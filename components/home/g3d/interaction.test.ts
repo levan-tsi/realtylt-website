@@ -301,3 +301,14 @@ describe("a featured home shown where the page leaves the map open (the keyboard
     }
   });
 });
+
+describe("our names under an open label (round 57.6)", () => {
+  it("fades a name the label covers, and one within the pad, and not one clear of it", async () => {
+    const { namesOverlap } = await import("./interaction");
+    const label = { x: 100, y: 100, w: 180, h: 60 };
+    expect(namesOverlap({ x: 150, y: 120, w: 70, h: 20 }, label)).toBe(true);
+    expect(namesOverlap({ x: 284, y: 120, w: 70, h: 20 }, label, 6)).toBe(true);
+    expect(namesOverlap({ x: 290, y: 120, w: 70, h: 20 }, label, 6)).toBe(false);
+    expect(namesOverlap({ x: 100, y: 40, w: 70, h: 20 }, label, 6)).toBe(false);
+  });
+});

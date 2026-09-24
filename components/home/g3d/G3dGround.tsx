@@ -19,9 +19,10 @@ import { warmPlan } from "./warm-plan";
 import type { MapCamera } from "./camera";
 import { mapIdFrom, modeChoice, type ModeChoice } from "./map-options";
 import { camOverrides, durOverrides } from "./lab-query";
-import { FEATURED_GLYPH } from "./glyph";
+import { featuredGlyph } from "./glyph";
+import { nightGrade, type NightGrade } from "./night";
 import { applyClaims, claims, type LightsState, type MapState } from "./claims";
-import { cameraShowing, clickAction, labelContent, openPoint, placeHoverLabel, tapNext, type LabelContent, type Rect, type TapState } from "./interaction";
+import { cameraShowing, clickAction, labelContent, namesOverlap, openPoint, placeHoverLabel, tapNext, type LabelContent, type Rect, type TapState } from "./interaction";
 
 /** The map's mode by default (map-options.ts), decided by frames in round 57.2
  * (scripts/_scratch-r57/2/mode/ab-{1440,390}.png, docs/parity/DESIGN-ROUND57.md §4 "Round 2"):
@@ -229,14 +230,25 @@ export function G3dGround({
   const lookRef = useRef<Look>("scrim");
   lookRef.current = look;
   const [revealed, setRevealed] = useState(false);
-  /** OUR POSTER is the load cover (round 56 phase 1b): the night flight's own still, our artwork,
-   * in the first bytes of HTML, until the map has drawn the page's first shot. A still of Google's
-   * map may never be stored or shipped (policy), so the cover is ours. It dissolves in 400 ms once
-   * the map is drawn; it goes AT ONCE when the visitor scrolls past 24 px (the round-55 rule of
-   * the night flight, components/home/night/NightGround.tsx: a still that stays while the page
-   * moves reads as a freeze); and it stays for good if the map cannot load (no key, `gmp-error`),
-   * so a failure leaves our picture, not a black screen. */
-  const [posterGone, setPosterGone] = useState<false | "dissolve" | "scroll">(false);
+  /** OUR POSTER is the load cover (round 56 phase 1b), our artwork, in the first bytes of HTML,
+   * until the map has drawn the page's first shot. A still of Google's map may never be stored or
+   * shipped (policy), so the cover is ours. Since round 57.6 it is the night map's own first frame
+   * (scripts/make-map-cover.mjs: our land in the night grade, our lights where the live layer draws
+   * them), and it lifts only at the reveal, in COVER_MS, a change of nothing but detail. An early
+   * scroll no longer lifts it (round 57.5 measured the freeze that followed): with JavaScript the
+   * cover is pinned to the window while it holds, the map goes to the visitor's section under it,
+   * and it lifts onto that section drawn (warm-plan.ts earlyScroll). It stays for good if the map
+   * cannot load (no key, `gmp-error`), so a failure leaves our picture, not a black screen. */
+  const [posterGone, setPosterGone] = useState(false);
+  /** JavaScript runs: the cover may be pinned to the window (with JS off it is the hero's picture
+   * and scrolls away with it). */
+  const [pinned, setPinned] = useState(false);
+  /** JavaScript has run (the scrims are placed by it; without it the cover shades its own words). */
+  const [js, setJs] = useState(false);
+  useEffect(() => setJs(true), []);
+  /** The night grade (night.ts) and the lights' thinning (`?thin=lattice` compares round 57.2's). */
+  const [night, setNight] = useState<NightGrade | null>(nightGrade(null).grade);
+  const lightCanvas = useRef<HTMLCanvasElement>(null);
   const [error, setError] = useState<string | null>(null);
   const [current, setCurrent] = useState<AreaShot | null>(null);
   /** The home the pointer (or a tap) is naming: its index, where its listing is (the town's search
@@ -263,6 +275,17 @@ export function G3dGround({
   // (250 ms) as soon as the reader scrolls or the camera leaves, and come back only when both are
   // true again. Placed from the camera the map is actually on, re-placed on every resize.
   const labelLayer = useRef<HTMLDivElement>(null);
+  /** Where each of our names stands (territory and towns), so an open label can fade the ones
+   * under it (round 57.6: the phone's tap label sat on "Rockland"). */
+  const nameBoxes = useRef(new Map<HTMLSpanElement, Box>());
+  const dimmed = useRef(new Set<HTMLSpanElement>());
+  const dimNames = (r: { x: number; y: number; w: number; h: number } | null) => {
+    const next = new Set<HTMLSpanElement>();
+    if (r) for (const [e, b] of nameBoxes.current) if (namesOverlap(b, r, 6)) next.add(e);
+    for (const e of dimmed.current) if (!next.has(e)) e.style.opacity = "";
+    for (const e of next) e.style.opacity = "0";
+    dimmed.current = next;
+  };
   const labelEls = useRef(new Map<string, HTMLSpanElement>());
   const labelsPlaced = useRef(false);
 
@@ -295,6 +318,8 @@ export function G3dGround({
       const p = placed.get(id);
       e.style.visibility = p ? "visible" : "hidden";
       if (p) e.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
+      if (p) nameBoxes.current.set(e, { x: p.x, y: p.y, w: p.w, h: p.h });
+      else nameBoxes.current.delete(e);
     }
     labelsPlaced.current = true;
     const layer = labelLayer.current;
@@ -357,6 +382,8 @@ export function G3dGround({
       const p = placed.get(id);
       e.style.visibility = p ? "visible" : "hidden";
       if (p) e.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
+      if (p) nameBoxes.current.set(e, { x: p.x, y: p.y, w: p.w, h: p.h });
+      else nameBoxes.current.delete(e);
     }
     layer.dataset.placed = [...placed.values()].map((p) => p.text).join(",");
     layer.style.opacity = placed.size ? "1" : "0";
@@ -369,6 +396,7 @@ export function G3dGround({
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
     townsOff.current = q.get("towns") === "0";
+    if (q.get("night") !== null) setNight(nightGrade(q.get("night")).grade);
     if (q.get("look") === "veil") setLook("veil");
     if (q.get("veil")) setVeil(Number(q.get("veil")));
     if (q.get("scrim")) setScrim(Number(q.get("scrim")));
@@ -527,6 +555,7 @@ export function G3dGround({
     const el = label.current;
     if (!el || el.dataset.open !== "1") return;
     el.dataset.open = "0";
+    dimNames(null);
     el.style.transitionDuration = "160ms";
     el.style.opacity = "0";
     el.style.pointerEvents = "none";
@@ -551,7 +580,9 @@ export function G3dGround({
     // scroll position, while the document is clean, and dropped on the next scroll or resize.
     avoid.push(...(wordBoxes.current ??= readWordBoxes(vp)));
     const p = placeHoverLabel(at, { w, h }, vp, { keep, avoid });
-    // Then the writes: text, which rows show, the place (a transform), the link.
+    // Then the writes: text, which rows show, the place (a transform), the link; our names under the
+    // label step aside (namesOverlap), and come back when it closes.
+    dimNames({ x: p.x, y: p.y, w, h });
     const same = el.dataset.open === "1";
     if (labelTown.current) labelTown.current.textContent = content.town;
     if (labelPrice.current) labelPrice.current.textContent = content.price ?? "";
@@ -573,8 +604,9 @@ export function G3dGround({
     }
   }, []);
 
-  /** The lit light's keep-out half-size: its glyph's radius and 4 px for the projection's error. */
-  const keepOf = (glyph: number) => glyph / 2 + 4;
+  /** The lit light's keep-out half-size: its lit core's radius (glyph.ts litGlyph, 1.6x) and 4 px of
+   * slack; its argument is the core's DIAMETER, as the controller's stats report it. */
+  const keepOf = (core: number) => (core / 2) * 1.6 + 4;
 
   const hideHover = useCallback(() => {
     clearTimeout(hideTimer.current);
@@ -608,6 +640,7 @@ export function G3dGround({
       setError(!key ? "no key" : "no webgl");
       return;
     }
+    setPinned(true);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     // THE PRE-WARM WALK (controller.ts): the shots the page will fly to, in the page's order, under
     // the poster, until the budget runs out. Measured (docs/parity/DESIGN-ROUND56.md §8): the whole
@@ -641,12 +674,17 @@ export function G3dGround({
       firstStep: q.get("ladder") === "first",
       mapId: mapIdFrom(process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID),
       mode: modeChoice(q.get("mode"), MODE),
+      canvas: lightCanvas.current,
+      thin: q.get("thin") === "lattice" ? "lattice" : "density",
       description: "Map of the Hudson Valley and New York City, with the homes for sale lit where they stand.",
       onReveal: () => {
         setRevealed(true);
         mapState.current = "live";
+        // The light sentences claim what our layer draws (claims.ts): homes loaded but none drawn
+        // at the shot the map opens on would make "every light" an empty promise.
+        if (lightsState.current === "some" && c.stats().planned === 0) lightsState.current = "none";
         syncClaims();
-        setPosterGone((g) => g || "dissolve");
+        setPosterGone(true);
         labelsPlaced.current = false;
         showTerritoryRef.current();
       },
@@ -675,13 +713,14 @@ export function G3dGround({
       },
     });
     ctl.current = c;
+    if (c.layer) c.layer.avoid = { x: 0, y: window.innerHeight - LOGO_CORNER.h, w: LOGO_CORNER.w, h: LOGO_CORNER.h };
     (window as unknown as { __g3d?: unknown }).__g3d = {
       ctl: c,
       stats: () => c.stats(),
       hover: hoverCost.current,
       clicks: clickLog.current,
       lit: () => c.lit(),
-      litCost: () => c.litCost,
+      layer: () => c.layer,
       label: () => {
         const l = label.current;
         return l ? { open: l.dataset.open === "1", side: l.dataset.side ?? null, href: l.getAttribute("href"), text: l.innerText, shownAt: Number(l.dataset.shownAt ?? 0) } : null;
@@ -723,22 +762,26 @@ export function G3dGround({
   useEffect(() => {
     const onResize = () => {
       measure();
+      const layer = ctl.current?.layer;
+      if (layer) {
+        layer.resize();
+        layer.avoid = { x: 0, y: window.innerHeight - LOGO_CORNER.h, w: LOGO_CORNER.w, h: LOGO_CORNER.h };
+      }
       scrimSizes.current = [];
       wordBoxes.current = null;
       labelsPlaced.current = false;
       schedule();
     };
     onResize();
-    // The poster goes at once on the first real scroll, where a live map can take its place (never
-    // when the map has failed: then the poster is the picture).
+    // An early scroll (round 57.6): the cover holds and the map goes to the visitor's section under
+    // it (controller scrolledEarly, warm-plan.ts earlyScroll); it lifts at the reveal, never before.
     const onFirstScroll = () => {
       if (failed.current) {
         window.removeEventListener("scroll", onFirstScroll);
         return;
       }
       if (window.scrollY > 24) {
-        setPosterGone((g) => g || "scroll");
-        ctl.current?.abortWarm();
+        ctl.current?.scrolledEarly();
         window.removeEventListener("scroll", onFirstScroll);
       }
     };
@@ -775,7 +818,7 @@ export function G3dGround({
     const p = c.screenOf(h.lat, h.lng);
     if (!p) return;
     const pin = h.price ? { price: h.price, beds: h.beds ?? 0, baths: h.baths ?? 0, address: h.address ?? "", city: h.city ?? "" } : null;
-    showLabel(p, keepOf(FEATURED_GLYPH), labelContent(h.city ?? "", pin), false, h.href);
+    showLabel(p, keepOf(2 * featuredGlyph(ctl.current?.layer?.glyph ?? { core: 1.5, halo: 6, haloAlpha: 0.4 }).core), labelContent(h.city ?? "", pin), false, h.href);
   }, [showLabel]);
   const showFocusRef = useRef(showFocus);
   showFocusRef.current = showFocus;
@@ -811,7 +854,7 @@ export function G3dGround({
       const spot = openPoint(solids, vp, card ? { x: card.left + card.width / 2, y: card.top + card.height / 2 } : { x: vp.width / 2, y: vp.height / 2 }, {
         avoid: [{ x: 0, y: vp.height - LOGO_CORNER.h, w: LOGO_CORNER.w, h: LOGO_CORNER.h }],
       });
-      const cam = spot ? cameraShowing({ lat: h.lat, lng: h.lng, alt: c.groundAlt(h.lat, h.lng) }, { x: spot.x, y: spot.y + FEATURED_GLYPH / 2 }, base, vp) : base;
+      const cam = spot ? cameraShowing({ lat: h.lat, lng: h.lng, alt: c.groundAlt(h.lat, h.lng) }, { x: spot.x, y: spot.y }, base, vp) : base;
       c.flyToCamera(cam, 1800);
       // After the flight has started (its start puts every light out), so this one stays lit.
       c.lightFeatured(h.id);
@@ -1112,7 +1155,58 @@ export function G3dGround({
             took four Tab stops between the header and the hero's search, with no visible focus. The
             map takes no pointer and is not a control here; the featured cards are the keyboard's
             path to its lights. */}
-        <div ref={host} className="absolute inset-0" inert />
+        <div ref={host} className="absolute inset-0" inert style={night ? { filter: night.filter } : undefined} />
+        {/* THE NIGHT'S FLOOR (night.ts): a deep blue-black screened into the graded map's shadows. */}
+        {night ? <div aria-hidden className="absolute inset-0" style={{ background: night.tint, mixBlendMode: "screen" }} /> : null}
+        {/* OUR LIGHTS (light-layer.ts): over the night, under the scrims and the words. */}
+        <canvas ref={lightCanvas} aria-hidden data-g3d-lights className="absolute inset-0 h-full w-full" style={{ mixBlendMode: "plus-lighter" }} />
+      </div>
+      {/* THE LOAD COVER: our still (see posterGone above), drawn from the map's own hero camera
+          (scripts/make-map-cover.mjs): the wide one from the laptop's camera, the tall one from the
+          phone's, each shown whole, so the dissolve keeps the composition at both widths. Round
+          57.6: it stands OVER the map and our lights and UNDER the same shades the live map has
+          (the scrims under the words, the header's shade, the phone's foot), so at the dissolve the
+          words, their shades and the lights stay exactly where they are and only the ground gains
+          its detail. With JavaScript off nothing places the scrims, so the cover carries its own
+          two shades then (and only then). Its images are preloaded by the page, each for its own
+          width. */}
+      <div
+        aria-hidden
+        data-g3d-poster
+        data-g3d-cover
+        data-state={posterGone ? "gone" : "on"}
+        data-drop={posterGone ? "dissolve" : undefined}
+        {...{ elementtiming: "g3d-poster" }}
+        className={`pointer-events-none ${pinned && !error ? "fixed" : "absolute"} inset-x-0 top-0 z-[1] h-[100svh] bg-black bg-cover bg-center bg-no-repeat bg-[image:var(--g3d-tall)] lg:bg-[image:var(--g3d-wide)] transition-opacity duration-[700ms] ease-in-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
+        style={{ "--g3d-tall": `url(${cover.tall})`, "--g3d-wide": `url(${cover.wide})` } as CSSProperties}
+      >
+        {js ? null : (
+          <>
+        <div
+          className="absolute inset-0 lg:hidden"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(5,5,5,0.80) 0%, rgba(5,5,5,0.46) 14%, rgba(5,5,5,0.12) 30%, rgba(5,5,5,0.12) 46%, rgba(5,5,5,0.55) 60%, rgba(5,5,5,0.86) 72%, rgba(5,5,5,0.9) 100%)",
+          }}
+        />
+        {/* The header's shade, as the map has it (topScrim): the cover sits above the map's own
+            layers, and cover B's hazy daylight sky left the header's links on a light ground. */}
+        <div
+          className="absolute inset-x-0 top-0 h-[230px]"
+          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)" }}
+        />
+        <div
+          className="absolute inset-0 hidden lg:block"
+          style={{
+            background:
+              "radial-gradient(66% 88% at 14% 74%, rgba(5,5,5,0.93) 0%, rgba(5,5,5,0.88) 30%, rgba(5,5,5,0.6) 56%, rgba(5,5,5,0.22) 80%, rgba(5,5,5,0) 100%)",
+          }}
+        />
+          </>
+        )}
+      </div>
+      {/* THE SHADES AND OUR NAMES: over the ground and the cover alike, under the words. */}
+      <div className="pointer-events-none fixed inset-0 z-[2]" data-g3d-shades>
         {look === "veil" ? (
           <div ref={scrimLayer} aria-hidden className="absolute inset-0" style={{ background: `rgba(0,0,0,${veil})`, ...mask }} />
         ) : (
@@ -1171,7 +1265,7 @@ export function G3dGround({
               }}
               data-area={l.id}
               className={`absolute left-0 top-0 whitespace-nowrap leading-[1.3] ${l.tier === "county" ? "text-[15px] font-semibold tracking-[-0.005em] text-ink" : "text-[13px] font-semibold tracking-[0.005em] text-ink"}`}
-              style={{ visibility: "hidden", textShadow: LABEL_SHADOW }}
+              style={{ visibility: "hidden", textShadow: LABEL_SHADOW, transition: "opacity 140ms ease-out" }}
             >
               {l.text}
             </span>
@@ -1188,50 +1282,12 @@ export function G3dGround({
                 else townEls.current.delete(t.id);
               }}
               className="absolute left-0 top-0 whitespace-nowrap text-[13px] font-medium leading-[1.3] tracking-[0.005em] text-ink"
-              style={{ visibility: "hidden", textShadow: LABEL_SHADOW, ...TOWN_SHADE }}
+              style={{ visibility: "hidden", textShadow: LABEL_SHADOW, ...TOWN_SHADE, transition: "opacity 140ms ease-out" }}
             >
               {t.text}
             </span>
           ))}
         </div>
-      </div>
-      {/* THE LOAD COVER: our still (see posterGone above), over the map and under the words,
-          drawn from the map's own hero camera (round 57.2, scripts/make-map-cover.mjs): the wide
-          one from the laptop's camera, the tall one from the phone's, each shown whole, so the
-          dissolve keeps the composition at both widths (round 57.1 cropped one landscape still
-          for the phone, and the city jumped at the dissolve). Absolute to the page like the night
-          flight's, with the same two scrims under the words (a still cannot be told where the
-          words are). Its images are preloaded by the page, each for its own width. */}
-      <div
-        aria-hidden
-        data-g3d-poster
-        data-g3d-cover
-        data-state={posterGone ? "gone" : "on"}
-        data-drop={posterGone || undefined}
-        {...{ elementtiming: "g3d-poster" }}
-        className={`pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh] bg-black bg-cover bg-center bg-no-repeat bg-[image:var(--g3d-tall)] lg:bg-[image:var(--g3d-wide)] transition-opacity duration-[400ms] ease-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
-        style={{ "--g3d-tall": `url(${cover.tall})`, "--g3d-wide": `url(${cover.wide})` } as CSSProperties}
-      >
-        <div
-          className="absolute inset-0 lg:hidden"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(5,5,5,0.80) 0%, rgba(5,5,5,0.46) 14%, rgba(5,5,5,0.12) 30%, rgba(5,5,5,0.12) 46%, rgba(5,5,5,0.55) 60%, rgba(5,5,5,0.86) 72%, rgba(5,5,5,0.9) 100%)",
-          }}
-        />
-        {/* The header's shade, as the map has it (topScrim): the cover sits above the map's own
-            layers, and cover B's hazy daylight sky left the header's links on a light ground. */}
-        <div
-          className="absolute inset-x-0 top-0 h-[230px]"
-          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)" }}
-        />
-        <div
-          className="absolute inset-0 hidden lg:block"
-          style={{
-            background:
-              "radial-gradient(66% 88% at 14% 74%, rgba(5,5,5,0.93) 0%, rgba(5,5,5,0.88) 30%, rgba(5,5,5,0.6) 56%, rgba(5,5,5,0.22) 80%, rgba(5,5,5,0) 100%)",
-          }}
-        />
       </div>
       {/* THE HOVER LABEL (round 57.3): the hovered or focused home's town, price, beds and baths, in
           our type on the site's black at the chip radius (8 px) with a low hairline; on a phone

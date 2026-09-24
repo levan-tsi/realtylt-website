@@ -240,3 +240,9 @@ export function cameraShowing(
   }
   return { ...base, center: { lat: Math.round(lat * 1e7) / 1e7, lng: Math.round(lng * 1e7) / 1e7, altitude: base.center.altitude } };
 }
+
+/** Round 57.6: does one of our names (its box) stand under an open label (its box grown by `pad`
+ * px)? Those names fade while the label is open, so the label never sits on a word of ours. */
+export function namesOverlap(name: Rect, label: Rect, pad = 0): boolean {
+  return name.x < label.x + label.w + pad && name.x + name.w > label.x - pad && name.y < label.y + label.h + pad && name.y + name.h > label.y - pad;
+}

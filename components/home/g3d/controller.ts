@@ -12,24 +12,24 @@
  *    and animates inside `flyCameraTo`.
  *  - After a flight the element reports its camera as the EYE (center = eye, range 0); camera.ts
  *    treats both forms as one camera.
- *  - Markers: Marker3DElement with an SVG in a <template> draws a small image anchored bottom-centre.
- *    ~0.35 ms each in total, most of it in a task after the append: 1,500 appended at once was a
- *    547 ms freeze, 25 per frame was 1.07 s with a worst frame of 21 ms. So they go in by the
- *    frame. `collisionBehavior: "REQUIRED"` draws them over the map's own labels without hiding
- *    any (OPTIONAL_AND_HIDES_LOWER_PRIORITY erased the street and place names under them); the
- *    thinning is ours (thinning.ts).
- *  - Nothing reports a marker's screen position and no hover event exists on markers, so hover is
- *    our projection of the homes we drew, hit-tested against the pointer (G3dGround.tsx). */
+ *  - Markers (until round 57.5): Marker3DElement with an SVG in a <template>, ~0.35 ms each, 25 a
+ *    frame, no hover, a glyph fixed once drawn. Round 57.6 draws the homes itself instead, on a
+ *    canvas over the night grade (light-layer.ts), projected every frame of a flight from the
+ *    camera the element reports: no marker is added at boot or on any flight.
+ *  - Hover is our projection of the homes we drew, hit-tested against the pointer (G3dGround.tsx),
+ *    the same positions the layer drew in its last frame. */
 import { loadMaps } from "@/lib/idx/maps-loader";
 import { sampleHeight, type ElevationGrid } from "../night/elevation";
 import type { ShotName } from "../night/shots";
 import { cameraFrame, flightMillis, projectWith, type MapCamera } from "./camera";
-import { budgetFor, cameraFor, focusOf, isNarrow, lightGap, type G3dCamera } from "./cameras";
+import { budgetFor, cameraFor, densityGap, focusOf, isNarrow, lightGap, type G3dCamera } from "./cameras";
 import { FlightGate } from "./gate";
 import { modeFor, type MapMode, type ModeChoice } from "./map-options";
-import { FEATURED_GLYPH, glyphFor, glyphKey, lightSvg, litSvg, type Glyph } from "./glyph";
 import { FLY_IN_MS, flyInCamera } from "./interaction";
-import { diffLights, lightPins, planLights, type LightSet } from "./thinning";
+import { lightPins, planLights, type LightSet } from "./thinning";
+import { LightLayer, type LayerCamera } from "./light-layer";
+import { focalOf, hashOrder, homesEcef, planDensity, projectHome } from "./light-plan";
+import { backWaitMs, earlyScroll } from "./warm-plan";
 import type { MapPin } from "@/lib/idx/types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -81,7 +81,10 @@ export interface G3dStats {
   error: string | null;
   /** The element's mode now, and the glyph size the last plan drew with (round 57.2). */
   mode: string | null;
+  /** The lights' core DIAMETER now, css px (glyph.ts, eased by range; round 57.6). */
   glyph: number;
+  /** Our light layer's per-frame cost (light-layer.ts). */
+  layer: { frames: number; maxMs: number; meanMs: number } | null;
 }
 
 interface FlightJob {
@@ -104,9 +107,8 @@ let loads = 0;
  * (and the camera's) are the same sea-level heights as ours, and the offset is 0. At the territory
  * shot 32 m is a third of a pixel either way. */
 const GEOID = 0;
-/** Homes added per frame, and taken away per frame. */
-const ADD_PER_FRAME = 25;
-const REMOVE_PER_FRAME = 60;
+/** The element's camera events (maps 3.66): our lights redraw on them (light-layer.ts onCameraChange). */
+const CAMERA_EVENTS = ["gmp-centerchange", "gmp-rangechange", "gmp-tiltchange", "gmp-headingchange"] as const;
 
 export class G3dController {
   el: El | null = null;
@@ -119,26 +121,26 @@ export class G3dController {
   private homes: Homes | null = null;
   private pins: MapPin[] = [];
   private elev: ElevationGrid | null = null;
-  private drawn = new Map<number, El>();
-  /** The glyph size each drawn home was drawn with (glyph.ts: size follows range, in tiers). */
-  private drawnSize = new Map<number, number>();
-  /** Which glyph each drawn home was drawn with (glyph.ts glyphKey): a change of glyph re-adds it. */
-  private drawnKey = new Map<number, string>();
-  private glyph: Glyph = glyphFor(Infinity);
+  /** Our light layer (light-layer.ts), or null (no canvas: the lab's map-only look). */
+  layer: LightLayer | null = null;
+  /** The homes in the planner's fixed random order (light-plan.ts hashOrder). */
+  private order = new Int32Array(0);
   private planned: number[] = [];
-  private job = 0;
-  private raf = 0;
   private revealed = false;
   private steadyAt: number | null = null;
   private firstMarkerAt: number | null = null;
   private lastPlanMs = 0;
-  private lastAddMs = 0;
   private error: string | null = null;
-  /** Screen positions of the drawn homes (x, y pairs; the light's centre, not the anchor) and
-   * which home each pair is, valid for the camera the map landed on. */
-  xy = new Float32Array(0);
-  xyIndex = new Int32Array(0);
-  xyCount = 0;
+  /** Where the drawn lights stood in the layer's last frame (the pointer's hit test). */
+  get xy() {
+    return this.layer?.xy ?? new Float32Array(0);
+  }
+  get xyIndex() {
+    return this.layer?.xyIndex ?? new Int32Array(0);
+  }
+  get xyCount() {
+    return this.layer?.xyCount ?? 0;
+  }
 
   constructor(
     private opts: {
@@ -190,10 +192,29 @@ export class G3dController {
       camOverride?: Partial<Record<ShotName, Partial<Pick<G3dCamera, "range" | "tilt" | "heading">>>>;
       durOverride?: Partial<Record<ShotName, number>>;
       legs?: number;
+      /** Our lights' canvas (light-layer.ts). */
+      canvas?: HTMLCanvasElement | null;
+      /** How the homes are thinned: "density" (round 57.6, a uniform sample: denser where homes are
+       * denser) or "lattice" (round 57.2's even screen gap), `?thin=` compares. */
+      thin?: "density" | "lattice";
     },
   ) {
     this.gate = new FlightGate<FlightJob>(opts.maxWaitMs);
+    if (opts.canvas) this.layer = new LightLayer(opts.canvas, () => this.liveCamera(), () => isNarrow(opts.viewport()));
   }
+
+  /** The camera the map element reports NOW (every frame of a flight, measured), or ours before it
+   * exists. */
+  liveCamera(): LayerCamera | null {
+    const el = this.el;
+    const c = el?.center;
+    if (el && c && Number.isFinite(el.range)) {
+      return { center: { lat: c.lat, lng: c.lng, altitude: c.altitude ?? 0 }, range: el.range, tilt: el.tilt ?? 0, heading: el.heading ?? 0, fov: el.fov ?? this.cam?.fov ?? 40 };
+    }
+    return this.cam;
+  }
+
+  private heightAt = (lat: number, lng: number) => (this.elev ? sampleHeight(this.elev, lng, lat) + GEOID : 0);
 
   private stopped = false;
 
@@ -237,6 +258,7 @@ export class G3dController {
     el.addEventListener("gmp-steadychange", this.onSteady as EventListener);
     el.addEventListener("gmp-animationend", this.onAnimationEnd);
     el.addEventListener("gmp-error", this.onMapError);
+    if (this.layer) for (const k of CAMERA_EVENTS) el.addEventListener(k, this.layer.onCameraChange);
     host.append(el);
     this.shot = this.opts.initial;
     this.at = this.goingTo = this.opts.initial;
@@ -251,18 +273,15 @@ export class G3dController {
 
   stop() {
     this.stopped = true;
-    cancelAnimationFrame(this.raf);
+    this.layer?.stop();
     clearTimeout(this.landTimer);
     clearTimeout(this.pollTimer);
     const el = this.el;
     if (!el) return;
-    for (const m of this.drawn.values()) m.remove();
-    this.drawn.clear();
-    this.drawnSize.clear();
-    this.drawnKey.clear();
     el.removeEventListener("gmp-steadychange", this.onSteady as EventListener);
     el.removeEventListener("gmp-animationend", this.onAnimationEnd);
     el.removeEventListener("gmp-error", this.onMapError);
+    if (this.layer) for (const k of CAMERA_EVENTS) el.removeEventListener(k, this.layer.onCameraChange);
   }
 
   private fail(msg: string) {
@@ -290,7 +309,9 @@ export class G3dController {
       this.firstSteadyAt = performance.now();
       performance.mark("g3d:first-steady");
     }
-    if (!this.warmed && this.opts.warm.length && !this.warmAbort) {
+    // The walk (or, after an early scroll that stopped it, just the return to the visitor's shot,
+    // drawn before it is shown: round 57.6).
+    if (!this.warmed && (this.opts.warm.length || this.warmAbort)) {
       void this.prewarm();
       return;
     }
@@ -324,6 +345,16 @@ export class G3dController {
   abortWarm() {
     this.warmAbort = true;
     this.wake?.();
+  }
+
+  /** The visitor scrolled before the map was shown (round 57.6, warm-plan.ts earlyScroll): the
+   * compile path goes on under the cover; any other walk stops. Either way the map is shown at the
+   * visitor's own section, drawn (or after EARLY_BACK_MS). */
+  private scrolled = false;
+  scrolledEarly() {
+    if (this.revealed || this.scrolled) return;
+    this.scrolled = true;
+    if (earlyScroll(this.opts.warmMode) === "abort") this.abortWarm();
   }
 
   /** After a camera change: resolves true when the map has redrawn and is steady again, false at
@@ -392,8 +423,10 @@ export class G3dController {
     // Back to the page's own shot (the reader may have scrolled meanwhile), drawn, then shown.
     this.at = this.goingTo = this.shot ?? this.opts.initial;
     this.setMode(this.at);
-    this.jump(this.cameraOf(this.at));
-    if (!this.warmAbort) await this.settle(this.opts.warmBackMs ?? 4000);
+    const back = this.cameraOf(this.at);
+    const moved = !sameCamera(this.cam, back);
+    this.jump(back);
+    if (moved || !this.warmAbort) await this.settle(backWaitMs({ scrolled: this.scrolled, backMs: this.opts.warmBackMs }));
     this.warmMs = Math.round(performance.now() - t0);
     performance.mark("g3d:warm-end");
     this.warming = false;
@@ -430,13 +463,14 @@ export class G3dController {
     if (!this.revealed) {
       // Before the map is shown there is nothing to see (our poster covers it): go there directly,
       // or, during the pre-warm, once the walk is over.
-      if (name !== this.shot && !this.warming) {
-        this.setMode(name);
-        this.jump(target);
-      }
+      const move = name !== this.shot && !this.warming;
       this.shot = name;
       this.flown = name;
       this.at = this.goingTo = name;
+      if (move) {
+        this.setMode(name);
+        this.jump(target);
+      }
       return;
     }
     this.shot = name;
@@ -516,12 +550,16 @@ export class G3dController {
   private jump(c: G3dCamera) {
     const el = this.el;
     this.cam = c;
-    if (!el) return;
-    el.center = c.center;
-    el.range = c.range;
-    el.tilt = c.tilt;
-    el.heading = c.heading;
-    el.fov = c.fov;
+    if (el) {
+      el.center = c.center;
+      el.range = c.range;
+      el.tilt = c.tilt;
+      el.heading = c.heading;
+      el.fov = c.fov;
+    }
+    // A cut (reduced motion, the walk under the cover, a shot set before the reveal): the lights for
+    // that camera at once, drawn once.
+    this.replan(c, true);
   }
 
   /** The second leg of a two-leg flight, flown when the first lands (the `legs` lab switch). */
@@ -531,21 +569,26 @@ export class G3dController {
     const el = this.el;
     if (!el) return;
     const from = this.cam ?? target;
-    this.cam = target;
     this.nextLeg = null;
-    this.cancelJob();
     this.flights++;
     this.flying = true;
     this.gate.started();
     this.opts.onFlightStart();
     clearTimeout(this.landTimer);
     if (this.opts.reduced) {
-      // Reduced motion: a cut, not a flight.
+      // Reduced motion: a cut, not a flight; the layer redraws once, for the new camera.
       this.jump(target);
       this.land();
       return;
     }
+    this.cam = target;
     const dur = ms ?? flightMillis(from, target, this.opts.flightMs[0], this.opts.flightMs[1]);
+    // THE LIGHTS OVER THE FLIGHT (round 57.6): the destination's homes planned now, and the set
+    // cross-fades over most of the flight (the homes both shots draw stay lit), while every light
+    // is projected frame by frame from the camera the map reports and its glyph eases with the
+    // range. Nothing pops at the start or at the landing.
+    this.replan(target, false, Math.round(dur * 0.8));
+    this.layer?.setFlying(true);
     const end = { center: target.center, range: target.range, tilt: target.tilt, heading: target.heading, fov: target.fov };
     if (twoLegs) {
       const m = midCamera(from, target);
@@ -562,27 +605,15 @@ export class G3dController {
     clearTimeout(this.landTimer);
     this.flying = false;
     this.at = this.goingTo;
+    this.layer?.setFlying(false);
     this.opts.onLand();
     const next = this.gate.landed(performance.now());
     if (next) return this.go(next);
     this.pump();
-    this.stale = true;
-    this.markNow();
   }
 
-  // ---- marker work off the flight (round 56 phase 1b, gate.ts canMark) ----------------------------
-  // Homes are planned and added only once the flight has ended (gmp-animationend) AND the map says
-  // it is steady AND no flight is waiting; a flight that starts cancels whatever is left of the job
-  // (fly -> cancelJob). A job, once started, runs to its end at ADD_PER_FRAME a frame.
-
-  /** A replan is owed (a landing, new homes) and waits for a steady, still map. */
-  private stale = false;
-
-  private markNow() {
-    if (!this.stale || !this.revealed || !this.gate.canMark()) return;
-    this.stale = false;
-    this.replan();
-  }
+  /** The gate's hook (it asks for marker work once the map is still): the layer needs none. */
+  private markNow() {}
 
   isFlying() {
     return this.flying || !this.revealed;
@@ -593,98 +624,50 @@ export class G3dController {
   setHomes(h: Homes) {
     this.homes = h;
     this.pins = lightPins(h);
-    this.stale = true;
-    this.markNow();
+    this.order = hashOrder(h.lat.length);
+    this.layer?.setHomes(h.lat, h.lng, this.heightAt);
+    if (this.cam) this.replan(this.cam, true);
   }
 
   setElevation(g: ElevationGrid) {
     this.elev = g;
-    if (this.revealed && !this.flying) this.reproject();
+    const h = this.homes;
+    if (h) this.layer?.setHomes(h.lat, h.lng, this.heightAt);
+    if (this.featured.length) this.setFeatured(this.featured);
+    this.layer?.kick();
   }
 
-  private featuredEls: El[] = [];
+  private featured: readonly FeaturedHome[] = [];
 
-  /** The featured homes, drawn a little larger than the rest whatever the shot. Measured in Chrome
-   * (scripts/_scratch-r56-tab.mjs): Marker3DInteractiveElement is NOT reachable by Tab on this
-   * version (Tab stops once on the map element itself, then leaves it; no focus event reaches a
-   * marker), and the map takes no pointer events here anyway, so these are plain markers and the
-   * keyboard reaches the featured homes through their cards on the page (G3dGround). */
+  /** The featured homes, drawn a little larger than the rest whatever the shot (glyph.ts
+   * featuredGlyph). The map takes no pointer and markers could never take focus (maps 3.66, round
+   * 56), so the keyboard reaches the featured homes through their cards on the page (G3dGround). */
   setFeatured(list: readonly FeaturedHome[]) {
-    const el = this.el;
-    if (!el || !this.lib) return;
-    for (const m of this.featuredEls) m.remove();
-    this.featuredById.clear();
-    this.litFeatured = null;
-    const big = lightSvg(FEATURED_GLYPH, 0.5, 3.1);
-    this.featuredEls = list.map((h) => {
-      const m = new this.lib.Marker3DElement({ position: { lat: h.lat, lng: h.lng }, altitudeMode: "CLAMP_TO_GROUND", collisionBehavior: "REQUIRED", sizePreserved: true }) as El;
-      const t = document.createElement("template");
-      t.innerHTML = big;
-      m.append(t);
-      el.append(m);
-      this.featuredById.set(h.id, m);
-      return m;
-    });
+    this.featured = list;
+    this.layer?.setFeatured(list, this.heightAt);
   }
 
-  // ---- the light answers (round 57.3) -------------------------------------------------------------
+  // ---- the light answers (round 57.3; on our canvas since 57.6) ------------------------------------
   // One light lit at a time: the hovered home's, or the featured home whose card has focus. The
-  // marker stays; its <template> is swapped for the lit glyph and back (glyph.ts litSvg).
+  // layer eases it up (and the last one down) over LIT_MS.
 
-  private featuredById = new Map<string, El>();
   private litHome: number | null = null;
   private litFeatured: string | null = null;
-  /** How long the last template swaps took (the probe reads them), ms. */
-  litCost = { swaps: 0, totalMs: 0, maxMs: 0 };
-
-  private swap(m: El | undefined, svg: string) {
-    if (!m) return;
-    const t0 = performance.now();
-    m.querySelector("template")?.remove();
-    const t = document.createElement("template");
-    t.innerHTML = svg;
-    m.append(t);
-    const ms = performance.now() - t0;
-    const c = this.litCost;
-    c.swaps++;
-    c.totalMs += ms;
-    c.maxMs = Math.max(c.maxMs, ms);
-  }
-
-  private unlightHome() {
-    if (this.litHome === null) return;
-    const i = this.litHome;
-    this.litHome = null;
-    const g = this.glyphs.get(this.drawnKey.get(i) ?? "");
-    if (g) this.swap(this.drawn.get(i), this.svgOf(g));
-  }
-
-  private unlightFeatured() {
-    if (this.litFeatured === null) return;
-    this.swap(this.featuredById.get(this.litFeatured), lightSvg(FEATURED_GLYPH, 0.5, 3.1));
-    this.litFeatured = null;
-  }
 
   /** Light one drawn home (its index in the homes), or put the lit home out. */
   lightHome(i: number | null) {
-    if (i !== null && i === this.litHome) return;
-    this.unlightHome();
-    if (i === null) return;
-    const g = this.glyphs.get(this.drawnKey.get(i) ?? "");
-    if (!g || !this.drawn.has(i)) return;
-    this.unlightFeatured();
+    if (i === this.litHome) return;
     this.litHome = i;
-    this.swap(this.drawn.get(i), litSvg(g.size, g.halo, g.core));
+    if (i !== null) this.litFeatured = null;
+    this.layer?.light(i === null ? (this.litFeatured ? { featured: this.litFeatured } : null) : { home: i });
   }
 
   /** Light one featured home (its listing id), or put the lit featured home out. */
   lightFeatured(id: string | null) {
-    if (id !== null && id === this.litFeatured) return;
-    this.unlightFeatured();
-    if (id === null || !this.featuredById.has(id)) return;
-    this.unlightHome();
+    if (id === this.litFeatured) return;
     this.litFeatured = id;
-    this.swap(this.featuredById.get(id), litSvg(FEATURED_GLYPH, 0.5, 3.1));
+    if (id !== null) this.litHome = null;
+    this.layer?.light(id === null ? (this.litHome !== null ? { home: this.litHome } : null) : { featured: id });
   }
 
   /** Which light is lit (the probes read it). */
@@ -739,143 +722,48 @@ export class G3dController {
     return { width, height, fov: this.cam?.fov ?? 35 };
   }
 
-  private viewport() {
-    return this.view();
-  }
-
-  private replan() {
+  /** THE PLAN: which homes a camera draws (light-plan.ts planDensity, or round 57.2's lattice with
+   * `?thin=lattice`), handed to the layer to fade to over `fadeMs` (or at once). */
+  private replan(cam: G3dCamera, instant: boolean, fadeMs = 250) {
     const h = this.homes;
-    const cam = this.cam;
-    if (!h || !cam || !this.lib || !this.el) return;
+    const layer = this.layer;
+    if (!h || !layer) return;
     const t0 = performance.now();
-    const name = this.flown ?? this.shot ?? "hero";
+    const name = this.goingTo ?? this.flown ?? this.shot ?? "hero";
     // A camera of its own (a featured home) has no range of the page's; its eye distance stands in.
     const range = cam.range > 0 ? cam.range : 25_000;
-    const vp = this.viewport();
-    const plan = planLights({ lights: h, pins: this.pins, camera: cam, viewport: vp, budget: budgetFor(range, vp), gap: lightGap(range), focus: focusOf(name) });
+    const vp = this.view();
+    const vpc = { ...vp, fov: cam.fov };
+    const focus = focusOf(name);
+    const budget = budgetFor(range, vp);
+    const plan =
+      this.opts.thin === "lattice"
+        ? planLights({ lights: h, pins: this.pins, camera: cam, viewport: vpc, budget, gap: lightGap(range), focus })
+        : planDensity({ ecef: layer.homesEcef, order: this.order, frame: cameraFrame(cam), viewport: vpc, budget, gap: densityGap(range), county: h.county, focus });
     this.lastPlanMs = Math.round((performance.now() - t0) * 10) / 10;
     this.planned = plan;
-    // A home drawn at another tier's size is taken away and drawn again at this one.
-    this.glyph = glyphFor(range, { narrow: isNarrow(vp) });
-    const want = glyphKey(this.glyph);
-    this.glyphs.set(want, this.glyph);
-    const keep = new Set<number>();
-    const stale: number[] = [];
-    for (const [i, key] of this.drawnKey) {
-      if (key === want) keep.add(i);
-      else stale.push(i);
-    }
-    const { add, remove } = diffLights(keep, plan);
-    this.run(add, [...stale, ...remove]);
-  }
-
-  private cancelJob() {
-    this.job++;
-    cancelAnimationFrame(this.raf);
-  }
-
-  /** Take away, then add, a frame's worth at a time; a new flight cancels what is left. */
-  private busy = false;
-
-  private run(add: number[], remove: number[]) {
-    const job = ++this.job;
-    this.busy = true;
-    cancelAnimationFrame(this.raf);
-    const t0 = performance.now();
-    let r = 0, a = 0;
-    const step = () => {
-      if (job !== this.job) return;
-      const end = Math.min(remove.length, r + REMOVE_PER_FRAME);
-      for (; r < end; r++) {
-        if (remove[r] === this.litHome) this.litHome = null;
-        this.drawn.get(remove[r])?.remove();
-        this.drawn.delete(remove[r]);
-        this.drawnSize.delete(remove[r]);
-        this.drawnKey.delete(remove[r]);
-      }
-      if (r >= remove.length) {
-        const stop = Math.min(add.length, a + ADD_PER_FRAME);
-        for (; a < stop; a++) this.addHome(add[a]);
-      }
-      if (r < remove.length || a < add.length) {
-        this.raf = requestAnimationFrame(step);
-      } else {
-        this.busy = false;
-        this.lastAddMs = Math.round(performance.now() - t0);
-        this.reproject();
-      }
-    };
-    this.raf = requestAnimationFrame(step);
-  }
-
-  private svgs = new Map<string, string>();
-  private glyphs = new Map<string, Glyph>();
-
-  private svgOf(g: Glyph): string {
-    const key = glyphKey(g);
-    let svg = this.svgs.get(key);
-    if (!svg) this.svgs.set(key, (svg = lightSvg(g.size, g.halo, g.core)));
-    return svg;
-  }
-
-  private addHome(i: number) {
-    const h = this.homes!;
-    const m = new this.lib.Marker3DElement({
-      position: { lat: h.lat[i], lng: h.lng[i] },
-      altitudeMode: "CLAMP_TO_GROUND",
-      collisionBehavior: "REQUIRED",
-      sizePreserved: true,
-    }) as El;
-    const g = this.glyph;
-    const t = document.createElement("template");
-    t.innerHTML = this.svgOf(g);
-    m.append(t);
-    this.el!.append(m);
-    this.drawn.set(i, m);
-    this.drawnSize.set(i, g.size);
-    this.drawnKey.set(i, glyphKey(g));
-    if (this.firstMarkerAt === null) {
+    layer.fadeMs = fadeMs;
+    layer.plan(plan, instant || !!this.opts.reduced);
+    if (this.firstMarkerAt === null && plan.length) {
       this.firstMarkerAt = performance.now();
       performance.mark("g3d:first-marker");
     }
   }
 
-  /** Where each drawn home's light is on screen, for the camera the map is on. */
-  reproject() {
-    const cam = this.cam;
-    const h = this.homes;
-    if (!cam || !h) return;
-    const frame = cameraFrame(cam);
-    const vp = this.viewport();
-    const n = this.drawn.size;
-    if (this.xy.length < n * 2) {
-      this.xy = new Float32Array(n * 2);
-      this.xyIndex = new Int32Array(n);
-    }
-    let k = 0;
-    for (const i of this.drawn.keys()) {
-      const alt = this.elev ? sampleHeight(this.elev, h.lng[i], h.lat[i]) + GEOID : 0;
-      const p = projectWith(frame, vp, h.lat[i], h.lng[i], alt);
-      if (!p) continue;
-      this.xy[2 * k] = p.x;
-      this.xy[2 * k + 1] = p.y - (this.drawnSize.get(i) ?? 0) / 2;
-      this.xyIndex[k] = i;
-      k++;
-    }
-    this.xyCount = k;
-  }
-
   /** The ground's height at a place, in the altitudes the camera maths uses. */
   groundAlt(lat: number, lng: number): number {
-    return this.elev ? sampleHeight(this.elev, lng, lat) + GEOID : 0;
+    return this.heightAt(lat, lng);
   }
 
-  /** The screen position of any place for the landed camera (the featured homes). */
+  /** The screen position of a featured home for the camera the map reports now (its light's
+   * centre: the layer draws it centred on the home). */
   screenOf(lat: number, lng: number): { x: number; y: number } | null {
-    if (!this.cam) return null;
-    const alt = this.elev ? sampleHeight(this.elev, lng, lat) + GEOID : 0;
-    const p = projectWith(cameraFrame(this.cam), this.viewport(), lat, lng, alt);
-    return p ? { x: p.x, y: p.y - FEATURED_GLYPH / 2 } : null;
+    const cam = this.liveCamera();
+    if (!cam) return null;
+    const e = homesEcef([lat], [lng], this.heightAt);
+    const vp = { ...this.view(), fov: cam.fov };
+    const p = { x: 0, y: 0, z: 0 };
+    return projectHome(cameraFrame(cam), vp, focalOf(vp), e, 0, p) ? { x: p.x, y: p.y } : null;
   }
 
   stats(): G3dStats {
@@ -886,20 +774,21 @@ export class G3dController {
       warmSteps: this.warmSteps,
       navToSteady: this.steadyAt === null ? null : Math.round(this.steadyAt),
       navToFirstMarker: this.firstMarkerAt === null ? null : Math.round(this.firstMarkerAt),
-      drawn: this.drawn.size,
+      drawn: this.layer?.drawnCount() ?? 0,
       planned: this.planned.length,
       lastPlanMs: this.lastPlanMs,
-      lastAddMs: this.lastAddMs,
+      lastAddMs: 0,
       flights: this.flights,
       flying: this.flying,
       steady: this.steadyNow,
-      busy: this.busy,
+      busy: false,
       shot: this.flown ?? this.shot,
       held: this.gate.held()?.shot ?? null,
       waits: this.waits,
       error: this.error,
       mode: this.el?.mode ?? null,
-      glyph: this.glyph.size,
+      glyph: this.layer ? Math.round(this.layer.glyph.core * 20) / 10 : 0,
+      layer: this.layer ? { frames: this.layer.cost.frames, maxMs: Math.round(this.layer.cost.maxMs * 100) / 100, meanMs: this.layer.cost.frames ? Math.round((this.layer.cost.totalMs / this.layer.cost.frames) * 1000) / 1000 : 0 } : null,
     };
   }
 

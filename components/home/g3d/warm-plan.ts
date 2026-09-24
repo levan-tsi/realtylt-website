@@ -77,3 +77,31 @@ export function warmPlan(o: { pageShots: readonly ShotName[]; initial: ShotName;
     backMs: numOr(q.get("warmBack"), undefined),
   };
 }
+
+// ---- the cover's hold on an early scroll (round 57.6) ---------------------------------------------
+//
+// The owner: "when you scroll down the real map shows up but sometimes it freezes". Round 57.5
+// measured it (docs/parity/DESIGN-ROUND57.md §4, item 9): a visitor who scrolled at 3, 4.5 or 6 s
+// lifted the cover and stopped the walk, and met the 236 to 257 ms shader compile on the flight to
+// Westchester. So an early scroll no longer lifts the cover or stops the path: the cover (now fixed
+// to the window while it holds) stays through the walk's compile flight, the map is set to the
+// visitor's own section under it, and it lifts onto that section once drawn. Bounded: the path's
+// own steps (at most 600 + 400 + 600 ms, the landing capped), then at most EARLY_BACK_MS for the
+// visitor's shot to draw. The jump walk (a phone: no stall to hide) is stopped, and the cover still
+// waits up to EARLY_BACK_MS for the visitor's shot, so the map is never shown undrawn.
+
+/** The longest the cover waits, after the walk, for the visitor's own section to be drawn. */
+export const EARLY_BACK_MS = 2000;
+
+/** What a scroll before the reveal does to the walk: a `path` walk (the compile) goes on under the
+ * cover; any other walk stops. */
+export function earlyScroll(mode: WarmPlan["mode"]): "hold" | "abort" {
+  return mode === "path" ? "hold" : "abort";
+}
+
+/** How long the walk's return waits for the shot the map goes back to (the page's, or the
+ * visitor's after an early scroll). */
+export function backWaitMs(o: { scrolled: boolean; backMs?: number }): number {
+  const back = o.backMs ?? 4000;
+  return o.scrolled ? Math.min(back, EARLY_BACK_MS) : back;
+}

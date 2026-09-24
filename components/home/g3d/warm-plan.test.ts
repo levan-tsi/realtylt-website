@@ -44,3 +44,26 @@ describe("the pre-warm plan", () => {
     expect(warmPlan({ pageShots, initial: "hero", narrow: false, q: q("warm=path&warmShots=highlands,nowhere,westchester") }).shots).toEqual(["highlands", "westchester"]);
   });
 });
+
+describe("the cover's hold on an early scroll (round 57.6)", () => {
+  it("holds the compile path under the cover and stops any other walk", async () => {
+    const { earlyScroll } = await import("./warm-plan");
+    expect(earlyScroll("path")).toBe("hold");
+    expect(earlyScroll("jump")).toBe("abort");
+    expect(earlyScroll("fly")).toBe("abort");
+  });
+  it("waits at most 2 s for the visitor's section after a scroll, the plan's own wait otherwise", async () => {
+    const { backWaitMs, EARLY_BACK_MS } = await import("./warm-plan");
+    expect(EARLY_BACK_MS).toBe(2000);
+    expect(backWaitMs({ scrolled: true, backMs: 2000 })).toBe(2000);
+    expect(backWaitMs({ scrolled: true })).toBe(2000);
+    expect(backWaitMs({ scrolled: false })).toBe(4000);
+    expect(backWaitMs({ scrolled: false, backMs: 2000 })).toBe(2000);
+  });
+  it("the whole hold after the map is first drawn is bounded: the path's steps plus the wait", async () => {
+    const { backWaitMs, PATH_SETTLE_MS, PATH_FLY_MS } = await import("./warm-plan");
+    const path = PATH_SETTLE_MS + PATH_FLY_MS + PATH_SETTLE_MS;
+    expect(path).toBe(1600);
+    expect(path + backWaitMs({ scrolled: true, backMs: 2000 })).toBeLessThanOrEqual(3600);
+  });
+});

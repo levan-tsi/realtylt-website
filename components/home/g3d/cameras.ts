@@ -204,6 +204,15 @@ export function lightGap(rangeMetres: number): number {
   return Math.round(Math.min(30, Math.max(14, 17 * Math.pow(rangeMetres / 25_000, 0.45))));
 }
 
+/** THE DENSITY-TRUE GAP (round 57.6, light-plan.ts planDensity): the planner now takes the homes in
+ * one random order until the ceiling, so where homes are denser more lights are drawn; this small
+ * gap only keeps two glows from standing on one another. A share of round 57.2's lattice gap (which
+ * set the spacing of the even lattice), chosen by frames side by side (scripts/_scratch-r57/6/thin/). */
+export const DENSITY_GAP_SHARE = 0.5;
+export function densityGap(rangeMetres: number): number {
+  return Math.round(lightGap(rangeMetres) * DENSITY_GAP_SHARE);
+}
+
 /** The county an area shot keeps its homes to (the others are not drawn there), or null. */
 export function focusOf(name: ShotName): string | null {
   return (AREA_COUNTY_OF as Partial<Record<ShotName, string>>)[name] ?? null;
