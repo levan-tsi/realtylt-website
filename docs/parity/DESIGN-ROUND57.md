@@ -760,3 +760,102 @@ scroll once top to bottom slowly, and either run the lag probe there (Node and P
 Mac) or leave the Claude-in-Chrome extension connected with that window in front so an in-page
 frame log can run. Twice: once as shipped, once with `?warm=full` (the old walk) to see whether
 the Mac has this stall at all.
+
+### Round 4, the orchestrator's verification (2026-09-23, HEAD `61f4d4a`, :3102 on `0b901fa`)
+
+Re-run, not read: tsc clean; vitest **1819 / 1819** (135 files); `/` answers 200; no extra
+worktree. The cold lag probe at 1440, my run on the shipped build: the flight to Westchester
+worst frame **27.9 ms, 0 over 34** (rounds 1 to 3: 236 to 278 every cold run); the Highlands
+69.6; the worst flight frame of the whole scroll 83.4 (the fling up); marker adds 518; first
+steady 7.5 s; the cover gone at 11.2 s (about a second later than before, as the builder said).
+The warm plan's two steps logged `ok:false` (their waits of 600 and 1,028 ms ran out before the
+map called itself steady) and the compile still happened, which is the point. The shader-compile
+diagnosis stands on the builder's profile experiments (the stall returns with Chrome's shader
+disk cache off, stays gone with the web cache deleted). Round 4 accepted.
+
+Carried to round 5: a visitor who scrolls under the cover in the first ~11 s stops the warm-up
+and may meet the freeze once (unmeasured); two of the builder's runs lost Google's script at
+load (the poster-stays path must hold); the MacBook stays unmeasured and needs the owner.
+
+### Round 5 brief (for builder 5): the fresh-eyes walkthrough on the real-map build
+
+The walkthrough that never ran. Move through the site as a visitor would, on a laptop (1440)
+and a phone (390), front to back, and fix what makes you hesitate; then the states nobody
+styled. Everything below is a defect list to close plus a sweep to run; each fix its own commit
+with the frame that shows it.
+
+A. Known defects (from rounds 1 to 4, all looked at by the orchestrator):
+1. The phone's tap label lands on the hero words (`scripts/_scratch-r57/3/lights/phone/
+   tap-1.png`): the label placement avoids the light, the logo corner and the header, not the
+   hero's text boxes. Make it avoid the words' boxes (flip below or beside; the `data-g3d-avoid`
+   idea already exists for the scroll cue), tested in `interaction.ts`.
+2. The county row's two clicks: today the first click holds the map and turns the count into
+   an underlined "See N homes", the second navigates. Decide on the running page: keep it with
+   a clearer affordance (the count reads as the link from the start, the row's name as the
+   flight), or make every click navigate and let hover or focus preview the flight. Whatever
+   you choose, a visitor must never click a row and see nothing happen.
+3. The label's anchor drifts from its light: about 8 px at the territory shot, about 30 px at
+   the featured rail (builder 3's report). Calibrate the projection against Google's drawn
+   positions (a marker's screen position can be read from a probe by pixel), or anchor the
+   label to the marker element's own box if maps 3.66 exposes it; the label must sit on its
+   light at every stop within 4 px.
+4. The hero words stand over the map during the 600 ms fly-in to a listing; fade them (and the
+   search control) over the first 200 ms so the dive is the picture; `motion-reduce` skips the
+   fly-in already.
+5. The town names' contrast is not measured; measure it with the kit at the chapters (4.5:1+
+   on the real pixels) and adjust the halo if needed.
+6. The 1440 hero's left scrim still reads as a soft column over New Jersey (builder 2's own
+   note: mean brightness 40 against 88 for the map): try a lighter shade on the count block
+   plus its own text-shadow, measured with the kit; the h1 does not need the shade the small
+   text needs.
+7. The phone's bottom edge shows a blue-grey glow under the Google logo (the foot shade over
+   the Atlantic's haze); make it read as the map's own atmosphere or shade it fully; frames.
+8. "Syracuse" at the phone's top edge under the header shade; harmless, but check it is dim
+   enough not to read as a claim; if not, one more degree of tilt or the header shade a touch
+   deeper at 390.
+
+B. The sweep (every item a frame or a number in the record):
+- Every page at 1440, 390 and 320: `/`, `/search` (list and map), a listing page, `/buying`,
+  `/selling`, `/financing`, `/home-value`, `/who-we-are`, `/connect`, `/plan`, `/reviews`,
+  `/blog` and one post, `/top-areas/<county>`, `/saved`, `/sitemap`, `/thank-you`; the day pages
+  must be byte-identical to a render from `main` at 1440 and 390 (explain any diff by live data).
+- Tab through the home page end to end: focus visible on every control (3:1+), no trap, the
+  order sensible, the featured cards fly the map and light their home, Escape hides the label,
+  the county rows reachable, the chat launcher reachable, the search suggest reachable.
+- The seams: home search to `/search` (the query carried, the map there as it was), a light's
+  click to the listing and back (the home page returns to the shot where it was, no double
+  map load: count the Maps script loads and `Map3DElement` constructions per navigation).
+- Slow network (Playwright `route` with a 3 s delay on the Maps script and on `/api/lights`):
+  the cover holds, the words read, nothing jumps (CLS measured), the lights arrive quietly.
+- Failed `/api/lights` (500 and a network abort): the map draws without lights, the copy still
+  reads honestly (the "every light" sentence must not lie when there are none: decide what the
+  caption says with 0 lights), no console error loop.
+- Failed map (`gmp-error` simulated, and the script blocked): the cover stays, the caption
+  makes no Google claim, the page scrolls and reads to the footer, the search works.
+- Empty and error states of the featured rails (0 listings, a failed fetch): the rail's own
+  empty state, no blank band.
+- 200 % zoom at 1440 (a 720 px effective viewport): no overflow, the words wrap, the map still
+  the ground, the labels placed or off.
+- Reduced motion: cuts, no flights, no fades that read as motion, the cover dissolve instant.
+- No JS: the cover carries the hero at both widths, the form is a plain GET, both rails render,
+  the footer reads.
+- No key (`NEXT_PUBLIC_HOME_MAP=night` or the key absent at build): the night flight returns
+  with its own copy (prove with one frame; a real build or the tested resolver plus a dev frame).
+- Every word of copy on the home page read aloud once: no em dashes, no arrow glyphs, no vendor
+  name beyond Google's own attribution, the count sentence true at 0 and at 15,000 lights, the
+  caption honest in every state.
+- The ledger re-run and written into the record: tsc, vitest, LCP and CLS at 1440 and 390
+  (production build), overflow at 1440/768/640/390/320, focus, tap targets, contrast at several
+  stops, no-JS, no WebGL, reduced motion, day pages byte-identical, the safety rules.
+
+Do not touch: CSP, `/search`'s own code, the covers' artwork, `lib/site.ts`, `Header.tsx`
+(except a focus-order fix if the sweep finds one, named in the commit).
+
+Added after round 4:
+9. The early scroll under the cover: measure a scroll at 3 s and at 6 s after navigation (cold,
+   1440): does the visitor meet the Westchester freeze once? If yes, decide by numbers: hold
+   the cover until the warm path completes (bounded, about 1.6 s more at worst) or let the
+   scroll lift it and accept one freeze; the cover must never hold past 14 s.
+10. Google's script failing to load (seen twice in round 4's runs): prove the poster-stays path
+    on a simulated failure (abort the script route on the first request only, then let it
+    through on reload), no console error loop, the caption honest.
