@@ -238,3 +238,133 @@ For two- to four-family buildings: New Rochelle, Mount Vernon, White Plains and 
 - Freddie Mac, [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms)
 
 Checked against these sources on September 24, 2026. Payments are computed with the standard 30-year amortization formula; taxes, insurance, mortgage insurance and rents are assumptions.`;
+
+export const ROI_CAP_RATE_POST = `Successful real estate investing is not about gut feelings or hot tips. It is about running the numbers before you fall in love with a building. Two metrics do most of the work: the capitalization rate, which judges the property, and the cash-on-cash return, which judges your deal. This guide shows how to calculate ROI and cap rate on an investment property, step by step, with a worked Poughkeepsie duplex example at 2026 rates.
+
+## Metric 1: the cap rate, the property's report card
+
+### What it tells you
+
+The capitalization rate measures a property's income relative to its price as if you paid cash. Because it ignores financing, it lets you compare a duplex in Poughkeepsie with a four-family in Kingston on the same footing.
+
+### How to calculate it
+
+**Step 1: potential gross income (PGI).** The rent if every unit were occupied all year. Two units at $2,100 a month: $2,100 x 2 x 12 = $50,400.
+
+**Step 2: net operating income (NOI).** Income after operating expenses:
+
+NOI = gross rental income + other income - vacancy - operating expenses
+
+Operating expenses **include**:
+
+- property taxes;
+- insurance (a landlord policy);
+- repairs and routine maintenance;
+- property management;
+- utilities the owner pays;
+- landscaping, snow removal, legal and accounting.
+
+They **exclude**:
+
+- the mortgage payment (a financing cost, not an operating cost);
+- capital expenditures such as a new roof or boiler (budget for them separately);
+- depreciation and income taxes, which belong to the owner, not the property.
+
+**Step 3: cap rate.**
+
+Cap rate = NOI / purchase price
+
+## Metric 2: cash-on-cash return, your return
+
+### What it tells you
+
+Cash-on-cash return measures the annual cash you receive against the cash you put in, including the effect of your loan. It answers: for every dollar I invest, how many cents come back each year?
+
+### How to calculate it
+
+**Step 1: annual cash flow.** Annual cash flow = NOI - annual debt service (twelve principal and interest payments).
+
+**Step 2: total cash invested.** Down payment + closing costs + any upfront renovation.
+
+**Step 3: cash-on-cash return.** Cash-on-cash = annual cash flow / total cash invested.
+
+## Worked example: a Poughkeepsie duplex
+
+Every input below is a stated assumption for illustration. The rent is set a little above HUD's fiscal 2026 two-bedroom Fair Market Rent of $1,979 for the Kiryas Joel-Poughkeepsie-Newburgh metro area ([HUD USER](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3602799999)). The rate is an assumed 7.5% for an investment loan, above the 7.03% survey average for all 30-year loans on September 24, 2026 ([Freddie Mac PMMS](https://www.freddiemac.com/pmms)).
+
+### The inputs
+
+- **Price:** $550,000.
+- **Down payment:** 25%, the Fannie Mae minimum for a two-unit investment property ([Fannie Mae Eligibility Matrix](https://www.fanniemae.com/content/eligibility_information/eligibility-matrix.pdf)): $137,500. Loan $412,500.
+- **Closing costs:** $16,500.
+- **Rent:** $2,100 per unit per month.
+- **Vacancy:** 5%.
+- **Property taxes:** $15,000 a year (check the real bill; it varies widely by municipality).
+- **Insurance:** $2,000 a year.
+- **Repairs:** 5% of collected rent. **Management:** 8% of collected rent.
+
+### The cap rate
+
+- Potential gross income: $50,400
+- Less vacancy (5%): $2,520
+- Effective gross income: $47,880
+- Less taxes $15,000, insurance $2,000, repairs $2,394, management $3,830: $23,224
+- **NOI: $24,656**
+- **Cap rate: $24,656 / $550,000 = 4.48%**
+
+### The cash-on-cash return
+
+- Monthly principal and interest on $412,500 at 7.5% for 30 years: $2,884; annual debt service $34,611
+- **Annual cash flow: $24,656 - $34,611 = minus $9,955**
+- Cash invested: $137,500 + $16,500 = $154,000
+- **Cash-on-cash return: minus 6.46%**
+
+The numbers just did their job: they show this deal loses about $830 a month at this price and these terms. They also tell you what would have to change. At the same NOI, a 6% cap rate would mean a price near $411,000; alternatively the rent would need to be higher, or the costs lower.
+
+## What is a good number?
+
+There is no universal answer. Cap rates reflect risk and location: lower in high-demand, low-risk places, higher where risk is higher. The useful comparison is the cap rate on recent sales of similar properties in the same town, which your agent can assemble, and the return you could earn elsewhere for the same risk. For cash-on-cash, set a personal target that pays you for the work and risk of being a landlord, and remember that financing terms, self-management or a larger down payment change it on the same building.
+
+## What the two metrics leave out
+
+Real estate returns come from four places:
+
+1. **Cash flow,** measured above.
+2. **Appreciation,** uncertain and realized only when you sell or refinance.
+3. **Mortgage paydown.** In the example, about $3,803 of the first year's payments reduces the loan balance even though cash flow is negative.
+4. **Tax treatment.** Operating expenses and mortgage interest are deductible against rental income, and residential rental buildings (not land) are depreciated over 27.5 years ([IRS Publication 527](https://www.irs.gov/publications/p527)). Depreciation is a non-cash deduction that can reduce taxable rental income, and it is generally recaptured when you sell.
+
+Use these metrics on every deal before you make an offer. For the wider buying plan, read [how to buy your first rental property in the Hudson Valley](/blog/how-to-buy-your-first-rental-property-in-the-hudson-valley) and [house hacking in the Hudson Valley](/blog/house-hacking-hudson-valley-ny); to see listings to analyze, use our [home search](/search) or [talk with us](/connect).
+
+This article is general information, not financial or tax advice.
+
+## Frequently asked questions
+
+### What is the difference between ROI and cap rate?
+
+ROI is a general term for return on investment. The cap rate is a specific measure of a property's income against its price as if bought with cash; cash-on-cash return is a specific measure of your annual cash flow against the cash you actually invested.
+
+### How do you calculate net operating income?
+
+Gross rental income plus other income, minus vacancy, minus operating expenses such as taxes, insurance, repairs, management and owner-paid utilities. It excludes the mortgage, capital expenditures, depreciation and income taxes.
+
+### Does the cap rate include the mortgage?
+
+No. The cap rate deliberately ignores financing so properties can be compared on the same basis.
+
+### What is a good cap rate in the Hudson Valley?
+
+It depends on the town, the property and the risk. Compare with cap rates on recent sales of similar properties nearby and with your alternatives, rather than relying on a single rule of thumb.
+
+### Is cash-on-cash return the same as ROI?
+
+It is one kind of ROI: annual pre-tax cash flow divided by the cash you invested, which makes it the most direct measure of what your money earns each year.
+
+## Sources
+
+- HUD USER, [FY2026 Fair Market Rents, Kiryas Joel-Poughkeepsie-Newburgh](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3602799999)
+- Freddie Mac, [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms)
+- Fannie Mae, [Eligibility Matrix](https://www.fanniemae.com/content/eligibility_information/eligibility-matrix.pdf)
+- IRS, [Publication 527, residential rental property](https://www.irs.gov/publications/p527)
+
+Checked against these sources on September 24, 2026. All example figures are assumptions; results are computed with the standard amortization formula.`;

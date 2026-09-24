@@ -40,7 +40,7 @@ import {
   REAL_ESTATE_ATTORNEY_POST,
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
-import { FIRST_RENTAL_POST, HOUSE_HACKING_POST } from "./investing-posts";
+import { FIRST_RENTAL_POST, HOUSE_HACKING_POST, ROI_CAP_RATE_POST } from "./investing-posts";
 import {
   FSBO_VS_AGENT_POST,
   SELLER_DISCLOSURE_POST,
@@ -664,6 +664,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "calculate-roi-cap-rate-investment-property-ny",
+    cluster: "investing",
+    title: "How to Calculate ROI & Cap Rate on Investment Property",
+    seoTitle: "How to Calculate ROI and Cap Rate on NY Investment Property",
+    /** Investing #3, reposted 2026-09-24. Slug = the CRM drip link (day 260) and the draft's;
+     * the drip doc's alternate redirects here. */
+    date: "2025-11-12",
+    updated: "2026-09-24",
+    excerpt:
+      "Cap rate judges the property, cash-on-cash return judges your deal. The formulas step by step, and a worked Poughkeepsie duplex at 2026 rents and rates that shows why the math matters.",
+    seoDescription:
+      "How to calculate ROI and cap rate on an investment property in NY: NOI, cap rate and cash-on-cash formulas with a worked Poughkeepsie duplex at 2026 rates.",
+    cover: "/images/editorial/adding-machine.jpg",
+    body: [],
+    placeholder: false,
+    markdown: ROI_CAP_RATE_POST,
+    aliases: ["how-to-calculate-roi-and-cap-rate"],
   },
   {
     slug: "house-hacking-hudson-valley-ny",
