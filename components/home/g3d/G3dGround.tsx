@@ -488,8 +488,16 @@ export function G3dGround({
     ctl.current?.flyToShot(name);
   }, []);
 
+  const wordsTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const apply = useCallback(() => {
     wordBoxes.current = null;
+    // Round 57.6: the words' line boxes are read once the scroll rests (the label needs them), not
+    // inside the first pointer frame after it (measured: that frame cost 9.7 ms, every other one
+    // under 1 ms, scripts/_scratch-r57f-hovercost.mjs).
+    clearTimeout(wordsTimer.current);
+    wordsTimer.current = setTimeout(() => {
+      wordBoxes.current ??= readWordBoxes({ width: window.innerWidth, height: window.innerHeight });
+    }, 180);
     placeScrims();
     showTerritoryRef.current();
     // The places move with the words only while they are shown (the phone's list scrolls over them).
@@ -708,6 +716,9 @@ export function G3dGround({
         syncClaims();
         setError(m);
         setPosterGone(false);
+        // Our lights stand on Google's map; without it they would float on black below the cover.
+        c.layer?.stop();
+        if (lightCanvas.current) lightCanvas.current.style.visibility = "hidden";
         showTerritoryRef.current();
         console.warn("[g3d]", m);
       },

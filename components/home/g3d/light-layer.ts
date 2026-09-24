@@ -214,6 +214,9 @@ export class LightLayer {
       const sig = this.sig();
       if (sig === this.lastSig) return;
       this.lastSig = sig;
+      // This frame's drawing is done (a cut's plan, set in the same task, is in it too): the
+      // animation frame need not draw it again (reduced motion: one draw per cut).
+      this.dirty = false;
       this.draw();
     });
   };
