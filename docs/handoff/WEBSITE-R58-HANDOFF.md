@@ -138,3 +138,19 @@ before starting.
 Also done 2026-09-24 outside the map: Rachel's line (914) 506-5884 is the visitor-facing
 number everywhere and the CRM line (914) 875-2424 only on /connect (`299f011`); consent-mode
 defaults and Do Not Track for the analytics, with the policy updated (`5b3a9c6`).
+
+### 8a. The blog repost ran the same day (2026-09-24 afternoon, in parallel by his order)
+
+Done on branch `content/blog-repost-0924` (worktree `C:\Users\Levan\realtylt-website-blog`, 37
+commits on top of `2c90117`, verified by the orchestrator: tsc clean, vitest 2110, every post
+rendered at 1440 and 390, the SEO check 35 of 35): all 35 Drive drafts reposted (10 buyer, 5
+seller, 10 investing, 5 homeownership, 5 moving), every claim sourced or removed, dates spread
+(each post's reason in `docs/handoff/BLOG-REPOST-URLS-2026-09-24.md` on that branch), 29 of the
+34 Sell 24 slugs answering 200 at their exact old slug, 39 old stub slugs redirecting (308).
+Still 404, no draft exists: `when-to-sell-house-hudson-valley`, `how-to-price-home-hudson-valley`,
+`home-staging-tips-highest-roi`, `seller-closing-costs-new-york-state-guide`,
+`high-roi-renovations-new-york` (five new articles for the next blog session). The pipeline is
+`docs/blog-repost/PIPELINE.md` on that branch. MERGE into `design/futuristic-r53` after round 13
+lands (the orchestrator does it), then remove the blog worktree. Known: the template gives cover
+and card photos empty alt text (pre-existing); the cover photos are the template's stock set,
+not chosen per topic (a polish item).
