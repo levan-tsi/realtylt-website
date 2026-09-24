@@ -84,7 +84,7 @@ describe("the /connect modal is wired into the page where the copy invites it", 
     );
     expect(line).toContain("Call or text");
     expect(line).toContain("and we&rsquo;ll find a time");
-    expect(line, "the words that name the action must BE the call control").toContain("SITE.phoneHref");
+    expect(line, "the words that name the action must BE the call control").toContain("SITE.connectPhoneHref");
   });
 });
 

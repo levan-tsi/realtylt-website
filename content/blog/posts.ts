@@ -96,7 +96,7 @@ export interface BlogPost {
 const PLACEHOLDER_BODY = (topic: string): string[] => [
   `[Placeholder draft. The owner's final article replaces this text.]`,
   `This post will cover ${topic} for Hudson Valley homeowners and buyers, written from local experience across Dutchess, Westchester, Putnam, Rockland, Ulster and Orange counties.`,
-  `In the meantime, if this topic is on your mind, call us at (914) 875-2424 or send a message from any page, and we're happy to talk it through, seven days a week.`,
+  `In the meantime, if this topic is on your mind, call us at (914) 506-5884 or send a message from any page, and we're happy to talk it through, seven days a week.`,
 ];
 
 /* NOTE ON ORDER: this array is authored NEWEST-FIRST, and lib/blog's merge relies on the

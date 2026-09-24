@@ -11,11 +11,17 @@ export const SITE = {
     region: "NY",
     postalCode: "12540",
   },
-  // The CRM's own line (2026-09-22, owner's order): texts and calls land in app.realtylt.com and
-  // forward to him. The old Twilio number (917) 905-7923 is retired from every visitor-facing surface.
-  phone: "(914) 875-2424",
-  phoneHref: "tel:+19148752424",
-  phoneE164: "+19148752424",
+  // THE MAIN NUMBER (owner's order 2026-09-24): Rachel's line, (914) 506-5884, everywhere a visitor
+  // sees a number (header, footer, every page and message), so a direct call reaches the AI
+  // assistant, who answers and books. The CRM's own line, (914) 875-2424, forwards to him and stays
+  // ONLY on /connect (`connectPhone` below), where a visitor books a time or calls him. The old
+  // Twilio number (917) 905-7923 stays retired from every visitor-facing surface.
+  phone: "(914) 506-5884",
+  phoneHref: "tel:+19145065884",
+  phoneE164: "+19145065884",
+  connectPhone: "(914) 875-2424",
+  connectPhoneHref: "tel:+19148752424",
+  connectPhoneE164: "+19148752424",
   email: "levan@realtylt.com",
   /** The general inbox shown beside the phone in the header (owner's order 2026-09-22). Proven to
    * deliver into levan@realtylt.com the same day (test token RLT-0922-A7 landed in his inbox). */

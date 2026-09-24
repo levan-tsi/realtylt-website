@@ -135,9 +135,9 @@ export default function ConnectPage() {
 
             <address className="mt-8 not-italic">
               <ContactRow
-                href={SITE.phoneHref}
+                href={SITE.connectPhoneHref}
                 label="Call or text"
-                value={SITE.phone}
+                value={SITE.connectPhone}
                 gaCategory="Phone"
                 gaLabel="connect-top"
                 icon={PHONE_ICON}
@@ -183,7 +183,7 @@ export default function ConnectPage() {
               <p className="t-small max-w-[46ch] text-stone">
                 Would rather not pick a slot?{" "}
                 <a
-                  href={SITE.phoneHref}
+                  href={SITE.connectPhoneHref}
                   className="inline-flex min-h-6 items-center font-bold text-ink underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
                 >
                   Call or text
