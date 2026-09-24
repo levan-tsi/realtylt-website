@@ -1637,3 +1637,78 @@ POSITION in the list, so when the hourly sync adds a listing the page lights dif
 and the cover drifts (diff rose to 8.0 within an hour). Round 10 orders by listing id in
 `light-plan.ts` (stable across syncs; only the new and gone homes change) and the handoff
 records the cover re-render (`scripts/make-map-cover.mjs`) as a release step.
+
+## 8. The owner's third verdict (2026-09-24, verbatim), the evidence, and round 11
+
+> "When you start on the page, it still loads with really, really bad quality, and then it
+> loads and it becomes better, but it still needs a lot of polish and work, and maybe
+> transitions need some work too. Also when you go up and down it's kind of a quality and then
+> it loads; it has to be really really good, amazing quality, or maybe we shouldn't do a
+> realistic map and instead do a regular Google map showing things in a different way, I'm not
+> sure. It zooms in and it's not good in the beginning, then it loads, it's better, but it's
+> still like we're looking from up and buildings and blocks look like bad quality lines. I'm
+> not sure how to approach it, more wow effect; maybe make it as our search map, but I don't
+> want two similar maps. I want that wow effect with transitions and a real map, but keep the
+> balance that it's not low quality lines, or at least fast loading. Brainstorm on those and
+> fix it up somehow; maybe a better definition of the map, or zoom closer so it's not low
+> quality pixelated lines."
+
+**The evidence (orchestrator, same build, `scripts/_scratch-r57/orch-closer/`).** Google's 3D
+imagery has real detail only close in: at the Westchester chapter's 48 km (`9/final/
+westchester-county-1440.png`) the moonlit land is near black and the roads are grey lines,
+"bad quality lines" as he says; the same place at 8 km and tilt 62 (`cam_westchester-county_
+8000_62_250`) is a sharp moonlit photograph of the Hudson shore and the town, and at
+`night=0` a sharp daylight one. So the "quality" he wants is a matter of ALTITUDE, not of the
+map: the chapters and counties sit at 30 to 90 km where the imagery is coarse, and the night
+grade's contrast makes the coarseness read as lines. The cost of going close, measured cold:
+the tiles took 5.8 to 12.6 s to settle at 8 km and 18 s at 3 km (48 km: 3.7 s), so closer
+shots must be pre-warmed under the cover or their arrival designed into the transition.
+
+**The options weighed:**
+1. Closer cameras on the real map (his own suggestion): the chapters and the counties at 4 to
+   12 km where the photograph is real, the territory shot alone stays high (its picture is our
+   lights and names). Keeps the wow and the real map; costs tile time on every flight unless
+   pre-warmed and hidden.
+2. A regular Google vector map in a dark style, tilted (crisp at every altitude, light tiles,
+   dark mode by a cloud style): fast and never pixelated, but not a photograph, and it needs the
+   owner's map ID; a second map in the search map's family, which he does not want.
+3. Both: the vector map for the high and county views, the photographic 3D for the close ones:
+   two map loads and two languages on one page; rejected for complexity and cost.
+4. Soften the grade (less contrast) so the coarse altitudes read as haze rather than lines: a
+   palliative, not the fix.
+
+**The decision: option 1 with the transition designed around the tiles**, on top of round 10's
+sharpness work. The flight IS the transition: as a flight starts the imagery dims toward the
+lights (the veil deepens), the lights carry the picture across, the camera lands, and the
+photograph fades in only when its tiles are sharp (round 10's metric), so no visitor ever sees
+tiles filling in; the chapters pre-warm under the cover within a budget. If round 11's frames
+and numbers do not reach "amazing" on the running build, option 2 is the fallback and needs
+his map ID first.
+
+### Round 11 brief (for builder 11): closer, and the flight as the transition
+
+1. **Re-compose every chapter and county shot close**, 4 to 12 km, tilt 55 to 66, over a
+   signature place with homes in view: Dutchess at the Poughkeepsie riverfront and the Walkway;
+   the Highlands at Cold Spring and Storm King; Westchester at the Tappan Zee from Tarrytown;
+   Ulster at Kingston's Rondout; Orange at Newburgh's waterfront; Putnam at Cold Spring or
+   Carmel; Rockland at Nyack; the five boroughs each at 4 to 8 km over a lit neighbourhood; the
+   harbour at 6 km over the Upper Bay. Frames at 1440 and 390 for each, night and `?night=0`,
+   chosen by eye; the lights' counts at those ranges reported (the close ceilings apply). The
+   territory shot stays as it is.
+2. **The flight as the transition.** On flight start the map's veil deepens (over 300 ms) so
+   the streaming imagery is nearly invisible and the lights carry the picture; on landing the
+   veil lifts to the grade only when the landed frame is sharp (round 10's metric; bounded at
+   2.5 s, then lift anyway); `motion-reduce` = cut with the same rule. Frames of one flight
+   at 0, 300, 1200, 2400 ms and landing plus 500 ms.
+3. **Pre-warm under the cover**: the first two chapters' tiles within round 10's budget; the
+   rest arrive behind the veil. Measured cold: the time from landing to sharp for every stop.
+4. **Cost**: closer tiles are heavier; the lag probe cold x3 at 1440 and cold x2 at 390: the
+   Westchester flight under 60 ms, the worst flight frame under 140 ms, boot unchanged; if a
+   close shot breaks that on this laptop, pull it back until it holds and say so.
+5. **The grade at close range**: check the moonlight on sharp imagery at three close stops
+   (it read well at 8 km in the orchestrator's frame); adjust only if frames say so.
+
+Gates: frames at every stop both widths night and day; the transition frames; landing-to-sharp
+times; the lag table; the contrast kit (0 at 390, the two pills at 1440); tsc; vitest only up
+(the shot table, the veil rule); overflow at 1440/390/320; the ladder rule (`cameras.ts`)
+re-examined for the new ranges with numbers.
