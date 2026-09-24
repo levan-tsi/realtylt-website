@@ -116,3 +116,125 @@ Many owners do, to learn the business and keep the cash flow. Hire a manager whe
 - New York Attorney General, [residential tenants' rights guide](https://ag.ny.gov/publications/residential-tenants-rights-guide); New York Real Property Law [238-a](https://www.nysenate.gov/legislation/laws/RPP/238-A)
 
 Checked against these sources on September 24, 2026. The worked example uses stated assumptions; payments are computed with the standard 30-year amortization formula.`;
+
+export const HOUSE_HACKING_POST = `In one of the most expensive regions in the country, what if tenants paid a large share of your housing cost? That is the idea behind house hacking: buy a property with more than one unit, live in one, and rent the others. This guide explains house hacking in the Hudson Valley, with Westchester as the example: how the financing works, where the right buildings are, what the numbers look like at 2026 rates, and the risks.
+
+## What house hacking is
+
+You buy a two- to four-unit building (or a single-family home with a legal rental unit), live in one unit as your home, and rent the rest. The rent offsets part, sometimes all, of your mortgage payment. It is a long-term strategy, not a flip, and because you live on site it is a lower-risk way to learn to be a landlord.
+
+## Why it works: four ways it builds wealth
+
+- **Lower housing cost.** Tenant rent reduces what you pay each month, freeing money to save or invest.
+- **Equity on a larger asset.** Part of each payment, funded partly by rent, pays down the loan, and you own the whole building's appreciation, not just one unit's.
+- **Cash flow later.** When you eventually move out and rent your own unit too, the building can become a full rental.
+- **Tax treatment.** Rental income is reported on Schedule E, and expenses for the rental portion, such as a share of mortgage interest, taxes, insurance, repairs and depreciation, can be deductible ([IRS Publication 527](https://www.irs.gov/publications/p527)). Ask a tax professional how to allocate them.
+
+## The financing advantage: owner-occupant loans
+
+Investors buying a two- to four-unit building usually need 25% down. Living in one unit changes that:
+
+- **FHA:** 3.5% down on a two- to four-unit home you occupy ([HUD](https://answers.hud.gov/FHA/s/article/What-is-the-minimum-down-payment-requirement-for-FHA)), with FHA mortgage insurance. For three and four units, the projected rent must pass HUD's self-sufficiency test.
+- **Conventional:** since late 2023 Fannie Mae allows up to 95% financing (5% down) on a two- to four-unit principal residence purchase ([Fannie Mae](https://singlefamily.fanniemae.com/media/36841/display)), with private mortgage insurance that can later be removed.
+
+You must genuinely live there. FHA, for example, requires the borrower to move in within 60 days and occupy the home for at least one year ([HUD](https://www.hud.gov/sites/documents/4155-1_4_secb.pdf)).
+
+### Higher loan limits in Westchester
+
+In high-cost areas, conforming loan limits are higher, and they rise with the number of units. In the Federal Housing Finance Agency's 2026 county list, Westchester, Putnam, Rockland and the five boroughs have these one- to four-unit limits ([FHFA](https://www.fhfa.gov/data/conforming-loan-limit)):
+
+- **one unit:** $1,209,750;
+- **two units:** $1,548,975;
+- **three units:** $1,872,225;
+- **four units:** $2,326,875.
+
+Dutchess, Orange and Ulster use the national baseline, $832,750 for one unit. Higher limits mean a larger multi-family can still be financed as a conforming loan.
+
+## Where to house hack
+
+### Classic two- to four-family buildings
+
+Southern Westchester cities such as New Rochelle, Mount Vernon, White Plains and Yonkers have many older two- to four-family homes, often near Metro-North, which renters value. Further north, Poughkeepsie, Newburgh, Kingston and Beacon also have multi-family stock. Search them on our [home search](/search).
+
+### A single-family with a legal accessory unit
+
+In towns dominated by single-family homes, the version is a house with a legal accessory apartment: a basement unit with its own entrance, or an apartment over a garage. Here the goal is usually to subsidize a more expensive home rather than live free.
+
+**Check legality first.** Whether you can rent part of a single-family home depends on local zoning and the building's certificate of occupancy, which vary by town and village. Confirm with the building department before you buy.
+
+## The numbers at 2026 rates
+
+Freddie Mac's survey put the average 30-year fixed rate at 7.03% on September 24, 2026 ([Freddie Mac PMMS](https://www.freddiemac.com/pmms)). Taxes, insurance, mortgage insurance and rents below are stated assumptions for illustration; use real figures for any property you consider.
+
+### Example 1: a two-family in southern Westchester
+
+- **Price:** $850,000, 5% down ($42,500), loan $807,500.
+- **Principal and interest at 7.03%:** about $5,389 a month.
+- **Property taxes (assumed):** $1,990 a month.
+- **Insurance (assumed):** $250.
+- **Private mortgage insurance (assumed):** $400.
+- **Total monthly cost:** about $8,029.
+- **Rent from the second unit (assumed):** $3,400.
+- **Your net housing cost:** about $4,629 a month.
+
+Not free, but you are living in your own unit and building equity on an $850,000 building for a net cost that may compare with renting a similar apartment nearby.
+
+### Example 2: a larger single-family with a legal suite
+
+- **Price:** $1,500,000, 20% down ($300,000), loan $1,200,000 (within Westchester's one-unit limit).
+- **Principal and interest at 7.03%:** about $8,008 a month.
+- **Taxes and insurance (assumed):** $2,900.
+- **Total:** about $10,908.
+- **Rent from the suite (assumed):** $2,500.
+- **Your net housing cost:** about $8,408, roughly 23% less.
+
+## Risks to take seriously
+
+- **Upfront cash.** Even 5% down on $850,000 is $42,500, before closing costs; see [buyer closing costs in New York](/blog/buyer-closing-costs-new-york).
+- **Competition.** Good two- to four-family buildings near transit attract experienced investors.
+- **Being a landlord.** Screening, leases, repairs and New York's tenant protections are real work. Our guide to [finding and screening tenants in New York](/blog/how-to-find-screen-tenants-ny) covers the rules.
+- **Vacancy.** If the unit is empty you pay the whole payment, about $8,000 a month in Example 1. Lenders also require reserves: Fannie Mae requires six months for a two- to four-unit principal residence loan run through Desktop Underwriter ([Fannie Mae Selling Guide B3-4.1-01](https://selling-guide.fanniemae.com/sel/b3-4.1-01/minimum-reserve-requirements)), and six months of the full payment in Example 1 is about $48,000.
+
+## Your five-step plan
+
+1. **Strengthen your finances:** credit, debts, down payment and reserves.
+2. **Get pre-approved** with a lender experienced in two- to four-unit owner-occupied loans and high-balance limits; see [what lenders look for](/blog/mortgage-pre-approval-requirements-ny).
+3. **Work with an agent** who analyzes income properties and knows where the multi-family stock is.
+4. **Analyze every deal:** full payment, realistic rent, vacancy and maintenance reserves. Our guide to [ROI and cap rate](/blog/calculate-roi-cap-rate-investment-property-ny) explains the metrics.
+5. **Offer, inspect and screen:** a competitive offer, thorough due diligence including leases and the certificate of occupancy, then careful tenant screening.
+
+Ready to explore it? See [how to buy your first rental property](/blog/how-to-buy-your-first-rental-property-in-the-hudson-valley) for the wider plan, or [talk with us](/connect).
+
+This article is general information, not financial, tax or legal advice.
+
+## Frequently asked questions
+
+### Is house hacking legal in Westchester County?
+
+Buying a legal two- to four-family home, living in one unit and renting the others is legal. Renting part of a single-family home depends on local zoning and the certificate of occupancy, which differ by town and village, so verify before you buy.
+
+### How do you finance a multi-family home in New York with a small down payment?
+
+Live in it. Owner-occupants can use FHA loans with 3.5% down or conventional loans with 5% down on two- to four-unit homes, subject to credit, income and reserve requirements.
+
+### Do I have to report the rental income?
+
+Yes. Rental income goes on Schedule E, and expenses for the rental portion can be deducted under IRS rules. Work with a tax professional.
+
+### Can I move out after a year?
+
+Owner-occupant loans require you to occupy the home as your principal residence; FHA, for example, requires at least one year. After meeting your loan's requirements you can generally move and rent your former unit, which turns the building into a full rental.
+
+### What are the best places to house hack in the Hudson Valley?
+
+For two- to four-family buildings: New Rochelle, Mount Vernon, White Plains and Yonkers in Westchester, and cities such as Poughkeepsie, Newburgh, Kingston and Beacon further north. For accessory-unit hacks, any town where zoning allows a legal second unit.
+
+## Sources
+
+- IRS, [Publication 527, residential rental property](https://www.irs.gov/publications/p527)
+- HUD, [FHA minimum down payment](https://answers.hud.gov/FHA/s/article/What-is-the-minimum-down-payment-requirement-for-FHA) and [owner occupancy requirements](https://www.hud.gov/sites/documents/4155-1_4_secb.pdf)
+- Fannie Mae, [2023 update allowing 95% financing on two- to four-unit principal residences](https://singlefamily.fanniemae.com/media/36841/display) and [Selling Guide B3-4.1-01](https://selling-guide.fanniemae.com/sel/b3-4.1-01/minimum-reserve-requirements)
+- Federal Housing Finance Agency, [2026 conforming loan limits by county](https://www.fhfa.gov/data/conforming-loan-limit)
+- Freddie Mac, [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms)
+
+Checked against these sources on September 24, 2026. Payments are computed with the standard 30-year amortization formula; taxes, insurance, mortgage insurance and rents are assumptions.`;

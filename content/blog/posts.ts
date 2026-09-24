@@ -40,7 +40,7 @@ import {
   REAL_ESTATE_ATTORNEY_POST,
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
-import { FIRST_RENTAL_POST } from "./investing-posts";
+import { FIRST_RENTAL_POST, HOUSE_HACKING_POST } from "./investing-posts";
 import {
   FSBO_VS_AGENT_POST,
   SELLER_DISCLOSURE_POST,
@@ -664,6 +664,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "house-hacking-hudson-valley-ny",
+    cluster: "investing",
+    title: "'House Hacking' 101: How to Live for Free in the Hudson Valley",
+    seoTitle: "House Hacking in the Hudson Valley, NY: A 2026 Guide",
+    /** Investing #2, reposted 2026-09-24. Slug = the CRM drip link (day 246); the draft's own
+     * Westchester slug and the drip doc's alternate redirect here. */
+    date: "2025-10-15",
+    updated: "2026-09-24",
+    excerpt:
+      "Buy a two- to four-family, live in one unit, rent the rest. The owner-occupant loans that make it work, the 2026 Westchester loan limits, real numbers at today's rates, and the risks.",
+    seoDescription:
+      "House hacking in the Hudson Valley, NY: 3.5% and 5% down owner-occupant loans, 2026 Westchester loan limits, worked examples at 2026 rates and the risks.",
+    cover: "/images/counties/westchester.jpg",
+    body: [],
+    placeholder: false,
+    markdown: HOUSE_HACKING_POST,
+    aliases: ["house-hacking-westchester-county-ny", "house-hacking-101-hudson-valley"],
   },
   {
     slug: "how-to-buy-your-first-rental-property-in-the-hudson-valley",

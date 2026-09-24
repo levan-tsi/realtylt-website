@@ -62,7 +62,6 @@ const PENDING_CRM = new Set<string>([
   "packing-tips-hacks-for-moving",
   "ultimate-8-week-moving-checklist",
   "how-to-hire-local-movers-ny",
-  "house-hacking-hudson-valley-ny",
   "calculate-roi-cap-rate-investment-property-ny",
   "multi-family-vs-single-family-investing-ny",
   "brrrr-method-hudson-valley",
@@ -83,7 +82,6 @@ const PENDING_LINK_TARGETS = new Set<string>([
   "calculate-roi-cap-rate-investment-property-ny",
   "how-to-find-screen-tenants-ny",
   "hiring-property-management-company-hudson-valley",
-  "house-hacking-hudson-valley-ny",
 ]);
 
 const LIVE = new Set(POSTS.map((p) => p.slug));
