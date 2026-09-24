@@ -40,7 +40,12 @@ import {
   REAL_ESTATE_ATTORNEY_POST,
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
-import { SELLER_DISCLOSURE_POST, SELLER_INSPECTION_PREP_POST, SELLING_TIMELINE_POST } from "./seller-posts";
+import {
+  SELLER_DISCLOSURE_POST,
+  SELLER_INSPECTION_PREP_POST,
+  SELLER_MISTAKES_POST,
+  SELLING_TIMELINE_POST,
+} from "./seller-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -657,6 +662,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "common-home-seller-mistakes-hudson-valley",
+    cluster: "selling",
+    title: "Common Mistakes Hudson Valley Home Sellers Make (And How to Avoid Them)",
+    seoTitle: "Common Home Seller Mistakes in the Hudson Valley, NY",
+    /** Seller Education #8, reposted 2026-09-24. Slug = the CRM drip link (day 106) and the
+     * draft's; the drip doc's alternate redirects here. */
+    date: "2026-02-02",
+    updated: "2026-09-24",
+    excerpt:
+      "Overpricing, a poor first impression, weak photos, the septic, well and permit surprises specific to the Hudson Valley, and the 2024 disclosure change, with the fix for each.",
+    seoDescription:
+      "Common home seller mistakes in the Hudson Valley, NY: overpricing, weak photos, septic, well and permit surprises, disclosure errors, and how to avoid them.",
+    cover: "/images/listings/house-08.jpg",
+    body: [],
+    placeholder: false,
+    markdown: SELLER_MISTAKES_POST,
+    aliases: ["common-mistakes-hudson-valley-home-sellers-make"],
   },
   {
     slug: "seller-guide-prepare-home-inspection",

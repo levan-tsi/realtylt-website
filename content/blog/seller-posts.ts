@@ -367,3 +367,111 @@ Often a credit. It closes the issue, lets the buyer pick the contractor, and avo
 - New York State Bar Association, [Property Condition Disclosure Act amendments](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)
 
 Checked against these sources on September 24, 2026.`;
+
+export const SELLER_MISTAKES_POST = `When you sell a home, the biggest financial risks often come not from the market but from a handful of avoidable mistakes that cost time, money and leverage. After working with sellers from Rhinebeck to Hastings-on-Hudson, we see the same ones again and again. These are the most common home seller mistakes in the Hudson Valley, including three that are specific to this region, and how to avoid each.
+
+## Mistake 1: Pricing on emotion
+
+### The pitfall
+
+Pricing from memories, from what you paid, from what the kitchen cost, or from what you need to net for your next home. Buyers and their agents compare your house with what similar homes have actually sold for, and they filter searches by price. An overpriced listing loses its most valuable weeks, the first few after it goes live, when attention is highest. As days on market add up, buyers start asking what is wrong with it, and a later price cut invites lower offers.
+
+### The fix: a comparative market analysis
+
+Base the price on data:
+
+- **recent sales** of truly similar homes nearby, the most important evidence;
+- **pending sales,** which show where the market is heading;
+- **active competition,** the homes buyers will compare yours with this week.
+
+Then adjust for size, condition, updates and location. Pricing correctly from day one is how you attract the most buyers and the strongest offers. Start with our [home value page](/home-value).
+
+## Mistake 2: Neglecting the first impression
+
+### The pitfall
+
+The first showing happens online, on the first photo. Peeling paint, an overgrown yard or a cluttered porch sets a negative frame that the rest of the visit has to fight, and buyers who start by looking for problems tend to find them.
+
+### The fix: inexpensive curb appeal
+
+- **Paint** the front door, trim and shutters where they need it.
+- **Tidy the landscaping:** mow and edge, weed, trim shrubs, fresh mulch.
+- **Power wash** siding, walkways, the driveway and the deck.
+- **Small updates:** house numbers, the mailbox and exterior light fixtures.
+
+Our [selling page](/selling) explains how we prepare and present homes, inside and out.
+
+## Mistake 3: Skimping on photography
+
+### The pitfall
+
+Almost every buyer's search starts online. Dark, tilted phone photos make buyers scroll past a house that would impress them in person.
+
+### The fix
+
+Insist on a professional real estate photographer who knows lighting, lenses and composition, plus a floor plan and, where it helps, video. Ask any agent you interview what their marketing includes; the answer tells you how seriously they will market your home.
+
+## Mistake 4: Ignoring the Hudson Valley's "big three"
+
+Septic systems, private wells and old unpermitted renovations delay or unravel more Hudson Valley sales than almost anything else. Deal with them before you list.
+
+### The septic system
+
+Many homes in Dutchess, Putnam, Ulster and northern Westchester are on septic rather than public sewer, and buyers routinely order a septic inspection. A failing system discovered while you are under contract becomes a major repair credit or a lost buyer. The EPA's guidance is to have a household system inspected about every three years and pumped generally every three to five years ([EPA](https://www.epa.gov/septic/how-care-your-septic-system)). Have yours pumped and inspected before you list and keep the report for buyers.
+
+### The well
+
+If your home has a private well, test it before you list. In Westchester County it is not optional: the county's Private Well Water Testing Law requires testing of private drinking water wells when a property is sold or leased, for a defined list of contaminants including coliform bacteria, nitrate, arsenic and lead, by a laboratory registered with the county ([Westchester County Department of Health](https://health.westchestergov.com/images/stories/pdfs/PrivateWellWaterTestLawQA.pdf)). Elsewhere, buyers and some lenders will ask for a test anyway. Use a laboratory certified by the Department of Health's Environmental Laboratory Approval Program ([NYSDOH](https://www.health.ny.gov/environmental/water/drinking/regulations/fact_sheets/fs3_water_quality.htm)). Finding a problem such as bacteria before listing gives you time to treat it on your own schedule.
+
+### Certificates of occupancy
+
+Decks added in the 1980s, basements finished in the 1990s, an attic bathroom: work done without permits and without a certificate of occupancy (or certificate of compliance) from the town tends to surface when the buyer's attorney and title company review municipal records, and it can hold up the buyer's loan. Before listing, ask your town or village building department for your property's file, compare it with the house as it stands, and start legalizing any gaps early; it can take time.
+
+## Mistake 5: Mishandling the property condition disclosure
+
+Since March 20, 2024 New York sellers of most one- to four-family homes must complete the Property Condition Disclosure Statement and deliver it before the buyer signs a contract. The old $500 credit alternative is gone, and the form grew from 49 to 56 questions, adding flood history and flood insurance ([New York State Bar Association](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)). Answer from actual knowledge, use "unknown" honestly where it applies, and complete it with your attorney. The septic, well and permit work above is also how you learn the answers. Our guide to [seller disclosures in New York](/blog/seller-disclosure-requirements-new-york) goes further.
+
+## The biggest gamble: selling it yourself
+
+Some sellers try to save commission by selling without an agent. According to the National Association of REALTORS 2025 Profile of Home Buyers and Sellers, only 5% of homes sold that way, an all-time low, and the median FSBO home sold for $360,000 against $425,000 for agent-assisted homes ([NAR](https://www.nar.realtor/magazine/real-estate-news/fsbos-reach-all-time-low-more-sellers-rely-on-agents)). The homes in the two groups are not identical, so the gap is not all due to representation, but it is large enough to take seriously, especially since an unrepresented seller negotiates against a professional on the buyer's side. We compare the options honestly in [For Sale By Owner vs using an agent in New York](/blog/fsbo-vs-agent-new-york-guide).
+
+## Your roadmap to a mistake-free sale
+
+1. **Assemble your team:** an agent who knows your town and a real estate attorney.
+2. **Audit before you list:** septic, well, certificates of occupancy, and a pre-listing inspection if the house is older. See our [seller's guide to preparing for the home inspection](/blog/seller-guide-prepare-home-inspection).
+3. **Present it well:** repairs, curb appeal, staging and professional photography.
+4. **Price from the data and negotiate calmly:** vet buyers' financing, and handle inspection and appraisal issues without emotion.
+
+For the full sequence, read our [timeline for selling a house in New York](/blog/timeline-selling-a-house-ny), or [talk with us](/connect) about your property.
+
+## Frequently asked questions
+
+### What is the biggest mistake a home seller can make?
+
+Overpricing. It wastes the first weeks on the market, when buyer interest is highest, and usually ends in price cuts and weaker offers.
+
+### Do I need to test my well before selling in New York?
+
+In Westchester County, yes: the county's well testing law applies when a property with a private well is sold or leased. Elsewhere it is not a statewide rule, but buyers and lenders commonly ask, so testing before listing is wise.
+
+### Why does unpermitted work matter when selling?
+
+It shows up in municipal and title searches, can hold up the buyer's mortgage, and may have to be legalized before closing. Checking your certificates of occupancy before listing avoids a late surprise.
+
+### Can I still give a $500 credit instead of the disclosure form?
+
+No. Since March 20, 2024 the credit option is gone, and sellers of most one- to four-family homes must complete the Property Condition Disclosure Statement.
+
+### Should I be home during showings?
+
+Generally no. Buyers look longer and talk more freely when the owner is out.
+
+## Sources
+
+- U.S. Environmental Protection Agency, [septic system care](https://www.epa.gov/septic/how-care-your-septic-system)
+- Westchester County Department of Health, [Private Well Water Testing Law questions and answers](https://health.westchestergov.com/images/stories/pdfs/PrivateWellWaterTestLawQA.pdf)
+- NYS Department of Health, [private well water testing](https://www.health.ny.gov/environmental/water/drinking/regulations/fact_sheets/fs3_water_quality.htm)
+- New York State Bar Association, [Property Condition Disclosure Act amendments](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)
+- National Association of REALTORS, [FSBOs reach all-time low](https://www.nar.realtor/magazine/real-estate-news/fsbos-reach-all-time-low-more-sellers-rely-on-agents)
+
+Checked against these sources on September 24, 2026 (NAR figures from its 2025 Profile).`;
