@@ -8,15 +8,17 @@ import type { MapPin } from "@/lib/idx/types";
 import { shotPosition, shotStops, withTail, type ShotSection, type ShotStop } from "../night/driver";
 import { loadElevation } from "../night/elevation";
 import { townSearchHref } from "../night/lights";
-import { AREA_COUNTY_OF, AREA_FLIGHT, type AreaShot, type ShotName } from "../night/shots";
+import { AREA_COUNTY_OF, type AreaShot, type ShotName } from "../night/shots";
 import { boxUVToLngLat } from "../night/world";
 import { G3dController, type FeaturedHome, type Homes } from "./controller";
 import { nearestLight } from "./thinning";
 import { TERRITORY_LABELS, googleBoxes, labelItems, placeLabels, type Box } from "./labels";
 import { TOWN_LABELS, townsOf } from "./towns";
-import { focusOf } from "./cameras";
+import { focusOf, isNarrow } from "./cameras";
+import { warmPlan } from "./warm-plan";
 import type { MapCamera } from "./camera";
 import { mapIdFrom, modeChoice, type ModeChoice } from "./map-options";
+import { camOverrides, durOverrides } from "./lab-query";
 import { FEATURED_GLYPH } from "./glyph";
 import { cameraShowing, clickAction, labelContent, openPoint, placeHoverLabel, tapNext, type LabelContent, type Rect, type TapState } from "./interaction";
 
@@ -581,20 +583,27 @@ export function G3dGround({
     // walk takes 20 to 30 s even on a warm profile (each shot 1.4 to 2.1 s to draw) and leaves the
     // flights' hitches where they were; ONE shot, the first the reader flies to, takes 2 to 4 s and
     // removes the cold first flight's 300 ms stall. So the budget is 1.5 s: the walk visits the next
-    // shot and stops. `?warm=0|lite|full|fly` and `?warmBudget=` are the lab's switches (lite: the
-    // six chapters and the first two counties; fly: flown in 400 ms instead of set).
+    // shot and stops. Round 57.4 (warm-plan.ts): on a wide window the walk instead flies the
+    // Highlands-to-Westchester path once, which compiles the GPU shader behind that flight's 236 ms
+    // stall; the phone keeps the one-shot jump. The lab's switches are listed in warm-plan.ts.
     const q = new URLSearchParams(window.location.search);
-    const warmQ = q.get("warm") ?? "full";
     const pageShots = [...new Set(names.current)].filter((n) => n !== initial);
-    const warm = warmQ === "0" ? [] : warmQ === "lite" ? pageShots.filter((n) => !isArea(n) || AREA_FLIGHT.indexOf(n) < 2) : pageShots;
+    const plan = warmPlan({ pageShots, initial, narrow: isNarrow({ width: window.innerWidth }), q });
     const c = new G3dController({
       key,
       reduced,
       viewport: () => ({ width: window.innerWidth, height: window.innerHeight }),
       initial,
-      warm,
-      warmMode: warmQ === "fly" ? "fly" : "jump",
-      warmBudgetMs: Number(q.get("warmBudget") ?? 1500),
+      warm: plan.shots,
+      warmMode: plan.mode,
+      warmFlyMs: plan.flyMs,
+      warmSettleMs: plan.settleMs,
+      warmBackMs: plan.backMs,
+      warmOpen: plan.open,
+      warmBudgetMs: plan.budgetMs,
+      camOverride: camOverrides(q.get("cam")),
+      durOverride: durOverrides(q.get("dur")),
+      legs: Number(q.get("legs") ?? 1),
       holdFlights: q.get("gate") === "1",
       maxWaitMs: Number(q.get("maxWait") ?? 1200),
       flightMs: (q.get("flight") ?? "1600,2600").split(",").map(Number) as unknown as readonly [number, number],

@@ -153,7 +153,15 @@ export class G3dController {
        * for the map to be drawn there; `fly` flies there in 400 ms (the path's tiles too) and waits
        * the same way. The walk stops at `warmBudgetMs` wherever it is. */
       warm: readonly ShotName[];
-      warmMode: "jump" | "fly";
+      warmMode: "jump" | "fly" | "path";
+      warmFlyMs?: number;
+      /** The longest a walk step waits for the map to be drawn there (default 4 s). */
+      warmSettleMs?: number;
+      /** The longest the walk's return to the page's shot waits for it to be drawn (default 4 s). */
+      warmBackMs?: number;
+      /** Open the map at the walk's first shot instead of the page's (the walk then starts where
+       * the map first drew, and the page's shot is drawn once, on the way back). */
+      warmOpen?: boolean;
       warmBudgetMs: number;
       /** Hold section changes until the map is steady and not flying (gate.ts). Measured in phase 1b
        * (DESIGN-ROUND56.md §8): holding made the map trail the page by 1 to 2 s (up to 5 s) and did
@@ -171,6 +179,12 @@ export class G3dController {
       mapId?: string | null;
       /** HYBRID, SATELLITE, or HYBRID at the territory shot only (map-options.ts). */
       mode?: ModeChoice;
+      /** Round 57.4's lab switches for the Westchester stall experiments (G3dGround reads them from
+       * the query): a shot's camera changed in range / tilt / heading, a shot's flight duration,
+       * and every section flight flown in two legs through the geometric-mean camera. */
+      camOverride?: Partial<Record<ShotName, Partial<Pick<G3dCamera, "range" | "tilt" | "heading">>>>;
+      durOverride?: Partial<Record<ShotName, number>>;
+      legs?: number;
     },
   ) {
     this.gate = new FlightGate<FlightJob>(opts.maxWaitMs);
@@ -191,9 +205,10 @@ export class G3dController {
     // The map opens on the page's own shot, under our poster (G3dGround): there is no intro flight
     // any more, because under the poster nobody would see it and it was one more flight of tiles
     // streaming during motion. The poster dissolves when the map is drawn at this camera.
-    const open = this.cameraOf(this.opts.initial);
     let el = singleton;
     const reused = !!el;
+    const openShot = !reused && this.opts.warmOpen && this.opts.warm.length ? this.opts.warm[0] : this.opts.initial;
+    const open = this.cameraOf(openShot);
     if (!el) {
       el = new this.lib.Map3DElement({
         center: open.center,
@@ -201,7 +216,7 @@ export class G3dController {
         tilt: open.tilt,
         heading: open.heading,
         fov: open.fov,
-        mode: this.modeOf(this.opts.initial),
+        mode: this.modeOf(openShot),
         gestureHandling: "COOPERATIVE",
         defaultUIHidden: true,
         description: this.opts.description,
@@ -330,7 +345,7 @@ export class G3dController {
     });
   }
 
-  private landed(): Promise<void> {
+  private landed(maxMs = 1200): Promise<void> {
     return new Promise((resolve) => {
       const el = this.el!;
       const done = () => {
@@ -341,7 +356,7 @@ export class G3dController {
       };
       el.addEventListener("gmp-animationend", done);
       this.wake = done;
-      const cap = setTimeout(done, 1200);
+      const cap = setTimeout(done, maxMs);
     });
   }
 
@@ -349,18 +364,23 @@ export class G3dController {
     this.warming = true;
     const t0 = performance.now();
     performance.mark("g3d:warm-start");
-    for (const name of this.opts.warm) {
+    for (const [k, name] of this.opts.warm.entries()) {
       if (this.warmAbort || this.stopped || performance.now() - t0 > this.opts.warmBudgetMs) break;
       const s0 = performance.now();
       const c = this.cameraOf(name);
-      if (this.opts.warmMode === "fly") {
-        this.el!.flyCameraTo({ endCamera: { center: c.center, range: c.range, tilt: c.tilt, heading: c.heading, fov: c.fov }, durationMillis: 400 });
+      // `path`: the first shot is set, each next one FLOWN as the page flies it (its own duration,
+      // or `warmFlyMs`), so the walk takes the page's own paths (round 57.4, experiment d).
+      const path = this.opts.warmMode === "path" && k > 0;
+      if (this.opts.warmMode === "path") this.setMode(name);
+      if (this.opts.warmMode === "fly" || path) {
+        const dur = path ? (this.opts.warmFlyMs ?? flightMillis(this.cam ?? c, c, this.opts.flightMs[0], this.opts.flightMs[1])) : 400;
+        this.el!.flyCameraTo({ endCamera: { center: c.center, range: c.range, tilt: c.tilt, heading: c.heading, fov: c.fov }, durationMillis: dur });
         this.cam = c;
-        await this.landed();
+        await this.landed(dur + 800);
       } else {
         this.jump(c);
       }
-      const ok = this.warmAbort ? false : await this.settle(4000);
+      const ok = this.warmAbort ? false : await this.settle(this.opts.warmSettleMs ?? 4000);
       this.warmSteps.push({ shot: name, ms: Math.round(performance.now() - s0), ok });
     }
     if (this.stopped) return;
@@ -368,7 +388,7 @@ export class G3dController {
     this.at = this.goingTo = this.shot ?? this.opts.initial;
     this.setMode(this.at);
     this.jump(this.cameraOf(this.at));
-    if (!this.warmAbort) await this.settle(4000);
+    if (!this.warmAbort) await this.settle(this.opts.warmBackMs ?? 4000);
     this.warmMs = Math.round(performance.now() - t0);
     performance.mark("g3d:warm-end");
     this.warming = false;
@@ -377,12 +397,20 @@ export class G3dController {
   }
 
   private onAnimationEnd = () => {
+    const leg = this.nextLeg;
+    if (leg && this.flying && this.el) {
+      this.nextLeg = null;
+      this.el.flyCameraTo(leg);
+      return;
+    }
     if (this.flying) this.land();
   };
 
   cameraOf(name: ShotName): G3dCamera {
     const { width, height } = this.opts.viewport();
-    return cameraFor(name, width / Math.max(1, height), { firstStep: this.opts.firstStep });
+    const c = cameraFor(name, width / Math.max(1, height), { firstStep: this.opts.firstStep });
+    const o = this.opts.camOverride?.[name];
+    return o ? { ...c, ...o } : c;
   }
 
   /** The page's shot the map is holding still at, or null (flying, not shown yet, or at a camera of
@@ -465,7 +493,8 @@ export class G3dController {
     if (job.shot) this.flown = job.shot;
     this.goingTo = job.shot;
     this.setMode(job.shot);
-    this.fly(job.cam, job.ms);
+    const over = job.shot ? this.opts.durOverride?.[job.shot] : undefined;
+    this.fly(job.cam, job.ms ?? over, !!job.shot && (this.opts.legs ?? 1) > 1);
   }
 
   private modeOf(shot: ShotName | null): MapMode {
@@ -490,11 +519,15 @@ export class G3dController {
     el.fov = c.fov;
   }
 
-  private fly(target: G3dCamera, ms?: number) {
+  /** The second leg of a two-leg flight, flown when the first lands (the `legs` lab switch). */
+  private nextLeg: { endCamera: object; durationMillis: number } | null = null;
+
+  private fly(target: G3dCamera, ms?: number, twoLegs = false) {
     const el = this.el;
     if (!el) return;
     const from = this.cam ?? target;
     this.cam = target;
+    this.nextLeg = null;
     this.cancelJob();
     this.flights++;
     this.flying = true;
@@ -508,7 +541,13 @@ export class G3dController {
       return;
     }
     const dur = ms ?? flightMillis(from, target, this.opts.flightMs[0], this.opts.flightMs[1]);
-    el.flyCameraTo({ endCamera: { center: target.center, range: target.range, tilt: target.tilt, heading: target.heading, fov: target.fov }, durationMillis: dur });
+    const end = { center: target.center, range: target.range, tilt: target.tilt, heading: target.heading, fov: target.fov };
+    if (twoLegs) {
+      const m = midCamera(from, target);
+      const half = Math.round(dur / 2);
+      this.nextLeg = { endCamera: end, durationMillis: dur - half };
+      el.flyCameraTo({ endCamera: { center: m.center, range: m.range, tilt: m.tilt, heading: m.heading, fov: m.fov }, durationMillis: half });
+    } else el.flyCameraTo({ endCamera: end, durationMillis: dur });
     // gmp-animationend is the landing; this is the net under it (an interrupted flight may not
     // report one).
     this.landTimer = setTimeout(() => this.flying && this.land(), dur + 500);
@@ -850,6 +889,19 @@ export class G3dController {
   camera(): MapCamera | null {
     return this.cam;
   }
+}
+
+/** Halfway between two cameras: the centre's midpoint, the geometric mean of the ranges, the mean
+ * tilt, fov and (the short way round) heading. */
+export function midCamera(a: G3dCamera, b: G3dCamera): G3dCamera {
+  const dh = ((((b.heading - a.heading) % 360) + 540) % 360) - 180;
+  return {
+    center: { lat: (a.center.lat + b.center.lat) / 2, lng: (a.center.lng + b.center.lng) / 2, altitude: 0 },
+    range: Math.round(Math.sqrt(Math.max(1, a.range) * Math.max(1, b.range))),
+    tilt: (a.tilt + b.tilt) / 2,
+    heading: (((a.heading + dh / 2) % 360) + 360) % 360,
+    fov: (a.fov + b.fov) / 2,
+  };
 }
 
 export function sameCamera(a: MapCamera | null, b: MapCamera): boolean {
