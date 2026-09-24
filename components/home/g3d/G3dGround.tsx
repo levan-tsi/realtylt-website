@@ -1108,7 +1108,11 @@ export function G3dGround({
   return (
     <AreaContext.Provider value={{ current, point }}>
       <div className="pointer-events-none fixed inset-0 z-0" data-g3d-ground data-g3d-error={error ?? undefined}>
-        <div ref={host} className="absolute inset-0" />
+        {/* inert (round 57.5, the sweep's Tab walk): the map element and the controls inside its shadow
+            took four Tab stops between the header and the hero's search, with no visible focus. The
+            map takes no pointer and is not a control here; the featured cards are the keyboard's
+            path to its lights. */}
+        <div ref={host} className="absolute inset-0" inert />
         {look === "veil" ? (
           <div ref={scrimLayer} aria-hidden className="absolute inset-0" style={{ background: `rgba(0,0,0,${veil})`, ...mask }} />
         ) : (
