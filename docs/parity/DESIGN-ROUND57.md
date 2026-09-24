@@ -1294,3 +1294,80 @@ lights sit under the words; Google's names are gone with SATELLITE (`?mode=split
 territory shot's back); the MacBook is unmeasured; the map ID for a Google style is the owner's
 to create. Nothing pushed; `main` untouched. The successor brief is
 `docs/handoff/WEBSITE-R58-HANDOFF.md`.
+
+## 7. The owner's second verdict (2026-09-24, verbatim, after the night build), and rounds 8 to 10
+
+First words on opening it: "what happened to the map, it completely degraded, quality went to
+shit, no transitions or proper map or lights." Then, a minute later: "no, it got fixed, maybe it
+needed loading, it's better; but the map has way less lights than there are listings and it
+should be more, and on zoom in zoom out it should balance it out how much it shows; and maybe
+work on the map, make graphics better but don't slow it down; maybe that low quality was a
+loading thing or it just froze, not sure; no, I think it's a loading thing, just refreshed and
+it's bad quality till it loads; and work on the map, maybe a little darker with moonlight or
+something and these lights light it up; and in cities it should be a little more, as listings,
+but don't put them too close so people can move the mouse and see the listing and differentiate
+from each other, but make a feeling that these houses kind of light up the neighbourhood; and
+work on it a few more rounds and make it faster somehow so it does not load with shit quality."
+
+Read as orders:
+1. **Many more lights**, balanced by altitude (zoom in and out), never too close for the mouse.
+2. **The lights light up the neighbourhood**: a glow that reads as houses lighting their streets.
+3. **Darker, moonlit map**, graphics better, no slower.
+4. **The load**: what he saw for the first seconds read as degraded quality and a freeze; make
+   it faster and never show low quality.
+
+### Round 8 brief (for builder 8): the lights, many and alive
+
+1. **Counts.** Today: 130 at the territory shot (1440), 72 (390), 245 to 380 at the chapters and
+   cities, against 15,689 listings. Raise them until the map reads as the market, by frames: the
+   territory shot several times today's count, the chapters and cities as many as the GAP allows.
+   The gap is the rule that keeps the mouse honest: the round-3 hit test is a 14 px radius, so
+   two lights closer than about 16 px on screen cannot both be picked; the on-screen gap floor
+   is therefore about 16 px at the chapters and cities at 1440 (tune 14 to 20 by a hover probe
+   that must resolve 50 of 50 pointer positions to one light), about 12 px at the territory
+   shot, about 14 px on the phone (a finger). Density-true stays: denser where the homes are.
+2. **Balance across zoom, continuous and stable.** The count follows the range as a smooth
+   function (not tiers that jump), and the CHOICE is stable: a fixed priority order (a hash of
+   the listing id, or price) so that coming down adds lights around the ones already lit and
+   going up removes the latest, never a reshuffle; tested. The tier easing of round 6 stays.
+3. **The neighbourhood glow.** Each light: a small bright warm core and a wide, soft, warm halo
+   drawn additively at low alpha (0.08 to 0.18), its radius by tier, so that where homes cluster
+   the halos overlap into a warm neighbourhood glow while every light still reads on its own;
+   no blob (frames at three halo strengths at the territory, Westchester and Queens, both widths,
+   the owner's sentence is the bar). The hovered or focused light's halo swells.
+4. **Cost.** More lights with a two-part glyph: draw from offscreen sprites (`drawImage`), the
+   halos at half resolution if needed; the layer's per-frame cost under 2 ms at 1440 at the
+   fullest stop and under 1 ms on the phone, measured on camera events during flights; the lag
+   table cold x3 at 1440 and cold x2 at 390 must hold round 7's numbers (Westchester under 60
+   ms, worst flight frame under 140 ms); boot unchanged.
+5. **The caption** stays true ("every light is a home"); the "15,689 homes" count stays.
+
+Gates: frames at every stop both widths with the counts per stop; the hover probe (50 of 50
+resolve to one light at Queens 1440, 30 of 30 taps at 390); the lag table; the contrast kit
+(the words sit over more lights now: 0 under the floor at 390, the two pills at 1440); tsc;
+vitest only up (the count function, the stable choice, the gap); overflow at 1440/390/320.
+Do not touch: the grade (round 9), the cover (round 9), the load (round 10), CSP, `/search`.
+
+### Round 9 brief (for builder 9): moonlight
+
+The night grade darker with a moonlit cast: cool silver-blue in the highlights, blue-black in
+the shadows, the water with a faint sheen, the land readable as terrain; the warm lights and
+their halos are the only warmth, so they read as houses lighting their streets. Measured free
+of frame cost (a filter, as round 6's). The cover re-rendered in exactly this look, and better:
+moonlit relief from our elevation data, the coastline and the sea beyond our grid drawn from a
+coastline rather than flat, the same lights at the same places; the cover-vs-first-frame diff
+reported. Frames at three cast strengths at four stops both widths first; the contrast kit; the
+owner's taste reference is realtylt.com/ai (black and one glow).
+
+### Round 10 brief (for builder 10): the load, fast and never ugly
+
+Measure what a visitor SEES in the first fifteen seconds, cold, both widths, no scroll and a
+scroll at 3 s: a frame every 250 ms, and a sharpness number for the map canvas (Google's tiles
+arrive low-resolution first). Name the ugly stretch: the cover, the reveal onto soft tiles, or
+the first flights' tile pop. Then fix by numbers: reveal only when the territory tiles are
+sharp (a sharpness threshold, not just `gmp-steadychange`); under the cover, pre-warm the first
+three shots when the tile arrival is fast enough (measured, budgeted, never past 14 s); a hold
+must never read as a freeze (the cover's lights breathe softly, or the cover drifts a few px,
+so something moves while it holds); shave the boot's critical path where it is ours (script
+order, preloads, `fetchPriority`, the lights fetch in parallel with the map). Report the
+first-steady, reveal and sharp-reveal times before and after, both widths.
