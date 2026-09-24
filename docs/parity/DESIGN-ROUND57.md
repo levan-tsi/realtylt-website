@@ -1886,3 +1886,165 @@ quarter-second freeze later; tested; the phone unchanged.
 Addendum to the round 11 brief: item 0 above; and `tilesQuiet` (300 ms with no tile, at least
 250 ms after the cut) is the "landed frame is sharp" signal for the flight-as-transition rule,
 with Google's steady event or a floor beside it on a view the map has not drawn yet.
+
+### Round 11, the builder's numbers (commits `d7aee95` `2cc88a5` `990f216` `8975c6a`; for the orchestrator to re-run)
+
+Production build on :3102 (the code of `8975c6a`), headed Chrome, cold = a fresh profile per run.
+**The line was slow all round**: Google's first draw came at 8.4 to 13.9 s at 1440 (once 20 s) and
+6.2 to 21 s on the phone, so every comparison below is an interleaved pair on the same line and
+every table row gives its first draw. Instruments (gitignored): `scripts/_scratch-r57j-compose.mjs`
+(cut the camera to a candidate at a stop, the page's words over it), `-gen1/-gen2/-plan.mjs`
+(candidates from a subject, a heading and where the subject stands across the frame), `-frames.mjs`
+(round 1's, waiting for the veil to lift), `-transition.mjs`, `-reduced.mjs`, `-landing.mjs` (landing
+to sharp, round 10's Laplacian ratio on the map alone), `-landing2.mjs` (every tile's arrival and the
+sharpness every ~450 ms after each landing), `-lag.mjs` (round 10's), `-sum2.mjs` (the section pass
+and the flings apart), `-contrast.mjs`. Outputs under `scripts/_scratch-r57/11/`.
+
+**0. The cap rule** (`d7aee95`; counted from the walk's start in `2cc88a5`). `coverCap(walkStart) =
+max(14 s, walkStart + WALK_ROOM_MS)`, the room now 3.4 s (the laptop's walk is three steps, below).
+The first build counted from the first draw and skipped the walk by 3 ms (lag `a1-desk`: first draw
+12.76 s, `warmSteps []`); counted from the walk's start it runs whatever the draw. Measured on the
+slow line, final build: first draw **12.16 s and 11.67 s** (both past round 10's 11.4 s limit), the
+walk ran all three steps (628 / 1020 / 1021 and 619 / 1016 / 1020 ms), its compile flight made 250 ms
+under the cover, and the page's Westchester flight was **34.6 and 34.8 ms** (the orchestrator's round
+10 run on the same kind of line: 250 ms). The price: the cover goes 3.1 to 3.2 s after the first draw.
+
+**1. The close shots** (`2cc88a5`; cameras.ts TUNED and SIGNATURE; candidates in `11/compose1`,
+`compose2`, `compose2p`, sheets `11/sheet1a..d.png`, `sheet2w.png`, `sheet2p.png`). Two or three
+candidates a shot at 1440 and one at 390 (the phone's words cover most of its frame, so its subject
+stands in the middle, fov 58), chosen by eye:
+
+| stop | place | range, tilt, heading | lights 1440 / 390 |
+|---|---|---|---|
+| dutchess | Poughkeepsie and the Walkway, looking up the river | 8 km, 60, 5 | 165 / 158 |
+| highlands | the gorge at Cold Spring under Storm King, looking south | 12 km, 60, 190 | 231 / 100 |
+| westchester | the Tappan Zee from Tarrytown | 12 km, 60, 265 | 333 / 117 |
+| ulster | Kingston and the Rondout, looking west | 8 km, 60, 270 | 112 / 88 |
+| dutchess-county | Poughkeepsie with both bridges, looking east | 7 km, 60, 80 | 213 / 136 |
+| orange | Newburgh's waterfront | 7 km, 60, 270 | 212 / 158 |
+| putnam | Carmel on Lake Gleneida (Cold Spring is the Highlands' and had 46 lights) | 9 km, 58, 0 | 120 / 59 |
+| rockland | Nyack with the bridge and Hook Mountain | 8 km, 60, 320 | 369 / 134 |
+| westchester-county | New Rochelle on the Sound (the Tappan Zee is Rockland's and the chapter's; the Sound had 372 lights against 27) | 7 km, 60, 30 | 372 / 171 |
+| bronx | the Grand Concourse and Yankee Stadium up to Fordham | 6 km, 60, 20 | 283 / 147 |
+| manhattan | Central Park and Midtown up to Harlem | 6 km, 60, 30 | 144 / 119 |
+| queens | Flushing Meadows and Flushing | 6 km, 60, 20 | 799 / 248 |
+| brooklyn | Prospect Park and Park Slope | 6 km, 60, 340 | 107 / 59 |
+| staten-island | St. George and the harbour | 7 km, 58, 350 | 60 / 25 |
+| harbour | the Upper Bay | 6 km, 60, 40 | 268 / 168 |
+
+The territory (145 km; 445 lights at 1440, 238 at 390) and the tail (60 km under the footer's 0.86
+veil; 531 / 324) are unchanged. The counts are what the close ceilings and the gap yield (nothing in
+the light layer changed); a close shot shows one town's homes, not the county's shape (Ulster 112 of
+755, Staten Island 60 of 105). The towns: Westchester names New Rochelle instead of Peekskill; every
+other signature place is already one of our names (Kingston, Poughkeepsie, Newburgh, Carmel, Nyack,
+Fordham, Harlem and Midtown, Flushing, Park Slope, St. George). Frames at every stop, both widths,
+night and `?night=0`: `11/final/{night,day}/`, sheets `11/final/sheet-{1440,390}-{night,day}.png`.
+Described: at 1440 every county is a moonlit photograph right of the list (Newburgh's street grid
+and waterfront, the Bronx's blocks along the Harlem River, Queens' lights over Flushing Meadows'
+lake), the lights on real streets; the Highlands and Westchester chapters sit under their cards and
+show at the edges; on the phone the words and their shades cover most of each frame as before and
+the imagery shows between them.
+
+**The ladder, re-examined** (cameras.test.ts). The close shots sit within 1.5x of each other (6 to
+12 km), so `MAX_RANGE_RATIO` 2 binds nowhere between them; `MAX_TILT_STEP` 15 holds everywhere (58 to
+60 among the close, 55 at the hero, 48 at the tail). The two altitude steps (hero -> Dutchess 145 ->
+8 km, 18x; harbour -> tail 6 -> 60 km, 10x) are exempt and flown under the veil; the old rule would
+have pulled Dutchess to 72.5 km and the harbour to 30 km. Measured: the hero -> Dutchess flight's
+worst frame 55.6 to 83.5 ms cold at 1440 (lag e, f, g, fin), 83 to 90 on the phone. Round 57's
+`?ladder=first` is removed. **Pulled back**: the Highlands and Westchester chapters to 12 km (they are
+under cards): the flight between them at 8 to 9 km made 97.1 / 55.4 / 104.1 ms, at 12 km 41.7 / 69.5
+/ 34.8 (lag f, interleaved pairs, same walk).
+
+**The stall moved, and the walk moved with it.** At the close cameras the one-time stall (a GPU
+compile: gone on a warm profile, lag `c3-warmB` worst 111 against 361 on the same profile cold) came
+on the page's first flight into the counties, **236 to 299 ms in 4 of 4** default runs (lag b, c). By
+experiment: flying Highlands -> Westchester -> Ulster under the cover compiles it (257 to 389 ms
+under the cover, every run) and the page's first county flight is then 55 to 97 ms; Westchester ->
+Ulster alone left it (285, 299); Dutchess -> Highlands -> Ulster left it (298, 236; its walk flight
+made 21 to 28 ms, no compile). So `STALL_PATH` is Highlands -> Westchester -> Ulster. Pre-warm (item
+3): the laptop's walk visits the second and third chapters (the Highlands, Westchester) and Ulster,
+the phone's the first two (Dutchess, the Highlands); each step's settle is bounded (600 ms laptop;
+1.2 s phone, `8975c6a`: at 4 s the phone's cover held 5.33 s after the first draw, at 1.2 s 2.95 /
+2.90 s with the same 90 ms flights, lag p). A close shot's tiles stream for 3 to 12 s on this line,
+so the walk starts them and does not finish them: the rest arrive behind the veil. Dutchess, the
+first chapter, is not in the laptop's walk (a fourth step would add ~1 s of cover); its first flight
+measured 55.6 to 83.5 ms and it lifted at 0.92 (below).
+
+**2. The flight as the transition** (`990f216`, flight-veil.ts, 6 tests). Veil 0.82 black over the
+graded map, under our lights, masked clear of Google's logo; in 300 ms ease-out at every flight's
+start, out in 700 ms ease in-out when the landed frame is sharp, at most 2.5 s after the landing.
+The rule was measured (`landing2`, 16 cold landings, tile arrivals and sharpness every ~450 ms): a new
+view's first tiles come 300 to 900 ms after the landing, so round 10's 300 ms quiet fired over maps
+at 0.05 to 0.6 of settled 4 times in 16; 500 ms once (0.22); **800 ms never**. A 1.2 s floor with a
+300 ms quiet (the first build) lifted the Westchester chapter at **0.09**. Google's steady came after
+none of the landings in one 1440 run and after 11 of 16 on the phone. So: a view drawn sharp before
+lifts on the 300 ms quiet, a new one on steady with the 300 ms quiet or on an 800 ms quiet, else at
+2.5 s. Depth 0.82 against 0.7 by frames (`11/transition/` first build, `cmp-veil.png`): at 0.7 the
+blurred fill reads as texture. Frames of one flight, final build (each screenshot costs 0.2 to 0.3 s,
+so the times given are the actual ones): `11/transition/hero-dutchess-1440-sheet.png` at 25 / 476 /
+1216 / 2409 ms and landing + 500 (3108 ms), the veil 0.02 / 0.82 / 0.82 / 0.82 / 0.82, lifted 2.51 s
+after the landing (cap); `orange-putnam-1440-sheet.png` (29 / 463 / 1212 / 2415 / 2821 ms, lifted by
+the cap); `hero-dutchess-390-sheet.png` (lifted by quiet 1.05 s after the landing). Mid-flight the map
+is near black and the homes fly across; after the lift Poughkeepsie's bridges and streets are sharp.
+Reduced motion (`-reduced.mjs`, three cuts): the veil goes on 158 to 173 ms after the scroll with no
+transition (1e-5 s) and off at 2.50 to 2.51 s.
+
+**3. Landing to sharp, every stop, cold** (`11/landing/fin-desk`, `fin-phone`; the ratio is the map's
+sharpness in the frame the visitor sees 700 ms after the lift, against the same shot settled):
+
+| stop | 1440 lift ms (by) | sharp at reveal | 390 lift ms (by) | sharp |
+|---|---|---|---|---|
+| dutchess | 2506 (cap) | 0.92 | 514 (steady) | 1.0 |
+| highlands | 2257 (quiet) | 1.0 | 806 (quiet) | 1.0 |
+| westchester | 2508 (cap) | 1.0 | 1067 (quiet) | 1.0 |
+| ulster | 2510 (cap) | 1.0 | 953 (quiet) | 1.0 |
+| dutchess-county | 2506 (cap) | **0.59** | 1017 (quiet) | 1.0 |
+| orange | 2518 (cap) | 0.81 | 1057 (quiet) | 1.0 |
+| putnam | 2511 (cap) | 1.0 | 1018 (quiet) | 1.0 |
+| rockland | 2509 (cap) | 0.94 | 1166 (quiet) | 1.0 |
+| westchester-county | 2512 (cap) | 0.82 | 1159 (quiet) | 1.0 |
+| bronx | 2516 (cap) | 0.80 | 1215 (quiet) | 1.0 |
+| manhattan | 2509 (cap) | 0.77 | 2300 (quiet) | 1.0 |
+| queens | 2514 (cap) | 0.84 | 1412 (quiet) | 1.0 |
+| brooklyn | 2510 (cap) | 1.0 | 1255 (quiet) | 1.0 |
+| staten-island | 1306 (quiet) | 1.0 | 856 (quiet) | 1.0 |
+| harbour | 1413 (quiet) | 1.0 | 1066 (quiet) | 1.0 |
+| region | 1001 (steady) | 1.0 | 918 (steady) | 1.0 |
+
+First draws: 10.4 s (the 1440 run), 6.2 s (the phone run). **Said plainly**: on this line the
+laptop's close shots take 3 to 6 s after the landing to settle (`landing2`), so 12 of 16 lifts at
+1440 came at the 2.5 s bound and 8 of those showed the map at 0.59 to 0.94 of its settled sharpness,
+still sharpening for 1.5 to 6 s under the grade. The phone's 16 lifted sharp (1.0) in 0.5 to 2.3 s.
+A longer bound would hide more on a slow line (in `landing2` the median is about 0.85 at 4 s and 0.95
+at 5 s) at the cost of a longer dark stretch per stop; I kept the brief's 2.5 s.
+
+**4. Cost: the lag table, final build** (`11/lag/fin-*`):
+
+| | 1440 x3 | 390 x2 |
+|---|---|---|
+| first draw / cover gone, s | 12.16 / 15.30, 11.67 / 14.86, 10.67 / 13.80 | 21.17 / 24.14, 9.22 / 12.21 |
+| the walk's steps, ms | 628,1020,1021 / 619,1016,1020 / 611,1022,1020 | 1225,1225 / 1217,1234 |
+| its compile flight, under the cover | 250 / 250.2 / 236.2 | - |
+| the page's Westchester flight | **34.6 / 34.8 / 27.8** | 34.7 / 34.9 |
+| worst page flight frame (the pass and the flings) | **76.2 / 55.6 / 83.4** | 90.4 / 83.4 |
+| boot worst / frames over 34 | 347.5 / 18, 340.4 / 19, 319.5 / 19 | 305.8 / 20, 291.5 / 18 |
+
+Round 10 on a comparable line: Westchester 41.5 to 55.2, worst 76 to 104, boot worst 347 to 507.
+The cover now goes 3.0 to 3.2 s after the first draw at both widths (round 10: 2.2 to 2.5 s): the
+laptop walk's third step and the phone's bounded steps.
+
+**5. The grade at close range**: checked on sharp imagery at Orange, the Bronx and Dutchess County
+(`11/final/night/{orange,bronx,dutchess-county}-1440.png`): the moonlight reads as intended close
+in, silver-blue roofs and streets, the river a dark slate, the lights the only warmth. Not changed.
+
+**Gates.** tsc clean; vitest **1884 -> 1887** (139 -> 140 files: flight-veil +6, sharp-gate +1, the
+camera tests rewritten for the close shots, the signature places and the new ladder rule; the
+county-middle and first-step tests retired with what they tested). Contrast kit, every stop: **390: 0
+under the floor outside the logo corner** (lowest 4.53); **1440: only the AI and Connect pills** (the
+kit's known misread; lowest real text 4.53). The 1440 kit crashed once on a text box outside the
+frame; the rerun skips such boxes (not counted). Overflow 0 at 1440 / 390 / 320, five scroll positions
+each. The diff since `608dcfa` outside `components/home/g3d/` and `components/home/night/shots.ts` is
+this record only.
+
+**:3102** runs the final build (the code of `8975c6a`). Down six times this round (stop, build,
+start): 76, 68, 73, 58, 68 and 68 s.
