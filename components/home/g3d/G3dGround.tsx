@@ -24,13 +24,16 @@ import { nightGrade, type NightGrade } from "./night";
 import { applyClaims, claims, type LightsState, type MapState } from "./claims";
 import { cameraShowing, clickAction, labelContent, namesOverlap, openPoint, placeHoverLabel, tapNext, type LabelContent, type Rect, type TapState } from "./interaction";
 
-/** The map's mode by default (map-options.ts), decided by frames in round 57.2
- * (scripts/_scratch-r57/2/mode/ab-{1440,390}.png, docs/parity/DESIGN-ROUND57.md §4 "Round 2"):
- * HYBRID at the territory shot, where Google's town names orient a stranger beside our own; SATELLITE
- * everywhere else, where HYBRID's coloured POI pins, route shields and street names cluttered the
- * county and city shots and competed with our words, while SATELLITE reads as the photograph the
- * owner asked for ("the map has to be more realistic"). `?mode=hybrid|satellite|split` compares. */
-const MODE: ModeChoice = "split";
+/** The map's mode by default (map-options.ts). Round 57.2 chose `split` by frames (HYBRID at the
+ * territory shot for Google's town names, SATELLITE below where HYBRID's coloured POI pins, route
+ * shields and street names cluttered the chapters). The orchestrator's polish round (57.7) moved the
+ * territory shot to SATELLITE too, by frames on the NIGHT grade (scripts/_scratch-r57/verify6/sat/
+ * hero-1440.png against verify6/hero-1440.png): on the dark map Google's red and blue interstate
+ * shields were the loudest thing in the frame, and since round 1 our own county and borough names
+ * orient a stranger at that altitude, so Google's names are not needed there either. The photograph
+ * at night, our lights and our names: one language at every stop. `?mode=hybrid|satellite|split`
+ * compares. */
+const MODE: ModeChoice = "satellite";
 
 /** THE REAL MAP AS THE PAGE'S GROUND (round 56's /lab/g3d prototype; the home page's ground since
  * round 57, app/page.tsx and lib/home-map.ts).
