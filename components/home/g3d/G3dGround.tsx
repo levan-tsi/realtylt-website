@@ -96,6 +96,17 @@ const LOGO_CORNER = { w: 180, h: 54 };
  * of the bottom. */
 const LOGO_HOLE = "radial-gradient(210px 64px at 84px 100%, transparent 0, transparent 62%, #000 100%)";
 
+/** THE PHONE'S FOOT (round 57.5, defect A7). The shade under the hero's search ran to 0.86 at the
+ * window's foot and LOGO_HOLE left a patch of the ocean around Google's logo, which read as a blue-grey
+ * glow in the corner (DESIGN-ROUND57.md §4, round 5). Tried live on the build, frames in
+ * scripts/_scratch-r57/5/foot/ (a hole hugging the logo read as a blue box; the ellipse as a glow):
+ * the shade now eases back to 0.15 below the links, so the whole foot of the frame shows the sea
+ * faintly, and a wider, softer hole leaves the logo on that same sea. The links keep their shade
+ * (0.86 from 66% to 72% of the band). */
+const FOOT_SHADE = "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.86) 66%, rgba(0,0,0,0.86) 72%, rgba(0,0,0,0.15) 100%)";
+const FOOT_HOLE_IMAGE = "radial-gradient(300px 92px at 84px 100%, transparent 0, transparent 42%, #000 100%)";
+const FOOT_HOLE = { WebkitMaskImage: FOOT_HOLE_IMAGE, maskImage: FOOT_HOLE_IMAGE } as const;
+
 /** THE SCRIMS (round 56 phase 1b): up to SCRIMS blocks of words at once, each shaded SCRIM_PAD px
  * past its box and fading to nothing over the next SCRIM_FEATHER px, so no edge reads as a
  * rectangle. Six, not four: at the Dutchess stop the hero's two blocks are still on screen with the
@@ -1123,7 +1134,7 @@ export function G3dGround({
           ref={footShade}
           aria-hidden
           className="absolute inset-x-0 bottom-0 h-[26svh] lg:hidden"
-          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 45%, rgba(0,0,0,0.86) 100%)", ...mask }}
+          style={{ background: FOOT_SHADE, ...FOOT_HOLE }}
         />
         {tail?.veil ? <div ref={tailVeil} aria-hidden className="absolute inset-0 bg-black" style={{ opacity: 0, ...mask }} /> : null}
         {/* The territory's names (labels.ts): over the map and its lights, under the words. Sentence
