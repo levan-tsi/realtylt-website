@@ -19,7 +19,17 @@ import { homeMap } from "@/lib/home-map";
  * Round 57.9: the real map's cover draws the coast and the sea beyond our elevation grid from
  * Natural Earth's land (public domain; no credit is required, it is named because it is used). */
 export function SceneCredit() {
-  if (usePathname() !== "/") return null;
+  const pathname = usePathname();
+  // Round 57.12: the MapLibre lab (/lab/ml, RLT_LAB=1 only) credits its own sources: the vector map's
+  // data (the corner of the map carries the same names, components/home/ml/style.ts ATTRIBUTION), the
+  // terrain tiles' sources in the words their licence page gives, and the load cover's coastline.
+  if (pathname === "/lab/ml")
+    return (
+      <p className="max-w-full md:ml-6 md:border-l md:border-current/20 md:pl-6">
+        Map data: © OpenStreetMap contributors; tiles: © OpenMapTiles, OpenFreeMap. Terrain: Mapzen terrain tiles; USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1. Coastline: Natural Earth.
+      </p>
+    );
+  if (pathname !== "/") return null;
   const night = homeMap({ NEXT_PUBLIC_HOME_MAP: process.env.NEXT_PUBLIC_HOME_MAP, NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }) === "night";
   return (
     <p className="max-w-full md:ml-6 md:border-l md:border-current/20 md:pl-6">

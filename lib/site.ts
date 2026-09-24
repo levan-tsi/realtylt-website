@@ -114,8 +114,9 @@ export const areaName = (label: string): string =>
 
 /** The routes that wear the round-53 blue-hour look (app/globals.css `.nocturne`). The page's
  * own wrapper carries the class; the Header and Footer read this list so the chrome around the
- * page matches it. Extending the look to another page is one entry here plus its wrapper. */
-export const NIGHT_ROUTES = ["/", "/search"] as const;
+ * page matches it. Extending the look to another page is one entry here plus its wrapper.
+ * `/lab/ml`: round 57.12's MapLibre night map lab (RLT_LAB=1 only), the home page's twin. */
+export const NIGHT_ROUTES = ["/", "/search", "/lab/ml"] as const;
 export const isNightRoute = (pathname: string | null | undefined): boolean =>
   (NIGHT_ROUTES as readonly string[]).includes(pathname ?? "");
 

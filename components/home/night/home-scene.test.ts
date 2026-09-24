@@ -233,9 +233,17 @@ describe("the footer over the scene", () => {
     expect(shell).toContain("style={style}");
   });
 
+  it("credits the MapLibre lab's own sources on the lab only (round 57.12)", () => {
+    const credit = fs.readFileSync(path.join(ROOT, "components/site/SceneCredit.tsx"), "utf8");
+    expect(credit).toContain('if (pathname === "/lab/ml")');
+    expect(credit).toContain("© OpenStreetMap contributors");
+    expect(credit).toContain("© OpenMapTiles");
+    expect(credit).toContain("USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1");
+  });
+
   it("carries the terrain credit on the home page only, in the words the sources ask for", () => {
     const credit = fs.readFileSync(path.join(ROOT, "components/site/SceneCredit.tsx"), "utf8");
-    expect(credit).toContain('usePathname() !== "/"');
+    expect(credit).toContain('if (pathname !== "/") return null;');
     expect(credit).toContain("Terrain: Mapzen; USGS 3DEP, SRTM, GMTED2010 and NHD; NOAA ETOPO1.");
     expect(fs.readFileSync(path.join(ROOT, "public/images/ATTRIBUTIONS.md"), "utf8")).toContain(
       "Terrain: Mapzen; USGS 3DEP, SRTM, GMTED2010 and NHD;",
