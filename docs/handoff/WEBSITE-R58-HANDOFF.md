@@ -122,3 +122,19 @@ round; the close flights stream more tiles (16 to 20 frames over 34 ms per fligh
 the veil); the map ID for a Google style is still his to create and still optional. If his
 next look says the real map still is not "amazing", the fallback is a dark-styled vector map
 (record §8, option 2), which needs his map ID first.
+
+## 8. Queued for a SEPARATE session (his order 2026-09-24, relayed by the CRM session)
+
+Repost the Brivity buyer-automation blog posts (all in his Google Drive) to the site: one
+agent checks the SEO to our standard (the realtylt.com/ai page is the bar): keywords, the
+site map, every claim re-verified as still true, links to the sources (public government data
+or reputable sites), then stable URLs. The CRM's plans link 34 dead posts
+(`realtylt-crm/docs/parity/BRIVITY-SELL-24-2026-09-22.md`, and the four stock buyer plans in
+`BRIVITY-BUYER-PLANS-2026-09-22.md`); when the posts are live, leave the URL list in the CRM
+repo's `docs/handoff/` so the plans can be rebuilt. Not started here (he said another session,
+while this one is on the design; the `/blog` command is the natural runner); confirm with him
+before starting.
+
+Also done 2026-09-24 outside the map: Rachel's line (914) 506-5884 is the visitor-facing
+number everywhere and the CRM line (914) 875-2424 only on /connect (`299f011`); consent-mode
+defaults and Do Not Track for the analytics, with the policy updated (`5b3a9c6`).
