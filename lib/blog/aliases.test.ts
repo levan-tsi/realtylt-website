@@ -65,7 +65,6 @@ const PENDING_CRM = new Set<string>([
   "ultimate-8-week-moving-checklist",
   "seller-guide-prepare-home-inspection",
   "how-to-hire-local-movers-ny",
-  "seller-disclosure-requirements-new-york",
   "how-to-buy-your-first-rental-property-in-the-hudson-valley",
   "house-hacking-hudson-valley-ny",
   "calculate-roi-cap-rate-investment-property-ny",
