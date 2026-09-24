@@ -34,7 +34,12 @@ export function loadMaps(key: string, libraries: readonly string[] = []): Promis
     // The callback exists before the tag does: an async script can run before any code after it.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).__rltMapsReady = () => resolve();
-    s.onerror = () => reject(new Error("Google Maps failed to load"));
+    // Round 57.5: a failed load is forgotten, so the next caller on this page view (/search after the
+    // home map failed, or the home page mounted again by a client navigation) tries again instead of inheriting the failure.
+    s.onerror = () => {
+      loader = null;
+      reject(new Error("Google Maps failed to load"));
+    };
     document.head.appendChild(s);
   });
   return withLibraries(loader, libraries);

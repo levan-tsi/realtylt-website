@@ -20,6 +20,7 @@ import type { MapCamera } from "./camera";
 import { mapIdFrom, modeChoice, type ModeChoice } from "./map-options";
 import { camOverrides, durOverrides } from "./lab-query";
 import { FEATURED_GLYPH } from "./glyph";
+import { applyClaims, claims, type LightsState, type MapState } from "./claims";
 import { cameraShowing, clickAction, labelContent, openPoint, placeHoverLabel, tapNext, type LabelContent, type Rect, type TapState } from "./interaction";
 
 /** The map's mode by default (map-options.ts), decided by frames in round 57.2
@@ -252,6 +253,10 @@ export function G3dGround({
   const footerEl = useRef<HTMLElement | null>(null);
   /** The map failed (no key, no WebGL, the script blocked, gmp-error): our poster stays for good. */
   const failed = useRef(false);
+  /** What stands behind the words, for what they may claim (claims.ts; round 57.5). */
+  const mapState = useRef<MapState>("cover");
+  const lightsState = useRef<LightsState>("pending");
+  const syncClaims = () => applyClaims(claims(mapState.current, lightsState.current));
 
   // ---- THE TERRITORY'S NAMES (round 57, labels.ts) ------------------------------------------------
   // Drawn only while the page sits at its top and the map holds the hero shot still: they fade out
@@ -639,7 +644,8 @@ export function G3dGround({
       description: "Map of the Hudson Valley and New York City, with the homes for sale lit where they stand.",
       onReveal: () => {
         setRevealed(true);
-        claimMap(true);
+        mapState.current = "live";
+        syncClaims();
         setPosterGone((g) => g || "dissolve");
         labelsPlaced.current = false;
         showTerritoryRef.current();
@@ -660,7 +666,8 @@ export function G3dGround({
         // Once, whatever fails: the poster comes back (or never left) and stays.
         if (failed.current) return;
         failed.current = true;
-        claimMap(false);
+        mapState.current = "failed";
+        syncClaims();
         setError(m);
         setPosterGone(false);
         showTerritoryRef.current();
@@ -690,6 +697,8 @@ export function G3dGround({
     // `?homes=0`: the map alone, for the frame-time probe to tell the map's cost from ours.
     const noHomes = new URLSearchParams(window.location.search).get("homes") === "0";
     void loadLights().then((pts) => {
+      lightsState.current = !pts || noHomes ? "none" : "some";
+      syncClaims();
       if (!pts || noHomes) return;
       const n = pts.x.length;
       const lat = new Float64Array(n), lng = new Float64Array(n);
@@ -1253,14 +1262,6 @@ export function G3dGround({
       </div>
     </AreaContext.Provider>
   );
-}
-
-/** "Map: Google." is said only while Google's map is what stands behind the page (app/page.tsx
- * renders it hidden: no claim with JS off, before the map has drawn, or after it failed). */
-function claimMap(on: boolean) {
-  document.querySelectorAll<HTMLElement>("[data-map-claim]").forEach((e) => {
-    e.hidden = !on;
-  });
 }
 
 /** The page's words on screen, by their LINES (a label may stand beside a short line), plus the

@@ -168,10 +168,10 @@ export default async function HomePage() {
                 {activeCount ? (
                   <>
                     <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale
-                    right now, from Poughkeepsie to the five boroughs. {g3d ? "Every light on the map is one of them." : "The bright lights below are them."}
+                    right now, from Poughkeepsie to the five boroughs. {g3d ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}
                   </>
                 ) : (
-                  <>Homes for sale right now, from Poughkeepsie to the five boroughs. {g3d ? "Every light on the map is one of them." : "The bright lights below are them."}</>
+                  <>Homes for sale right now, from Poughkeepsie to the five boroughs. {g3d ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}</>
                 )}
               </p>
               {/* One instrument (components/search-instrument.test.ts pins the geometry: 16px
@@ -228,8 +228,10 @@ export default async function HomePage() {
                     <span data-map-claim hidden>
                       Map: Google.{" "}
                     </span>
-                    Every light is a home listed on OneKey&reg; MLS, standing where it stands.
-                    Point at one to see its town and price.
+                    <span data-lights-claim>Every light is a home listed on OneKey&reg; MLS, standing where it stands. </span>
+                    <span data-point-claim hidden>
+                      Point at one to see its town and price.
+                    </span>
                   </>
                 ) : (
                   <>
@@ -338,8 +340,8 @@ export default async function HomePage() {
                   </span>
                 </SectionHeading>
                 <p className="mt-5 max-w-md text-stone">
-                  Six counties of the Hudson Valley and all five boroughs. Every {g3d ? "" : "bright "}light is a
-                  home for sale there right now.
+                  Six counties of the Hudson Valley and all five boroughs.{" "}
+                  {g3d ? <span data-lights-claim>Every light is a home for sale there right now.</span> : "Every bright light is a home for sale there right now."}
                 </p>
               </Reveal>
               {g3d ? <G3dAreaChapter rows={AREA_ROWS} /> : <AreaChapter rows={AREA_ROWS} />}

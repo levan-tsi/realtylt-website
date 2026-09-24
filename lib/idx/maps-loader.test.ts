@@ -61,6 +61,21 @@ describe("loadMaps", () => {
     expect(importLibrary).toHaveBeenCalledWith("maps3d");
   });
 
+  it("forgets a failed load, so the next caller on the same page view tries again (round 57.5)", async () => {
+    const appended = fakeDom() as unknown as { src: string; onerror: (() => void) | null }[];
+    const { loadMaps } = await import("./maps-loader");
+    const first = loadMaps("K", ["maps3d"]);
+    appended[0].onerror?.();
+    await expect(first).rejects.toThrow("Google Maps failed to load");
+    const importLibrary = vi.fn(() => Promise.resolve({}));
+    const second = loadMaps("K", ["maps3d"]);
+    expect(appended).toHaveLength(2);
+    vi.stubGlobal("google", { maps: { importLibrary } });
+    (globalThis as unknown as { __rltMapsReady: () => void }).__rltMapsReady();
+    await second;
+    expect(importLibrary).toHaveBeenCalledWith("maps3d");
+  });
+
   it("imports nothing for the 2D callers", async () => {
     fakeDom();
     const importLibrary = vi.fn(() => Promise.resolve({}));
