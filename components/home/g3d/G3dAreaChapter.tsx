@@ -5,7 +5,6 @@ import Link from "next/link";
 import { PRESS } from "@/components/ui/Button";
 import { loadLights } from "@/lib/idx/lights-client";
 import { useG3dArea } from "./G3dGround";
-import { areaRowAction } from "./interaction";
 import type { AreaRow } from "../night/AreaChapter";
 
 /** WHERE WE WORK on the real map (round 56 lab): the night flight's chapter (../night/AreaChapter.tsx,
@@ -16,7 +15,7 @@ import type { AreaRow } from "../night/AreaChapter";
  * context into one module both grounds provide, and this file goes. */
 
 export function G3dAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
-  const { current, point, held, hold } = useG3dArea();
+  const { current, point } = useG3dArea();
   const [counts, setCounts] = useState<Record<string, number> | null>(null);
 
   useEffect(() => {
@@ -42,7 +41,6 @@ export function G3dAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
           <ul className="mt-3 border-t border-line">
             {group.items.map((row) => {
               const on = current === row.shot;
-              const isHeld = held === row.shot;
               const n = counts?.[row.slug];
               return (
                 <li key={row.slug}>
@@ -54,17 +52,10 @@ export function G3dAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
                     }}
                     onFocus={() => point(row.shot)}
                     onBlur={() => point(null)}
-                    // Round 57.3: a click or Enter flies the map to the county and holds it there,
-                    // the row current and the page where it is; a click on the held county (or any
-                    // modifier click) opens its page, so the row stays a real link.
-                    onClick={(e) => {
-                      if (areaRowAction(held, row.shot, e) === "hold") {
-                        e.preventDefault();
-                        hold(row.shot);
-                      }
-                    }}
-                    aria-current={isHeld ? "true" : undefined}
-                    data-held={isHeld ? "1" : undefined}
+                    // Round 57.5: a click (or Enter) always opens the county's page; the pointer's
+                    // hover and the keyboard's focus are what fly the map there first. Round 57.3's
+                    // first click held the map and only the second navigated, so a visitor could
+                    // click a link and see the page not move (DESIGN-ROUND57.md §4, round 5 A2).
                     className={`group flex items-baseline gap-3 border-b border-line py-3 transition-colors duration-200 motion-reduce:transition-none ${PRESS}`}
                   >
                     {/* A lamp, not a bullet: it lights when the camera is over this area, the
@@ -88,13 +79,10 @@ export function G3dAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
                         grey needs a background under 0.034 relative luminance to clear 4.5:1,
                         which is not something a live city can promise; ink-soft has twice the
                         head-room, and 14px is a number somebody actually reads. */}
-                    {/* Held by a click, the count says what the next click does. */}
                     <span
-                      className={`shrink-0 text-[14px] tabular-nums transition-colors duration-200 motion-reduce:transition-none ${on ? "text-ink" : "text-ink-soft"} ${
-                        isHeld ? "underline decoration-line-strong underline-offset-[5px]" : ""
-                      }`}
+                      className={`shrink-0 text-[14px] tabular-nums transition-colors duration-200 motion-reduce:transition-none ${on ? "text-ink" : "text-ink-soft"}`}
                     >
-                      {n ? `${isHeld ? "See " : ""}${n.toLocaleString("en-US")} ${n === 1 ? "home" : "homes"}` : isHeld ? "See homes" : " "}
+                      {n ? `${n.toLocaleString("en-US")} ${n === 1 ? "home" : "homes"}` : " "}
                     </span>
                   </Link>
                 </li>

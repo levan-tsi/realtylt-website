@@ -176,18 +176,6 @@ export function tapNext(s: TapState, e: TapEvent): { state: TapState; action: "s
   return s.shown === null ? { state: s, action: "none" } : { state: { shown: null }, action: "hide" };
 }
 
-/** A county row in "Where we work": a plain click (or Enter) flies the map there and holds it on
- * that county, the row marked current and the page left where it is; a click on the county the
- * map is already holding opens its page, as does any modifier click (the row is a real link). */
-export function areaRowAction(
-  held: string | null,
-  row: string,
-  e: { button?: number; ctrlKey?: boolean; metaKey?: boolean; shiftKey?: boolean; altKey?: boolean },
-): "hold" | "open" {
-  if ((e.button ?? 0) !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return "open";
-  return held === row ? "open" : "hold";
-}
-
 /** Where on screen a featured home should stand when its card has focus (round 57.3). At the
  * featured rail the page covers most of the map (the heading, four cards, the credit, the button),
  * and a home flown to the middle of the window sat under a card, its label over the NEXT card (the

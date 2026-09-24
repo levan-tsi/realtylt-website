@@ -59,11 +59,8 @@ const MODE: ModeChoice = "split";
 interface AreaValue {
   current: AreaShot | null;
   point: (area: AreaShot | null) => void;
-  /** The county a click (or Enter) on its row holds the map on, round 57.3; null: the scroll leads. */
-  held: AreaShot | null;
-  hold: (area: AreaShot) => void;
 }
-const AreaContext = createContext<AreaValue>({ current: null, point: () => {}, held: null, hold: () => {} });
+const AreaContext = createContext<AreaValue>({ current: null, point: () => {} });
 export const useG3dArea = () => useContext(AreaContext);
 
 const isArea = (n: ShotName): n is AreaShot => n in AREA_COUNTY_OF;
@@ -137,8 +134,6 @@ const CLEAR_STYLE = {
 /** How long the scroll must rest on a new stop before the map flies there: a fling across three
  * sections is one flight, not three. */
 const SETTLE_MS = 110;
-/** How far the page may scroll before a county held by its row lets go (round 57.3). */
-const HOLD_SLACK = 160;
 
 export interface Cover {
   wide: string;
@@ -218,9 +213,6 @@ export function G3dGround({
   const tap = useRef<TapState>({ shown: null });
   /** The click's clock, for the probe: when it came, what it did, when the route was asked for. */
   const clickLog = useRef<{ at: number; act: string; routedAt: number | null; href: string | null }[]>([]);
-  const [held, setHeld] = useState<AreaShot | null>(null);
-  const heldRef = useRef<AreaShot | null>(null);
-  const heldY = useRef(0);
   const hoverCost = useRef<{ tests: number; totalMs: number; maxMs: number; frames?: number; frameMs?: number; frameMax?: number; samples?: number[] }>({ tests: 0, totalMs: 0, maxMs: 0 });
   const scheduleRef = useRef<() => void>(() => {});
   const tailVeil = useRef<HTMLDivElement>(null);
@@ -433,13 +425,6 @@ export function G3dGround({
     showTerritoryRef.current();
     // The places move with the words only while they are shown (the phone's list scrolls over them).
     if (townLayer.current?.dataset.on === "1") showTownsRef.current();
-    // A county held by its row (round 57.3) lets go once the reader scrolls on: the scroll leads
-    // again, and the chapter's own flight takes over.
-    if (heldRef.current && Math.abs(window.scrollY - heldY.current) > HOLD_SLACK) {
-      heldRef.current = null;
-      setHeld(null);
-      override.current = null;
-    }
     if (!stops.current.length || override.current) return;
     const { index } = shotPosition(stops.current, window.scrollY);
     const name = names.current[index];
@@ -658,7 +643,6 @@ export function G3dGround({
         const l = label.current;
         return l ? { open: l.dataset.open === "1", side: l.dataset.side ?? null, href: l.getAttribute("href"), text: l.innerText, shownAt: Number(l.dataset.shownAt ?? 0) } : null;
       },
-      held: () => heldRef.current,
       fly: (n: ShotName) => flyTo(n),
       hovered: () => hovered.current,
       stops: () => stops.current.map((x) => ({ name: x.name, anchor: Math.round(x.anchor) })),
@@ -792,7 +776,7 @@ export function G3dGround({
       focusHome.current = null;
       c.lightFeatured(null);
       hideLabel();
-      override.current = heldRef.current;
+      override.current = null;
       // Back to whatever the scroll says (the focus may have scrolled the page meanwhile).
       target.current = null;
       scheduleRef.current();
@@ -866,7 +850,7 @@ export function G3dGround({
         setTimeout(() => {
           if (window.location.pathname !== "/" || !ctl.current) return;
           hideHover();
-          override.current = heldRef.current;
+          override.current = null;
           target.current = null;
           scheduleRef.current();
         }, 4000);
@@ -1050,40 +1034,22 @@ export function G3dGround({
 
   const point = useCallback(
     (area: AreaShot | null) => {
-      // Leaving a row gives the map back to the county a row click is holding, if any (round 57.3),
-      // else to the scroll.
-      const back = area ?? heldRef.current;
-      override.current = back;
-      if (!back) {
+      override.current = area;
+      if (!area) {
         schedule();
         return;
       }
       clearTimeout(settle.current);
-      setCurrent(back);
-      flyTo(back);
-    },
-    [flyTo, schedule],
-  );
-
-  /** A click or Enter on a county row (round 57.3, interaction.ts areaRowAction): the map flies there
-   * and holds, the row is current, the page stays where it is; scrolling on lets go (apply). */
-  const hold = useCallback(
-    (area: AreaShot) => {
-      heldRef.current = area;
-      heldY.current = window.scrollY;
-      setHeld(area);
-      override.current = area;
-      clearTimeout(settle.current);
       setCurrent(area);
       flyTo(area);
     },
-    [flyTo],
+    [flyTo, schedule],
   );
 
   const mask = { WebkitMaskImage: LOGO_HOLE, maskImage: LOGO_HOLE } as const;
 
   return (
-    <AreaContext.Provider value={{ current, point, held, hold }}>
+    <AreaContext.Provider value={{ current, point }}>
       <div className="pointer-events-none fixed inset-0 z-0" data-g3d-ground data-g3d-error={error ?? undefined}>
         <div ref={host} className="absolute inset-0" />
         {look === "veil" ? (

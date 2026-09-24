@@ -5,7 +5,6 @@ import {
   OFFSET,
   SCAN,
   SCAN_MAX,
-  areaRowAction,
   cameraShowing,
   clickAction,
   FLY_IN_DEPTH,
@@ -259,21 +258,6 @@ describe("the phone's tap, then open", () => {
 
   it("a label with nothing shown does nothing", () => {
     expect(tapNext(idle, { kind: "label" }).action).toBe("none");
-  });
-});
-
-describe("a county row in Where we work", () => {
-  it("the first click flies there and holds the county; a click on the held county opens it", () => {
-    expect(areaRowAction(null, "ulster", {})).toBe("hold");
-    expect(areaRowAction("dutchess", "ulster", {})).toBe("hold");
-    expect(areaRowAction("ulster", "ulster", {})).toBe("open");
-  });
-
-  it("a modifier click opens the county page as the browser would", () => {
-    expect(areaRowAction(null, "ulster", { ctrlKey: true })).toBe("open");
-    expect(areaRowAction(null, "ulster", { metaKey: true })).toBe("open");
-    expect(areaRowAction(null, "ulster", { shiftKey: true })).toBe("open");
-    expect(areaRowAction(null, "ulster", { button: 1 })).toBe("open");
   });
 });
 
