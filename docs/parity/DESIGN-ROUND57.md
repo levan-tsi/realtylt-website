@@ -656,3 +656,107 @@ Gates: the lag probe cold x5 and warm x2 at 1440 and cold x2 at 390 on the shipp
 flight worst / over 34, boot, marker adds); frames at every stop both widths if any camera moved
 (and the contrast kit at that stop); tsc; vitest only up; overflow. Do not touch the address
 lights, the labels, the covers, CSP, `/search`, the day pages.
+
+### Round 4, the builder's numbers (commit `0b901fa`; for the orchestrator to re-run)
+
+Instruments (gitignored): `scripts/_scratch-r57d-lag.mjs` (the round-57 lag probe plus the worst
+frame's offset inside each flight, `--chrome=` for Chrome flags, `--coverShot` for a screenshot at
+the reveal, and whether the map was steady when the cover left), `-sum.mjs` (one row from N runs),
+`-shots.mjs` (the per-flight table), `-exp.sh` (N cold runs per query), `-overflow.mjs`. Outputs
+in `scripts/_scratch-r57/4/` (`lag/*-summary.json`, `rows*.txt`, `lag/*-reveal.png`). Headed
+Chrome, RTX 2060, 144 Hz, 1440 x 900; cold = a fresh profile every run; runs where Google's
+script failed to load (e2-4, f7-3: `load: Cannot read properties of undefined`) are dropped and
+said so.
+
+**The finding: the stall is a one-time GPU shader compile inside Google's renderer, not tiles.**
+The two decisive rows are the profile experiments (a warm profile is one untimed pass first):
+
+| profile | Westchester flight worst, ms |
+|---|---|
+| cold (fresh), five runs | 236 / 236 / 243 / 229 / 236 |
+| warm, as is | 56 / 49 |
+| warm, `--disable-gpu-shader-disk-cache` (HTTP cache warm) | 229 / 236 / 243 |
+| warm, HTTP cache and code cache deleted, shader cache kept | 48 / 48 |
+
+The frame comes 375 to 395 ms into the flight, every run. Only a FLIGHT along that path compiles
+the shader: round 57's pre-warm that JUMPED to Westchester left it (orchestrator's `diag-warm5`).
+
+**The experiment table** (cold, five runs each unless said; "other flights" = every other flight
+of the scroll; medians; cover = the poster gone, ms after navigation):
+
+| row | query | Westchester worst (each run) | Westchester over 34 | other flights worst, med | other over-34 sum, med | boot worst, med | cover, med |
+|---|---|---|---|---|---|---|---|
+| base (before, `4a6bc03` code) | - | 236/236/243/229/236 | 2-3 | 91 | 70 | 424 | 10045 |
+| base, rebuilt with the switches | - | 229/236/243/236/236 | 2-3 | 104 | 60 | 424 | 10044 |
+| a1: 40 km, tilt 50 | `?cam=westchester:40000,50,250` | 236/236/236/243/236 | 3 | 83 | 63 | 424 | 10219 |
+| a2: 60 km, tilt 45 | `?cam=westchester:60000,45,250` | 243/229/236/229/229 | 2-4 | 97 | 85 | 424 | 10069 |
+| a3: 48 km, heading kept (no turn) | `?cam=westchester:48000,50,185` | 236/236/236/243/236 | 3-4 | 104 | 58 | 417 | 9866 |
+| b: two legs, geometric-mean camera | `?legs=2` | 236/243/236/28/28 | 0-3 | **236** (the stall moved to the next flight) | 81 | 424 | 10165 |
+| c: 3.2 s flight | `?dur=westchester:3200` | 236/236/243/243/236 | 2-4 | 83 | 56 | 424 | 10139 |
+| e1: HYBRID everywhere | `?mode=hybrid` | 236/243/243/243/243 | 5-10 | 84 | 164 | 431 | 10216 |
+| e2: SATELLITE everywhere (4 runs) | `?mode=satellite` | 236/229/236/229 | 2-3 | 70 | **21** | 417 | **8046** |
+| d: pre-warm flies the exact path (2.35 s) | `?warm=path&warmShots=highlands,westchester&warmBudget=20000` | **35/28/28/35/35** | 0-1 | 83 | 66 | 424 | 16318 |
+| f1: Dutchess set, 400 ms flight | `...warmShots=dutchess,westchester&warmFly=400` | 104/97/97/90/97 | 1-3 | 97 | 62 | 438 | 14317 |
+| f2: Highlands set, 400 ms flight | `...warmShots=highlands,westchester&warmFly=400` | 28/35/49/28/28 | 0-1 | 97 | 67 | 431 | 14351 |
+| f4: from the hero, 400 ms flight | `...warmShots=hero,westchester&warmFly=400` | 243/243/236/236/236 | 2-3 | 97 | 63 | 431 | 12944 |
+| f3: f2, each step waits at most 600 ms | `...&warmSettle=600` | 28/35/28/35/35 | 0-1 | 83 | 65 | 431 | 12771 |
+| f5: hero, Highlands, Westchester, 600 ms | `...warmShots=hero,highlands,westchester...` | 35/28/42/28/28 | 0-2 | 118 | 60 | 431 | 13265 |
+| f6: f3, map opened at the Highlands | `...&warmOpen=1` | 28/42/42/35/28 | 0-2 | 97 | 63 | 424 | 11053; with the return capped at 2.5 s, 9294 but **the hero unsteady at the reveal** (3 of 3) |
+| **f7: f3, the return waits at most 2 s (shipped)** (4 runs) | `...&warmSettle=600&warmBack=2000` | **42/42/28/28** | 0-2 | 76 | 51 | 430 | 10723 |
+
+What the rows say: the stall does not follow the camera (a1 to a3), the duration (c) or the mode
+(e1, e2); splitting the flight moves it (b); the path has to be FLOWN from the Highlands (f1 from
+Dutchess leaves 97 ms, f4 from the hero leaves 236); the flight can be short (400 ms). The walk's
+return to the hero never reports steady inside 4 s after that flight, so it waits 2 s (f7) and
+the reveal screenshots (`lag/rv-*-reveal.png`, three runs each of base, f3, f7) show the same
+drawn territory as before, the map steady at the reveal in every run; opening the map at the
+Highlands (f6) saves a second but reveals an unsteady hero, so it lost. Side finding for the
+orchestrator: SATELLITE everywhere (e2) cleans the other flights (over-34 sum 21 against 60 to 70)
+and draws 2 s sooner, but the territory shot loses Google's names that round 2 kept on purpose;
+not shipped, one query away.
+
+**Shipped as the default** (`warm-plan.ts`, 5 tests; `lab-query.ts`, 7 tests): on a window 640 px
+and wider that opens at the territory shot, the walk under the poster sets the Highlands (waits at
+most 600 ms), flies to Westchester in 400 ms (waits at most 600 ms), returns to the hero (waits at
+most 2 s), then reveals. A phone, or a page opened mid-scroll, keeps the round-56 one-shot jump.
+The cut option was NOT built: the stall is removed.
+
+**The shipped build's lag table** (`0b901fa`, per flight on the way down then the flings; median
+worst ms / median frames over 34, max worst in brackets):
+
+| flight | before, cold x5 | shipped, cold x5 | shipped, warm x2 | shipped, 390 cold x2 |
+|---|---|---|---|---|
+| to Dutchess | 56 / 6 (63) | 56 / 5 (56) | 35 / 2 | 35 / 1 |
+| to the Highlands | 56 / 4 (70) | 56 / 4 (69) | 35 / 1 | 21 / 0 |
+| **to Westchester** | **236 / 2 (243)** | **28 / 0 (56)** | 28 / 0 (35) | 90 / 2 |
+| Dutchess County | 42 / 2 (56) | 48 / 1 (56) | 21 / 0 | 49 / 2 |
+| Manhattan, Queens, Brooklyn | 42-49 / 2-3 (56) | 48-56 / 2-3 (56) | 21-35 / 0-3 | 49 / 2 |
+| Staten Island | 91 / 4 (125) | 97 / 4 (132) | 35 / 1 (125) | 49 / 2 |
+| fling up (Brooklyn, Queens, hero) | 91 / 11-12 (125) | 97 / 12 (132) | 125 / 5-8 | 49 / 2 |
+| fling down (Westchester to the region) | 28-42 / 0-3 | 28-42 / 0-3 | 21-28 / 0 | 7-21 / 0 |
+| worst flight frame of the scroll (median of runs) | 236 | 97 | 125 | 90 |
+| boot worst / over 34 (under the poster) | 424 / 29 | 431 / 31 | 160 / 28 | 396 / 21 |
+| poster gone, ms (median) | 10045 | 10936 | 9898 | 9680 |
+| marker adds (median; during flights) | 518 (0) | 518 (0) | 518 (0) | 179 (0) |
+
+The remaining worst frames (97 to 132 ms at Staten Island and the fling back up) were there before,
+warm too, so they are not this shader; they are round 56's streaming hitches.
+
+Gates: tsc clean; vitest **1807 -> 1819** (135 files); no horizontal overflow on `/` at 1440, 390
+and 320 (scrollWidth = clientWidth). No camera moved, so no new stop frames or contrast runs; the
+reveal frames are `lag/shipcold-*-reveal.png`.
+
+**The owner's sentence.** On his laptop, cold, first visit: the poster for about 11 seconds (one
+second longer than before), then the map, and every section flight runs at 60 to 144 fps with
+short hitches of 50 to 130 ms; the quarter-second freeze on the way into Westchester is gone. If he
+scrolls before the poster lifts, the warm-up stops and he may meet that freeze once. On a phone:
+nothing changed; the flights were already clean (worst 90 ms).
+
+**What the MacBook measurement needs from him.** The stall is a shader compile, so it depends on
+the GPU and its driver: on the Mac (Metal, not ANGLE on D3D11) it may be longer, shorter or absent,
+and another path may compile its own. We need him to open `http://<this PC>:3102/` or the preview
+in Chrome on the MacBook, in a fresh guest window (a cold shader cache), keep the tab in front,
+scroll once top to bottom slowly, and either run the lag probe there (Node and Playwright on the
+Mac) or leave the Claude-in-Chrome extension connected with that window in front so an in-page
+frame log can run. Twice: once as shipped, once with `?warm=full` (the old walk) to see whether
+the Mac has this stall at all.
