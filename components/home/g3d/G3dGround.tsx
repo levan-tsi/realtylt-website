@@ -11,6 +11,7 @@ import { townSearchHref } from "../night/lights";
 import { AREA_COUNTY_OF, type AreaShot, type ShotName } from "../night/shots";
 import { boxUVToLngLat } from "../night/world";
 import { G3dController, type FeaturedHome, type Homes } from "./controller";
+import { placeKeys } from "./light-plan";
 import { nearestLight } from "./thinning";
 import { TERRITORY_LABELS, googleBoxes, labelItems, placeLabels, type Box } from "./labels";
 import { TOWN_LABELS, townsOf } from "./towns";
@@ -764,7 +765,7 @@ export function G3dGround({
         lat[i] = b;
         county[i] = pts.townCounty[pts.town[i]] ?? "";
       }
-      const homes: Homes = { lat, lng, county, town: pts.town, towns: pts.towns };
+      const homes: Homes = { lat, lng, county, key: placeKeys(pts.x, pts.y), town: pts.town, towns: pts.towns };
       c.setHomes(homes);
     });
     void loadElevation().then((g) => c.setElevation(g)).catch(() => {});

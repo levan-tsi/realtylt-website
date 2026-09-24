@@ -274,7 +274,7 @@ if (look === "night") {
     lat[i] = b;
     county[i] = pts.townCounty[pts.town[i]] ?? "";
   }
-  homes = { lat, lng, county, n };
+  homes = { lat, lng, county, n, x: pts.x, y: pts.y };
   // Built-up land: homes per 0.01-degree cell, blurred, as 0..1 (a borough ~1, a village ~0.3).
   const b = grid.box, CW = 0.01;
   const gw = Math.ceil((b.east - b.west) / CW), gh = Math.ceil((b.north - b.south) / CW);
@@ -418,7 +418,7 @@ if (homes && flag("nolights", "0") !== "1") {
   const vp = { width: vw, height: vh, fov: cam.fov };
   const narrow = C.isNarrow(vp);
   const ecef = P.homesEcef(homes.lat, homes.lng, (la, ln) => E.sampleHeight(grid, ln, la));
-  const order = P.hashOrder(homes.n);
+  const order = P.keyOrder(P.placeKeys(homes.x, homes.y));
   const gap = C.densityGap(cam.range, narrow);
   const proj = P.projectAll(ecef, fr, vp, 8, homes.county, null);
   const planAt = (c, keep, pj) =>

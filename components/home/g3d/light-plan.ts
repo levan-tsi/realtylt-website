@@ -47,20 +47,39 @@ export function projectHome(frame: CameraFrame, vp: Viewport, f: number, ecef: F
   return true;
 }
 
-/** A fixed random order of n homes (a stable integer hash of each index): the order the planner
- * takes them in, so a budget cut is a uniform sample and the same camera draws the same homes. */
-export function hashOrder(n: number): Int32Array<ArrayBuffer> {
-  const keys = new Uint32Array(n);
+/** A fixed random order of the homes (a stable integer hash of each home's KEY): the order the
+ * planner takes them in, so a budget cut is a uniform sample and the same camera draws the same
+ * homes. Homes with one key (the units of one building: one place) keep their order in the list.
+ *
+ * THE KEY (round 57.10). Until round 57.9 the key was the home's INDEX in the list, and the route
+ * lists the homes by listing id, so one listing added by the hourly sync shifted the index of every
+ * home after it and the page lit different homes: the cover (baked at the hero, the same order) no
+ * longer matched the live lights (its diff rose from 6.9 to 8.0 levels within an hour, round 9).
+ * Keyed by something the listing keeps across syncs, only the new and the gone homes change. The
+ * lights carry no listing id (6 bytes a home, lib/idx/lights.ts; an id would grow the load), so
+ * the key is the home's place on the lights' own grid (`placeKeys`): the listing's, as stable as its
+ * coordinates, and all the page and the cover script both have. */
+export function keyOrder(keys: ArrayLike<number>): Int32Array<ArrayBuffer> {
+  const n = keys.length;
+  const h32 = new Uint32Array(n);
   for (let i = 0; i < n; i++) {
-    let h = (i + 0x9e3779b9) >>> 0;
+    let h = (keys[i] + 0x9e3779b9) >>> 0;
     h = Math.imul(h ^ (h >>> 16), 0x85ebca6b) >>> 0;
     h = Math.imul(h ^ (h >>> 13), 0xc2b2ae35) >>> 0;
-    keys[i] = (h ^ (h >>> 16)) >>> 0;
+    h32[i] = (h ^ (h >>> 16)) >>> 0;
   }
   const idx = new Int32Array(n);
   for (let i = 0; i < n; i++) idx[i] = i;
-  idx.sort((a, b) => keys[a] - keys[b] || a - b);
+  idx.sort((a, b) => h32[a] - h32[b] || a - b);
   return idx;
+}
+
+/** Each home's key for `keyOrder`: its place on the lights' 65,536-step grid (x step * 65536 + y
+ * step), recovered exactly from the unpacked 0..1 coordinates (lib/idx/lights.ts unpackLights). */
+export function placeKeys(x: ArrayLike<number>, y: ArrayLike<number>): Uint32Array<ArrayBuffer> {
+  const out = new Uint32Array(x.length);
+  for (let i = 0; i < x.length; i++) out[i] = (Math.round(x[i] * 65535) * 65536 + Math.round(y[i] * 65535)) >>> 0;
+  return out;
 }
 
 /** The homes a camera draws, density-true (see the file's note), as home indices in draw order. */

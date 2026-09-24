@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { cameraFrame, projectWith, type MapCamera } from "./camera";
-import { GLOW_LEVELS, applyPlan, easeFade, focalOf, glowLevel, hashOrder, homesEcef, planDensity, projectHome, representedCounts, stepFades, type Fade } from "./light-plan";
+import { GLOW_LEVELS, applyPlan, easeFade, focalOf, glowLevel, homesEcef, keyOrder, placeKeys, planDensity, projectHome, representedCounts, stepFades, type Fade } from "./light-plan";
 import { lightPins, planLights, type LightSet } from "./thinning";
 
 /** The round-57.2 test region: a dense "city" of 4,000 homes in a 6 km square and 1,000 scattered
@@ -21,7 +21,9 @@ function region(): LightSet {
 }
 const L = region();
 const E = homesEcef(L.lat, L.lng);
-const ORDER = hashOrder(L.lat.length);
+/** Each home keyed by its index: the order the planner took until round 57.9. */
+const INDEX_KEYS = (n: number) => Array.from({ length: n }, (_, i) => i);
+const ORDER = keyOrder(INDEX_KEYS(L.lat.length));
 const VP = { width: 1440, height: 900, fov: 40 };
 const WIDE: MapCamera = { center: { lat: 40.95, lng: -73.95, altitude: 0 }, range: 90_000, tilt: 45, heading: 0 };
 const isCity = (i: number) => i < 4000;
@@ -47,10 +49,58 @@ describe("the per-frame projection", () => {
 
 describe("the order", () => {
   it("is a permutation, and the same every time", () => {
-    const a = hashOrder(1000), b = hashOrder(1000);
+    const a = keyOrder(INDEX_KEYS(1000)), b = keyOrder(INDEX_KEYS(1000));
     expect([...a]).toEqual([...b]);
     expect(new Set(a).size).toBe(1000);
     expect([...a].slice(0, 20)).not.toEqual(Array.from({ length: 20 }, (_, i) => i));
+  });
+
+  it("keys a home by its place on the lights' grid, exactly, from the unpacked 0..1 coordinates", () => {
+    // lib/idx/lights.ts unpacks each 16-bit step s as the float32 s / 65535: every step comes back.
+    const xs = new Float32Array([0, 1, 12345, 65535].map((s) => s / 65535));
+    const ys = new Float32Array([65535, 2, 54321, 0].map((s) => s / 65535));
+    expect([...placeKeys(xs, ys)]).toEqual([0 * 65536 + 65535, 1 * 65536 + 2, 12345 * 65536 + 54321, 65535 * 65536 + 0]);
+    for (let s = 0; s < 65536; s += 7) expect(placeKeys(new Float32Array([s / 65535]), new Float32Array([0]))[0]).toBe(s * 65536);
+  });
+
+  it("round 57.10: a listing added by the sync leaves every other home where it was in the order", () => {
+    // The route sends the homes sorted by listing id, so a new listing shifts the INDEX of every home
+    // after it. Keyed by place, the order of the old homes is unchanged; only the new one is inserted.
+    let s = 5;
+    const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+    const keys = Array.from({ length: 2000 }, () => (Math.floor(r() * 65536) * 65536 + Math.floor(r() * 65536)) >>> 0);
+    const fresh = (Math.floor(r() * 65536) * 65536 + 17) >>> 0;
+    const after = [...keys.slice(0, 3), fresh, ...keys.slice(3)];
+    const seq = (k: number[]) => [...keyOrder(k)].map((i) => k[i]);
+    expect(seq(after).filter((k) => k !== fresh)).toEqual(seq(keys));
+    // Keyed by index (round 6 to 9), the same sync reshuffles nearly everything.
+    const byIndex = (k: number[]) => [...keyOrder(INDEX_KEYS(k.length))].map((i) => k[i]);
+    const moved = byIndex(after).filter((k) => k !== fresh).filter((k, j) => k !== byIndex(keys)[j]).length;
+    expect(moved).toBeGreaterThan(1900);
+  });
+
+  it("orders homes at one place (a building's units) by where they stand in the list", () => {
+    const k = [42, 7, 42, 42, 9];
+    const o = [...keyOrder(k)];
+    const at42 = o.filter((i) => k[i] === 42);
+    expect(at42).toEqual([0, 2, 3]);
+  });
+
+  it("round 57.10: the lights a camera draws stay the same homes when the sync adds homes off screen", () => {
+    // The real homes are listed by id; four new listings (far away, off this camera) land at the
+    // front of the list. By place, the drawn homes are the same homes; by index they were not.
+    const extra = 4;
+    const lat2 = new Float64Array(L.lat.length + extra), lng2 = new Float64Array(L.lat.length + extra);
+    for (let i = 0; i < extra; i++) (lat2[i] = 44 + i * 0.01), (lng2[i] = -76);
+    lat2.set(L.lat, extra);
+    lng2.set(L.lng, extra);
+    const key = (la: ArrayLike<number>, ln: ArrayLike<number>) => Array.from({ length: la.length }, (_, i) => (Math.round((la[i] - 40) * 10000) * 65536 + Math.round((ln[i] + 77) * 10000)) >>> 0);
+    const k1 = key(L.lat, L.lng), k2 = key(lat2, lng2);
+    const E2 = homesEcef(lat2, lng2);
+    const drawn = (e: Float64Array, order: Int32Array, k: number[]) =>
+      planDensity({ ecef: e, order, frame: cameraFrame(WIDE), viewport: VP, budget: 150, gap: 8 }).map((i) => k[i]).sort((a, b) => a - b);
+    expect(drawn(E2, keyOrder(k2), k2)).toEqual(drawn(E, keyOrder(k1), k1));
+    expect(drawn(E2, keyOrder(INDEX_KEYS(k2.length)), k2)).not.toEqual(drawn(E, keyOrder(INDEX_KEYS(k1.length)), k1));
   });
 });
 

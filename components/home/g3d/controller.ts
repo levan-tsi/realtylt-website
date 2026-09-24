@@ -28,7 +28,7 @@ import { modeFor, type MapMode, type ModeChoice } from "./map-options";
 import { FLY_IN_MS, flyInCamera } from "./interaction";
 import { lightPins, planLights, type LightSet } from "./thinning";
 import { LightLayer, type LayerCamera } from "./light-layer";
-import { focalOf, glowLevel, hashOrder, homesEcef, planDensity, projectAll, projectHome, representedCounts } from "./light-plan";
+import { focalOf, glowLevel, homesEcef, keyOrder, planDensity, projectAll, projectHome, representedCounts } from "./light-plan";
 import { backWaitMs, earlyScroll } from "./warm-plan";
 import type { MapPin } from "@/lib/idx/types";
 
@@ -36,6 +36,8 @@ import type { MapPin } from "@/lib/idx/types";
 type El = HTMLElement & Record<string, any>;
 
 export interface Homes extends LightSet {
+  /** Each home's key for the planner's fixed order (light-plan.ts placeKeys): stable across syncs. */
+  key: ArrayLike<number>;
   town: Uint16Array;
   towns: readonly string[];
 }
@@ -123,7 +125,7 @@ export class G3dController {
   private elev: ElevationGrid | null = null;
   /** Our light layer (light-layer.ts), or null (no canvas: the lab's map-only look). */
   layer: LightLayer | null = null;
-  /** The homes in the planner's fixed random order (light-plan.ts hashOrder). */
+  /** The homes in the planner's fixed random order (light-plan.ts keyOrder, by each home's key). */
   private order = new Int32Array(0);
   private planned: number[] = [];
   private revealed = false;
@@ -629,7 +631,7 @@ export class G3dController {
   setHomes(h: Homes) {
     this.homes = h;
     this.pins = lightPins(h);
-    this.order = hashOrder(h.lat.length);
+    this.order = keyOrder(h.key);
     this.layer?.setHomes(h.lat, h.lng, this.heightAt);
     if (this.cam) this.replan(this.cam, true);
   }
