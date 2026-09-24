@@ -1510,3 +1510,113 @@ Bronx, Manhattan, Staten Island and Putnam draw fewer lights than round 7 becaus
 gap, not the count, now limits the boroughs (his own rule: "not too close so people can move
 the mouse"). For round 9: the cover still carries round 7's 130 lights and no glow; the
 re-render must use round 8's plan (`reachOf`, `densityGap`, the glow steps).
+
+### Round 9, the builder's numbers (commits `78535ca` `17f1d7d`; for the orchestrator to re-run)
+
+Production build on :3102 (the code of `17f1d7d`), headed Chrome, RTX 2060, cold = a fresh profile
+per run. Instruments (gitignored): `scripts/_scratch-r57h-grade.mjs` (candidate grades set live on
+the running page at four stops, `--raw` the ungraded map alone), `-model.mjs` (night.ts `gradeRgb`
+against Chrome's pixels), `-try.mjs` (candidates offline on the raw frames), `-live.mjs` (a dump of
+the page's own lights at the hero), `-landdiff.mjs`, `-dissolve.mjs` / `-dissolve2.mjs`,
+`-peaks.mjs`, `-frames.mjs`, `-lag.mjs`, `-contrast.mjs`, `-overflow.mjs`, `-coast.mjs` (fetched and
+clipped the coastline). Outputs under `scripts/_scratch-r57/9/`.
+
+**1. The moonlit grade** (`night.ts`, `78535ca`). CSS has no per-channel filter, so the cast is
+built from the ones it has: `hue-rotate(-186deg) saturate(s) sepia(p) hue-rotate(186deg)` after
+brightness and contrast. The imagery's own colours are turned half round and back (they return
+where they were, fainter) and only the sepia's warmth comes out turned, to silver-blue. The plain
+order (sepia then hue-rotate, the first try) turned the flat sea brown, a warm patch on the map
+against the brief (`9/model/sheet.png`). `gradeRgb` models the whole chain (the Filter Effects
+matrices, clamped per function, then the screen tint): against Chrome's own graded pixels at the
+territory and Queens, mean error **0.20 to 0.28 levels** (`-model.mjs`). Three strengths at four
+stops both widths (`9/grade/sheet-1440.png`, `sheet-390.png`, columns deep / moon1 / moon2 / moon3;
+rows the territory, Orange, Westchester County, Queens). Chosen: **moon2** (`brightness(0.53)
+contrast(1.46) hue-rotate(-186deg) saturate(0.32) sepia(0.38) hue-rotate(186deg)`, tint
+`rgb(3, 6, 16)`). Median levels, deep -> moon2: the western ridges 11 -> 6, New Jersey's valley
+23 -> 14, the Sound 45 -> 32, the open sea 47 -> 34. Why moon2: moon1 is barely darker than deep on
+the valley; moon3 sinks the western ridges and Brooklyn's streets into the floor; moon2 is a third
+darker with the ridges, the Hudson and the coast still drawn, the city's roofs silver-blue, the sea
+a slate sheen, and nothing in the map warm (tested: blue over red for the land, the city, the sea
+and white; red never over blue, even for sand and brown). Google's white logo comes out at about
+0.6 of white and reads (`9/final/*-1440.png`). `?night=deep|light|mid|moon1|moon3|0` compare.
+vitest **1861 -> 1874** (the chain, the grade's promises, the choice).
+
+Said plainly: the water's "sheen" is the grade's own doing (the imagery's flat sea lifts to a slate
+blue above the land, 34 against 6 to 14); a filter cannot light the water and not the land, and
+nothing else was added to the page.
+
+**2. The cover** (`make-map-cover.mjs`, `17f1d7d`). The land in the imagery's DAYLIGHT tones,
+then every pixel through `gradeRgb` with the page's grade: the cover is in exactly the live look and
+follows the grade if it changes. The tones are box means measured by `--measure` on the ungraded
+live frames at the hero camera, both widths (they agree within 5 levels), sorted by what our data
+says is at each pixel: land under 60 m 93,101,80; 60 to 160 m 69,85,64; the uplands 67,84,62; our
+densest homes 112,112,94; water within 1 km of the shore 25,55,49 and 1 to 2 km 44,75,93; the flat
+sea 85,109,168 from about 2.5 km out; and the far land's haze by distance from the eye (fitted to
+four bins, 150 to 400 km). Moonlit relief from our grid, subtle (x 1 +/- 0.5 of the facing; the
+moon from 292 degrees, 30 up). Beyond the grid: Natural Earth 1:10m land
+(`scripts/data/ne10m-land-nyc.json`, 13 rings, 1,001 points, 19 KB, public domain), rasterised at
+0.004 degrees with the grid's own water mask inside the grid, and a chamfer distance to the shore
+for the water's tone. New Jersey's and Long Island's shores and Connecticut's coast stand where they
+are (`9/cover/tall-v1.webp`: Long Island whole, the Jersey shore; round 6's cover was flat dark land
+there). Still flat: the land beyond the grid has no relief (we have no elevation there).
+
+The lights: round 8's plan at the hero for the live css box (1425 x 900 / 390 x 844): `budgetFor`,
+`densityGap` (12 px wide, 14 px phone), `planDensity` over the same hash order, `representedCounts`
+at 1.5 gaps and the five glow steps at 0.12, each light added to its full `reachOf`, the logo corner
+dark. Checked against a dump of the page's own drawn lights at the hero (`--check`): places within
+**0.01 px**; homes shared **442 of 445** at 1440 (the cover takes the walk's Highlands step with
+`keep`, as the page does under the cover; cold 436, with the Westchester step too 431), **219 to
+225 of 245 to 251** on the phone (its walk is a timed jump through the page's shots, not
+reproducible; the cover keeps the cold plan). Wide 1600 x 1000 **31.4 KB**, tall 780 x 1688
+**29.0 KB** (were 13.7 and 13.1): 445 and 245 glowing lights against 130 and 72 points; q55 saves
+4 KB and softens the cores, not taken.
+
+**Cover vs first steady frame** (the same words and shades over both; `9/dissolve*/`), mean
+absolute levels / share of pixels over 24:
+
+| | round 6's record | round 8's build, round 6's cover | round 9, fresh | round 9, an hour on |
+|---|---|---|---|---|
+| 1440 | 12.9 / 13.5 % | 12.42 / 11.9 % | **6.92 / 6.3 %** (6.93 / 6.3 % on the final build) | 8.0 / 7.7 % (x2) |
+| 390 | 7.6 / 6.0 % | 7.97 / 6.8 % | **4.23 / 2.8 %** (4.21 / 2.7 %) | 5.02 / 4.0 % (x2) |
+
+The last column, said plainly: the cover bakes the listings of the moment, and the planner's order
+is a hash of the home's INDEX, so four listings added by the sync (15,709 -> 15,713) moved which
+homes the page lights. The covers were re-rendered after it (the committed ones) and measured again
+(6.93 / 4.21). A cover rendered at deploy, or an order keyed by the listing id (light-plan.ts, not
+this round's to touch), would hold it. Looked at: `9/dissolve-final3/default/sheet-1440.png`,
+`sheet-390.png` (before / 350 ms in / after): the lights stay where they are, the land gains
+Google's texture, towns and roads, the sea and the coast stay put; at 390 the names arrive with the
+map (as before).
+
+**3. Frames, the chosen grade, every stop both widths** (`9/final/sheet-1440.png`,
+`sheet-390.png`; counts per stop identical to round 8's, 445 at the territory to 72 at Staten
+Island, least gaps 12 to 14.8 px). Looked at: the territory reads as moonlit ground with the
+Shawangunk and Highlands ridges drawn and the city silver under its warm field; Queens' streets
+silver-grey, the parks and the bay near-black, every light warm; Westchester and Rockland the
+lights' glow on dark blue-grey ground; the Featured and New listings sections darker behind the
+cards. The phone's map mostly sits behind the lists, as before.
+
+**4. Gates.** Lag, cold, 1440: the final build (`9/lag/final-desk-{3,4}`) and this round's first
+build (`desk-{1,2}`, `desk-night0`; the same grade and covers, the footer line the only change):
+
+| | desk-1 | desk-2 | final-3 | final-4 | ?night=0 |
+|---|---|---|---|---|---|
+| the Westchester flight, ms | 27.8 | 27.8 | 28.0 | 27.8 | 27.8 |
+| worst flight frame, ms | 97.3 | 90.3 | 83.4 | 83.3 | 83.3 |
+| flights over 34, sum | 23 | 22 | 37 | 21 | 27 |
+| first steady / cover gone, s | 5.4 / 9.1 | 5.3 / 9.2 | 5.3 / 9.2 | 5.8 / 9.4 | 5.1 / 9.0 |
+| boot worst / over 34 | 417 / 23 | 431 / 23 | 424 / 26 | 417 / 21 | 417 / 24 |
+
+Round 8: 27.8 to 48.6, 83 to 97, first steady 5.3 to 6.1 s, cover gone 9.1 to 9.9 s: unchanged; the
+grade costs nothing measurable (the same numbers with `?night=0`). Contrast kit on the final build
+(`9/contrast/final-*`): 1440 = **2** (AI and Connect, the pills the kit misreads), 390 = **0**
+outside the logo hole (5 texts inside it, faded on purpose); the lowest real text 4.53, as round 8.
+Overflow 0 at 1440 / 390 / 320, five scroll positions each. tsc clean; vitest **1874** (138 files).
+Outside `components/home/g3d/night*`, the cover script, the covers, ATTRIBUTIONS.md and
+SceneCredit.tsx the diff is one new data file, `scripts/data/ne10m-land-nyc.json` (the coastline
+the script reads). The footer credit on the real map now ends "Coastline: Natural Earth." (none is
+required; named because used). The dusk and day covers are unchanged (the day render is
+byte-identical to the old script's).
+
+**:3102** runs the final build (the code of `17f1d7d`, the re-rendered covers); it was down twice,
+55 s and 51 s (stop, build, start).
