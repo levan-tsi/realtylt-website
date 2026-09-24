@@ -192,3 +192,10 @@ lever); one cold laptop flight at 62.5 ms in one of five runs; the blog template
 text on cover and card photos and its stock covers not chosen per topic; the 320 px tap label
 overlap and the 200 % zoom search field from round 5; with JS off the browser still fetches
 the two preloaded library modules; OpenFreeMap's continuity.
+
+Verification debts from the blog agent's own close-out, for the next blog session: the
+basement post's Cost vs. Value figures ($52,012 cost, $36,905 resale value, 71 %) come from
+secondary sources because the JLC page blocks fetches (confirm against the report itself); the
+NY DMV 10-day address and 30-day licence rules in the relocating post were confirmed from
+search snippets, not the DMV page; the 1031 post's commit message says the Form 8824
+safe-harbor text was added and it was not (the post is right, the message is wrong).
