@@ -294,3 +294,105 @@ Yes. Every basement sleeping room needs an emergency escape and rescue opening o
 - New York State Department of Health, [radon](https://www.health.ny.gov/environmental/radon/)
 
 Checked against these sources on September 24, 2026.`;
+
+/** Homeownership #4: "The Ultimate New Homeowner's Toolkit: 9 Essentials Every Owner Needs" (Drive draft,
+ * 2025). Corrections: the unsourced "90% of issues" and "$100 handyman" figures are removed; the caulking
+ * savings claim now carries ENERGY STAR's own figure. Added a sourced safety section (New York smoke and CO
+ * alarm rules, calling 811 through UDig NY before digging). */
+export const TOOLKIT_POST = `Congratulations on the keys. Along with the joy of a home of your own comes the small stuff: a loose doorknob, a picture to hang, a flat-pack bookcase in a hundred pieces. You do not need a garage full of equipment to handle it. These new homeowner toolkit essentials are nine versatile tools that cover most first-year jobs, plus one bonus tool for older Hudson Valley houses and the safety basics every owner should know in the first week.
+
+## The 9 new homeowner toolkit essentials
+
+### 1. A cordless drill/driver
+
+The workhorse. It drives screws for furniture assembly, curtain rods, shelves and brackets, and drills pilot holes and holes for anchors. A job with thirty screws takes minutes instead of an hour. A compact model with two batteries is enough for most homes.
+
+### 2. A multi-bit screwdriver
+
+For the jobs where a drill is too much: cabinet hinges, switch plates, a loose doorknob, battery doors on smoke alarms and remotes. One handle with interchangeable Phillips and flat bits replaces a drawer of loose screwdrivers.
+
+### 3. A 16-ounce claw hammer
+
+Drives nails for pictures and trim, taps things into place, and the claw pulls bent or misplaced nails. Sixteen ounces is a good all-purpose weight.
+
+### 4. A 25-foot tape measure
+
+Measure before you buy, before you move furniture and before you hang anything. Will the sofa fit through the door? Where is the center of the wall? A 25-foot locking tape covers nearly any room.
+
+### 5. Pliers: needle-nose and groove-joint
+
+Needle-nose pliers reach into tight spaces and hold small parts. Groove-joint pliers (often called channel-lock or plumber's pliers) grip the large slip nuts under kitchen and bath sinks, where many small drips start.
+
+### 6. An adjustable wrench
+
+One wrench that fits a wide range of nuts and bolts: furniture with bolts, a wobbly table leg, supply-line fittings, lawn equipment. A 10-inch size is a good first choice.
+
+### 7. A utility knife
+
+Safer and far more effective than kitchen scissors. It breaks down moving boxes, opens packaging, trims carpet and scores drywall for small patches. Buy spare blades; a sharp blade is a safer blade.
+
+### 8. An electronic stud finder
+
+Drywall alone will not hold a TV, a large mirror, floating shelves or a grab bar. A stud finder shows where the framing is so heavy items go into wood, or tells you when you need the right anchor instead.
+
+### 9. A headlamp
+
+Most repairs in dark places need both hands: under a sink, behind the washer, at the breaker panel, in the attic. A headlamp puts light where you look and keeps your hands free.
+
+## The Hudson Valley bonus tool: a caulking gun
+
+Many homes here are older, and older windows, trim and baseboards leak air. A caulking gun and a tube of the right caulk seal those gaps before winter. ENERGY STAR notes that simple fixes like caulking around windows and weatherstripping doors are part of sealing and insulating a home, which can save up to 10% on annual energy bills ([ENERGY STAR](https://www.energystar.gov/saveathome/seal_insulate)).
+
+## Safety basics for your first week
+
+Tools fix things; these steps prevent the expensive problems.
+
+- **Find your shut-offs.** Locate the main water shut-off valve, the breaker panel and, if you have gas, the gas meter valve. Label the breakers if they are not labeled. When a pipe bursts, knowing where the valve is matters more than any tool.
+- **Check the smoke alarms.** Since April 1, 2019, new or replacement smoke alarms sold in New York must have a sealed, non-removable 10-year battery or be hard-wired ([New York Department of State](https://dos.ny.gov/news/new-residential-smoke-alarm-sales-requirements-go-effect-april-1)). Test each one and note the manufacture date.
+- **Check the carbon monoxide alarms.** Under Amanda's Law, New York homes with a fuel-burning appliance or an attached garage must have CO alarms; in existing one- and two-family homes the minimum is one on the lowest story with a sleeping area ([Town of Cortlandt summary of Amanda's Law](https://www.townofcortlandtny.gov/cn/webpage.cfm?tpid=17479)).
+- **Call 811 before you dig.** Planting a tree, setting a fence post or installing a mailbox? Outside New York City and Long Island, submit a free locate request with UDig NY online or by calling 811, and member utilities respond within two business days ([UDig NY](https://www.udigny.org/)).
+
+## Common jobs you can now handle
+
+- A loose doorknob, hinge or cabinet handle
+- A small drip at the slip nut under a sink
+- Assembling a bookcase or bed frame
+- Hanging a level gallery wall, or a TV mounted into studs
+- Sealing a drafty window before winter
+
+For the seasonal routine that keeps a house in shape, use our [seasonal home maintenance checklist](/blog/seasonal-home-maintenance-checklist-hudson-valley); when you are ready for small upgrades, see [high-ROI home improvements under $1,000](/blog/high-roi-home-improvements-under-1000).
+
+## Building your toolkit
+
+- **One trip.** Take this list to a local hardware store and buy it in one visit; staff can point you to durable mid-range options.
+- **The housewarming list.** When friends and family ask what you need, send them this page.
+- **One place for everything.** A sturdy toolbox or canvas bag, kept in the same spot, means the right tool is there when you need it.
+
+For the bigger jobs that call for a licensed professional, our help does not end at closing. If you need a recommendation for a painter, plumber or electrician in the Hudson Valley, [get in touch](/connect). Still shopping for the house itself? Start with our [buying guide](/buying).
+
+## Frequently asked questions
+
+### What tools should a new homeowner buy first?
+
+A cordless drill/driver, a multi-bit screwdriver, a claw hammer, a tape measure, needle-nose and groove-joint pliers, an adjustable wrench, a utility knife, a stud finder and a headlamp. In an older house, add a caulking gun.
+
+### What should be in a basic home repair kit?
+
+The nine tools above, plus picture-hanging hardware, wall anchors, spare screws, plumber's tape, a level, and spare batteries for anything that still takes them.
+
+### What is the first thing to do in a new house?
+
+Find the main water shut-off, the breaker panel and the gas valve, then test the smoke and carbon monoxide alarms and change the locks or rekey them.
+
+### Do I need to call before digging in my yard in New York?
+
+Yes. Outside New York City and Long Island, submit a free request with UDig NY or call 811 before you dig, and wait for the utilities to mark their lines.
+
+## Sources
+
+- ENERGY STAR, [seal and insulate](https://www.energystar.gov/saveathome/seal_insulate)
+- New York Department of State, [residential smoke alarm sales requirements](https://dos.ny.gov/news/new-residential-smoke-alarm-sales-requirements-go-effect-april-1)
+- Town of Cortlandt, NY, [Amanda's Law carbon monoxide alarm requirements](https://www.townofcortlandtny.gov/cn/webpage.cfm?tpid=17479)
+- UDig NY, [call 811 before you dig](https://www.udigny.org/)
+
+Checked against these sources on September 24, 2026.`;

@@ -59,7 +59,7 @@ import {
   SELLER_MISTAKES_POST,
   SELLING_TIMELINE_POST,
 } from "./seller-posts";
-import { BASEMENT_POST, SEASONAL_MAINTENANCE_POST, UNDER_1000_POST } from "./homeowner-posts";
+import { BASEMENT_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -1247,15 +1247,23 @@ export const POSTS: BlogPost[] = ([
     placeholder: true,
   },
   {
-    slug: "new-homeowners-toolkit-9-essentials",
+    slug: "new-homeowner-toolkit-essentials",
     cluster: "owning",
     title: "The Ultimate New Homeowner's Toolkit: 9 Essentials Every Owner Needs",
-    date: "2025-09-12",
+    seoTitle: "The New Homeowner Toolkit: 9 Essentials Every Owner Needs",
+    /** Homeownership #4, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug
+     * redirects here. Dated 2025-09-17 (the stub's 2025-09-12 now belongs to the basement post). */
+    date: "2025-09-17",
+    updated: "2026-09-24",
     excerpt:
-      "The nine tools that handle ninety percent of first-year homeowner jobs, and none of them are a table saw.",
-    cover: "/images/listings/house-14.jpg",
-    body: PLACEHOLDER_BODY("the starter toolkit every new homeowner should own before the first squeaky hinge"),
-    placeholder: true,
+      "Nine versatile tools that cover most first-year jobs, a bonus tool for drafty older houses, and the safety checks every new owner should make in the first week.",
+    seoDescription:
+      "New homeowner toolkit essentials: the 9 tools for most first-year repairs, a caulking gun for drafty older homes, and New York smoke, CO and 811 basics.",
+    cover: "/images/editorial/tool-wall.jpg",
+    body: [],
+    placeholder: false,
+    markdown: TOOLKIT_POST,
+    aliases: ["new-homeowners-toolkit-9-essentials", "new-homeowner-toolkit"],
   },
   {
     slug: "cost-vs-value-finishing-basement-hudson-valley",
