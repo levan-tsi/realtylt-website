@@ -54,7 +54,7 @@ For the down payment side in detail, read [how much you really need for a down p
 
 ## Step 2: Get pre-approved and ask about NY first-time home buyer programs
 
-A pre-qualification is a quick estimate. A pre-approval is a conditional commitment from a lender after it has checked your pay stubs, W-2s, bank statements and tax returns. It tells you your real budget, and it tells a seller you are a serious buyer. Our article on [getting pre-approved for a mortgage](/blog/mortgage-pre-approval-what-lenders-look-for) walks through what lenders check, and the [financing page](/financing) explains how we connect buyers with lenders.
+A pre-qualification is a quick estimate. A pre-approval is a conditional commitment from a lender after it has checked your pay stubs, W-2s, bank statements and tax returns. It tells you your real budget, and it tells a seller you are a serious buyer. Our article on [getting pre-approved for a mortgage](/blog/mortgage-pre-approval-requirements-ny) walks through what lenders check, and the [financing page](/financing) explains how we connect buyers with lenders.
 
 When you talk to a lender, ask one question plainly: which down payment and closing cost assistance programs do you offer? These are the main ones New York buyers should know about, with the figures as published in 2026.
 
@@ -116,7 +116,7 @@ This matters because an accepted offer is not yet a signed contract. Until both 
 
 ## Step 8: Inspect the house and let the lender appraise it
 
-- **The home inspection.** A licensed home inspector examines the structure and the major systems: roof, foundation, plumbing, electrical, heating and cooling. Use the report to decide whether to proceed, renegotiate or ask for repairs. Our [home inspection checklist](/blog/home-inspection-checklist-new-york) lists what to watch.
+- **The home inspection.** A licensed home inspector examines the structure and the major systems: roof, foundation, plumbing, electrical, heating and cooling. Use the report to decide whether to proceed, renegotiate or ask for repairs. Our [home inspection checklist](/blog/home-inspection-checklist-hudson-valley-ny) lists what to watch.
 - **The appraisal.** Your lender orders an independent appraisal to confirm the home is worth what it is lending against.
 
 Many Hudson Valley homes need more than the standard inspection:
@@ -177,3 +177,118 @@ After you have a house under contract, a financed purchase commonly takes one to
 - New York State Department of Health, [radon](https://www.health.ny.gov/environmental/radon/) and [private well water testing](https://www.health.ny.gov/environmental/water/drinking/regulations/fact_sheets/fs3_water_quality.htm)
 
 Program terms, limits and income caps change. Figures here were checked against the sources above on September 24, 2026; confirm current terms with your lender before you rely on them.`;
+
+export const MORTGAGE_TYPES_POST = `FHA, VA, PMI, MIP, DTI: the first conversation about a mortgage can sound like alphabet soup. This guide explains FHA, VA and conventional loans in plain terms, with the 2026 limits that apply in the Hudson Valley and New York City, so you can walk into a lender's office knowing which questions to ask.
+
+Think of the three as different tools for the same job. A conventional loan suits a buyer with strong credit and savings. An FHA loan opens the door for buyers with less cash or a thinner credit history. A VA loan is an earned benefit for those who have served, and for the people who qualify it is often the strongest of the three.
+
+## FHA vs VA vs conventional loans at a glance
+
+- **Minimum down payment:** conventional 3% on programs such as HomeReady, otherwise usually 5%; FHA 3.5%; VA 0% for eligible borrowers.
+- **Credit:** conventional has no fixed Fannie Mae floor for automated underwriting since November 2025, though many lenders still use 620; FHA allows 580 for the minimum down payment and 500 to 579 with 10% down; VA sets no minimum of its own, and lenders set theirs.
+- **Mortgage insurance:** conventional carries private mortgage insurance (PMI) below 20% down, which can be cancelled; FHA carries mortgage insurance premiums (MIP) that often last the life of the loan; VA has no monthly mortgage insurance but charges a one-time funding fee.
+- **Property use:** conventional can finance a primary home, second home or investment property; FHA and VA are for a home you will live in, including a two- to four-unit building where you occupy one unit.
+
+## The conventional loan: the standard choice for strong borrowers
+
+A conventional loan is a mortgage that is not insured or guaranteed by a federal agency. Most are "conforming" loans that meet the rules of Fannie Mae and Freddie Mac, which buy them from lenders.
+
+### Who it suits
+
+- **Credit.** Better scores still earn better pricing. Fannie Mae removed the hard 620 minimum for loans run through its Desktop Underwriter system in November 2025, but loans underwritten by hand and many lenders' own rules still use 620 ([Fannie Mae](https://singlefamily.fanniemae.com/applications-technology/desktop-underwriter-desktop-originator/desktop-underwriter-credit-risk-assessment-updates)).
+- **Debt-to-income.** Fannie Mae allows a total debt-to-income ratio of up to 50% on loans approved through Desktop Underwriter; on manually underwritten loans the ceiling is 36%, or 45% with the required credit score and reserves ([Fannie Mae Selling Guide B3-6-02](https://selling-guide.fanniemae.com/sel/b3-6-02/debt-income-ratios)).
+- **Down payment.** Programs such as HomeReady allow 3% down for eligible lower- and moderate-income buyers ([Fannie Mae](https://yourhome.fanniemae.com/buy/homeready)). The real advantage comes at 20% down, which removes mortgage insurance altogether.
+
+### Private mortgage insurance, and how it ends
+
+PMI protects the lender, not you, when you put down less than 20%. It is usually added to your monthly payment. Unlike FHA insurance, it is not permanent. Under the federal Homeowners Protection Act you can ask your servicer to cancel it when your balance is scheduled to reach 80% of the home's original value, and the servicer must end it automatically when the balance is scheduled to reach 78%, as long as you are current on payments ([CFPB](https://www.consumerfinance.gov/ask-cfpb/when-can-i-remove-private-mortgage-insurance-pmi-from-my-loan-en-202/)).
+
+### How sellers see it
+
+Sellers compare risk as well as price. FHA and VA appraisals also check minimum property standards, so a house with safety or condition problems may need repairs before the loan can close. A conventional appraisal does not carry those program standards, and many sellers read a conventional pre-approval as the simplest path to closing. That perception is not a rule, but in a multiple-offer situation it can matter.
+
+## The FHA loan: the accessible option for getting started
+
+An FHA loan is made by a private lender and insured by the Federal Housing Administration, part of the U.S. Department of Housing and Urban Development (HUD). The insurance lowers the lender's risk, which is why the requirements are more flexible.
+
+### Who it suits
+
+- **Credit.** A score of 580 or higher qualifies for the minimum 3.5% down payment; 500 to 579 requires 10% down; below 500 is not eligible ([HUD](https://answers.hud.gov/FHA/s/article/Does-FHA-require-a-minimum-credit-score-and-how-is-it-determined)). Individual lenders can require more.
+- **Down payment.** 3.5% of the price ([HUD](https://answers.hud.gov/FHA/s/article/What-is-the-minimum-down-payment-requirement-for-FHA)).
+- **Multi-family.** FHA can finance a two- to four-unit property if you live in one unit. With a three- or four-unit building, the projected rent must pass HUD's self-sufficiency test. Buying a small multi-family to live in one unit and rent the others is what investors call [house hacking](/blog/house-hacking-hudson-valley-ny).
+
+### The mortgage insurance premium
+
+FHA insurance has two parts. The upfront premium is 1.75% of the base loan amount, usually financed into the loan. The annual premium is paid monthly. For loans endorsed since March 20, 2023 with a term over 15 years and a loan amount at or below the national conforming limit, it is 0.55% a year with the minimum 3.5% down and 0.50% with 5% or more down ([HUD Mortgagee Letter 2023-05](https://www.hud.gov/sites/dfiles/OCHCO/documents/2023-05hsgml.pdf)).
+
+The part to understand before you choose FHA is how long the annual premium lasts. With less than 10% down it stays for the life of the loan; with 10% or more down it ends after 11 years. The usual way out is to refinance into a conventional loan once you have enough equity. FHA trades a lower entry cost for a higher long-term cost, which is a fair trade for many first-time buyers, as long as it is a deliberate one.
+
+## The VA loan: a benefit earned through service
+
+A VA loan is made by a private lender and guaranteed by the U.S. Department of Veterans Affairs. Eligibility covers veterans and service members who meet the service requirements, some members of the National Guard and Reserves, and some surviving spouses. The first step is a Certificate of Eligibility, which a VA-experienced lender can usually request for you.
+
+### Why it is so strong
+
+- **No down payment** for eligible borrowers, as long as the price does not exceed the appraised value.
+- **No monthly mortgage insurance.**
+- **No county loan limit with full entitlement.** Since January 1, 2020, veterans with full entitlement have no VA loan limit; the lender still decides how much you qualify for ([VA](https://www.va.gov/housing-assistance/home-loans/loan-limits/)).
+- **No VA-set minimum credit score.** Lenders set their own.
+
+### The funding fee
+
+Instead of monthly insurance, most VA borrowers pay a one-time funding fee, which can be paid at closing or financed. For a purchase, it is 2.15% of the loan on first use with less than 5% down, 3.3% on later uses with less than 5% down, 1.5% with 5% or more down, and 1.25% with 10% or more down. Veterans receiving compensation for a service-connected disability, eligible surviving spouses receiving Dependency and Indemnity Compensation, and several other groups are exempt ([VA](https://www.va.gov/housing-assistance/home-loans/funding-fee-and-closing-costs/)).
+
+VA appraisals check the VA's minimum property requirements, which exist to protect the buyer from an unsafe house. Some sellers still assume a VA purchase will be slow or complicated. A buyer's agent and lender who know the program can answer that directly with the seller's side and position the offer as the reliable one it is.
+
+## What the 2026 loan limits mean in the Hudson Valley
+
+Conforming loan limits cap the size of a loan Fannie Mae and Freddie Mac can buy, and the Federal Housing Finance Agency sets them every year. For 2026 the baseline one-unit limit is $832,750, and the ceiling in the most expensive areas is $1,249,125 ([FHFA](https://www.fhfa.gov/news/news-release/fhfa-announces-conforming-loan-limit-values-for-2026)).
+
+In FHFA's 2026 county list, Westchester, Putnam and Rockland, together with the five boroughs, are in the New York metro area with a one-unit limit of $1,209,750. Dutchess, Orange and Ulster are at the $832,750 baseline ([FHFA county data](https://www.fhfa.gov/data/conforming-loan-limit)). A loan above your county's limit is a jumbo loan, which usually means stricter requirements.
+
+### How it plays out locally
+
+- **A bidding war in Beacon.** Five offers on a walkable house near Main Street. A conventional pre-approval with a solid down payment reads as the least complicated path, and in a close contest that can decide it.
+- **A two-family in Poughkeepsie.** You plan to live in one unit and rent the other. FHA lets you buy it with 3.5% down, and the rent from the second unit helps carry the mortgage.
+- **A veteran buying in Westchester.** With full entitlement, a VA buyer has no VA loan limit and no required down payment, and can keep savings for moving costs and repairs, provided the lender approves the amount.
+
+## Your mortgage roadmap
+
+1. **Take a financial snapshot.** Know your credit score, your savings, and what you can put toward the down payment and [closing costs](/blog/buyer-closing-costs-new-york).
+2. **Meet a lender and compare all three.** Ask for a side-by-side of monthly payment, cash to close and long-term cost for each program you qualify for. Our [financing page](/financing) explains how we connect buyers with lenders.
+3. **Get pre-approved** for the program you choose. See [what lenders look for in a pre-approval](/blog/mortgage-pre-approval-requirements-ny).
+4. **Plan the offer with your agent.** How your loan type will read to a particular seller is part of the offer strategy. Start with our [first-time home buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist) if you are early in the process.
+
+There is no single best mortgage. The best one fits your credit, your savings, your income and how long you plan to stay. When you are ready to run your own numbers, [talk with us](/connect).
+
+## Frequently asked questions
+
+### What is the biggest difference between an FHA and a conventional loan?
+
+Mortgage insurance. Conventional PMI can be cancelled at 80% of the original value and ends automatically at 78%. FHA's annual premium lasts the life of the loan when you put down less than 10%, and 11 years when you put down 10% or more. FHA is easier to qualify for; conventional is usually cheaper over time for buyers with strong credit.
+
+### How do I avoid PMI on a conventional loan?
+
+Put down 20% or more. With less, you can ask to cancel PMI once your balance is scheduled to reach 80% of the home's original value, and your servicer must end it at 78%.
+
+### Who is eligible for a VA loan?
+
+Veterans and active-duty service members who meet the VA's service requirements, some National Guard and Reserve members, and some surviving spouses. You prove eligibility with a Certificate of Eligibility.
+
+### Is there a VA loan limit in New York?
+
+Not for borrowers with full entitlement: VA removed county loan limits for them on January 1, 2020. Your lender still decides how much you can borrow. Borrowers with partial entitlement are subject to county limits.
+
+### What is the 2026 conforming loan limit in Westchester County?
+
+$1,209,750 for a one-unit home, the same as the rest of the New York metro area including Putnam, Rockland and the five boroughs. Dutchess, Orange and Ulster are at the $832,750 baseline.
+
+## Sources
+
+- Fannie Mae, [Desktop Underwriter credit risk assessment updates](https://singlefamily.fanniemae.com/applications-technology/desktop-underwriter-desktop-originator/desktop-underwriter-credit-risk-assessment-updates), [Selling Guide B3-6-02](https://selling-guide.fanniemae.com/sel/b3-6-02/debt-income-ratios) and [HomeReady](https://yourhome.fanniemae.com/buy/homeready)
+- Consumer Financial Protection Bureau, [when can I remove PMI](https://www.consumerfinance.gov/ask-cfpb/when-can-i-remove-private-mortgage-insurance-pmi-from-my-loan-en-202/)
+- HUD, [FHA minimum credit score](https://answers.hud.gov/FHA/s/article/Does-FHA-require-a-minimum-credit-score-and-how-is-it-determined), [minimum down payment](https://answers.hud.gov/FHA/s/article/What-is-the-minimum-down-payment-requirement-for-FHA) and [Mortgagee Letter 2023-05](https://www.hud.gov/sites/dfiles/OCHCO/documents/2023-05hsgml.pdf)
+- U.S. Department of Veterans Affairs, [loan limits and entitlement](https://www.va.gov/housing-assistance/home-loans/loan-limits/) and [funding fee](https://www.va.gov/housing-assistance/home-loans/funding-fee-and-closing-costs/)
+- Federal Housing Finance Agency, [2026 conforming loan limits](https://www.fhfa.gov/news/news-release/fhfa-announces-conforming-loan-limit-values-for-2026) and [county list](https://www.fhfa.gov/data/conforming-loan-limit)
+
+Limits, premiums and fees were checked against these sources on September 24, 2026. Your lender's own rules can be stricter than the program minimums.`;

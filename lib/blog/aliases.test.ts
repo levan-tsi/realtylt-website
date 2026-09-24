@@ -77,7 +77,6 @@ const PENDING_CRM = new Set<string>([
   "how-to-find-screen-tenants-ny",
   "short-term-vs-long-term-rentals-hudson-valley",
   "hiring-property-management-company-hudson-valley",
-  "fha-va-conventional-mortgage-loans-ny",
   "how-much-house-can-i-afford-ny-guide",
   "why-you-need-real-estate-attorney-ny",
   "relocating-to-hudson-valley-ny-guide",
@@ -91,11 +90,12 @@ const PENDING_CRM = new Set<string>([
 const PENDING_LINK_TARGETS = new Set<string>([
   "buyer-closing-costs-new-york",
   "down-payment-hudson-valley-ny",
-  "mortgage-pre-approval-what-lenders-look-for",
+  "mortgage-pre-approval-requirements-ny",
   "winning-offer-competitive-market-ny-hudson-valley",
   "why-you-need-real-estate-attorney-ny",
-  "home-inspection-checklist-new-york",
+  "home-inspection-checklist-hudson-valley-ny",
   "final-walk-through-checklist",
+  "house-hacking-hudson-valley-ny",
 ]);
 
 const LIVE = new Set(POSTS.map((p) => p.slug));

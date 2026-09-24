@@ -28,7 +28,7 @@ import {
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
-import { FIRST_TIME_BUYER_CHECKLIST_POST } from "./real-estate-posts";
+import { FIRST_TIME_BUYER_CHECKLIST_POST, MORTGAGE_TYPES_POST } from "./real-estate-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -108,7 +108,11 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
 /* NOTE ON ORDER: this array is authored NEWEST-FIRST, and lib/blog's merge relies on the
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
-export const POSTS: BlogPost[] = [
+/* 2026-09-24: the reposted consumer articles carry spread-out dates, so hand-keeping the array
+   newest-first became error-prone. The array is now SORTED ON EXPORT (stable, newest first):
+   entries already in order keep their exact order, ties keep authoring order, and an entry
+   added anywhere lands where its date puts it. */
+export const POSTS: BlogPost[] = ([
   {
     slug: "the-singularity-self-improving-ai-system",
     cluster: "building",
@@ -643,6 +647,24 @@ export const POSTS: BlogPost[] = [
     placeholder: true,
   },
   {
+    slug: "fha-va-conventional-mortgage-loans-ny",
+    cluster: "buying",
+    title: "Understanding Different Mortgages: FHA, VA, and Conventional Loans Explained",
+    seoTitle: "FHA vs VA vs Conventional Loans in NY: A 2026 Guide",
+    /** Buyer Education #7, reposted 2026-09-24. Slug = the CRM drip link and the draft's own. */
+    date: "2025-11-20",
+    updated: "2026-09-24",
+    excerpt:
+      "Conventional, FHA or VA: what each asks of you, what each costs over time, and how the 2026 loan limits play out in Westchester, Dutchess and the rest of the Hudson Valley.",
+    seoDescription:
+      "FHA, VA and conventional loans explained for New York buyers: down payments, credit, PMI vs MIP, the VA funding fee and the 2026 Hudson Valley loan limits.",
+    cover: "/images/lifestyle/financing.jpg",
+    body: [],
+    placeholder: false,
+    markdown: MORTGAGE_TYPES_POST,
+    aliases: ["understanding-mortgages-fha-va-conventional"],
+  },
+  {
     slug: "first-time-home-buyer-ny-10-step-checklist",
     cluster: "buying",
     title: "First-Time Home Buyer in NY? Here's Your 10-Step Checklist from Start to Finish",
@@ -751,7 +773,7 @@ export const POSTS: BlogPost[] = [
     placeholder: true,
   },
 
-];
+] as BlogPost[]).sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 
 export function getPost(slug: string): BlogPost | undefined {
   return POSTS.find((p) => p.slug === slug);
