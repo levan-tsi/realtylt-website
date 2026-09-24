@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PHONE_WARM_SHOTS, STALL_PATH, warmPlan } from "./warm-plan";
+import { PHONE_SETTLE_MS, PHONE_WARM_SHOTS, STALL_PATH, warmPlan } from "./warm-plan";
 import type { ShotName } from "../night/shots";
 
 const pageShots: ShotName[] = ["dutchess", "highlands", "westchester", "ulster", "harbour", "region"];
@@ -31,6 +31,11 @@ describe("the pre-warm plan", () => {
     expect(p.shots).toHaveLength(PHONE_WARM_SHOTS);
     expect(p.budgetMs).toBeGreaterThanOrEqual(14_000);
     expect(p.flyMs).toBeUndefined();
+    // Round 57.11: at the close cameras a step waited up to its 4 s for tiles that stream for 3 to
+    // 6 s; each step now waits at most PHONE_SETTLE_MS: the cover's hold after the first draw 2.95 /
+    // 2.90 s against 5.33 / 3.42, the flights' frames the same (90 ms, lag p1..p2).
+    expect(p.settleMs).toBe(PHONE_SETTLE_MS);
+    expect(PHONE_SETTLE_MS).toBe(1200);
   });
 
   it("keeps the one-shot jump when the page opens mid-scroll (not at the territory shot)", () => {

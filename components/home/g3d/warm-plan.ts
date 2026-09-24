@@ -51,6 +51,10 @@ export const JUMP_BUDGET_MS = 1500;
  * all (271, 278), against 90 ms with both. So both, always; the cover's 14 s cap (sharp-gate.ts)
  * bounds the walk instead of the budget. */
 export const PHONE_WARM_SHOTS = 2;
+/** Round 57.11: each of the phone's steps waits at most this for its tiles. At the close cameras a
+ * step's tiles stream for 3 to 6 s, and the old 4 s wait held the cover 5.3 s after the first draw;
+ * at 1.2 s it holds 2.9 to 3.0 s and the first flights' frames are the same (90 ms, lag p1..p2). */
+export const PHONE_SETTLE_MS = 1200;
 
 type Query = { get(name: string): string | null };
 
@@ -77,7 +81,7 @@ export function warmPlan(o: { pageShots: readonly ShotName[]; initial: ShotName;
     };
   }
   if (auto && narrow && initial === "hero" && !asked.length) {
-    return { shots: pageShots.slice(0, PHONE_WARM_SHOTS), mode: "jump", budgetMs: budget(20_000), settleMs: numOr(q.get("warmSettle"), undefined), backMs: numOr(q.get("warmBack"), undefined) };
+    return { shots: pageShots.slice(0, PHONE_WARM_SHOTS), mode: "jump", budgetMs: budget(20_000), settleMs: numOr(q.get("warmSettle"), PHONE_SETTLE_MS), backMs: numOr(q.get("warmBack"), undefined) };
   }
   const lite = pageShots.filter((n) => !(AREA_FLIGHT as readonly string[]).includes(n) || (AREA_FLIGHT as readonly string[]).indexOf(n) < 2);
   return {
