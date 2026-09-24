@@ -171,6 +171,10 @@ const CLEAR_STYLE = {
 /** How long the scroll must rest on a new stop before the map flies there: a fling across three
  * sections is one flight, not three. */
 const SETTLE_MS = 110;
+/** The cover's breath (round 57.10): the added copy's peak opacity and one breath's length, chosen by
+ * frames (docs/parity/DESIGN-ROUND57.md §7, round 10). */
+const BREATH_PEAK = 0.35;
+const BREATH_MS = 4200;
 
 export interface Cover {
   wide: string;
@@ -250,6 +254,28 @@ export function G3dGround({
   /** JavaScript has run (the scrims are placed by it; without it the cover shades its own words). */
   const [js, setJs] = useState(false);
   useEffect(() => setJs(true), []);
+  /** THE COVER BREATHES while it holds (round 57.10): the owner read the still as "maybe it just
+   * froze". A copy of the cover added over itself (plus-lighter) at an opacity that swells and
+   * falls. The copy carries `contrast(3)`, which sends everything under mid-grey (the land, the
+   * water: all of the ground) to black, so only the lights and their glow are added: they swell by
+   * up to BREATH_PEAK and the ground does not move (measured over the lit city at 1440: the mean
+   * rises 29.7 -> 31.6 levels at the peak; without the filter 38.2, and the sea lifted with it). The
+   * compositor animates one opacity (no main-thread work while the map boots); reduced motion: still.
+   * It goes with the cover's own dissolve, then stops. */
+  const breath = useRef<HTMLDivElement>(null);
+  const breathAnim = useRef<Animation | null>(null);
+  useEffect(() => {
+    const el = breath.current;
+    if (!el || typeof el.animate !== "function" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const a = el.animate([{ opacity: 0 }, { opacity: BREATH_PEAK }, { opacity: 0 }], { duration: BREATH_MS, iterations: Infinity, easing: "ease-in-out" });
+    breathAnim.current = a;
+    return () => a.cancel();
+  }, [js]);
+  useEffect(() => {
+    if (!posterGone) return;
+    const t = setTimeout(() => breathAnim.current?.cancel(), 900);
+    return () => clearTimeout(t);
+  }, [posterGone]);
   /** The night grade (night.ts) and the lights' thinning (`?thin=lattice` compares round 57.2's). */
   const [night, setNight] = useState<NightGrade | null>(nightGrade(null).grade);
   const lightCanvas = useRef<HTMLCanvasElement>(null);
@@ -1198,6 +1224,9 @@ export function G3dGround({
         className={`pointer-events-none ${pinned && !error ? "fixed" : "absolute"} inset-x-0 top-0 z-[1] h-[100svh] bg-black bg-cover bg-center bg-no-repeat bg-[image:var(--g3d-tall)] lg:bg-[image:var(--g3d-wide)] transition-opacity duration-[700ms] ease-in-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
         style={{ "--g3d-tall": `url(${cover.tall})`, "--g3d-wide": `url(${cover.wide})` } as CSSProperties}
       >
+        {js && !error ? (
+          <div ref={breath} aria-hidden data-g3d-breath className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-[image:var(--g3d-tall)] opacity-0 lg:bg-[image:var(--g3d-wide)]" style={{ mixBlendMode: "plus-lighter", filter: "contrast(3)" }} />
+        ) : null}
         {js ? null : (
           <>
         <div
