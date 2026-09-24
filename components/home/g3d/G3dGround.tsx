@@ -709,7 +709,6 @@ export function G3dGround({
       holdFlights: q.get("gate") === "1",
       maxWaitMs: Number(q.get("maxWait") ?? 1200),
       flightMs: (q.get("flight") ?? "1600,2600").split(",").map(Number) as unknown as readonly [number, number],
-      firstStep: q.get("ladder") === "first",
       mapId: mapIdFrom(process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID),
       mode: modeChoice(q.get("mode"), MODE),
       canvas: lightCanvas.current,

@@ -40,7 +40,7 @@ const TOWNS: Record<string, readonly Row[]> = {
   westchester: [
     ["White Plains", 41.034, -73.763],
     ["Yonkers", 40.931, -73.899],
-    ["Peekskill", 41.29, -73.92],
+    ["New Rochelle", 40.911, -73.782],
   ],
   bronx: [
     ["Riverdale", 40.9, -73.906],

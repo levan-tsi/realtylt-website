@@ -26,7 +26,7 @@ export interface G3dCamera extends MapCamera {
  * subject, comes down to 50 to 55 degrees, and comes in until the subject fills the frame. The
  * hero also moves its center west so the valley and the city stand to the right of the words.
  * `tall` is the portrait phone; a shot without one uses `wide` with the phone's wider lens. */
-export const TUNED: Partial<Record<ShotName, { wide: G3dCamera; tall?: G3dCamera }>> = {
+export const TUNED: Record<ShotName, { wide: G3dCamera; tall?: G3dCamera }> = {
   // The phone puts its words above and below the map, so the valley stands in the middle.
   //
   // Round 56 phase 1b, THE LADDER (below): the ranges were 120, 38, 28, 30 km, then the counties at
@@ -60,16 +60,66 @@ export const TUNED: Partial<Record<ShotName, { wide: G3dCamera; tall?: G3dCamera
   // tilt 45 at 172 km and 48 at 162 km lost, one showing Schenectady, one Syracuse). The pale band
   // at the bottom is the ocean at every candidate, so it is shaded, not framed away (G3dGround).
   hero: { wide: cam(41.0093, -74.3582, 145_000, 55, 8, 40), tall: cam(40.8319, -73.858, 156_000, 46, 340, 58) },
-  dutchess: { wide: cam(41.62, -73.95, 60_000, 50, 0, 40) },
-  highlands: { wide: cam(41.4, -73.97, 30_000, 52, 185, 40) },
-  westchester: { wide: cam(41.07, -73.87, 48_000, 50, 250, 40) },
-  harbour: { wide: cam(40.7, -74.02, 30_000, 50, 30, 40), tall: cam(40.7, -74.0, 34_000, 48, 30, 58) },
+  //
+  // Round 57.11, CLOSE (the owner's third verdict, record section 8: "buildings and blocks look like
+  // bad quality lines ... zoom closer so it's not low quality pixelated lines"). Measured by the
+  // orchestrator: at the chapters' 30 to 90 km Google's imagery is a black slab with grey road
+  // lines; at 8 km it is a sharp photograph. So every chapter and county is now a PHOTOGRAPH of one
+  // signature place (SIGNATURE below) at 6 to 9 km and tilt 58 to 60, chosen by eye from candidates
+  // at both widths (scripts/_scratch-r57/11/compose*/, the record's round 11). On a laptop the "Where
+  // we work" list takes the left half, so each county's place stands right of it (the look point
+  // is moved screen-left by ~0.45 of the half width); on a phone the words fill the top and bottom
+  // and the place stands in the middle (`tall`, fov 58). The territory (hero) and the tail
+  // (region, under the footer's 0.86 veil) stay high.
+  // The Highlands and Westchester chapters stand under the featured and new-listings cards (the
+  // photograph barely shows), so they sit at 12 km, the brief's upper bound: measured cold, the
+  // flight between them at 8 to 9 km made 97 / 55 / 104 ms, at 12 km 42 / 70 / 35 (lag f1..f3).
+  dutchess: { wide: cam(41.7259, -73.964, 8_000, 60, 5, 40), tall: cam(41.71, -73.945, 8_000, 60, 5, 58) },
+  highlands: { wide: cam(41.43, -73.975, 12_000, 60, 190, 40), tall: cam(41.43, -73.975, 12_000, 60, 190, 58) },
+  westchester: { wide: cam(41.07, -73.895, 12_000, 60, 265, 40), tall: cam(41.07, -73.895, 12_000, 60, 265, 58) },
+  ulster: { wide: cam(41.9061, -73.99, 8_000, 60, 270, 40), tall: cam(41.922, -73.99, 8_000, 60, 270, 58) },
+  "dutchess-county": { wide: cam(41.7213, -73.9388, 7_000, 60, 80, 40), tall: cam(41.705, -73.935, 7_000, 60, 80, 58) },
+  orange: { wide: cam(41.4835, -74.01, 7_000, 60, 270, 40), tall: cam(41.5, -74.01, 7_000, 60, 270, 58) },
+  putnam: { wide: cam(41.4, -73.7282, 9_000, 58, 0, 40), tall: cam(41.4, -73.7, 9_000, 58, 0, 58) },
+  rockland: { wide: cam(41.0779, -73.9441, 8_000, 60, 320, 40), tall: cam(41.09, -73.925, 8_000, 60, 320, 58) },
+  "westchester-county": { wide: cam(40.9233, -73.7889, 7_000, 60, 30, 40), tall: cam(40.915, -73.77, 7_000, 60, 30, 58) },
+  bronx: { wide: cam(40.8398, -73.9325, 6_000, 60, 20, 40), tall: cam(40.835, -73.915, 6_000, 60, 20, 58) },
+  manhattan: { wide: cam(40.7771, -73.9912, 6_000, 60, 30, 40), tall: cam(40.77, -73.975, 6_000, 60, 30, 58) },
+  queens: { wide: cam(40.7248, -73.8575, 6_000, 60, 20, 40), tall: cam(40.72, -73.84, 6_000, 60, 20, 58) },
+  brooklyn: { wide: cam(40.6652, -73.9875, 6_000, 60, 340, 40), tall: cam(40.67, -73.97, 6_000, 60, 340, 58) },
+  "staten-island": { wide: cam(40.5971, -74.1214, 7_000, 58, 350, 40), tall: cam(40.615, -74.088, 7_000, 58, 350, 58) },
+  harbour: { wide: cam(40.685, -74.03, 6_000, 60, 40, 40), tall: cam(40.682, -74.042, 6_000, 60, 40, 58) },
   region: { wide: cam(40.98, -73.98, 60_000, 48, 10, 40) },
 };
 
 function cam(lat: number, lng: number, range: number, tilt: number, heading: number, fov: number): G3dCamera {
   return { center: { lat, lng, altitude: 0 }, range, tilt, heading, fov };
 }
+
+/** The two shots that stay HIGH: the territory (the page's first picture: our lights and names over
+ * the whole region) and the tail under the footer. Every other shot is CLOSE. */
+export const HIGH: readonly ShotName[] = ["hero", "region"];
+export const CLOSE: readonly ShotName[] = (Object.keys(TUNED) as ShotName[]).filter((n) => !HIGH.includes(n));
+
+/** Each close shot's subject, the place the photograph is of (tested: in the window at both widths,
+ * right of the list on a laptop for the counties). */
+export const SIGNATURE: Record<Exclude<ShotName, "hero" | "region">, { place: string; lat: number; lng: number }> = {
+  dutchess: { place: "Walkway over the Hudson", lat: 41.7106, lng: -73.9447 },
+  highlands: { place: "Cold Spring, under Storm King", lat: 41.4201, lng: -73.9546 },
+  westchester: { place: "the Tappan Zee from Tarrytown", lat: 41.0707, lng: -73.8898 },
+  ulster: { place: "Kingston's Rondout", lat: 41.9187, lng: -73.9837 },
+  "dutchess-county": { place: "Poughkeepsie's riverfront", lat: 41.7004, lng: -73.935 },
+  orange: { place: "Newburgh's waterfront", lat: 41.5023, lng: -74.0086 },
+  putnam: { place: "Carmel on Lake Gleneida", lat: 41.43, lng: -73.6804 },
+  rockland: { place: "Nyack", lat: 41.0907, lng: -73.9179 },
+  "westchester-county": { place: "New Rochelle on the Sound", lat: 40.9115, lng: -73.7824 },
+  bronx: { place: "the Grand Concourse at Yankee Stadium", lat: 40.8296, lng: -73.9262 },
+  manhattan: { place: "Central Park and Midtown", lat: 40.774, lng: -73.9708 },
+  queens: { place: "Flushing Meadows", lat: 40.7461, lng: -73.8448 },
+  brooklyn: { place: "Prospect Park and Park Slope", lat: 40.6602, lng: -73.969 },
+  "staten-island": { place: "St. George", lat: 40.6437, lng: -74.0736 },
+  harbour: { place: "the Upper Bay", lat: 40.6892, lng: -74.0445 },
+};
 
 /** Google's 3D map will not tilt past this; a camera above it flies to a different picture. */
 export const MAX_TILT = 80;
@@ -97,25 +147,25 @@ export const aspectMix = (aspect: number) => Math.min(1, Math.max(0, (aspect - 0
 export const LADDER: readonly ShotName[] = ["hero", "dutchess", "highlands", "westchester", ...AREA_FLIGHT, "harbour", "region"];
 export const MAX_RANGE_RATIO = 2;
 export const MAX_TILT_STEP = 15;
-/** Round 57: the hero rose to 145 to 156 km to hold the whole territory, and the ladder pulls
- * Dutchess back behind it (60 -> 72.5 km at 1440, 78 km at 390). The alternative, letting the
- * FIRST step (hero to Dutchess) differ by up to this ratio and Dutchess stay at 60 km, was built
- * and measured with the headed lag probe, cold, twice at each width (docs/parity/DESIGN-ROUND57.md
- * §4): on the phone the first flight's worst frame was 243 and 271 ms with the exception against
- * 118 and 70 ms on the ladder; at 1440, 83 and 63 against 76 and 56. It costs, so the ladder
- * holds. `{ firstStep: true }` (the page's `?ladder=first`) keeps the exception one switch away. */
-export const FIRST_STEP_RATIO = 2.75;
+/* Round 57.11, the ladder re-examined for the close shots: the chapters and counties now sit at 6 to
+ * 9 km, within 1.5x of each other, so the rule binds nowhere between them; kept, so a later shot
+ * cannot break it. The two ALTITUDE steps (the territory down to the first chapter, 145 -> 8 km; the
+ * harbour up to the tail, 6 -> 60 km) are exempt: pulling the close shots back behind a high
+ * neighbour (the old rule: Dutchess 72.5 km, the harbour 30 km) is exactly the "bad quality lines"
+ * altitude. Their cost is measured by the lag probe (the record's round 11) and the imagery streams
+ * under the flight's veil (G3dGround). Round 57's first-step exception (`?ladder=first`) is gone:
+ * the first step is now always free. */
 
 const ladderCache = new Map<string, Map<ShotName, G3dCamera>>();
 
 /** Every shot on the ladder at this aspect, with the range floors applied. */
-export function ladderCameras(aspect: number, opts: { firstStep?: boolean } = {}): Map<ShotName, G3dCamera> {
-  const key = `${Math.round(aspect * 1000)}${opts.firstStep ? "f" : ""}`;
+export function ladderCameras(aspect: number): Map<ShotName, G3dCamera> {
+  const key = `${Math.round(aspect * 1000)}`;
   const hit = ladderCache.get(key);
   if (hit) return hit;
   const cams = LADDER.map((n) => rawCamera(n, aspect));
   // The allowed ratio between rung i and rung i + 1.
-  const ratio = (i: number) => (i === 0 && opts.firstStep ? FIRST_STEP_RATIO : MAX_RANGE_RATIO);
+  const ratio = (i: number) => (HIGH.includes(LADDER[i]) || HIGH.includes(LADDER[i + 1]) ? Infinity : MAX_RANGE_RATIO);
   // Raise the nearer of any two neighbours until the ratio holds, both ways, until nothing moves
   // (raising only, so it converges; each pass can only lift a range to half a neighbour's).
   for (let pass = 0; pass < LADDER.length; pass++) {
@@ -135,8 +185,8 @@ export function ladderCameras(aspect: number, opts: { firstStep?: boolean } = {}
 }
 
 /** The camera for a shot in a window of this aspect (width / height), on the ladder. */
-export function cameraFor(name: ShotName, aspect: number, opts: { firstStep?: boolean } = {}): G3dCamera {
-  return ladderCameras(aspect, opts).get(name) ?? rawCamera(name, aspect);
+export function cameraFor(name: ShotName, aspect: number): G3dCamera {
+  return ladderCameras(aspect).get(name) ?? rawCamera(name, aspect);
 }
 
 /** The shot's own camera, before the ladder's range floors. */

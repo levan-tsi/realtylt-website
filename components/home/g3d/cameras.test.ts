@@ -1,8 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { AREA_FLIGHT, FLIGHT, SHOTS, type ShotName } from "../night/shots";
-import { FIRST_STEP_RATIO, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, TUNED, CITY_GAP, MAX_LIGHTS, budgetFor, cameraFor, densityGap, derivedCamera, focusOf, lightGap, pxPerLight, rawCamera } from "./cameras";
+import { CLOSE, HIGH, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, SIGNATURE, TUNED, CITY_GAP, MAX_LIGHTS, budgetFor, cameraFor, densityGap, focusOf, lightGap, pxPerLight, rawCamera } from "./cameras";
 import { project } from "./camera";
-import { COUNTY_BOUNDS } from "@/components/idx/county-bounds";
 
 const LAPTOP = 1440 / 900;
 const PHONE = 390 / 844;
@@ -25,38 +24,49 @@ describe("the shots as cameras", () => {
     }
   });
 
-  it("tunes the six chapters and leaves the eleven county shots as derived", () => {
-    expect(Object.keys(TUNED).sort()).toEqual([...FLIGHT].sort());
-    for (const a of AREA_FLIGHT) expect(rawCamera(a, LAPTOP)).toEqual({ ...derivedCamera(a, LAPTOP), tilt: Math.min(MAX_TILT, derivedCamera(a, LAPTOP).tilt) });
+  it("tunes every shot: the territory and the tail high, every chapter and county close (round 57.11)", () => {
+    expect(Object.keys(TUNED).sort()).toEqual([...ALL].sort());
+    expect([...HIGH].sort()).toEqual(["hero", "region"]);
+    expect([...CLOSE].sort()).toEqual(ALL.filter((n) => !HIGH.includes(n)).sort());
   });
 
-  it("keeps each tuned chapter looking the way the night flight looked (heading within 15 degrees)", () => {
-    for (const name of FLIGHT) {
-      if (name === "region") continue; // the night region looked due north too; kept
-      const d = derivedCamera(name, LAPTOP).heading, t = cameraFor(name, LAPTOP).heading;
-      const delta = Math.abs(((((t - d) % 360) + 540) % 360) - 180);
-      expect(delta).toBeLessThan(15);
+  // The owner (record section 8): "buildings and blocks look like bad quality lines ... zoom closer
+  // so it's not low quality pixelated lines". Google's imagery is a photograph only close in.
+  it("brings every chapter and county down to 4 to 12 km at a tilt of 55 to 66, both shapes of window", () => {
+    for (const name of CLOSE) {
+      for (const aspect of [LAPTOP, PHONE, 1]) {
+        const c = cameraFor(name, aspect);
+        expect(c.range, name).toBeGreaterThanOrEqual(4_000);
+        expect(c.range, name).toBeLessThanOrEqual(12_000);
+        expect(c.tilt, name).toBeGreaterThanOrEqual(55);
+        expect(c.tilt, name).toBeLessThanOrEqual(66);
+      }
     }
   });
 
-  it("keeps the horizon out of every chapter on a laptop (tilt 55 or under; the night flight's 62 to 72 showed Montreal)", () => {
-    for (const name of FLIGHT) expect(cameraFor(name, LAPTOP).tilt).toBeLessThanOrEqual(55);
+  it("keeps the territory shot as it was (145 km at 1440, 156 km on a phone)", () => {
+    expect(cameraFor("hero", LAPTOP)).toEqual({ center: { lat: 41.0093, lng: -74.3582, altitude: 0 }, range: 145_000, tilt: 55, heading: 8, fov: 40 });
+    expect(cameraFor("hero", PHONE).range).toBe(156_000);
+  });
+
+  it("frames each close shot on its signature place: in the window at both shapes, and right of the list of areas on a laptop", () => {
+    for (const name of CLOSE) {
+      const sig = SIGNATURE[name as keyof typeof SIGNATURE];
+      for (const [aspect, vp] of [[LAPTOP, { width: 1440, height: 900 }], [PHONE, { width: 390, height: 844 }]] as const) {
+        const c = cameraFor(name, aspect);
+        const p = project(c, { ...vp, fov: c.fov }, sig.lat, sig.lng);
+        expect(p, `${name} ${sig.place}`).not.toBeNull();
+        expect(p!.x, `${name} ${sig.place} x`).toBeGreaterThan(0.08 * vp.width);
+        expect(p!.x, `${name} ${sig.place} x`).toBeLessThan(0.95 * vp.width);
+        expect(p!.y, `${name} ${sig.place} y`).toBeGreaterThan(0.1 * vp.height);
+        expect(p!.y, `${name} ${sig.place} y`).toBeLessThan(0.95 * vp.height);
+        if (aspect === LAPTOP && (AREA_FLIGHT as readonly string[]).includes(name)) expect(p!.x, `${name} right of the list`).toBeGreaterThan(740);
+      }
+    }
   });
 
   it("widens the lens for a portrait phone, as the night flight did", () => {
     for (const name of ALL) expect(cameraFor(name, PHONE).fov).toBeGreaterThan(cameraFor(name, LAPTOP).fov);
-  });
-
-  it("frames each county on its own homes: the county's middle is in the window", () => {
-    for (const a of AREA_FLIGHT) {
-      const b = COUNTY_BOUNDS[focusOf(a) as keyof typeof COUNTY_BOUNDS];
-      const c = cameraFor(a, LAPTOP);
-      const p = project(c, { width: 1440, height: 900, fov: c.fov }, (b.south + b.north) / 2, (b.west + b.east) / 2)!;
-      expect(p.x).toBeGreaterThan(0);
-      expect(p.x).toBeLessThan(1440);
-      expect(p.y).toBeGreaterThan(0);
-      expect(p.y).toBeLessThan(900);
-    }
   });
 
   it("puts the hero's city and valley in the window, right of the words on a laptop", () => {
@@ -83,43 +93,31 @@ describe("the ladder (phase 1b: fewer new tiles per flight)", () => {
   });
 
   for (const [label, aspect] of [["laptop", LAPTOP], ["phone", PHONE], ["square", 1]] as const) {
-    it(`keeps neighbours within ${MAX_RANGE_RATIO}x in range and ${MAX_TILT_STEP} degrees in tilt (${label})`, () => {
+    it(`keeps close neighbours within ${MAX_RANGE_RATIO}x in range, and every neighbour within ${MAX_TILT_STEP} degrees in tilt (${label})`, () => {
       for (let i = 1; i < LADDER.length; i++) {
         const a = cameraFor(LADDER[i - 1], aspect), b = cameraFor(LADDER[i], aspect);
         const ratio = Math.max(a.range, b.range) / Math.min(a.range, b.range);
-        expect(ratio, `${LADDER[i - 1]} -> ${LADDER[i]}`).toBeLessThanOrEqual(MAX_RANGE_RATIO + 1e-3);
+        // Round 57.11: the steps into and out of a HIGH shot (the territory down to the first chapter,
+        // the harbour up to the tail) are altitude changes flown under the flight's veil.
+        const altitude = HIGH.includes(LADDER[i - 1]) || HIGH.includes(LADDER[i]);
+        if (!altitude) expect(ratio, `${LADDER[i - 1]} -> ${LADDER[i]}`).toBeLessThanOrEqual(MAX_RANGE_RATIO + 1e-3);
         expect(Math.abs(a.tilt - b.tilt), `${LADDER[i - 1]} -> ${LADDER[i]}`).toBeLessThanOrEqual(MAX_TILT_STEP);
       }
     });
 
-    it(`with the first-step exception, lets only hero -> dutchess reach ${FIRST_STEP_RATIO}x (${label})`, () => {
-      for (let i = 1; i < LADDER.length; i++) {
-        const a = cameraFor(LADDER[i - 1], aspect, { firstStep: true }), b = cameraFor(LADDER[i], aspect, { firstStep: true });
-        const ratio = Math.max(a.range, b.range) / Math.min(a.range, b.range);
-        expect(ratio, `${LADDER[i - 1]} -> ${LADDER[i]}`).toBeLessThanOrEqual((i === 1 ? FIRST_STEP_RATIO : MAX_RANGE_RATIO) + 1e-3);
-      }
-    });
-
-    it(`only ever pulls a shot back, never closer, and changes nothing but its range (${label})`, () => {
+    it(`never pulls a close shot back behind a high one, and changes nothing but range (${label})`, () => {
       for (const n of LADDER) {
         const raw = rawCamera(n, aspect), c = cameraFor(n, aspect);
         expect(c.range).toBeGreaterThanOrEqual(raw.range);
         expect({ ...c, range: 0 }).toEqual({ ...raw, range: 0 });
       }
+      expect(cameraFor("dutchess", aspect).range).toBe(rawCamera("dutchess", aspect).range);
+      expect(cameraFor("harbour", aspect).range).toBe(rawCamera("harbour", aspect).range);
     });
   }
 
-  it("pulls back only the shots that needed it on a laptop (Dutchess and the Highlands behind the round-57 hero, Putnam after Orange, the Bronx after Westchester County)", () => {
-    const moved = LADDER.filter((n) => cameraFor(n, LAPTOP).range > rawCamera(n, LAPTOP).range);
-    expect(moved).toEqual(["dutchess", "highlands", "putnam", "bronx"]);
-    expect(cameraFor("dutchess", LAPTOP).range).toBe(72_500);
-    expect(cameraFor("highlands", LAPTOP).range).toBe(36_250);
-  });
-
-  it("with the first-step exception, leaves Dutchess at its own 60 km (round 57, measured and not chosen)", () => {
-    const hero = cameraFor("hero", LAPTOP, { firstStep: true }), dutchess = cameraFor("dutchess", LAPTOP, { firstStep: true });
-    expect(hero.range / dutchess.range).toBeGreaterThan(MAX_RANGE_RATIO);
-    expect(dutchess.range).toBe(rawCamera("dutchess", LAPTOP).range);
+  it("pulls back nothing on a laptop now that the close shots sit within 1.5x of each other", () => {
+    expect(LADDER.filter((n) => cameraFor(n, LAPTOP).range > rawCamera(n, LAPTOP).range)).toEqual([]);
   });
 });
 

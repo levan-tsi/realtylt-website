@@ -11,6 +11,10 @@ describe("the pre-warm plan", () => {
   it("on a wide window opening at the territory shot, flies the stall's path under the poster", () => {
     const p = warmPlan({ pageShots, initial: "hero", narrow: false, q: q() });
     expect(p.shots).toEqual([...STALL_PATH]);
+    // Round 57.11: at the close cameras the one-time stall (236 to 299 ms, the first flight into the
+    // counties) is compiled by the long close flight Westchester -> Ulster, not by Highlands ->
+    // Westchester alone (lag g1..g3: without it 298 / 236 ms, with it 55 / 56 / 97).
+    expect(STALL_PATH).toEqual(["highlands", "westchester", "ulster"]);
     expect(p.mode).toBe("path");
     expect(p.flyMs).toBe(400);
     expect(p.settleMs).toBe(600);

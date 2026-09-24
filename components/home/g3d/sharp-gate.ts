@@ -19,9 +19,10 @@ export const QUIET_MS = 300;
 export const QUIET_MIN_MS = 250;
 /** The cover never holds past this, from navigation, once the map has drawn. */
 export const COVER_CAP_MS = 14_000;
-/** What the walk under the cover needs to finish (its steps, then the return): measured 1.7 s of
- * steps at 1440 and the return's quiet; the phone's jump walk about 2.6 s. */
-export const WALK_ROOM_MS = 2_600;
+/** What the walk under the cover needs to finish (its steps, then the return). Round 57.11: the
+ * laptop's walk is three steps (warm-plan.ts STALL_PATH), measured 2.6 to 3.5 s with its return cold
+ * (lag e..g); the phone's two jumps fit inside it. */
+export const WALK_ROOM_MS = 3_400;
 
 /** The camera set at `since` is drawn: nothing has arrived for QUIET_MS (tiles before `since` do not
  * count), and at least QUIET_MIN_MS have gone by. */
@@ -51,7 +52,8 @@ export function walkFits(now: number, capMs = COVER_CAP_MS, roomMs = WALK_ROOM_M
  * the walk's own room. Round 10's fixed 14 s skipped the compile walk whenever the first draw came
  * after ~11.4 s (a slow line), and the visitor met the 250 ms Westchester stall later instead; now a
  * slow-line visitor waits the walk's two seconds more under the breathing cover. Before the first
- * draw (null) the cap is COVER_CAP_MS (the cover stays until the map has drawn anyway). */
+ * draw (null) the cap is COVER_CAP_MS (the cover stays until the map has drawn anyway). Pass the
+ * walk's START (it comes a few ms after the draw; counted from the draw, the walk missed by 3 ms). */
 export function coverCap(firstDraw: number | null, capMs = COVER_CAP_MS, roomMs = WALK_ROOM_MS): number {
   return firstDraw === null ? capMs : Math.max(capMs, firstDraw + roomMs);
 }

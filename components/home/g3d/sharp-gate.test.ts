@@ -32,6 +32,8 @@ describe("the sharp gate", () => {
 
   it("the walk runs only if it can finish before the cover's cap", () => {
     expect(COVER_CAP_MS).toBe(14_000);
+    // Round 57.11: the laptop's walk is three steps now (measured 2.6 to 3.5 s with its return).
+    expect(WALK_ROOM_MS).toBe(3_400);
     expect(walkFits(COVER_CAP_MS - WALK_ROOM_MS)).toBe(true);
     expect(walkFits(COVER_CAP_MS - WALK_ROOM_MS + 1)).toBe(false);
   });
@@ -43,6 +45,9 @@ describe("the sharp gate", () => {
     expect(walkFits(11_800)).toBe(false);
     expect(coverCap(11_800)).toBe(11_800 + WALK_ROOM_MS);
     expect(walkFits(11_800, coverCap(11_800))).toBe(true);
+    // Counted from the walk's start, which comes a few ms after the draw, the walk still fits.
+    expect(walkFits(11_803, coverCap(11_803))).toBe(true);
+    expect(walkFits(11_803, coverCap(11_800))).toBe(false);
     // A very late draw still gets its walk.
     expect(walkFits(30_000, coverCap(30_000))).toBe(true);
   });

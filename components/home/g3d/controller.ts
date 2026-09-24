@@ -188,9 +188,6 @@ export class G3dController {
       maxWaitMs: number;
       /** A section flight's shortest and longest duration (camera.ts flightMillis). */
       flightMs: readonly [number, number];
-      /** Let the hero's first step exceed MAX_RANGE_RATIO (cameras.ts FIRST_STEP_RATIO; measured
-       * worse on the phone in round 57, so off unless `?ladder=first`). */
-      firstStep?: boolean;
       /** The owner's cloud style (map-options.ts mapIdFrom), or null: Google's unstyled map. */
       mapId?: string | null;
       /** HYBRID, SATELLITE, or HYBRID at the territory shot only (map-options.ts). */
@@ -477,7 +474,9 @@ export class G3dController {
     const sharp = this.opts.sharp !== false;
     // Round 57.11: the cap is the later of 14 s and the first draw plus the walk's room, so the
     // compile walk always runs once the map has drawn (sharp-gate.ts coverCap).
-    const cap = coverCap(this.firstSteadyAt);
+    // Counted from the walk's own start (a few ms after the first draw: counted from the draw, the
+    // first build of this rule skipped the walk by 3 ms on the slow line, lag a1-desk).
+    const cap = coverCap(t0);
     const fits = !sharp || walkFits(t0, cap);
     for (const [k, name] of this.opts.warm.entries()) {
       if (!fits || this.warmAbort || this.stopped || performance.now() - t0 > this.opts.warmBudgetMs) break;
@@ -533,7 +532,7 @@ export class G3dController {
 
   cameraOf(name: ShotName): G3dCamera {
     const { width, height } = this.opts.viewport();
-    const c = cameraFor(name, width / Math.max(1, height), { firstStep: this.opts.firstStep });
+    const c = cameraFor(name, width / Math.max(1, height));
     const o = this.opts.camOverride?.[name];
     return o ? { ...c, ...o } : c;
   }

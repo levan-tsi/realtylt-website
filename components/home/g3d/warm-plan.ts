@@ -36,8 +36,10 @@ export interface WarmPlan {
   open?: boolean;
 }
 
-/** The flight that compiles the shader: the page's own Highlands to Westchester. */
-export const STALL_PATH: readonly ShotName[] = ["highlands", "westchester"];
+/** The flights that compile the shader: the page's own Highlands to Westchester, and (round 57.11, the
+ * close cameras) on to Ulster: the long close flight is what compiles the one-time stall there, which
+ * otherwise came on the page's first flight into the counties at 236 to 299 ms (lag g1..g3). */
+export const STALL_PATH: readonly ShotName[] = ["highlands", "westchester", "ulster"];
 export const PATH_FLY_MS = 400;
 export const PATH_SETTLE_MS = 600;
 export const PATH_BACK_MS = 2000;
