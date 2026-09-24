@@ -154,3 +154,41 @@ Still 404, no draft exists: `when-to-sell-house-hudson-valley`, `how-to-price-ho
 lands (the orchestrator does it), then remove the blog worktree. Known: the template gives cover
 and card photos empty alt text (pre-existing); the cover photos are the template's stock set,
 not chosen per topic (a polish item).
+
+## 9. The state at the close of 2026-09-24 (rounds 12 and 13 and the blog merge; supersedes §2 to §4 and §7 where they differ)
+
+**The home page's ground is now the MapLibre night map** (round 12 built it in a lab, the
+orchestrator measured it against Google, round 13 moved it onto the home page): open source,
+no key, vector tiles from OpenFreeMap (OpenStreetMap data, OpenMapTiles schema; "as-is", may be
+discontinued: the fallback is a self-hosted PMTiles copy), terrain and hillshade from AWS
+Terrain Tiles (USGS and NOAA data), 3D buildings close in, our light layer, names, flights and
+click on top; a cover rendered from the map itself; a flat coarse territory on slow lines. The
+CSP gained `tiles.openfreemap.org` and `s3.amazonaws.com` under connect-src (measured, `2a15e8a`).
+`NEXT_PUBLIC_HOME_MAP`: `ml` (default), `g3d` (Google's photographic map, needs the Maps key),
+`night` (the round-54 scene). The Google lab and the MapLibre lab are deleted: one home page.
+
+Numbers, cold, verified by the orchestrator on the running preview: the map's first paint
+1.2 s, the whole territory idle 2.0 s (Google: 5.3 to 12 s to steady, 9 to 13 s to reveal), the
+worst in-flight frame 28 ms (the builder's five runs: 28 to 62.5), the phone 21 to 34 ms; Slow
+4G whole at 13 to 15 s (Google never within 25 s); the cover to the first frame 2.4 / 2.6
+levels; contrast 0 under the floor at 390 (the two pills at 1440); hover 50 of 50, taps 30 of
+30; tsc clean; **vitest 2123** (147 files) on the merged tree; the blog's 35 posts merged
+(`b3884d5`). Branch `design/futuristic-r53`, **204 commits over `main`, NOTHING pushed.** The
+videos (untracked, round 13's cut): `docs/design-r57-video/r57-desktop.mp4`, `r57-phone.mp4`.
+
+**The owner's actions now:**
+1. His look at :3102 (first screen cold, a scroll, a click on a light, the phone).
+2. Before any push: the Maps key on Vercel matters only for `/search` and the listing pages now
+   (the home page needs none); `NEXT_PUBLIC_HOME_MAP` unset means MapLibre.
+3. The five missing seller articles (no drafts in his Drive) if he wants the Sell 24 plan's
+   day 7, 14, 22, 64 and 78 links to resolve: the next blog session writes them.
+4. The stale `/website` command text (auto mode refused my edit); the MacBook look.
+5. Optional and no longer needed: a Google map ID; a Mapbox token (the higher-wow photographic
+   night variant, if he ever wants photographs back).
+
+**Open, in the order a visitor would notice:** Slow 4G at 13 to 15 s (the page's own 650 KB
+plus the 292 KB library gate the map's import; a lighter page or a smaller first bundle is the
+lever); one cold laptop flight at 62.5 ms in one of five runs; the blog template's empty alt
+text on cover and card photos and its stock covers not chosen per topic; the 320 px tap label
+overlap and the 200 % zoom search field from round 5; with JS off the browser still fetches
+the two preloaded library modules; OpenFreeMap's continuity.

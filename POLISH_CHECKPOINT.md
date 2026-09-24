@@ -1,3 +1,17 @@
+# ROUND 57 CLOSED 2026-09-24 EVENING (13 rounds): THE MAPLIBRE NIGHT MAP IS THE HOME PAGE; THE BLOG IS BACK. START HERE.
+
+Read `docs/handoff/WEBSITE-R58-HANDOFF.md` §9 first (the state, his actions, what is open), then
+§7 and §8a, then `docs/parity/DESIGN-ROUND57.md` §9 and §10 (his fourth verdict verbatim, the
+engine change and why, rounds 12 and 13 measured, the close). Since the block below: Google's
+photographic 3D map was rejected by the owner for its first-visit load (5 to 15 s) and its
+coarseness high up; the engine changed to MapLibre (open source, keyless) keeping the design; the
+whole lit territory is on screen 2 s after the page opens, flights at 28 ms worst; the blog's 35
+Drive drafts are reposted with sources and spread dates (29 of 34 plan links live, 5 need new
+articles); Rachel's line is the main number, the CRM line on /connect only; consent-mode and Do
+Not Track added. vitest 2123, tsc clean, nothing pushed. He has not seen rounds 12 and 13.
+
+---
+
 # ROUND 57 CONTINUED 2026-09-24 (rounds 8 to 11): THE NIGHT MAP, CLOSE AND SHARP. START HERE.
 
 Read `docs/handoff/WEBSITE-R58-HANDOFF.md` (§7 first, then §2 to §5) and `docs/parity/
