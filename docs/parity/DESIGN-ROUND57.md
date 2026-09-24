@@ -2471,3 +2471,29 @@ test (back to the base).
 
 **:3102 this round.** Four rebuilds, outages 69, 72, 79 and 66 s, each back with its stylesheets;
 never a second server on the shared `.next`. Left running on the build of `4e87b6c`.
+
+## 10. Round 13 verified, the blog merged, the close of the day (2026-09-24 evening)
+
+**Round 13 verified** (HEAD `96848d6`, :3102 on `4e87b6c`): tsc clean; vitest **1936 / 1936**;
+the home page serves the MapLibre ground with its stylesheets and the CSP carries the two tile
+hosts; my cold run of the lag probe on `/` at 1440: the map's first paint **1.2 s**, first idle
+and reveal **2.0 s**, the worst in-flight frame **27.8 ms**, no errors. Looked at
+`13/frames/sheet-1440.jpg`: every stop a consistent dark night map with the warm lights, the
+chapters' road webs and terrain under the county lights, the territory with all our names.
+The builder's two honest misses stand as recorded: Slow 4G whole at 13 to 15 s (10 was the
+target; Google never drew within 25), and one of five cold 1440 runs at 62.5 ms on the flight
+to the Highlands (60 was the bar). Accepted. The builder also found that round 12's Slow 4G
+"26 s" was partly the probe (Playwright's `route` turns the HTTP cache off, so the worker
+re-downloaded the library); the round-13 probes block by CDP with the cache on.
+
+**The blog repost merged** (`b3884d5`, no conflicts): 35 posts, 29 of the 34 plan slugs live at
+their old addresses, five need new articles (no drafts exist); on the merged tree tsc clean and
+vitest **2123 / 2123**; :3102 rebuilt on the merged tree serves the home page and the posts
+(`/blog/how-much-house-can-i-afford-ny-guide` 200, `/blog/1031-exchange-rules-new-york` 200).
+The blog worktree is removed; the branch `content/blog-repost-0924` stays as a ref.
+
+**What the owner will now see, cold:** a laptop or a phone on a normal line has the whole lit
+territory on screen about two seconds after the page opens, sharp at every height, every flight
+smooth; a slow mobile line sees a still frame of the same map first and the live map at about
+13 to 15 s. Google's photographic map stays one setting away (`NEXT_PUBLIC_HOME_MAP=g3d`), the
+night flight too (`night`). No Google load on the home page; no key needed for it.
