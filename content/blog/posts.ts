@@ -40,7 +40,7 @@ import {
   REAL_ESTATE_ATTORNEY_POST,
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
-import { SELLING_TIMELINE_POST } from "./seller-posts";
+import { SELLER_DISCLOSURE_POST, SELLING_TIMELINE_POST } from "./seller-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -657,6 +657,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "seller-disclosure-requirements-new-york",
+    cluster: "selling",
+    title: "Seller Disclosures in New York: What You Are Legally Required to Reveal",
+    seoTitle: "Seller Disclosure Requirements in New York: 2026 Guide",
+    /** Seller Education #10, reposted 2026-09-24. Slug = the CRM drip link (day 218) and the
+     * draft's; the drip doc's alternate redirects here. */
+    date: "2025-12-17",
+    updated: "2026-09-24",
+    excerpt:
+      "The Property Condition Disclosure Statement is mandatory since March 2024. What it asks, who is exempt, the lead paint rule, what you need not volunteer, and how to prepare.",
+    seoDescription:
+      "Seller disclosure requirements in New York: the mandatory PCDS since 2024, flood questions, exemptions, lead paint rules, stigmatized property and liability.",
+    cover: "/images/editorial/signature-ink.jpg",
+    body: [],
+    placeholder: false,
+    markdown: SELLER_DISCLOSURE_POST,
+    aliases: ["seller-disclosures-in-new-york"],
   },
   {
     slug: "timeline-selling-a-house-ny",
