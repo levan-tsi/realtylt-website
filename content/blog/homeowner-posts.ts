@@ -396,3 +396,101 @@ Yes. Outside New York City and Long Island, submit a free request with UDig NY o
 - UDig NY, [call 811 before you dig](https://www.udigny.org/)
 
 Checked against these sources on September 24, 2026.`;
+
+/** Homeownership #5: "Lower Your Energy Bills: 9 Efficiency Tips for New York Homeowners" (Drive draft,
+ * 2025). Corrections: the draft said every owner of a 1-4 family home gets a free NYSERDA audit and that
+ * EmPower+ pays "up to $10,000"; today NYSERDA offers a free virtual assessment to anyone, a no-fee contractor
+ * consultation through Comfort Home, and EmPower+ caps of $12,000 upstate / $14,000 downstate for low-income
+ * single-family homes. Removed as unsourced: "$200 to $400 wasted", "5% to 30%" from air sealing, "25% of heat
+ * loss" through the attic, the curtain percentages, the refrigerator 9%, the window prices and "90% recouped".
+ * The Energy Saver pages the draft relied on no longer exist on energy.gov; the thermostat and window figures
+ * are cited to DOE's current Home Upgrades page. */
+export const ENERGY_POST = `A January heating bill or a July cooling bill can be a shock, and in an older Hudson Valley house the numbers add up fast. The good news is that you have more control than it feels like. These nine ways to lower energy bills in New York start with free changes you can make this weekend and move to the upgrades that pay back over years, and they end with the state programs, run by NYSERDA, that help New York homeowners find and fund the right fixes.
+
+## Free and low-cost ways to lower energy bills this weekend
+
+### 1. Use your thermostat on purpose
+
+The U.S. Department of Energy says you can save as much as 10% a year on heating and cooling by turning your thermostat back 7 to 10 degrees Fahrenheit for 8 hours a day from its normal setting ([DOE](https://www.energy.gov/save/home-upgrades)). In winter, lower it while you sleep or are away. In summer, NYSERDA notes that each degree above 75 degrees you set your air conditioner saves about 3% of the energy used to cool your home ([NYSERDA](https://www.nyserda.ny.gov/Residents-and-Homeowners/Energy-Saving-Tips)). A programmable or ENERGY STAR certified smart thermostat does it for you; certified smart thermostats save about 8% on heating and cooling bills on average ([ENERGY STAR](https://www.energystar.gov/products/smart_thermostats)).
+
+### 2. Find and seal air leaks
+
+Drafts around windows, doors, outlets, baseboards, attic hatches and pipe penetrations are paid-for heat leaving the house. Use caulk on gaps in stationary joints like trim, weatherstripping on moving parts like doors and window sashes, and foam gaskets behind outlet and switch plates on exterior walls. ENERGY STAR says sealing and insulating can save up to 10% on annual energy bills ([ENERGY STAR](https://www.energystar.gov/saveathome/seal_insulate)). To find leaks, hold a lit incense stick near likely spots on a windy day with fans off; if the smoke wavers, you have a draft.
+
+### 3. Work the curtains with the seasons
+
+NYSERDA's advice is simple: in cold weather, keep drapes open during daylight to let the sun in and close them at night; in hot weather, keep shades down and drapes drawn during the hottest part of the day ([NYSERDA](https://www.nyserda.ny.gov/Residents-and-Homeowners/Energy-Saving-Tips)).
+
+### 4. Set the water heater to 120 degrees
+
+Water heating is about 20% of a typical home's energy use, the second-largest expense after heating and cooling ([DOE](https://www.energy.gov/save/home-upgrades)). NYSERDA recommends setting it to 120 degrees Fahrenheit, or only as hot as you need, and turning it down when you are away on vacation. A lower setting also reduces the risk of scalding.
+
+### 5. Check the HVAC filter monthly
+
+A clogged filter makes the system work harder. NYSERDA says to check it every month, especially in heavy-use months, change it when it looks dirty, and change it at least every three months; ENERGY STAR gives the same monthly guidance ([ENERGY STAR maintenance checklist](https://www.energystar.gov/saveathome/heating-cooling/maintenance-checklist)).
+
+## Upgrades that pay back over time
+
+### 6. Insulate the attic
+
+In many older Hudson Valley homes, the attic is where the biggest gains are, because warm air rises and escapes through a thin or gapped attic floor. Seal the gaps in the attic floor first, then add insulation over them. Good attic insulation and air sealing also help prevent ice dams, which form when heat escaping through the roof melts snow that refreezes at the eaves and can back water up under shingles. Insulating before you replace a furnace or add a heat pump can also mean the new system can be smaller.
+
+### 7. Buy ENERGY STAR when it is time to replace
+
+When an appliance wears out, choose an ENERGY STAR certified model. ENERGY STAR says a typical household can save about $450 a year on energy bills by choosing certified products ([ENERGY STAR](https://www.energystar.gov/about/impacts)). A certified clothes washer, for example, uses about 20% less energy and about 30% less water than a regular washer ([ENERGY STAR](https://www.energystar.gov/products/clothes_washers)).
+
+### 8. Replace old single-pane windows, with clear eyes
+
+The DOE says heat gain and loss through windows are responsible for 25% to 30% of residential heating and cooling energy use ([DOE](https://www.energy.gov/save/home-upgrades)). New windows cut drafts, cold spots and noise, but they are expensive, and the payback from energy savings alone is long. Get the attic, air sealing and an assessment done first, then decide whether windows are the next dollar. If you are also thinking about value at resale, see [which small improvements pay back most](/blog/high-roi-home-improvements-under-1000).
+
+## The New York advantage: NYSERDA
+
+### 9. Get a home energy assessment
+
+A professional assessment measures your house instead of guessing: a blower-door test pressurizes the home to measure how leaky it is and find hidden drafts, and an infrared camera shows where insulation is missing. The New York State Energy Research and Development Authority (NYSERDA) makes this accessible in three ways:
+
+- **Anyone in New York** can complete NYSERDA's virtual home energy assessment and get a free Home Energy Plan as a first step ([NYSERDA](https://www.nyserda.ny.gov/All-Programs/Home-Energy-Efficiency-Upgrades)).
+- **Comfort Home** starts with a no-fee consultation with a qualified contractor and offers incentives for air sealing and insulation packages: $2,500 for attic and rim joist work, $3,000 when walls or floors are added, and a $2,000 windows add-on ([NYSERDA Comfort Home](https://www.nyserda.ny.gov/All-Programs/Comfort-Home-Program)). Westchester homeowners may qualify for coordinated Con Edison incentives.
+- **EmPower+** is for income-eligible owners and renters of one- to four-family homes: a no-cost comprehensive assessment, no-cost direct-install measures, and incentives for low-income single-family households of up to $12,000 upstate or $14,000 downstate ([NYSERDA EmPower+](https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program)).
+
+Program amounts and eligibility change, so check the current terms on NYSERDA's pages or call 1-866-NYSERDA before you plan around them.
+
+## Your energy savings plan
+
+**This weekend.** Program the thermostat, set the water heater to 120 degrees, check the filter, and caulk and weatherstrip the worst drafts. Our [new homeowner toolkit](/blog/new-homeowner-toolkit-essentials) has the tools.
+
+**This year.** Complete NYSERDA's virtual assessment or book a Comfort Home consultation, and let the results rank the bigger projects.
+
+**Over the next few years.** Tackle one larger project at a time: attic insulation first, then equipment and windows as they reach the end of their life. Our [seasonal home maintenance checklist](/blog/seasonal-home-maintenance-checklist-hudson-valley) keeps the routine on track, and our [home inspection checklist](/blog/home-inspection-checklist-hudson-valley-ny) shows what buyers' inspectors look for.
+
+An efficient home is cheaper to run and easier to sell. If you want to know how your upgrades could affect your home's value, get an estimate on our [home value page](/home-value) or [talk with us](/connect).
+
+## Frequently asked questions
+
+### How can I lower my heating bill in the winter?
+
+Turn the thermostat back 7 to 10 degrees for 8 hours a day (the DOE says that can save up to 10% a year on heating and cooling), seal drafts, open south-facing drapes on sunny days, and insulate the attic.
+
+### What uses the most energy in a house?
+
+Heating and cooling, followed by water heating, which the DOE puts at about 20% of a typical home's energy use.
+
+### Is a NYSERDA home energy assessment free?
+
+NYSERDA's virtual assessment and Home Energy Plan are free to any New Yorker, Comfort Home starts with a no-fee contractor consultation, and income-eligible households get a no-cost comprehensive assessment through EmPower+.
+
+### What temperature should my water heater be set to?
+
+NYSERDA recommends 120 degrees Fahrenheit, or only as hot as you need.
+
+### Are new windows worth it in New York?
+
+They improve comfort and cut drafts and noise, but energy savings alone pay them back slowly. Do the attic, air sealing and an assessment first.
+
+## Sources
+
+- U.S. Department of Energy, [home upgrades](https://www.energy.gov/save/home-upgrades)
+- NYSERDA, [energy-saving tips](https://www.nyserda.ny.gov/Residents-and-Homeowners/Energy-Saving-Tips), [home energy efficiency programs](https://www.nyserda.ny.gov/All-Programs/Home-Energy-Efficiency-Upgrades), [Comfort Home](https://www.nyserda.ny.gov/All-Programs/Comfort-Home-Program) and [EmPower+](https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program)
+- ENERGY STAR, [seal and insulate](https://www.energystar.gov/saveathome/seal_insulate), [smart thermostats](https://www.energystar.gov/products/smart_thermostats), [maintenance checklist](https://www.energystar.gov/saveathome/heating-cooling/maintenance-checklist), [impacts](https://www.energystar.gov/about/impacts) and [clothes washers](https://www.energystar.gov/products/clothes_washers)
+
+Checked against these sources on September 24, 2026.`;

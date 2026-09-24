@@ -59,7 +59,7 @@ import {
   SELLER_MISTAKES_POST,
   SELLING_TIMELINE_POST,
 } from "./seller-posts";
-import { BASEMENT_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
+import { BASEMENT_POST, ENERGY_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -1236,15 +1236,23 @@ export const POSTS: BlogPost[] = ([
     placeholder: true,
   },
   {
-    slug: "lower-energy-bills-9-efficiency-tips-ny",
+    slug: "lower-energy-bills-new-york-homeowners",
     cluster: "owning",
     title: "Lower Your Energy Bills: 9 Efficiency Tips for New York Homeowners",
-    date: "2025-09-12",
+    seoTitle: "Lower Energy Bills in New York: 9 Tips for Homeowners",
+    /** Homeownership #5, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug
+     * redirects here. Dated 2025-10-08 (the stub's 2025-09-12 now belongs to the basement post). */
+    date: "2025-10-08",
+    updated: "2026-09-24",
     excerpt:
-      "Hudson Valley winters are no joke. Nine upgrades, from free habits to smart investments, that cut heating and cooling costs in New York homes.",
+      "Nine ways to cut heating and cooling costs in a New York home, from free thermostat and water heater settings to insulation, plus the NYSERDA programs that help pay for it.",
+    seoDescription:
+      "Nine ways to lower energy bills in New York: thermostat and water heater settings, air sealing, insulation, ENERGY STAR, and NYSERDA assessments and rebates.",
     cover: "/images/listings/house-07.jpg",
-    body: PLACEHOLDER_BODY("nine energy-efficiency moves for New York homeowners, ranked by cost and payback"),
-    placeholder: true,
+    body: [],
+    placeholder: false,
+    markdown: ENERGY_POST,
+    aliases: ["lower-energy-bills-9-efficiency-tips-ny", "lower-energy-bills-ny"],
   },
   {
     slug: "new-homeowner-toolkit-essentials",

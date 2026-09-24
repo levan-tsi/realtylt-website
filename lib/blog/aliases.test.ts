@@ -55,7 +55,6 @@ const PENDING_CRM = new Set<string>([
   "home-staging-tips-highest-roi",
   "high-roi-renovations-new-york",
   "seller-closing-costs-new-york-state-guide",
-  "lower-energy-bills-new-york-homeowners",
   "packing-tips-hacks-for-moving",
   "ultimate-8-week-moving-checklist",
   "how-to-hire-local-movers-ny",
@@ -65,9 +64,7 @@ const PENDING_CRM = new Set<string>([
 
 /** Internal /blog/ links written into a reposted body ahead of the article they point at.
  * Same rule: may only shrink, and must be empty when the round is done. */
-const PENDING_LINK_TARGETS = new Set<string>([
-  "lower-energy-bills-new-york-homeowners",
-]);
+const PENDING_LINK_TARGETS = new Set<string>([]);
 
 const LIVE = new Set(POSTS.map((p) => p.slug));
 const resolves = (slug: string) => LIVE.has(slug) || aliasTarget(slug) !== undefined;
