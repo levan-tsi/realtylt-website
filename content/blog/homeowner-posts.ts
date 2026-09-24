@@ -826,3 +826,115 @@ Wrap each one, stand them on edge in a small or medium box lined with crumpled p
 - New York State Department of Environmental Conservation, [firewood and invasive pests](https://dec.ny.gov/nature/animals-fish-plants/invasive-species/terrestrial/firewood)
 
 Checked against these sources on September 24, 2026.`;
+
+/** Moving #4: "Relocating to the Hudson Valley: A Newcomer's Guide to Small-Town Charm & Big-City Access"
+ * (Drive draft, 2025). Corrections: the Hudson Line runs along the EAST bank, not "the west side of the
+ * valley"; the commute table (Poughkeepsie ~100, Beacon ~90, Cold Spring ~75 minutes) had no source and is
+ * replaced by the state's own figures for Poughkeepsie; peak fares also apply to weekday trains LEAVING Grand
+ * Central 6 to 9 a.m. Removed as unsourced or promotional: Bronxville's "$2.7M median", "oldest wine region
+ * in America", the wine festival, and "highest-rated schools in the nation". Septic and well guidance now
+ * cites the EPA. */
+export const RELOCATING_POST = `Thinking about trading city blocks for hills and river views without cutting your ties to New York City? Relocating to the Hudson Valley is a move many New Yorkers make for more space, more nature and a slower pace. This guide covers both sides honestly: what life here is like, how the commute really works, how the counties differ, and the practical changes (a car, winter, wells and septic) that surprise newcomers.
+
+## Living in the Hudson Valley: small towns that are not sleepy
+
+### Main streets and food
+
+Beacon, Rhinebeck, Hudson, Kingston and Cold Spring have busy main streets with independent shops, restaurants and weekend farmers' markets. The Culinary Institute of America in Hyde Park helps make the food scene one of the region's draws, and orchards, farm stands and wineries are a short drive from almost anywhere.
+
+### Nature close to home
+
+The outdoors is part of daily life here. Hike Breakneck Ridge above the river, swim and walk the carriage roads at Minnewaska State Park Preserve, climb in the Shawangunks, bike the rail trails, or kayak the Hudson. Fall color and apple picking draw visitors from all over; winter brings skiing within an easy drive.
+
+### Arts and culture
+
+Dia Beacon fills a former Nabisco box-printing factory with large-scale modern art, Storm King Art Center sets monumental sculpture across a 500-acre landscape, and Bard College's Fisher Center, designed by Frank Gehry, programs music, theater and dance. Woodstock and Beacon have long histories as artists' towns.
+
+## Moving to the Hudson Valley from NYC: the commute
+
+### Metro-North
+
+Two Metro-North lines connect the east side of the Hudson Valley to Grand Central: the **Hudson Line**, which runs along the river's east bank through Cold Spring, Beacon and Poughkeepsie, and the **Harlem Line**, which runs inland through Westchester, Putnam and eastern Dutchess. West-of-Hudson towns are served by separate lines and by bus, and many west-side commuters drive to a Hudson Line station across a bridge.
+
+Times depend on the train. When New York announced its Poughkeepsie "super-express" trips in 2025, it said they would run between Poughkeepsie and Grand Central in under 90 minutes, against up to 115 minutes for non-express trips ([New York State](https://www.governor.ny.gov/news/governor-hochul-announces-mta-metro-north-railroad-super-express-trips-between-poughkeepsie)). Check the current timetable for your station before you decide.
+
+Peak fares apply on weekday trains scheduled to arrive at Grand Central between 6 and 10 a.m. or leave it between 4 and 8 p.m., and on Metro-North also to weekday trains leaving Grand Central between 6 and 9 a.m.; all other trains, weekends and holidays are off-peak ([MTA](https://www.mta.info/fares-tolls/lirr-metro-north)).
+
+### The hybrid week
+
+For many newcomers the commute is two or three days a week, not five. A long train ride is far easier to live with when it is part-time, and that change is a big reason more people now live here full-time.
+
+### Driving
+
+A car is essential for life within the Valley. The main routes are the New York State Thruway (I-87) on the west side, I-684 through northern Westchester, and the Taconic State Parkway, a scenic, toll-free parkway through the eastern Valley. The Taconic has narrow lanes, short merges and at-grade crossings in places, so drive it with care.
+
+## Finding your fit: the counties at a glance
+
+- **[Westchester](/top-areas/westchester):** the shortest commute and the most suburban feel, with river villages like Tarrytown and Dobbs Ferry and a wide range of school districts. Usually the highest prices in the region.
+- **[Putnam](/top-areas/putnam):** hilly, wooded and quiet, with lakes such as Lake Mahopac, reservoirs of the New York City water supply and a stretch of the Appalachian Trail. Harlem Line and Hudson Line stations for the commute.
+- **[Dutchess](/top-areas/dutchess):** small cities and farm country together: Beacon and Poughkeepsie on the Hudson Line, Rhinebeck, Red Hook and Millbrook to the north, and colleges including Vassar, Marist and Bard.
+- **[Ulster](/top-areas/ulster):** across the river, the gateway to the Catskills and the Shawangunks, with the college town of New Paltz, Woodstock, and Kingston's historic Stockade District and waterfront.
+- **[Orange](/top-areas/orange):** west of the river, with Newburgh, Warwick and quick Thruway access; commuters use the Port Jervis Line or drive to the Beacon station across the bridge.
+
+## The reality check: what to know before you move
+
+### You will need a car
+
+Main streets are walkable, but buses between towns are limited. Plan on driving for groceries, school, the station and the trailhead.
+
+### Check the internet at the exact address
+
+In the larger towns, cable and fiber service is common. On rural roads, options can drop to fixed wireless or satellite. Before you fall for a house on a back road, check the providers and speeds reported for that address on the FCC's National Broadband Map ([FCC](https://broadbandmap.fcc.gov/home)) and confirm with the providers.
+
+### Winter is real
+
+Expect snow, ice and the occasional power outage. Budget for plowing or a snowblower, put good tires on the car, and keep flashlights, batteries and blankets ready; if you work from home, think about backup power.
+
+### Wells and septic systems
+
+Many homes outside village centers have a private well and a septic system instead of town water and sewer.
+
+- **Septic:** the EPA says a household system should be inspected at least every three years by a professional, and tanks are typically pumped every three to five years ([EPA](https://www.epa.gov/septic/how-care-your-septic-system)). Keep grease, harsh chemicals and wipes out of the drains.
+- **Wells:** the EPA recommends testing a private well every year for total coliform bacteria, nitrates, total dissolved solids and pH, and more often in some situations ([EPA](https://www.epa.gov/privatewells/protect-your-homes-water)). When you buy, test the water and inspect the septic as part of your due diligence.
+
+Our [seasonal home maintenance checklist](/blog/seasonal-home-maintenance-checklist-hudson-valley) covers the year-round well, septic and chimney tasks.
+
+## Your relocation plan
+
+1. **Spend weekends in the towns.** Have lunch in Beacon, walk Rhinebeck, visit the Kingston farmers' market, and notice where you feel at home. Renting first is a good way to test a town; see our guide to [renting versus buying in the Hudson Valley](/blog/rent-vs-buy-hudson-valley-ny).
+2. **Test the commute at rush hour.** Drive to the station, park, and ride the peak train to Grand Central and back before you look at houses.
+3. **Audit your routine.** Groceries, delivery, childcare and workouts all change when the corner store is a drive away.
+4. **Work with someone local.** A good agent knows which roads have fiber, which towns have the train you need, and who inspects septic systems.
+
+When you are ready to plan the move itself, use our [8-week moving checklist](/blog/ultimate-8-week-moving-checklist), and if you are buying for the first time, start with the [first-time buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist). Browse [homes for sale](/search) or [talk with us](/connect) about the towns that fit you.
+
+## Frequently asked questions
+
+### How long is the commute from the Hudson Valley to NYC?
+
+It depends on the station and the train. New York said its 2025 super-express trips run between Poughkeepsie and Grand Central in under 90 minutes, against up to 115 minutes for non-express trips; stations closer to the city are shorter. Check the current Metro-North timetable.
+
+### Do I need a car if I live in the Hudson Valley?
+
+In almost every town, yes. Main streets are walkable, but transit between towns is limited.
+
+### What is the difference between the Hudson Line and the Harlem Line?
+
+The Hudson Line follows the east bank of the river through Cold Spring, Beacon and Poughkeepsie. The Harlem Line runs inland through Westchester, Putnam and eastern Dutchess.
+
+### How often should a septic tank be pumped?
+
+The EPA says household tanks are typically pumped every three to five years, with an inspection at least every three years.
+
+### Is internet reliable in the Hudson Valley?
+
+In the larger towns, usually. In rural areas it varies by address, so check the FCC National Broadband Map and ask providers before you buy.
+
+## Sources
+
+- New York State, [Poughkeepsie super-express announcement (2025)](https://www.governor.ny.gov/news/governor-hochul-announces-mta-metro-north-railroad-super-express-trips-between-poughkeepsie)
+- MTA, [LIRR and Metro-North fares](https://www.mta.info/fares-tolls/lirr-metro-north)
+- Federal Communications Commission, [National Broadband Map](https://broadbandmap.fcc.gov/home)
+- U.S. Environmental Protection Agency, [how to care for your septic system](https://www.epa.gov/septic/how-care-your-septic-system) and [protect your home's water](https://www.epa.gov/privatewells/protect-your-homes-water)
+
+Checked against these sources on September 24, 2026.`;

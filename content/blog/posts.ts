@@ -59,7 +59,7 @@ import {
   SELLER_MISTAKES_POST,
   SELLING_TIMELINE_POST,
 } from "./seller-posts";
-import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, MOVERS_POST, PACKING_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
+import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, MOVERS_POST, PACKING_POST, RELOCATING_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -1192,15 +1192,23 @@ export const POSTS: BlogPost[] = ([
     placeholder: true,
   },
   {
-    slug: "relocating-to-hudson-valley-newcomers-guide",
+    slug: "relocating-to-hudson-valley-ny-guide",
     cluster: "moving",
-    title: "Relocating to the Hudson Valley: What Newcomers Need to Know About Small-Town Charm Meets Big-City Access",
+    title: "Relocating to the Hudson Valley: A Newcomer's Guide to Small-Town Charm and Big-City Access",
+    seoTitle: "Relocating to the Hudson Valley: A Newcomer's Guide",
+    /** Moving #4, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug redirects
+     * here. The stub's date (2025-09-13) carries over. */
     date: "2025-09-13",
+    updated: "2026-09-24",
     excerpt:
-      "Metro-North lines, school districts, winters, and the difference between river towns: the honest orientation we give every family relocating from the city.",
+      "What life in the Hudson Valley is really like: the towns, Metro-North and the drive, the counties at a glance, and the car, winter, well and septic realities newcomers meet.",
+    seoDescription:
+      "Relocating to the Hudson Valley from NYC: the towns, Metro-North commute times and fares, a guide to the counties, and the car, winter, well and septic basics.",
     cover: "/images/counties/dutchess.jpg",
-    body: PLACEHOLDER_BODY("what newcomers should know before relocating to the Hudson Valley: commutes, towns, and trade-offs"),
-    placeholder: true,
+    body: [],
+    placeholder: false,
+    markdown: RELOCATING_POST,
+    aliases: ["relocating-to-hudson-valley-newcomers-guide", "relocating-to-hudson-valley"],
   },
   {
     slug: "how-to-hire-local-movers-ny",

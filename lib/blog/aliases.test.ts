@@ -55,14 +55,13 @@ const PENDING_CRM = new Set<string>([
   "home-staging-tips-highest-roi",
   "high-roi-renovations-new-york",
   "seller-closing-costs-new-york-state-guide",
-  "relocating-to-hudson-valley-ny-guide",
   "rent-vs-buy-hudson-valley-ny",
 ]);
 
 /** Internal /blog/ links written into a reposted body ahead of the article they point at.
  * Same rule: may only shrink, and must be empty when the round is done. */
 const PENDING_LINK_TARGETS = new Set<string>([
-  "relocating-to-hudson-valley-ny-guide",
+  "rent-vs-buy-hudson-valley-ny",
 ]);
 
 const LIVE = new Set(POSTS.map((p) => p.slug));
