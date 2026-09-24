@@ -1253,3 +1253,44 @@ Everything in "Round 6 brief (for builder 6)" above stands, with these adjustmen
   (no NASA line if no NASA data is used).
 - The caption's claims (`claims.ts`) stay as they are; the light sentence must stay true with
   our own layer (it counts what the layer draws).
+
+## 6. Round 6 verified, and the orchestrator's polish round (2026-09-24)
+
+**Round 6 verified** (:3102 on `fb7f207`): tsc clean; vitest **1849 / 1849** (138 files); fresh
+frames from the running server: the territory shot 130 lights, 11 names, plan 0.4 ms, **marker
+adds 0**; my cold lag run: the Westchester flight 27.8 ms max, the scroll's worst flight frame
+97 ms (the fling), first steady 7.3 s, cover gone 10.9 s. Looked at `6/final/hero-1440.png`,
+`hero-390.png`, `final/sheet-1440.png`, `dissolve/default/sheet-1440.png`, `final/orange-1440.png`:
+the night grade keeps the photograph (ridges, water darker than land, the river), the lights are
+warm points by true density, the city chapters read as cities at night, the cover is the map's
+own first frame and the dissolve only adds detail. The loudest element left on the dark map was
+Google's red and blue interstate shields at the territory shot (HYBRID there since round 2).
+Round 6 accepted.
+
+**The polish round, one change by frames** (`7aa6167`): the territory shot goes SATELLITE too
+(`scripts/_scratch-r57/verify6/sat/hero-1440.png` against `verify6/hero-1440.png`, then every
+stop both widths in `scripts/_scratch-r57/7/`). Our county and borough names orient a stranger
+at that altitude since round 1, so Google's names and shields are not needed; the night
+photograph, our lights and our names are one language at every stop, and the dissolve adds no
+shields either. On the final build, cold at 1440: first steady **6.2 s**, cover gone **9.9 s**
+(a second sooner than HYBRID), the Westchester flight 27.8 ms, the scroll's worst flight frame
+**76 ms**, marker adds 0; the contrast kit 0 under the floor at 390 and 2 at 1440 (the AI and
+Connect pills the kit misreads, unchanged since round 56); tsc clean; vitest 1849; frames: 130
+lights and 11 names at 1440, 72 and 7 at 390.
+
+**The videos** (untracked): `docs/design-r57-video/r57-desktop.mp4` (84 s) and `r57-phone.mp4`
+(74 s), cut from the production build under the real CSP with photos loading; frames checked at
+2 s (the cover: dark, our lights, the words) and 22 s (the live night map, our names fading as
+the scroll begins).
+
+**Left open, honestly** (from the builders' reports and mine): at 320 the tap label can still
+overlap words (no word-free spot within 160 px); at 200 % zoom the search field's left half
+fades inside the logo corner's mask; one 278 ms landing frame in 1 of 3 phone runs
+(undiagnosed); the shader warm-up missed once in 17 cold runs (one 250 ms stall then); a
+visitor scrolling DURING the compile under the cover still feels one hitch; the cover outside
+our elevation grid (New Jersey, Connecticut) is flat dark land; three of forty phone lights were
+11 to 19 px off in the calibration probe (undiagnosed); the word scrims stay at 0.8 because our
+lights sit under the words; Google's names are gone with SATELLITE (`?mode=split` brings the
+territory shot's back); the MacBook is unmeasured; the map ID for a Google style is the owner's
+to create. Nothing pushed; `main` untouched. The successor brief is
+`docs/handoff/WEBSITE-R58-HANDOFF.md`.

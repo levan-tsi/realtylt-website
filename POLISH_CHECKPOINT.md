@@ -1,3 +1,23 @@
+# ROUND 57 CLOSED 2026-09-24: THE NIGHT REAL MAP IS THE HOME PAGE. START HERE.
+
+Read `docs/handoff/WEBSITE-R58-HANDOFF.md` first, then `docs/parity/DESIGN-ROUND57.md` (§5 the
+owner's verdict verbatim, §6 the close). Branch `design/futuristic-r53` in the worktree
+`~/realtylt-website-r53`, 124 commits over `main`, NOTHING pushed. Seven rounds (six Opus
+builders, one at a time, then the orchestrator's polish): the territory shot with our names;
+lights by altitude; the address lights finished (hover, click fly-in, phone tap, keyboard); the
+Westchester freeze = a one-time GPU shader compile, pre-flown under the cover; the walkthrough
+(projection to 2 px, honest caption, Tab stops); THE NIGHT on his order (a tone-curve grade, our
+own canvas light layer at true coordinates with 0 Google markers, the cover as the map's own first
+frame, the cover held through the warm-up on an early scroll); SATELLITE at every stop.
+Verified on the running build by the orchestrator: tsc clean, vitest 1849, overflow 0 at five
+widths, contrast 0 under the floor at 390 (2 at 1440 = the two pills the kit misreads), cold 1440
+steady 6.2 s, cover gone 9.9 s, the Westchester flight 28 ms, the worst flight frame 76 ms.
+Videos: `docs/design-r57-video/r57-{desktop,phone}.mp4` (untracked). Open items and the owner's
+five actions (his look; the map ID; the MacBook; the Vercel Maps key before any push; the stale
+`/website` command text) are in the handoff §3 and §4. The block below is round 56's, superseded.
+
+---
+
 # Website polish checkpoint (read/updated by the /website command)
 
 ## == NEXT SESSION = ROUND 57: THE REAL MAP BECOMES THE HOME PAGE AND GETS FINISHED (2026-09-23) ==
