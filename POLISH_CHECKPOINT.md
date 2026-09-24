@@ -1,3 +1,17 @@
+# ROUND 57 CONTINUED 2026-09-24 (rounds 8 to 11): THE NIGHT MAP, CLOSE AND SHARP. START HERE.
+
+Read `docs/handoff/WEBSITE-R58-HANDOFF.md` (§7 first, then §2 to §5) and `docs/parity/
+DESIGN-ROUND57.md` §7 and §8 (his second and third verdicts verbatim, the evidence that quality
+is altitude, the four options and the decision). Since the block below: 445 lights at the
+opening shot with a 14 px mouse gap and a neighbourhood glow; the moonlit grade; the cover as
+the map's own first frame with the real coast; the load's ugly stretch found (our own soft
+cover, held past a sharp map) and cut to ~2 s, breathing, capped; the lights keyed by place;
+every chapter and county a close moonlit photograph at 6 to 12 km; the flight as the
+transition (dim to the lights, lift when sharp). vitest 1887, tsc clean; nothing pushed. The
+videos are re-cut. He has NOT seen rounds 8 to 11 yet.
+
+---
+
 # ROUND 57 CLOSED 2026-09-24: THE NIGHT REAL MAP IS THE HOME PAGE. START HERE.
 
 Read `docs/handoff/WEBSITE-R58-HANDOFF.md` first, then `docs/parity/DESIGN-ROUND57.md` (§5 the

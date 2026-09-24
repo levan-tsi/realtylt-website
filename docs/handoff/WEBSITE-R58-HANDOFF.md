@@ -89,3 +89,36 @@ through a bash heredoc.
 
 The site is `noindex` on purpose. The owner clears `NEXT_PUBLIC_SITE_URL`, points the apex, then
 removes `PRELAUNCH=1`, in that order. Never push `main` without his fresh go.
+
+## 7. Rounds 8 to 11 (2026-09-24, after his two further verdicts; supersedes §1 to §4 where they differ)
+
+He looked twice more (record §7 and §8, verbatim). Four more builder rounds, each verified by
+the orchestrator on the running build:
+8. **The lights, many and alive**: 445 at the opening shot (was 130), a 14 px on-screen gap so
+   the mouse always picks one home, a smooth count by range with a stable choice (coming down
+   adds lights, going up removes the latest), a neighbourhood glow weighted by the homes each
+   light stands for.
+9. **Moonlight**: the grade a third darker in silver-blue, the warm lights the only warmth; the
+   cover re-rendered in the same grade with the real coast (Natural Earth) and the same lights
+   (diff to the first live frame 6.9 at 1440, 4.2 at 390).
+10. **The load**: the ugly stretch was OUR cover, soft, held 4 s past a sharp map; now it lifts
+    about 2 s after the first draw, breathes while it holds, and is capped; the lights' order
+    keyed by place so an hourly sync no longer re-lights the map.
+11. **Closer, and the flight as the transition**: every chapter and county a close moonlit
+    photograph (6 to 12 km) of one real place; the map dims to the lights as a flight starts and
+    the photograph comes up once the landed tiles are sharp (2.5 s at most); the cover's cap
+    never skips the shader walk, which now flies three steps.
+
+State: HEAD `e03ee7a` plus this file, **vitest 1887** (140 files), tsc clean, overflow 0 at
+five widths, contrast 0 under the floor at 390 (the two pills at 1440); cold 1440 on a slow
+line: steady 7.3 s, cover gone 10.5 s, worst flight frame 97 ms, no stall; the videos re-cut
+(`docs/design-r57-video/r57-desktop.mp4` 105 s, `r57-phone.mp4` 82 s).
+
+Open, in the order a visitor would notice: on a slow line the laptop's close tiles keep
+sharpening for a moment after the 2.5 s lift at some stops (an adaptive bound from the tile
+arrival rate is the next step); Google's script failed to load twice in about forty runs and
+the page stayed on the cover (retry once); the phone's Westchester flight is 90 ms in every
+round; the close flights stream more tiles (16 to 20 frames over 34 ms per flight, hidden by
+the veil); the map ID for a Google style is still his to create and still optional. If his
+next look says the real map still is not "amazing", the fallback is a dark-styled vector map
+(record §8, option 2), which needs his map ID first.
