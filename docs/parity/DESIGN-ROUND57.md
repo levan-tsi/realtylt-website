@@ -1059,3 +1059,45 @@ two pills); the pointer probe of round 3 re-run (label on its light within 2 px 
 tsc; vitest only up (the projection fit, the eased tiers, the cover-hold rule tested); overflow
 at 1440/390/320; day pages untouched (`git diff --stat` outside the home page's files empty).
 Do not touch: CSP, `/search`, `lib/site.ts`, `Header.tsx`, the fallback order.
+
+### Round 5, the orchestrator's verification (2026-09-23, HEAD `f38a818`, :3102 on that code)
+
+Re-run, not read: tsc clean; vitest **1827 / 1827** (136 files); `/` answers 200; both
+temporary worktrees gone. Looked at `5/a1-tapwords/after-frames-390/tap-1.png`: the tap label
+now sits below the headline, off the words; it lands on our "Rockland" territory name (a
+round-6 item: names under an open label fade). The projection fix is the kind of finding that
+survives the next round: a constant 8.6 px left at every range was the 17 px scrollbar
+(`innerWidth` against the map element's own width), and the 8.7 px at 2.6 km was the geoid
+offset (Google's landed camera reports sea-level heights); max error now 2.3 px. Accepted:
+A1 to A8, the caption claims by state, the four invisible Tab stops removed, the reveal's CLS
+back to 0.0002, the seams (one script load and one `Map3DElement` per listing round trip), the
+failure states, the copy, the pages at three widths, day pages explained.
+
+Overridden for round 6: the builder's "no hold" on item 9. Its own table says a visitor who
+scrolls at 3, 4.5 or 6 s still meets the 236 to 257 ms freeze on the Westchester flight (the
+warm path had not run); at 8 s the freeze moved under the cover. The owner's words are "sometimes
+it freezes", so round 6 holds the cover through the warm path even on an early scroll (bounded
+by the path's own 1.6 s, never past the drawn map plus 2 s) and lifts it onto the visitor's own
+section. Carried: at 320 the tap label still overlaps words (no word-free spot within 160 px);
+at 200 % zoom the search field fades in the logo corner's mask; the scroll cue's focus ring is
+2.5:1 over the daylight map (re-measure on the dark grade); the footer still credits NASA's
+night lights, true only of the old cover: when the cover is rebuilt without that data the credit
+and `ATTRIBUTIONS.md` change with it.
+
+### Round 6 brief, adjusted after round 5
+
+Everything in "Round 6 brief (for builder 6)" above stands, with these adjustments:
+- Item 2's calibration is DONE (`42592fe`): use the calibrated projection as it is (the map
+  element's own size, sea-level heights); the layer's target stays 2 px; re-measure with
+  `scripts/_scratch-r57e-calib.mjs` at five stops after the layer replaces the markers.
+- Item 4's cover hold is decided, not open: hold through the warm path on an early scroll, lift
+  onto the visitor's section, the numbers in the record (scrolls at 3, 4.5, 6 and 8 s cold; the
+  Westchester flight must stay under 60 ms in every case; the cover's longest hold reported).
+- The county rows navigate on every click (`2374ceb`); hover and focus preview the flight; the
+  night layer must keep that preview.
+- When a label is open, our territory and town names under its box fade (the layer draws
+  them, so it knows).
+- The footer credit and `public/images/ATTRIBUTIONS.md` follow the new cover's real sources
+  (no NASA line if no NASA data is used).
+- The caption's claims (`claims.ts`) stay as they are; the light sentence must stay true with
+  our own layer (it counts what the layer draws).
