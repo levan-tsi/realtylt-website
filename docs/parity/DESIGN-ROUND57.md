@@ -2048,3 +2048,26 @@ this record only.
 
 **:3102** runs the final build (the code of `8975c6a`). Down six times this round (stop, build,
 start): 76, 68, 73, 58, 68 and 68 s.
+
+### Round 11, the orchestrator's verification (2026-09-24, HEAD `3e499d7`, :3102 on `8975c6a`)
+
+Re-run, not read: tsc clean; vitest **1887 / 1887** (140 files). My cold lag run at 1440 (the
+line still slow: first steady 7.3 s, cover gone 10.5 s, the walk's three steps ran): the flight
+to Dutchess (now 8 km) worst 97.2 ms, the Highlands 97.3, Westchester 48.7, the flings 62.6; no
+frame over 100 ms and no quarter-second stall; the over-34 counts per flight rose from 0 to 3
+at the far cameras to 16 to 20 at the close ones (the close tiles stream during flights), which
+the flight veil hides. One run before it never got the map at all (`loads 0`, Google's script
+did not load: the known rare case; the cover stayed as designed). Looked at
+`11/final/sheet-1440-night.png` and `11/final/night/westchester-county-1440.png`: every chapter
+and county is a close, sharp moonlit photograph of a real place (New Rochelle and the Sound
+shore, the Bronx along the river, Queens at Flushing, Nyack and the Tappan Zee) with the warm
+lights on the houses; `11/transition/hero-dutchess-1440-sheet.png`: the map dims to the lights
+as the flight starts and the photograph comes up after the landing. This is the quality he
+asked for. Accepted.
+
+Decisions: the 2.5 s lift bound stays (on the slow line 12 of 16 laptop stops were still
+sharpening at the lift, 0.59 to 0.94 of settled; a longer bound would mean a longer dark
+stretch at every stop; on a normal line and on the phone every stop lifts sharp). Carried to
+the next session: retry Google's script once after a failed load (twice in about forty runs it
+never loaded and the page stayed on the cover); an adaptive lift bound from the measured tile
+arrival rate; the phone's Westchester flight at 90 ms (every round, never under 60).
