@@ -494,3 +494,118 @@ They improve comfort and cut drafts and noise, but energy savings alone pay them
 - ENERGY STAR, [seal and insulate](https://www.energystar.gov/saveathome/seal_insulate), [smart thermostats](https://www.energystar.gov/products/smart_thermostats), [maintenance checklist](https://www.energystar.gov/saveathome/heating-cooling/maintenance-checklist), [impacts](https://www.energystar.gov/about/impacts) and [clothes washers](https://www.energystar.gov/products/clothes_washers)
 
 Checked against these sources on September 24, 2026.`;
+
+/** Moving #1: "The Ultimate Moving Checklist: Your 8-Week Guide to a Stress-Free Move" (Drive draft, 2025).
+ * Corrections: the federal mover rules (USDOT number, estimates, valuation) apply to INTERSTATE moves; a move
+ * within New York is licensed by NYSDOT, which the draft never mentioned. Full value protection is the federal
+ * default, not the extra-cost option the draft described. Added the USPS fee ($1.25), forwarding term, the NY DMV
+ * 10-day address rule and the 30-day license exchange. The 15-question mover interview moved to its own post. */
+export const EIGHT_WEEK_POST = `Moving is one of the most stressful things most people do, and the stress usually comes from the same place: too many tasks remembered too late. This 8-week moving checklist turns the whole move into a few jobs a week, from the first quote to the first night in your new home, with the New York rules that trip people up.
+
+## Before the countdown: choose the right mover
+
+The mover is the biggest single decision. Get at least three written estimates based on an in-home or video walk-through, never a phone guess.
+
+- **A move within New York** is regulated by the New York State Department of Transportation. Household goods movers need a NYSDOT certificate to operate within the state and must show the certificate number in their advertising and on the bill of lading ([NYSDOT](https://www.dot.ny.gov/divisions/operating/osss/truck/registration-licensing)).
+- **A move across state lines** is regulated by the Federal Motor Carrier Safety Administration. The mover needs a USDOT number, which you can check with FMCSA ([FMCSA Protect Your Move](https://www.fmcsa.dot.gov/protect-your-move)). On a non-binding estimate, an interstate mover cannot demand more than 110% of the estimate at delivery ([49 CFR 375.407](https://www.law.cornell.edu/cfr/text/49/375.407)), and full value protection, where the mover is liable for replacement value, is the default unless you waive it in writing for a much lower released value ([49 CFR 375.201](https://www.law.cornell.edu/cfr/text/49/375.201)).
+
+Walk away from a mover that will not give a written estimate, asks for a large deposit up front, or quotes far below everyone else. Our guide to [hiring local movers](/blog/how-to-hire-local-movers-ny) has the full list of questions to ask.
+
+## 8 weeks out: the master plan
+
+- **Start a moving binder**, paper or a shared folder, for quotes, contracts, receipts and contacts.
+- **Set a budget** for movers, supplies, cleaning, travel and a cushion for surprises.
+- **Request estimates** from three or more licensed movers.
+- **Start decluttering** one closet or shelf at a time. Everything you sell, donate or discard is something you do not pay to move.
+- **Check your dates.** Renters: read the lease for the notice period and give written notice. Sellers and buyers: confirm the closing and possession dates in your contract with your attorney.
+
+## 6 weeks out: book and start packing
+
+- **Book the mover** and get the estimate, services and dates in writing.
+- **Order supplies:** boxes in several sizes, good tape, markers, packing paper, wardrobe and dish boxes. Our [packing tips](/blog/packing-tips-hacks-for-moving) cover what to buy and how to use it.
+- **Pack what you will not need** before moving day: off-season clothes, books, decor, the attic and the basement.
+- **Number every box** and keep an inventory by room; it speeds unpacking and supports any damage claim.
+- **Plan the specialty items:** pianos, art, antiques.
+- **Request school and medical records** if you are changing districts or doctors.
+
+## 4 weeks out: the change of address and utilities
+
+- **Change your address with USPS** online. The online request costs $1.25 for identity verification, forwarding can start within 3 business days (allow up to 2 weeks), and standard forwarding lasts 12 months ([USPS](https://www.usps.com/manage/forward.htm)).
+- **Schedule utilities.** Stop service at the old home the day after you leave and start it at the new home the day before you arrive. Depending on the town, gas and electric in the Hudson Valley come from Central Hudson, NYSEG, Orange & Rockland or Con Edison; also call water, trash, internet and security.
+- **Notify the money people first:** employer payroll, banks, credit cards, loans and retirement accounts.
+- **Ask for the day off** if you are moving on a weekday.
+
+## 2 weeks out: the final push
+
+- **Confirm the mover:** date, arrival window, crew size and both addresses.
+- **Finish most of the packing**, leaving only what you use daily. Pack fragile items with plenty of paper.
+- **Label each box on the top and one side** with the room and the contents.
+- **Eat down the pantry and freezer.**
+- **Arrange child and pet care** for moving day.
+- **Refill prescriptions** so you have enough to get through the move.
+
+## The final week: the countdown
+
+- **Pack a first-night box** that rides with you, not on the truck: toilet paper, soap, toiletries, medications, chargers, a few tools, a coffee maker, snacks, pet food, a change of clothes and sheets for every bed.
+- **Defrost and clean the refrigerator** a day or two ahead, and prop the doors open.
+- **Gather important documents** (passports, birth certificates, Social Security cards, car titles, the moving binder) and keep them with you.
+- **Get cash** for tips and small surprises.
+
+## Moving day
+
+- **Protect floors** at both homes.
+- **Walk the crew leader through the house**, pointing out fragile items and what is not going on the truck.
+- **Check the inventory and bill of lading** before you sign; if a condition note is wrong, have it corrected.
+- **Do a final sweep** of every room, closet and cabinet.
+- **At the new home,** direct furniture and boxes to their rooms, then make the beds first.
+
+## The change of address checklist
+
+- **Government:** USPS; the IRS, using Form 8822 ([IRS](https://www.irs.gov/forms-pubs/about-form-8822)); the New York DMV, which requires you to report a new address on your license and registration within 10 days ([NY DMV](https://dmv.ny.gov/records/change-your-address)); voter registration; Social Security and the VA if they apply.
+- **New to New York?** Exchange an out-of-state driver license within 30 days of becoming a resident ([NY DMV](https://dmv.ny.gov/driver-license/exchange-out-of-state-driver-license)).
+- **Financial:** banks, credit cards, loans, payroll, retirement and payment apps.
+- **Insurance:** home or renters, auto (rates can change with your ZIP code), health and life.
+- **Health:** doctors, dentist, pharmacy, veterinarian.
+- **Everything else:** online stores and subscriptions, schools, and your pet's microchip registry.
+
+## How to avoid the common moving-day problems
+
+- **The mover does not show.** Hire a licensed mover with a written contract and confirm two weeks and one week out.
+- **The bill is higher than the quote.** Get a binding or not-to-exceed estimate in writing, and do not add large items without amending it.
+- **Things arrive broken.** Pack well, photograph valuables, and understand the valuation coverage you chose before you sign.
+- **You cannot find anything on night one.** That is what the first-night box is for.
+
+Buying in the Hudson Valley? Start with our [first-time buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist) and the [final walk-through checklist](/blog/final-walk-through-checklist) for the days before closing. Moving here for the first time? See [our buying guide](/buying), and if you need a recommendation for a mover, cleaner or handyman, [talk with us](/connect).
+
+## Frequently asked questions
+
+### What should I do two months before moving?
+
+Start a moving binder, set a budget, get written estimates from at least three licensed movers, start decluttering, and confirm your lease notice or closing dates.
+
+### How far in advance should I change my address with USPS?
+
+You can submit it ahead of time; forwarding can begin within 3 business days, but USPS suggests allowing up to 2 weeks. Standard forwarding lasts 12 months.
+
+### How soon do I have to update my address with the New York DMV?
+
+Within 10 days of moving. New residents must exchange an out-of-state driver license within 30 days.
+
+### Does my mover need a license in New York?
+
+Yes. Movers doing moves within New York need a NYSDOT household goods certificate; interstate movers need a USDOT number registered with FMCSA.
+
+### What goes in a first-night box?
+
+Toiletries, medications, chargers, basic tools, a coffee maker, snacks, pet supplies, a change of clothes and bedding: everything you need for 24 hours without opening another box.
+
+## Sources
+
+- New York State Department of Transportation, [registration and licensing](https://www.dot.ny.gov/divisions/operating/osss/truck/registration-licensing)
+- Federal Motor Carrier Safety Administration, [Protect Your Move](https://www.fmcsa.dot.gov/protect-your-move)
+- 49 CFR [375.201](https://www.law.cornell.edu/cfr/text/49/375.201) and [375.407](https://www.law.cornell.edu/cfr/text/49/375.407) (Cornell Legal Information Institute)
+- U.S. Postal Service, [change of address and mail forwarding](https://www.usps.com/manage/forward.htm)
+- Internal Revenue Service, [Form 8822](https://www.irs.gov/forms-pubs/about-form-8822)
+- New York State DMV, [change your address](https://dmv.ny.gov/records/change-your-address) and [exchange an out-of-state license](https://dmv.ny.gov/driver-license/exchange-out-of-state-driver-license)
+
+Checked against these sources on September 24, 2026.`;

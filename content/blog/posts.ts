@@ -59,7 +59,7 @@ import {
   SELLER_MISTAKES_POST,
   SELLING_TIMELINE_POST,
 } from "./seller-posts";
-import { BASEMENT_POST, ENERGY_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
+import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -1225,15 +1225,23 @@ export const POSTS: BlogPost[] = ([
     placeholder: true,
   },
   {
-    slug: "ultimate-moving-checklist-8-week-guide",
+    slug: "ultimate-8-week-moving-checklist",
     cluster: "moving",
     title: "The Ultimate Moving Checklist: Your 8-Week Guide to a Stress-Free Move",
-    date: "2025-09-12",
+    seoTitle: "The Ultimate 8-Week Moving Checklist: A Stress-Free Plan",
+    /** Moving #1, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug redirects
+     * here. Dated 2025-09-19 (the stub's 2025-09-12 now belongs to the basement post). */
+    date: "2025-09-19",
+    updated: "2026-09-24",
     excerpt:
-      "Eight weeks out to moving day, week by week: utilities, schools, address changes, and everything people remember too late.",
+      "Eight weeks to moving day, week by week: choosing a licensed mover, packing, the change of address, utilities, and the New York DMV deadlines people remember too late.",
+    seoDescription:
+      "An 8-week moving checklist, week by week: hire a licensed mover, pack, change your address with USPS and the NY DMV, set up utilities, and plan moving day.",
     cover: "/images/listings/house-18.jpg",
-    body: PLACEHOLDER_BODY("an eight-week countdown checklist that keeps a move on schedule"),
-    placeholder: true,
+    body: [],
+    placeholder: false,
+    markdown: EIGHT_WEEK_POST,
+    aliases: ["ultimate-moving-checklist-8-week-guide"],
   },
   {
     slug: "lower-energy-bills-new-york-homeowners",
