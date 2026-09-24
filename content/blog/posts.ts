@@ -59,7 +59,7 @@ import {
   SELLER_MISTAKES_POST,
   SELLING_TIMELINE_POST,
 } from "./seller-posts";
-import { SEASONAL_MAINTENANCE_POST, UNDER_1000_POST } from "./homeowner-posts";
+import { BASEMENT_POST, SEASONAL_MAINTENANCE_POST, UNDER_1000_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -1258,15 +1258,23 @@ export const POSTS: BlogPost[] = ([
     placeholder: true,
   },
   {
-    slug: "finishing-your-basement-cost-and-value",
+    slug: "cost-vs-value-finishing-basement-hudson-valley",
     cluster: "owning",
     title: "Thinking of Finishing Your Basement? What to Know About Cost and Value",
+    seoTitle: "Finishing a Basement in the Hudson Valley: Cost and Value",
+    /** Homeownership #3, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the
+     * stub's slug and date (2025-09-12) carry over, and the stub slug redirects here. */
     date: "2025-09-12",
+    updated: "2026-09-24",
     excerpt:
-      "Costs per square foot, permits, moisture first, and what a finished basement really adds at resale in the Hudson Valley.",
+      "What finishing a basement costs, what it adds at resale, how appraisers treat below-grade space, and the water, radon, egress and permit checks to do first.",
+    seoDescription:
+      "What it costs to finish a basement in the Hudson Valley, what it adds at resale (about 71% recouped), and the appraisal, egress, radon and permit rules.",
     cover: "/images/listings/house-17.jpg",
-    body: PLACEHOLDER_BODY("what finishing a basement costs in our market and how much value it actually returns"),
-    placeholder: true,
+    body: [],
+    placeholder: false,
+    markdown: BASEMENT_POST,
+    aliases: ["finishing-your-basement-cost-and-value", "finishing-your-basement-cost-value"],
   },
 
 ] as BlogPost[]).sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));

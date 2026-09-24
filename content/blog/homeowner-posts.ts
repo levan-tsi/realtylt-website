@@ -199,3 +199,98 @@ Only if you are comfortable doing it safely with the power off. Hire a licensed 
 - ENERGY STAR, [smart thermostats](https://www.energystar.gov/products/smart_thermostats)
 
 Checked against these sources on September 24, 2026.`;
+
+/** Homeownership #3: "Thinking of Finishing Your Basement? What to Know About Cost and Value" (Drive draft,
+ * 2025). Corrections: the draft's line-item prices, its $85 to $150 per square foot and its "50% to 70%"
+ * appraisal discount had no source and are removed; the Cost vs. Value figures are the national ones (the
+ * draft promised Middle Atlantic numbers but printed national ones); "granite bedrock" and the radon
+ * mitigation price are removed; the town-specific permit package is replaced by the general rule. */
+export const BASEMENT_POST = `An unfinished basement is often the largest unused space in a Hudson Valley house, and finishing it is one of the most common projects owners ask us about. Before asking "can we finish it," ask "should we": what is the cost to finish a basement in the Hudson Valley, what does it add at resale, and what has to be true about the space before any framing goes up. This guide covers the money, the appraisal rules, and the local risks, water, radon and permits, that decide whether the project pays.
+
+## What a finished basement is worth: two kinds of value
+
+### The value you live in
+
+The first return is the one no spreadsheet shows: a family room, a home office away from the kitchen, a gym, or a guest room, without the cost and disruption of moving. For many owners who plan to stay for years, that is the main reason to do it.
+
+### The value an appraiser sees
+
+Here is where expectations often go wrong. Fannie Mae's Selling Guide tells appraisers to measure homes under the ANSI Z765 standard and to treat a level as **below grade if any portion of it is below grade, regardless of the quality of its finish or the window area of any room** ([Fannie Mae Selling Guide B4-1.3-05](https://selling-guide.fanniemae.com/sel/b4-1.3-05/improvements-section-appraisal-report)). Below-grade space is reported separately from above-grade gross living area.
+
+That does not mean it is worth nothing. The same guidance notes that finished below-grade areas may add substantially to value, particularly when the finish is high quality. The appraiser prices that contribution from comparable sales of homes with finished basements, and in most markets a square foot below grade contributes less than a square foot above it. A 1,800-square-foot house with a 700-square-foot finished basement is not appraised like a 2,500-square-foot house.
+
+## Basement finishing cost: where the money goes
+
+Every basement is different, so the only reliable number for yours is a set of written quotes. What we can tell you is where the budget goes, in the order it should be spent:
+
+- **Water management first.** Nothing else matters if the space is not dry. Depending on what you find, that can mean regrading and gutter work outside, an interior drainage channel, a sump pump, or sealing. Fix water before you frame.
+- **Framing, insulation and drywall.** The shell of the room. Use materials suited to below-grade walls, where moisture is always a factor.
+- **Egress.** In New York, basements with habitable space and every sleeping room need an emergency escape and rescue opening: at least 5.7 square feet of net clear opening, at least 24 inches high and 20 inches wide, with a sill no more than 44 inches above the floor, and a window well of at least 9 square feet where the sill is below grade ([Town of Wilton building department summary of the NYS code](https://townofwilton.ny.gov/departments/building-department/information/code-requirements-for-finished-basements/)). Cutting a foundation wall and digging a well is a real line item.
+- **Electrical and lighting.** Outlets, switches and recessed lights, done by a licensed electrician under permit. Smoke and carbon monoxide alarms are part of the job.
+- **Plumbing.** A bathroom or wet bar is usually the most expensive single choice. If the main drain sits above the basement floor, you will need an ejector or upflush system.
+- **Heating and cooling.** To live like the rest of the house, the space needs to be conditioned, whether by extending ductwork or adding a separate unit.
+- **Flooring and finishes.** The most variable line, driven by your taste. Choose materials rated for below-grade use.
+
+The same code summary sets a minimum ceiling height of 6 feet 8 inches for habitable basement space, with beams and ducts allowed down to 6 feet 4 inches. Check yours before you plan a room around it.
+
+## Basement remodel ROI: what the national data says
+
+The most cited source for remodeling returns is the Cost vs. Value Report, now published by the Journal of Light Construction with Zonda. In the 2025 report, a midrange basement remodel had a national average job cost of $52,012 and added an estimated $36,905 at resale, about **71% of cost recouped** ([JLC 2025 Cost vs. Value Report](https://www.jlconline.com/cost-vs-value/2025/)). The report publishes regional figures too; costs in the New York area generally run above the national average, so treat the national number as a floor for cost, not a quote.
+
+Read the 71% correctly. It is not a failed investment; it is what you should expect when you turn unfinished space into finished space that is still below grade. A finished basement is not a flip. It is a hybrid: most of the money comes back at resale, and the rest buys years of use.
+
+## Hudson Valley specifics: what to check before you build
+
+### Water and older foundations
+
+Many older homes here sit on fieldstone or block foundations, which handle water differently from modern poured concrete. A stone wall with tired mortar usually needs an interior drainage approach rather than a patch. Have a waterproofing contractor assess the space, and consider a structural engineer if you see active cracks or movement.
+
+### Radon
+
+The EPA's action level for radon is 4 picocuries per liter, and it recommends testing every home ([EPA](https://www.epa.gov/radon)). Several of our counties are high-radon areas: Putnam County, for example, is in the EPA's highest-risk Zone 1 ([Putnam County Department of Health](https://putnamcountyny.gov/component/zoo/item/free-radon-test-kits-for-residents-putnam-remains-high-radon-zone?Itemid=101)). Test before you finish the space, because a mitigation system is far easier to install before the walls and ceiling go up. The New York State Department of Health also has testing information ([NYSDOH](https://www.health.ny.gov/environmental/radon/)).
+
+### Permits and certificates
+
+Finishing a basement creates habitable space, and your town or village building department will require a permit, plan review and inspections, then a certificate of occupancy or compliance at the end. Skipping this is a mistake that surfaces when you sell: unpermitted work can come up in the buyer's inspection or the title search and may need to be legalized, sometimes by opening walls. If you already have unpermitted work, read our guide to [seller disclosure requirements in New York](/blog/seller-disclosure-requirements-new-york).
+
+## A four-step plan for your basement project
+
+1. **Decide why.** If you are staying for years, you can build for your own use. If you may sell soon, choose neutral finishes and a flexible layout that suit most buyers.
+2. **Get the assessments first.** A waterproofing assessment, a radon test and, for older foundations, an engineer's opinion. These set the fixed part of your budget.
+3. **Fund the must-haves before the wants.** Water control, radon mitigation if needed, egress for any bedroom, and licensed electrical work come first; a wet bar or built-ins come last. A dry, legal basement with modest finishes beats a luxurious one with a water problem.
+4. **Call the building department before you hire.** Ask what drawings they need, which inspections apply, and how long the review takes.
+
+Weighing smaller projects first? See [high-ROI home improvements under $1,000](/blog/high-roi-home-improvements-under-1000). Buying a house with a finished basement? Our [home inspection checklist](/blog/home-inspection-checklist-hudson-valley-ny) covers what to look for. To see how a finished basement could change your own home's value, get an estimate on our [home value page](/home-value) or [talk with us](/connect).
+
+## Frequently asked questions
+
+### Does a finished basement count as square footage?
+
+Not as above-grade gross living area. Under Fannie Mae's appraisal guidance, a level is below grade if any part of it is below grade, and below-grade finished space is reported and valued separately, based on comparable sales.
+
+### Is finishing a basement a good return on investment?
+
+It returns most of its cost. The 2025 Cost vs. Value Report put a midrange basement remodel at about 71% of cost recouped nationally, and the rest comes back as years of usable space.
+
+### How much does it cost to finish a basement in the Hudson Valley?
+
+It depends on water conditions, egress, plumbing and finishes. The national midrange average in the 2025 Cost vs. Value Report was $52,012, and New York area costs generally run higher, so get several written quotes.
+
+### Do I need a permit to finish my basement in New York?
+
+Yes. Creating habitable space requires a building permit and inspections from your local building department, and a certificate of occupancy or compliance when the work is done.
+
+### Does a basement bedroom need an egress window?
+
+Yes. Every basement sleeping room needs an emergency escape and rescue opening of at least 5.7 square feet net clear, with a sill no higher than 44 inches.
+
+## Sources
+
+- Fannie Mae, [Selling Guide B4-1.3-05, Improvements Section of the Appraisal Report](https://selling-guide.fanniemae.com/sel/b4-1.3-05/improvements-section-appraisal-report)
+- Journal of Light Construction and Zonda, [2025 Cost vs. Value Report](https://www.jlconline.com/cost-vs-value/2025/)
+- Town of Wilton, NY, [code requirements for finished basements](https://townofwilton.ny.gov/departments/building-department/information/code-requirements-for-finished-basements/)
+- U.S. Environmental Protection Agency, [radon](https://www.epa.gov/radon)
+- Putnam County Department of Health, [free radon test kits; Putnam remains a high radon zone](https://putnamcountyny.gov/component/zoo/item/free-radon-test-kits-for-residents-putnam-remains-high-radon-zone?Itemid=101)
+- New York State Department of Health, [radon](https://www.health.ny.gov/environmental/radon/)
+
+Checked against these sources on September 24, 2026.`;
