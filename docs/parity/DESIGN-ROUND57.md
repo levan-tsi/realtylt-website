@@ -981,6 +981,157 @@ lights. `maps-loader.ts` now forgets a failed load so a later caller on the same
   adds 518, 0 in flights; first steady 7.9 s, cover gone 11.7 s.
 - Gates: `npx tsc --noEmit` clean; `npx vitest run` **1827 passing** (1819 - 2 row-hold tests + 10).
 
+### Round 6, the builder's numbers (commits `e2ef45b` `20ca57e` `c72584a` `fb7f207`; for the orchestrator to re-run)
+
+Production build on :3102 (the code of `fb7f207`), headed Chrome, RTX 2060, 144 Hz, cold = a fresh
+profile per run. Instruments (gitignored): `scripts/_scratch-r57f-*.mjs` (`-camlive` the camera per
+frame, `-frames`, `-grade.sh` the three strengths, `-samp` tones by box, `-dissolve` frames + the
+cover-vs-map diff, `-lag` round 5's probe plus markers in the DOM and the layer's cost, `-sum.cjs`,
+`-table.cjs`, `-calib` a red Google marker and our green dot per home, `-lights` round 3's hover /
+tap / click / focus probe, `-hovercost`, `-contrast`, `-reddraw`, `-nojs`, `-states`,
+`-overflow`). Outputs under `scripts/_scratch-r57/6/`.
+
+**Measured before building.** During `flyCameraTo` the element's `center`, `range`, `tilt` and
+`heading` change on every frame Google draws (225 changes in a 2.4 s flight; the `gmp-*change`
+events as often) and reading all five costs under 0.1 ms (`camlive/log.json`). So a layer can follow
+the camera frame by frame.
+
+**1. The night grade** (`night.ts`, `e2ef45b`). Not a flat veil: a flat veil turns Google's white
+names grey with the land. A tone curve on the map element (CSS `brightness`, then `contrast` about
+middle grey, then `saturate`) and a deep blue-black screened into the shadows: the land's middle
+tones (~0.35 of white) fall to 0.09..0.21, white stays 0.71..0.89, the order of tones is kept
+(tested). Three strengths at four stops both widths (`grade/sheet-{1440,390}.png`): light, mid, deep.
+Chosen: **deep** (`brightness(0.64) contrast(1.5) saturate(0.45)`, tint `rgb(5,8,19)`): the owner's
+"a dark place", the /ai page's black; the satellite imagery still reads (the Queens frame: the
+airports' runways, the coast, the water darker than the land); HYBRID's flat sea at the territory
+shot stays a quiet navy, a little brighter than the land (the one place where water is not darker,
+Google's own flat colour). Cost: the cold lag probe with `?night=0` gave the same flights (over-34
+sum 142 vs 142 on that build): free. Google's logo is under the grade (white stays white; not
+covered by anything of ours). `?night=light|mid|deep|0` compares. **Scrims kept at 0.8**: with our
+lights under the words, 0.6 failed the kit (12 texts at 1440, 23 at 390, down to 2.06:1).
+
+**2. Our light layer** (`light-layer.ts`, `light-plan.ts`, `glyph.ts`, `20ca57e`). One canvas over
+the grade and under the scrims; no `Marker3DElement` anywhere (markers in the DOM at the end of every
+lag run: 0; marker adds: 0, were 518). Every drawn home's place is precomputed (ECEF, ground height
+from our grid); a frame projects them from the camera the element reports.
+- *In Google's frame.* Drawn on our own animation frame alone, the lights trailed Google's drawing by
+  up to 21 px mid-flight (our callback ran first and read last frame's camera). Now drawn on the
+  element's camera events (a microtask gathers the four): mid-flight, a red Google marker and our
+  green dot for the same home in ONE screenshot, median 1.9 to 3.2 px, max 5.4 px
+  (`calib/flight-*.png`).
+- *The glyph.* A warm-white core and a soft warm halo, one hue, no ring, ADDED to the ground (canvas
+  "lighter", CSS `plus-lighter`), baked once per glyph at its device size and drawn unscaled. Sizes
+  read continuously from the live range (log range between anchors), so the tiers are eased (tested:
+  no step anywhere on the ladder): laptop core / halo / strength 1.9 / 9 / 0.54 at 145 km, 2.05 /
+  9.5 / 0.54 at 60, 2.25 / 10.5 / 0.54 at 25, 2.6 / 13 / 0.56 at 3 km; phone 2.2 / 10 / 0.62 at
+  156 km. Lit (hover, a card's focus): core x1.6 to pure white, halo x1.45, strength x1.9, eased
+  140 ms. Featured homes: core +0.6, halo x1.2.
+- *Per-frame cost at 1440* (whole scroll, cold x4): mean 0.44 to 0.45 ms, p95 0.8 ms, max 1.6 to
+  12.2 ms (single frames); phone 0.28 / 0.5 to 0.6. The first build (two sprites a light scaled from
+  64 px with "high" smoothing) cost 1.09 / 1.9 and doubled the flights' frames over 34 ms (142 vs 65
+  with `?homes=0`); baked, it is back to the map-only level (41 to 67).
+- *The distribution* (`planDensity`): the homes in one fixed random order until the altitude's
+  ceiling (`budgetFor`, unchanged), a small gap only (half the lattice gap: 15 px at the territory)
+  so glows never overlap. A uniform sample: more lights where there are more homes. Frames side by
+  side (`thin/sheet-1440.png`, lattice left, density right, Queens / Westchester / territory):
+  Westchester's south (Yonkers, Mount Vernon) dense and its north sparse, the territory's lights
+  gathered on the city, where the lattice evened both. `?thin=lattice` keeps round 57.2's. Plan
+  0.2 to 1.7 ms (the lattice 6.7 to 24 ms). Drawn per stop at 1440: territory 130, chapters 245 /
+  380 / 356, counties 130 to 380, Staten Island 85; at 390: territory 72.
+- *Over a flight* the destination's homes are planned at its start and the set cross-fades over 80 %
+  of the flight (homes both shots draw stay lit; smoothstep per light); reduced motion cuts, one
+  layer draw per cut (measured: 1 at Dutchess, 1 at Queens).
+- *The pointer* uses the positions the layer drew last frame: hover (20 lights at 1440, 3 frames:
+  middle, right edge, the logo corner), 0 labels over their light, 0 on the logo, label shown 4 to
+  14 ms after the pointer arrives, label text 11.5:1 to 18:1 on the real pixels; the pointer's whole
+  frame over Queens (380 lights) p95 0.5 ms, max 1.0 ms (and 1.4 over 150 samples: the first frame
+  after a scroll had cost 9.7 ms reading the words' line boxes; they are now read when the scroll
+  rests, `fb7f207`); click steady -> fly-in -> route asked 619 to 635 ms, URL 690 to 834 ms; not
+  steady 26 to 31 ms. Phone: 10 of 10 taps named the home (3 to 17 ms), 0 over the light, the open
+  686 ms steady, 58 ms not steady; overflow 0 with a label at the right edge. Keyboard: the
+  featured cards light their homes and name them (Pleasant Valley, Staatsburg, Poughkeepsie);
+  Escape puts both out; Tab leaves the rail.
+- *Names under a label fade* (`namesOverlap`, 140 ms, tested): `lights/phone/tap-1.png`, the tap
+  label on Cornwall has Rockland and Westchester stepped aside.
+- *The calibration* (the layer's green dot against a red Google marker per home, each photographed
+  with the other hidden): 38 lights at five stops (hero, Dutchess County, Orange, Queens,
+  Manhattan): median 1.9 to 2.3 px, **max 2.6 px**; the error is a constant (+0.4, +1.9) px at every
+  range from 145 km to 21 km, i.e. screen-space (the marker image's own anchor), not the projection's
+  geometry. One red dot of 39 was half hidden by a Google label (23 px of 68) and gave 9.3 px; not
+  counted. Not measured at 390 (the phone's shades hid the red dots; the probe hides them now but was
+  not re-run at 390).
+
+**3. The cover** (`c72584a`). `make-map-cover.mjs --look=night`: our relief and water in the tones
+measured on the graded live frame (land 21..39, the Sound and the harbour 24,33,58, offshore
+30,40,68), built-up land from our own listings' density, NO lamp carpet, no NASA channel; the lights
+planned by the live planner in the live css box and summed with the live glyph. Wide 1600x1000
+13.7 KB, tall 780x1688 13.1 KB. The cover now stands over the map and under the SAME shades as the
+live map (the shades moved to their own fixed layer), so the words and their shades do not change at
+the dissolve; with JS off it keeps its own shades (`nojs/first-1440.png`). Measured: the cover's
+lights land on the live layer's (`dissolve/default/overlay-city.png`, red = cover, green = live:
+every light yellow) with the same energy (5,683 vs 5,743 summed levels a light, both peaks 253).
+**Cover vs first steady frame, mean absolute difference: 12.9 levels at 1440 (13.5 % of pixels over
+24), 7.6 at 390 (6.0 %)**; the old dusk cover under the same shades: 19.0 (24.8 %). What changes
+is Google's detail: roads, names, the imagery of New Jersey and Connecticut (outside our elevation
+grid the cover is flat dark land). Frames: `dissolve/default/sheet-{1440,390}.png` (before / 350 ms
+into the 700 ms dissolve / after). The dusk and day covers left the default path (`?cover=`).
+Credits: the footer's NASA line shows only when the ground is the night flight; ATTRIBUTIONS.md
+records the new cover's sources.
+
+**4. The reveal and the early scroll** (`warm-plan.ts earlyScroll / backWaitMs`). Cold 1440, the
+scroll starting N s after navigation (`lag/final-early*`):
+
+| scroll at | first steady | cover gone | held after the scroll | after first steady | the walk's compile flight | the page's Westchester flight | worst page flight |
+|---|---|---|---|---|---|---|---|
+| 3.0 s | 7.2 s | 11.2 s | 8.2 s | 3.9 s | 250 ms at 7.9 s, under the cover | 21.0 / 27.9 | 76 |
+| 4.5 s | 8.5 s | 12.2 s | 7.7 s | 3.7 s | 250 ms at 9.1 s, under the cover | 20.9 | 97 |
+| 6.0 s | 7.2 s | 11.1 s | 5.1 s | 4.0 s | 257 ms at 7.8 s, under the cover | 27.8 / 27.9 | 139 |
+| 8.0 s | 7.1 s | 10.8 s | 2.8 s | 3.7 s | 236 ms at 7.7 s, under the cover | 41.7 | 70 |
+
+The Westchester flight is under 60 ms in every case (round 5: 236 to 257). The longest hold after a
+scroll: 8.2 s (the scroll at 3 s; the map had not drawn yet). The cover lifts 3.7 to 4.0 s after the
+map first draws, the same as with no scroll (3.7): the path's steps (~1.7 s) then up to 2 s for the
+visitor's shot to draw; so "the drawn map plus 2 s" holds only if "drawn" means the walk's end, not
+the first steady frame. Said plainly: the compile's 236 to 257 ms frame still happens once, under
+the cover; a visitor who is scrolling at that moment feels it as a scroll hitch with the cover up.
+
+**5. Lag, before (round 5 final, `5/lag/final-cold`) -> after** (flights: worst ms; the walk's
+compile flight is under the cover):
+
+| | before cold | after cold x4 | after warm x1 | after 390 cold x3 |
+|---|---|---|---|---|
+| boot worst / over 34 | 493 / 41 | 424 to 479 / 27 to 32 | 292 / 39 | 396 to 424 / 19 to 23 |
+| the page's Westchester flight | 34.7 | 27.8 to 34.7 | 41.7 | 90.3 / 90.3 / 90.4 |
+| worst flight frame of the scroll | 139 | 76 / 97 / 104 / 125 | 83 | 90 / **278** / 90 |
+| flights' frames over 34, sum | 89 | 62 / 41 / 65 / 67 | 74 | 12 / 31 / 21 |
+| marker adds (in flights) | 518 (0) | 0 (0) | 0 | 0 |
+| first steady / cover gone, s | 7.9 / 11.7 | 7.1-7.5 / 10.7-11.1 | 6.9 / 10.6 | 5.4-6.1 / 8.4-10.2 |
+| our layer per frame, mean / p95 / max ms | - | 0.45 / 0.8 / 1.6-12.2 | 0.46 / 0.8 / 11.5 | 0.28 / 0.5-0.6 / 2.9-8.4 |
+
+The phone's 278 ms (1 run of 3) is one frame at the landing of the first flight (Dutchess, 2.5 s
+into 2.6 s); not seen in the other two runs; not diagnosed. In one earlier cold run on an
+intermediate build the walk's compile flight did not compile (131.9 ms under the cover) and the
+page's Westchester flight stalled 250 ms: 1 of the 17 cold 1440 runs of this round; not diagnosed.
+
+**6. Gates.** Contrast kit, 18 stops: **1440 = 2** (AI and Connect, the pills the kit misreads),
+**390 = 0** outside the logo hole (6 text-stops inside it, faded on purpose); lowest real texts 4.53
+(the chapter headings over the lights). No horizontal overflow at 1440 / 390 / 320 at five scroll
+positions each. No JS: the night cover at opacity 1 at both widths, the GET form, both rails, 0 Maps
+requests. Blocked script and `gmp-error`: the cover stays, "load: Google Maps failed to load", no
+Google claim; our lights stop and hide. Reduced motion: 0 flights, 1 layer draw per cut, the cover's
+transition 0. tsc clean; vitest **1827 -> 1849** (136 -> 138 files).
+
+**Decided here, for the owner**: the deep grade; density-true lights; the scrims unchanged (the
+kit); the cover's hold ends at the reveal, never earlier; the dusk and day covers kept only behind
+`?cover=`. **What he will see**: on a cold laptop, the dark territory with its lights for about 11 s
+(our cover), which then gains Google's detail in place without the lights moving, and every section
+flight carries its lights with it, growing as the camera comes down; on a phone, the same, sooner
+(about 8 to 10 s).
+
+**Left**: `thinning.ts diffLights` and the gate's marker hook (`canMark`) are no longer used by the
+page (kept, tested; remove in a sweep); the 390 calibration; the phone's one 278 ms landing frame;
+HYBRID's sea at the territory shot is a touch brighter than the land.
+
 ## 5. The owner's verdict mid-round (2026-09-23, verbatim, after rounds 1 to 4)
 
 > "It's definitely getting better, the real map is better, but you have to work on the light
