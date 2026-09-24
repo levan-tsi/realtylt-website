@@ -59,7 +59,7 @@ import {
   SELLER_MISTAKES_POST,
   SELLING_TIMELINE_POST,
 } from "./seller-posts";
-import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, MOVERS_POST, PACKING_POST, RELOCATING_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
+import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, MOVERS_POST, PACKING_POST, RELOCATING_POST, RENT_VS_BUY_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -1181,15 +1181,23 @@ export const POSTS: BlogPost[] = ([
     aliases: ["first-time-home-buyer-checklist-ny"],
   },
   {
-    slug: "moving-to-hudson-valley-rental-vs-buying",
+    slug: "rent-vs-buy-hudson-valley-ny",
     cluster: "moving",
     title: "Moving to the Hudson Valley: Rental vs. Buying, and What Makes the Most Sense",
-    date: "2025-09-13",
+    seoTitle: "Rent vs. Buy in the Hudson Valley, NY: How to Decide",
+    /** Moving #5 (moving folder done), reposted 2026-09-24. Slug = the CRM drip link and the draft's; the
+     * stub's slug redirects here. Dated 2025-11-26 (the stub's 2025-09-13 went to the relocating post). */
+    date: "2025-11-26",
+    updated: "2026-09-24",
     excerpt:
-      "Rents keep climbing, but so do rates. Here's an honest framework for deciding whether your first Hudson Valley address should be rented or owned.",
+      "Renting first versus buying now in the Hudson Valley: the case for each, a worked monthly comparison at today's mortgage rate, the five-year rule and four questions that settle it.",
+    seoDescription:
+      "Rent vs. buy in the Hudson Valley, NY: the case for each, a monthly cost example at the current 30-year rate, the five-year rule, and the questions to decide.",
     cover: "/images/listings/house-12.jpg",
-    body: PLACEHOLDER_BODY("the rent-versus-buy math for the Hudson Valley market, including the break-even timeline"),
-    placeholder: true,
+    body: [],
+    placeholder: false,
+    markdown: RENT_VS_BUY_POST,
+    aliases: ["moving-to-hudson-valley-rental-vs-buying", "hudson-valley-rental-vs-buying"],
   },
   {
     slug: "relocating-to-hudson-valley-ny-guide",

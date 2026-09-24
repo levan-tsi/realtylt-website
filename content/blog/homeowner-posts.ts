@@ -938,3 +938,119 @@ In the larger towns, usually. In rural areas it varies by address, so check the 
 - U.S. Environmental Protection Agency, [how to care for your septic system](https://www.epa.gov/septic/how-care-your-septic-system) and [protect your home's water](https://www.epa.gov/privatewells/protect-your-homes-water)
 
 Checked against these sources on September 24, 2026.`;
+
+/** Moving #5: "Moving to the Hudson Valley: Rental vs. Buying, What Makes the Most Sense?" (Drive draft,
+ * 2025). Corrections: the draft's Beacon "median $715,000", "median rent $3,500", "2.05% Dutchess effective tax
+ * rate", "75% appreciation since mid-2020", "5.76% average commission", "school taxes over 60% of the bill" and
+ * "8% to 10% selling costs" had no source and are removed; the worked example is now a labeled hypothetical at
+ * the 7.03% Freddie Mac rate of September 24, 2026 (the draft used 6.25%). Added the 2026 SALT cap ($40,400),
+ * New York's one-month security deposit limit, the seller's 0.4% transfer tax and the IRS exclusion. */
+export const RENT_VS_BUY_POST = `You have decided to move to the Hudson Valley. The next question is one of the biggest: rent or buy? There is no single right answer. It depends on how long you will stay, how well you know the towns, and how much cash you want tied up in a house. This guide to rent vs. buy in the Hudson Valley, NY lays out both cases, works through the monthly math with today's mortgage rate, and ends with the questions that usually settle it.
+
+## The case for renting first
+
+### Try the towns before you commit
+
+The Hudson Valley is many places. Beacon's walkable Main Street and Metro-North station, Rhinebeck's village and farm country, and Cold Spring's trails and river are very different lives. A one-year lease lets you live through a winter, test the commute and learn the town before you make a decision measured in hundreds of thousands of dollars. Our [newcomer's guide to the Hudson Valley](/blog/relocating-to-hudson-valley-ny-guide) compares the towns and counties.
+
+### Less cash up front
+
+To rent, you usually need the first month's rent and a security deposit, which New York limits to one month's rent ([New York Attorney General](https://ag.ny.gov/publications/residential-tenants-rights-guide)). To buy, you need a down payment (20% avoids private mortgage insurance on a conventional loan) plus closing costs. That difference keeps cash free for an emergency fund or a job change.
+
+### Flexibility and no repair bills
+
+When a lease ends you can move without selling a house. The furnace, the roof and the septic system are the landlord's problem.
+
+### The drawback: no equity
+
+Rent pays for shelter and nothing else. None of it comes back to you.
+
+## The case for buying
+
+### Equity through principal and appreciation
+
+Part of every mortgage payment reduces the loan balance, so you build ownership month by month. Over time, rising values can add to that, though no market rises in a straight line.
+
+### A fixed payment
+
+With a 30-year fixed-rate mortgage, principal and interest never change. Taxes and insurance still move, but the largest part of the payment is locked, while rents can rise every year.
+
+### Tax and personal benefits
+
+If you itemize, mortgage interest and property taxes may be deductible. For 2026 the state and local tax (SALT) deduction cap is $40,400 ($20,200 if married filing separately), reduced for higher incomes but not below $10,000 ([IRS](https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill)); see [IRS Publication 530](https://www.irs.gov/publications/p530) for the rules for homeowners. And you can paint, renovate and plant as you like.
+
+### The drawbacks: cash, upkeep and property taxes
+
+Buying takes a large up-front sum, all repairs are yours, and property taxes in the Hudson Valley are high. New York's local governments and school districts rely heavily on the property tax, and your bill will usually include county, town and school taxes, with the school tax often the largest part. Always use the actual tax bills for the house you are considering, not an average.
+
+## The monthly math: a worked example
+
+Every input below is a stated assumption for illustration, except the rate: Freddie Mac's survey put the average 30-year fixed rate at 7.03% on September 24, 2026 ([Freddie Mac PMMS](https://www.freddiemac.com/pmms)).
+
+- **House price:** $600,000, with 20% down ($120,000) and a $480,000 loan
+- **Property tax:** 2.2% of value a year, an assumption; use the real bill
+- **Homeowners insurance:** $1,800 a year, an assumption
+- **Maintenance:** 1% of value a year, a common rule of thumb
+- **Comparable rent:** $3,300 a month for a similar three-bedroom house, an assumption (for context, HUD's fiscal 2026 Fair Market Rent for a two-bedroom unit in the Kiryas Joel-Poughkeepsie-Newburgh metro area, which includes Dutchess County, is $1,979; [HUD USER](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3602799999))
+
+**Owning, per month:**
+
+- Principal and interest at 7.03%: about $3,203
+- Property tax: about $1,100
+- Insurance: $150
+- Maintenance: about $500
+- **Total: about $4,953**, of which about $404 a month in the first year is principal, money that stays yours as equity
+
+**Renting, per month:** $3,300 plus renters insurance.
+
+So owning costs roughly $1,650 a month more in cash, and about $1,250 more after counting the principal you keep. In this example, renting is cheaper month to month. Buying wins only if you stay long enough for equity and any appreciation to outrun the costs of getting in and out. Change the assumptions to your own numbers; the conclusion can flip with price, taxes and rent.
+
+## How long do you need to stay? The five-year rule of thumb
+
+A common guideline is to plan on owning for at least five years. The reason is transaction costs:
+
+- **Getting in:** closing costs for lender fees, title insurance, the attorney, and in much of the region the mortgage recording tax. Our guide to [buyer closing costs in New York](/blog/buyer-closing-costs-new-york) lists them line by line.
+- **Getting out:** the brokerage commission, which is negotiable, your attorney, and New York's real estate transfer tax, normally paid by the seller at 0.4% of the price ([NYS Department of Taxation and Finance](https://www.tax.ny.gov/bus/transfer/rptidx.htm)).
+
+In the example above, the first five years pay down about $28,000 of principal. If you sell sooner, those costs can easily outweigh the equity you built. The five-year guideline is not the same as the IRS rule that lets you exclude up to $250,000 of gain ($500,000 for most married couples filing jointly) if you owned and lived in the home for at least two of the five years before the sale ([IRS](https://www.irs.gov/taxtopics/tc701)).
+
+## Four questions that settle it
+
+1. **Timeline:** how sure are you that you will live in this part of the Hudson Valley for five years or more?
+2. **Knowledge:** have you spent enough time in the towns to choose one now, or would a year of renting pay for itself in a better choice?
+3. **Cash:** do you have the down payment and closing costs, plus a separate reserve for repairs and emergencies?
+4. **Lifestyle:** are you ready for snow, repairs and contractors, or does a landlord's phone number suit you better right now?
+
+If you are leaning toward buying, start with [how much house you can afford](/blog/how-much-house-can-i-afford-ny-guide) and our [first-time buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist), and see our [financing guide](/financing). Whether you rent first or buy now, [talk with us](/connect) about the towns and the numbers.
+
+## Frequently asked questions
+
+### Is it cheaper to rent or buy in the Hudson Valley?
+
+Month to month, renting is often cheaper; in our worked example at a 7.03% rate, owning cost about $1,650 a month more in cash. Buying can come out ahead over longer periods as you pay down the loan and if values rise.
+
+### How long do I need to live in a house to make buying worth it?
+
+A common rule of thumb is at least five years, so equity and any appreciation can cover the costs of buying and selling.
+
+### How much is a security deposit in New York?
+
+New York limits a security deposit to one month's rent.
+
+### Are property taxes high in the Hudson Valley?
+
+Yes, compared with much of the country. Bills typically combine county, town and school taxes. Always check the actual bills for the house.
+
+### What is the difference between the five-year rule and the IRS two-out-of-five rule?
+
+The five-year rule is a planning guideline for breaking even. The IRS rule lets you exclude up to $250,000 of gain ($500,000 for most joint filers) if you owned and lived in the home for two of the five years before selling.
+
+## Sources
+
+- Freddie Mac, [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms)
+- New York State Attorney General, [residential tenants' rights guide](https://ag.ny.gov/publications/residential-tenants-rights-guide)
+- HUD USER, [FY2026 Fair Market Rents, Dutchess County](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3602799999)
+- IRS, [2026 inflation adjustments](https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill), [Publication 530](https://www.irs.gov/publications/p530) and [Topic 701, sale of your home](https://www.irs.gov/taxtopics/tc701)
+- NYS Department of Taxation and Finance, [real estate transfer tax](https://www.tax.ny.gov/bus/transfer/rptidx.htm)
+
+Checked against these sources on September 24, 2026.`;
