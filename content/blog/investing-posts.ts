@@ -665,3 +665,101 @@ HUD's annual estimates of typical rents, including utilities, set near the 40th 
 - City of Kingston, [ETPA implementation fact sheet](https://kingston-ny.gov/filestorage/8399/8469/48370/ETPA_Implementation_Fact_Sheet_Kingston_New_York.pdf)
 
 Checked against these sources on September 24, 2026.`;
+
+export const EXCHANGE_1031_POST = `Selling an investment property that has grown in value can mean a large tax bill. Federal long-term capital gains are taxed at up to 20%, gain from past depreciation at up to 25%, higher earners may owe the 3.8% net investment income tax ([IRS Topic 409](https://www.irs.gov/taxtopics/tc409); [IRS Topic 559](https://www.irs.gov/taxtopics/tc559)), and New York taxes capital gains as ordinary income at its graduated rates ([NYS Department of Taxation and Finance](https://www.tax.ny.gov/pit/file/tax-tables/)). A 1031 exchange lets an investor defer those taxes by reinvesting in another investment property. This guide to the 1031 exchange in New York explains the rules, the deadlines and the traps, with a Hudson Valley example.
+
+## What a 1031 exchange is
+
+Section 1031 of the Internal Revenue Code lets you exchange real property held for business or investment for other like-kind real property without recognizing the gain at that time. Since January 1, 2018, only real property qualifies; personal residences and property held primarily for sale do not, and U.S. property cannot be exchanged for foreign property ([IRS](https://www.irs.gov/businesses/small-businesses-self-employed/like-kind-exchanges-real-estate-tax-tips)).
+
+It is **deferral, not forgiveness**. Your old property's tax basis carries over to the new one, so the untaxed gain is carried forward and recognized when you eventually sell in a taxable sale, unless you exchange again.
+
+## The rules and deadlines
+
+### The 45-day identification period
+
+You must identify replacement property in writing no later than 45 days after you transfer the property you sold, in a document you sign or a written agreement signed by all parties, describing it by legal description, street address or a distinguishable name ([IRS Form 8824 instructions](https://www.irs.gov/instructions/i8824)).
+
+The Treasury regulations limit how many properties you can identify ([26 CFR 1.1031(k)-1](https://www.law.cornell.edu/cfr/text/26/1.1031%28k%29-1)):
+
+- **three properties** of any value; or
+- **any number,** if their total value does not exceed **200%** of the value of the property you sold; or
+- any number of any value, if you actually acquire at least **95%** of the total value you identified.
+
+### The 180-day exchange period
+
+You must receive the replacement property by the earlier of the 180th day after the sale or the due date, including extensions, of your tax return for the year of the sale ([IRS Form 8824 instructions](https://www.irs.gov/instructions/i8824)). A sale late in the year can therefore run into the April filing deadline unless you extend. The 45-day and 180-day periods run at the same time, from the same starting day.
+
+### The qualified intermediary
+
+You may not receive or control the sale proceeds. In a typical delayed exchange a qualified intermediary holds them between the two closings under a written exchange agreement signed before the sale closes. Under the regulations, your agent, attorney, accountant or employee within the prior two years, and certain relatives, are disqualified from serving as your intermediary ([26 CFR 1.1031(k)-1](https://www.law.cornell.edu/cfr/text/26/1.1031%28k%29-1)).
+
+### Like-kind is broad for real estate
+
+Properties are like-kind if they are of the same nature or character, even if they differ in grade or quality ([IRS](https://www.irs.gov/businesses/small-businesses-self-employed/like-kind-exchanges-real-estate-tax-tips)). A Dutchess County rental house can be exchanged for a Westchester apartment building, commercial property or investment land, as long as both are held for investment or business use.
+
+## A Hudson Valley example
+
+This is an illustration with stated assumptions, not tax advice.
+
+- **Sold:** a Poughkeepsie duplex, bought years ago for $200,000, with $50,000 of improvements, sold for $750,000.
+- **Assumed gain:** $500,000 above the adjusted basis, of which $150,000 reflects past depreciation. (Depreciation lowers basis, so in reality the adjusted basis would be lower and the gain higher; the round figure keeps the arithmetic simple.)
+- **Bought:** a $1,500,000 six-unit building in New Rochelle.
+
+If sold without an exchange, an illustrative tax estimate:
+
+- $150,000 of depreciation-related gain at up to 25%: $37,500
+- $350,000 of remaining gain at 20%: $70,000
+- Net investment income tax at 3.8% on $500,000: $19,000
+- New York tax at an assumed 6.85%: $34,250
+- **Total: about $160,750**
+
+With a properly structured exchange, that tax is deferred and the full proceeds go toward the new building. Actual amounts depend on your income, deductions, depreciation history and filing status; your CPA should model them.
+
+## Pitfalls
+
+- **Boot.** Cash you receive, or a reduction in your mortgage debt that is not offset by new cash, is taxable to the extent of your gain. To defer fully, buy property of equal or greater value, reinvest all the net proceeds, and replace the debt you paid off.
+- **Missed deadlines.** The 45- and 180-day limits are strict. Relief for federally declared disasters exists but is narrow.
+- **Title mismatch.** The taxpayer who sells should be the taxpayer who buys; changing entities mid-exchange can break it.
+- **The Hudson Valley scramble.** In tight markets, finding, negotiating and contracting within 45 days is hard. Start looking for replacements while your property is still on the market; see [the best Hudson Valley towns for investors](/blog/best-places-to-invest-hudson-valley).
+
+## Your 1031 exchange blueprint
+
+1. **Before listing:** meet your CPA or tax attorney to confirm the property qualifies and the exchange fits your goals, and choose a real estate attorney and agent.
+2. **Before closing:** sign the exchange agreement with a qualified intermediary, add an exchange cooperation clause to the sale contract, and begin the replacement search.
+3. **Days 0 to 45:** the sale closes, proceeds go to the intermediary, and you identify replacement property in writing by day 45.
+4. **By day 180 (or the tax return due date):** complete due diligence, close on the replacement property in the same taxpayer's name, and report the exchange on Form 8824 with your return.
+
+For analyzing replacement properties, see [how to calculate ROI and cap rate](/blog/calculate-roi-cap-rate-investment-property-ny), or [talk with us](/connect) about the sale and the search.
+
+I am a real estate salesperson, not a tax professional or attorney. This article is general information, not tax or legal advice; consult a qualified tax advisor, an attorney and a qualified intermediary before starting an exchange.
+
+## Frequently asked questions
+
+### What are the 1031 exchange deadlines?
+
+Identify replacement property in writing within 45 days of the sale, and receive it by the earlier of 180 days after the sale or your tax return due date including extensions.
+
+### Can I do a 1031 exchange on my primary residence?
+
+No. Personal residences do not qualify. The home sale exclusion under a different section of the tax code may apply instead.
+
+### What is a qualified intermediary?
+
+An independent party that holds your sale proceeds between closings under a written exchange agreement, so you never receive them. Your own agent, attorney, accountant, employee within the prior two years and certain relatives cannot serve.
+
+### What is boot?
+
+Anything you receive that is not like-kind property, such as cash or net debt relief. It is taxable up to the amount of your gain.
+
+### Does New York follow the federal 1031 rules?
+
+New York's personal income tax starts from federal adjusted gross income, so gain deferred federally is generally deferred for New York too. Nonresident sellers have extra New York estimated-tax filings at closing; ask your attorney.
+
+## Sources
+
+- IRS, [like-kind exchanges: real estate tax tips](https://www.irs.gov/businesses/small-businesses-self-employed/like-kind-exchanges-real-estate-tax-tips), [Form 8824 instructions](https://www.irs.gov/instructions/i8824), [Topic 409, capital gains](https://www.irs.gov/taxtopics/tc409) and [Topic 559, net investment income tax](https://www.irs.gov/taxtopics/tc559)
+- Treasury regulations, [26 CFR 1.1031(k)-1](https://www.law.cornell.edu/cfr/text/26/1.1031%28k%29-1) (Cornell Legal Information Institute)
+- NYS Department of Taxation and Finance, [tax rates and tables](https://www.tax.ny.gov/pit/file/tax-tables/)
+
+Checked against these sources on September 24, 2026.`;

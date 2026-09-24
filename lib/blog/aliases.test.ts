@@ -62,7 +62,6 @@ const PENDING_CRM = new Set<string>([
   "packing-tips-hacks-for-moving",
   "ultimate-8-week-moving-checklist",
   "how-to-hire-local-movers-ny",
-  "1031-exchange-rules-new-york",
   "how-to-find-screen-tenants-ny",
   "short-term-vs-long-term-rentals-hudson-valley",
   "hiring-property-management-company-hudson-valley",

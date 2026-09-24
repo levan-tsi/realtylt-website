@@ -43,6 +43,7 @@ import {
 import {
   BEST_TOWNS_POST,
   BRRRR_POST,
+  EXCHANGE_1031_POST,
   FIRST_RENTAL_POST,
   HOUSE_HACKING_POST,
   MULTI_VS_SINGLE_POST,
@@ -671,6 +672,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "1031-exchange-rules-new-york",
+    cluster: "investing",
+    title: "A Guide to the 1031 Exchange in New York",
+    seoTitle: "1031 Exchange Rules in New York: A 2026 Investor Guide",
+    /** Investing #7, reposted 2026-09-24. Slug = the CRM drip link (day 316) and the draft's;
+     * the drip doc's alternate redirects here. The H1 drops the draft's "(2025 Rules)". */
+    date: "2026-02-25",
+    updated: "2026-09-24",
+    excerpt:
+      "How a 1031 exchange defers federal and New York tax on the sale of an investment property: the 45- and 180-day deadlines, the intermediary, like-kind, boot, and a Hudson Valley example.",
+    seoDescription:
+      "1031 exchange rules in New York: the 45-day and 180-day deadlines, identification limits, the qualified intermediary, boot, and a Hudson Valley tax example.",
+    cover: "/images/editorial/ledger-names.jpg",
+    body: [],
+    placeholder: false,
+    markdown: EXCHANGE_1031_POST,
+    aliases: ["understanding-1031-exchange-ny"],
   },
   {
     slug: "best-places-to-invest-hudson-valley",
