@@ -31,6 +31,7 @@ import {
 import {
   BUYER_CLOSING_COSTS_POST,
   DOWN_PAYMENT_POST,
+  FINAL_WALK_THROUGH_POST,
   FIRST_TIME_BUYER_CHECKLIST_POST,
   HOME_INSPECTION_POST,
   HOW_MUCH_HOUSE_POST,
@@ -655,6 +656,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "final-walk-through-checklist",
+    cluster: "buying",
+    title: "The Final Walk-Through: Your Last Chance Checklist Before Closing",
+    seoTitle: "Final Walk-Through Checklist Before Closing in New York",
+    /** Buyer Education #10, reposted 2026-09-24. Slug = the drip doc's link; the draft's longer
+     * slug redirects here. */
+    date: "2026-05-21",
+    updated: "2026-09-24",
+    excerpt:
+      "What to test, room by room, in the last visit before closing, what \"broom clean\" means, and the calm three-step plan if something is wrong.",
+    seoDescription:
+      "A final walk-through checklist for New York home buyers: systems, appliances, repairs, inclusions, broom clean, and what to do if you find a problem.",
+    cover: "/images/listings/house-11.jpg",
+    body: [],
+    placeholder: false,
+    markdown: FINAL_WALK_THROUGH_POST,
+    aliases: ["final-walk-through-checklist-before-closing"],
   },
   {
     slug: "home-inspection-checklist-hudson-valley-ny",

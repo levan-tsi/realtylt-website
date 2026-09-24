@@ -85,7 +85,6 @@ const PENDING_CRM = new Set<string>([
 /** Internal /blog/ links written into a reposted body ahead of the article they point at.
  * Same rule: may only shrink, and must be empty when the round is done. */
 const PENDING_LINK_TARGETS = new Set<string>([
-  "final-walk-through-checklist",
   "house-hacking-hudson-valley-ny",
 ]);
 

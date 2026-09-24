@@ -1076,3 +1076,101 @@ Yes, if the house has them. A general inspector is not a well or septic speciali
 - International Code Council, [IRC R401.3, drainage](https://codes.iccsafe.org/s/IRC2021P3/chapter-4-foundations/IRC2021P3-Pt03-Ch04-SecR401.3)
 
 Checked against these sources on September 24, 2026.`;
+
+export const FINAL_WALK_THROUGH_POST = `The boxes are packed and the closing is on the calendar. Before you sign, there is one last step that too many buyers treat as a formality: the final walk-through. It is your chance to confirm that the house you are about to own is in the condition you agreed to buy, that promised repairs were made, and that everything included in the sale is still there. This final walk-through checklist takes you through it room by room, with what to do if you find a problem.
+
+## What the final walk-through is for
+
+The walk-through is not a second inspection and not a chance to renegotiate things that were there all along. It is a verification that the seller delivered what the contract promised. It has three jobs:
+
+1. **Confirm the condition.** Nothing new has broken or been damaged since you last saw the house, including during the seller's move-out: gouged floors, holes in walls, a failed water heater.
+2. **Confirm the repairs.** If the seller agreed to fix items after your [home inspection](/blog/home-inspection-checklist-hudson-valley-ny), check the work and ask for receipts and any warranties.
+3. **Confirm the inclusions.** Appliances, light fixtures, window treatments and anything else the contract lists should be present, and not swapped for something lesser.
+
+New York law also protects a buyer against major loss before closing. Under the state's Uniform Vendor and Purchaser Risk Act, if all or a material part of the property is destroyed without the buyer's fault before title or possession passes, the seller cannot enforce the contract and the buyer can recover what was paid, while damage to an immaterial part leads to a reduction in the price, unless the contract says otherwise ([NY General Obligations Law 5-1311](https://www.nysenate.gov/legislation/laws/GOB/5-1311)). Your attorney will know how your contract handles this and lesser damage.
+
+## When to schedule it and how long it takes
+
+Schedule it as close to closing as practical, usually the day of closing or the day before, after the seller has moved out. Allow 30 minutes for a small condo and an hour or more for a house. The seller normally is not present. Do not let anyone rush you.
+
+## The final walk-through checklist
+
+### Systems
+
+- **Heating and cooling:** run the heat and the air conditioning, whatever the season, and confirm the thermostat responds.
+- **Plumbing:** run hot and cold water at every sink, tub and shower; check pressure and that hot water arrives; look under sinks for new leaks; flush every toilet and make sure it stops running; confirm everything drains.
+- **Electrical:** flip every switch; test outlets with a phone charger or night light; try the doorbell, ceiling fans and the garage door opener.
+
+### Appliances
+
+Operate every appliance included in the sale, do not just look at it:
+
+- a short dishwasher cycle;
+- the washer and dryer for a few minutes;
+- every burner, and preheat the oven;
+- refrigerator and freezer cold;
+- disposal and every exhaust fan.
+
+### Interior
+
+- Open, close and lock every window and door; check for cracked glass and missing screens.
+- Look at walls, floors and ceilings for move-out damage, especially where furniture and rugs used to be.
+- Look for any new water stains, leaks or mold.
+
+### Repairs and inclusions
+
+- Bring your contract and any repair agreement. Check each agreed repair, one by one.
+- Walk the inclusions list: fixtures, window treatments, built-ins, a smart thermostat, anything named.
+
+### "Broom clean," garage and exterior
+
+Many New York contracts require the seller to deliver the house vacant and "broom clean": personal belongings, trash and debris removed from the house, garage and yard, and floors swept. It does not mean professionally cleaned. Your contract's own wording controls, so read it.
+
+- Check the garage, basement, attic and any sheds for leftover belongings.
+- Walk the outside: no removed plantings or fixtures that were supposed to stay, no dumped debris.
+
+## What if you find a problem?
+
+Stay calm. Most walk-through problems are solved without cancelling the closing.
+
+1. **Document it.** Photos from several angles; a short video for anything that runs or leaks.
+2. **Call your agent and your attorney before you leave.** Your agent alerts the seller's side; your attorney decides how to protect you.
+3. **Let the attorneys agree on a fix.** Common solutions are a credit to you at closing, or an escrow holdback: part of the seller's proceeds is held by an attorney until the repair is done or paid for. Occasionally a short delay is the right answer. How much is held back, and on what terms, is negotiated between the attorneys.
+
+## Your pre-closing plan
+
+- **The night before:** review the contract's inclusions and exclusions and the repair agreement with your agent.
+- **What to bring:** the contract and repair list, your phone for photos, a charger or night light for outlets, a flashlight, and a notepad.
+- **Afterwards:** tell your agent and attorney right away, whether it is a problem list or an all-clear, so the closing can go ahead.
+
+If you are earlier in the process, our [first-time home buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist) covers every step, and [buyer closing costs in New York](/blog/buyer-closing-costs-new-york) explains what you will pay at the table. See how we work with buyers on our [buying page](/buying), or [talk with us](/connect).
+
+## Frequently asked questions
+
+### What is the purpose of the final walk-through?
+
+To verify that the house is in the condition the contract requires, that agreed repairs are done, and that included items are still there, before you close.
+
+### What happens if problems are found during a final walk-through?
+
+Document them and call your agent and attorney before leaving. Most are settled with a credit at closing or an escrow holdback from the seller's proceeds, so the closing can go ahead.
+
+### How long should a final walk-through take?
+
+About 30 minutes for a small condo, an hour or more for a house. Take as long as you need to test everything.
+
+### Should the seller be there?
+
+Usually not. It is normally the buyer and the buyer's agent, which makes it easier to be thorough.
+
+### What does "broom clean" mean in New York?
+
+It is a common contract term meaning the seller removes belongings, trash and debris and sweeps the floors; it does not require professional cleaning. Check your contract's exact wording.
+
+## Sources
+
+- New York State Senate, [General Obligations Law 5-1311, risk of loss](https://www.nysenate.gov/legislation/laws/GOB/5-1311)
+- Consumer Financial Protection Bureau, [Closing Disclosure](https://www.consumerfinance.gov/ask-cfpb/what-is-a-closing-disclosure-en-1983/), which you should compare with your Loan Estimate before closing
+- New York State Bar Association, [the attorney's role in home purchase transactions](https://nysba.org/legalease-the-attorneys-role-in-home-purchase-transactions/)
+
+Checked against these sources on September 24, 2026. This is general information, not legal advice.`;
