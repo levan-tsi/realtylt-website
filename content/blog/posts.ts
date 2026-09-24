@@ -32,6 +32,7 @@ import {
   BUYER_CLOSING_COSTS_POST,
   DOWN_PAYMENT_POST,
   FIRST_TIME_BUYER_CHECKLIST_POST,
+  HOME_INSPECTION_POST,
   HOW_MUCH_HOUSE_POST,
   MORTGAGE_TYPES_POST,
   PRE_APPROVAL_POST,
@@ -654,6 +655,24 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "home-inspection-checklist-hudson-valley-ny",
+    cluster: "buying",
+    title: "The Ultimate Home Inspection Checklist: 9 Critical Things You Can't Overlook",
+    seoTitle: "Home Inspection Checklist for Hudson Valley, NY Buyers",
+    /** Buyer Education #5, reposted 2026-09-24 at the draft's own slug. */
+    date: "2026-02-19",
+    updated: "2026-09-24",
+    excerpt:
+      "Nine areas to watch in a New York home inspection, from stone foundations and ice dams to wells, septic systems and buried oil tanks, and how to sort the report.",
+    seoDescription:
+      "A home inspection checklist for Hudson Valley, NY buyers: foundations, roofs, wiring, lead and radon, wells, septic and buried oil tanks, and deal breakers.",
+    cover: "/images/listings/house-05.jpg",
+    body: [],
+    placeholder: false,
+    markdown: HOME_INSPECTION_POST,
+    aliases: ["home-inspection-checklist-ny"],
   },
   {
     slug: "buyer-closing-costs-new-york",

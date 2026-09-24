@@ -916,3 +916,163 @@ Yes, as a negotiated concession, within your loan program's limits: for Fannie M
 - Fannie Mae, [Selling Guide B3-4.1-02](https://selling-guide.fanniemae.com/sel/b3-4.1-02/interested-party-contributions-ipcs); HUD, [what a seller can pay for an FHA borrower](https://answers.hud.gov/FHA/s/article/What-costs-can-a-seller-or-other-interested-party-pay-on-behalf-of-the-Borrower)
 
 Checked against these sources on September 24, 2026. This is general information, not tax or legal advice.`;
+
+export const HOME_INSPECTION_POST = `The home inspection is the most important piece of due diligence a buyer does. It is not a pass or fail test; almost every house, new or old, produces a list. It is your chance to learn what you are really buying before you are fully committed. In the Hudson Valley, where many houses are a century old or more and many run on wells, septic systems and oil heat, a generic checklist misses the things that cost the most. This home inspection checklist for New York buyers covers nine areas, plus how to read the report.
+
+## Before you book: hire a licensed inspector
+
+New York licenses home inspectors. Only a person licensed by the Department of State may perform a home inspection for pay (licensed architects and engineers working within their profession are exempt), and you can check a license on the Department of State's public search ([NYS Department of State](https://dos.ny.gov/home-inspector)). Choose someone experienced with the kind of house you are buying: a 1890s farmhouse on a stone foundation is not a 2005 colonial.
+
+Attend the inspection if you can. You will see problems in context, ask questions on the spot, and learn where the main water shut-off, the fuel shut-off and the electrical panel are.
+
+## The home inspection checklist: nine areas
+
+### 1. Foundation, structure and basement
+
+The inspector looks for significant cracks, bowing walls, signs of movement, damaged or altered joists and beams, and evidence of water: stains, efflorescence (a white chalky deposit), active leaks, damp and musty air.
+
+Many of the region's older houses sit on fieldstone or cut-stone foundations. Their many mortar joints are more vulnerable to water than a modern poured wall, and they depend heavily on water being kept away from the house in the first place (see grading, below). Foundation repairs are among the most expensive a homeowner faces, and serious structural problems can affect financing.
+
+Red flags:
+
+- horizontal cracks in a concrete or block wall;
+- stair-step cracks along mortar joints;
+- a wall bowing inward;
+- doors and windows that stick or show uneven gaps;
+- floors noticeably out of level.
+
+### 2. Roof and attic
+
+Outside, the inspector judges the roofing material and its remaining life, and checks flashing around chimneys, skylights and vents, and the gutters. Inside, the attic shows water stains on the roof deck, the framing, the insulation and whether the space is ventilated.
+
+In the Hudson Valley, snow and freeze-thaw cycles make ice dams a real risk. Heat escaping from a poorly insulated, poorly ventilated attic melts snow on the roof; the water refreezes at the cold eaves and backs up under the shingles. So "inadequate insulation" in a report is not just about energy bills; it is a warning about water damage.
+
+Red flags:
+
+- heavy shingle granules in the gutters;
+- dark stains or soft spots on the roof deck;
+- damp, compressed or missing insulation;
+- no visible soffit or ridge ventilation.
+
+### 3. Plumbing
+
+The inspector checks visible pipes, drains and fixtures, tests flow with several fixtures running, notes the pipe materials and examines the water heater's age and condition.
+
+Older houses may have galvanized steel supply pipes, which corrode from the inside, narrowing the pipe and lowering pressure over time. Replacing supply lines means opening walls. If the house has older plumbing, ask whether any lead pipes or lead service lines are present; the EPA explains how lead enters drinking water through older plumbing ([EPA](https://www.epa.gov/ground-water-and-drinking-water/basic-information-about-lead-drinking-water)).
+
+Red flags:
+
+- low pressure when two fixtures run;
+- brown or rusty water after the tap sits;
+- corrosion or drips at fittings;
+- a rusting water heater.
+
+### 4. Electrical
+
+The inspector opens the main panel (capacity, condition, signs of overheating or improper work), tests a sample of outlets for correct wiring and grounding, and checks for GFCI protection near water: kitchens, bathrooms, garages, outdoors.
+
+Houses built before the mid-20th century may still have knob-and-tube wiring, recognizable by white ceramic knobs and tubes on the framing. It is ungrounded and its old insulation becomes brittle. Some insurers restrict coverage for homes with active knob-and-tube wiring, so talk to your insurance agent early if the inspector finds it.
+
+Red flags:
+
+- ceramic knobs and tubes in the basement or attic;
+- mostly two-prong outlets;
+- a fuse box instead of breakers;
+- taped splices outside junction boxes or exposed wire ends.
+
+### 5. Heating and cooling
+
+The inspector confirms the system heats and cools using normal controls, records its age from the data plate and its fuel (natural gas, propane or, very often here, heating oil), and looks at accessible ductwork. This is a check of operation, not a full engineering evaluation. The age matters most: a system near the end of its life is a budgeting item or a negotiating point, and a winter failure is an emergency. Ask the inspector how much life they would expect from what they saw.
+
+Red flags:
+
+- rust or water stains around the furnace, boiler or condenser;
+- banging, screeching or short-cycling;
+- a filthy filter or blower, a sign of deferred maintenance.
+
+### 6. Exterior and grading
+
+Siding, trim, paint, windows (including fogged double-pane glass, a failed seal) and above all grading: the ground must slope away from the house. For new construction, the International Residential Code calls for the grade to fall at least 6 inches within the first 10 feet from the foundation ([ICC, IRC R401.3](https://codes.iccsafe.org/s/IRC2021P3/chapter-4-foundations/IRC2021P3-Pt03-Ch04-SecR401.3)), a useful benchmark for any house. Flat or reversed grading sends rain and snowmelt straight at the foundation walls.
+
+Red flags:
+
+- soil or mulch piled against the siding;
+- puddles near the foundation after rain;
+- downspouts that empty at the corner of the house instead of several feet away;
+- soft or rotted wood low on the walls and window sills.
+
+### 7. Walls, floors and ceilings
+
+These reveal problems elsewhere. Hairline cracks in old plaster are normal; large diagonal cracks spreading from door and window corners can signal movement. A single freshly painted ceiling in an otherwise untouched room deserves a question.
+
+Red flags:
+
+- any ceiling stain, especially under a bathroom or at a top-floor corner;
+- spongy or bouncy floors;
+- wide or separating cracks;
+- interior doors trimmed to close in racked frames.
+
+### 8. Health and safety
+
+The inspector checks smoke and carbon monoxide alarms, handrails and obvious hazards, and flags materials that need a specialist:
+
+- **Lead paint.** Homes built before 1978 may contain lead-based paint. Federal rules require sellers to disclose known lead information for pre-1978 housing and to give buyers a 10-day opportunity to arrange a lead inspection or risk assessment, which the parties can change in writing ([EPA](https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards)).
+- **Asbestos.** Older houses may contain asbestos in pipe and boiler insulation, some vinyl floor tiles and other materials. A home inspector can point out suspect material; only testing by a qualified professional confirms it ([EPA](https://www.epa.gov/asbestos/protect-your-family)).
+- **Radon.** The New York State Department of Health recommends testing before you buy, using a certified radon tester and a state-approved laboratory ([NYSDOH](https://www.health.ny.gov/environmental/radon/)).
+
+### 9. Hudson Valley specifics: wells, septic systems and buried oil tanks
+
+These need specialists beyond the general inspector, scheduled inside your inspection window.
+
+- **Private well.** Have the water tested by a laboratory certified by the Department of Health's Environmental Laboratory Approval Program, at least for bacteria and the other contaminants the Department recommends, and have the well's flow measured to confirm it can supply a household ([NYSDOH](https://www.health.ny.gov/environmental/water/drinking/regulations/fact_sheets/fs3_water_quality.htm)).
+- **Septic system.** A full inspection opens the tank, measures sludge and scum, checks the baffles and the tank's condition, and walks the leach field for soggy ground or odors. A dye test alone is not enough.
+- **Buried oil tank.** If an older house now heats with gas or propane, or you see an old fill or vent pipe, ask for a tank sweep. The Department of Environmental Conservation notes that many buried home heating oil tanks are steel tanks that were not designed to be buried and will eventually corrode and leak, and it strongly encourages removal of abandoned tanks over leaving them in place; leaks must be reported to the state spill hotline ([NYSDEC](https://dec.ny.gov/environmental-protection/hazardous-substance-bulk-storage/underground-heating-oil-tanks-homeowner-guide)). A leaking tank on a property you own can become your cleanup problem, so this is one of the largest risks in an older Hudson Valley house.
+
+## Reading the report: what is a deal breaker?
+
+Sort every finding into three groups.
+
+1. **Safety hazards and major defects:** active knob-and-tube wiring, bowing foundation walls, a leaking oil tank, a failing septic system, high radon, an active roof leak. Repair, credit, price change or walk away.
+2. **Significant repairs coming soon:** an old roof or heating system, galvanized supply lines with low pressure, grading that is already letting water in. Strong negotiating points.
+3. **Maintenance:** a dripping faucet, a dirty filter, worn paint, gutters to clean. Part of owning a house, and rarely worth risking the deal over.
+
+## Does the seller have to fix anything?
+
+Usually not, unless your contract says so. What you can ask for comes from the inspection terms in your contract, which the New York State Bar Association notes can make the buyer's obligation conditional on satisfactory inspection reports ([NYSBA](https://nysba.org/legalease-buying-and-selling-real-estate/)). With those terms you can accept the house, ask for repairs, ask for a credit or price reduction, or cancel within the contract's limits. A lender's requirements (FHA and VA have minimum property standards) and local code can also force certain repairs. How you frame these terms in a competitive situation is covered in [making a winning offer](/blog/winning-offer-competitive-market-ny-hudson-valley).
+
+## Your next step
+
+A good report is not a short one; it is a thorough one that leaves you understanding the house. Add inspection costs to your budget (see [buyer closing costs in New York](/blog/buyer-closing-costs-new-york)), and if you are buying in the Hudson Valley, [talk with us](/connect) about inspectors who know old houses, wells and septic systems. The full buying sequence is in our [first-time home buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist).
+
+## Frequently asked questions
+
+### What are common red flags in a home inspection?
+
+Horizontal or bowing foundation walls, water in the basement, an active roof leak, knob-and-tube wiring, an old or failing heating system, negative grading, and, in the Hudson Valley, a failing septic system, poor well water or a buried oil tank.
+
+### Should the buyer attend the home inspection?
+
+Yes. You learn far more walking the house with the inspector than from the written report, and you find out where the shut-offs and the panel are.
+
+### Do home inspectors in New York need a license?
+
+Yes. The Department of State licenses home inspectors, and you can verify a license on its public search. Licensed architects and engineers working within their profession are exempt.
+
+### What fixes are mandatory after a home inspection in NY?
+
+Generally none by default. Repairs depend on what your contract allows you to negotiate, plus any requirements from your lender or local code.
+
+### Do I need a separate well and septic inspection?
+
+Yes, if the house has them. A general inspector is not a well or septic specialist; arrange a certified water test, a flow test and a full septic inspection.
+
+## Sources
+
+- NYS Department of State, [home inspector licensing](https://dos.ny.gov/home-inspector)
+- NYS Department of Health, [radon](https://www.health.ny.gov/environmental/radon/) and [private well water testing](https://www.health.ny.gov/environmental/water/drinking/regulations/fact_sheets/fs3_water_quality.htm)
+- NYS Department of Environmental Conservation, [underground heating oil tanks: a homeowner's guide](https://dec.ny.gov/environmental-protection/hazardous-substance-bulk-storage/underground-heating-oil-tanks-homeowner-guide)
+- U.S. Environmental Protection Agency, [lead disclosure in real estate](https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards), [lead in drinking water](https://www.epa.gov/ground-water-and-drinking-water/basic-information-about-lead-drinking-water) and [asbestos](https://www.epa.gov/asbestos/protect-your-family)
+- New York State Bar Association, [buying and selling real estate](https://nysba.org/legalease-buying-and-selling-real-estate/)
+- International Code Council, [IRC R401.3, drainage](https://codes.iccsafe.org/s/IRC2021P3/chapter-4-foundations/IRC2021P3-Pt03-Ch04-SecR401.3)
+
+Checked against these sources on September 24, 2026.`;
