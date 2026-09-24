@@ -14,7 +14,7 @@
 import { describe, expect, it } from "vitest";
 import { POSTS } from "@/content/blog/posts";
 import { staticToArticle } from "./index";
-import { relatedArticles } from "./related";
+import { isConsumer, relatedArticles } from "./related";
 import type { Article } from "./types";
 
 const ALL: Article[] = POSTS.map(staticToArticle);
@@ -44,10 +44,10 @@ describe("relatedArticles", () => {
   /** THE DEFECT ITSELF. A consumer post handed three B2B automation essays was the concrete
    * thing the checker found; this is the assertion that would have caught it. */
   it("keeps a consumer post inside the consumer cohort", () => {
-    for (const post of ALL.filter((a) => a.placeholder)) {
+    for (const post of ALL.filter((a) => isConsumer(a))) {
       const picked = relatedArticles(post, ALL);
       expect(
-        picked.filter((a) => !a.placeholder).map((a) => a.slug),
+        picked.filter((a) => !isConsumer(a)).map((a) => a.slug),
         `${post.slug} recommends the automation cohort`,
       ).toEqual([]);
     }
@@ -59,7 +59,20 @@ describe("relatedArticles", () => {
   });
 
   it("keeps a flagship post inside the flagship cohort", () => {
-    for (const post of ALL.filter((a) => !a.placeholder)) {
+    for (const post of ALL.filter((a) => !isConsumer(a))) {
+      expect(
+        relatedArticles(post, ALL).filter((a) => isConsumer(a)).map((a) => a.slug),
+        `${post.slug} recommends a consumer post`,
+      ).toEqual([]);
+    }
+  });
+
+  /** And the reverse of the consumer rule for REAL consumer posts: a reposted article is never
+   * handed a placeholder stub while a real sibling exists. */
+  it("never recommends a stub from a real post while its cohort has three real others", () => {
+    const realOthers = (post: Article) =>
+      ALL.filter((a) => !a.placeholder && a.slug !== post.slug && isConsumer(a) === isConsumer(post)).length;
+    for (const post of ALL.filter((a) => !a.placeholder && realOthers(a) >= 3)) {
       expect(
         relatedArticles(post, ALL).filter((a) => a.placeholder).map((a) => a.slug),
         `${post.slug} recommends a placeholder stub`,
@@ -70,7 +83,10 @@ describe("relatedArticles", () => {
   /** The relevance rule: what a post offers first is a sibling on its own subject. */
   it("leads with a post from the same cluster wherever the cluster has a sibling", () => {
     for (const post of ALL) {
-      const siblings = ALL.filter((a) => a.cluster === post.cluster && a.slug !== post.slug);
+      // A stub is not an offerable sibling for a real post (see "never recommends a stub").
+      const siblings = ALL.filter(
+        (a) => a.cluster === post.cluster && a.slug !== post.slug && (post.placeholder || !a.placeholder),
+      );
       if (!siblings.length) continue;
       const first = relatedArticles(post, ALL)[0];
       expect(first.cluster, `${post.slug} leads with an unrelated post`).toBe(post.cluster);

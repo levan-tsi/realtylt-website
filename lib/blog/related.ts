@@ -16,7 +16,7 @@
  *
  *   1. the post's own CLUSTER. One word per post, on the post, in content/blog/posts.ts.
  *   2. the rest of its own COHORT, in running order, starting AFTER this post and wrapping.
- *      Cohort is the flagship/placeholder split: a consumer post never falls through to the
+ *      Cohort is the consumer/business split (isConsumer): a consumer post never falls through to the
  *      automation essays and vice versa. Starting after the post rather than at the top is
  *      what stops two posts in a small cluster topping up with the identical pair.
  *   3. anything left, so the block is never empty even for a post with no cluster at all
@@ -51,7 +51,23 @@ export type Cluster =
   /** Consumer: the move itself. */
   | "moving"
   /** Consumer: the house once you are in it. */
-  | "owning";
+  | "owning"
+  /** Consumer: buying a home, from the budget to the keys. */
+  | "buying"
+  /** Consumer: selling a home. */
+  | "selling"
+  /** Consumer: buying property to rent or hold. */
+  | "investing";
+
+/** The consumer clusters. Until 2026-09-24 the consumer cohort was simply "the placeholder
+ * stubs", because every consumer post was one. The reposted Drive articles are real consumer
+ * posts, so the cohort is now named by cluster; a stub still counts as consumer. */
+const CONSUMER: ReadonlySet<Cluster> = new Set<Cluster>(["moving", "owning", "buying", "selling", "investing"]);
+
+/** True for a consumer post (buying, selling, owning, moving, investing, or a stub). */
+export function isConsumer(a: Pick<Article, "placeholder" | "cluster">): boolean {
+  return a.placeholder || (a.cluster !== undefined && CONSUMER.has(a.cluster));
+}
 
 export function relatedArticles(post: Article, all: Article[], count = 3): Article[] {
   const pool = all.filter((a) => a.slug !== post.slug);
@@ -63,16 +79,24 @@ export function relatedArticles(post: Article, all: Article[], count = 3): Artic
     }
   };
 
+  // A real article is never offered a "[Placeholder draft...]" stub while anything real is
+  // left; a stub may be offered real articles and other stubs.
+  const offerable = (a: Article) => post.placeholder || !a.placeholder;
+
   // 1. its own cluster
-  if (post.cluster) take(pool.filter((a) => a.cluster === post.cluster));
+  if (post.cluster) take(pool.filter((a) => a.cluster === post.cluster && offerable(a)));
 
   // 2. the rest of its own cohort, starting after it in the running order and wrapping
-  const sameCohort = all.filter((a) => a.placeholder === post.placeholder);
+  const sameCohort = all.filter((a) => isConsumer(a) === isConsumer(post) && (a.slug === post.slug || offerable(a)));
   const here = sameCohort.findIndex((a) => a.slug === post.slug);
   const rotated = here < 0 ? sameCohort : [...sameCohort.slice(here + 1), ...sameCohort.slice(0, here)];
   take(rotated.filter((a) => a.slug !== post.slug));
 
-  // 3. anything at all, so the block is never empty
+  // 3. a stub from its own cohort before crossing cohorts (only reachable while a cohort has
+  //    fewer than four real articles)
+  take(pool.filter((a) => isConsumer(a) === isConsumer(post)));
+
+  // 4. anything at all, so the block is never empty
   take(pool);
 
   return picked;

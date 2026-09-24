@@ -31,7 +31,9 @@ describe("placeholder posts stay out of the index", () => {
     const real = POSTS.find((p) => p.slug === REAL_SLUG);
     expect(placeholder?.placeholder, PLACEHOLDER_SLUG).toBe(true);
     expect(real?.placeholder, REAL_SLUG).toBe(false);
-    expect(POSTS.filter((p) => p.placeholder).length).toBeGreaterThanOrEqual(10);
+    // Was >= 10 until 2026-09-24, when the reposted Drive articles began replacing the stubs one
+    // by one (docs/blog-repost/PIPELINE.md). The guard below still needs one live stub to test.
+    expect(POSTS.filter((p) => p.placeholder).length).toBeGreaterThanOrEqual(1);
   });
 
   it("a placeholder post asks not to be indexed, but stays crawlable", async () => {

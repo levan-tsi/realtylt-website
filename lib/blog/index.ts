@@ -55,6 +55,12 @@ export async function getArticles(): Promise<Article[]> {
   return mergeArticles(db, POSTS.map(staticToArticle));
 }
 
+/** The live slug an OLD slug now answers to, or undefined. Static posts only: a CRM-published
+ * post has one slug and no history. */
+export function aliasTarget(slug: string): string | undefined {
+  return POSTS.find((p) => p.aliases?.includes(slug))?.slug;
+}
+
 /** One article by slug — undefined for unknown slugs AND for unpublished ones (a draft
  * is invisible to the anon key, so it simply isn't in the list) → the page 404s. */
 export async function getArticle(slug: string): Promise<Article | undefined> {

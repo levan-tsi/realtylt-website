@@ -28,6 +28,7 @@ import {
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
+import { FIRST_TIME_BUYER_CHECKLIST_POST } from "./real-estate-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -91,6 +92,11 @@ export interface BlogPost {
    * of the page. See lib/blog/related.ts for why one word per post beats deriving the block
    * from the posts' own links. */
   cluster?: Cluster;
+  /** Older URLs this article must still answer to, each permanently redirected here by
+   * app/blog/[slug]/page.tsx. The reposted Drive articles carry the slugs the CRM's drip emails
+   * have been linking since 2025 (docs/handoff/BLOG-REPOST-URLS-2026-09-24.md) and the slugs
+   * the seeded stubs used. An alias is never also a live slug (lib/blog/aliases.test.ts). */
+  aliases?: string[];
 }
 
 const PLACEHOLDER_BODY = (topic: string): string[] => [
@@ -638,14 +644,23 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "first-time-home-buyer-ny-10-step-checklist",
-    cluster: "owning",
+    cluster: "buying",
     title: "First-Time Home Buyer in NY? Here's Your 10-Step Checklist from Start to Finish",
+    seoTitle: "First-Time Home Buyer NY Checklist: 10 Steps for 2026",
+    /** Reposted from the Drive draft (Buyer Education #1) and re-verified 2026-09-24. The date
+     * is the one this stub carried from the old site's post list; see
+     * docs/handoff/BLOG-REPOST-URLS-2026-09-24.md. The draft's own slug is kept as an alias. */
     date: "2025-10-24",
+    updated: "2026-09-24",
     excerpt:
-      "From the first budget conversation to getting the keys, the ten steps every first-time New York buyer walks through, in order, with no jargon.",
+      "From the first look at your credit to the day you get the keys: the ten steps every first-time buyer in New York walks through, with the 2026 SONYMA, HomeFirst and bank program figures.",
+    seoDescription:
+      "A first-time home buyer checklist for New York: credit, pre-approval, SONYMA and NYC HomeFirst aid, the attorney, inspections and closing, updated for 2026.",
     cover: "/images/listings/house-03.jpg",
-    body: PLACEHOLDER_BODY("a step-by-step checklist for first-time buyers in New York, from pre-approval to closing day"),
-    placeholder: true,
+    body: [],
+    placeholder: false,
+    markdown: FIRST_TIME_BUYER_CHECKLIST_POST,
+    aliases: ["first-time-home-buyer-checklist-ny"],
   },
   {
     slug: "moving-to-hudson-valley-rental-vs-buying",
