@@ -30,6 +30,7 @@ import { lightPins, planLights, type LightSet } from "./thinning";
 import { LightLayer, type LayerCamera } from "./light-layer";
 import { focalOf, glowLevel, homesEcef, keyOrder, planDensity, projectAll, projectHome, representedCounts } from "./light-plan";
 import { backWaitMs, earlyScroll } from "./warm-plan";
+import { holdLeft, quietBack, tilesQuiet, walkFits } from "./sharp-gate";
 import type { MapPin } from "@/lib/idx/types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -61,6 +62,10 @@ export interface G3dStats {
   loads: number;
   /** The map's first finished frame (under the poster). */
   navToFirstSteady: number | null;
+  /** Tiles the page saw arrive before the reveal (sharp-gate.ts). */
+  tiles: number;
+  /** How the walk's return ended: Google's steady, the tiles quiet, or the time limit. */
+  backBy: "steady" | "quiet" | "cap" | null;
   /** How long the pre-warm walk took, and each step (null: no walk). */
   warmMs: number | null;
   warmSteps: { shot: string; ms: number; ok: boolean }[];
@@ -110,6 +115,8 @@ let loads = 0;
  * shot 32 m is a third of a pixel either way. */
 const GEOID = 0;
 /** The element's camera events (maps 3.66): our lights redraw on them (light-layer.ts onCameraChange). */
+/** A steady event within this of a camera cut may still be the previous camera's (round 57.10). */
+const FRESH_CUT_MS = 500;
 const CAMERA_EVENTS = ["gmp-centerchange", "gmp-rangechange", "gmp-tiltchange", "gmp-headingchange"] as const;
 
 export class G3dController {
@@ -203,6 +210,9 @@ export class G3dController {
        * and the chapters' gap in px (`?gap=14`, cameras.ts CITY_GAP). */
       glow?: number;
       cityGap?: number;
+      /** Round 57.10's sharp gate (sharp-gate.ts): show the map when its tiles stop arriving and cap
+       * the cover at 14 s; `?sharp=0` puts back round 9's waits on Google's steady event. */
+      sharp?: boolean;
     },
   ) {
     this.gate = new FlightGate<FlightJob>(opts.maxWaitMs);
@@ -257,6 +267,7 @@ export class G3dController {
       }) as El;
       loads++;
       singleton = el;
+      performance.mark("g3d:element");
     }
     this.el = el;
     el.style.width = "100%";
@@ -266,6 +277,7 @@ export class G3dController {
     el.addEventListener("gmp-animationend", this.onAnimationEnd);
     el.addEventListener("gmp-error", this.onMapError);
     if (this.layer) for (const k of CAMERA_EVENTS) el.addEventListener(k, this.layer.onCameraChange);
+    if (!reused && this.opts.sharp !== false) this.watchTiles();
     host.append(el);
     this.shot = this.opts.initial;
     this.at = this.goingTo = this.opts.initial;
@@ -280,6 +292,7 @@ export class G3dController {
 
   stop() {
     this.stopped = true;
+    this.unwatchTiles();
     this.layer?.stop();
     clearTimeout(this.landTimer);
     clearTimeout(this.pollTimer);
@@ -311,9 +324,54 @@ export class G3dController {
     const next = this.gate.setSteady(this.steadyNow, performance.now());
     if (next && this.revealed) this.go(next);
     else this.markNow();
-    if (!e.isSteady || this.revealed || this.warming) return;
+    if (e.isSteady) this.drawn();
+  };
+
+  // ---- the tiles' clock (round 57.10, sharp-gate.ts) ----------------------------------------------
+  // Every tile the map fetches is a resource entry the page sees as it arrives. Until the reveal the
+  // controller keeps when the last one came and how many have: the walk's return to the shot the map
+  // first drew is drawn again when they stop (its tiles are resident).
+
+  private tiles = 0;
+  private lastTile: number | null = null;
+  private tileObs: PerformanceObserver | null = null;
+  /** The shot the map first drew (Google's steady event): the one a return may call drawn by quiet. */
+  private drawnShot: ShotName | null = null;
+  /** When the camera was last cut (set, not flown). */
+  private cutAt = -Infinity;
+  private backBy: "steady" | "quiet" | "cap" | null = null;
+
+  private watchTiles() {
+    try {
+      this.tileObs = new PerformanceObserver((list) => {
+        for (const e of list.getEntries()) {
+          if (!e.name.includes("/rt/earth/")) continue;
+          this.tiles++;
+          const end = (e as PerformanceResourceTiming).responseEnd || e.startTime;
+          if (this.lastTile === null || end > this.lastTile) this.lastTile = end;
+        }
+      });
+      this.tileObs.observe({ type: "resource", buffered: true });
+    } catch {
+      this.tileObs = null;
+    }
+  }
+
+  private unwatchTiles() {
+    this.tileObs?.disconnect();
+    this.tileObs = null;
+  }
+
+  /** The map has drawn the camera it was opened on (Google's steady): the walk, or the reveal. The
+   * first draw stays Google's event: the tiles' quiet was tried for it and fired during a pause of
+   * a slow stream over a map still blurred (0.01 of its settled sharpness, round 10). */
+  private drawn() {
+    if (this.revealed || this.warming) return;
     if (this.firstSteadyAt === null) {
       this.firstSteadyAt = performance.now();
+      // A steady that comes right after a cut (a visitor's scroll before the first draw) may be the
+      // old camera's: then no shot counts as drawn, and the return waits for Google's steady.
+      this.drawnShot = this.firstSteadyAt - this.cutAt > FRESH_CUT_MS ? this.at : null;
       performance.mark("g3d:first-steady");
     }
     // The walk (or, after an early scroll that stopped it, just the return to the visitor's shot,
@@ -323,10 +381,11 @@ export class G3dController {
       return;
     }
     this.reveal();
-  };
+  }
 
   private reveal() {
     this.revealed = true;
+    this.unwatchTiles();
     this.steadyAt = performance.now();
     performance.mark("g3d:steady");
     this.opts.onReveal();
@@ -367,24 +426,30 @@ export class G3dController {
   /** After a camera change: resolves true when the map has redrawn and is steady again, false at
    * `maxMs` (or on an abort). A camera whose tiles are all resident may never report unsteady, so a
    * steady map with no change in 300 ms counts as drawn. */
-  private settle(maxMs: number): Promise<boolean> {
+  private settle(maxMs: number, how?: { by: "steady" | "quiet" | "cap" | null; quiet?: boolean }): Promise<boolean> {
+    const since = performance.now();
+    const sharp = !!how?.quiet && this.opts.sharp !== false && this.tileObs !== null;
     return new Promise((resolve) => {
       let sawUnsteady = false;
-      const done = (ok: boolean) => {
+      const done = (ok: boolean, by: "steady" | "quiet" | "cap") => {
         clearTimeout(grace);
         clearTimeout(cap);
+        clearInterval(poll);
         this.steadyWaiters.delete(onChange);
         this.wake = null;
+        if (how) how.by = by;
         resolve(ok);
       };
       const onChange = (steady: boolean) => {
         if (!steady) sawUnsteady = true;
-        else if (sawUnsteady) done(true);
+        else if (sawUnsteady) done(true, "steady");
       };
       this.steadyWaiters.add(onChange);
-      this.wake = () => done(false);
-      const grace = setTimeout(() => !sawUnsteady && this.steadyNow && done(true), 300);
-      const cap = setTimeout(() => done(false), maxMs);
+      this.wake = () => done(false, "cap");
+      const grace = setTimeout(() => !sawUnsteady && this.steadyNow && done(true, "steady"), 300);
+      const cap = setTimeout(() => done(false, "cap"), maxMs);
+      // Round 57.10: drawn when its tiles stop arriving (sharp-gate.ts), measured sharp.
+      const poll = sharp ? setInterval(() => tilesQuiet({ now: performance.now(), since, lastTile: this.lastTile }) && done(true, "quiet"), 50) : undefined;
     });
   }
 
@@ -407,8 +472,12 @@ export class G3dController {
     this.warming = true;
     const t0 = performance.now();
     performance.mark("g3d:warm-start");
+    // Round 57.10: the cover never holds past 14 s once the map has drawn, so a walk that cannot
+    // finish by then is not started (a slow network: the visitor meets the stall once instead).
+    const sharp = this.opts.sharp !== false;
+    const fits = !sharp || walkFits(t0);
     for (const [k, name] of this.opts.warm.entries()) {
-      if (this.warmAbort || this.stopped || performance.now() - t0 > this.opts.warmBudgetMs) break;
+      if (!fits || this.warmAbort || this.stopped || performance.now() - t0 > this.opts.warmBudgetMs) break;
       const s0 = performance.now();
       const c = this.cameraOf(name);
       // `path`: the first shot is set, each next one FLOWN as the page flies it (its own duration,
@@ -423,7 +492,7 @@ export class G3dController {
       } else {
         this.jump(c);
       }
-      const ok = this.warmAbort ? false : await this.settle(this.opts.warmSettleMs ?? 4000);
+      const ok = this.warmAbort ? false : await this.settle(sharp ? holdLeft(performance.now(), this.opts.warmSettleMs ?? 4000) : (this.opts.warmSettleMs ?? 4000));
       this.warmSteps.push({ shot: name, ms: Math.round(performance.now() - s0), ok });
     }
     if (this.stopped) return;
@@ -433,7 +502,12 @@ export class G3dController {
     const back = this.cameraOf(this.at);
     const moved = !sameCamera(this.cam, back);
     this.jump(back);
-    if (moved || !this.warmAbort) await this.settle(backWaitMs({ scrolled: this.scrolled, backMs: this.opts.warmBackMs }));
+    const back0 = backWaitMs({ scrolled: this.scrolled, backMs: this.opts.warmBackMs });
+    // Drawn by quiet only on the way back to the shot the map first drew (its tiles resident; measured
+    // 0.94 to 0.96 sharp 250 ms after the jump); a visitor's new section waits for Google's steady.
+    const how = { by: null as "steady" | "quiet" | "cap" | null, quiet: quietBack({ back: this.at, drawn: this.drawnShot }) };
+    if (moved || !this.warmAbort) await this.settle(sharp ? holdLeft(performance.now(), back0) : back0, how);
+    this.backBy = how.by;
     this.warmMs = Math.round(performance.now() - t0);
     performance.mark("g3d:warm-end");
     this.warming = false;
@@ -557,6 +631,7 @@ export class G3dController {
   private jump(c: G3dCamera) {
     const el = this.el;
     this.cam = c;
+    this.cutAt = performance.now();
     if (el) {
       el.center = c.center;
       el.range = c.range;
@@ -786,6 +861,8 @@ export class G3dController {
     return {
       loads,
       navToFirstSteady: this.firstSteadyAt === null ? null : Math.round(this.firstSteadyAt),
+      tiles: this.tiles,
+      backBy: this.backBy,
       warmMs: this.warmMs,
       warmSteps: this.warmSteps,
       navToSteady: this.steadyAt === null ? null : Math.round(this.steadyAt),

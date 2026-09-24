@@ -690,6 +690,7 @@ export function G3dGround({
       thin: q.get("thin") === "lattice" ? "lattice" : "density",
       glow: q.has("glow") ? Number(q.get("glow")) : undefined,
       cityGap: q.has("gap") ? Number(q.get("gap")) : undefined,
+      sharp: q.get("sharp") !== "0",
       description: "Map of the Hudson Valley and New York City, with the homes for sale lit where they stand.",
       onReveal: () => {
         setRevealed(true);
