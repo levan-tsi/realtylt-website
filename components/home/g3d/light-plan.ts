@@ -77,44 +77,195 @@ export function planDensity(o: {
   focus?: string | null;
   /** How far outside the window a light may stand and still be planned (its halo shows). */
   margin?: number;
+  /** THE STABLE CHOICE (round 57.8): the homes lit now. Among the homes this camera would reach in
+   * the fixed order on its own (up to where its budget fills), the lit ones are taken first, still
+   * held to the gap and the budget, then the rest. Coming down, the screen spreads and every lit
+   * home in the new view stays, the new ones arriving around them; going up, the order decides who
+   * goes (the latest first), and the high camera gets back exactly the lights it drew before
+   * (tested). Without it the gap alone swaps some lights for their neighbours on the way down (a
+   * reshuffle; measured on the real homes, scripts/_scratch-r57g-sim.mjs). */
+  keep?: Iterable<number>;
+  /** The homes already projected for this camera (projectAll), if the caller has them. */
+  proj?: Projected;
 }): number[] {
-  const { ecef, order, frame, viewport: vp, budget, gap, county, focus, margin = 8 } = o;
-  const f = focalOf(vp);
+  const reach = { k: 0 };
+  const oo = { ...o, proj: o.proj ?? projectAll(o.ecef, o.frame, o.viewport, o.margin ?? 8, o.county, o.focus) };
+  const cold = greedy(oo, null, o.order.length, reach);
+  if (!o.keep) return cold;
+  const kept = new Uint8Array(o.order.length);
+  let any = false;
+  for (const i of o.keep) if (i >= 0 && i < kept.length && oo.proj.ok[i]) kept[i] = 1, (any = true);
+  // Nothing lit in this view: the cold plan is the plan.
+  return any ? greedy(oo, kept, reach.k, reach) : cold;
+}
+
+/** One greedy pass over `order` (see planDensity): with `kept`, first the kept homes among the
+ * first `upTo` of the order, then every other home. `reach.k` gets how far into the order the
+ * pass went before the budget filled. */
+function greedy(o: Parameters<typeof planDensity>[0], kept: Uint8Array | null, upTo: number, reach: { k: number }): number[] {
+  const { order, viewport: vp, budget, gap, margin = 8 } = o;
+  const proj = o.proj ?? projectAll(o.ecef, o.frame, vp, margin, o.county, o.focus);
   const out: number[] = [];
-  const p = { x: 0, y: 0, z: 0 };
-  const cell = Math.max(1, gap);
-  const cells = new Map<number, number[]>();
-  const key = (cx: number, cy: number) => (cx + 4096) * 16384 + (cy + 4096);
+  const grid = gap > 0 ? new Grid(vp, margin, gap, Math.min(budget, order.length)) : null;
   const g2 = gap * gap;
-  for (let k = 0; k < order.length && out.length < budget; k++) {
-    const i = order[k];
+  let k = 0;
+  for (let pass = kept ? 0 : 1; pass < 2; pass++) {
+    const end = pass === 0 ? Math.min(upTo, order.length) : order.length;
+    for (k = 0; k < end && out.length < budget; k++) {
+      const i = order[k];
+      // Pass 0 takes only the kept homes; pass 1 every home pass 0 did not look at.
+      if (kept && (pass === 0 ? kept[i] !== 1 : kept[i] === 1 && k < upTo)) continue;
+      if (!place(i)) continue;
+      out.push(i);
+    }
+  }
+  reach.k = out.length >= budget ? k : order.length;
+  return out;
+
+  function place(i: number): boolean {
+    if (!proj.ok[i]) return false;
+    const x = proj.x[i], y = proj.y[i];
+    if (grid) {
+      if (grid.nearest(x, y, g2) >= 0) return false;
+      grid.add(x, y);
+    }
+    return true;
+  }
+}
+
+/** Every home on screen for a camera (in the focus county), in css px: the plan and the counts
+ * read it once instead of projecting each home again (round 57.8: the plan's cost). */
+export interface Projected {
+  x: Float32Array;
+  y: Float32Array;
+  ok: Uint8Array;
+}
+export function projectAll(ecef: Float64Array, frame: CameraFrame, vp: Viewport, margin = 8, county?: readonly string[], focus?: string | null): Projected {
+  const n = ecef.length / 3;
+  const x = new Float32Array(n), y = new Float32Array(n), ok = new Uint8Array(n);
+  const f = focalOf(vp);
+  const p = { x: 0, y: 0, z: 0 };
+  for (let i = 0; i < n; i++) {
     if (focus && county && county[i] !== focus) continue;
     if (!projectHome(frame, vp, f, ecef, i, p)) continue;
     if (p.x < -margin || p.y < -margin || p.x > vp.width + margin || p.y > vp.height + margin) continue;
-    if (gap > 0) {
-      const cx = Math.floor(p.x / cell), cy = Math.floor(p.y / cell);
-      let clear = true;
-      for (let a = -1; a <= 1 && clear; a++)
-        for (let b = -1; b <= 1 && clear; b++) {
-          const bin = cells.get(key(cx + a, cy + b));
-          if (!bin) continue;
-          for (let j = 0; j < bin.length; j += 2) {
-            const ex = bin[j] - p.x, ey = bin[j + 1] - p.y;
-            if (ex * ex + ey * ey < g2) {
-              clear = false;
-              break;
-            }
+    x[i] = p.x;
+    y[i] = p.y;
+    ok[i] = 1;
+  }
+  return { x, y, ok };
+}
+
+/** Points in square cells over the window (typed arrays, a linked list per cell): the gap test and
+ * the nearest light, three by three cells around a place. */
+class Grid {
+  private cell: number;
+  private gw: number;
+  private gh: number;
+  private off: number;
+  private head: Int32Array;
+  private next: Int32Array;
+  readonly px: Float32Array;
+  readonly py: Float32Array;
+  size = 0;
+  constructor(vp: Viewport, margin: number, cell: number, cap: number) {
+    this.cell = Math.max(1, cell);
+    this.off = margin + this.cell;
+    this.gw = Math.ceil((vp.width + 2 * this.off) / this.cell) + 1;
+    this.gh = Math.ceil((vp.height + 2 * this.off) / this.cell) + 1;
+    this.head = new Int32Array(this.gw * this.gh).fill(-1);
+    this.next = new Int32Array(Math.max(1, cap));
+    this.px = new Float32Array(Math.max(1, cap));
+    this.py = new Float32Array(Math.max(1, cap));
+  }
+  private cx(x: number) {
+    return Math.min(this.gw - 2, Math.max(1, Math.floor((x + this.off) / this.cell)));
+  }
+  private cy(y: number) {
+    return Math.min(this.gh - 2, Math.max(1, Math.floor((y + this.off) / this.cell)));
+  }
+  add(x: number, y: number): number {
+    const id = this.size++;
+    this.px[id] = x;
+    this.py[id] = y;
+    const c = this.cy(y) * this.gw + this.cx(x);
+    this.next[id] = this.head[c];
+    this.head[c] = id;
+    return id;
+  }
+  /** The nearest point within sqrt(r2) px (closer than, not equal to), or -1. */
+  nearest(x: number, y: number, r2: number): number {
+    const cx = this.cx(x), cy = this.cy(y);
+    let best = -1, bd = r2;
+    for (let b = cy - 1; b <= cy + 1; b++)
+      for (let a = cx - 1; a <= cx + 1; a++)
+        for (let id = this.head[b * this.gw + a]; id >= 0; id = this.next[id]) {
+          const dx = this.px[id] - x, dy = this.py[id] - y;
+          const d = dx * dx + dy * dy;
+          if (d < bd) {
+            bd = d;
+            best = id;
           }
         }
-      if (!clear) continue;
-      const kk = key(cx, cy);
-      const bin = cells.get(kk);
-      if (bin) bin.push(p.x, p.y);
-      else cells.set(kk, [p.x, p.y]);
-    }
-    out.push(i);
+    return best;
+  }
+}
+
+// ---- the glow stands for the homes --------------------------------------------------------------------
+
+/** HOW MANY HOMES EACH DRAWN LIGHT STANDS FOR (round 57.8). Where the gap is full (a borough, a
+ * county at 13 px) the lights stand as evenly as a lattice whatever the homes beneath them: Yonkers
+ * and northern Westchester looked the same. So each light's glow is weighted by the homes it
+ * stands for: every home on screen (and in the focus county) goes to the nearest drawn light within
+ * `reach` px, itself included. Its glow then carries the true density while its point keeps the
+ * mouse's gap. Counts in the plan's order. A grid of `reach`-sized cells: one pass over the homes. */
+export function representedCounts(o: {
+  ecef: Float64Array;
+  frame: CameraFrame;
+  viewport: Viewport;
+  plan: readonly number[];
+  reach: number;
+  county?: readonly string[];
+  focus?: string | null;
+  margin?: number;
+  /** The homes already projected for this camera (projectAll), if the caller has them. */
+  proj?: Projected;
+}): Float32Array {
+  const { ecef, frame, viewport: vp, plan, reach, county, focus, margin = 8 } = o;
+  const proj = o.proj ?? projectAll(ecef, frame, vp, margin, county, focus);
+  const f = focalOf(vp);
+  const p = { x: 0, y: 0, z: 0 };
+  const grid = new Grid(vp, margin + reach, Math.max(4, reach), plan.length);
+  const ofId = new Int32Array(plan.length);
+  for (let k = 0; k < plan.length; k++) {
+    const i = plan[k];
+    if (proj.ok[i]) ofId[grid.add(proj.x[i], proj.y[i])] = k;
+    else if (projectHome(frame, vp, f, ecef, i, p)) ofId[grid.add(p.x, p.y)] = k;
+  }
+  const out = new Float32Array(plan.length);
+  const n = proj.ok.length;
+  const r2 = reach * reach + 1e-6;
+  for (let i = 0; i < n; i++) {
+    if (!proj.ok[i]) continue;
+    const id = grid.nearest(proj.x[i], proj.y[i], r2);
+    if (id >= 0) out[ofId[id]]++;
   }
   return out;
+}
+
+/** The glow's strength steps, as a share of the glyph's glow (the median light is 1): a few steps
+ * so the layer bakes a few sprites a frame, not one per light. */
+export const GLOW_LEVELS = [0.4, 0.7, 1, 1.35, 1.7] as const;
+
+/** The step for a light standing for `count` homes when the median light stands for `median`: by
+ * the square root of the ratio (a light for four times the homes glows twice as strong), nearest
+ * step in log terms. */
+export function glowLevel(count: number, median: number): number {
+  if (count <= 0 || median <= 0) return 0;
+  const w = Math.sqrt(count / median);
+  let best = 0;
+  for (let l = 1; l < GLOW_LEVELS.length; l++) if (Math.abs(Math.log(w / GLOW_LEVELS[l])) < Math.abs(Math.log(w / GLOW_LEVELS[best]))) best = l;
+  return best;
 }
 
 // ---- the cross-fade ---------------------------------------------------------------------------------

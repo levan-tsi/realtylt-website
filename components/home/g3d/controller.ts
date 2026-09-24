@@ -28,7 +28,7 @@ import { modeFor, type MapMode, type ModeChoice } from "./map-options";
 import { FLY_IN_MS, flyInCamera } from "./interaction";
 import { lightPins, planLights, type LightSet } from "./thinning";
 import { LightLayer, type LayerCamera } from "./light-layer";
-import { focalOf, hashOrder, homesEcef, planDensity, projectHome } from "./light-plan";
+import { focalOf, glowLevel, hashOrder, homesEcef, planDensity, projectAll, projectHome, representedCounts } from "./light-plan";
 import { backWaitMs, earlyScroll } from "./warm-plan";
 import type { MapPin } from "@/lib/idx/types";
 
@@ -197,10 +197,15 @@ export class G3dController {
       /** How the homes are thinned: "density" (round 57.6, a uniform sample: denser where homes are
        * denser) or "lattice" (round 57.2's even screen gap), `?thin=` compares. */
       thin?: "density" | "lattice";
+      /** Round 57.8's lab switches: the neighbourhood glow's strength (`?glow=0.08`, 0 for none)
+       * and the chapters' gap in px (`?gap=14`, cameras.ts CITY_GAP). */
+      glow?: number;
+      cityGap?: number;
     },
   ) {
     this.gate = new FlightGate<FlightJob>(opts.maxWaitMs);
     if (opts.canvas) this.layer = new LightLayer(opts.canvas, () => this.liveCamera(), () => isNarrow(opts.viewport()));
+    if (this.layer) this.layer.glowStrength = opts.glow;
   }
 
   /** The camera the map element reports NOW (every frame of a flight, measured), or ours before it
@@ -736,14 +741,23 @@ export class G3dController {
     const vpc = { ...vp, fov: cam.fov };
     const focus = focusOf(name);
     const budget = budgetFor(range, vp);
+    const gap = densityGap(range, isNarrow(vp), this.opts.cityGap);
+    const frame = cameraFrame(cam);
+    const proj = projectAll(layer.homesEcef, frame, vpc, 8, h.county, focus);
     const plan =
       this.opts.thin === "lattice"
         ? planLights({ lights: h, pins: this.pins, camera: cam, viewport: vpc, budget, gap: lightGap(range), focus })
-        : planDensity({ ecef: layer.homesEcef, order: this.order, frame: cameraFrame(cam), viewport: vpc, budget, gap: densityGap(range), county: h.county, focus });
+        : planDensity({ ecef: layer.homesEcef, order: this.order, frame, viewport: vpc, budget, gap, county: h.county, focus, keep: layer.litIndices(), proj });
+    // Round 57.8: each light's glow by the homes it stands for (light-plan.ts representedCounts),
+    // so the glow keeps the true density where the gap has made the points even.
+    const counts = representedCounts({ ecef: layer.homesEcef, frame, viewport: vpc, plan, reach: 1.5 * gap, county: h.county, focus, proj });
+    const median = [...counts].sort((a, b) => a - b)[Math.floor(counts.length / 2)] ?? 1;
+    const levels = new Uint8Array(plan.length);
+    for (let k = 0; k < plan.length; k++) levels[k] = glowLevel(counts[k], median);
     this.lastPlanMs = Math.round((performance.now() - t0) * 10) / 10;
     this.planned = plan;
     layer.fadeMs = fadeMs;
-    layer.plan(plan, instant || !!this.opts.reduced);
+    layer.plan(plan, instant || !!this.opts.reduced, levels);
     if (this.firstMarkerAt === null && plan.length) {
       this.firstMarkerAt = performance.now();
       performance.mark("g3d:first-marker");

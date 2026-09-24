@@ -158,43 +158,39 @@ export function rawCamera(name: ShotName, aspect: number): G3dCamera {
   };
 }
 
-/** HOW MANY HOMES A SHOT DRAWS, BY ALTITUDE (round 57.2). The owner: "minimalistic, not too
- * overcrowded ... still balanced", and round 57.1's frames showed why the old rule failed it: 339
- * lights at the territory shot read as one blob over the city, and the county chapters drew up to
- * 810 (the old one-per-1,600-px window cap) as a white carpet over Westchester, the Bronx and
- * Queens. So the count, the spacing on screen and the glyph (glyph.ts) all follow the RANGE: high
- * up, few lights, far apart and small; they grow only as the camera comes down.
+/** HOW MANY HOMES A SHOT DRAWS, BY ALTITUDE (round 57.8; round 57.2's tiers before it). The owner
+ * on round 57.7's 130 lights at the territory and 245 to 380 at the chapters, against 15,689
+ * listings: "the map has way less lights than there are listings and it should be more, and on zoom
+ * in zoom out it should balance it out how much it shows ... in cities it should be a little more
+ * ... but don't put them too close so people can move the mouse".
  *
- * Two ceilings, the lower wins: one light per `pxPerLight(range)` square pixels of window (2,000
- * close in, rising smoothly to 10,000 at the territory's height), and a hard count by altitude.
- * Numbers tuned by frames at every stop, 1440 and 390 (scripts/_scratch-r57/2/, the record in
- * docs/parity/DESIGN-ROUND57.md §4 "Round 2"). */
-export function pxPerLight(rangeMetres: number): number {
-  return Math.round(Math.min(10_000, Math.max(2_000, 2_000 * Math.pow(rangeMetres / 25_000, 0.9))));
+ * So the count is ONE smooth function of the range (round 57.2's hard tiers of 130 / 380 / 900
+ * jumped): one light per `pxPerLight(range)` square pixels of window, a power law of the range, so
+ * coming down 2 % adds a couple of percent and never a step. High up it is the ceiling that binds
+ * (the territory: a few hundred, the map still the picture); from the chapters down it is set high
+ * enough that the GAP (`densityGap`, the mouse's rule) is what limits: "as many as the gap allows".
+ * A phone gets more lights for its area (its territory band is small and its lights are its map).
+ * Numbers chosen by frames at every stop, both widths (scripts/_scratch-r57/8/, the record in
+ * docs/parity/DESIGN-ROUND57.md §7 "Round 8, the builder's numbers"). */
+export function pxPerLight(rangeMetres: number, narrow = false): number {
+  const wide = Math.min(8_000, Math.max(800, PX_AT_30KM * Math.pow(rangeMetres / 30_000, PX_POWER)));
+  return Math.round(narrow ? wide * NARROW_PX_SHARE : wide);
 }
+const PX_AT_30KM = 2_100;
+/** Nearly flat (the first build's 1.1 drew 971 lights at the Dutchess chapter, a starfield over the
+ * whole frame and under the words): the lights' density ON SCREEN stays about the same as the
+ * camera comes down, which is the owner's "balance", and the cities are held by the gap. */
+const PX_POWER = 0.2;
+const NARROW_PX_SHARE = 0.42;
+/** The most lights the layer is asked to draw in one frame (its cost, light-layer.ts). */
+export const MAX_LIGHTS = 2_400;
 
-/** The hard count by altitude: the territory (100 km and up), every chapter and county (25 to 100
- * km: Queens at 35 km drew 655 in round 57.1, the carpet), and a close shot under 25 km. */
-export function ceilingFor(rangeMetres: number): number {
-  return rangeMetres >= 100_000 ? 130 : rangeMetres >= 25_000 ? 380 : 900;
-}
-
-/** THE PHONE'S TERRITORY, SEEN (round 57.3). At 390 x 844 the density rule leaves the territory
- * shot 32 lights, and in the ~220 px band between the phone's words they were faint to invisible
- * while the copy says "every light on the map is one of them" (round 2's frames). A narrow window
- * draws at least this many at any height; closer in the density rule already draws more, so the
- * count still only grows as the camera comes down. Chosen by frames at 390 (the record in
- * docs/parity/DESIGN-ROUND57.md §4 "Round 3"). */
-export const PHONE_FLOOR = 72;
 /** Below this width a window is a phone for the lights' count and glyph (glyph.ts `narrow`). */
 export const NARROW = 640;
 export const isNarrow = (viewport?: { width: number }) => !!viewport && viewport.width < NARROW;
 
-export function budgetFor(rangeMetres: number, viewport?: { width: number; height: number }): number {
-  const hard = ceilingFor(rangeMetres);
-  if (!viewport) return hard;
-  const byDensity = Math.min(hard, Math.floor((viewport.width * viewport.height) / pxPerLight(rangeMetres)));
-  return isNarrow(viewport) ? Math.max(byDensity, Math.min(hard, PHONE_FLOOR)) : byDensity;
+export function budgetFor(rangeMetres: number, viewport: { width: number; height: number } = { width: 1440, height: 900 }): number {
+  return Math.min(MAX_LIGHTS, Math.floor((viewport.width * viewport.height) / pxPerLight(rangeMetres, isNarrow(viewport))));
 }
 
 /** The least distance, in css px, between two lights on screen (thinning.ts): wide apart at the
@@ -204,13 +200,27 @@ export function lightGap(rangeMetres: number): number {
   return Math.round(Math.min(30, Math.max(14, 17 * Math.pow(rangeMetres / 25_000, 0.45))));
 }
 
-/** THE DENSITY-TRUE GAP (round 57.6, light-plan.ts planDensity): the planner now takes the homes in
- * one random order until the ceiling, so where homes are denser more lights are drawn; this small
- * gap only keeps two glows from standing on one another. A share of round 57.2's lattice gap (which
- * set the spacing of the even lattice), chosen by frames side by side (scripts/_scratch-r57/6/thin/). */
-export const DENSITY_GAP_SHARE = 0.5;
-export function densityGap(rangeMetres: number): number {
-  return Math.round(lightGap(rangeMetres) * DENSITY_GAP_SHARE);
+/** THE GAP THAT KEEPS THE MOUSE HONEST (round 57.8; light-plan.ts planDensity takes the homes in one
+ * fixed order until the budget, density-true, and skips a home closer than this to one it took).
+ * The pointer's hit test is a 14 px radius (G3dGround nearestLight), so two lights nearer than
+ * about 16 px on screen cannot both be picked cleanly: at the chapters and cities, where the pointer
+ * is used, the floor is CITY_GAP, tuned by the hover probe (scripts/_scratch-r57g-hover.mjs, 50
+ * pointer positions over Queens at 1440, each a light plus a random aim error): at 16 px, 50 of 50
+ * named the light they were put on with an error up to 8 px, 396 lights; at 14 px, 50 of 50 up to
+ * 7 px, 478 lights. The owner asked for more in the cities, and both resolve every position, so
+ * 14 (the lowest the brief allows; the nearest light wins where a second is within reach); at the territory
+ * shot, a scatter over the whole region, 12 px; between the two it eases in log range. A finger is
+ * wider and less exact: 14 px on a phone at every height (its tap takes the nearest light within
+ * 22 px). Round 57.6's density gap (half the old lattice gap, 8 to 15 px) went down to 9 px at the
+ * boroughs, under the pointer's reach. */
+export const CITY_GAP = 14;
+export const TERRITORY_GAP = 12;
+export const FINGER_GAP = 14;
+export function densityGap(rangeMetres: number, narrow = false, cityGap = CITY_GAP): number {
+  if (narrow) return FINGER_GAP;
+  const city = cityGap >= 8 && cityGap <= 30 ? cityGap : CITY_GAP;
+  const t = Math.min(1, Math.max(0, Math.log(rangeMetres / 60_000) / Math.log(120_000 / 60_000)));
+  return Math.round(city + (TERRITORY_GAP - city) * t);
 }
 
 /** The county an area shot keeps its homes to (the others are not drawn there), or null. */

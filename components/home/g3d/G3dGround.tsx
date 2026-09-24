@@ -687,6 +687,8 @@ export function G3dGround({
       mode: modeChoice(q.get("mode"), MODE),
       canvas: lightCanvas.current,
       thin: q.get("thin") === "lattice" ? "lattice" : "density",
+      glow: q.has("glow") ? Number(q.get("glow")) : undefined,
+      cityGap: q.has("gap") ? Number(q.get("gap")) : undefined,
       description: "Map of the Hudson Valley and New York City, with the homes for sale lit where they stand.",
       onReveal: () => {
         setRevealed(true);
@@ -832,7 +834,7 @@ export function G3dGround({
     const p = c.screenOf(h.lat, h.lng);
     if (!p) return;
     const pin = h.price ? { price: h.price, beds: h.beds ?? 0, baths: h.baths ?? 0, address: h.address ?? "", city: h.city ?? "" } : null;
-    showLabel(p, keepOf(2 * featuredGlyph(ctl.current?.layer?.glyph ?? { core: 1.5, halo: 6, haloAlpha: 0.4 }).core), labelContent(h.city ?? "", pin), false, h.href);
+    showLabel(p, keepOf(2 * featuredGlyph(ctl.current?.layer?.glyph ?? { core: 1.5, halo: 6, haloAlpha: 0.4, glow: 0, glowAlpha: 0 }).core), labelContent(h.city ?? "", pin), false, h.href);
   }, [showLabel]);
   const showFocusRef = useRef(showFocus);
   showFocusRef.current = showFocus;

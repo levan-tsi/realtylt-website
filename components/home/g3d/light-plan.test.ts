@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { cameraFrame, projectWith, type MapCamera } from "./camera";
-import { applyPlan, easeFade, focalOf, hashOrder, homesEcef, planDensity, projectHome, stepFades, type Fade } from "./light-plan";
+import { GLOW_LEVELS, applyPlan, easeFade, focalOf, glowLevel, hashOrder, homesEcef, planDensity, projectHome, representedCounts, stepFades, type Fade } from "./light-plan";
 import { lightPins, planLights, type LightSet } from "./thinning";
 
 /** The round-57.2 test region: a dense "city" of 4,000 homes in a 6 km square and 1,000 scattered
@@ -90,6 +90,95 @@ describe("the density-true plan (round 57.6)", () => {
     expect(share(dense)).toBeGreaterThan(0.5);
     expect(share(lattice)).toBeLessThan(0.3);
     expect(share(dense)).toBeGreaterThan(share(lattice) * 2);
+  });
+});
+
+describe("the stable choice (round 57.8: zoom adds and takes away, never reshuffles)", () => {
+  // The same place from the territory's height, then close in over the city, then back up.
+  const HIGH: MapCamera = { center: { lat: 40.9, lng: -73.95, altitude: 0 }, range: 120_000, tilt: 45, heading: 0 };
+  const LOW: MapCamera = { center: { lat: 40.76, lng: -73.97, altitude: 0 }, range: 25_000, tilt: 45, heading: 0 };
+  const at = (cam: MapCamera, budget: number, gap: number, keep?: readonly number[]) => planDensity({ ecef: E, order: ORDER, frame: cameraFrame(cam), viewport: VP, budget, gap, keep });
+  const onScreen = (cam: MapCamera, i: number) => {
+    const p = projectWith(cameraFrame(cam), VP, L.lat[i], L.lng[i]);
+    return !!p && p.x >= 0 && p.y >= 0 && p.x <= VP.width && p.y <= VP.height;
+  };
+
+  it("coming down keeps every light already lit that stands in the new view, and adds around them", () => {
+    const high = at(HIGH, 300, 12);
+    const low = at(LOW, 900, 16, high);
+    const lowSet = new Set(low);
+    const stay = high.filter((i) => onScreen(LOW, i));
+    expect(stay.length).toBeGreaterThan(20);
+    for (const i of stay) expect(lowSet.has(i)).toBe(true);
+    expect(low.length).toBeGreaterThan(stay.length * 2);
+  });
+
+  it("without the lit set, the gap alone would drop some of them (why `keep` exists)", () => {
+    const high = at(HIGH, 300, 12);
+    const cold = new Set(at(LOW, 900, 16));
+    expect(high.filter((i) => onScreen(LOW, i) && !cold.has(i)).length).toBeGreaterThan(0);
+  });
+
+  it("going back up takes away the latest and returns the lights the high camera drew", () => {
+    // Exactly, but for a few homes at the low view's own edge: one just outside it was not lit
+    // down there, so up here a lit neighbour of it may stand in its place (3 of 300 in this set).
+    const back = (high: number[], low: number[], budget: number) => {
+      const b = new Set(at(HIGH, budget, 12, low));
+      return high.filter((i) => b.has(i)).length / high.length;
+    };
+    const high = at(HIGH, 300, 12);
+    expect(back(high, at(LOW, 900, 16, high), 300)).toBeGreaterThanOrEqual(0.98);
+    // and when the gap, not the budget, is what limits
+    const highG = at(HIGH, 100_000, 12);
+    expect(back(highG, at(LOW, 100_000, 16, highG), 100_000)).toBeGreaterThanOrEqual(0.98);
+    // a flight that never left the view comes back exactly
+    const wide = at(WIDE, 300, 12);
+    expect(at(WIDE, 300, 12, wide)).toEqual(wide);
+  });
+
+  it("a kept light still honours the gap and the budget", () => {
+    const low = at(LOW, 900, 16);
+    const high = at(HIGH, 200, 12, low);
+    expect(high.length).toBeLessThanOrEqual(200);
+    const fr = cameraFrame(HIGH);
+    const pts = high.map((i) => projectWith(fr, VP, L.lat[i], L.lng[i])!);
+    for (let a = 0; a < pts.length; a++) for (let b = a + 1; b < pts.length; b++) expect(Math.hypot(pts[a].x - pts[b].x, pts[a].y - pts[b].y)).toBeGreaterThanOrEqual(12);
+  });
+});
+
+describe("the glow stands for the homes (round 57.8: density-true when the gap is full)", () => {
+  const fr = cameraFrame(WIDE);
+  const plan = planDensity({ ecef: E, order: ORDER, frame: fr, viewport: VP, budget: 400, gap: 12 });
+  const counts = representedCounts({ ecef: E, frame: fr, viewport: VP, plan, reach: 40 });
+
+  it("gives every drawn light the homes nearest it, and every home on screen to one light", () => {
+    expect(counts.length).toBe(plan.length);
+    for (const c of counts) expect(c).toBeGreaterThanOrEqual(1); // itself at least
+    const onScreen = Array.from({ length: L.lat.length }, (_, i) => i).filter((i) => {
+      const p = projectWith(fr, VP, L.lat[i], L.lng[i]);
+      return !!p && p.x >= -8 && p.y >= -8 && p.x <= VP.width + 8 && p.y <= VP.height + 8;
+    }).length;
+    const sum = counts.reduce((a, b) => a + b, 0);
+    expect(sum).toBeLessThanOrEqual(onScreen);
+    expect(sum).toBeGreaterThan(onScreen * 0.9);
+  });
+
+  it("a light in the city stands for far more homes than one in the valley", () => {
+    const med = (a: number[]) => [...a].sort((x, y) => x - y)[Math.floor(a.length / 2)];
+    const city = plan.map((i, k) => (isCity(i) ? counts[k] : -1)).filter((c) => c >= 0);
+    const valley = plan.map((i, k) => (!isCity(i) ? counts[k] : -1)).filter((c) => c >= 0);
+    expect(med(city)).toBeGreaterThan(3 * med(valley));
+  });
+
+  it("the level of a light's glow: the median is 1, more homes more glow, held to a few steps", () => {
+    expect(GLOW_LEVELS[glowLevel(10, 10)]).toBe(1);
+    expect(glowLevel(40, 10)).toBeGreaterThan(glowLevel(10, 10));
+    expect(glowLevel(1, 10)).toBeLessThan(glowLevel(10, 10));
+    expect(glowLevel(10_000, 10)).toBe(GLOW_LEVELS.length - 1);
+    expect(glowLevel(0, 10)).toBe(0);
+    for (let c = 1; c < 200; c++) expect(glowLevel(c + 1, 10)).toBeGreaterThanOrEqual(glowLevel(c, 10));
+    expect(Math.min(...GLOW_LEVELS)).toBeGreaterThan(0.3);
+    expect(Math.max(...GLOW_LEVELS)).toBeLessThanOrEqual(1.8);
   });
 });
 

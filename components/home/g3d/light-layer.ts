@@ -11,8 +11,8 @@
  * The same projection feeds the pointer: `xy` holds where each drawn light stood in the last frame,
  * so the hover's hit test, the tap and the label use exactly the positions that were drawn. */
 import { cameraFrame, type MapCamera } from "./camera";
-import { CORE_RGB, LIT_MS, LIT_RGB, featuredGlyph, glyphAdd, glyphAt, litGlyph, type Glyph } from "./glyph";
-import { applyPlan, easeFade, focalOf, homesEcef, projectHome, stepFades, type Fade } from "./light-plan";
+import { CORE_RGB, LIT_MS, LIT_RGB, featuredGlyph, glyphAdd, glyphAt, litGlyph, reachOf, type Glyph } from "./glyph";
+import { GLOW_LEVELS, applyPlan, easeFade, focalOf, homesEcef, projectHome, stepFades, type Fade } from "./light-plan";
 
 export interface LayerCamera extends MapCamera {
   fov: number;
@@ -26,37 +26,68 @@ type Rect = { x: number; y: number; w: number; h: number };
  * frame mean and 1.9 ms p95 over a cold scroll at 1440 (the county ceilings), and it doubled the
  * flights' frames over 34 ms (142 against 65 with `?homes=0`). The glyph eases continuously, so the
  * bakes are keyed by the glyph quantised finer than the eye can see (core 0.05 px, halo 0.25 px,
- * strength 0.02, lit 0.1): a flight bakes a few dozen, each ~0.05 ms. */
+ * strength 0.02, lit 0.1): a flight bakes a few dozen, each ~0.05 ms.
+ *
+ * Round 57.8: the glow widens the bake to 20 to 32 css px of radius (to 4x the pixels) and the
+ * glow steps make five bakes a frame, so the first build's per-pixel glyphAdd cost a 7 to 22 ms
+ * frame whenever the eased glyph crossed a step mid-flight (the lag probe's layer max). The light
+ * is round, so its profile is computed once per bake on radii an eighth of a device pixel apart
+ * and every pixel reads it; and a frame bakes at most BAKES_PER_FRAME new sprites (the others keep
+ * last frame's for a frame or two, a change finer than the eye can see). */
+const BAKES_PER_FRAME = 2;
+const LUT_STEP = 8;
 function bake(g: Glyph, lit: number, dpr: number): HTMLCanvasElement {
   const c = document.createElement("canvas");
-  const R = g.halo * dpr;
+  const R = reachOf(g) * dpr;
   const s = Math.ceil(R) * 2 + 2;
   c.width = c.height = s;
   const x = c.getContext("2d")!;
   const img = x.createImageData(s, s);
   const core = [0, 1, 2].map((k) => CORE_RGB[k] + (LIT_RGB[k] - CORE_RGB[k]) * lit);
-  for (let j = 0; j < s; j++)
+  // The light's additive value stored as colour over alpha (alpha = its largest channel), so the
+  // canvas keeps it premultiplied and is transparent wherever the light adds nothing (an opaque
+  // bake made "lighter" paint black squares on the transparent canvas). The canvas is then ADDED to
+  // the map by its CSS blend (G3dGround: plus-lighter), as the cover sums it.
+  const nL = Math.ceil((s / 2) * Math.SQRT2 * LUT_STEP) + 2;
+  const lut = new Uint8ClampedArray(nL * 4);
+  for (let k = 0; k < nL; k++) {
+    const [r, gg, b] = glyphAdd(g, k / LUT_STEP / dpr, 1, core);
+    const Rr = Math.min(255, r), Gc = Math.min(255, gg), B = Math.min(255, b);
+    const a = Math.max(Rr, Gc, B);
+    if (a < 0.5) continue;
+    lut[4 * k] = Math.round((Rr / a) * 255);
+    lut[4 * k + 1] = Math.round((Gc / a) * 255);
+    lut[4 * k + 2] = Math.round((B / a) * 255);
+    lut[4 * k + 3] = Math.round(a);
+  }
+  const data = img.data;
+  const h = s / 2;
+  for (let j = 0; j < s; j++) {
+    const dy = j + 0.5 - h;
     for (let i = 0; i < s; i++) {
-      const d = Math.hypot(i + 0.5 - s / 2, j + 0.5 - s / 2) / dpr;
-      const [r, gg, b] = glyphAdd(g, d, 1, core);
+      const dx = i + 0.5 - h;
+      const k = Math.round(Math.sqrt(dx * dx + dy * dy) * LUT_STEP) * 4;
+      if (lut[k + 3] === 0) continue;
       const o = (j * s + i) * 4;
-      // The light's additive value stored as colour over alpha (alpha = its largest channel), so
-      // the canvas keeps it premultiplied and is transparent wherever the light adds nothing (an
-      // opaque bake made "lighter" paint black squares on the transparent canvas). The canvas is
-      // then ADDED to the map by its CSS blend (G3dGround: plus-lighter), as the cover sums it.
-      const R = Math.min(255, r), Gc = Math.min(255, gg), B = Math.min(255, b);
-      const a = Math.max(R, Gc, B);
-      if (a < 0.5) continue;
-      img.data[o] = Math.round((R / a) * 255);
-      img.data[o + 1] = Math.round((Gc / a) * 255);
-      img.data[o + 2] = Math.round((B / a) * 255);
-      img.data[o + 3] = Math.round(a);
+      data[o] = lut[k];
+      data[o + 1] = lut[k + 1];
+      data[o + 2] = lut[k + 2];
+      data[o + 3] = lut[k + 3];
     }
+  }
   x.putImageData(img, 0, 0);
   return c;
 }
 
-const quant = (g: Glyph, lit: number) => ({ core: Math.round(g.core * 20) / 20, halo: Math.max(0.5, Math.round(g.halo * 4) / 4), haloAlpha: Math.round(g.haloAlpha * 50) / 50, lit: Math.round(lit * 10) / 10 });
+const quant = (g: Glyph, lit: number) => ({
+  core: Math.round(g.core * 20) / 20,
+  halo: Math.max(0.5, Math.round(g.halo * 4) / 4),
+  haloAlpha: Math.round(g.haloAlpha * 50) / 50,
+  // the glow is wide and faint: half a pixel and a hundredth are finer than the eye can see
+  glow: Math.round(g.glow * 2) / 2,
+  glowAlpha: Math.round(g.glowAlpha * 100) / 100,
+  lit: Math.round(lit * 10) / 10,
+});
 
 export class LightLayer {
   private ctx: CanvasRenderingContext2D | null;
@@ -87,6 +118,8 @@ export class LightLayer {
   cost = { frames: 0, totalMs: 0, maxMs: 0, samples: [] as number[] };
   /** Draw no light here (Google's logo corner, policy: never covered). */
   avoid: Rect | null = null;
+  /** The neighbourhood glow's strength (glyph.ts GLOW_ALPHA unless the page's `?glow=` says). */
+  glowStrength: number | undefined = undefined;
 
   constructor(
     private canvas: HTMLCanvasElement,
@@ -101,7 +134,10 @@ export class LightLayer {
   resize() {
     const c = this.canvas;
     const dpr = Math.min(2, window.devicePixelRatio || 1);
-    if (dpr !== this.dpr) this.bakes.clear();
+    if (dpr !== this.dpr) {
+      this.bakes.clear();
+      this.lastBase = [];
+    }
     this.dpr = dpr;
     this.w = c.clientWidth;
     this.h = c.clientHeight;
@@ -115,7 +151,11 @@ export class LightLayer {
     this.ecef = homesEcef(lat, lng, height);
     this.xy = new Float32Array(lat.length * 2);
     this.xyIndex = new Int32Array(lat.length);
+    this.level = new Uint8Array(lat.length).fill(2);
   }
+
+  /** Each home's glow step (light-plan.ts GLOW_LEVELS; 2 is the median light). */
+  private level = new Uint8Array(0);
 
   get homesEcef() {
     return this.ecef;
@@ -128,7 +168,8 @@ export class LightLayer {
   }
 
   /** A new set of homes to draw; `instant` for a cut. */
-  plan(indices: readonly number[], instant: boolean) {
+  plan(indices: readonly number[], instant: boolean, levels?: Uint8Array) {
+    if (levels) for (let k = 0; k < indices.length; k++) this.level[indices[k]] = levels[k];
     applyPlan(this.fades, indices, instant);
     this.kick();
   }
@@ -150,6 +191,11 @@ export class LightLayer {
     let n = 0;
     for (const f of this.fades.values()) if (f.to === 1) n++;
     return n;
+  }
+
+  /** The homes planned in now (the planner keeps them first: light-plan.ts planDensity `keep`). */
+  *litIndices(): Generator<number> {
+    for (const [i, f] of this.fades) if (f.to === 1) yield i;
   }
 
   /** Draw a frame now and keep going while anything moves. */
@@ -232,7 +278,7 @@ export class LightLayer {
     this.xyCount = 0;
     if (!cam || this.w === 0) return;
     const range = cam.range > 1 ? cam.range : Math.max(500, cam.center.altitude / Math.max(0.2, Math.cos((cam.tilt * Math.PI) / 180)));
-    const g = glyphAt(range, { narrow: this.narrow() });
+    const g = glyphAt(range, { narrow: this.narrow(), glow: this.glowStrength });
     this.glyph = g;
     const fr = cameraFrame(cam);
     const vp = { width: this.w, height: this.h, fov: cam.fov };
@@ -242,10 +288,13 @@ export class LightLayer {
     ctx.imageSmoothingQuality = "low";
     const p = { x: 0, y: 0, z: 0 };
     const av = this.avoid;
-    const reach = g.halo * 1.6;
+    const r0 = reachOf(g);
+    const reach = r0 * 1.6;
     const blocked = (x: number, y: number, r: number) => !!av && x + r > av.x && x - r < av.x + av.w && y + r > av.y && y - r < av.y + av.h;
-    // The frame's one bake for every unlit light (the lit ones, one or two, bake their own).
-    const base = this.bakeOf(g, 0);
+    // The frame's bakes for the unlit lights, one per glow step (the lit ones bake their own).
+    const stepped = GLOW_LEVELS.map((l) => ({ ...g, glowAlpha: g.glowAlpha * l }));
+    this.bakeBudget = BAKES_PER_FRAME;
+    const bases = stepped.map((gl, l) => this.bakeOf(gl, 0, l));
     const litHomes = new Map<number, number>();
     for (const [key, v] of this.litK) if (key.startsWith("h:")) litHomes.set(Number(key.slice(2)), v);
     let k = 0;
@@ -253,18 +302,18 @@ export class LightLayer {
       if (!projectHome(fr, vp, f, this.ecef, i, p)) continue;
       if (p.x < -reach || p.y < -reach || p.x > this.w + reach || p.y > this.h + reach) continue;
       // Nothing in Google's logo corner: not drawn, and so not hoverable either.
-      if (blocked(p.x, p.y, g.halo)) continue;
+      if (av && blocked(p.x, p.y, r0)) continue;
       if (fd.to === 1 && fd.a > 0.5) {
         this.xy[2 * k] = p.x;
         this.xy[2 * k + 1] = p.y;
         this.xyIndex[k] = i;
         k++;
       }
-      const lk = litHomes.get(i) ?? 0;
+      const lk = litHomes.size ? litHomes.get(i) ?? 0 : 0;
       if (lk > 0) {
-        const gl = litGlyph(g, easeFade(lk));
+        const gl = litGlyph(stepped[this.level[i]] ?? g, this.litEase(`h:${i}`, lk));
         this.stamp(ctx, p.x, p.y, this.bakeOf(gl, lk), easeFade(fd.a));
-      } else this.stamp(ctx, p.x, p.y, base, easeFade(fd.a));
+      } else this.stamp(ctx, p.x, p.y, bases[this.level[i]] ?? bases[2], fd.a === 1 ? 1 : easeFade(fd.a));
     }
     this.xyCount = k;
     const fg = featuredGlyph(g);
@@ -272,8 +321,8 @@ export class LightLayer {
       if (!projectHome(fr, vp, f, this.featEcef, j, p)) continue;
       if (p.x < -reach || p.y < -reach || p.x > this.w + reach || p.y > this.h + reach) continue;
       const lk = this.litK.get(`f:${this.featIds[j]}`) ?? 0;
-      const gl = lk > 0 ? litGlyph(fg, easeFade(lk)) : fg;
-      if (blocked(p.x, p.y, gl.halo)) continue;
+      const gl = lk > 0 ? litGlyph(fg, this.litEase(`f:${this.featIds[j]}`, lk)) : fg;
+      if (blocked(p.x, p.y, reachOf(gl))) continue;
       this.stamp(ctx, p.x, p.y, this.bakeOf(gl, lk), 1);
     }
     ctx.globalAlpha = 1;
@@ -287,16 +336,31 @@ export class LightLayer {
     if (c.samples.length > 3000) c.samples.shift();
   }
 
-  /** A glyph's bake (made once, kept while the glyph is on screen). */
-  private bakeOf(g: Glyph, lit: number): HTMLCanvasElement {
+  /** THE SWELL'S CURVE (round 57.8, the animate skill's rule: feedback to a pointer is ease-out,
+   * fast at the moment the eye is on it): coming up, a cubic ease-out over LIT_MS (140 ms);
+   * going down, the round-6 smoothstep, so the light settles back without a snap. */
+  private litEase(key: string, k: number): number {
+    return key === this.litWant ? 1 - (1 - k) * (1 - k) * (1 - k) : easeFade(k);
+  }
+
+  /** New bakes this frame may still make, and the last bake each glow step drew with. */
+  private bakeBudget = BAKES_PER_FRAME;
+  private lastBase: (HTMLCanvasElement | undefined)[] = [];
+
+  /** A glyph's bake (made once, kept while the glyph is on screen). `slot`, a glow step's base:
+   * past this frame's budget of new bakes it keeps last frame's sprite for that step. */
+  private bakeOf(g: Glyph, lit: number, slot?: number): HTMLCanvasElement {
     const q = quant(g, lit);
-    const key = `${q.core}/${q.halo}/${q.haloAlpha}/${q.lit}`;
+    const key = `${q.core}/${q.halo}/${q.haloAlpha}/${q.glow}/${q.glowAlpha}/${q.lit}`;
     let b = this.bakes.get(key);
+    if (!b && slot !== undefined && this.bakeBudget <= 0 && this.lastBase[slot]) return this.lastBase[slot]!;
     if (!b) {
+      this.bakeBudget--;
       if (this.bakes.size > 400) this.bakes.clear();
       b = bake(q, q.lit, this.dpr);
       this.bakes.set(key, b);
     }
+    if (slot !== undefined) this.lastBase[slot] = b;
     return b;
   }
 

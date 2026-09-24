@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AREA_FLIGHT, FLIGHT, SHOTS, type ShotName } from "../night/shots";
-import { FIRST_STEP_RATIO, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, TUNED, PHONE_FLOOR, budgetFor, cameraFor, derivedCamera, focusOf, lightGap, pxPerLight, rawCamera } from "./cameras";
+import { FIRST_STEP_RATIO, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, TUNED, CITY_GAP, MAX_LIGHTS, budgetFor, cameraFor, densityGap, derivedCamera, focusOf, lightGap, pxPerLight, rawCamera } from "./cameras";
 import { project } from "./camera";
 import { COUNTY_BOUNDS } from "@/components/idx/county-bounds";
 
@@ -128,48 +128,57 @@ describe("how many homes a shot draws (round 57.2: the count follows the range)"
   const MOBILE = { width: 390, height: 844 };
   const RANGES = [300_000, 156_000, 145_000, 120_000, 90_000, 72_500, 60_000, 48_000, 36_250, 30_000, 25_000, 21_000, 12_000, 5_000];
 
-  it("draws a scatter at the territory shot, not a city blob", () => {
+  // Round 57.8, the owner: "the map has way less lights than there are listings ... on zoom in zoom
+  // out it should balance it out how much it shows ... don't put them too close so people can move
+  // the mouse". The count is a smooth function of the range; the gap keeps the mouse honest.
+  it("draws several times round 57.7's lights at the territory shot (130 at 1440, 72 at 390)", () => {
     const desk = budgetFor(cameraFor("hero", LAPTOP).range, DESK);
     const phone = budgetFor(cameraFor("hero", PHONE).range, MOBILE);
-    expect(desk).toBeLessThanOrEqual(150);
-    expect(desk).toBeGreaterThanOrEqual(60);
-    // Round 57.3: the phone's territory lights must be SEEN (PHONE_FLOOR), still a scatter.
-    expect(phone).toBe(PHONE_FLOOR);
-    expect(phone).toBeGreaterThanOrEqual(60);
-    expect(phone).toBeLessThanOrEqual(100);
+    expect(desk).toBeGreaterThanOrEqual(3 * 130);
+    expect(desk).toBeLessThanOrEqual(6 * 130);
+    expect(phone).toBeGreaterThanOrEqual(3 * 72);
+    expect(phone).toBeLessThanOrEqual(6 * 72);
   });
 
-  it("gives only a narrow window the phone's floor; the laptop's territory stays as it was", () => {
-    expect(budgetFor(cameraFor("hero", LAPTOP).range, DESK)).toBe(130);
-    expect(budgetFor(145_000, { width: 768, height: 1024 })).toBe(Math.floor((768 * 1024) / pxPerLight(145_000)));
-    expect(budgetFor(145_000, { width: 320, height: 640 })).toBe(PHONE_FLOOR);
-  });
-
-  it("never lays a carpet over a county chapter", () => {
-    // Every county shot but a close one (under 25 km, Staten Island: a close shot may grow, and it
-    // has ~100 homes to draw anyway).
-    for (const name of AREA_FLIGHT) {
-      const d = cameraFor(name, LAPTOP).range, p = cameraFor(name, PHONE).range;
-      if (d >= 25_000) expect(budgetFor(d, DESK), name).toBeLessThanOrEqual(400);
-      if (p >= 25_000) expect(budgetFor(p, MOBILE), name).toBeLessThanOrEqual(170);
+  it("follows the range as a smooth function: no tier, no jump anywhere on the way down", () => {
+    for (const vp of [DESK, MOBILE]) {
+      let prev = budgetFor(400_000, vp);
+      for (let r = 400_000; r > 3_000; r /= 1.02) {
+        const b = budgetFor(r / 1.02, vp);
+        // never fewer as the camera comes down, and never more than a few percent more per 2 %
+        expect(b).toBeGreaterThanOrEqual(prev);
+        expect(b).toBeLessThanOrEqual(Math.ceil(prev * 1.04) + 1);
+        prev = b;
+      }
     }
-    expect(AREA_FLIGHT.filter((n) => cameraFor(n, LAPTOP).range >= 25_000).length).toBeGreaterThanOrEqual(9);
   });
 
-  it("grows only as the camera comes down, and a close shot may draw more", () => {
+  it("grows as the camera comes down, gently: the lights' density on screen stays balanced", () => {
     for (const vp of [DESK, MOBILE]) {
       const b = RANGES.map((r) => budgetFor(r, vp));
       for (let i = 1; i < b.length; i++) expect(b[i]).toBeGreaterThanOrEqual(b[i - 1]);
-      // 3x on a laptop; 2x on a phone, whose territory floor (round 57.3) lifts the far end.
-      expect(budgetFor(12_000, vp)).toBeGreaterThanOrEqual((vp === DESK ? 3 : 2) * budgetFor(145_000, vp));
+      expect(budgetFor(35_000, vp)).toBeGreaterThanOrEqual(1.25 * budgetFor(145_000, vp));
+      expect(budgetFor(35_000, vp)).toBeLessThanOrEqual(2 * budgetFor(145_000, vp));
     }
   });
 
-  it("never more than one light per pxPerLight(range) square pixels of window", () => {
+  it("never more than one light per pxPerLight(range) square pixels of window, nor more than the layer can draw", () => {
     for (const r of RANGES) {
       expect(budgetFor(r, DESK)).toBeLessThanOrEqual(Math.floor((1440 * 900) / pxPerLight(r)));
-      expect(budgetFor(r, MOBILE)).toBeLessThanOrEqual(Math.max(PHONE_FLOOR, Math.floor((390 * 844) / pxPerLight(r))));
+      expect(budgetFor(r, MOBILE)).toBeLessThanOrEqual(Math.floor((390 * 844) / pxPerLight(r, true)));
+      expect(budgetFor(r, DESK)).toBeLessThanOrEqual(MAX_LIGHTS);
     }
+  });
+
+  it("keeps the mouse honest: a gap of 12 px at the territory, 14 to 20 at the chapters and cities, 14 for a finger", () => {
+    expect(densityGap(145_000)).toBe(12);
+    expect(densityGap(300_000)).toBe(12);
+    for (const r of [60_000, 48_000, 35_000, 21_000, 5_000]) expect(densityGap(r)).toBe(CITY_GAP);
+    expect(CITY_GAP).toBeGreaterThanOrEqual(14);
+    expect(CITY_GAP).toBeLessThanOrEqual(20);
+    for (const r of RANGES) expect(densityGap(r, true)).toBe(14);
+    // between, eased with the range (never a step of more than a pixel per 5 %)
+    for (let r = 130_000; r > 55_000; r /= 1.05) expect(Math.abs(densityGap(r / 1.05) - densityGap(r))).toBeLessThanOrEqual(1);
   });
 
   it("keeps lights further apart on screen the higher the camera", () => {
