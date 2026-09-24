@@ -59,6 +59,7 @@ import {
   SELLER_MISTAKES_POST,
   SELLING_TIMELINE_POST,
 } from "./seller-posts";
+import { SEASONAL_MAINTENANCE_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -675,6 +676,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "seasonal-home-maintenance-checklist-hudson-valley",
+    cluster: "owning",
+    title: "Your Essential Seasonal Home Maintenance Checklist for Hudson Valley Homes",
+    seoTitle: "Seasonal Home Maintenance Checklist for Hudson Valley Homes",
+    /** Homeownership #1, reposted 2026-09-24. Slug = the CRM drip link (day 134) and the draft's;
+     * the drip doc's alternate redirects here. */
+    date: "2025-09-30",
+    updated: "2026-09-24",
+    excerpt:
+      "Autumn, winter, spring and summer, task by task, for a Hudson Valley house, plus the year-round care that wells, septic systems and chimneys need.",
+    seoDescription:
+      "A seasonal home maintenance checklist for Hudson Valley homes: fall and winter prep, ice dams, spring repairs, summer ticks, and septic and well care.",
+    cover: "/images/hero/hudson-olana.jpg",
+    body: [],
+    placeholder: false,
+    markdown: SEASONAL_MAINTENANCE_POST,
+    aliases: ["seasonal-home-maintenance-checklist"],
   },
   {
     slug: "hiring-property-management-company-hudson-valley",
