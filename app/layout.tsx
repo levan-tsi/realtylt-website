@@ -119,6 +119,14 @@ export default function RootLayout({
         <Script id="gtag-helper" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
+          // Google Consent Mode (owner's privacy check 2026-09-24): no consent banner is required
+          // for our New York visitors, but Google's EU user consent policy asks that its tag store
+          // nothing for visitors in the EEA, the UK and Switzerland without consent, and a browser
+          // that sends Global Privacy Control has asked not to be tracked anywhere. Both default to
+          // denied BEFORE the tag configures; everyone else is unchanged.
+          var denied = {ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'};
+          gtag('consent','default',Object.assign({region:['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IS','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','GB','CH']}, denied));
+          if (navigator.globalPrivacyControl === true) { gtag('consent','default',denied); }
           gtag('js', new Date());
           gtag('config', 'AW-11479042629');
           function gtagSendEvent(url) {

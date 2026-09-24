@@ -36,6 +36,9 @@ export function PostHogInit() {
       // dated preset carries the corrected pageview semantics.
       defaults: "2025-05-24",
       persistence: "localStorage",
+      // Honour Do Not Track (and Global Privacy Control, which posthog-js reads the same way):
+      // no capture at all for a visitor who asked not to be tracked (owner's privacy check 2026-09-24).
+      respect_dnt: true,
       capture_pageleave: true,
       session_recording: {
         maskAllInputs: true,

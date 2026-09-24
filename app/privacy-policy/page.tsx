@@ -113,7 +113,10 @@ export default function PrivacyPolicyPage() {
         <p>
           <strong className="text-ink">Your controls.</strong> You can block or clear cookies in
           your browser settings, use a private window, or opt out of personalised Google advertising
-          through Google&rsquo;s own ad settings. The site works without them.
+          through Google&rsquo;s own ad settings. If your browser sends a Global Privacy Control or Do Not Track
+          signal, the Google tag stores nothing and our analytics is told not to record your visit. For
+          visitors in the European Economic Area, the United Kingdom and Switzerland the Google tag stores
+          no advertising cookies. The site works without any of them.
         </p>
       </Section>
 
