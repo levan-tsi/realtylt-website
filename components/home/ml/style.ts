@@ -82,11 +82,60 @@ const rgba = (hex: string, a: number) => {
 export const DEM_TILE = 512;
 export const DEM_MAXZOOM = 12;
 
-export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggeration?: number; hillshade?: boolean; demTile?: number; demMaxzoom?: number } = {}): StyleSpecification {
+/** THE SLOW LINE'S TERRITORY (round 57.13, ./slow-line.ts): drawn from a second copy of the same
+ * vector tiles capped at `maxzoom` (measured at the territory: 9 full tiles at 1440 and 12 on a
+ * phone, 1.1 and 1.6 MB gzipped, one tile 80 to 240 KB; the capped copy asks for a handful), shown
+ * below zoom `below`; the full tiles from `fullFrom`, so between the two both are drawn and the
+ * ground never goes bare while the full tiles arrive (the chapters and counties are zoom 12.8 up). */
+export const COARSE = { maxzoom: 6, below: 11.5, fullFrom: 10 } as const;
+
+export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggeration?: number; hillshade?: boolean; demTile?: number; demMaxzoom?: number; coarse?: { below: number; maxzoom: number } } = {}): StyleSpecification {
   const terrain = o.terrain ?? true;
   const buildings = o.buildings ?? true;
   const hillshade = o.hillshade ?? true;
-  const layers: StyleSpecification["layers"] = [
+  const base = tiledLayers(hillshade, buildings);
+  const layers: StyleSpecification["layers"] = o.coarse ? withCoarse(base, o.coarse) : base;
+  return {
+    version: 8,
+    name: "RealtyLT night",
+    sources: {
+      omt: { type: "vector", url: OFM, attribution: ATTRIBUTION },
+      ...(o.coarse ? { "omt-coarse": { type: "vector" as const, url: OFM, maxzoom: o.coarse.maxzoom } } : {}),
+      ...(terrain || hillshade ? { dem: { type: "raster-dem" as const, tiles: [DEM], encoding: "terrarium" as const, tileSize: o.demTile ?? DEM_TILE, maxzoom: Math.min(15, o.demMaxzoom ?? DEM_MAXZOOM) } } : {}),
+    },
+    ...(terrain ? { terrain: { source: "dem", exaggeration: o.exaggeration ?? EXAGGERATION } } : {}),
+    sky: {
+      "sky-color": NIGHT.sky,
+      "horizon-color": NIGHT.horizon,
+      "fog-color": NIGHT.fog,
+      "fog-ground-blend": 0.6,
+      "horizon-fog-blend": 0.7,
+      "sky-horizon-blend": 0.6,
+      "atmosphere-blend": 0,
+    },
+    layers,
+  };
+}
+
+/** Each layer of the full tiles gets a coarse copy under it (the same paint, from `omt-coarse`,
+ * below `c.below`), and itself starts at COARSE.fullFrom; a layer that starts at or above
+ * `c.below` has no copy. */
+function withCoarse(layers: StyleSpecification["layers"], c: { below: number }): StyleSpecification["layers"] {
+  const out: StyleSpecification["layers"] = [];
+  for (const l of layers) {
+    if (!("source" in l) || l.source !== "omt") {
+      out.push(l);
+      continue;
+    }
+    const min = l.minzoom ?? 0;
+    if (min < c.below) out.push({ ...l, id: `${l.id}-coarse`, source: "omt-coarse", maxzoom: c.below } as typeof l);
+    out.push({ ...l, minzoom: Math.max(min, COARSE.fullFrom) });
+  }
+  return out;
+}
+
+function tiledLayers(hillshade: boolean, buildings: boolean): StyleSpecification["layers"] {
+  return [
     { id: "land", type: "background", paint: { "background-color": NIGHT.land } },
     { id: "wood", type: "fill", source: "omt", "source-layer": "landcover", filter: ["==", ["get", "class"], "wood"], paint: { "fill-color": NIGHT.wood, "fill-antialias": false } },
     {
@@ -167,23 +216,4 @@ export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggera
         ]
       : []),
   ];
-  return {
-    version: 8,
-    name: "RealtyLT night",
-    sources: {
-      omt: { type: "vector", url: OFM, attribution: ATTRIBUTION },
-      dem: { type: "raster-dem", tiles: [DEM], encoding: "terrarium", tileSize: o.demTile ?? DEM_TILE, maxzoom: Math.min(15, o.demMaxzoom ?? DEM_MAXZOOM) },
-    },
-    ...(terrain ? { terrain: { source: "dem", exaggeration: o.exaggeration ?? EXAGGERATION } } : {}),
-    sky: {
-      "sky-color": NIGHT.sky,
-      "horizon-color": NIGHT.horizon,
-      "fog-color": NIGHT.fog,
-      "fog-ground-blend": 0.6,
-      "horizon-fog-blend": 0.7,
-      "sky-horizon-blend": 0.6,
-      "atmosphere-blend": 0,
-    },
-    layers,
-  };
 }

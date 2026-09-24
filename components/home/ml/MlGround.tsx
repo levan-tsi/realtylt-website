@@ -22,6 +22,7 @@ import { applyClaims, claims, type LightsState, type MapState } from "../g3d/cla
 import { clickAction, labelContent, namesOverlap, openPoint, placeHoverLabel, tapNext, type LabelContent, type Rect, type TapState } from "../g3d/interaction";
 import { MlController } from "./controller";
 import { projectedItems } from "./names";
+import { slowConnection } from "./slow-line";
 
 /** THE MAPLIBRE NIGHT MAP AS THE PAGE'S GROUND (round 57.12, /lab/ml). The Google map's ground
  * (../g3d/G3dGround.tsx, the home page's, untouched) with its engine changed and its design kept:
@@ -85,8 +86,8 @@ const CLEAR_STYLE = {
   maskImage: `${HOLE}, linear-gradient(#000, #000)`,
   WebkitMaskSize: `${HOLE_W * 2}px ${HOLE_H * 2}px, 100% 100%`,
   maskSize: `${HOLE_W * 2}px ${HOLE_H * 2}px, 100% 100%`,
-  WebkitMaskPosition: `${-HOLE_W}px var(--g3d-hole-y, -9999px), 0 0`,
-  maskPosition: `${-HOLE_W}px var(--g3d-hole-y, -9999px), 0 0`,
+  WebkitMaskPosition: `${-HOLE_W}px -9999px, 0 0`,
+  maskPosition: `${-HOLE_W}px -9999px, 0 0`,
   WebkitMaskRepeat: "no-repeat",
   maskRepeat: "no-repeat",
   WebkitMaskComposite: "xor",
@@ -136,8 +137,8 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
   const tailRef = useRef(tail);
   tailRef.current = tail;
   const [revealed, setRevealed] = useState(false);
-  /** The cover (today's night cover, the Google map's first frame at the same territory camera):
-   * over the map until the opening shot is drawn. `?cover=0` shows no cover (the map draws on black
+  /** The cover (since round 57.13 a frame of this very map at its territory camera, rendered by
+   * scripts/make-ml-cover.mjs): over the map until the opening shot is drawn. `?cover=0` shows no cover (the map draws on black
    * as it loads), the measurement's other arm. */
   const [posterGone, setPosterGone] = useState(false);
   const [noCover, setNoCover] = useState(false);
@@ -306,26 +307,12 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
     names.current = stops.current.map((s) => s.name);
   }, []);
 
+  // Round 57.13 (the page's own scroll cost, measured with the map blocked): every scroll frame here
+  // cost 10 to 20 ms of forced style and layout, because it WROTE first (a custom property on the
+  // element holding the whole page, which every descendant inherits, so the whole page's style was
+  // recalculated) and then READ rectangles. Now it reads everything first, then writes, and the
+  // credit corner's hole moves by the element's own mask-position (nothing inherits it).
   const placeScrims = useCallback(() => {
-    const content = contentRef.current;
-    if (content) {
-      const y = Math.round(window.scrollY + window.innerHeight - HOLE_H);
-      if (y !== holeY.current) {
-        holeY.current = y;
-        content.style.setProperty("--g3d-hole-y", `${y}px`);
-      }
-    }
-    if (topScrim.current) topScrim.current.style.transform = `translate3d(0, ${-Math.min(window.scrollY, 400)}px, 0)`;
-    if (footShade.current) footShade.current.style.opacity = String(Math.max(0, 1 - window.scrollY / 320));
-    const t = tailRef.current;
-    if (tailVeil.current && t?.veil) {
-      const f = footerEl.current;
-      const vh = window.innerHeight;
-      const top = f ? f.getBoundingClientRect().top : Infinity;
-      const k = Math.min(1, Math.max(0, (vh - top) / (vh * 0.5)));
-      const max = window.innerWidth < 1024 ? (t.veilPhone ?? t.veil) : t.veil;
-      tailVeil.current.style.opacity = String(Math.round(k * max * 1000) / 1000);
-    }
     const vh = window.innerHeight;
     const reach = SCRIM_PAD + SCRIM_FEATHER;
     const wide = window.innerWidth >= 1024;
@@ -335,6 +322,26 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
       .filter(({ r }) => r.width > 8 && r.height > 8 && r.bottom > -reach && r.top < vh + reach)
       .sort((a, b) => b.r.width * b.r.height - a.r.width * a.r.height)
       .slice(0, SCRIMS);
+    const t = tailRef.current;
+    const footTop = tailVeil.current && t?.veil && footerEl.current ? footerEl.current.getBoundingClientRect().top : Infinity;
+    // ---- writes only from here ----
+    const content = contentRef.current;
+    if (content) {
+      const y = Math.round(window.scrollY + vh - HOLE_H);
+      if (y !== holeY.current) {
+        holeY.current = y;
+        const pos = `${-HOLE_W}px ${y}px, 0 0`;
+        content.style.maskPosition = pos;
+        content.style.webkitMaskPosition = pos;
+      }
+    }
+    if (topScrim.current) topScrim.current.style.transform = `translate3d(0, ${-Math.min(window.scrollY, 400)}px, 0)`;
+    if (footShade.current) footShade.current.style.opacity = String(Math.max(0, 1 - window.scrollY / 320));
+    if (tailVeil.current && t?.veil) {
+      const k = Math.min(1, Math.max(0, (vh - footTop) / (vh * 0.5)));
+      const max = window.innerWidth < 1024 ? (t.veilPhone ?? t.veil) : t.veil;
+      tailVeil.current.style.opacity = String(Math.round(k * max * 1000) / 1000);
+    }
     for (let k = 0; k < SCRIMS; k++) {
       const el = scrimEls.current[k];
       if (!el) continue;
@@ -498,7 +505,12 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const q = new URLSearchParams(window.location.search);
     const num = (k: string) => (q.has(k) && Number.isFinite(Number(q.get(k))) ? Number(q.get(k)) : undefined);
+    // The slow line (./slow-line.ts), known up front from the browser; `?slow=1` and `?slow=0` force
+    // either arm for a measurement.
+    const slow = q.get("slow") === "1" || (q.get("slow") !== "0" && slowConnection((navigator as Navigator & { connection?: { effectiveType?: string } }).connection));
     const c = new MlController({
+      slow,
+      watchFirstTile: q.get("slow") !== "0",
       reduced,
       viewport: () => ({ width: window.innerWidth, height: window.innerHeight }),
       initial,
@@ -584,7 +596,8 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
       const homes: Homes = { lat, lng, county, key: placeKeys(pts.x, pts.y), town: pts.town, towns: pts.towns };
       c.setHomes(homes);
     });
-    void loadElevation().then((g) => c.setElevation(g)).catch(() => {});
+    // Our homes' heights on the terrain (367 KB); the flat map of a slow line needs none.
+    if (!slow) void loadElevation().then((g) => c.setElevation(g)).catch(() => {});
     return () => {
       c.stop();
       ctl.current = null;
@@ -734,13 +747,14 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
       const wait = (ms: number) => new Promise<null>((r) => setTimeout(() => r(null), ms));
       const pin = h.pin ? Promise.resolve(h.pin) : Promise.race([h.pending ?? Promise.resolve(null), wait(900)]);
       const fallback = h.href;
+      const here = window.location.pathname;
       void Promise.all([fly, pin]).then(([, p]) => {
         const href = p ? listingPath(p) : fallback;
         log.routedAt = Math.round(performance.now());
         log.href = href;
         router.push(href);
         setTimeout(() => {
-          if (window.location.pathname !== "/lab/ml" || !ctl.current) return;
+          if (window.location.pathname !== here || !ctl.current) return;
           for (const w of words) if (w) w.style.opacity = "";
           hideHover();
           override.current = null;

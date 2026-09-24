@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ATTRIBUTION, BUILDINGS_MINZOOM, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, nightStyle } from "./style";
+import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, nightStyle } from "./style";
 
 /** The colours a style value names (hex or rgba), as [r, g, b]. */
 function rgbOf(v: string): [number, number, number] | null {
@@ -90,5 +90,47 @@ describe("the night style", () => {
   it("has a dark sky and a fog", () => {
     expect(s.sky?.["sky-color"]).toBe(NIGHT.sky);
     expect(s.sky?.["fog-color"]).toBe(NIGHT.fog);
+  });
+});
+
+/** Round 57.13: the slow line's style (./slow-line.ts). */
+describe("the night style on a slow line", () => {
+  const flat = nightStyle({ terrain: false, hillshade: false, coarse: { below: COARSE.below, maxzoom: COARSE.maxzoom } });
+  const byId = new Map(flat.layers.map((l) => [l.id, l]));
+  it("asks for no terrain tile at all when neither the terrain nor the hillshade is drawn", () => {
+    expect(flat.terrain).toBeUndefined();
+    expect(flat.sources.dem).toBeUndefined();
+    expect(flat.layers.some((l) => l.type === "hillshade")).toBe(false);
+  });
+  it("draws the territory from coarse tiles: a second source capped at a low zoom", () => {
+    const c = flat.sources["omt-coarse"] as { type: string; url: string; maxzoom: number };
+    expect(c.type).toBe("vector");
+    expect(c.url).toBe((flat.sources.omt as { url: string }).url);
+    expect(c.maxzoom).toBe(COARSE.maxzoom);
+    expect(COARSE.maxzoom).toBeLessThanOrEqual(7);
+  });
+  it("hands each tiled layer from the coarse copy to the full one with an overlap, so the ground never goes bare mid-flight", () => {
+    const fine = nightStyle({ terrain: false, hillshade: false }).layers.filter((l) => "source" in l && l.source === "omt");
+    for (const l of fine) {
+      const full = byId.get(l.id)!;
+      const min = Math.max(l.minzoom ?? 0, COARSE.fullFrom);
+      expect(full.minzoom ?? 0, l.id).toBe(min);
+      const coarse = byId.get(`${l.id}-coarse`);
+      if ((l.minzoom ?? 0) >= COARSE.below) {
+        expect(coarse, l.id).toBeUndefined();
+        continue;
+      }
+      expect(coarse && "source" in coarse && coarse.source, l.id).toBe("omt-coarse");
+      expect(coarse!.maxzoom, l.id).toBe(COARSE.below);
+      expect(coarse!.minzoom ?? 0, l.id).toBe(l.minzoom ?? 0);
+      expect(JSON.stringify("paint" in coarse! ? coarse.paint : null), l.id).toBe(JSON.stringify("paint" in l ? l.paint : null));
+      // the coarse copy is drawn under the full one
+      expect(flat.layers.indexOf(coarse!)).toBeLessThan(flat.layers.indexOf(full));
+    }
+    expect(COARSE.fullFrom).toBeLessThan(COARSE.below);
+  });
+  it("leaves the fast line's style exactly as it was", () => {
+    expect(nightStyle().sources["omt-coarse"]).toBeUndefined();
+    expect(JSON.stringify(nightStyle({ coarse: undefined }))).toBe(JSON.stringify(nightStyle()));
   });
 });

@@ -25,7 +25,8 @@ import type { FeaturedHome, Homes } from "../g3d/controller";
 import { FLY_IN_DEPTH, FLY_IN_MS } from "../g3d/interaction";
 import { matrixFrame, mercX, mercY, mlFrame, projectMl, rangeForZoom, zoomForRange, type MlCamera, type MlFrame } from "./geo";
 import { flightMs, lensFor, mlShot } from "./shots";
-import { EXAGGERATION, MAPLIBRE_URL, nightStyle } from "./style";
+import { COARSE, EXAGGERATION, MAPLIBRE_URL, nightStyle } from "./style";
+import { FIRST_TILE_BUDGET_MS, slowFirstTile } from "./slow-line";
 
 export { MAPLIBRE_URL };
 
@@ -53,6 +54,9 @@ export interface MlStats {
   range: number | null;
   error: string | null;
   layer: { frames: number; maxMs: number; meanMs: number } | null;
+  /** The slow line (./slow-line.ts): how it was known ("connection" before the map was made,
+   * "first-tile" when the first vector tile was late), and when the first vector tile came. */
+  slow: { by: "connection" | "first-tile" | null; firstTileAt: number | null };
 }
 
 type Job = { shot: ShotName | null; cam: MlCamera; ms?: number; offset?: [number, number] };
@@ -75,7 +79,7 @@ export class MlController {
   private lastPlanMs = 0;
   private error: string | null = null;
   private stopped = false;
-  private st: Omit<MlStats, "flights" | "flying" | "shot" | "drawn" | "planned" | "lastPlanMs" | "glyph" | "zoom" | "range" | "error" | "layer"> = {
+  private st: Omit<MlStats, "flights" | "flying" | "shot" | "drawn" | "planned" | "lastPlanMs" | "glyph" | "zoom" | "range" | "error" | "layer" | "slow"> = {
     importedAt: null,
     createdAt: null,
     loadAt: null,
@@ -84,8 +88,11 @@ export class MlController {
     revealAt: null,
     stops: [],
   };
-  /** The exaggeration the terrain is drawn with (0: no terrain), so our homes stand on it. */
-  readonly exaggeration: number;
+  /** The exaggeration the terrain is drawn with (0: no terrain), so our homes stand on it. Set to 0
+   * when a slow line drops the terrain after the map was made. */
+  exaggeration: number;
+  private slowBy: "connection" | "first-tile" | null = null;
+  private firstTileAt: number | null = null;
 
   get xy() {
     return this.layer?.xy ?? new Float32Array(0);
@@ -120,9 +127,15 @@ export class MlController {
       demMaxzoom?: number;
       glow?: number;
       cityGap?: number;
+      /** The line is slow, known before the map is made (./slow-line.ts slowConnection): the flat
+       * night map with the coarse territory. Otherwise the map watches its first vector tile. */
+      slow?: boolean;
+      /** false: never judge the line by its first tile (`?slow=0`, the measurement's full arm). */
+      watchFirstTile?: boolean;
     },
   ) {
-    this.exaggeration = opts.terrain ? (opts.exaggeration ?? EXAGGERATION) : 0;
+    if (opts.slow) this.slowBy = "connection";
+    this.exaggeration = opts.terrain && !opts.slow ? (opts.exaggeration ?? EXAGGERATION) : 0;
     if (opts.canvas) {
       this.layer = new LightLayer(opts.canvas, () => this.liveCamera(), () => isNarrow(opts.viewport()), {
         places: (lat, lng, height) => {
@@ -166,7 +179,9 @@ export class MlController {
     try {
       map = new lib.Map({
         container: host,
-        style: nightStyle({ terrain: this.opts.terrain, buildings: this.opts.buildings, hillshade: this.opts.hillshade, exaggeration: this.exaggeration || undefined, demTile: this.opts.demTile, demMaxzoom: this.opts.demMaxzoom }) as StyleSpecification,
+        style: (this.opts.slow
+          ? nightStyle({ terrain: false, hillshade: false, buildings: this.opts.buildings, coarse: COARSE })
+          : nightStyle({ terrain: this.opts.terrain, buildings: this.opts.buildings, hillshade: this.opts.hillshade, exaggeration: this.exaggeration || undefined, demTile: this.opts.demTile, demMaxzoom: this.opts.demMaxzoom })) as StyleSpecification,
         center: [first.lng, first.lat],
         zoom: first.zoom,
         pitch: first.pitch,
@@ -187,11 +202,11 @@ export class MlController {
     this.map = map;
     map.setVerticalFieldOfView(first.fov);
     this.st.createdAt = Math.round(performance.now());
+    // The cover's longest hold: past it the map is shown as far as it has drawn. If it has drawn
+    // nothing yet (a slow line: round 57.13 measured the first tile at 18 s on Slow 4G), the cover,
+    // a frame of this same map, holds until the opening shot is whole; it is not a failure.
     const cap = setTimeout(() => {
-      if (!this.revealed && !this.error) {
-        if (this.st.firstPaintAt === null) this.fail("the map drew nothing in time");
-        else this.reveal();
-      }
+      if (!this.revealed && !this.error && this.st.firstPaintAt !== null) this.reveal();
     }, this.opts.revealCapMs);
     let sawTile = false;
     map.on("load", () => {
@@ -199,8 +214,16 @@ export class MlController {
       this.replan(this.target!, true);
     });
     map.on("data", (e) => {
-      if ((e as { dataType?: string; tile?: unknown }).dataType === "source" && (e as { tile?: unknown }).tile) sawTile = true;
+      const d = e as { dataType?: string; tile?: unknown; sourceId?: string };
+      if (d.dataType !== "source" || !d.tile) return;
+      sawTile = true;
+      if (this.firstTileAt === null && d.sourceId !== "dem") this.firstTileAt = Math.round(performance.now());
     });
+    // The slow line found out (./slow-line.ts): no vector tile two seconds after the map was made.
+    if (!this.opts.slow && this.opts.watchFirstTile !== false)
+      setTimeout(() => {
+        if (!this.stopped && slowFirstTile(this.firstTileAt, this.st.createdAt ?? 0, Math.round(performance.now()))) this.dropTerrain();
+      }, FIRST_TILE_BUDGET_MS + 1);
     map.on("render", () => {
       if (sawTile && this.st.firstPaintAt === null) {
         this.st.firstPaintAt = Math.round(performance.now());
@@ -236,6 +259,29 @@ export class MlController {
 
   private moveId = 0;
   private startedAt = 0;
+
+  /** A slow line found out after the map was made: the terrain and the hillshade go (their PNGs
+   * stop queueing in front of the vector tiles), and our homes come down onto the flat map. */
+  private dropTerrain() {
+    const m = this.map;
+    if (!m || this.slowBy) return;
+    this.slowBy = "first-tile";
+    try {
+      m.setTerrain(null);
+      if (m.getLayer("relief")) m.removeLayer("relief");
+      if (m.getSource("dem")) m.removeSource("dem");
+    } catch (e) {
+      console.warn("[ml] terrain", (e as Error).message);
+    }
+    this.exaggeration = 0;
+    const h = this.homes;
+    if (h) this.layer?.setHomes(h.lat, h.lng, this.heightAt);
+    if (this.featured.length) this.setFeatured(this.featured);
+    if (this.target) {
+      this.target = { ...this.target, elevation: 0 };
+      this.replan(this.target, true);
+    }
+  }
 
   stop() {
     this.stopped = true;
@@ -509,6 +555,7 @@ export class MlController {
       range: live ? Math.round(live.range) : null,
       error: this.error,
       layer: L ? { frames: L.cost.frames, maxMs: Math.round(L.cost.maxMs * 100) / 100, meanMs: L.cost.frames ? Math.round((L.cost.totalMs / L.cost.frames) * 1000) / 1000 : 0 } : null,
+      slow: { by: this.slowBy, firstTileAt: this.firstTileAt },
     };
   }
 
