@@ -40,7 +40,7 @@ import {
   REAL_ESTATE_ATTORNEY_POST,
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
-import { SELLER_DISCLOSURE_POST, SELLING_TIMELINE_POST } from "./seller-posts";
+import { SELLER_DISCLOSURE_POST, SELLER_INSPECTION_PREP_POST, SELLING_TIMELINE_POST } from "./seller-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -657,6 +657,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "seller-guide-prepare-home-inspection",
+    cluster: "selling",
+    title: "Preparing for the Home Inspection: A Seller's Guide to a Smooth Process",
+    seoTitle: "Seller's Guide to Prepare for a Home Inspection in NY",
+    /** Seller Education #7, reposted 2026-09-24. Slug = the CRM drip link (day 190) and the
+     * draft's; the drip doc's alternate redirects here. */
+    date: "2026-06-10",
+    updated: "2026-09-24",
+    excerpt:
+      "The easy fixes that keep an inspection report short, the septic, well, radon and permit paperwork Hudson Valley buyers ask for, and how to answer repair requests.",
+    seoDescription:
+      "A seller's guide to prepare for a home inspection in New York: easy fixes, septic, well and permit records, inspection day etiquette and repair negotiations.",
+    cover: "/images/listings/house-09.jpg",
+    body: [],
+    placeholder: false,
+    markdown: SELLER_INSPECTION_PREP_POST,
+    aliases: ["preparing-for-home-inspection-sellers-guide"],
   },
   {
     slug: "seller-disclosure-requirements-new-york",

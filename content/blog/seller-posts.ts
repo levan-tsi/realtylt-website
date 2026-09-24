@@ -230,3 +230,140 @@ No. The act's definition of residential property excludes condominium units and 
 - U.S. Environmental Protection Agency, [real estate disclosures about lead](https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards)
 
 Checked against these sources on September 24, 2026.`;
+
+export const SELLER_INSPECTION_PREP_POST = `For many sellers, the days between an accepted offer and the buyer's home inspection are the most stressful of the sale. The report can reopen a deal you thought was settled. Preparation changes that. This seller's guide to preparing for the home inspection covers what inspectors look for, the easy fixes that keep a report short, the paperwork Hudson Valley buyers will ask for, and how to handle the requests that follow.
+
+## What the inspector is looking for
+
+A home inspection is a visual, non-invasive look at a house's condition for the buyer; it is not pass or fail. New York licenses home inspectors through the Department of State ([NYS Department of State](https://dos.ny.gov/home-inspector)). They concentrate on:
+
+1. **Structure:** foundation, framing, floors, walls and ceilings.
+2. **The roof:** coverings, flashing, gutters and downspouts.
+3. **Major systems:** heating and cooling, plumbing, electrical.
+4. **Water:** stains, leaks, damp and signs of mold, the biggest red flag in most reports.
+5. **Safety:** wiring hazards, handrails, smoke and carbon monoxide alarms.
+
+Chipped paint and dated but working fixtures are cosmetic. A ceiling stain is cosmetic in itself, but it points at a leak, and the leak goes in the report.
+
+Why small things matter: a report full of minor items (a running toilet, a dead bulb, a dirty filter) reads to an anxious buyer as a story of neglect, and a list of inexpensive fixes can turn into a request for a much larger credit. The goal is the shortest, least eventful report you can honestly get.
+
+## Your pre-inspection checklist
+
+### 1. Water and leaks
+
+- Fix dripping faucets and running toilets; make sure toilets are firmly seated.
+- Look under every sink for leaks or old damage and repair them.
+- Clean the gutters and make sure downspouts are attached and carry water well away from the foundation.
+- If there was a past leak, have proof that the cause was fixed.
+
+### 2. Safety
+
+- Test every smoke and carbon monoxide alarm and put in fresh batteries.
+- Tighten loose handrails and guardrails.
+- Press "test" and "reset" on every GFCI outlet (kitchen, baths, garage, outside).
+- Test the garage door's automatic reverse: the Consumer Product Safety Commission recommends placing a 2x4 flat on the floor in the door's path; if the door does not reverse on contact, adjust or repair the opener ([CPSC](https://www.cpsc.gov/s3fs-public/garage.pdf)).
+
+### 3. Systems on and working
+
+- Replace the heating and cooling filter.
+- Make sure pilot lights are lit; inspectors do not relight them.
+- Run the heat and the air conditioning a few days before.
+- Keep water, gas and electricity on. A system the inspector cannot test is written up as "not tested", which worries buyers and can mean a second visit.
+
+### 4. Doors and windows
+
+- Every door should open, close and latch, including closets.
+- Free windows that are painted or swollen shut and check the locks.
+
+### 5. Light bulbs
+
+Replace every burned-out bulb, inside and out. An inspector cannot tell a dead bulb from a bad fixture, so the report says "fixture not operational".
+
+### 6. Total access
+
+- Clear the way to the attic hatch, basement, crawl spaces, electrical panel, furnace or boiler, water heater and under sinks. Inspectors will not move your belongings.
+- Unlock gates, sheds and outbuildings, and leave labeled keys.
+
+Anything the inspector cannot reach is marked "inaccessible", which invites suspicion and a return trip.
+
+### 7. Your paperwork
+
+Assemble a folder: receipts and warranties for the roof, heating system and major appliances; permits and certificates of occupancy for additions, finished basements and decks; septic pump-out records; and any recent well water test.
+
+## Hudson Valley paperwork that matters most
+
+### Septic systems
+
+The EPA's guidance is to have a household septic system inspected about every three years and the tank pumped generally every three to five years ([EPA](https://www.epa.gov/septic/how-care-your-septic-system)). Records showing that routine care builds confidence; if you have none, consider a pre-listing septic inspection so you know the answer before the buyer does.
+
+### Private wells
+
+Buyers and some lenders will want a water test. A recent result from a laboratory certified by the Department of Health's Environmental Laboratory Approval Program, covering at least bacteria and the other items the Department recommends, can save time ([NYSDOH](https://www.health.ny.gov/environmental/water/drinking/regulations/fact_sheets/fs3_water_quality.htm)).
+
+### Radon
+
+If you have tested, have the results ready. The EPA recommends fixing a home at 4 pCi/L or more and considering it between 2 and 4 pCi/L ([EPA](https://www.epa.gov/radon/what-epas-action-level-radon-and-what-does-it-mean)).
+
+### Certificates of occupancy and permits
+
+Unpermitted work (a finished basement, an enclosed porch, a garage turned into living space) can surface in the buyer's title and municipal searches and delay or derail the loan. Call your town or city building department well before you list to confirm the certificates of occupancy on file match the house as it stands today, and give yourself time to legalize anything that does not.
+
+### Your disclosure statement
+
+Since March 20, 2024 New York sellers of most one- to four-family homes must complete the Property Condition Disclosure Statement before the buyer signs; the $500 credit option is gone ([NYSBA](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)). Walking your own house with this checklist is also how you gather the actual knowledge the form asks for. See our guide to [seller disclosures in New York](/blog/seller-disclosure-requirements-new-york).
+
+## Inspection day etiquette
+
+- **Clean and tidy.** It signals a cared-for house.
+- **Utilities on,** everything accessible.
+- **Pets out** for the few hours the inspection takes, or securely confined with a note.
+- **Be somewhere else.** The inspector works for the buyer, and buyers ask better questions without the seller in the room.
+
+## After the report: negotiating calmly
+
+The report is a starting point for a conversation, not a repair order. Unless your contract says otherwise, you generally are not obliged to fix what a buyer asks, though a lender's requirements and local code can force some items.
+
+- **Reasonable requests** usually involve safety hazards, active leaks, structural problems, non-working systems or radon at or above the EPA action level.
+- **Overreach** is cosmetic work, or replacing things that are old but working and were visible when the buyer made the offer.
+- **A credit is often cleaner than a repair.** It settles the item, lets the buyer choose the contractor, and keeps you out of disputes about workmanship after closing. Your attorney documents whatever you agree.
+
+## Your path to a smooth inspection
+
+1. **Audit your own house** with this checklist one to two weeks ahead.
+2. **Gather documents,** including a call to the building department about certificates of occupancy.
+3. **Set the stage** the day before: clean, utilities on, access clear, plans to be out.
+4. **Respond strategically** afterwards, with your agent and attorney.
+
+The inspection sits inside the wider sequence in our [timeline for selling a house in New York](/blog/timeline-selling-a-house-ny), and buyers will be reading the same [home inspection checklist](/blog/home-inspection-checklist-hudson-valley-ny) we give them. To plan your own sale, see our [selling page](/selling) or [talk with us](/connect).
+
+## Frequently asked questions
+
+### What should a seller fix before a home inspection?
+
+The small, visible items that otherwise fill a report: leaks and running toilets, dead bulbs, dirty filters, loose handrails, dead smoke and carbon monoxide alarm batteries, stuck windows and doors, clogged gutters and blocked access.
+
+### What are sellers required to fix after a home inspection in NY?
+
+Generally nothing by default. Repairs are negotiated under the contract, although a buyer's lender or local code may require some.
+
+### Should a seller get a pre-listing inspection?
+
+It can help, especially with older houses, wells or septic systems: you learn the problems first and can fix them, price them in, or disclose them on your terms.
+
+### Should the seller be home during the inspection?
+
+No. Let the buyer and inspector work freely; it usually makes the process go more smoothly.
+
+### Is it better to give a credit or make the repairs?
+
+Often a credit. It closes the issue, lets the buyer pick the contractor, and avoids disputes about the quality of work you arranged.
+
+## Sources
+
+- NYS Department of State, [home inspector licensing](https://dos.ny.gov/home-inspector)
+- U.S. Consumer Product Safety Commission, [automatic garage door openers](https://www.cpsc.gov/s3fs-public/garage.pdf)
+- U.S. Environmental Protection Agency, [septic system care](https://www.epa.gov/septic/how-care-your-septic-system) and [radon action level](https://www.epa.gov/radon/what-epas-action-level-radon-and-what-does-it-mean)
+- NYS Department of Health, [private well water testing](https://www.health.ny.gov/environmental/water/drinking/regulations/fact_sheets/fs3_water_quality.htm)
+- New York State Bar Association, [Property Condition Disclosure Act amendments](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)
+
+Checked against these sources on September 24, 2026.`;

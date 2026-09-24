@@ -63,7 +63,6 @@ const PENDING_CRM = new Set<string>([
   "lower-energy-bills-new-york-homeowners",
   "packing-tips-hacks-for-moving",
   "ultimate-8-week-moving-checklist",
-  "seller-guide-prepare-home-inspection",
   "how-to-hire-local-movers-ny",
   "how-to-buy-your-first-rental-property-in-the-hudson-valley",
   "house-hacking-hudson-valley-ny",
@@ -83,7 +82,6 @@ const PENDING_CRM = new Set<string>([
 /** Internal /blog/ links written into a reposted body ahead of the article they point at.
  * Same rule: may only shrink, and must be empty when the round is done. */
 const PENDING_LINK_TARGETS = new Set<string>([
-  "seller-guide-prepare-home-inspection",
   "house-hacking-hudson-valley-ny",
 ]);
 
