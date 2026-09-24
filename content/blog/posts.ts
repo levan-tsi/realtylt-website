@@ -28,7 +28,12 @@ import {
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
-import { FIRST_TIME_BUYER_CHECKLIST_POST, HOW_MUCH_HOUSE_POST, MORTGAGE_TYPES_POST } from "./real-estate-posts";
+import {
+  FIRST_TIME_BUYER_CHECKLIST_POST,
+  HOW_MUCH_HOUSE_POST,
+  MORTGAGE_TYPES_POST,
+  REAL_ESTATE_ATTORNEY_POST,
+} from "./real-estate-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -645,6 +650,23 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "why-you-need-real-estate-attorney-ny",
+    cluster: "buying",
+    title: "Why You Need a Real Estate Attorney in New York (And What They Do)",
+    seoTitle: "Why You Need a Real Estate Attorney in NY, and What They Do",
+    /** Buyer Education #9, reposted 2026-09-24. Slug = the CRM drip link (day 530) and the draft's. */
+    date: "2025-10-02",
+    updated: "2026-09-24",
+    excerpt:
+      "Why nearly every New York home sale has an attorney on each side, what yours does from the accepted offer to the closing table, and how to choose one.",
+    seoDescription:
+      "Do you need a real estate attorney in New York? What buyer and seller attorneys do, why an accepted offer is not yet a contract, and how to choose one.",
+    cover: "/images/editorial/deed-1825.jpg",
+    body: [],
+    placeholder: false,
+    markdown: REAL_ESTATE_ATTORNEY_POST,
   },
   {
     slug: "how-much-house-can-i-afford-ny-guide",

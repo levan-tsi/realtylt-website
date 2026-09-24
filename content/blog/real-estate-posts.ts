@@ -408,3 +408,111 @@ Because they are part of the monthly payment. Two houses at the same price can c
 - New York State Department of Taxation and Finance, [ORPTS Municipal Data Portal](https://www.tax.ny.gov/pit/property/munidataportal.htm)
 
 The rate and the calculations were checked on September 24, 2026. Loan amounts are computed with the standard 30-year amortization formula; your lender's figures will reflect your actual rate, fees and mortgage insurance.`;
+
+export const REAL_ESTATE_ATTORNEY_POST = `In many states, lawyers only appear in a home sale when something goes wrong. In New York, a real estate attorney is usually on your team from the first week, and for buyers and sellers that is a good thing. If you are relocating to the Hudson Valley or New York City from somewhere else, this guide explains what a real estate attorney in New York actually does, why nearly every transaction here uses one on each side, and how to choose one.
+
+## Is a real estate attorney required in New York?
+
+Strictly speaking, no statute requires a buyer or seller to hire one. In practice, almost everyone does, and the process is built around it.
+
+- **Downstate, the seller's attorney drafts the contract of sale.** Upstate, an agent often prepares the offer or contract "subject to the approval of the parties' attorneys" ([New York State Bar Association](https://nysba.org/legalease-the-attorneys-role-in-home-purchase-transactions/)). Either way, attorneys write or approve the binding document.
+- **Only lawyers may prepare real estate instruments for a fee.** New York Judiciary Law section 484 bars anyone not admitted to practice from being paid to prepare "deeds, mortgages, assignments, discharges, leases or any other instruments affecting real estate" for someone else ([NY Judiciary Law 484](https://www.nysenate.gov/legislation/laws/JUD/484)). That is why your agent negotiates the business terms but does not draft the contract or deed.
+- **Lenders and the other side expect it.** A buyer without counsel would be negotiating a contract written by the seller's lawyer, alone.
+
+So the accurate answer is: not mandatory, but standard, and going without one is a real risk. This is also the most common surprise for buyers from states where a title company or agent handles everything.
+
+## An accepted offer is not a contract yet
+
+This is the single most important thing to understand about buying in New York. When a seller accepts your offer, you have an agreement on price and terms, but usually not a binding contract. The seller's attorney then drafts the contract of sale, your attorney reviews and negotiates it, and the deal becomes binding only when both parties have signed and the down payment deposit is held in escrow, typically by the seller's attorney.
+
+Between those two moments the deal is still fragile. Either side can still walk away, and another buyer can still make an offer. A responsive attorney shortens that window, which is one reason to choose yours before you start making offers. (Some states have a fixed "attorney review" period of a few business days; New York has no statutory period of that kind, so the timing depends on the attorneys.)
+
+## What does a buyer's real estate attorney do?
+
+- **Reviews and negotiates the contract.** Your attorney explains the terms, and makes "changes and additions for a particular transaction to reflect the understanding of the parties" ([NYSBA](https://nysba.org/legalease-the-attorneys-role-in-home-purchase-transactions/)): the mortgage contingency, what happens to your deposit, what the seller must deliver, and how problems found later are handled.
+- **Handles title.** The buyer's attorney orders a title report from a title insurance company, reviews it, and explains the exceptions: liens, judgments, easements, open permits. Title insurance protects you against covered defects after closing.
+- **Checks the survey and the certificate of occupancy.** Does the fence sit on the line? Were the deck and the finished basement built with permits? Those questions are cheaper to answer before closing than after.
+- **Works with your lender.** Your attorney reviews the mortgage commitment and the loan documents with you and coordinates with the lender's attorney so the loan can fund. See [what lenders look for in a pre-approval](/blog/mortgage-pre-approval-requirements-ny).
+- **Represents you at closing.** Your attorney checks the closing figures and documents and explains each one before you sign.
+
+## What does a seller's attorney do?
+
+- **Drafts the contract of sale** from the terms you agreed with the buyer (price, closing date, what stays with the house).
+- **Negotiates** the buyer's attorney's requested changes.
+- **Clears title problems early**, such as an old mortgage that was paid off but never formally discharged.
+- **Prepares the deed and the transfer paperwork**, including New York's real estate transfer tax return, Form TP-584 (TP-584-NYC in the five boroughs) ([NYS Department of Taxation and Finance](https://www.tax.ny.gov/bus/transfer/rptidx.htm)), and calculates adjustments such as prorated property taxes and fuel.
+- **Holds the buyer's deposit in escrow** until closing, in the usual downstate arrangement.
+
+Selling? Our [selling page](/selling) explains how we work with sellers and their attorneys.
+
+## What does a real estate attorney cost in New York?
+
+Most residential real estate attorneys in the Hudson Valley charge a flat fee for a standard purchase or sale rather than billing by the hour. Fees vary with the attorney, the county and the complexity of the deal (a co-op, a new build, an estate sale or a property with title problems costs more), so ask each attorney for a written quote that says exactly what the fee includes and what would be extra. The fee is one of your closing costs; our [guide to buyer closing costs in New York](/blog/buyer-closing-costs-new-york) shows where it fits.
+
+## Agent and attorney: who does what
+
+**Your real estate agent:**
+
+- finds homes that fit, or markets your home;
+- analyzes prices and negotiates the business terms;
+- coordinates inspections, appraisal access and the timeline;
+- keeps everyone communicating;
+- does not give legal advice.
+
+**Your real estate attorney:**
+
+- drafts or reviews and negotiates the contract;
+- handles title, survey and certificate of occupancy questions;
+- works with the lender's attorney on the loan documents;
+- represents you at closing;
+- gives legal advice.
+
+## Common mistakes to avoid
+
+- **One attorney for both sides.** The buyer's and seller's interests conflict on the points that matter most. NYSBA's guidance is built on each side having its own attorney with no conflicting loyalties. Hire your own.
+- **Waiting until you have an accepted offer.** The contract stage moves quickly; the attorney you choose should be ready the day your offer is accepted.
+- **Asking your agent to interpret the contract.** Agents know the market, but legal interpretation is the attorney's job, and Judiciary Law 484 is why.
+
+## How to choose a real estate attorney
+
+Start looking when you start house hunting or preparing to sell. Your agent can recommend attorneys who close regularly in your county. When you talk to candidates, ask:
+
+- Is residential real estate the main focus of your practice?
+- How often do you close in this county, and with this kind of property (co-op, condo, well and septic, new construction)?
+- Will I work with you directly or mainly with a paralegal, and how quickly do you return calls?
+- Is your fee a flat fee, what does it include, and what would cost extra?
+- How many residential closings do you handle a year?
+
+Once your offer is accepted, your agent sends a deal sheet with the agreed terms to both attorneys, and the contract stage begins. Your agent keeps managing the timeline; your attorney leads on everything legal. For the full sequence, see our [first-time home buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist), and [talk with us](/connect) if you would like attorney recommendations for your county.
+
+This article is general information, not legal advice. Consult a licensed New York attorney about your own situation.
+
+## Frequently asked questions
+
+### Is New York an attorney state for real estate?
+
+In practice, yes: buyers and sellers each normally hire an attorney, and downstate the seller's attorney drafts the contract of sale. No statute requires a party to hire one, but only a licensed attorney may be paid to prepare deeds, mortgages and other real estate instruments for someone else (Judiciary Law section 484).
+
+### Is an accepted offer binding in New York?
+
+Usually not. The deal becomes binding when both parties sign the contract of sale that the attorneys negotiate, and the buyer's deposit is placed in escrow. Until then either side can still change course.
+
+### How much does a real estate attorney cost in NY?
+
+Most charge a flat fee for a standard residential purchase or sale, and the amount varies by attorney, county and complexity. Ask for a written quote that lists what the fee covers.
+
+### Can a real estate agent give legal advice in New York?
+
+No. Agents negotiate business terms and manage the process, but interpreting contract clauses and title issues is legal work for the attorney.
+
+### Can one attorney represent both the buyer and the seller?
+
+It is strongly discouraged. The two sides' interests conflict, and each should have an attorney whose loyalty is only to them.
+
+## Sources
+
+- New York State Bar Association, [the attorney's role in home purchase transactions](https://nysba.org/legalease-the-attorneys-role-in-home-purchase-transactions/)
+- New York State Senate, [Judiciary Law section 484](https://www.nysenate.gov/legislation/laws/JUD/484)
+- NYS Department of Taxation and Finance, [real estate transfer tax](https://www.tax.ny.gov/bus/transfer/rptidx.htm)
+
+Checked against these sources on September 24, 2026.`;
