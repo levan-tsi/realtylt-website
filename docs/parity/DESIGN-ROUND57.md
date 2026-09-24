@@ -1620,3 +1620,20 @@ byte-identical to the old script's).
 
 **:3102** runs the final build (the code of `17f1d7d`, the re-rendered covers); it was down twice,
 55 s and 51 s (stop, build, start).
+
+### Round 9, the orchestrator's verification (2026-09-24, HEAD `46d06d9`, :3102 on `17f1d7d`)
+
+Re-run, not read: tsc clean; vitest **1874 / 1874**; a fresh hero frame from the running server:
+445 lights, 11 names; my cold lag run at 1440: first steady 5.2 s, cover gone 8.9 s, the
+Westchester flight 34.7 ms, the worst flight frame 90.3 (the Highlands). Looked at
+`9/final/hero-1440.png` and `9/dissolve-final3/default/sheet-1440.png`: the map is a third
+darker in a cool silver-blue with the warm lights the only warmth (the /ai page's black and one
+glow), and the cover is now the same picture as the live map (moonlit land, the real coast, the
+same 445 lights and glow; diff 12.4 to 6.9 levels at 1440, 8.0 to 4.2 at 390), so the dissolve
+adds detail and our names, nothing else. Accepted.
+
+The builder's finding, carried to round 10: the lights' priority order is a hash of each home's
+POSITION in the list, so when the hourly sync adds a listing the page lights different homes
+and the cover drifts (diff rose to 8.0 within an hour). Round 10 orders by listing id in
+`light-plan.ts` (stable across syncs; only the new and gone homes change) and the handoff
+records the cover re-render (`scripts/make-map-cover.mjs`) as a release step.
