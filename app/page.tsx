@@ -17,6 +17,8 @@ import { G3dAreaChapter } from "@/components/home/g3d/G3dAreaChapter";
 import { MlGround } from "@/components/home/ml/MlGround";
 import { MlAreaChapter } from "@/components/home/ml/MlAreaChapter";
 import { MAPLIBRE_URL } from "@/components/home/ml/style";
+import { PLATES } from "@/components/home/plates/plates.gen";
+import { TALL_MEDIA, WIDE_MEDIA, plateSrc, plateSrcSet } from "@/components/home/plates/plate-frame";
 import { COVERS, coverFor, homeCover, homeMap } from "@/lib/home-map";
 import { listingPath } from "@/lib/idx/listing-url";
 import { AREA_ROWS } from "@/components/home/night/areas";
@@ -85,7 +87,16 @@ export default async function HomePage() {
   // the tall still for a phone and the wide one for a laptop (round 57.2). Each map's cover is its
   // own first frame from its own camera (lib/home-map.ts coverFor; round 57.13).
   const cover = coverFor(ground, homeCover({ NEXT_PUBLIC_HOME_COVER: process.env.NEXT_PUBLIC_HOME_COVER }));
-  if (mapped) {
+  if (ground === "plates") {
+    // Round 58: the territory plate IS the first screen (components/home/plates/), asked for with the
+    // document at the density the screen needs (the srcset's widths, 100vw); AVIF, which every
+    // browser of the last three years decodes, and a browser without it skips the typed preload and
+    // takes the picture's WebP source.
+    for (const a of ["tall", "wide"] as const) {
+      const p = PLATES.hero[a];
+      preload(plateSrc("hero", a, p.widths[0], "avif"), { as: "image", type: "image/avif", fetchPriority: "high", media: a === "tall" ? TALL_MEDIA : WIDE_MEDIA, imageSrcSet: plateSrcSet("hero", a, p, "avif"), imageSizes: "100vw" });
+    }
+  } else if (mapped) {
     preload(cover.tall, { as: "image", fetchPriority: "high", media: "(max-width: 1023px)" });
     preload(cover.wide, { as: "image", fetchPriority: "high", media: "(min-width: 1024px)" });
   }
@@ -105,8 +116,8 @@ export default async function HomePage() {
     .slice(0, 8)
     .map((l) => ({ id: l.id, lat: l.lat, lng: l.lng, title: `$${l.price.toLocaleString("en-US")}, ${l.address}, ${l.city}`, href: listingPath(l), price: l.price, beds: l.beds, baths: l.baths, address: l.address, city: l.city }));
   const Ground = ({ children }: { children: ReactNode }) =>
-    ground === "ml" ? (
-      <MlGround poster={cover} tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }} featured={featuredHomes}>
+    ground === "ml" || ground === "plates" ? (
+      <MlGround engine={ground} poster={cover} tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }} featured={featuredHomes}>
         {children}
       </MlGround>
     ) : g3d ? (
@@ -377,7 +388,7 @@ export default async function HomePage() {
                   {mapped ? <span data-lights-claim>Every light is a home for sale there right now.</span> : "Every bright light is a home for sale there right now."}
                 </p>
               </Reveal>
-              {ground === "ml" ? <MlAreaChapter rows={AREA_ROWS} /> : g3d ? <G3dAreaChapter rows={AREA_ROWS} /> : <AreaChapter rows={AREA_ROWS} />}
+              {ground === "ml" || ground === "plates" ? <MlAreaChapter rows={AREA_ROWS} /> : g3d ? <G3dAreaChapter rows={AREA_ROWS} /> : <AreaChapter rows={AREA_ROWS} />}
             </div>
           </div>
         </section>

@@ -27,6 +27,7 @@ import { matrixFrame, mercX, mercY, mlFrame, projectMl, rangeForZoom, zoomForRan
 import { flightMs, lensFor, mlShot } from "./shots";
 import { COARSE, EXAGGERATION, MAPLIBRE_URL, nightStyle } from "./style";
 import { FIRST_TILE_BUDGET_MS, slowFirstTile } from "./slow-line";
+import type { GroundEngine } from "./engine";
 
 export { MAPLIBRE_URL };
 
@@ -57,11 +58,14 @@ export interface MlStats {
   /** The slow line (./slow-line.ts): how it was known ("connection" before the map was made,
    * "first-tile" when the first vector tile was late), and when the first vector tile came. */
   slow: { by: "connection" | "first-tile" | null; firstTileAt: number | null };
+  /** The plates engine (round 58): the plate on, the one arriving, the one queued, the ones
+   * decoded ahead, and the aspect shown. */
+  plates?: { at: string | null; to: string | null; next: string | null; warmed: string[]; aspect: "wide" | "tall" };
 }
 
 type Job = { shot: ShotName | null; cam: MlCamera; ms?: number; offset?: [number, number] };
 
-export class MlController {
+export class MlController implements GroundEngine {
   map: MlMap | null = null;
   layer: LightLayer | null = null;
   private homes: Homes | null = null;
@@ -129,6 +133,9 @@ export class MlController {
       /** The halo's radius as a scale of glyph.ts's (`?halo=`, round 58). */
       halo?: number;
       cityGap?: number;
+      /** The map's pixel ratio (`?pr=`, round 58: the plate renderer draws a phone plate at 3). The
+       * page's own is the screen's, held to 2. */
+      pixelRatio?: number;
       /** The line is slow, known before the map is made (./slow-line.ts slowConnection): the flat
        * night map with the coarse territory. Otherwise the map watches its first vector tile. */
       slow?: boolean;
@@ -194,7 +201,7 @@ export class MlController {
         attributionControl: false,
         // Tiles cross-fade in over 150 ms instead of 300: less time reading as unfinished.
         fadeDuration: 150,
-        pixelRatio: Math.min(2, window.devicePixelRatio || 1),
+        pixelRatio: this.opts.pixelRatio && this.opts.pixelRatio > 0 ? Math.min(4, this.opts.pixelRatio) : Math.min(2, window.devicePixelRatio || 1),
         canvasContextAttributes: { antialias: false, powerPreference: "high-performance" },
         // The page never shows the world twice over.
         renderWorldCopies: false,
@@ -343,6 +350,14 @@ export class MlController {
     const vp = this.view();
     const c = mlShot(name, vp);
     return { ...c, elevation: this.heightAt(c.lat, c.lng) * this.exaggeration };
+  }
+
+  ready() {
+    return !!this.map;
+  }
+
+  setAvoid(r: { x: number; y: number; w: number; h: number } | null) {
+    if (this.layer) this.layer.avoid = r;
   }
 
   heldShot(): ShotName | null {

@@ -1,17 +1,20 @@
-/** WHICH GROUND THE HOME PAGE STANDS ON (round 57; round 57.13 changed the default).
+/** WHICH GROUND THE HOME PAGE STANDS ON (round 57; round 57.13 and round 58 changed the default).
  *
- * "ml" (the default): the MapLibre night map with our homes lit on it (components/home/ml/): open
- * source, keyless, 2 to 3 s to the whole territory on a fast line, sharp at every height
- * (docs/parity/DESIGN-ROUND57.md §9, the owner's fourth verdict and the change of engine).
+ * "plates" (the default since round 58): seventeen pictures of our own MapLibre night map, one per
+ * shot, rendered once (scripts/make-plates.mjs) with our homes lit live on each by the picture's
+ * recorded camera (components/home/plates/): nothing loads on a flight, the first screen is the
+ * territory plate itself (docs/parity/DESIGN-ROUND58.md §3, the owner's fifth verdict).
+ * "ml": the live MapLibre night map (components/home/ml/): open source, keyless, the plates'
+ * renderer and the comparison (`NEXT_PUBLIC_HOME_MAP=ml`; the renderer asks for it with `?ground=ml`).
  * "g3d": Google's photorealistic 3D map (components/home/g3d/), only when the flag asks for it
  * (`NEXT_PUBLIC_HOME_MAP=g3d`) AND the browser Maps key is present; asked for without the key it is
- * the MapLibre map, which needs nothing from anyone.
+ * the default, which needs nothing from anyone.
  * "night": our own night flight (components/home/night/), when the flag asks for it.
  *
- * The flag is read loosely (case and spaces ignored); a value that is none of the three words counts
+ * The flag is read loosely (case and spaces ignored); a value that is none of the four words counts
  * as unset. The runtime failures (no WebGL, a blocked script, a map that draws nothing) are decided
  * in the browser by the ground, which keeps our cover for good; they never load a second scene. */
-export type HomeMap = "ml" | "g3d" | "night";
+export type HomeMap = "plates" | "ml" | "g3d" | "night";
 
 /** THE REAL MAP'S LOAD COVER (scripts/make-map-cover.mjs): our own still over the map for its first
  * seconds, drawn from our elevation data from the map's own hero camera, one for a landscape window
@@ -50,6 +53,7 @@ export function homeMap(env: { NEXT_PUBLIC_HOME_MAP?: string; NEXT_PUBLIC_GOOGLE
   const flag = (env.NEXT_PUBLIC_HOME_MAP ?? "").trim().toLowerCase();
   const key = (env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "").trim();
   if (flag === "night") return "night";
+  if (flag === "ml") return "ml";
   if (flag === "g3d" && key) return "g3d";
-  return "ml";
+  return "plates";
 }

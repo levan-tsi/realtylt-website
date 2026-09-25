@@ -26,7 +26,8 @@ export function SceneCredit() {
   // map's data (the corner of the map carries the same names, components/home/ml/style.ts
   // ATTRIBUTION) and the terrain tiles' sources in the words their licence page gives. Its load cover
   // is a frame of the same map (scripts/make-ml-cover.mjs), so it adds no source of its own.
-  if (ground === "ml")
+  // Round 58: the plates are pictures of that same map (scripts/make-plates.mjs): the same sources.
+  if (ground === "ml" || ground === "plates")
     return (
       <p className="max-w-full md:ml-6 md:border-l md:border-current/20 md:pl-6">
         Map data: © OpenStreetMap contributors; tiles: © OpenMapTiles, OpenFreeMap. Terrain: Mapzen terrain tiles; USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1.

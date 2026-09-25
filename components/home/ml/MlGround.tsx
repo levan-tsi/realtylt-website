@@ -21,8 +21,14 @@ import { featuredGlyph } from "../g3d/glyph";
 import { applyClaims, claims, type LightsState, type MapState } from "../g3d/claims";
 import { clickAction, labelContent, namesOverlap, openPoint, placeHoverLabel, tapNext, type LabelContent, type Rect, type TapState } from "../g3d/interaction";
 import { MlController } from "./controller";
+import type { GroundEngine } from "./engine";
+import { ML_SHOTS } from "./shots";
 import { projectedItems } from "./names";
 import { slowConnection } from "./slow-line";
+import { PlateController, type PlateSlotEls } from "../plates/plate-controller";
+import { PLATES } from "../plates/plates.gen";
+import { TALL_MEDIA, WIDE_MEDIA, plateSrc, plateSrcSet } from "../plates/plate-frame";
+import { neighbours } from "../plates/plate-motion";
 
 /** THE MAPLIBRE NIGHT MAP AS THE PAGE'S GROUND (round 57.12, /lab/ml). The Google map's ground
  * (../g3d/G3dGround.tsx, the home page's, untouched) with its engine changed and its design kept:
@@ -107,7 +113,17 @@ export interface Cover {
   tall: string;
 }
 
-export function MlGround({ poster, tail, featured = [], children }: { poster: Cover; tail?: MlTail; featured?: readonly FeaturedHome[]; children: ReactNode }) {
+/** Round 58: the ground has two engines behind the same words, names, hover, tap and click
+ * (./engine.ts): the plates (the default: seventeen pictures of the map, our lights live on each,
+ * ../plates/) and the live MapLibre map ("ml": the plates' renderer and the comparison). The
+ * renderer asks for the live map on a plates page with `?ground=ml`. */
+export type GroundEngineName = "ml" | "plates";
+
+export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml", children }: { poster: Cover; tail?: MlTail; featured?: readonly FeaturedHome[]; engine?: GroundEngineName; children: ReactNode }) {
+  const [engine, setEngine] = useState<GroundEngineName>(engineProp);
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("ground") === "ml") setEngine("ml");
+  }, []);
   const featuredRef = useRef(featured);
   featuredRef.current = featured;
   const host = useRef<HTMLDivElement>(null);
@@ -126,7 +142,8 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
   const footShade = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const holeY = useRef(-1);
-  const ctl = useRef<MlController | null>(null);
+  const ctl = useRef<GroundEngine | null>(null);
+  const lastIndex = useRef(-1);
   const sections = useRef<ShotSection[]>([]);
   const stops = useRef<ShotStop[]>([]);
   const names = useRef<ShotName[]>([]);
@@ -193,7 +210,7 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
 
   const placeTerritory = useCallback(() => {
     const c = ctl.current;
-    if (!c?.map) return;
+    if (!c?.ready()) return;
     const vp = c.view();
     const els = labelEls.current;
     const byText = new Map([...els.values()].map((e) => [e.textContent ?? "", e]));
@@ -247,7 +264,7 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
     if (!layer) return;
     const shot = c?.heldShot() ?? null;
     const area = !failed.current && !townsOff.current && shot && isArea(shot) ? focusOf(shot) : null;
-    if (!area || !c?.map) {
+    if (!area || !c?.ready()) {
       layer.style.opacity = "0";
       layer.dataset.on = "0";
       return;
@@ -381,6 +398,11 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
     const { index } = shotPosition(stops.current, window.scrollY);
     const name = names.current[index];
     if (!name) return;
+    // Round 58: the plates on either side of where the page is, decoded ahead of the scroll.
+    if (index !== lastIndex.current) {
+      lastIndex.current = index;
+      ctl.current?.warm?.(neighbours(names.current, index));
+    }
     setCurrent(isArea(name) ? name : null);
     if (name === target.current) {
       clearTimeout(settle.current);
@@ -489,52 +511,23 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
     const el = host.current;
     if (!el) return;
     measure();
-    const initial = stops.current.length ? names.current[shotPosition(stops.current, window.scrollY).index] ?? "hero" : "hero";
+    // Round 58: `?plate=<shot>` pins the map on one shot whatever the scroll (the plate renderer,
+    // scripts/make-plates.mjs, photographs each shot this way).
+    const pinned = new URLSearchParams(window.location.search).get("plate");
+    const pin = pinned && pinned in ML_SHOTS ? (pinned as ShotName) : null;
+    const initial = pin ?? (stops.current.length ? names.current[shotPosition(stops.current, window.scrollY).index] ?? "hero" : "hero");
     target.current = initial;
-    let glOk = false;
-    try {
-      const cv = document.createElement("canvas");
-      glOk = !!cv.getContext("webgl2");
-    } catch {}
-    if (!glOk) {
-      failed.current = true;
-      setError("no webgl2");
-      return;
-    }
-    setPinned(true);
+    if (pin) override.current = pin as AreaShot;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const q = new URLSearchParams(window.location.search);
     const num = (k: string) => (q.has(k) && Number.isFinite(Number(q.get(k))) ? Number(q.get(k)) : undefined);
-    // The slow line (./slow-line.ts), known up front from the browser; `?slow=1` and `?slow=0` force
-    // either arm for a measurement.
-    const slow = q.get("slow") === "1" || (q.get("slow") !== "0" && slowConnection((navigator as Navigator & { connection?: { effectiveType?: string } }).connection));
-    const c = new MlController({
-      slow,
-      watchFirstTile: q.get("slow") !== "0",
+    const shared = {
       reduced,
       viewport: () => ({ width: window.innerWidth, height: window.innerHeight }),
       initial,
-      canvas: lightCanvas.current,
-      revealOn: q.get("cover") === "0" ? "paint" : "idle",
-      revealCapMs: num("cap") ?? REVEAL_CAP_MS,
-      terrain: q.get("terrain") !== "0",
-      buildings: q.get("buildings") !== "0",
-      hillshade: q.get("hillshade") !== "0",
-      exaggeration: num("exag"),
-      demTile: q.get("dem") ? Number(q.get("dem")!.split(":")[0]) || undefined : undefined,
-      demMaxzoom: q.get("dem") ? Number(q.get("dem")!.split(":")[1]) || undefined : undefined,
       glow: num("glow"),
       halo: num("halo"),
       cityGap: num("gap"),
-      onReveal: () => {
-        setRevealed(true);
-        mapState.current = "live";
-        if (lightsState.current === "some" && c.stats().planned === 0) lightsState.current = "none";
-        syncClaims();
-        setPosterGone(true);
-        labelsPlaced.current = false;
-        showTerritoryRef.current();
-      },
       onLand: () => {
         labelsPlaced.current = false;
         showTerritoryRef.current();
@@ -546,6 +539,114 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
         hideLabel();
         showTerritoryRef.current();
         showTownsRef.current();
+      },
+    };
+    const install = (c: GroundEngine) => {
+      ctl.current = c;
+      c.setAvoid({ x: 0, y: window.innerHeight - CREDIT_CORNER.h, w: CREDIT_CORNER.w, h: CREDIT_CORNER.h });
+      (window as unknown as { __ml?: unknown }).__ml = {
+        ctl: c,
+        engine,
+        stats: () => c.stats(),
+        hover: hoverCost.current,
+        clicks: clickLog.current,
+        lit: () => c.lit(),
+        layer: () => c.layer,
+        label: () => {
+          const l = label.current;
+          return l ? { open: l.dataset.open === "1", side: l.dataset.side ?? null, href: l.getAttribute("href"), text: l.innerText, shownAt: Number(l.dataset.shownAt ?? 0) } : null;
+        },
+        fly: (n: ShotName) => flyTo(n),
+        hovered: () => hovered.current,
+        stops: () => stops.current.map((x) => ({ name: x.name, anchor: Math.round(x.anchor) })),
+        towns: () => ({ on: townLayer.current?.dataset.on === "1", placed: (townLayer.current?.dataset.placed ?? "").split(",").filter(Boolean) }),
+        territory: () => ({ on: labelLayer.current?.dataset.on === "1", placed: (labelLayer.current?.dataset.placed ?? "").split(",").filter(Boolean) }),
+      };
+    };
+    if (engine === "plates") {
+      // THE PLATES (round 58, ../plates/plate-controller.ts): two layers, each a picture with its
+      // own light canvas; the first holds the territory the server rendered. No WebGL is needed.
+      const slots: PlateSlotEls[] = [...el.querySelectorAll<HTMLElement>("[data-plate-slot]")].map((root) => ({
+        root,
+        picture: root.querySelector("picture")!,
+        img: root.querySelector("img")!,
+        canvas: root.querySelector("canvas")!,
+      }));
+      const c = new PlateController({
+        ...shared,
+        manifest: PLATES,
+        slots,
+        onReveal: () => {
+          setRevealed(true);
+          mapState.current = "live";
+          if (lightsState.current === "some" && c.stats().planned === 0) lightsState.current = "none";
+          syncClaims();
+          setPosterGone(true);
+          labelsPlaced.current = false;
+          showTerritoryRef.current();
+          if (stops.current.length) c.warm(neighbours(names.current, shotPosition(stops.current, window.scrollY).index));
+        },
+        onError: (m) => {
+          if (failed.current) return;
+          failed.current = true;
+          mapState.current = "failed";
+          syncClaims();
+          setError(m);
+          showTerritoryRef.current();
+          console.warn("[plates]", m);
+        },
+      });
+      install(c);
+      void c.start();
+      const noHomes = q.get("homes") === "0";
+      void loadLights().then((pts) => {
+        lightsState.current = !pts || noHomes ? "none" : "some";
+        syncClaims();
+        if (!pts || noHomes) return;
+        c.setHomes(homesOf(pts));
+      });
+      void loadElevation().then((g) => c.setElevation(g)).catch(() => {});
+      return () => {
+        c.stop();
+        ctl.current = null;
+      };
+    }
+    let glOk = false;
+    try {
+      const cv = document.createElement("canvas");
+      glOk = !!cv.getContext("webgl2");
+    } catch {}
+    if (!glOk) {
+      failed.current = true;
+      setError("no webgl2");
+      return;
+    }
+    setPinned(true);
+    // The slow line (./slow-line.ts), known up front from the browser; `?slow=1` and `?slow=0` force
+    // either arm for a measurement.
+    const slow = q.get("slow") === "1" || (q.get("slow") !== "0" && slowConnection((navigator as Navigator & { connection?: { effectiveType?: string } }).connection));
+    const c = new MlController({
+      ...shared,
+      slow,
+      watchFirstTile: q.get("slow") !== "0",
+      canvas: lightCanvas.current,
+      revealOn: q.get("cover") === "0" ? "paint" : "idle",
+      revealCapMs: num("cap") ?? REVEAL_CAP_MS,
+      terrain: q.get("terrain") !== "0",
+      buildings: q.get("buildings") !== "0",
+      hillshade: q.get("hillshade") !== "0",
+      exaggeration: num("exag"),
+      demTile: q.get("dem") ? Number(q.get("dem")!.split(":")[0]) || undefined : undefined,
+      demMaxzoom: q.get("dem") ? Number(q.get("dem")!.split(":")[1]) || undefined : undefined,
+      pixelRatio: num("pr"),
+      onReveal: () => {
+        setRevealed(true);
+        mapState.current = "live";
+        if (lightsState.current === "some" && c.stats().planned === 0) lightsState.current = "none";
+        syncClaims();
+        setPosterGone(true);
+        labelsPlaced.current = false;
+        showTerritoryRef.current();
       },
       onError: (m) => {
         if (failed.current) return;
@@ -560,42 +661,16 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
         console.warn("[ml]", m);
       },
     });
-    ctl.current = c;
-    if (c.layer) c.layer.avoid = { x: 0, y: window.innerHeight - CREDIT_CORNER.h, w: CREDIT_CORNER.w, h: CREDIT_CORNER.h };
-    (window as unknown as { __ml?: unknown }).__ml = {
-      ctl: c,
-      stats: () => c.stats(),
-      hover: hoverCost.current,
-      clicks: clickLog.current,
-      lit: () => c.lit(),
-      layer: () => c.layer,
-      label: () => {
-        const l = label.current;
-        return l ? { open: l.dataset.open === "1", side: l.dataset.side ?? null, href: l.getAttribute("href"), text: l.innerText, shownAt: Number(l.dataset.shownAt ?? 0) } : null;
-      },
-      fly: (n: ShotName) => flyTo(n),
-      hovered: () => hovered.current,
-      stops: () => stops.current.map((x) => ({ name: x.name, anchor: Math.round(x.anchor) })),
-      towns: () => ({ on: townLayer.current?.dataset.on === "1", placed: (townLayer.current?.dataset.placed ?? "").split(",").filter(Boolean) }),
-      territory: () => ({ on: labelLayer.current?.dataset.on === "1", placed: (labelLayer.current?.dataset.placed ?? "").split(",").filter(Boolean) }),
-    };
-    void c.start(el);
+    install(c);
+    const mapEl = el.querySelector<HTMLElement>("[data-ml-map]");
+    if (!mapEl) return;
+    void c.start(mapEl);
     const noHomes = q.get("homes") === "0";
     void loadLights().then((pts) => {
       lightsState.current = !pts || noHomes ? "none" : "some";
       syncClaims();
       if (!pts || noHomes) return;
-      const n = pts.x.length;
-      const lat = new Float64Array(n), lng = new Float64Array(n);
-      const county: string[] = new Array(n);
-      for (let i = 0; i < n; i++) {
-        const [a, b] = boxUVToLngLat(pts.x[i], pts.y[i], pts.box);
-        lng[i] = a;
-        lat[i] = b;
-        county[i] = pts.townCounty[pts.town[i]] ?? "";
-      }
-      const homes: Homes = { lat, lng, county, key: placeKeys(pts.x, pts.y), town: pts.town, towns: pts.towns };
-      c.setHomes(homes);
+      c.setHomes(homesOf(pts));
     });
     // Our homes' heights on the terrain (367 KB); the flat map of a slow line needs none.
     if (!slow) void loadElevation().then((g) => c.setElevation(g)).catch(() => {});
@@ -603,7 +678,7 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
       c.stop();
       ctl.current = null;
     };
-  }, [measure, flyTo, hideHover, hideLabel]);
+  }, [engine, measure, flyTo, hideHover, hideLabel]);
 
   useEffect(() => {
     const onResize = () => {
@@ -611,7 +686,7 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
       const c = ctl.current;
       if (c) {
         c.resized();
-        if (c.layer) c.layer.avoid = { x: 0, y: window.innerHeight - CREDIT_CORNER.h, w: CREDIT_CORNER.w, h: CREDIT_CORNER.h };
+        c.setAvoid({ x: 0, y: window.innerHeight - CREDIT_CORNER.h, w: CREDIT_CORNER.w, h: CREDIT_CORNER.h });
       }
       scrimSizes.current = [];
       wordBoxes.current = null;
@@ -926,18 +1001,64 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
   );
 
   const mask = { WebkitMaskImage: CREDIT_HOLE, maskImage: CREDIT_HOLE } as const;
-  const coverOn = !noCover;
+  const coverOn = engine === "ml" && !noCover;
+  const plates = engine === "plates";
 
   return (
     <AreaContext.Provider value={{ current, point }}>
-      <div className="pointer-events-none fixed inset-0 z-0 bg-black" data-ml-ground data-ml-error={error ?? undefined}>
-        {/* The map: inert (it takes no pointer and no focus; the featured cards are the keyboard's path). */}
-        {/* Inline position: maplibre-gl.css makes its container `position: relative`, which would take the
-            class's `absolute` and leave the map 0 px tall. */}
-        <div ref={host} inert data-ml-map style={{ position: "absolute", inset: 0 }} />
-        {/* OUR LIGHTS (../g3d/light-layer.ts): over the map, under the scrims and the words. */}
-        <canvas ref={lightCanvas} aria-hidden data-g3d-lights className="absolute inset-0 h-full w-full" style={{ mixBlendMode: "plus-lighter" }} />
+      <div ref={host} className="pointer-events-none fixed inset-0 z-0 bg-black" data-ml-ground data-plates={plates ? "1" : undefined} data-ml-error={error ?? undefined}>
+        {plates ? (
+          // THE PLATES (round 58): two layers, each a picture of the map and the canvas our lights are
+          // drawn on (plus-lighter, within the layer, so the lights fade with their picture). The first
+          // layer is server-rendered with the territory: AVIF then WebP, the tall or the wide picture
+          // by the page's own breakpoint, the browser taking the width its screen needs. The second
+          // layer waits empty (no srcset, no src: nothing loads) for the first transition.
+          [0, 1].map((k) => (
+            <div key={k} data-plate-slot={k} data-shot={k === 0 ? "hero" : undefined} className="absolute inset-0 will-change-[transform,opacity]" style={{ opacity: k === 0 ? 1 : 0, zIndex: k === 0 ? 2 : 1 }}>
+              <picture>
+                {(["avif", "webp"] as const).map((f) =>
+                  (["tall", "wide"] as const).map((a) => (
+                    <source key={`${f}-${a}`} type={`image/${f}`} media={a === "tall" ? TALL_MEDIA : WIDE_MEDIA} data-plate-src={`${f}-${a}`} srcSet={k === 0 ? plateSrcSet("hero", a, PLATES.hero[a], f) : undefined} sizes={k === 0 ? "100vw" : undefined} />
+                  )),
+                )}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img alt="" decoding="async" fetchPriority={k === 0 ? "high" : undefined} data-shot={k === 0 ? "hero" : undefined} src={k === 0 ? plateSrc("hero", "wide", PLATES.hero.wide.widths[PLATES.hero.wide.widths.length - 1], "webp") : undefined} className="absolute inset-0 h-full w-full object-cover" />
+              </picture>
+              <canvas aria-hidden data-g3d-lights className="absolute inset-0 h-full w-full" style={{ mixBlendMode: "plus-lighter" }} />
+            </div>
+          ))
+        ) : (
+          <>
+            {/* The map: inert (it takes no pointer and no focus; the featured cards are the keyboard's path). */}
+            {/* Inline position: maplibre-gl.css makes its container `position: relative`, which would take the
+                class's `absolute` and leave the map 0 px tall. */}
+            <div inert data-ml-map style={{ position: "absolute", inset: 0 }} />
+            {/* OUR LIGHTS (../g3d/light-layer.ts): over the map, under the scrims and the words. */}
+            <canvas ref={lightCanvas} aria-hidden data-g3d-lights className="absolute inset-0 h-full w-full" style={{ mixBlendMode: "plus-lighter" }} />
+          </>
+        )}
       </div>
+      {plates && !js ? (
+        // With JavaScript off (and for the moment before it runs) the plate stands under the words
+        // with the same shade the cover carried: the lights and the scrims are the script's.
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh]">
+          <div
+            className="absolute inset-0 lg:hidden"
+            style={{ background: "linear-gradient(to bottom, rgba(5,5,5,0.80) 0%, rgba(5,5,5,0.46) 14%, rgba(5,5,5,0.12) 30%, rgba(5,5,5,0.12) 46%, rgba(5,5,5,0.55) 60%, rgba(5,5,5,0.86) 72%, rgba(5,5,5,0.9) 100%)" }}
+          />
+          <div className="absolute inset-x-0 top-0 h-[230px]" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)" }} />
+          <div
+            className="absolute inset-0 hidden lg:block"
+            style={{ background: "radial-gradient(66% 88% at 14% 74%, rgba(5,5,5,0.93) 0%, rgba(5,5,5,0.88) 30%, rgba(5,5,5,0.6) 56%, rgba(5,5,5,0.22) 80%, rgba(5,5,5,0) 100%)" }}
+          />
+        </div>
+      ) : null}
+      {plates ? (
+        // No script, no lights on the plate: the words say nothing about lights (../g3d/claims.ts).
+        <noscript>
+          <style>{`[data-lights-claim]{display:none}`}</style>
+        </noscript>
+      ) : null}
       {coverOn ? (
         <div
           aria-hidden
@@ -1073,6 +1194,21 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
       </div>
     </AreaContext.Provider>
   );
+}
+
+/** The lights' homes as the engines take them (lib/idx/lights.ts unpacked: the box's 0..1 grid
+ * turned into degrees, each home's county and town, and its place key for the planner's order). */
+function homesOf(pts: NonNullable<Awaited<ReturnType<typeof loadLights>>>): Homes {
+  const n = pts.x.length;
+  const lat = new Float64Array(n), lng = new Float64Array(n);
+  const county: string[] = new Array(n);
+  for (let i = 0; i < n; i++) {
+    const [a, b] = boxUVToLngLat(pts.x[i], pts.y[i], pts.box);
+    lng[i] = a;
+    lat[i] = b;
+    county[i] = pts.townCounty[pts.town[i]] ?? "";
+  }
+  return { lat, lng, county, key: placeKeys(pts.x, pts.y), town: pts.town, towns: pts.towns };
 }
 
 function readWordBoxes(vp: { width: number; height: number }): Rect[] {

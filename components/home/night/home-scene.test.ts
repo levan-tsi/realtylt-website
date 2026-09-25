@@ -233,9 +233,9 @@ describe("the footer over the scene", () => {
     expect(shell).toContain("style={style}");
   });
 
-  it("credits the MapLibre map's own sources on the home page when it is the ground (round 57.13)", () => {
+  it("credits the MapLibre map's own sources on the home page when it or its plates are the ground (rounds 57.13, 58)", () => {
     const credit = fs.readFileSync(path.join(ROOT, "components/site/SceneCredit.tsx"), "utf8");
-    expect(credit).toContain('if (ground === "ml")');
+    expect(credit).toContain('if (ground === "ml" || ground === "plates")');
     expect(credit).toContain("© OpenStreetMap contributors");
     expect(credit).toContain("© OpenMapTiles, OpenFreeMap");
     expect(credit).toContain("USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1");
