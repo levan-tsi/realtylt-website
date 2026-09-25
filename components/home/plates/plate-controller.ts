@@ -93,6 +93,8 @@ export class PlateController implements GroundEngine {
       onError: (msg: string) => void;
       glow?: number;
       halo?: number;
+      ha?: number;
+      core?: readonly number[];
       cityGap?: number;
     },
   ) {
@@ -124,6 +126,8 @@ export class PlateController implements GroundEngine {
       );
       slot.layer.glowStrength = opts.glow;
       slot.layer.haloScale = opts.halo;
+      slot.layer.haloStrength = opts.ha;
+      slot.layer.coreRgb = opts.core;
       this.slots.push(slot);
     }
   }

@@ -53,7 +53,8 @@ for (const s of SHOTS) {
     css.textContent = "body *{visibility:hidden!important}[data-ml-ground],[data-ml-ground] *{visibility:visible!important}";
     document.addEventListener("DOMContentLoaded", () => document.head.append(css));
   });
-  await page.goto(`${base}/?cover=0`, { waitUntil: "domcontentloaded" });
+  // Round 59: `ground=ml`, since round 58 the page's default ground is the plates, not this map.
+  await page.goto(`${base}/?cover=0&ground=ml`, { waitUntil: "domcontentloaded" });
   // The territory drawn, the homes in, the elevation under them, and the plan's fade finished.
   await page.waitForFunction(() => {
     const s = window.__ml?.stats();

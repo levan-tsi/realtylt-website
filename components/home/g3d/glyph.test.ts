@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { GLOW_ALPHA, NARROW_ANCHORS, WIDE_ANCHORS, coreProfile, featuredGlyph, glowProfile, glyphAdd, glyphAt, haloProfile, litGlyph, reachOf } from "./glyph";
+import { CORE_RGB, GLOW_ALPHA, HALO_ALPHA, HALO_ALPHA_NARROW, HALO_RGB, LIT_RGB, NARROW_ANCHORS, WIDE_ANCHORS, coreProfile, featuredGlyph, glowProfile, glyphAdd, glyphAt, haloProfile, litGlyph, reachOf } from "./glyph";
 import { densityGap } from "./cameras";
 
 /** Round 57.6: the light on our canvas, its size read continuously from the range (the tiers
@@ -71,6 +71,85 @@ describe("the light's glyph by range", () => {
     expect(h.haloAlpha).toBe(g.haloAlpha);
     expect(glyphAt(40_000, { halo: 0 })).toEqual(g);
     expect(glyphAt(40_000, { halo: 1 })).toEqual(g);
+  });
+});
+
+/** Round 59, the owner's sixth verdict: "make that yellow dots just yellow, like a light, but don't
+ * give brightness around it, maybe just a little bit, like five, ten percent, nothing more." */
+describe("round 59: a yellow light, a whisper of a halo", () => {
+  const RANGES = [300_000, 156_000, 145_000, 72_500, 40_000, 21_000, 5_000, 1_500];
+
+  it("the core is whitish-yellow: R full, G and B in the lamp's band, G above B (never grey, never saturated)", () => {
+    const [r, g, b] = CORE_RGB;
+    expect(r).toBe(255);
+    expect(g).toBeGreaterThanOrEqual(200);
+    expect(g).toBeLessThanOrEqual(235);
+    expect(b).toBeGreaterThanOrEqual(135);
+    expect(b).toBeLessThanOrEqual(195);
+    expect(g).toBeGreaterThan(b + 20);
+    // the halo is the same hue: its channels in the same order and ratio band
+    expect(HALO_RGB[0]).toBe(255);
+    expect(HALO_RGB[1]).toBeLessThanOrEqual(g);
+    expect(HALO_RGB[2]).toBeLessThanOrEqual(b);
+    const [cr, cg, cb] = glyphAdd(glyphAt(40_000), 0);
+    expect(cg / cr).toBeGreaterThan(0.78);
+    expect(cg / cr).toBeLessThan(0.93);
+    expect(cb).toBeLessThan(cg);
+  });
+
+  it("the halo is at most 10 percent and reaches at most 2 core radii, at every range, both widths", () => {
+    expect(HALO_ALPHA).toBeLessThanOrEqual(0.1);
+    expect(HALO_ALPHA_NARROW).toBeLessThanOrEqual(0.1);
+    for (const narrow of [false, true]) {
+      for (const r of RANGES) {
+        const g = glyphAt(r, { narrow });
+        expect(g.haloAlpha).toBeGreaterThan(0);
+        expect(g.haloAlpha).toBeLessThanOrEqual(0.1);
+        expect(g.halo).toBeLessThanOrEqual(2 * g.core);
+        expect(reachOf(g)).toBeLessThanOrEqual(2 * g.core);
+      }
+    }
+  });
+
+  it("`?ha=` sets the halo's strength; 0 is a bare dot whose reach is the core", () => {
+    const g = glyphAt(40_000, { ha: 0.05 });
+    expect(g.haloAlpha).toBeCloseTo(0.05);
+    const bare = glyphAt(40_000, { ha: 0 });
+    expect(bare.haloAlpha).toBe(0);
+    expect(reachOf(bare)).toBe(bare.core);
+    expect(glyphAdd(bare, bare.core + 0.01)).toEqual([0, 0, 0]);
+    expect(glyphAt(40_000, { ha: -1 })).toEqual(glyphAt(40_000));
+  });
+
+  it("`?core=` reaches the glyph and its colour, through lit and featured; a bad value is ignored", () => {
+    const c = [255, 200, 140] as const;
+    const g = glyphAt(40_000, { core: c });
+    expect(g.coreRgb).toEqual(c);
+    expect(glyphAdd(g, 0)[1]).toBeCloseTo(200 + HALO_RGB[1] * g.haloAlpha);
+    expect(litGlyph(g, 0.5).coreRgb).toEqual(c);
+    expect(featuredGlyph(g).coreRgb).toEqual(c);
+    expect(glyphAt(40_000).coreRgb).toBeUndefined();
+    expect(glyphAt(40_000, { core: [255, 300, 0] }).coreRgb).toBeUndefined();
+    expect(glyphAt(40_000, { core: [NaN, 1, 2] }).coreRgb).toBeUndefined();
+    expect(glyphAt(40_000, { core: [255, 212] }).coreRgb).toBeUndefined();
+  });
+
+  it("a lit light is brighter than the resting one at its centre (white, among yellow) and larger", () => {
+    const g = glyphAt(40_000), l = litGlyph(g, 1);
+    // the layer's bake eases the core toward LIT_RGB with the lit amount; fully lit it is LIT_RGB
+    const lit = glyphAdd(l, 0, 1, LIT_RGB);
+    const rest = glyphAdd(g, 0);
+    expect(lit[1] + lit[2]).toBeGreaterThan(rest[1] + rest[2] + 60);
+    expect(reachOf(l)).toBeGreaterThan(reachOf(g));
+  });
+
+  it("a featured light's halo stays a whisper (a proportion up, no ring)", () => {
+    for (const narrow of [false, true]) {
+      const f = featuredGlyph(glyphAt(40_000, { narrow }));
+      expect(f.haloAlpha).toBeLessThanOrEqual(0.13);
+      expect(f.core).toBeGreaterThan(glyphAt(40_000, { narrow }).core);
+      expect(reachOf(f)).toBeGreaterThanOrEqual(f.core);
+    }
   });
 });
 
@@ -164,7 +243,7 @@ describe("the profiles", () => {
     expect(haloProfile(1)).toBe(0);
     for (let u = 0; u < 1; u += 0.05) expect(haloProfile(u + 0.05)).toBeLessThanOrEqual(haloProfile(u));
   });
-  it("adds warm white at the centre and nothing past the halo", () => {
+  it("adds the lamp's warmth at the centre and nothing past the halo", () => {
     const [r, gg, b] = glyphAdd(g, 0);
     expect(r).toBeGreaterThan(b);
     expect(gg).toBeGreaterThan(b);

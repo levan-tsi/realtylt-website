@@ -527,6 +527,9 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
       initial,
       glow: num("glow"),
       halo: num("halo"),
+      // Round 59's comparison knobs: `?ha=0.08` the halo's strength, `?core=255,212,158` the core's colour.
+      ha: num("ha"),
+      core: q.get("core")?.split(",").map(Number),
       cityGap: num("gap"),
       onLand: () => {
         labelsPlaced.current = false;

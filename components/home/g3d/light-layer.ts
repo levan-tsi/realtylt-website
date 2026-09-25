@@ -52,7 +52,8 @@ function bake(g: Glyph, lit: number, dpr: number): HTMLCanvasElement {
   c.width = c.height = s;
   const x = c.getContext("2d")!;
   const img = x.createImageData(s, s);
-  const core = [0, 1, 2].map((k) => CORE_RGB[k] + (LIT_RGB[k] - CORE_RGB[k]) * lit);
+  const rest = g.coreRgb ?? CORE_RGB;
+  const core = [0, 1, 2].map((k) => rest[k] + (LIT_RGB[k] - rest[k]) * lit);
   // The light's additive value stored as colour over alpha (alpha = its largest channel), so the
   // canvas keeps it premultiplied and is transparent wherever the light adds nothing (an opaque
   // bake made "lighter" paint black squares on the transparent canvas). The canvas is then ADDED to
@@ -96,6 +97,7 @@ const quant = (g: Glyph, lit: number) => ({
   glow: Math.round(g.glow * 2) / 2,
   glowAlpha: Math.round(g.glowAlpha * 100) / 100,
   lit: Math.round(lit * 10) / 10,
+  coreRgb: g.coreRgb,
 });
 
 export class LightLayer {
@@ -131,6 +133,9 @@ export class LightLayer {
   glowStrength: number | undefined = undefined;
   /** The halo's radius as a scale of glyph.ts's (1 unless the page's `?halo=` says; round 58). */
   haloScale: number | undefined = undefined;
+  /** Round 59's comparison knobs: the halo's strength (`?ha=`) and the core's colour (`?core=`). */
+  haloStrength: number | undefined = undefined;
+  coreRgb: readonly number[] | undefined = undefined;
 
   constructor(
     private canvas: HTMLCanvasElement,
@@ -291,7 +296,7 @@ export class LightLayer {
     this.xyCount = 0;
     if (!cam || this.w === 0) return;
     const range = cam.range > 1 ? cam.range : Math.max(500, cam.center.altitude / Math.max(0.2, Math.cos((cam.tilt * Math.PI) / 180)));
-    const g = glyphAt(range, { narrow: this.narrow(), glow: this.glowStrength, halo: this.haloScale });
+    const g = glyphAt(range, { narrow: this.narrow(), glow: this.glowStrength, halo: this.haloScale, ha: this.haloStrength, core: this.coreRgb });
     this.glyph = g;
     const fr = cameraFrame(cam);
     const vp = { width: this.w, height: this.h, fov: cam.fov };
@@ -367,7 +372,7 @@ export class LightLayer {
    * past this frame's budget of new bakes it keeps last frame's sprite for that step. */
   private bakeOf(g: Glyph, lit: number, slot?: number): HTMLCanvasElement {
     const q = quant(g, lit);
-    const key = `${q.core}/${q.halo}/${q.haloAlpha}/${q.glow}/${q.glowAlpha}/${q.lit}`;
+    const key = `${q.core}/${q.halo}/${q.haloAlpha}/${q.glow}/${q.glowAlpha}/${q.lit}/${q.coreRgb ?? ""}`;
     let b = this.bakes.get(key);
     if (!b && slot !== undefined && this.bakeBudget <= 0 && this.lastBase[slot]) return this.lastBase[slot]!;
     if (!b) {

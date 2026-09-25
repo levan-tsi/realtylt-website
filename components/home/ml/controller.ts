@@ -132,6 +132,9 @@ export class MlController implements GroundEngine {
       glow?: number;
       /** The halo's radius as a scale of glyph.ts's (`?halo=`, round 58). */
       halo?: number;
+      /** Round 59: the halo's strength (`?ha=`) and the core's colour (`?core=r,g,b`). */
+      ha?: number;
+      core?: readonly number[];
       cityGap?: number;
       /** The map's pixel ratio (`?pr=`, round 58: the plate renderer draws a phone plate at 3). The
        * page's own is the screen's, held to 2. */
@@ -165,6 +168,8 @@ export class MlController implements GroundEngine {
       });
       this.layer.glowStrength = opts.glow;
       this.layer.haloScale = opts.halo;
+      this.layer.haloStrength = opts.ha;
+      this.layer.coreRgb = opts.core;
     }
   }
 
