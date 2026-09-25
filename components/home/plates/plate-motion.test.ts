@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FADE_MS, HURRY_MS, SETTLE_FROM, finished, hurryRate, idle, neighbours, progress, request, settleScale } from "./plate-motion";
+import { FADE_MS, FILM_MAX_RATE, filmNeighbours, HURRY_MS, SETTLE_FROM, filmHurry, finished, hurryRate, idle, neighbours, progress, request, settleScale, useFilm, type FilmChooser } from "./plate-motion";
 
 describe("a plate asked for", () => {
   it("the first plate is a cut: there is nothing to fade from", () => {
@@ -106,5 +106,69 @@ describe("which plates to have ready", () => {
     expect(neighbours(names, 1)).toEqual(["dutchess", "highlands", "hero"]);
     expect(neighbours(names, 2)).toEqual(["highlands", "dutchess"]);
     expect(neighbours(names, 4)).toEqual(["westchester", "highlands"]);
+  });
+});
+
+describe("the film (round 59)", () => {
+  // films recorded between adjacent plates only, and ready here only for hero -> dutchess, both ways
+  const film: FilmChooser = (from, to) => ((from === "hero" && to === "dutchess") || (from === "dutchess" && to === "hero") ? 2564 : null);
+
+  it("adjacent and ready plays the film, with the film's own length", () => {
+    const r = request(idle("hero"), "dutchess", 5, FADE_MS, film);
+    expect(r.action).toBe("start");
+    expect(r.state.motion).toEqual({ from: "hero", to: "dutchess", startedAt: 5, ms: 2564, film: true });
+  });
+
+  it("the back flight plays too", () => {
+    expect(request(idle("dutchess"), "hero", 0, FADE_MS, film).state.motion?.film).toBe(true);
+  });
+
+  it("not adjacent, or not ready, is the fade over", () => {
+    const r = request(idle("hero"), "queens", 0, FADE_MS, film);
+    expect(r.state.motion).toEqual({ from: "hero", to: "queens", startedAt: 0, ms: FADE_MS });
+    expect(request(idle("dutchess"), "highlands", 0, FADE_MS, film).state.motion?.film).toBeUndefined();
+    expect(request(idle("hero"), "dutchess", 0, FADE_MS).state.motion?.film).toBeUndefined();
+  });
+
+  it("the rule: recorded, ready, no reduced motion, not switched off", () => {
+    const base = { recorded: true, ready: true, reduced: false, off: false };
+    expect(useFilm(base)).toBe(true);
+    expect(useFilm({ ...base, recorded: false })).toBe(false);
+    expect(useFilm({ ...base, ready: false })).toBe(false);
+    expect(useFilm({ ...base, reduced: true })).toBe(false);
+    expect(useFilm({ ...base, off: true })).toBe(false);
+  });
+
+  it("a request during a film is queued, and the queued one starts from the landed plate (film or fade)", () => {
+    const s = request(idle("hero"), "dutchess", 0, FADE_MS, film).state;
+    const q = request(s, "highlands", 400, FADE_MS, film);
+    expect(q.action).toBe("queue");
+    expect(q.state.motion?.film).toBe(true);
+    const f = finished(q.state, 900, FADE_MS, film);
+    expect(f.action).toBe("start");
+    expect(f.state.motion).toEqual({ from: "dutchess", to: "highlands", startedAt: 900, ms: FADE_MS });
+    const back = finished(request(s, "hero", 400, FADE_MS, film).state, 900, FADE_MS, film);
+    expect(back.state.motion?.film).toBe(true);
+  });
+
+  it("the hurry: a rate that ends the film within HURRY_MS, capped; a cut when even the cap leaves over a second", () => {
+    expect(filmHurry(2000)).toEqual({ rate: FILM_MAX_RATE });
+    expect(filmHurry(500)).toEqual({ rate: 500 / HURRY_MS });
+    expect(filmHurry(100)).toEqual({ rate: 1 });
+    expect(filmHurry(0)).toEqual({ rate: 1 });
+    expect(filmHurry(4000)).toEqual({ rate: FILM_MAX_RATE });
+    expect(filmHurry(4001)).toBe("cut");
+  });
+});
+
+describe("which films to have ready (round 59)", () => {
+  const names = ["hero", "hero", "hero", "dutchess", "highlands", "highlands", "westchester"] as const;
+  it("the shot on, then the nearest different shot ahead and behind", () => {
+    expect(filmNeighbours(names, 0)).toEqual(["hero", "dutchess"]);
+    expect(filmNeighbours(names, 2)).toEqual(["hero", "dutchess"]);
+    expect(filmNeighbours(names, 3)).toEqual(["dutchess", "highlands", "hero"]);
+    expect(filmNeighbours(names, 4)).toEqual(["highlands", "westchester", "dutchess"]);
+    expect(filmNeighbours(names, 6)).toEqual(["westchester", "highlands"]);
+    expect(filmNeighbours(names, 9)).toEqual([]);
   });
 });

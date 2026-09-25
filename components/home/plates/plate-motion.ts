@@ -22,7 +22,12 @@ export interface Motion {
   to: ShotName;
   startedAt: number;
   ms: number;
+  /** Round 59: a recorded flight plays (./flight-path.ts, the film), not the fade over. */
+  film?: boolean;
 }
+
+/** Which films are ready to play: from, to, and the film's length in ms, or null for the fade. */
+export type FilmChooser = (from: ShotName, to: ShotName) => number | null;
 
 export interface MotionState {
   /** The plate on screen at full strength. */
@@ -43,7 +48,7 @@ export type Step = { state: MotionState; action: "none" | "start" | "queue" | "c
  *  - "queue": a transition runs; hurry it, this one follows;
  *  - "cut": no picture is on yet (the first plate): show it at once.
  * `ms` is the fade's length (reduced motion: FADE_REDUCED_MS). */
-export function request(state: MotionState, shot: ShotName, now: number, ms = FADE_MS): Step {
+export function request(state: MotionState, shot: ShotName, now: number, ms = FADE_MS, film?: FilmChooser): Step {
   if (state.motion) {
     if (state.motion.to === shot && state.next === null) return { state, action: "none" };
     if (state.motion.to === shot) return { state: { ...state, next: null }, action: "none" };
@@ -51,16 +56,22 @@ export function request(state: MotionState, shot: ShotName, now: number, ms = FA
   }
   if (state.at === shot) return { state, action: "none" };
   if (state.at === null) return { state: { at: shot, motion: null, next: null }, action: "cut" };
-  return { state: { at: state.at, motion: { from: state.at, to: shot, startedAt: now, ms }, next: null }, action: "start" };
+  return { state: { at: state.at, motion: startOf(state.at, shot, now, ms, film), next: null }, action: "start" };
+}
+
+/** A transition from one plate to another: the film if one is ready, else the fade over. */
+function startOf(from: ShotName, to: ShotName, now: number, ms: number, film?: FilmChooser): Motion {
+  const f = film?.(from, to) ?? null;
+  return f !== null ? { from, to, startedAt: now, ms: f, film: true } : { from, to, startedAt: now, ms };
 }
 
 /** The running transition has ended (its fade finished). The arriving plate is on; a queued plate
  * starts its own transition now. */
-export function finished(state: MotionState, now: number, ms = FADE_MS): Step {
+export function finished(state: MotionState, now: number, ms = FADE_MS, film?: FilmChooser): Step {
   const m = state.motion;
   if (!m) return { state, action: "none" };
   const at = m.to;
-  if (state.next && state.next !== at) return { state: { at, motion: { from: at, to: state.next, startedAt: now, ms }, next: null }, action: "start" };
+  if (state.next && state.next !== at) return { state: { at, motion: startOf(at, state.next, now, ms, film), next: null }, action: "start" };
   return { state: { at, motion: null, next: null }, action: "none" };
 }
 
@@ -76,6 +87,30 @@ export function hurryRate(m: Motion, now: number, within = HURRY_MS): number {
   if (left <= 0) return 1;
   return Math.max(1, left / Math.max(1, within));
 }
+
+/** THE FILM'S RULES (round 59). A film plays when the flight between the two plates was recorded,
+ * its clip and its frames are in (decoded ahead), and nothing asks for stillness (reduced motion,
+ * `?film=0`); anything else is the fade over. */
+export function useFilm(o: { recorded: boolean; ready: boolean; reduced: boolean; off: boolean }): boolean {
+  return o.recorded && o.ready && !o.reduced && !o.off;
+}
+
+/** The fastest a film is played when hurried (a request during it). */
+export const FILM_MAX_RATE = 4;
+/** A request during a film: the rate that ends it within `within` ms (1 to FILM_MAX_RATE), or
+ * "cut" when even the fastest rate would leave it running over a second more (then plate B, the
+ * film's own last picture, is put on at once and the queued transition starts from it). */
+export function filmHurry(leftMs: number, within = HURRY_MS): { rate: number } | "cut" {
+  if (leftMs <= 0) return { rate: 1 };
+  if (leftMs / FILM_MAX_RATE > 1000) return "cut";
+  return { rate: Math.min(FILM_MAX_RATE, Math.max(1, leftMs / Math.max(1, within))) };
+}
+
+/** How long the film fades out onto plate B at its end (the last frames are still: the plate is the
+ * same picture, sharper; the fade hides the codec's last few levels). */
+export const FILM_OUT_MS = 180;
+/** How long the film's first frame dissolves in over plate A before it plays (both still). */
+export const FILM_IN_MS = 140;
 
 /** The arriving plate's scale during the settle, for the same clock (ease-out cubic, the curve the
  * animation runs: `cubic-bezier(0.33, 1, 0.68, 1)`). */
@@ -93,5 +128,24 @@ export function neighbours(names: readonly ShotName[], index: number): ShotName[
     const n = names[k];
     if (n && !out.includes(n)) out.push(n);
   }
+  return out;
+}
+
+/** The films to have ready (round 59): the shot the page is on, then the nearest DIFFERENT shot
+ * ahead and behind (the page holds some shots over several stops: three for the territory). */
+export function filmNeighbours(names: readonly ShotName[], index: number): ShotName[] {
+  const cur = names[index];
+  if (!cur) return [];
+  const out: ShotName[] = [cur];
+  for (let k = index + 1; k < names.length; k++)
+    if (names[k] !== cur) {
+      out.push(names[k]);
+      break;
+    }
+  for (let k = index - 1; k >= 0; k--)
+    if (names[k] !== cur) {
+      if (!out.includes(names[k])) out.push(names[k]);
+      break;
+    }
   return out;
 }

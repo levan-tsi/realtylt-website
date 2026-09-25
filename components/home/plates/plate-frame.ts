@@ -84,6 +84,53 @@ export function plateRange(plate: Plate, fit: CoverFit): number {
   return rangeForZoom(plate.cam.zoom, plate.cam.lat, plate.h, plate.cam.fov) / Math.max(1e-6, fit.s * (plate.k ?? 1));
 }
 
+/** ROUND 59, THE FLIGHT AS A FILM: an adjacent flight recorded once (scripts/make-flights.mjs) and
+ * played between its two plates. `fps` and `n` (frames 0..n: 0 is plate A's camera, n plate B's),
+ * `ms` its length, `w` x `h` the css geometry its matrices are in (the deep render's, `k` 2), and
+ * the pixel widths each codec's clip is served at. The back flight is the forward frames reversed. */
+export interface FilmClip {
+  fps: number;
+  n: number;
+  ms: number;
+  w: number;
+  h: number;
+  k: number;
+  webm: readonly number[];
+  mp4: readonly number[];
+}
+export type FilmManifest = Record<string, Record<PlateAspect, FilmClip>>;
+/** One recorded frame (public/flights/<a>--<b>-<aspect>.json): the camera and the map's matrix. */
+export interface FilmFrame {
+  cam: Omit<MlCamera, "fov">;
+  ws: number;
+  m: readonly number[];
+}
+export type FilmFormat = "webm" | "mp4";
+
+/** The film between two plates, either way, or null (not adjacent, not recorded). */
+export function filmOf(manifest: FilmManifest, from: ShotName | null, to: ShotName): { key: string; reverse: boolean } | null {
+  if (!from || from === to) return null;
+  if (manifest[`${from}--${to}`]) return { key: `${from}--${to}`, reverse: false };
+  if (manifest[`${to}--${from}`]) return { key: `${to}--${from}`, reverse: true };
+  return null;
+}
+export const filmSrc = (from: ShotName, to: ShotName, aspect: PlateAspect, width: number, format: FilmFormat) => `/flights/${from}--${to}-${aspect}-${width}.${format}`;
+export const filmDataSrc = (key: string, aspect: PlateAspect) => `/flights/${key}-${aspect}.json`;
+/** The format a clip is played in: the first of the browser's playable formats (best first) the
+ * clip was encoded in, or null (then there is no film: the fade over). */
+export function filmFormat(clip: Pick<FilmClip, "webm" | "mp4">, playable: readonly FilmFormat[]): FilmFormat | null {
+  return playable.find((f) => clip[f].length > 0) ?? null;
+}
+/** The width to fetch: the smallest at least the window's device width, else the largest. */
+export const filmWidth = (widths: readonly number[], deviceWidth: number) => [...widths].sort((a, b) => a - b).find((w) => w >= deviceWidth) ?? Math.max(...widths);
+
+/** A recorded frame as a plate (the same fit, projector and range as a picture's), the frame index
+ * read backwards for the back flight. */
+export function framePlate(clip: FilmClip, frames: readonly FilmFrame[], i: number, reverse: boolean, ex: number, fov: number): Plate {
+  const f = frames[reverse ? clip.n - i : i];
+  return { w: clip.w, h: clip.h, widths: [], cam: { ...f.cam, fov }, ex, ws: f.ws, m: f.m, k: clip.k };
+}
+
 /** The window's part of the plate, in the plate's css pixels (what is on screen; a light outside it
  * is not drawn). */
 export function visiblePlateRect(plate: { w: number; h: number }, fit: CoverFit, vp: { width: number; height: number }): { x: number; y: number; w: number; h: number } {

@@ -60,7 +60,16 @@ export interface MlStats {
   slow: { by: "connection" | "first-tile" | null; firstTileAt: number | null };
   /** The plates engine (round 58): the plate on, the one arriving, the one queued, the ones
    * decoded ahead, and the aspect shown. */
-  plates?: { at: string | null; to: string | null; next: string | null; warmed: string[]; aspect: "wide" | "tall" };
+  plates?: {
+    at: string | null;
+    to: string | null;
+    next: string | null;
+    warmed: string[];
+    aspect: "wide" | "tall";
+    /** Round 59, the films: the transitions that played as films and as fades, the films decoded
+     * ahead, the clip format, the frame the last film reached and its dropped frames. */
+    films?: { on: boolean; format: string | null; played: number; fades: number; rejected: number; ready: string[]; last: { key: string; frames: number; reached: number; drops: number; rate: number } | null; log: { key: string; kind: "film" | "fade"; at: number }[] };
+  };
 }
 
 type Job = { shot: ShotName | null; cam: MlCamera; ms?: number; offset?: [number, number] };

@@ -41,6 +41,7 @@ export interface GroundEngine {
   screenOf(lat: number, lng: number, h?: number): { x: number; y: number } | null;
   stats(): MlStats;
   camera(): LayerCamera | null;
-  /** Have these shots' pictures ready (the plates); the live map has nothing to warm. */
-  warm?(names: readonly ShotName[]): void;
+  /** Have these shots' pictures ready (the plates); the live map has nothing to warm. `films`: the
+   * shot the page is on, then the nearest different shot either way (round 59: the films to them). */
+  warm?(names: readonly ShotName[], films?: readonly ShotName[]): void;
 }

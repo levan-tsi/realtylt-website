@@ -25,10 +25,11 @@ import type { GroundEngine } from "./engine";
 import { ML_SHOTS } from "./shots";
 import { projectedItems } from "./names";
 import { slowConnection } from "./slow-line";
-import { PlateController, type PlateSlotEls } from "../plates/plate-controller";
+import { PlateController, type PlateFilmEls, type PlateSlotEls } from "../plates/plate-controller";
 import { PLATES } from "../plates/plates.gen";
+import { FLIGHTS } from "../plates/flights.gen";
 import { TALL_MEDIA, WIDE_MEDIA, plateSrc, plateSrcSet } from "../plates/plate-frame";
-import { neighbours } from "../plates/plate-motion";
+import { filmNeighbours, neighbours } from "../plates/plate-motion";
 
 /** THE MAPLIBRE NIGHT MAP AS THE PAGE'S GROUND (round 57.12, /lab/ml). The Google map's ground
  * (../g3d/G3dGround.tsx, the home page's, untouched) with its engine changed and its design kept:
@@ -401,7 +402,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
     // Round 58: the plates on either side of where the page is, decoded ahead of the scroll.
     if (index !== lastIndex.current) {
       lastIndex.current = index;
-      ctl.current?.warm?.(neighbours(names.current, index));
+      ctl.current?.warm?.(neighbours(names.current, index), filmNeighbours(names.current, index));
     }
     setCurrent(isArea(name) ? name : null);
     if (name === target.current) {
@@ -575,10 +576,17 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
         img: root.querySelector("img")!,
         canvas: root.querySelector("canvas")!,
       }));
+      // Round 59, THE FILMS: the recorded flights between adjacent plates play in the film layer
+      // (`?film=0` shows round 58's fade over on the same build).
+      const filmRoot = el.querySelector<HTMLElement>("[data-plate-film]");
+      const film: PlateFilmEls | null = filmRoot ? { root: filmRoot, canvas: filmRoot.querySelector("canvas")! } : null;
       const c = new PlateController({
         ...shared,
         manifest: PLATES,
         slots,
+        films: FLIGHTS,
+        film,
+        filmOff: q.get("film") === "0",
         onReveal: () => {
           setRevealed(true);
           mapState.current = "live";
@@ -587,7 +595,10 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
           setPosterGone(true);
           labelsPlaced.current = false;
           showTerritoryRef.current();
-          if (stops.current.length) c.warm(neighbours(names.current, shotPosition(stops.current, window.scrollY).index));
+          if (stops.current.length) {
+            const i = shotPosition(stops.current, window.scrollY).index;
+            c.warm(neighbours(names.current, i), filmNeighbours(names.current, i));
+          }
         },
         onError: (m) => {
           if (failed.current) return;
@@ -1040,7 +1051,13 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
               </picture>
               <canvas aria-hidden data-g3d-lights className="absolute inset-0 h-full w-full" style={{ mixBlendMode: "plus-lighter" }} />
             </div>
-          ))
+          )).concat(
+            // ROUND 59, THE FILM LAYER: above the plates, empty until a flight plays (the clips are
+            // added by the engine when the page is near them: nothing here fetches anything).
+            <div key="film" data-plate-film className="absolute inset-0" style={{ opacity: 0, zIndex: 3, isolation: "isolate" }}>
+              <canvas aria-hidden data-g3d-lights className="absolute inset-0 h-full w-full" style={{ mixBlendMode: "plus-lighter" }} />
+            </div>,
+          )
         ) : (
           <>
             {/* The map: inert (it takes no pointer and no focus; the featured cards are the keyboard's path). */}

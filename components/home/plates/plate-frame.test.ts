@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PLATE_BREAKPOINT, TALL_MEDIA, WIDE_MEDIA, aspectFor, coverFit, plateProjector, plateRange, plateSrc, plateSrcSet, visiblePlateRect, type Plate } from "./plate-frame";
+import { PLATE_BREAKPOINT, TALL_MEDIA, WIDE_MEDIA, aspectFor, coverFit, filmFormat, plateProjector, plateRange, plateSrc, plateSrcSet, visiblePlateRect, type Plate } from "./plate-frame";
 import { mercX, mercY, rangeForZoom } from "../ml/geo";
 
 /** A matrix that maps world pixels straight to css pixels (w = 1): x = X, y = Y. Column-major as
@@ -91,5 +91,17 @@ describe("the plate's projector", () => {
     expect(plateRange(deep, coverFit(deep, big))).toBeCloseTo(plateRange(plain, coverFit(plain, big)), 6);
     // without its k the deep plate would read as twice as far (the bug the calibration probe caught)
     expect(plateRange({ ...deep, k: undefined }, coverFit(deep, vp))).toBeCloseTo(2 * plateRange(plain, coverFit(plain, vp)), 6);
+  });
+});
+
+describe("the film's format (round 59)", () => {
+  const wide = { webm: [1440], mp4: [] as number[] }, tall = { webm: [] as number[], mp4: [780] };
+  it("the first playable format the clip was encoded in, or none", () => {
+    expect(filmFormat(wide, ["webm", "mp4"])).toBe("webm");
+    expect(filmFormat(wide, ["mp4", "webm"])).toBe("webm");
+    expect(filmFormat(wide, ["mp4"])).toBeNull();
+    expect(filmFormat(tall, ["webm", "mp4"])).toBe("mp4");
+    expect(filmFormat(tall, ["webm"])).toBeNull();
+    expect(filmFormat(tall, [])).toBeNull();
   });
 });

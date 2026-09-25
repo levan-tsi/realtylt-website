@@ -11,7 +11,15 @@
  * Nothing here fetches a tile or a library: a plate is one image (AVIF, WebP behind it), the next
  * and the previous on the ladder decoded ahead (`warm`), the first one server-rendered and
  * preloaded with the document (app/page.tsx). The click's fly-in is a push into the picture; a
- * featured card's focus shows its home on the closest plate that contains it. */
+ * featured card's focus shows its home on the closest plate that contains it.
+ *
+ * Round 59, THE FLIGHT AS A FILM (docs/parity/DESIGN-ROUND59.md §3): between two ADJACENT plates the
+ * map moves again. Each such flight was recorded once from the live map (scripts/make-flights.mjs),
+ * frame by frame, with the camera's matrix per frame; the clip plays in a third layer above the
+ * plates, our lights drawn on every presented frame from that frame's matrix (exact, as on a
+ * plate), plate B waiting under it. Its first frame dissolves in over plate A, its last dissolves out
+ * onto plate B, both while still. The clips near the page are decoded ahead like the plates; the fade
+ * over stays for any other jump, reduced motion, a clip not ready, and a browser that will not play. */
 import { sampleHeight, type ElevationGrid } from "../night/elevation";
 import type { ShotName } from "../night/shots";
 import { budgetFor, densityGap, focusOf, isNarrow } from "../g3d/cameras";
@@ -23,8 +31,9 @@ import { FLY_IN_MS } from "../g3d/interaction";
 import { mercX, mercY } from "../ml/geo";
 import type { MlStats } from "../ml/controller";
 import type { GroundEngine } from "../ml/engine";
-import { aspectFor, coverFit, plateProjector, plateRange, plateSrc, plateSrcSet, type CoverFit, type Plate, type PlateAspect, type PlateFormat, type PlateManifest, type Projector } from "./plate-frame";
-import { FADE_MS, FADE_REDUCED_MS, PUSH_TO, SETTLE_FROM, finished, hurryRate, idle, request, type Motion, type MotionState } from "./plate-motion";
+import { aspectFor, coverFit, filmDataSrc, filmFormat, filmOf, filmSrc, filmWidth, framePlate, plateProjector, plateRange, plateSrc, plateSrcSet, type CoverFit, type FilmClip, type FilmFormat, type FilmFrame, type FilmManifest, type Plate, type PlateAspect, type PlateFormat, type PlateManifest, type Projector } from "./plate-frame";
+import { FADE_MS, FADE_REDUCED_MS, FILM_IN_MS, FILM_OUT_MS, PUSH_TO, SETTLE_FROM, filmHurry, finished, hurryRate, idle, request, useFilm, type Motion, type MotionState } from "./plate-motion";
+import { frameAt } from "./flight-path";
 
 /** One layer's elements: the picture (four sources: AVIF and WebP, the tall and the wide), its image,
  * and the canvas our lights are drawn on. `data-plate-src` on each source names its format and aspect. */
@@ -43,6 +52,34 @@ interface Slot {
   fit: CoverFit;
   at: Projector | null;
   planned: number[];
+  /** The glow step of each planned home (the film's lights take the same). */
+  levels: Uint8Array;
+}
+
+/** ROUND 59, THE FILM LAYER: above the two plates, the playing clip and its own light canvas, whose
+ * camera is the frame on screen (its recorded matrix: exact, as a plate's). */
+export interface PlateFilmEls {
+  root: HTMLElement;
+  canvas: HTMLCanvasElement;
+}
+interface FilmLayer {
+  el: PlateFilmEls;
+  layer: LightLayer;
+  plate: Plate | null;
+  fit: CoverFit;
+  at: Projector | null;
+}
+/** A film decoded ahead: its clip (a video element in the film layer, hidden), its frames. */
+interface FilmEntry {
+  id: string;
+  key: string;
+  reverse: boolean;
+  aspect: PlateAspect;
+  clip: FilmClip;
+  video: HTMLVideoElement;
+  frames: FilmFrame[] | null;
+  ready: boolean;
+  failed: boolean;
 }
 
 /** The plates a featured home is looked for on, closest pictures first (the counties, the harbour,
@@ -54,6 +91,11 @@ const HOME_PLATES: readonly ShotName[] = ["ulster", "dutchess-county", "orange",
 const SETTLE_EASE = "cubic-bezier(0.33, 1, 0.68, 1)";
 /** How far the click's fly-in pushes into the picture. */
 const FLY_IN_SCALE = 1.6;
+/** Films kept decoded at most, one video element each (the ones near the page, then the most
+ * recently near). The phone keeps two: the fewest that still decode the next film ahead while the
+ * one just played can be played back (a phone's browser holding many video elements is the crash
+ * pattern the record §3 cites). */
+const FILMS_KEPT = { wide: 4, tall: 2 } as const;
 
 export class PlateController implements GroundEngine {
   private slots: Slot[] = [];
@@ -79,6 +121,15 @@ export class PlateController implements GroundEngine {
   private warmed = new Map<ShotName, { pic: HTMLPictureElement; done: Promise<void> }>();
   private wantInitial: ShotName;
   private st = { createdAt: 0, firstPaintAt: null as number | null, stops: [] as MlStats["stops"] };
+  /** Round 59, the films: the layer, the clips decoded ahead (by from>to>aspect), the format this
+   * browser plays best, and what played. */
+  private film: FilmLayer | null = null;
+  private films = new Map<string, FilmEntry>();
+  /** The clip formats this browser plays, best first (empty: every transition fades). */
+  private formats: FilmFormat[] = [];
+  private formatAsked = false;
+  private playing: { entry: FilmEntry; inc: Slot; out: Slot; id: number; reached: number; drops: number; frames: number; ending: boolean; outAnim: Animation | null } | null = null;
+  private fs = { played: 0, fades: 0, rejected: 0, last: null as { key: string; frames: number; reached: number; drops: number; rate: number } | null, log: [] as { key: string; kind: "film" | "fade"; at: number }[] };
 
   constructor(
     private opts: {
@@ -96,40 +147,60 @@ export class PlateController implements GroundEngine {
       ha?: number;
       core?: readonly number[];
       cityGap?: number;
+      /** Round 59: the recorded flights, the film layer's elements, and `?film=0` (films off). */
+      films?: FilmManifest;
+      film?: PlateFilmEls | null;
+      filmOff?: boolean;
     },
   ) {
     this.wantInitial = opts.initial;
     for (const el of opts.slots) {
-      const slot: Slot = { el, layer: null as unknown as LightLayer, shot: null, plate: null, fit: { s: 1, ox: 0, oy: 0 }, at: null, planned: [] };
-      slot.layer = new LightLayer(
-        el.canvas,
-        () => this.cameraOfSlot(slot),
-        () => isNarrow(opts.viewport()),
-        {
-          places: (lat, lng, height) => {
-            const n = lat.length;
-            const out = new Float64Array(n * 3);
-            for (let i = 0; i < n; i++) {
-              out[3 * i] = mercX(lng[i]);
-              out[3 * i + 1] = mercY(lat[i]);
-              out[3 * i + 2] = height(lat[i], lng[i]);
-            }
-            return out;
-          },
-          frame: () => {
-            const at = slot.at, p = slot.plate;
-            if (!at || !p) return null;
-            const ex = p.ex;
-            return (pts, i, out) => at(pts[3 * i], pts[3 * i + 1], pts[3 * i + 2] * ex, out);
-          },
-        },
-      );
-      slot.layer.glowStrength = opts.glow;
-      slot.layer.haloScale = opts.halo;
-      slot.layer.haloStrength = opts.ha;
-      slot.layer.coreRgb = opts.core;
+      const slot: Slot = { el, layer: null as unknown as LightLayer, shot: null, plate: null, fit: { s: 1, ox: 0, oy: 0 }, at: null, planned: [], levels: new Uint8Array(0) };
+      slot.layer = this.lightsFor(el.canvas, slot);
       this.slots.push(slot);
     }
+    if (opts.film && opts.films && !opts.reduced && !opts.filmOff) {
+      const f: FilmLayer = { el: opts.film, layer: null as unknown as LightLayer, plate: null, fit: { s: 1, ox: 0, oy: 0 }, at: null };
+      f.layer = this.lightsFor(opts.film.canvas, f);
+      this.film = f;
+    }
+  }
+
+  /** A light canvas projected by a picture's own camera (a plate's, or the film's frame on screen). */
+  private lightsFor(canvas: HTMLCanvasElement, s: { plate: Plate | null; fit: CoverFit; at: Projector | null }): LightLayer {
+    const layer = new LightLayer(
+      canvas,
+      () => this.cameraOfSlot(s),
+      () => isNarrow(this.opts.viewport()),
+      {
+        places: (lat, lng, height) => {
+          const n = lat.length;
+          const out = new Float64Array(n * 3);
+          for (let i = 0; i < n; i++) {
+            out[3 * i] = mercX(lng[i]);
+            out[3 * i + 1] = mercY(lat[i]);
+            out[3 * i + 2] = height(lat[i], lng[i]);
+          }
+          return out;
+        },
+        frame: () => {
+          const at = s.at, p = s.plate;
+          if (!at || !p) return null;
+          const ex = p.ex;
+          return (pts, i, out) => at(pts[3 * i], pts[3 * i + 1], pts[3 * i + 2] * ex, out);
+        },
+      },
+    );
+    layer.glowStrength = this.opts.glow;
+    layer.haloScale = this.opts.halo;
+    layer.haloStrength = this.opts.ha;
+    layer.coreRgb = this.opts.core;
+    return layer;
+  }
+
+  /** Every light canvas: the two plates' and the film's. */
+  private layers(): LightLayer[] {
+    return this.film ? [...this.slots.map((s) => s.layer), this.film.layer] : this.slots.map((s) => s.layer);
   }
 
   // ---- the engine's surface --------------------------------------------------------------------
@@ -184,8 +255,10 @@ export class PlateController implements GroundEngine {
     this.stopped = true;
     for (const a of this.anims) a.cancel();
     this.flyInAnim?.cancel();
-    for (const s of this.slots) s.layer.stop();
+    for (const l of this.layers()) l.stop();
     this.warmed.clear();
+    for (const e of this.films.values()) this.dropFilm(e);
+    this.films.clear();
   }
 
   /** THE BOX THE PICTURE IS FITTED TO: the layer's own (fixed, inset 0: the layout viewport, which
@@ -224,6 +297,14 @@ export class PlateController implements GroundEngine {
       s.layer.resize();
       this.replan(s, true);
     }
+    const f = this.film;
+    if (f) {
+      if (f.plate) {
+        f.fit = coverFit(f.plate, this.box());
+        f.at = plateProjector(f.plate, f.fit);
+      }
+      f.layer.resize();
+    }
   }
 
   setAvoid(r: { x: number; y: number; w: number; h: number } | null) {
@@ -238,7 +319,7 @@ export class PlateController implements GroundEngine {
     }
     if (this.flyInAnim && name === this.motion.at) this.undoFlyIn();
     const now = performance.now();
-    const step = request(this.motion, name, now, this.fadeMs());
+    const step = request(this.motion, name, now, this.fadeMs(), this.filmMs);
     this.motion = step.state;
     if (step.action === "start") void this.begin(step.state.motion!);
     else if (step.action === "queue") this.hurry(now);
@@ -276,7 +357,7 @@ export class PlateController implements GroundEngine {
   setHomes(h: Homes) {
     this.homes = h;
     this.order = keyOrder(h.key);
-    for (const s of this.slots) s.layer.setHomes(h.lat, h.lng, this.heightAt);
+    for (const l of this.layers()) l.setHomes(h.lat, h.lng, this.heightAt);
     const now = this.slotNow();
     this.replan(now, false, 600);
     const inc = this.slotArriving();
@@ -286,14 +367,14 @@ export class PlateController implements GroundEngine {
   setElevation(g: ElevationGrid) {
     this.elev = g;
     const h = this.homes;
-    if (h) for (const s of this.slots) s.layer.setHomes(h.lat, h.lng, this.heightAt);
+    if (h) for (const l of this.layers()) l.setHomes(h.lat, h.lng, this.heightAt);
     if (this.featured.length) this.setFeatured(this.featured);
     for (const s of this.slots) if (s.plate) this.replan(s, true);
   }
 
   setFeatured(list: readonly FeaturedHome[]) {
     this.featured = list;
-    for (const s of this.slots) s.layer.setFeatured(list, this.heightAt);
+    for (const l of this.layers()) l.setFeatured(list, this.heightAt);
   }
 
   lightHome(i: number | null) {
@@ -301,14 +382,14 @@ export class PlateController implements GroundEngine {
     this.litHome = i;
     if (i !== null) this.litFeatured = null;
     const key = i === null ? (this.litFeatured ? { featured: this.litFeatured } : null) : { home: i };
-    for (const s of this.slots) s.layer.light(key);
+    for (const l of this.layers()) l.light(key);
   }
   lightFeatured(id: string | null) {
     if (id === this.litFeatured) return;
     this.litFeatured = id;
     if (id !== null) this.litHome = null;
     const key = id === null ? (this.litHome !== null ? { home: this.litHome } : null) : { featured: id };
-    for (const s of this.slots) s.layer.light(key);
+    for (const l of this.layers()) l.light(key);
   }
   lit() {
     return { home: this.litHome, featured: this.litFeatured };
@@ -355,7 +436,14 @@ export class PlateController implements GroundEngine {
       error: this.error,
       layer: { frames: L.cost.frames, maxMs: Math.round(L.cost.maxMs * 100) / 100, meanMs: L.cost.frames ? Math.round((L.cost.totalMs / L.cost.frames) * 1000) / 1000 : 0 },
       slow: { by: null, firstTileAt: null },
-      plates: { at: this.motion.at, to: this.motion.motion?.to ?? null, next: this.motion.next, warmed: [...this.warmed.keys()], aspect: this.aspect() },
+      plates: {
+        at: this.motion.at,
+        to: this.motion.motion?.to ?? null,
+        next: this.motion.next,
+        warmed: [...this.warmed.keys()],
+        aspect: this.aspect(),
+        films: { on: !!this.film, format: this.formats.join(",") || null, played: this.fs.played, fades: this.fs.fades, rejected: this.fs.rejected, ready: [...this.films.values()].filter((e) => e.ready).map((e) => e.id), last: this.fs.last, log: this.fs.log },
+      },
     };
   }
 
@@ -365,13 +453,348 @@ export class PlateController implements GroundEngine {
 
   /** The pictures to have decoded now: the plate on, the next, the previous (plate-motion.ts
    * neighbours). Others decoded earlier are let go (the browser's cache keeps their bytes). */
-  warm(names: readonly ShotName[]) {
+  warm(names: readonly ShotName[], films: readonly ShotName[] = names) {
     for (const n of names) void this.warmOne(n);
     const keep = new Set<ShotName>(names);
     for (const s of this.slots) if (s.shot) keep.add(s.shot);
     if (this.motion.motion) keep.add(this.motion.motion.to);
     if (this.motion.next) keep.add(this.motion.next);
     for (const k of [...this.warmed.keys()]) if (!keep.has(k)) this.warmed.delete(k);
+    this.warmFilms(films);
+  }
+
+  // ---- the films (round 59) ---------------------------------------------------------------------
+
+  /** The film from the plate the page is on (`names[0]`) to each neighbour, decoded ahead the way the
+   * neighbours' plates are; any other decoded film is let go (the one playing stays). Nothing is
+   * fetched for a film until the page is within one stop of it. */
+  private warmFilms(names: readonly ShotName[]) {
+    const f = this.film, M = this.opts.films;
+    // A browser that refused to play one (a phone in low-power mode) gets the fade over from then on,
+    // and no more clips are fetched for it.
+    if (!f || !M || !this.revealed || this.fs.rejected > 0) return;
+    this.lastNames = names;
+    if (!this.filmsOpen) return this.openFilms();
+    const from = names[0];
+    const aspect = this.aspect();
+    const want = new Set<string>();
+    // Ahead always; behind only once the visitor has moved back up the page (a reader goes down: the
+    // back films would double what a read fetches).
+    if (from)
+      for (const to of names.slice(1)) {
+        const w = to !== from ? filmOf(M, from, to) : null;
+        if (w && (!w.reverse || this.backward)) want.add(`${from}>${to}>${aspect}`);
+      }
+    // The flight about to start: from the plate on screen to where the page now is (the scroll moves
+    // the page's position a moment before the flight is asked for).
+    const at = this.motion.motion?.to ?? this.motion.at;
+    if (at && from && at !== from && filmOf(M, at, from)) want.add(`${at}>${from}>${aspect}`);
+    if (this.playing) want.add(this.playing.entry.id);
+    // Loading a clip (a decoder made) or letting one go (a decoder torn down) while a film starts
+    // cost that film a 50 to 110 ms frame (measured: scripts/_scratch-r59-hitch.mjs). So the work
+    // waits for the page to be still: after the landing, or a moment with no transition asked for.
+    const job = () => {
+      // Films no longer near are let go only past FILMS_KEPT, oldest first (a decoder torn down is
+      // the other half of that cost; the page may also come back to them).
+      for (const id of want) {
+        const e = this.films.get(id);
+        if (e) {
+          this.films.delete(id);
+          this.films.set(id, e);
+        }
+      }
+      for (const [id, e] of this.films) {
+        if (this.films.size + [...want].filter((w) => !this.films.has(w)).length <= FILMS_KEPT[aspect]) break;
+        if (want.has(id) || this.playing?.entry === e) continue;
+        this.dropFilm(e);
+        this.films.delete(id);
+      }
+      if (!want.size) return;
+      void this.pickFormat().then(() => {
+        if (this.stopped || !this.formats.length) return;
+        // The plates first: a clip is asked for once the plate it lands on is in (on a slow line the
+        // clip's bytes must not delay the picture the fade would need).
+        for (const id of want)
+          if (!this.films.has(id))
+            void this.warmOne(id.split(">")[1] as ShotName).then(() => {
+              if (!this.stopped && !this.films.has(id)) this.loadFilm(id);
+            });
+      });
+    };
+    // The first films (the page just opened, nothing moving yet) at once.
+    if (!this.films.size && !this.motion.motion) job();
+    else this.calm(job);
+  }
+
+  private calmJob: (() => void) | null = null;
+  private calmTimer: ReturnType<typeof setTimeout> | undefined;
+  /** Run `job` (the latest one asked) once no transition runs and none has been asked for in 350 ms. */
+  private calm(job: () => void) {
+    this.calmJob = job;
+    clearTimeout(this.calmTimer);
+    this.calmTimer = setTimeout(() => this.flushCalm(), 350);
+  }
+  private flushCalm() {
+    if (!this.calmJob || this.stopped) return;
+    if (this.motion.motion) return; // land() flushes it
+    const j = this.calmJob;
+    this.calmJob = null;
+    j();
+  }
+
+  private lastNames: readonly ShotName[] = [];
+  /** The last move went back up the ladder (the films behind are then warmed too). */
+  private backward = false;
+  private filmsOpen = false;
+  private opening = false;
+  /** THE FIRST SCREEN FIRST: no clip is asked for until the page has loaded, its lights have arrived
+   * (or three seconds have passed) and the browser is idle; then the films near the page are. */
+  private openFilms() {
+    if (this.opening) return;
+    this.opening = true;
+    const loaded = document.readyState === "complete" ? Promise.resolve() : new Promise<void>((r) => window.addEventListener("load", () => r(), { once: true }));
+    const lights = new Promise<void>((r) => {
+      const t0 = performance.now();
+      const tick = () => (this.homes || performance.now() - t0 > 3000 ? r() : setTimeout(tick, 100));
+      tick();
+    });
+    void Promise.all([loaded, lights]).then(() => {
+      const go = () => {
+        if (this.stopped) return;
+        this.filmsOpen = true;
+        this.warmFilms(this.lastNames);
+      };
+      const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
+      if (ric) ric(go, { timeout: 600 });
+      else setTimeout(go, 200);
+    });
+  }
+
+  /** The clip formats this browser plays, best first: VP9 when its decoder is power-efficient (a
+   * hardware one), else H.264 when that one is, else whichever it can play at all (mediaCapabilities,
+   * or canPlayType where that is missing). A clip is played in the first of them it was encoded in
+   * (the laptop's in VP9 only, the phone's in both: plate-frame.ts filmFormat); none, the fade. */
+  private async pickFormat() {
+    if (this.formatAsked) return;
+    this.formatAsked = true;
+    const types: Record<FilmFormat, string> = { webm: 'video/webm; codecs="vp09.00.40.08"', mp4: 'video/mp4; codecs="avc1.640028"' };
+    const probe = document.createElement("video");
+    const info: Record<FilmFormat, { ok: boolean; eff: boolean }> = { webm: { ok: false, eff: false }, mp4: { ok: false, eff: false } };
+    for (const fmt of ["webm", "mp4"] as const) {
+      info[fmt].ok = probe.canPlayType(types[fmt]) === "probably";
+      try {
+        const mc = navigator.mediaCapabilities;
+        if (mc) {
+          const r = await mc.decodingInfo({ type: "file", video: { contentType: types[fmt], width: 1440, height: 900, bitrate: 2_500_000, framerate: 30 } });
+          info[fmt] = { ok: info[fmt].ok && r.supported, eff: r.supported && r.powerEfficient };
+        }
+      } catch {}
+    }
+    const rank = (f: FilmFormat) => (info[f].ok ? (info[f].eff ? 0 : 1) : 9);
+    this.formats = (["webm", "mp4"] as const).filter((f) => info[f].ok).sort((a, b) => rank(a) - rank(b));
+  }
+
+  /** One film decoded ahead: its frames' matrices (a few KB) and its clip in a hidden video element
+   * of the film layer, ready when every byte is buffered and the first frame is decoded. */
+  private loadFilm(id: string) {
+    const f = this.film, M = this.opts.films;
+    if (!f || !M) return;
+    const [from, to, aspect] = id.split(">") as [ShotName, ShotName, PlateAspect];
+    const which = filmOf(M, from, to);
+    if (!which) return;
+    const clip = M[which.key][aspect];
+    // Never a source that does not exist: no format this browser plays was encoded, no film.
+    const fmt = filmFormat(clip, this.formats);
+    if (!fmt) return;
+    const v = document.createElement("video");
+    v.muted = true;
+    v.defaultMuted = true;
+    v.playsInline = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    v.setAttribute("aria-hidden", "true");
+    v.disablePictureInPicture = true;
+    v.preload = "auto";
+    v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0";
+    const e: FilmEntry = { id, key: which.key, reverse: which.reverse, aspect, clip, video: v, frames: null, ready: false, failed: false };
+    this.films.set(id, e);
+    f.el.root.insertBefore(v, f.el.canvas);
+    const dw = Math.round(this.box().width * Math.min(2, window.devicePixelRatio || 1));
+    v.src = filmSrc(from, to, aspect, filmWidth(clip[fmt], dw), fmt);
+    const check = () => {
+      if (e.ready || e.failed || !e.frames) return;
+      const b = v.buffered;
+      const whole = b.length > 0 && b.end(b.length - 1) >= v.duration - 0.05 && b.start(0) <= 0.05;
+      if (v.readyState >= 4 && whole) e.ready = true;
+    };
+    v.addEventListener("canplaythrough", check);
+    v.addEventListener("progress", check);
+    v.addEventListener("loadeddata", check);
+    v.addEventListener("error", () => (e.failed = true));
+    void fetch(filmDataSrc(which.key, aspect))
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((d: { n: number; frames: FilmFrame[] }) => {
+        if (d.n !== clip.n || d.frames.length !== clip.n + 1) throw new Error("frames");
+        e.frames = d.frames;
+        check();
+      })
+      .catch(() => (e.failed = true));
+  }
+
+  private dropFilm(e: FilmEntry) {
+    const v = e.video;
+    v.pause();
+    v.removeAttribute("src");
+    v.load();
+    v.remove();
+  }
+
+  /** The film's length if the flight from -> to plays as a film now (plate-motion.ts useFilm). */
+  private filmMs = (from: ShotName, to: ShotName): number | null => {
+    const e = this.films.get(`${from}>${to}>${this.aspect()}`);
+    const ready = !!e && e.ready && !e.failed && !!e.frames && e.video.readyState >= 3 && !e.video.seeking && e.video.currentTime === 0;
+    const ok = useFilm({ recorded: !!(this.film && this.opts.films && filmOf(this.opts.films, from, to)), ready, reduced: this.opts.reduced, off: !!this.opts.filmOff || this.fs.rejected > 0 });
+    return ok && e ? e.clip.ms : null;
+  };
+
+  /** The film layer showing frame i of the playing film: its picture is the video's; its lights are
+   * projected by that frame's own matrix. */
+  private showFrame(e: FilmEntry, i: number) {
+    const f = this.film;
+    if (!f || !e.frames) return;
+    const ex = this.slots[this.cur].plate?.ex ?? 1.6;
+    const fov = this.slots[this.cur].plate?.cam.fov ?? 40;
+    f.plate = framePlate(e.clip, e.frames, i, e.reverse, ex, fov);
+    f.fit = coverFit(f.plate, this.box());
+    f.at = plateProjector(f.plate, f.fit);
+    f.layer.kick();
+  }
+
+  /** THE FILM: the flight recorded between the two plates plays over plate A (its first frame IS
+   * plate A), our lights ride it frame by frame, plate B waits underneath, and at the end the film
+   * fades out onto plate B (the same picture: the last frames are still). */
+  private async beginFilm(m: Motion, id: number, inc: Slot, out: Slot) {
+    const f = this.film!;
+    const e = this.films.get(`${m.from}>${m.to}>${this.aspect()}`);
+    if (!e || !e.ready || !e.frames) return this.runFade(m, id, inc, out);
+    const v = e.video;
+    this.replan(inc, true);
+    for (const a of inc.el.root.getAnimations()) a.cancel();
+    for (const a of out.el.root.getAnimations()) a.cancel();
+    for (const a of f.el.root.getAnimations()) a.cancel();
+    this.flyInAnim = null;
+    inc.el.root.style.transformOrigin = out.el.root.style.transformOrigin = "";
+    inc.el.root.style.transform = out.el.root.style.transform = "";
+    // The film's lights: plate A's set at once, plate B's coming in over most of the flight (the live
+    // map's rule, ../ml/controller.ts go), every one on its street in every frame.
+    f.layer.fadeMs = 0;
+    f.layer.plan(out.planned, true, out.levels);
+    f.layer.fadeMs = Math.round(e.clip.ms * 0.8);
+    f.layer.plan(inc.planned, false, inc.levels);
+    this.showFrame(e, 0);
+    // Drawn now, in the same frame the film is shown: plate A's lights are covered by it this frame.
+    f.layer.draw();
+    f.layer.setFlying(true);
+    for (const x of this.films.values()) x.video.style.opacity = x === e ? "1" : "0";
+    v.playbackRate = 1;
+    // In as it goes out: the film's first frame (plate A's picture through the codec) dissolves in
+    // over plate A while both are still, then it plays; a cut there showed the codec's few levels on
+    // the dense city plates (the record §3).
+    const inAnim = f.el.root.animate([{ opacity: 0 }, { opacity: 1 }], { duration: FILM_IN_MS, easing: "ease-out", fill: "forwards" });
+    const run = { entry: e, inc, out, id, reached: 0, drops: 0, frames: 0, ending: false, outAnim: null as Animation | null };
+    this.playing = run;
+    this.motion = { ...this.motion, motion: { ...m, startedAt: performance.now() } };
+    const onFrame = (i: number) => {
+      if (this.playing !== run) return;
+      if (i > run.reached + 1 && v.playbackRate === 1) run.drops += i - run.reached - 1;
+      if (i !== run.reached || run.frames === 0) {
+        run.frames++;
+        run.reached = Math.max(run.reached, i);
+        this.showFrame(e, i);
+      }
+    };
+    const rvfc = (v as HTMLVideoElement & { requestVideoFrameCallback?: (cb: (now: number, meta: { mediaTime: number }) => void) => number }).requestVideoFrameCallback?.bind(v);
+    if (rvfc) {
+      const cb = (_now: number, meta: { mediaTime: number }) => {
+        if (this.playing !== run) return;
+        onFrame(frameAt(meta.mediaTime, e.clip.fps, e.clip.n));
+        if (!run.ending) rvfc(cb);
+      };
+      rvfc(cb);
+    } else {
+      const loop = () => {
+        if (this.playing !== run || run.ending) return;
+        onFrame(frameAt(v.currentTime, e.clip.fps, e.clip.n));
+        requestAnimationFrame(loop);
+      };
+      requestAnimationFrame(loop);
+    }
+    v.addEventListener("ended", () => this.endFilm(run), { once: true });
+    if (this.motion.next) inAnim.playbackRate = 3;
+    await inAnim.finished.catch(() => {});
+    f.el.root.style.opacity = "1";
+    inAnim.cancel();
+    if (this.playing !== run) return;
+    try {
+      await v.play();
+    } catch (err) {
+      // A phone in low-power mode (or any refusal): the fade over, from plate A, which is still under.
+      if (this.playing !== run) return;
+      console.warn("[plates] film refused:", (err as Error).message);
+      this.fs.rejected++;
+      this.stopFilm(run);
+      if (id !== this.beginId || this.stopped) return;
+      return this.runFade(m, id, inc, out, true);
+    }
+    this.fs.played++;
+    this.logKind(e.key + (e.reverse ? " back" : ""), "film");
+  }
+
+  /** The film's end: plate B on under it, the film fades out onto it, then the stop lands. */
+  private endFilm(run: NonNullable<PlateController["playing"]>, cut = false) {
+    if (this.playing !== run || run.ending) return;
+    run.ending = true;
+    const f = this.film!;
+    const { inc, out } = run;
+    this.showFrame(run.entry, run.entry.clip.n);
+    run.reached = run.entry.clip.n;
+    inc.el.root.style.opacity = "1";
+    inc.el.root.style.zIndex = "2";
+    out.el.root.style.opacity = "0";
+    out.el.root.style.zIndex = "1";
+    const finish = () => {
+      if (this.playing !== run) return;
+      this.stopFilm(run);
+      if (run.id !== this.beginId || this.stopped) return;
+      this.land(inc, out);
+    };
+    if (cut) return finish();
+    run.outAnim = f.el.root.animate([{ opacity: 1 }, { opacity: 0 }], { duration: FILM_OUT_MS, easing: "ease-out", fill: "forwards" });
+    if (this.motion.next) run.outAnim.playbackRate = 2;
+    run.outAnim.finished.then(finish, () => {});
+  }
+
+  /** The film layer emptied and hidden, the clip rewound for the next time (still decoded). */
+  private stopFilm(run: NonNullable<PlateController["playing"]>) {
+    const f = this.film!;
+    const e = run.entry;
+    this.fs.last = { key: e.key + (e.reverse ? " back" : ""), frames: run.frames, reached: run.reached, drops: run.drops, rate: e.video.playbackRate };
+    this.playing = null;
+    run.outAnim?.cancel();
+    f.el.root.style.opacity = "0";
+    e.video.pause();
+    e.video.style.opacity = "0";
+    e.video.playbackRate = 1;
+    try {
+      e.video.currentTime = 0;
+    } catch {}
+    f.layer.setFlying(false);
+    f.layer.plan([], true);
+  }
+
+  private logKind(key: string, kind: "film" | "fade") {
+    this.fs.log.push({ key, kind, at: Math.round(performance.now()) });
+    if (this.fs.log.length > 80) this.fs.log.shift();
   }
 
   // ---- inside -----------------------------------------------------------------------------------
@@ -408,7 +831,7 @@ export class PlateController implements GroundEngine {
 
   private heightAt = (lat: number, lng: number) => (this.elev ? Math.max(0, sampleHeight(this.elev, lng, lat)) : 0);
 
-  private cameraOfSlot(s: Slot): LayerCamera | null {
+  private cameraOfSlot(s: { plate: Plate | null; fit: CoverFit }): LayerCamera | null {
     const p = s.plate;
     if (!p) return null;
     return { center: { lat: p.cam.lat, lng: p.cam.lng, altitude: p.cam.elevation }, range: plateRange(p, s.fit), tilt: p.cam.pitch, heading: p.cam.bearing, fov: p.cam.fov };
@@ -479,6 +902,12 @@ export class PlateController implements GroundEngine {
 
   private async begin(m: Motion) {
     const id = ++this.beginId;
+    const dir = this.opts.films && m.from ? filmOf(this.opts.films, m.from, m.to) : null;
+    if (dir && dir.reverse !== this.backward) {
+      this.backward = dir.reverse;
+      // The way the visitor goes changed: the films behind are wanted now (or no longer).
+      if (this.lastNames.length) this.warmFilms(this.lastNames);
+    }
     const inc = this.slots[1 - this.cur], out = this.slots[this.cur];
     this.flights++;
     this.startedAt = Math.round(performance.now());
@@ -503,6 +932,16 @@ export class PlateController implements GroundEngine {
       this.flyToShot(queued);
       return;
     }
+    if (m.film && this.film) return this.beginFilm(m, id, inc, out);
+    this.runFade(m, id, inc, out);
+  }
+
+  /** THE FADE OVER (round 58): the arriving plate laid on top, fading in while it settles; the one
+   * under it holds and pushes a little. Also every film's fallback. */
+  private runFade(m0: Motion, id: number, inc: Slot, out: Slot, refused = false) {
+    const m: Motion = m0.film ? { from: m0.from, to: m0.to, startedAt: m0.startedAt, ms: this.fadeMs() } : m0;
+    this.fs.fades++;
+    this.logKind(`${m.from}--${m.to}${refused ? " refused" : ""}`, "fade");
     this.replan(inc, true);
     const R = inc.el.root, O = out.el.root;
     for (const a of R.getAnimations()) a.cancel();
@@ -535,6 +974,21 @@ export class PlateController implements GroundEngine {
 
   private hurry(now: number) {
     const m = this.motion.motion;
+    const run = this.playing;
+    if (m?.film && run) {
+      // A request during a film: played faster so it ends within HURRY_MS (at most FILM_MAX_RATE),
+      // or, were that not enough, plate B (the film's own last picture) at once; then the queued one.
+      if (run.ending) {
+        if (run.outAnim) run.outAnim.playbackRate = 3;
+        return;
+      }
+      const v = run.entry.video;
+      const left = Math.max(0, (v.duration - v.currentTime) * 1000);
+      const h = filmHurry(left);
+      if (h === "cut") this.endFilm(run, true);
+      else v.playbackRate = Math.max(v.playbackRate, h.rate);
+      return;
+    }
     if (!m || !this.anims.length) return;
     const rate = hurryRate(m, now);
     for (const a of this.anims) a.playbackRate = rate;
@@ -555,10 +1009,14 @@ export class PlateController implements GroundEngine {
     const now = Math.round(performance.now());
     this.st.stops.push({ shot: inc.shot, startedAt: this.startedAt, landedAt: now, idleMs: 0 });
     if (this.st.stops.length > 60) this.st.stops.shift();
-    const step = finished(this.motion, now, this.fadeMs());
+    const step = finished(this.motion, now, this.fadeMs(), this.filmMs);
     this.motion = step.state;
     this.opts.onLand();
     if (step.action === "start") void this.begin(step.state.motion!);
+    else if (this.calmJob) {
+      clearTimeout(this.calmTimer);
+      this.calmTimer = setTimeout(() => this.flushCalm(), 120);
+    }
   }
 
   /** The closest plate the home stands on with room round it, or null. */
@@ -602,6 +1060,7 @@ export class PlateController implements GroundEngine {
     for (let k = 0; k < plan.length; k++) levels[k] = glowLevel(counts[k], median);
     this.lastPlanMs = Math.round((performance.now() - t0) * 10) / 10;
     s.planned = plan;
+    s.levels = levels;
     s.layer.fadeMs = fadeMs;
     s.layer.plan(plan, instant || this.opts.reduced, levels);
   }
