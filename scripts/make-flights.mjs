@@ -70,14 +70,17 @@ const GEOM = {
  * same camera closest). */
 const DISSOLVE = { lo: 0.3, hi: 0.7 };
 
-/** THE ENCODES (the record §3 has the measurements that chose them). Pixel widths per codec: the
- * laptop's clip at 1440 x 900 for every screen (a 2880 clip is 1 MB and more, and the film is motion:
- * the plate it lands on is the sharp picture), the phone's at 780 x 1688. VP9 first, H.264 for the
- * browsers that decode it better (Safari; the page asks mediaCapabilities). A clip over CAP is
- * encoded again at a lower quality and the table says so. */
-const ENC = { wide: { vp9: [1440], h264: [1440] }, tall: { vp9: [780], h264: [780] } };
-const CRF = { wide: { vp9: Number(flag("crf", "40")), h264: 27 }, tall: { vp9: Number(flag("crft", "40")), h264: 27 } };
-const CRF_MAX = { vp9: 48, h264: 32 };
+/** THE ENCODES (the record §3 has the measurements that chose them). ONE codec per aspect, at one
+ * width: the laptop's clip VP9 in WebM at 1440 x 900 for every screen (a 2880 clip is 1 MB and more,
+ * and the film is motion: the plate it lands on is the sharp picture; the only desktop browser
+ * without VP9 in WebM is Safari before 14.1, which gets the fade), the phone's H.264 in MP4 at
+ * 780 x 1688 (iOS Safari plays WebM from iOS 15, decodes VP9 in hardware only from the A14, and has
+ * crashed on pages holding several WebM videos; H.264 decodes in hardware on every phone). The
+ * orchestrator's decision (round 59): VP9 crf 46, H.264 crf 30. A clip over CAP is encoded again at
+ * a lower quality and the table says so. */
+const ENC = { wide: { vp9: [1440], h264: [] }, tall: { vp9: [], h264: [780] } };
+const CRF = { wide: { vp9: Number(flag("crf", "46")), h264: 30 }, tall: { vp9: 46, h264: Number(flag("crft", "30")) } };
+const CRF_MAX = { vp9: 52, h264: 34 };
 const CAP = 900 * 1024;
 
 export const PAIRS = SHOTS.slice(0, -1).map((a, i) => [a, SHOTS[i + 1]]);
