@@ -38,8 +38,11 @@ const stage = flag("stage", "all");
 const only = flag("only", "") ? flag("only", "").split(",") : null;
 const aspectOnly = flag("aspect", "");
 const headless = process.argv.includes("--headless");
+/** A comparison: one render override for every shot in --only, its raws written to --raw. */
+const renderAll = flag("render", "");
+const rawDir = flag("raw", "");
 
-const RAW = "scripts/_scratch-r57/58/plates/raw";
+const RAW = rawDir || "scripts/_scratch-r57/58/plates/raw";
 const OUT = "public/plates";
 const GEN = "components/home/plates/plates.gen.ts";
 const SHEETS = "docs/design-r58";
@@ -55,17 +58,62 @@ export const ASPECTS = {
   tall: { vp: { width: 390, height: 844 }, dpr: 3, mobile: true, widths: [1170, 780] },
 };
 
-/** Per-shot render overrides (the page's own query switches: exag, dem, hillshade, buildings), by eye
- * from the contact sheet. Empty = the shared style as it stands. */
+/** Per-shot render overrides (the page's own query switches: exag, dem, hillshade, buildings).
+ * Compared on Ulster and Putnam (scripts/_scratch-r57/58/plates/variant-sheet.png): a taller
+ * terrain (exag 2.4, 3.2) and the finer DEM (256:14) change the relief only a little at 14 km, far
+ * less than the tonal lift below, so the shared style stands and every plate keeps the same
+ * exaggeration our homes are lifted by. */
 const RENDER = {};
 
-/** Per-shot grade applied to the raw picture (sharp): `gamma` (1 = none; under 1 lifts the
- * mid-tones), `lift` (a linear gain, 1 = none). By eye from the contact sheet. */
-const GRADE = {};
+/** Per-shot grade applied to the raw picture: `curve` (out = 255 * (in / 255) ^ curve: 1 = none,
+ * under 1 lifts the mid-tones and leaves black black), `gain` (a linear gain, 1 = none). By eye from
+ * the contact sheet (scripts/_scratch-r58-grade.mjs). Not sharp's gamma(), which is a resize
+ * correction and cancels itself without one.
+ *
+ * The owner's "some areas don't look that good" (record §11) were the valley counties: at 14 km the
+ * shared night style leaves them a near-black land with a faint relief and a few hairlines. A 0.85
+ * curve brings the moonlit relief and the roads up while the water stays black and the lights stay
+ * the brightest thing (0.72 turned the land a flat grey and lost the night); the chapters over the
+ * valley take the same; the two edge plates a lighter touch; the territory, the boroughs and the
+ * harbour, dense with hairlines already, are left as rendered, so the first screen and the city keep
+ * the approved black. */
+const GRADE = {
+  dutchess: { curve: 0.85 },
+  highlands: { curve: 0.85 },
+  westchester: { curve: 0.85 },
+  ulster: { curve: 0.85 },
+  "dutchess-county": { curve: 0.85 },
+  orange: { curve: 0.85 },
+  putnam: { curve: 0.85 },
+  rockland: { curve: 0.85 },
+  "westchester-county": { curve: 0.9 },
+  "staten-island": { curve: 0.9 },
+  region: { curve: 0.9 },
+};
+
+/** The grade applied on raw pixels: one lookup table, every channel. */
+async function graded(file, g) {
+  const { data, info } = await sharp(file).raw().toBuffer({ resolveWithObject: true });
+  const curve = g.curve ?? 1, gain = g.gain ?? 1;
+  if (curve !== 1 || gain !== 1) {
+    const lut = new Uint8Array(256);
+    for (let i = 0; i < 256; i++) lut[i] = Math.max(0, Math.min(255, Math.round(255 * Math.pow(i / 255, curve) * gain)));
+    const c = info.channels;
+    for (let p = 0; p < data.length; p += c) {
+      data[p] = lut[data[p]];
+      data[p + 1] = lut[data[p + 1]];
+      data[p + 2] = lut[data[p + 2]];
+    }
+  }
+  return sharp(data, { raw: { width: info.width, height: info.height, channels: info.channels } }).png().toBuffer();
+}
 
 /** AVIF: the plates are near black with thin bright hairlines; chroma kept whole (4:4:4) so the
- * moon-blue lines do not smear. WebP: the fallback for browsers without AVIF. */
-const AVIF = { quality: 62, effort: 5, chromaSubsampling: "4:4:4" };
+ * moon-blue lines do not smear. Quality 55 chosen by measurement against the raw render of the
+ * territory (scripts/_scratch-r58-avifq.mjs): 189 KB at 2880 wide, a mean 1.9 levels apart, p95 5,
+ * against 228 KB / 1.7 / 5 at 62 and the WebP fallback's 229 KB / 2.0 / 6 at 82; 48 with 4:2:0 gives
+ * 137 KB at 2.2 / 7 and softens the hairlines' edges (p99.9 23). WebP: the fallback. */
+const AVIF = { quality: 55, effort: 5, chromaSubsampling: "4:4:4" };
 const WEBP = { quality: 82, effort: 6, smartSubsample: true };
 
 const wanted = SHOTS.filter((s) => !only || only.includes(s));
@@ -98,7 +146,7 @@ async function shoot() {
     });
     for (const shot of wanted) {
       const q = new URLSearchParams({ ground: "ml", plate: shot, cover: "0", homes: "0", slow: "0", pr: String(A.dpr) });
-      for (const [k, v] of new URLSearchParams(RENDER[shot] ?? "")) q.set(k, v);
+      for (const [k, v] of new URLSearchParams(renderAll || RENDER[shot] || "")) q.set(k, v);
       const t0 = Date.now();
       await page.goto(`${base}/?${q}`, { waitUntil: "domcontentloaded" });
       await page.waitForFunction(() => {
@@ -170,13 +218,10 @@ async function encode() {
       const doEncode = wanted.includes(shot) && aspects.includes(aspect);
       const g = GRADE[shot] ?? {};
       if (doEncode) {
-        let img = sharp(`${RAW}/${name}.png`);
-        if (g.gamma && g.gamma !== 1) img = img.gamma(g.gamma);
-        if (g.lift && g.lift !== 1) img = img.linear(g.lift, 0);
-        const graded = await img.png().toBuffer();
+        const gradedPng = await graded(`${RAW}/${name}.png`, g);
         for (const w of A.widths) {
           const h = Math.round((w * A.vp.height) / A.vp.width);
-          const scaled = sharp(graded).resize(w, h, { kernel: "lanczos3" });
+          const scaled = sharp(gradedPng).resize(w, h, { kernel: "lanczos3" });
           const avif = `${OUT}/${name}-${w}.avif`, webp = `${OUT}/${name}-${w}.webp`;
           await scaled.clone().avif(AVIF).toFile(avif);
           await scaled.clone().webp(WEBP).toFile(webp);
@@ -184,7 +229,7 @@ async function encode() {
           total += ka + kw;
           console.log(`${name.padEnd(24)} ${String(w).padStart(4)}  avif ${(ka / 1024).toFixed(0).padStart(4)} KB  webp ${(kw / 1024).toFixed(0).padStart(4)} KB`);
         }
-        const tile = await sharp(graded).resize(aspect === "wide" ? 480 : 160, aspect === "wide" ? 300 : 346).png().toBuffer();
+        const tile = await sharp(gradedPng).resize(aspect === "wide" ? 480 : 160, aspect === "wide" ? 300 : 346).png().toBuffer();
         tiles[aspect].push({ name: shot, tile });
       }
       manifest[shot] ??= {};
