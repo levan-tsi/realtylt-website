@@ -338,3 +338,28 @@ and `final-390/`; the town names sit on their towns).
   A lower pitch would fill the frame with town and flatten the place.
 - The Bronx and Manhattan stand at window zoom 12.99 at 1440. Their plates are deep, so it does not
   matter to the picture, but a later camera change there should be re-measured.
+
+### The orchestrator's verification of §2 (2026-09-25)
+
+Re-run on the rebuilt :3102: tsc clean; vitest 2163 passed, 0 failed; the calibration probe on the
+re-rendered plates, Dutchess county, Putnam, Staten Island and Orange at 1440 and Dutchess county
+and Queens at 390: 0.00 px mean, p95 and max, with the plates drawing the same number of lights as
+the live map at every one (253, 96, 60, 281, 139, 278); the transition walk at 1440: 16 flights,
+the worst in-flight frame 7.2 ms, 0 over 34, the light layer 0.69 ms mean; the cold boot at 1440
+(medians of 3): the plate on 619 ms, the lights 769 ms, LCP 320 ms, 1953 KB. The hero and region
+plates are byte-identical to round 58's (git shows no change under public/plates for either).
+
+His test, taken cold on both sheets before reading the key: Poughkeepsie (5) is unmistakable at
+1440 (the grid, the Mid-Hudson Bridge and the Walkway side by side, the built mass); the Tappan
+Zee names 3 and 8; Central Park 11, Flushing Meadows and the runways 12, Prospect Park 13, the
+Verrazzano 14; Kingston's Rondout 4 and Newburgh's bay 6 read to someone who knows the valley;
+Putnam (7) reads as the reservoirs' lake district with Carmel's strip, which is what Putnam is;
+the Highlands chapter (2) by its gorge. Staten Island's camera trades lights in the window (60 at
+1440, 45 at 390, from 97 and 89) for the Verrazzano and St. George: accepted, the ask was
+recognition. The valley plates are lifted by a gain of 1.25 and the hillsides carry a moonlit
+sheen; the lights stay the brightest thing.
+
+Open from this verification: `public/plates` is 23 MB (from 11; the WebP fallbacks carry most of
+it); the boot fetched `/api/lights` twice in 2 of 3 runs (131 KB became 263), which the builder
+also saw and did not touch: the orchestrator is looking into it (the page preloads it with
+`crossOrigin: "anonymous"` and the client fetches it plain).
