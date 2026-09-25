@@ -225,19 +225,25 @@ export default async function HomePage() {
                   Search
                 </button>
               </form>
-              <p className={`rise rise-4 mt-5 flex flex-wrap gap-x-7 gap-y-3 text-[15px] ${halo}`}>
-                <Link
-                  href="/home-value"
-                  className={`inline-flex min-h-[24px] items-center text-ink underline decoration-line-strong underline-offset-[6px] hover:decoration-porchlight ${PRESS}`}
-                >
-                  What is my home worth?
-                </Link>
-                <Link
-                  href="/selling"
-                  className={`inline-flex min-h-[24px] items-center text-ink underline decoration-line-strong underline-offset-[6px] hover:decoration-porchlight ${PRESS}`}
-                >
-                  Sell with us
-                </Link>
+              {/* Round 58 (the owner's fifth verdict): the two links under the search "should be
+                  a small box or something to differentiate, so people know it's a clickable CTA".
+                  Two small boxed controls in the search box's own glass: 12 px radius (the
+                  buttons' step of the scale), a hairline, the night buttons' 15 px semibold, no
+                  arrow, 40 px tall (the tap floor and more), the border and the fill answering a
+                  hover, the porchlight ring answering the keyboard. */}
+              <p className="rise rise-4 mt-5 flex flex-wrap gap-x-3 gap-y-3">
+                {[
+                  { href: "/home-value", label: "What is my home worth?" },
+                  { href: "/selling", label: "Sell with us" },
+                ].map((c) => (
+                  <Link
+                    key={c.href}
+                    href={c.href}
+                    className={`inline-flex min-h-[40px] items-center rounded-xl border border-line-strong bg-night-deep/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night-deep/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
+                  >
+                    {c.label}
+                  </Link>
+                ))}
               </p>
               {/* What the lights are, said once and small, with the data's source: this is
                   listing data drawn on the land, so it carries the MLS credit the rails below
