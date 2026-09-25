@@ -29,6 +29,7 @@
 // the same credits as the live map (components/site/SceneCredit.tsx, public/images/ATTRIBUTIONS.md).
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import sharp from "sharp";
 
@@ -101,7 +102,7 @@ const RENDER = {};
  * most, where the light is, and the near-black land least: the town is the brightest ground, black
  * stays black, and the lights (drawn live, not graded) stay the brightest thing. Westchester
  * county and Staten Island, now grids edge to edge, as rendered. The territory and the tail are not re-encoded (their round 58 pictures stand). */
-const GRADE = {
+export const GRADE = {
   dutchess: { gain: 1.25 },
   highlands: { gain: 1.25 },
   westchester: { gain: 1.25 },
@@ -114,7 +115,7 @@ const GRADE = {
 };
 
 /** The grade applied on raw pixels: one lookup table, every channel. */
-async function graded(file, g) {
+export async function graded(file, g) {
   const { data, info } = await sharp(file).raw().toBuffer({ resolveWithObject: true });
   const curve = g.curve ?? 1, gain = g.gain ?? 1;
   if (curve !== 1 || gain !== 1) {
@@ -146,8 +147,11 @@ const AVIF_DENSE = 50;
 const wanted = SHOTS.filter((s) => !only || only.includes(s));
 const aspects = Object.keys(ASPECTS).filter((a) => !aspectOnly || a === aspectOnly);
 
-if (stage === "shoot" || stage === "all") await shoot();
-if (stage === "encode" || stage === "all") await encode();
+// Round 59: the flights' recorder (scripts/make-flights.mjs) imports SHOTS, GRADE and graded() from
+// here, so the stages run only when this file is the one node was asked to run.
+const isMain = !!process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isMain && (stage === "shoot" || stage === "all")) await shoot();
+if (isMain && (stage === "encode" || stage === "all")) await encode();
 
 async function shoot() {
   fs.mkdirSync(RAW, { recursive: true });
