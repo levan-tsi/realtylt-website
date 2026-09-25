@@ -2497,3 +2497,48 @@ territory on screen about two seconds after the page opens, sharp at every heigh
 smooth; a slow mobile line sees a still frame of the same map first and the live map at about
 13 to 15 s. Google's photographic map stays one setting away (`NEXT_PUBLIC_HOME_MAP=g3d`), the
 night flight too (`night`). No Google load on the home page; no key needed for it.
+
+## 11. The owner's fifth verdict (2026-09-24 night, verbatim) and the next session's direction
+
+> "This is definitely getting better, but still it needs a couple of seconds on the loading.
+> The first image is terrible; is it because it's local, or you're not doing something right?
+> And when you scroll down, when it goes place to place, it needs a couple of seconds to load,
+> and then some areas don't look that good. I've heard that type of transition animation is
+> done through a Higgsfield connection: it generates the pictures and then helps you with the
+> code to assemble. Maybe we could just generate pictures, or take pictures from Mac or
+> something, and load that with our geocoding on the specific areas, however much is good or
+> acceptable visually, not to overload everything. Idea-wise it's great and I like it, but it's
+> still way, way far from great, maybe 20 % of what I want design-wise. The idea is perfect,
+> we're going in the right direction, but loading that image first, and then every zoom takes
+> time to zoom in and give proper graphics, and I'm still not amazed. Also the lights of the
+> listings: a round yellow and the brightness around it is too big; it should be half, or even
+> less, if not nothing at all; those lights could use work as well. Below the search there's
+> 'Sell with us' and 'What's your home worth': that should be a small box or something to
+> differentiate, so people know it's a clickable CTA. Prepare everything for the handoff; I'll
+> clear the chat and start a new one, the same work, orchestrator disabled, Opus."
+
+**Answers.** (1) Not local: the first image is `public/images/home-night-cover.webp`, our own
+file, served instantly from any host; it looks terrible because round 13 photographed the map
+at webp quality 35 to keep it under 40 KB (a low-quality render is our mistake, not the
+machine's). (2) The seconds place to place are the map's vector and terrain tiles arriving from
+the tile host on every flight, the same locally and deployed; a live tile map cannot avoid
+that on a first visit. (3) "Some areas don't look that good" is the live style at those
+cameras: a shared style cannot be tuned per place; a picture per place can.
+
+**The direction he names, read as the plan: pre-rendered plates.** One high-quality picture
+per shot (the territory and every chapter and county: 17 plates), rendered ONCE at 2x from our
+own map and terrain with the style tuned per plate, delivered as avif/webp (about 100 to 200 KB
+each, the first with the page, the rest lazy by section), our lights drawn live on top by the
+plate's fixed-camera projection (exact by construction, hover and click as today), and the
+transitions as designed crossfades with a slow move (or short generated clips where they earn
+it), so nothing loads on a flight and every frame is the curated picture. The live map stays
+for interaction only (a pan or a zoom by the visitor swaps the plate for the live map at the
+same camera) or goes entirely; measured, not assumed. Generated pictures (the Higgsfield
+connector exists in the session) can dress a plate's atmosphere, never define geography: a
+light at a real address must sit on a real map, so plates are rendered from map data and
+only graded or enriched by generation.
+
+**Two small fixes first**, named by him: the light's glow halved or removed (the core stays, a
+tight halo at most, tuned by frames at the territory and Queens); the two lines under the
+search ("What is my home worth?", "Sell with us") become small boxed controls (12 px radius,
+a hairline, the site's type) so they read as clickable.
