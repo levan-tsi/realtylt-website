@@ -114,10 +114,110 @@ render (a light drawn by the live map and by the plate for the same home, same p
 of 50 and taps 30 of 30, contrast under the words, overflow at five widths, reduced motion, JS
 off, and the day pages byte-identical.
 
-## 4. What was built
+## 4. What was built (2026-09-25, one session, working directly)
 
-(filled in as the round proceeds)
+**The renderer** (`scripts/make-plates.mjs`). Two stages. `shoot` drives the running site's home
+page pinned on one shot (`?plate=<shot>`, added to `MlGround.tsx`; `?pr=` sets the map's pixel
+ratio; `?ground=ml` asks a plates page for the live map), everything but the map hidden, no
+lights, no cover, waits for every tile of the shot, photographs the map's box and records the
+camera, the map's 3D pixel matrix and its world size (raw PNG + JSON, gitignored). `encode`
+grades each raw picture with a per-shot curve, writes AVIF and WebP at the render's density and
+the one below (public/plates/, 136 files), generates the manifest
+`components/home/plates/plates.gen.ts` and the contact sheets `docs/design-r58/plates-*.jpg`.
+All 34 shot in 1 m 57 s; the encode about 3 minutes.
 
-## 5. Measured
+**The engine** (`components/home/plates/`). `plate-frame.ts` (pure, tested): which aspect a window
+shows (the page's 1024 px breakpoint), the `object-fit: cover` fit, the projector (the recorded
+matrix, then the fit), the range the window sees. `plate-motion.ts` (pure, tested): the fade over,
+the queue, the hurry, the settle's curve, the neighbours to warm. `plate-controller.ts`: two
+layers, each a picture with its own light canvas; the Web Animations for the fade (opacity), the
+settle (scale 1.04 to 1, ease-out) and the push (1 to 1.02); the decode-ahead cache; the click's
+fly-in as a scale about the home; a featured card's focus on the closest plate that holds the
+home with 48 px of room. `ml/engine.ts`: the surface both engines offer the ground; `MlController`
+implements it too, so `MlGround.tsx` drives either (the plates by default, `lib/home-map.ts`).
 
-(filled in as the round proceeds)
+**The page.** The first layer is server-rendered with the territory (`<picture>`: AVIF then WebP,
+tall or wide by media query, `sizes="100vw"`, `fetchpriority="high"`), preloaded with the
+document together with the lights' fetch; no map library, no tile host, no terrain PNG. With JS
+off the plate stands under the same shade the cover carried and the lights sentence leaves the
+page (`<noscript><style>`). The footer's credit names the same sources (the plates are pictures of
+that map). The elevation loads after the lights.
+
+**The grade.** The valley counties and the chapters over the valley take a 0.85 curve (the
+moonlit relief and the roads come up, the water stays black, the lights stay the brightest thing;
+0.72 turned the land a flat grey), Westchester county, Staten Island and the tail 0.9, the
+territory, the boroughs and the harbour as rendered (dense with hairlines; the approved black of
+the first screen). Taller terrain (exag 2.4, 3.2) and a finer DEM were compared on Ulster and
+Putnam and changed the relief only a little; the shared style stands. AVIF at quality 55
+(4:4:4), measured against the raw render of the territory: 189 KB at 2880 wide, a mean 1.9
+levels apart, p95 5 (the WebP fallback at 82: 229 KB, 2.0, 6).
+
+**Not done, on purpose.** The live map's CSP hosts stay (a removal is its own measured change).
+No long hold drift. No third aspect for tablets (a 768 x 1024 window takes the tall plate
+cropped; looked at, acceptable, noted). No generated imagery: none of the 34 plates needed
+dressing once graded.
+
+## 5. Measured (the running production build on this PC, headed Chrome; probes gitignored under `scripts/_scratch-r58-*`)
+
+**The projection is exact.** `_scratch-r58-calib.mjs`: every drawn light's position on the plates
+against the live map for the same homes at the same shot, 1440: hero 443 common lights, Queens
+754, Dutchess 328, Putnam 117: mean 0.00 px, p95 0.00, max 0.00. (The first cut stood 7.50 px
+off at every shot: the fit used `window.innerWidth`, which counts the scrollbar; the picture is
+fitted to the layer's box, which does not. The fit reads the box now.)
+
+**Nothing loads on a flight, and the frames say so.** `_scratch-r58-transition.mjs`, a walk
+through all 20 stops with a rAF logger: 1440: 4,315 frames, p50 6.9 ms, p95 7.1, p99 7.1; 15
+flights, the worst in-flight frame 27.8 ms, no in-flight frame over 34; the phone: p50 6.9, the
+worst in-flight 20.8. Two long frames outside any flight (97 and 49 ms at 1440, 49 and 35 on the
+phone) sit exactly at the probe's instant scroll jumps; `_scratch-r58-trace.mjs` (a Chrome trace
+of the same walk) finds 0 main-thread events of 25 ms or more, 209 image decodes totalling 230 ms
+off the main thread, the longest GC 10 ms: the jumps are the page's own raster of a new screen of
+content, the same on any ground (round 55 measured it on the night flight). The light layer's
+draw: mean 1.0 ms, max 5.2, 19 to 26 draws over the walk (it draws on landings and hovers, not
+per frame).
+
+**The cold first visit** (`_scratch-r58-boot.mjs`, three runs, medians). 1440 at 2x: the plate's
+bytes in at 86 to 271 ms, LCP 356 ms (the paragraph: Chrome does not count a full-viewport image
+as an LCP candidate), the plate on (the engine's reveal, after hydration) 732 ms, the lights
+drawn 788 ms, 1.84 MB in all (JS 378 KB, HTML 368, elevation 366, plates 228, fonts 153, lights
+131, images 134). The phone at 3x: reveal 813 ms, lights 936, LCP 360, 1.49 MB (the 1170 wide
+plate, 123 KB). Slow 4G: the plate on at 9.2 s and the lights with it (before the lights
+preload: 8.6 and 11.5 s); the live map's whole was 13 to 15 s. The remaining lever is the page's
+own weight (its HTML and script), as the round-57 handoff said.
+
+**Behaviour.** Hover over Queens (`_scratch-r57l-hover.mjs`): 50 of 50 pointer positions named
+the nearest light, hit test 0.017 ms mean; the click flew in and routed (817 ms). County row
+hover flew to Queens in 922 ms with its towns named; the row's click navigated; a featured card's
+focus lit its home and opened its label on the plate that holds it (`_scratch-r57l-behave.mjs`).
+Reduced motion: one 400 ms opacity fade, no scale, landed at 450 ms (`_scratch-r58-reduced.mjs`).
+JS off at 1440 and 390: the plate decoded and shown, the shade over the words, the lights
+sentence gone, the pointing claim hidden (`_scratch-r58-nojs.mjs`).
+
+**Words and widths.** Contrast under the words at every stop, both widths (`_scratch-r57l-contrast.mjs`):
+0 under the floor at 390; at 1440 the same two header pills the kit misreads since round 57
+("AI", "Connect"; not the ground's). Overflow 0 at 1440 / 390 / 320 and at 768 x 1024, 1024 x 768,
+1366 x 768, 1920 x 1080, each with its plate fitted and its lights on it (315 to 763 drawn).
+
+**Gates.** `tsc` clean; vitest 2123 to 2147 (147 to 151 files): the glyph's new truth, the
+plate frame, the motion, the manifest (both aspects of every shot, a 16-number matrix that puts
+the camera's centre within 1.5 px of the plate's middle, every file present), the ground's
+default.
+
+## 6. The close (2026-09-25)
+
+Commits, in order: `cbc1be2` the lights; `f9f491b` the boxed links; `4f9227e` the cover at 2x;
+`4010d6b` this record's first three sections; `8069212` the plates (the engine, the renderer, the
+manifest, 136 pictures); `19f0412` the lights preloaded and the elevation after them; the graded
+re-encode; this close. Branch `design/futuristic-r53`, nothing pushed: **his look comes first**
+(`docs/handoff/WEBSITE-R59-HANDOFF.md` §4), then his go for the push, which deploys the private
+noindex site.
+
+What he should look at, in this order: the first screen cold at :3102 (the territory plate with
+the lights arriving), a scroll top to bottom (every transition a fade over with a settle, no wait
+anywhere), the county rows under "Where we work" (the plates by hover), a hover over Queens' lights
+and a click (the push in, then the listing), the phone at 390; `?ground=ml` beside it for the live
+map on the same build, `?glow=0.12&halo=2` for round 57's lights.
+
+Left open, honestly (the handoff §5): the page's own weight on a slow line; a third aspect for
+tablets; the lights sentence visible from the server render for the second before the lights
+arrive; LCP being the paragraph; the carried items from round 57.

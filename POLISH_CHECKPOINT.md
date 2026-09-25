@@ -1,13 +1,17 @@
-# HANDOFF 2026-09-24 NIGHT: READ `docs/handoff/WEBSITE-R58-HANDOFF.md` §10 FIRST. START THERE.
+# ROUND 58 CLOSED 2026-09-25: THE PLATES ARE THE HOME PAGE. READ `docs/handoff/WEBSITE-R59-HANDOFF.md` FIRST.
 
-His fifth verdict (record §11): the idea is right, the execution is at 20 %: the first image is
-terrible (our cover at webp quality 35), every flight waits for tiles, some areas do not look
-good, the lights' glow is far too big, the two links under the search do not read as buttons.
-Next: the cover at full quality, the glow halved or gone, the CTAs as small boxes, then the
-PLATES round (one high-quality picture per shot from our own map, lights drawn live by the
-fixed camera, crossfade transitions, no tile loads). The next session runs on Opus, directly.
-Everything else in this file is history. vitest 2123, tsc clean, 206 commits over main, nothing
-pushed.
+His fifth verdict answered in one session, working directly (record `docs/parity/DESIGN-ROUND58.md`):
+the lights' halo halved and the glow off (`?glow=` / `?halo=` compare); the two links under the
+search are boxed controls; the cover re-rendered at 2x quality 82; then THE PLATES: seventeen
+pictures of our own night map, one per shot per aspect (34, AVIF + WebP, two widths, 11 MB in
+public/plates), rendered once by `scripts/make-plates.mjs` with the map's own projection matrix
+recorded, our lights drawn live on each (0.00 px against the live map at four shots), a fade over
+with a settle between them (every in-flight frame under 28 ms, a Chrome trace with 0 main-thread
+events over 25 ms), the territory plate server-rendered and preloaded as the first screen (the
+plate's bytes in at 86 ms, LCP 356 ms, the lights drawn at 0.8 s; no map library, no tile, no
+third host on the page), the live map kept as the renderer and behind `NEXT_PUBLIC_HOME_MAP=ml`.
+The valley plates graded (a 0.85 curve). tsc clean, vitest 2147, ~215 commits over main, NOTHING
+pushed: his look first. Everything below is history.
 
 ---
 
