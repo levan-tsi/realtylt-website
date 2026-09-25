@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { GLOW_ALPHA, NARROW_ANCHORS, WIDE_ANCHORS, coreProfile, featuredGlyph, glowProfile, glyphAdd, glyphAt, haloProfile, litGlyph } from "./glyph";
+import { GLOW_ALPHA, NARROW_ANCHORS, WIDE_ANCHORS, coreProfile, featuredGlyph, glowProfile, glyphAdd, glyphAt, haloProfile, litGlyph, reachOf } from "./glyph";
 import { densityGap } from "./cameras";
 
 /** Round 57.6: the light on our canvas, its size read continuously from the range (the tiers
@@ -28,8 +28,8 @@ describe("the light's glyph by range", () => {
     }
   });
 
-  it("meets every anchor exactly and holds past the ends", () => {
-    const w = (g: object) => ({ ...g, glowAlpha: GLOW_ALPHA });
+  it("meets every anchor exactly and holds past the ends (the glow off: its radius 0)", () => {
+    const w = (g: object) => ({ ...g, glow: 0, glowAlpha: 0 });
     for (const [r, g] of WIDE_ANCHORS) expect(glyphAt(r)).toEqual(w(g));
     for (const [r, g] of NARROW_ANCHORS) expect(glyphAt(r, { narrow: true })).toEqual(w(g));
     expect(glyphAt(1_000_000)).toEqual(w(WIDE_ANCHORS[WIDE_ANCHORS.length - 1][1]));
@@ -43,19 +43,49 @@ describe("the light's glyph by range", () => {
     expect(phone.core).toBeGreaterThan(far.core);
     expect(phone.haloAlpha).toBeGreaterThan(far.haloAlpha);
   });
+
+  /** Round 58, the owner's fifth verdict: "a round yellow and the brightness around it is too big;
+   * it should be half, or even less, if not nothing at all." The halo is half round 57.8's (which
+   * was 6 to 8 px on a laptop) and the glow is gone by default: a light's whole reach is under
+   * 4 px at every range, the core itself unchanged. */
+  it("round 58: the halo is at most 4 px and the light reaches no further (the glow off)", () => {
+    for (const narrow of [false, true]) {
+      for (const r of RANGES) {
+        const g = glyphAt(r, { narrow });
+        expect(g.halo).toBeLessThanOrEqual(4);
+        expect(g.halo).toBeGreaterThanOrEqual(3);
+        expect(g.glow).toBe(0);
+        expect(g.glowAlpha).toBe(0);
+        expect(reachOf(g)).toBe(g.halo);
+        expect(glyphAdd(g, g.halo + 0.01)).toEqual([0, 0, 0]);
+      }
+    }
+    expect(GLOW_ALPHA).toBe(0);
+  });
+
+  it("`?halo=` scales the halo's radius alone (the comparison's knob)", () => {
+    const g = glyphAt(40_000), h = glyphAt(40_000, { halo: 0.5 }), f = glyphAt(40_000, { halo: 2 });
+    expect(h.halo).toBeCloseTo(g.halo / 2);
+    expect(f.halo).toBeCloseTo(g.halo * 2);
+    expect(h.core).toBe(g.core);
+    expect(h.haloAlpha).toBe(g.haloAlpha);
+    expect(glyphAt(40_000, { halo: 0 })).toEqual(g);
+    expect(glyphAt(40_000, { halo: 1 })).toEqual(g);
+  });
 });
 
-describe("the neighbourhood glow (round 57.8: 'these houses kind of light up the neighbourhood')", () => {
+describe("the neighbourhood glow (round 57.8; off since round 58, kept for `?glow=`)", () => {
   const RANGES = [300_000, 145_000, 100_000, 72_500, 48_000, 35_000, 21_000, 5_000];
+  const ON = { glow: 0.12 };
 
   it("is a wide, soft, faint warm halo, its radius by the range, eased", () => {
     for (const narrow of [false, true]) {
-      const g = RANGES.map((r) => glyphAt(r, { narrow }));
+      const g = RANGES.map((r) => glyphAt(r, { narrow, ...ON }));
       for (let i = 1; i < g.length; i++) expect(g[i].glow).toBeGreaterThanOrEqual(g[i - 1].glow);
-      for (let r = 2_000; r < 200_000; r *= 1.02) expect(Math.abs(glyphAt(r, { narrow }).glow - glyphAt(r * 1.02, { narrow }).glow)).toBeLessThan(0.6);
+      for (let r = 2_000; r < 200_000; r *= 1.02) expect(Math.abs(glyphAt(r, { narrow, ...ON }).glow - glyphAt(r * 1.02, { narrow, ...ON }).glow)).toBeLessThan(0.6);
     }
     for (const r of RANGES) {
-      const g = glyphAt(r);
+      const g = glyphAt(r, ON);
       expect(g.glowAlpha).toBeGreaterThanOrEqual(0.08);
       expect(g.glowAlpha).toBeLessThanOrEqual(0.18);
       expect(g.glow).toBeGreaterThan(2.5 * g.halo);
@@ -64,21 +94,22 @@ describe("the neighbourhood glow (round 57.8: 'these houses kind of light up the
 
   it("reaches past the gap, so the glows of neighbours overlap into one warm ground", () => {
     for (const r of RANGES) {
-      expect(glyphAt(r).glow).toBeGreaterThanOrEqual(1.5 * densityGap(r));
-      expect(glyphAt(r, { narrow: true }).glow).toBeGreaterThanOrEqual(1.5 * densityGap(r, true));
+      expect(glyphAt(r, ON).glow).toBeGreaterThanOrEqual(1.5 * densityGap(r));
+      expect(glyphAt(r, { narrow: true, ...ON }).glow).toBeGreaterThanOrEqual(1.5 * densityGap(r, true));
     }
   });
 
-  it("takes a strength (the lab's three), held to 0.08..0.18", () => {
-    expect(GLOW_ALPHA).toBeGreaterThanOrEqual(0.08);
-    expect(GLOW_ALPHA).toBeLessThanOrEqual(0.18);
+  it("takes a strength (the lab's three), held to 0.08..0.18; 0 and the default are none", () => {
     expect(glyphAt(40_000, { glow: 0.18 }).glowAlpha).toBeCloseTo(0.18);
     expect(glyphAt(40_000, { glow: 0.5 }).glowAlpha).toBeCloseTo(0.18);
+    expect(glyphAt(40_000, { glow: 0.02 }).glowAlpha).toBeCloseTo(0.08);
     expect(glyphAt(40_000, { glow: 0 }).glowAlpha).toBe(0);
+    expect(glyphAt(40_000, { glow: 0 }).glow).toBe(0);
+    expect(glyphAt(40_000).glowAlpha).toBe(0);
   });
 
   it("adds a little warmth between the halo and the glow's edge, never more than its strength", () => {
-    const g = glyphAt(40_000);
+    const g = glyphAt(40_000, ON);
     const [r, gg, b] = glyphAdd(g, (g.halo + g.glow) / 2);
     expect(r).toBeGreaterThan(0);
     expect(r).toBeLessThanOrEqual(255 * g.glowAlpha);
@@ -89,7 +120,7 @@ describe("the neighbourhood glow (round 57.8: 'these houses kind of light up the
   });
 
   it("swells when the light is lit, in place", () => {
-    const g = glyphAt(40_000), l = litGlyph(g, 1);
+    const g = glyphAt(40_000, ON), l = litGlyph(g, 1);
     expect(l.glow).toBeGreaterThanOrEqual(1.4 * g.glow);
     expect(l.glowAlpha).toBeGreaterThan(g.glowAlpha);
     expect(litGlyph(g, 0)).toEqual(g);
@@ -137,6 +168,6 @@ describe("the profiles", () => {
     const [r, gg, b] = glyphAdd(g, 0);
     expect(r).toBeGreaterThan(b);
     expect(gg).toBeGreaterThan(b);
-    expect(glyphAdd(g, g.glow + 1)).toEqual([0, 0, 0]);
+    expect(glyphAdd(g, reachOf(g) + 1)).toEqual([0, 0, 0]);
   });
 });

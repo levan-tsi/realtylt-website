@@ -30,51 +30,55 @@ export interface Glyph {
 
 type Anchor = readonly [range: number, glyph: Omit<Glyph, "glowAlpha">];
 
-/** A laptop's lights by range (metres). Round 57.8: with three to four times the lights, 12 to 16
- * px apart, round 57.6's near halo (9 to 13 px at 0.54) would sum into a blob, so it tightens to a
- * bloom that makes the point read (6 to 8 px), and the reach moves to the GLOW: 20 px at the
- * territory to 32 px close in (about one and a half times the gap: the first build's 31 px at
- * Queens, 16 px apart, summed into a flat tan blanket), faint, so the glows of a street's homes overlap into lamplight on
- * the ground while each core still stands on its own. */
+/** A laptop's lights by range (metres). Round 58 (the owner's fifth verdict: "a round yellow and
+ * the brightness around it is too big; it should be half, or even less, if not nothing at all"):
+ * the halo is HALF round 57.8's (3 to 4 px, from 6 to 8), a tight bloom that makes the point read
+ * as a light and no more, and the neighbourhood glow is OFF by default (GLOW_ALPHA 0; its radii
+ * stay here for `?glow=`). The core is unchanged: the point itself was never the complaint. */
 export const WIDE_ANCHORS: readonly Anchor[] = [
-  [3_000, { core: 2.6, halo: 8, haloAlpha: 0.5, glow: 32 }],
-  [25_000, { core: 2.25, halo: 7, haloAlpha: 0.5, glow: 26 }],
-  [60_000, { core: 2.05, halo: 6.5, haloAlpha: 0.5, glow: 24 }],
-  [145_000, { core: 1.9, halo: 6, haloAlpha: 0.5, glow: 20 }],
+  [3_000, { core: 2.6, halo: 4, haloAlpha: 0.46, glow: 32 }],
+  [25_000, { core: 2.25, halo: 3.5, haloAlpha: 0.46, glow: 26 }],
+  [60_000, { core: 2.05, halo: 3.25, haloAlpha: 0.46, glow: 24 }],
+  [145_000, { core: 1.9, halo: 3, haloAlpha: 0.46, glow: 20 }],
 ];
 
 /** A phone's (round 57.3: the phone's territory lights were faint beside its words, so its far
  * lights are a touch larger and stronger; closer in the two meet). */
 export const NARROW_ANCHORS: readonly Anchor[] = [
-  [3_000, { core: 2.6, halo: 8, haloAlpha: 0.52, glow: 30 }],
-  [25_000, { core: 2.35, halo: 7.5, haloAlpha: 0.54, glow: 24 }],
-  [60_000, { core: 2.25, halo: 7, haloAlpha: 0.56, glow: 22 }],
-  [156_000, { core: 2.2, halo: 6.5, haloAlpha: 0.58, glow: 22 }],
+  [3_000, { core: 2.6, halo: 4, haloAlpha: 0.5, glow: 30 }],
+  [25_000, { core: 2.35, halo: 3.75, haloAlpha: 0.52, glow: 24 }],
+  [60_000, { core: 2.25, halo: 3.5, haloAlpha: 0.54, glow: 22 }],
+  [156_000, { core: 2.2, halo: 3.25, haloAlpha: 0.56, glow: 22 }],
 ];
 
-/** The glow's strength (chosen by frames at three strengths, 0.08 / 0.12 / 0.18, record §7 round 8;
- * the page's `?glow=` compares). */
-export const GLOW_ALPHA = 0.12;
+/** The glow's strength. Round 57.8 chose 0.12 by frames at three strengths (record §7 round 8);
+ * round 58 turned it OFF on the owner's word ("if not nothing at all"). `?glow=0.12` shows it for
+ * comparison; a non-zero strength is still held to 0.08..0.18. */
+export const GLOW_ALPHA = 0;
 const GLOW_MIN = 0.08;
 const GLOW_MAX = 0.18;
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 /** The light for a camera this far from its centre: interpolated in log range between the
- * anchors, held at the ends. `glow` is the glow's strength (0 = none; else held to 0.08..0.18). */
-export function glyphAt(rangeMetres: number, opts: { narrow?: boolean; glow?: number } = {}): Glyph {
+ * anchors, held at the ends. `glow` is the glow's strength (0 = none: the glow's radius is 0 too,
+ * so the light's reach is its halo; else held to 0.08..0.18). `halo` scales the halo's radius
+ * (1 = the anchors'; the page's `?halo=` compares, round 58). */
+export function glyphAt(rangeMetres: number, opts: { narrow?: boolean; glow?: number; halo?: number } = {}): Glyph {
   const A = opts.narrow ? NARROW_ANCHORS : WIDE_ANCHORS;
   const s = opts.glow ?? GLOW_ALPHA;
   const glowAlpha = s <= 0 ? 0 : Math.min(GLOW_MAX, Math.max(GLOW_MIN, s));
+  const hs = opts.halo !== undefined && opts.halo > 0 ? opts.halo : 1;
+  const finish = (g: Omit<Glyph, "glowAlpha">): Glyph => ({ ...g, halo: g.halo * hs, glow: glowAlpha > 0 ? g.glow : 0, glowAlpha });
   const r = Math.max(1, rangeMetres);
-  if (r <= A[0][0]) return { ...A[0][1], glowAlpha };
+  if (r <= A[0][0]) return finish(A[0][1]);
   const last = A[A.length - 1];
-  if (r >= last[0]) return { ...last[1], glowAlpha };
+  if (r >= last[0]) return finish(last[1]);
   let k = 1;
   while (A[k][0] < r) k++;
   const [r0, g0] = A[k - 1], [r1, g1] = A[k];
   const t = Math.log(r / r0) / Math.log(r1 / r0);
-  return { core: lerp(g0.core, g1.core, t), halo: lerp(g0.halo, g1.halo, t), haloAlpha: lerp(g0.haloAlpha, g1.haloAlpha, t), glow: lerp(g0.glow, g1.glow, t), glowAlpha };
+  return finish({ core: lerp(g0.core, g1.core, t), halo: lerp(g0.halo, g1.halo, t), haloAlpha: lerp(g0.haloAlpha, g1.haloAlpha, t), glow: lerp(g0.glow, g1.glow, t) });
 }
 
 /** THE LIGHT ANSWERS (round 57.3, now on the canvas): the hovered light, or the featured home whose

@@ -126,6 +126,8 @@ export class MlController {
       demTile?: number;
       demMaxzoom?: number;
       glow?: number;
+      /** The halo's radius as a scale of glyph.ts's (`?halo=`, round 58). */
+      halo?: number;
       cityGap?: number;
       /** The line is slow, known before the map is made (./slow-line.ts slowConnection): the flat
        * night map with the coarse territory. Otherwise the map watches its first vector tile. */
@@ -155,6 +157,7 @@ export class MlController {
         },
       });
       this.layer.glowStrength = opts.glow;
+      this.layer.haloScale = opts.halo;
     }
   }
 

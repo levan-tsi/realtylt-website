@@ -524,6 +524,7 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
       demTile: q.get("dem") ? Number(q.get("dem")!.split(":")[0]) || undefined : undefined,
       demMaxzoom: q.get("dem") ? Number(q.get("dem")!.split(":")[1]) || undefined : undefined,
       glow: num("glow"),
+      halo: num("halo"),
       cityGap: num("gap"),
       onReveal: () => {
         setRevealed(true);

@@ -129,6 +129,8 @@ export class LightLayer {
   avoid: Rect | null = null;
   /** The neighbourhood glow's strength (glyph.ts GLOW_ALPHA unless the page's `?glow=` says). */
   glowStrength: number | undefined = undefined;
+  /** The halo's radius as a scale of glyph.ts's (1 unless the page's `?halo=` says; round 58). */
+  haloScale: number | undefined = undefined;
 
   constructor(
     private canvas: HTMLCanvasElement,
@@ -289,7 +291,7 @@ export class LightLayer {
     this.xyCount = 0;
     if (!cam || this.w === 0) return;
     const range = cam.range > 1 ? cam.range : Math.max(500, cam.center.altitude / Math.max(0.2, Math.cos((cam.tilt * Math.PI) / 180)));
-    const g = glyphAt(range, { narrow: this.narrow(), glow: this.glowStrength });
+    const g = glyphAt(range, { narrow: this.narrow(), glow: this.glowStrength, halo: this.haloScale });
     this.glyph = g;
     const fr = cameraFrame(cam);
     const vp = { width: this.w, height: this.h, fov: cam.fov };
