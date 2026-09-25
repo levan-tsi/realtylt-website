@@ -249,3 +249,13 @@ clean, JS off works (the cover), day pages byte-identical, no em dashes in visit
 **His actions** stay as in §9: his look; the five missing seller articles; the stale
 `/website` command text (this file supersedes it); the MacBook look. The Maps key matters only
 for `/search` and the listing pages now.
+
+**Generation tools (his note 2026-09-24 night):** for the plates' pictures or transition clips
+use whatever is connected: the ElevenLabs creative tools in the session (`creative_generate_image`,
+`creative_generate_video`, `creative_edit_image`; every run lands on a flow he can open), the
+Higgsfield connector, or any other reachable generator. One rule stands: a generated picture
+may dress a plate (sky, haze, grading, a night city's texture), never define its geography;
+the lights at real addresses are drawn on a plate rendered from map data, and a generated
+plate is only used where our projection still lands every light on the right street (check
+with the calibration probe against the map render of the same camera). Record every generated
+asset's source and licence in `public/images/ATTRIBUTIONS.md`.
