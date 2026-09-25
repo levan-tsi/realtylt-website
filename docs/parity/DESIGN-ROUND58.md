@@ -221,3 +221,61 @@ map on the same build, `?glow=0.12&halo=2` for round 57's lights.
 Left open, honestly (the handoff §5): the page's own weight on a slow line; a third aspect for
 tablets; the lights sentence visible from the server render for the second before the lights
 arrive; LCP being the paragraph; the carried items from round 57.
+
+## 7. The owner's sixth verdict (2026-09-25, verbatim) and the next session's direction
+
+> "It definitely looks better now; on the loading, it loads faster. But when you switch the dots to
+> just white it kind of lost its brightness or vision on the city. Maybe make that yellow dots just
+> yellow, like a light, but don't give brightness around it, maybe just a little bit, like five,
+> ten percent, nothing more, or just a yellow dot. And also transitions: it was a smoother
+> transition before, in a way that it would move the map and go to that county where you are, but
+> now it just disappears and appears close to that one. Can we still do the transition? And also,
+> yeah, the map is definitely better loading at the moment, but the upper regions, the counties
+> such as Putnam and all of that, it just doesn't have any definition, and if there is no name you
+> might even not know which county it is. For example when you stand on Dutchess you don't see the
+> city or any buildings or street lines or anything, just highway lines and the river. And we need
+> it really, really good, high definition map, in a way that if you see it, even if there is no name
+> of Poughkeepsie or some other city, you would understand which city it is. A really, really good
+> high definition that is not loading too long. Prepare a handoff and I'll clear this chat and
+> start the new one. We need the same work type: Fable orchestrator, Opus builders."
+
+**What he approved.** The loading. The plates as the ground stand.
+
+**Three asks, with their causes.**
+
+1. **The lights read white and the city lost its glow.** Round 58 kept the core warm white
+   (255, 248, 236: `glyph.ts` CORE_RGB) and cut the halo to 3 to 4 px at 0.46; on the black plate
+   the warmth was in the halo, so the point now reads as white. He wants a YELLOW dot, "like a
+   light", with at most a 5 to 10 percent brightness round it, or none. The fix is in one file:
+   the core takes the light's own warmth (the halo's 255, 212, 158 or a touch deeper), the halo
+   goes to a whisper (alpha 0.05 to 0.10, about 1.5 to 2 core radii) or away, compared by frames
+   at the territory and Queens on both widths; the galaxy's rule holds (whitish-yellow, never a
+   saturated yellow; [[feedback-galaxy-gold-whitish-not-yellow]]).
+2. **The transition no longer moves the map.** Round 58 replaced the live map's flight (a
+   continuous camera move, 1.6 to 2.6 s, tiles arriving through it) with a fade over between two
+   plates. He liked the move. The options and their costs are in the round 59 handoff §0; the
+   recommendation is THE FLIGHT AS A FILM: each adjacent flight on the ladder recorded once from
+   the live map at the screen's density (16 forward, 16 back) with the camera's pixel matrix
+   recorded PER FRAME, played as a short muted clip between the two plates while our lights are
+   drawn live on it from the frame's matrix (exact, as on the plates), the fade over kept for the
+   non-adjacent jumps (a county row's hover) and for reduced motion. Nothing loads at the moment
+   of the move (the next clip is decoded ahead like the next plate); the pictures never depend on
+   the visitor's line.
+3. **No definition in the counties.** The plates are 2880 x 1800 and 1170 x 2532: the pixels are
+   there; what is missing is CONTENT. `components/home/ml/style.ts` draws minor roads from zoom 12
+   at alpha 0.16 fading in over a zoom, tertiary from 10 at 0.2, buildings from 13: a ladder tuned
+   so the LIVE map streamed few tiles. The county plates sit at zoom 12.1 to 12.6 (12 to 16 km),
+   where the street grid is all but invisible and a town is two highway lines and the river. A
+   plate is rendered once, so it can afford everything: a PLATE STYLE with the whole street grid
+   drawn at the county cameras (minor and service roads at a readable alpha, tertiary and
+   secondary brighter), residential and commercial land a shade up so a town reads as a place,
+   buildings from zoom 12, parks and water bodies, and the county cameras brought down to 8 to 10
+   km on their signature place (round 57.11's Google cameras were 6 to 9 km) so Poughkeepsie's grid,
+   its bridges and its river bend are recognisable with no name. The test is his sentence: a stop
+   with its names hidden (`?towns=0`, the county name covered) must still say which place it is.
+   The cost is bytes per plate (more lines, bigger AVIF: measure; 250 to 400 KB at 2880 is
+   acceptable for a lazy plate) and nothing else.
+
+**Process he named:** a Fable orchestrator with Opus builders, one at a time, the orchestrator
+verifying on the running build (the calibration probe at 0.00 px is the gate for any change to a
+plate or its camera; the frames, the trace, the cold boot, the contact sheet).

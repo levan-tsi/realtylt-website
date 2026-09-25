@@ -1,4 +1,18 @@
-# ROUND 58 CLOSED 2026-09-25: THE PLATES ARE THE HOME PAGE. READ `docs/handoff/WEBSITE-R59-HANDOFF.md` FIRST.
+# HIS SIXTH VERDICT 2026-09-25 (after round 58): READ `docs/handoff/WEBSITE-R59-HANDOFF.md` §0 FIRST. START THERE.
+
+"It definitely looks better now, it loads faster" (the plates stand). Three asks for round 59
+(record §7, verbatim): (1) the lights read WHITE now and the city lost its glow: a YELLOW dot like
+a light with at most 5 to 10 percent brightness round it, or none; (2) the transition no longer
+MOVES the map: bring the flight back (recommended: each adjacent flight recorded once as a short
+clip with the camera matrix per frame, our lights live on it; the fade over kept for jumps and
+reduced motion); (3) the counties have no DEFINITION (Dutchess = highway lines and the river):
+a plate style that draws the whole street grid, land and buildings at the county cameras, and the
+county cameras down to 8 to 10 km, so Poughkeepsie reads with no name. Process: Fable orchestrator,
+Opus builders one at a time, the orchestrator verifying. Nothing pushed.
+
+---
+
+# ROUND 58 CLOSED 2026-09-25: THE PLATES ARE THE HOME PAGE.
 
 His fifth verdict answered in one session, working directly (record `docs/parity/DESIGN-ROUND58.md`):
 the lights' halo halved and the glow off (`?glow=` / `?halo=` compare); the two links under the

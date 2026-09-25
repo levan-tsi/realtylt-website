@@ -1,9 +1,75 @@
 # Website round 59 handoff (written 2026-09-25 at the close of round 58)
 
-Read this first, then `docs/parity/DESIGN-ROUND58.md` (§3 the decisions, §4 what was built, §5
-what was measured), then `docs/handoff/WEBSITE-R58-HANDOFF.md` §9 and §10 only for how round 57
-ended (its "START HERE" is done). The `/website` command text is stale (a round-11 brief); this file
-and the memory's NEXT WEBSITE SESSION block carry the live order.
+Read this first, then `docs/parity/DESIGN-ROUND58.md` (§7 his sixth verdict verbatim with the
+causes, §3 the plates' decisions, §4 what was built, §5 what was measured). The `/website` command
+text is stale (a round-11 brief); this file and the memory's NEXT WEBSITE SESSION block carry the
+live order. The process he named for round 59: **a Fable orchestrator, Opus builders one at a time
+(`model: "opus"`, each to ~700k tokens, never closed early), the orchestrator re-verifying every
+builder's work on the running build before the next starts.**
+
+## 0. START HERE: his sixth verdict (2026-09-25) and the round 59 program
+
+He approved the loading and the plates as the ground. Three asks, in the order he gave them, each
+a builder's round; the causes are in the record §7.
+
+**Builder 1: the lights, yellow like a light.** `components/home/g3d/glyph.ts` only. The core
+takes the light's own warmth (start from the halo's 255, 212, 158; whitish-yellow, never a
+saturated yellow), the halo becomes a whisper at 5 to 10 percent (alpha 0.05 to 0.10, about 1.5
+to 2 core radii) or goes; the lit and featured glyphs follow; the cover script's numbers are the
+same file. Compare by frames at the territory and Queens at 1440 and 390 (the round 58 sheet:
+`scripts/_scratch-r58-sheet.mjs`; `?halo=` and a new `?core=` if it helps him compare), then
+re-render nothing (the lights are live). Tests: glyph.test.ts's colour and reach truths.
+
+**Builder 2: the county plates with definition.** Two things at once, because they are one
+picture: (a) a PLATE STYLE in `components/home/ml/style.ts` (a `plate: true` option, used only by
+the renderer's `?plate=` path): every road class drawn at the county zooms (minor and service at
+a readable alpha, no fade-in ladder), residential and commercial land a shade up, buildings from
+zoom 12, water bodies and parks, the shore and streams as now; (b) the eleven county cameras in
+`components/home/ml/shots.ts` brought down to 8 to 10 km on each signature place (`SIGNATURE` in
+`g3d/cameras.ts`; round 57.11 stood at 6 to 9 km on Google's map), the three valley chapters
+likely with them, the territory and the tail untouched. Then `node scripts/make-plates.mjs`
+(shoot, encode), the grade table re-judged (a denser plate may need less lift), the contact
+sheets, and HIS TEST: each county stop with `?towns=0` and the county's name covered must still
+say which place it is (Poughkeepsie's bridges and river bend, Kingston's Rondout, Newburgh's
+waterfront, Carmel's lakes, Nyack under the bridge, New Rochelle on the Sound). Measure the bytes
+per plate (250 to 400 KB at 2880 is acceptable, lazy) and re-run the calibration probe
+(`scripts/_scratch-r58-calib.mjs` must print 0.00 px: a camera change is safe only with the
+matrix re-recorded, which the script does). The live map's own style stays as it is (its ladder
+is for streaming).
+
+**Builder 3: the flight as a film (the transition that moves).** The recommendation, with the
+alternatives so the orchestrator can decide with him:
+
+- **Recommended: recorded flights.** For each adjacent pair on the ladder (hero to dutchess ...
+  harbour to region: 16 forward, 16 back), record the live map's own flight ONCE at the screen's
+  density (a Playwright screencast or CDP frame capture of `?ground=ml` flying from A to B, 30 or
+  60 fps, both aspects), encode as a short muted clip (WebM VP9 with an MP4 H.264 fallback, about
+  1.6 to 2.6 s, target 300 to 600 KB at 1440), and record the camera's pixel matrix PER FRAME
+  (the same `_pixelMatrix3D` the plates carry, 16 numbers a frame, a few KB a clip). At playback
+  the clip sits between the two plates: plate A fades to the clip's first frame (identical by
+  construction), the clip plays, plate B is under its last frame; our lights are drawn live on
+  the clip from the matrix of the frame at `video.currentTime` (exact, as on the plates). The next
+  and previous clips decode ahead like the plates. The fade over of round 58 stays for the
+  non-adjacent jumps (a county row's hover, a featured card's focus) and for reduced motion. Cost:
+  32 clips, roughly 12 to 20 MB in `public/flights/`, none loaded until its plate is near; the
+  renderer grows a `flights` stage; the controller grows a video layer and a per-frame projector.
+  Risks to measure: autoplay (muted, inline: allowed everywhere), the phone's decode, the sync
+  between the clip's frame and the lights (aim under one frame), the join at each end (the diff
+  between the clip's first frame and plate A must be under 3 levels, as the cover's was).
+- **Alternative: intermediate plates.** Three to five extra pictures along each adjacent flight,
+  played with the round 58 fade over and a scale toward the next (a flip book). Cheaper to build,
+  but the motion is stepped and 50 to 80 more pictures weigh as much as the clips.
+- **Alternative: the live map for flights only.** Bring `maplibre` back at the first scroll, fly
+  it between plates and swap to the plate on landing. It is the motion he liked, but every flight
+  streams tiles again (the very wait he rejected in his fifth verdict), 292 KB of library returns,
+  and the picture differs by line and machine. Only if the film fails.
+
+Order: builders 1 and 2 first (they change what every picture and light look like, and the
+clips must be recorded from the final style and cameras), builder 3 last. The orchestrator's gates
+after each: tsc, vitest (2147, only up), the calibration probe, the frames at all stops both
+widths, the cold boot (`_scratch-r58-boot.mjs`), the transition frames and trace
+(`_scratch-r58-transition.mjs`, `_scratch-r58-trace.mjs`), hover 50 of 50, contrast, overflow,
+reduced motion, JS off, and a LOOK at every frame. Nothing pushed without his go.
 
 ## 1. What round 58 did (one session, working directly, no builders)
 
