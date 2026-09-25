@@ -199,3 +199,53 @@ secondary sources because the JLC page blocks fetches (confirm against the repor
 NY DMV 10-day address and 30-day licence rules in the relocating post were confirmed from
 search snippets, not the DMV page; the 1031 post's commit message says the Form 8824
 safe-harbor text was added and it was not (the post is right, the message is wrong).
+
+## 10. START HERE for the next session (his order 2026-09-24 night: a fresh chat, Opus, working directly)
+
+His fifth verdict is in the record §11, verbatim, with the answers. In one line: the idea is
+right, the execution is at 20 % of what he wants: the first image is terrible (our cover was
+rendered at webp quality 35), every flight waits seconds for tiles, some areas do not look good,
+the lights' glow is far too big, and the two links under the search do not read as buttons.
+
+**Do these in this order, each verified on the running preview (frames, then his look):**
+1. **The cover at full quality.** `scripts/make-ml-cover.mjs` photographs the page at quality
+   35; render it at 2x and quality 80 plus (webp, or avif with a webp fallback), both widths,
+   and check the dissolve diff still under 3 levels; the first screen must look finished.
+2. **The glow halved or gone** (`components/home/g3d/glyph.ts` and `light-layer.ts`: the halo
+   radius and alpha by tier; `?glow=` compares). He said "half or even less, if not nothing at
+   all": ship the tight version, keep `?glow=0.12` for comparison, frames at the territory and
+   Queens both widths.
+3. **The two CTAs under the search** ("What is my home worth?", "Sell with us") as small boxed
+   controls: 12 px radius, a hairline border, the site's type, hover and focus states, no arrow
+   glyph; both widths; the tap target 24 px plus.
+4. **The plates round** (record §11): one high-quality picture per shot rendered once at 2x
+   from our own map with the style tuned per plate (17 plates: the territory and every chapter
+   and county), avif/webp, the first with the page and the rest lazy by section; the lights
+   drawn live on top by each plate's fixed-camera projection (`components/home/ml/geo.ts`);
+   transitions as crossfades with a slow move, no tile loads on any flight; the live MapLibre
+   map only when the visitor pans or zooms (swap at the same camera), or removed if the plates
+   alone reach his bar. Measure: total page weight, LCP, the first-fifteen-seconds probe (the
+   territory plate must be sharp within the page's own first paint), frames on every crossfade,
+   contrast, hover and tap probes, the cover-to-plate dissolve (the plate IS the cover now).
+   Generated imagery (the Higgsfield connector is in the session) may dress atmosphere, never
+   define geography: lights at real addresses need real map plates.
+5. **"Some areas don't look that good"**: with plates, tune each one by eye (water, land,
+   roads, terrain exaggeration, the county's lights) and keep a contact sheet of all 17.
+
+**How to run.** Worktree `C:\Users\Levan\realtylt-website-r53`, branch `design/futuristic-r53`
+(206 commits over `main`, nothing pushed; a push deploys and needs his go). ONE server on the
+shared `.next`: the production preview on :3102 (PowerShell: stop the listener, `npx next build`
+with `NODE_OPTIONS=--use-system-ca`, `RLT_LAB=1` and `npx next start -p 3102`), never a dev
+server beside it (it broke the preview's CSS for 25 minutes on 09-24). Foreground gates: `npx
+tsc --noEmit`, `npx vitest run` (2123, only up). Probes are gitignored `scripts/_scratch-r57*`
+(the round-13 set `_scratch-r57l-*`: lag with per-flight windows, boot, frames, contrast,
+calib, hover, see; block `/api/media/` and `/api/lead` by CDP, not by `route`, which disables
+the cache). Explicit git pathspecs, never `git add -A`; no `.env` files; keys never printed;
+CSP untouched except with a measured reason; never write TypeScript through a bash heredoc.
+Design: black ground, white type, warm-white lights the only warmth, no gradients, no new hues,
+radii 8/12/16/24, body 16 px plus on mobile, tap 24 px plus, focus 3:1 plus, reduced motion
+clean, JS off works (the cover), day pages byte-identical, no em dashes in visitor copy.
+
+**His actions** stay as in §9: his look; the five missing seller articles; the stale
+`/website` command text (this file supersedes it); the MacBook look. The Maps key matters only
+for `/search` and the listing pages now.

@@ -1,3 +1,16 @@
+# HANDOFF 2026-09-24 NIGHT: READ `docs/handoff/WEBSITE-R58-HANDOFF.md` §10 FIRST. START THERE.
+
+His fifth verdict (record §11): the idea is right, the execution is at 20 %: the first image is
+terrible (our cover at webp quality 35), every flight waits for tiles, some areas do not look
+good, the lights' glow is far too big, the two links under the search do not read as buttons.
+Next: the cover at full quality, the glow halved or gone, the CTAs as small boxes, then the
+PLATES round (one high-quality picture per shot from our own map, lights drawn live by the
+fixed camera, crossfade transitions, no tile loads). The next session runs on Opus, directly.
+Everything else in this file is history. vitest 2123, tsc clean, 206 commits over main, nothing
+pushed.
+
+---
+
 # ROUND 57 CLOSED 2026-09-24 EVENING (13 rounds): THE MAPLIBRE NIGHT MAP IS THE HOME PAGE; THE BLOG IS BACK. START HERE.
 
 Read `docs/handoff/WEBSITE-R58-HANDOFF.md` §9 first (the state, his actions, what is open), then
