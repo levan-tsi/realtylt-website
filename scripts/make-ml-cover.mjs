@@ -9,15 +9,17 @@
 // light layer (the same plan, count, gap and glow), the elevation under them loaded, then the map's
 // box screenshotted at the cover's pixel size:
 //
-//   wide: the laptop's css box, 1425 x 900 (1440 minus the scrollbar), at 1000 / 900 device pixels
-//         per css pixel = 1583 x 1000; shown with `bg-cover` in that box it is scaled by exactly 0.9;
+//   wide: the laptop's css box, 1425 x 900 (1440 minus the scrollbar), at 2 device pixels per css
+//         pixel = 2850 x 1800 (round 58: round 13's 1583 x 1000 at webp quality 35 was the "terrible"
+//         first image of the owner's fifth verdict; the first screen is the design, so it is
+//         photographed at the MacBook's density and a quality the eye cannot fault);
 //   tall: the phone's 390 x 844 at 2x = 780 x 1688.
 //
 // What is in the picture: OpenStreetMap data in OpenMapTiles tiles from OpenFreeMap, the AWS terrain
 // (USGS 3DEP, SRTM, GMTED2010, NOAA ETOPO1) as the moonlit relief, and our own listings as the lights.
 // The same credits as the live map (components/site/SceneCredit.tsx, public/images/ATTRIBUTIONS.md).
 //
-//   node scripts/make-ml-cover.mjs [--base=http://127.0.0.1:3102] [--only=wide|tall] [--q=35] [--headless]
+//   node scripts/make-ml-cover.mjs [--base=http://127.0.0.1:3102] [--only=wide|tall] [--q=82] [--headless]
 //
 // The server must be running the production build with the MapLibre ground (the default). No MLS Grid
 // call: `/api/media/` and `/api/lead` are blocked (the page's listing photos are not in the frame).
@@ -31,9 +33,9 @@ const flag = (k, d) => {
 };
 const base = flag("base", "http://127.0.0.1:3102");
 const only = flag("only", "");
-const quality = Number(flag("q", "35"));
+const quality = Number(flag("q", "82"));
 const SHOTS = [
-  { name: "wide", out: "public/images/home-night-cover.webp", vp: { width: 1440, height: 900 }, dpr: 1000 / 900, mobile: false },
+  { name: "wide", out: "public/images/home-night-cover.webp", vp: { width: 1440, height: 900 }, dpr: 2, mobile: false },
   { name: "tall", out: "public/images/home-night-cover-tall.webp", vp: { width: 390, height: 844 }, dpr: 2, mobile: true },
 ].filter((s) => !only || s.name === only);
 
