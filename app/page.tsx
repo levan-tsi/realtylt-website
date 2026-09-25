@@ -30,6 +30,14 @@ import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
 import { getActiveSaleCount, isDbConfigured } from "@/lib/idx/db";
 import { OG_DEFAULTS, SITE } from "@/lib/site";
 import type { ReactNode } from "react";
+import { EARLY_LIGHTS_KEY } from "@/lib/idx/lights-client";
+
+/** THE LIGHTS' EARLY FETCH (round 59): one line of script at the top of the page starts the fetch
+ * of /api/lights while the document is still parsing, ahead of the page's own bundle, and leaves
+ * the promise on the window for lib/idx/lights-client.ts to take (its `takeEarly`). The trailing
+ * catch keeps a failed early fetch from logging as unhandled; the client sees the failure itself
+ * and fetches again. With JavaScript off nothing runs and the plate stands as before. */
+const EARLY_LIGHTS = `window.${EARLY_LIGHTS_KEY}=fetch("/api/lights");window.${EARLY_LIGHTS_KEY}.catch(function(){});`;
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
@@ -96,10 +104,12 @@ export default async function HomePage() {
       const p = PLATES.hero[a];
       preload(plateSrc("hero", a, p.widths[0], "avif"), { as: "image", type: "image/avif", fetchPriority: "high", media: a === "tall" ? TALL_MEDIA : WIDE_MEDIA, imageSrcSet: plateSrcSet("hero", a, p, "avif"), imageSizes: "100vw" });
     }
-    // The lights (134 KB, cached an hour) asked for with the document too, not after hydration:
-    // measured cold at 1440, the fetch began at 678 ms and the lights were drawn at 1.0 s; the page's
-    // own script is what the lights wait for now.
-    preload("/api/lights", { as: "fetch", crossOrigin: "anonymous" });
+    // The lights (134 KB, cached an hour) are asked for with the document too, not after hydration:
+    // measured cold at 1440 (round 58), a fetch that began at 678 ms drew the lights at 1.0 s. Round
+    // 58 preloaded them here (`preload("/api/lights", { as: "fetch", crossOrigin: "anonymous" })`);
+    // round 59 measured that Chrome never matched the page's fetch to that preload (two full
+    // downloads on every cold visit, the second at ~550 ms), so the request is now started by the
+    // inline script at the top of the page (EARLY_LIGHTS) and taken by lib/idx/lights-client.ts.
   } else if (mapped) {
     preload(cover.tall, { as: "image", fetchPriority: "high", media: "(max-width: 1023px)" });
     preload(cover.wide, { as: "image", fetchPriority: "high", media: "(min-width: 1024px)" });
@@ -155,6 +165,7 @@ export default async function HomePage() {
     // the ground colour and below the content (z-10) without escaping into the footer.
     // `.nocturne` re-points the site's tokens to the night (app/globals.css).
     <div className="nocturne isolate relative">
+      {ground === "plates" || ground === "ml" ? <script dangerouslySetInnerHTML={{ __html: EARLY_LIGHTS }} /> : null}
       {/* `tail`: the flight does not stop where the page's sections do. Everything below them is
           the footer, and without a last leg the scene simply ended at the footer's top edge —
           a straight line straight through the middle of the region shot. The camera holds the
