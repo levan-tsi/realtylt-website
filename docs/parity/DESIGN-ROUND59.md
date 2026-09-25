@@ -603,3 +603,66 @@ second in flight neither shows; the plates the films land on are unchanged.
   GPU), iOS Safari's MP4 path (built, served, stubbed; no iPhone here), Firefox.
 - Scratch on disk, gitignored: the lossless masters (4.1 GB) and sample raw frames (1.3 GB) under
   `scripts/_scratch-r57/58/flights/`, kept for a re-encode; the orchestrator deletes them.
+
+## §4 The orchestrator's verification of §3 and the round's close (2026-09-25)
+
+**Verified on the final build (:3102, built after the last engine change), nothing else running.**
+tsc clean; vitest 2189 passed, 0 failed (2147 at the round's start: +6 the lights, +10 the plates,
++3 the lights fetched once, +23 the film). The transition walk at 1440 (round 58's cadence, a stop
+every 1.5 s): 4,333 frames, p50 6.9 ms, p95 7.1, p99 7.2; the worst in-flight frame 34.7 ms in the
+flight to Staten Island where the probe's instant scroll jump lands mid-film (the 90 ms frame is
+the same jump on a still, as in round 58); a visitor's scroll is not an instant jump. Hover at
+Queens 50 of 50 alone. The mid-flight frames looked at (`scripts/_scratch-r57/58/flights/cast/`):
+the map moves again, Poughkeepsie's grid wheeling away and the river turning under the camera to
+Newburgh, Flushing sliding off as the map rotates onto Brooklyn, the lights riding the streets.
+The crf 46 crop beside crf 40 (`flights/look/qb-wide-crf40-vs-46.png`): the far side streets go
+from faint lines to haze, the near grid and the main roads read; in motion at 1x it passes, and
+the lossless masters stay on disk for a re-encode after his look.
+
+**Three decisions taken by the orchestrator, with their evidence.**
+1. **The bytes.** The first encode (both codecs, both aspects) was 88.5 MB in `public/flights`,
+   four times the handoff's estimate, and was committed. The decision: one codec an aspect, VP9
+   WebM for the laptop (only Safari before 14.1, April 2021, lacks it; it fades) and H.264 MP4 for
+   the phone (iOS Safari plays WebM only from iOS 15, in hardware only from the A14, and crashes on
+   pages holding several WebM video elements; H.264 decodes in hardware on every phone; sources in
+   §3), at crf 46 and 30. Result 30.1 MB (64 clips, 32 matrix files): a read that stops at every
+   stop fetches 6.4 MB on a laptop and 9.1 MB on a phone, a quick read 3.0 MB, and no clip is in
+   the first screen. The history was then rewritten (nothing was pushed): the film's six commits
+   became three, and the branch carries the final clips only; the tree was proven identical to the
+   pre-rewrite head by an empty diff before the safety tag was removed.
+2. **The lights fetched once** (`27f579f`, §2's open item): round 58's `<link rel="preload"
+   as="fetch">` for `/api/lights` was never matched by the client's fetch on Chrome (a request-level
+   probe: two network fetches with their own timings on every cold visit, 136 KB twice, the lights
+   waiting for the second at ~550 ms). Replaced by one line of inline script at the top of the
+   page that starts the fetch with the document and leaves the promise on the window, taken once
+   by `lib/idx/lights-client.ts`; measured after: one request per visit, from the script at ~100 ms.
+   Three tests. The site's CSP allows the inline script (`'unsafe-inline'`, no nonce).
+3. **The dissolves at the film's ends** (builder 3's deviation, accepted): the encode puts the
+   on-screen joins at 2.75 to 7.65 levels (worst on the Queens and Brooklyn grids at 2x), so the
+   film's first frame dissolves in over plate A for 140 ms while both are still and its last frame
+   dissolves out onto plate B for 180 ms; looked at frame by frame, no visible step. It adds 320 ms
+   to a transition of 1.6 to 2.6 s.
+
+**Two instrument findings, recorded so the next session does not chase them.** A pointer probe
+run beside another headed Chrome under-counts (15 of 50 and 14 of 50 in two such runs across the
+round; 50 of 50 alone every time). The hover probe's phone mode dies at Queens because its hide tap
+aims at the hero's heading, off screen there, so a later tap lands on the open label, which opens
+the listing by design; at the territory 30 of 30 taps pass.
+
+**The state at the close.** Branch `design/futuristic-r53`, about 235 commits over `main`, NOTHING
+pushed. `public/plates` 23.7 MB (136 files), `public/flights` 30.1 MB (96 files). Scratch on disk,
+gitignored: the lossless masters (4.1 GB, `scripts/_scratch-r57/58/flights/master/`, kept for a
+re-encode at another crf after his look) and the screencasts and crops (`cast/`, `look/`); the
+raw frames, the join and end renders (1.7 GB) deleted. The PC's disk is 97 percent full (16 GB
+free of 466): `scripts/_scratch-r57/` holds 8.8 GB of this and earlier rounds' frames.
+
+**Open, in the order a visitor would notice.** The film's weight on a phone (9.1 MB over a full
+read, lazy, never blocking; his call between crf and motion). The 1440 clip is softer than the
+2880 plate on a 2x screen (the MacBook); the dissolves carry the change. Mid-flight, from about
+0.7 to 1.3 s of a county flight, few lights are on screen (plate A's have left, plate B's are
+fading in: the live map's own rule). A second film of a visit can open with one 27 to 118 ms
+frame inside its still dissolve (a second hardware decoder starting). The first move up the page
+fades (the back films are warmed once the visitor turns). Not verified on real devices: an
+iPhone's MP4 path and its decoder, Safari, Firefox. Carried: `public/plates` at 23.7 MB (the WebP
+fallbacks), the tablet aspect, the page's own weight on a slow line, the blog template's alt text
+and covers, the five seller articles, the 320 tap label overlap.

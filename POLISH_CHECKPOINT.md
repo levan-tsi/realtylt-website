@@ -1,4 +1,26 @@
-# HIS SIXTH VERDICT 2026-09-25 (after round 58): READ `docs/handoff/WEBSITE-R59-HANDOFF.md` §0 FIRST. START THERE.
+# ROUND 59 CLOSED 2026-09-25: YELLOW LIGHTS, COUNTY PLATES WITH DEFINITION, THE FLIGHT AS A FILM. READ `docs/handoff/WEBSITE-R60-HANDOFF.md` §0 FIRST. START THERE.
+
+His sixth verdict answered in full (record `docs/parity/DESIGN-ROUND59.md`, a Fable orchestrator
+with three Opus builders one at a time, each verified on the running build): (1) the lights are
+yellow like a lamp (core 255, 212, 158, halo 0.08, no glow; `?core=` and `?ha=` compare); (2) the
+county plates draw the whole street grid, the built land and the buildings at 9 to 10 km (a plate
+style + lower cameras + THE DEEP RENDER, one zoom deeper with the same ground; calibration 0.00 px
+at every plate with the live map's light counts; his names-off test passes on Poughkeepsie and the
+rest, Putnam by its lakes); (3) the transition MOVES again: the sixteen adjacent flights recorded
+frame by frame from the live map with the camera matrix per frame, our lights riding the clip at
+0.00 px, VP9 for the laptop and H.264 for the phone, 64 clips, 30.1 MB, decoded ahead, the fade
+over kept for jumps, reduced motion and a codec the browser lacks (`?film=0` compares). Also: the
+lights are fetched ONCE (round 58's preload never matched; an inline early fetch). vitest 2189,
+tsc clean, the walk p50 6.9 ms, boot 635 / 664 / 268 ms. ~235 commits over main, NOTHING pushed;
+the film's history rewritten before any push so the branch carries the final clips only (an 88 MB
+first encode is not in it). HIS LOOK FIRST at :3102, then his go. Open: the film's weight on a
+phone (9.1 MB a full read) and its softness at 2x (masters kept for a re-encode), few lights
+mid-flight, the first move up fades, real iPhone / Safari / Firefox unverified, the disk at 97
+percent. Everything below is history.
+
+---
+
+# HIS SIXTH VERDICT 2026-09-25 (after round 58): READ `docs/handoff/WEBSITE-R59-HANDOFF.md` §0 FIRST.
 
 "It definitely looks better now, it loads faster" (the plates stand). Three asks for round 59
 (record §7, verbatim): (1) the lights read WHITE now and the city lost its glow: a YELLOW dot like
