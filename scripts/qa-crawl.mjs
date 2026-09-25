@@ -13,6 +13,14 @@ const check = (name, ok, detail = '') => {
 };
 
 const browser = await chromium.launch();
+// The MLS media proxy is never asked for by a probe (rate-limit and suspension history; CLAUDE.md):
+// every context aborts /api/media/ and the lead post.
+const _newContext = browser.newContext.bind(browser);
+browser.newContext = async (...args) => {
+  const ctx = await _newContext(...args);
+  await ctx.route(/\/api\/(media|lead)/, (r) => r.abort());
+  return ctx;
+};
 
 // ---- 1. collect internal hrefs from every page, then HEAD/GET each once ----
 {
@@ -65,7 +73,8 @@ const browser = await chromium.launch();
     const expected = new Set((await api(`county=${c}&pageSize=60`)).map((l) => l.id));
     await page.goto(`${base}/top-areas/${c}`, { waitUntil: 'load' });
     await page.waitForTimeout(900);
-    const shown = await page.evaluate(() => [...new Set([...document.querySelectorAll('a[href^="/listing/"]')].map((a) => a.getAttribute('href').split('/').pop()))]);
+    // Listing links are /homes-for-sale/<state>/<city>/<zip>/<address>/bid-38-<id> (lib/idx/listing-url.ts).
+    const shown = await page.evaluate(() => [...new Set([...document.querySelectorAll('a[href^="/homes-for-sale/"], a[href^="/listing/"]')].map((a) => a.getAttribute('href').split('/').pop().replace(/^bid-38-/, '')))]);
     const wrong = shown.filter((id) => !expected.has(id));
     check(`county /top-areas/${c}: ${shown.length} cards all in-county`, shown.length > 0 && wrong.length === 0, wrong.join(','));
   }
