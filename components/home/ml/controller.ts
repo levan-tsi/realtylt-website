@@ -25,7 +25,7 @@ import type { FeaturedHome, Homes } from "../g3d/controller";
 import { FLY_IN_DEPTH, FLY_IN_MS } from "../g3d/interaction";
 import { matrixFrame, mercX, mercY, mlFrame, projectMl, rangeForZoom, zoomForRange, type MlCamera, type MlFrame } from "./geo";
 import { flightMs, lensFor, mlShot } from "./shots";
-import { COARSE, EXAGGERATION, MAPLIBRE_URL, nightStyle } from "./style";
+import { COARSE, EXAGGERATION, MAPLIBRE_URL, deepDemMaxzoom, nightStyle, type PlateOpt } from "./style";
 import { FIRST_TILE_BUDGET_MS, slowFirstTile } from "./slow-line";
 import type { GroundEngine } from "./engine";
 
@@ -139,6 +139,11 @@ export class MlController implements GroundEngine {
       /** The map's pixel ratio (`?pr=`, round 58: the plate renderer draws a phone plate at 3). The
        * page's own is the screen's, held to 2. */
       pixelRatio?: number;
+      /** Round 59: the plate style (style.ts PlateOpt), for the plate renderer's pinned shot only. */
+      plate?: PlateOpt | false;
+      /** The camera centre's height, metres as drawn, held instead of clamped to the terrain
+       * (`?elev=`, the deep plate render only). */
+      centerElevation?: number;
       /** The line is slow, known before the map is made (./slow-line.ts slowConnection): the flat
        * night map with the coarse territory. Otherwise the map watches its first vector tile. */
       slow?: boolean;
@@ -196,7 +201,7 @@ export class MlController implements GroundEngine {
         container: host,
         style: (this.opts.slow
           ? nightStyle({ terrain: false, hillshade: false, buildings: this.opts.buildings, coarse: COARSE })
-          : nightStyle({ terrain: this.opts.terrain, buildings: this.opts.buildings, hillshade: this.opts.hillshade, exaggeration: this.exaggeration || undefined, demTile: this.opts.demTile, demMaxzoom: this.opts.demMaxzoom })) as StyleSpecification,
+          : nightStyle({ terrain: this.opts.terrain, buildings: this.opts.buildings, hillshade: this.opts.hillshade, exaggeration: this.exaggeration || undefined, demTile: this.opts.demTile, demMaxzoom: this.opts.plate && this.opts.plate.deep ? deepDemMaxzoom(first.zoom, this.opts.demMaxzoom) : this.opts.demMaxzoom, plate: this.opts.plate })) as StyleSpecification,
         center: [first.lng, first.lat],
         zoom: first.zoom,
         pitch: first.pitch,
@@ -216,6 +221,13 @@ export class MlController implements GroundEngine {
     }
     this.map = map;
     map.setVerticalFieldOfView(first.fov);
+    // Round 59, the deep plate: its centre's height is the one the plain render reported (read by the
+    // renderer in a plain pass first). The map sets it from whichever terrain level has arrived when
+    // it clamps, which is not the same level one zoom deeper (measured 10 m apart at Newburgh: 0.9 px).
+    if (this.opts.centerElevation != null) {
+      map.setCenterClampedToGround(false);
+      map.setCenterElevation(this.opts.centerElevation);
+    }
     this.st.createdAt = Math.round(performance.now());
     // The cover's longest hold: past it the map is shown as far as it has drawn. If it has drawn
     // nothing yet (a slow line: round 57.13 measured the first tile at 18 s on Slow 4G), the cover,

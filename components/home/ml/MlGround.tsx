@@ -646,6 +646,13 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
       demTile: q.get("dem") ? Number(q.get("dem")!.split(":")[0]) || undefined : undefined,
       demMaxzoom: q.get("dem") ? Number(q.get("dem")!.split(":")[1]) || undefined : undefined,
       pixelRatio: num("pr"),
+      // Round 59: a pinned shot is a plate being rendered, so it takes the plate style (style.ts
+      // PLATE_ROADS: the whole street grid, the built land a shade up, buildings from zoom 12);
+      // `?pstyle=0` shows it in the live style for comparison, `?deep=1` marks the deep render (twice
+      // the css size, one zoom deeper: the style keeps its lines the picture's size).
+      plate: pin && q.get("pstyle") !== "0" ? { deep: q.get("deep") === "1" } : undefined,
+      // `?elev=` holds the deep render's centre at the plain render's height (controller.ts).
+      centerElevation: pin ? num("elev") : undefined,
       onReveal: () => {
         setRevealed(true);
         mapState.current = "live";

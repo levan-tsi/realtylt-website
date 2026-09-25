@@ -82,4 +82,14 @@ describe("the plate's projector", () => {
     expect(plateRange(p, { s: 1, ox: 0, oy: 0 })).toBeCloseTo(r0);
     expect(plateRange(p, { s: 4 / 3, ox: 0, oy: 0 })).toBeCloseTo(r0 * 0.75);
   });
+  it("a deep plate (round 59: twice the css size, one zoom deeper) gives the window the plain plate's range", () => {
+    const plain = plate(1440, 900);
+    const deep: Plate = { ...plate(2880, 1800), cam: { ...plain.cam, zoom: plain.cam.zoom + 1 }, k: 2 };
+    const vp = { width: 1440, height: 900 };
+    expect(plateRange(deep, coverFit(deep, vp))).toBeCloseTo(plateRange(plain, coverFit(plain, vp)), 6);
+    const big = { width: 1920, height: 1080 };
+    expect(plateRange(deep, coverFit(deep, big))).toBeCloseTo(plateRange(plain, coverFit(plain, big)), 6);
+    // without its k the deep plate would read as twice as far (the bug the calibration probe caught)
+    expect(plateRange({ ...deep, k: undefined }, coverFit(deep, vp))).toBeCloseTo(2 * plateRange(plain, coverFit(plain, vp)), 6);
+  });
 });

@@ -26,6 +26,9 @@ export interface Plate {
   /** The map's world size and 3D pixel matrix for that camera (geo.ts projectMl, kind "matrix"). */
   ws: number;
   m: readonly number[];
+  /** Round 59: the render's css size over the window's it was composed for (1440 x 900, 390 x 844):
+   * 2 for a deep render (twice the css size, one zoom deeper, the same ground), absent for 1. */
+  k?: number;
 }
 
 export type PlateManifest = Record<ShotName, Record<PlateAspect, Plate>>;
@@ -75,9 +78,10 @@ export function plateProjector(plate: Plate, fit: CoverFit): Projector {
 
 /** The eye's distance from the plate's centre as the window sees it, metres: the render's range
  * over the fit's scale (a window that enlarges the picture is a nearer eye), the number the glyph
- * and the light counts are tuned in (glyph.ts, cameras.ts). */
+ * and the light counts are tuned in (glyph.ts, cameras.ts). A deep plate shown at half its css size
+ * is not a further eye: the fit is read against the window the plate was composed for (`k`). */
 export function plateRange(plate: Plate, fit: CoverFit): number {
-  return rangeForZoom(plate.cam.zoom, plate.cam.lat, plate.h, plate.cam.fov) / Math.max(1e-6, fit.s);
+  return rangeForZoom(plate.cam.zoom, plate.cam.lat, plate.h, plate.cam.fov) / Math.max(1e-6, fit.s * (plate.k ?? 1));
 }
 
 /** The window's part of the plate, in the plate's css pixels (what is on screen; a light outside it

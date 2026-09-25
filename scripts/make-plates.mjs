@@ -13,10 +13,13 @@
 //   encode  grades each raw picture (GRADE, per shot, by eye), writes it as AVIF and WebP at its
 //           full and its lower density (public/plates/), and generates the manifest
 //           components/home/plates/plates.gen.ts from the recorded JSONs, plus a contact sheet
-//           (docs/design-r58/plates-<aspect>.jpg) for the record.
+//           (docs/design-r59/plates-<aspect>.jpg, of the plates encoded that run) for the record.
 //
 //   node scripts/make-plates.mjs [--stage=shoot|encode|all] [--only=hero,queens] [--aspect=wide|tall]
-//                                [--base=http://127.0.0.1:3102] [--headless]
+//                                [--base=http://127.0.0.1:3102] [--headless] [--deep=1]
+//
+// Round 59: the county, chapter and harbour plates are DEEP renders (`--deep=1`, see below); the
+// territory and the tail are plain. Re-render a deep shot with `--deep=1 --only=<shots>`.
 //
 // The server must be running the production build with the MapLibre ground reachable
 // (`NEXT_PUBLIC_HOME_MAP` unset or `ml`... the ground the page draws is decided by lib/home-map.ts;
@@ -42,10 +45,17 @@ const headless = process.argv.includes("--headless");
 const renderAll = flag("render", "");
 const rawDir = flag("raw", "");
 
+/** Round 59, THE DEEP RENDER: the same shot at twice the css size and device scale 1 (the phone's at
+ * 1.5), so the device pixels are the same but the map stands one zoom deeper for the same range and
+ * fetches tiles one level finer (z14 at the 9 km county cameras: the buildings). The plate style
+ * keeps its lines the picture's size (`?deep=1`, style.ts plateLayers). The manifest records the
+ * render's own css size (2880 x 1800), and the page's fit (max(vw / W, vh / H)) shows it at 0.5. */
+const deep = flag("deep", "0") === "1";
+
 const RAW = rawDir || "scripts/_scratch-r57/58/plates/raw";
 const OUT = "public/plates";
 const GEN = "components/home/plates/plates.gen.ts";
-const SHEETS = "docs/design-r58";
+const SHEETS = "docs/design-r59";
 
 /** The page's shots, in the order a reader meets them (components/home/night/shots.ts FLIGHT and
  * AREA_FLIGHT; the MapLibre cameras are components/home/ml/shots.ts ML_SHOTS). */
@@ -53,10 +63,15 @@ export const SHOTS = ["hero", "dutchess", "highlands", "westchester", "ulster", 
 
 /** The two aspects: the laptop (1440 x 900 css at 2x) and the phone (390 x 844 css at 3x). The
  * lower density each is also written at (1x and 2x) is the same picture resized. */
-export const ASPECTS = {
-  wide: { vp: { width: 1440, height: 900 }, dpr: 2, mobile: false, widths: [2880, 1440] },
-  tall: { vp: { width: 390, height: 844 }, dpr: 3, mobile: true, widths: [1170, 780] },
-};
+export const ASPECTS = deep
+  ? {
+      wide: { vp: { width: 2880, height: 1800 }, dpr: 1, mobile: false, widths: [2880, 1440] },
+      tall: { vp: { width: 780, height: 1688 }, dpr: 1.5, mobile: true, widths: [1170, 780] },
+    }
+  : {
+      wide: { vp: { width: 1440, height: 900 }, dpr: 2, mobile: false, widths: [2880, 1440] },
+      tall: { vp: { width: 390, height: 844 }, dpr: 3, mobile: true, widths: [1170, 780] },
+    };
 
 /** Per-shot render overrides (the page's own query switches: exag, dem, hillshade, buildings).
  * Compared on Ulster and Putnam (scripts/_scratch-r57/58/plates/variant-sheet.png): a taller
@@ -76,18 +91,25 @@ const RENDER = {};
  * the brightest thing (0.72 turned the land a flat grey and lost the night); the chapters over the
  * valley take the same; the two edge plates a lighter touch; the territory, the boroughs and the
  * harbour, dense with hairlines already, are left as rendered, so the first screen and the city keep
- * the approved black. */
+ * the approved black.
+ *
+ * Round 59: the county and chapter plates are denser (the plate style's whole street grid, the deep
+ * render's z14 tiles), and the grid itself now carries a town. Compared at 1.0, 0.92 and 0.85 on
+ * Dutchess county and Putnam (scripts/_scratch-r59/2/grade-*.jpg): 0.85 turned the hillsides grey
+ * round the streets and the grid lost its edge; 0.92 kept the land darker but the streets dim. A
+ * linear gain of 1.25 with no curve (gain-dc.jpg: 0.92, 1.3 and 1.0 against it) lifts the streets
+ * most, where the light is, and the near-black land least: the town is the brightest ground, black
+ * stays black, and the lights (drawn live, not graded) stay the brightest thing. Westchester
+ * county and Staten Island, now grids edge to edge, as rendered. The territory and the tail are not re-encoded (their round 58 pictures stand). */
 const GRADE = {
-  dutchess: { curve: 0.85 },
-  highlands: { curve: 0.85 },
-  westchester: { curve: 0.85 },
-  ulster: { curve: 0.85 },
-  "dutchess-county": { curve: 0.85 },
-  orange: { curve: 0.85 },
-  putnam: { curve: 0.85 },
-  rockland: { curve: 0.85 },
-  "westchester-county": { curve: 0.9 },
-  "staten-island": { curve: 0.9 },
+  dutchess: { gain: 1.25 },
+  highlands: { gain: 1.25 },
+  westchester: { gain: 1.25 },
+  ulster: { gain: 1.25 },
+  "dutchess-county": { gain: 1.25 },
+  orange: { gain: 1.25 },
+  putnam: { gain: 1.25 },
+  rockland: { gain: 1.25 },
   region: { curve: 0.9 },
 };
 
@@ -115,6 +137,11 @@ async function graded(file, g) {
  * 137 KB at 2.2 / 7 and softens the hairlines' edges (p99.9 23). WebP: the fallback. */
 const AVIF = { quality: 55, effort: 5, chromaSubsampling: "4:4:4" };
 const WEBP = { quality: 82, effort: 6, smartSubsample: true };
+/** Round 59: a plate is lazy (decoded ahead of the scroll), so 250 to 400 KB at 2880 is the budget
+ * the owner's brief accepts; one over 450 KB at quality 55 is written at 50 (measured on the dense
+ * borough plates, the record's §2). */
+const AVIF_CAP = 450 * 1024;
+const AVIF_DENSE = 50;
 
 const wanted = SHOTS.filter((s) => !only || only.includes(s));
 const aspects = Object.keys(ASPECTS).filter((a) => !aspectOnly || a === aspectOnly);
@@ -125,9 +152,9 @@ if (stage === "encode" || stage === "all") await encode();
 async function shoot() {
   fs.mkdirSync(RAW, { recursive: true });
   const browser = await chromium.launch({ channel: "chrome", headless });
-  for (const aspect of aspects) {
-    const A = ASPECTS[aspect];
-    const ctx = await browser.newContext({ viewport: A.vp, deviceScaleFactor: A.dpr, isMobile: A.mobile, hasTouch: A.mobile });
+  const errors = [];
+  const open = async (vp, dpr, mobile) => {
+    const ctx = await browser.newContext({ viewport: vp, deviceScaleFactor: dpr, isMobile: mobile, hasTouch: mobile });
     const page = await ctx.newPage();
     const cdp = await ctx.newCDPSession(page);
     await cdp.send("Network.enable");
@@ -140,14 +167,35 @@ async function shoot() {
       css.textContent = "html{overflow:hidden!important}body *{visibility:hidden!important}[data-ml-ground],[data-ml-map],[data-ml-map] *{visibility:visible!important}[data-g3d-lights],[data-g3d-shades],[data-g3d-cover]{display:none!important}";
       document.addEventListener("DOMContentLoaded", () => document.head.append(css));
     });
-    const errors = [];
     page.on("console", (m) => {
       if (m.type() === "error" || /\[ml\]/.test(m.text())) errors.push(m.text().slice(0, 200));
     });
+    return { ctx, page };
+  };
+  for (const aspect of aspects) {
+    const A = ASPECTS[aspect];
+    const { ctx, page } = await open(A.vp, A.dpr, A.mobile);
+    // The deep render's plain pass: the same shot at the window's own css size, only to read the
+    // camera centre's height the map clamps to there (the live map's), which the deep render then
+    // holds (`?elev=`): the matrix is then the live map's exactly, doubled.
+    const plain = deep ? await open({ width: A.vp.width / 2, height: A.vp.height / 2 }, 1, A.mobile) : null;
     for (const shot of wanted) {
-      const q = new URLSearchParams({ ground: "ml", plate: shot, cover: "0", homes: "0", slow: "0", pr: String(A.dpr) });
+      const q = new URLSearchParams({ ground: "ml", plate: shot, cover: "0", homes: "0", slow: "0", pr: String(A.dpr), ...(deep ? { deep: "1" } : {}) });
       for (const [k, v] of new URLSearchParams(renderAll || RENDER[shot] || "")) q.set(k, v);
       const t0 = Date.now();
+      if (plain) {
+        const pq = new URLSearchParams(q);
+        pq.delete("deep");
+        pq.set("pr", "1");
+        await plain.page.goto(`${base}/?${pq}`, { waitUntil: "domcontentloaded" });
+        await plain.page.waitForFunction(() => {
+          const s = window.__ml?.stats();
+          return !!s && (s.error || (s.firstIdleAt != null && !s.flying));
+        }, null, { timeout: 90000 });
+        await plain.page.waitForTimeout(1800);
+        const e = await plain.page.evaluate(() => { const m = window.__ml.ctl.map; return (m.transform ?? m._camera?.transform ?? {}).elevation ?? 0; });
+        q.set("elev", String(e));
+      }
       await page.goto(`${base}/?${q}`, { waitUntil: "domcontentloaded" });
       await page.waitForFunction(() => {
         const s = window.__ml?.stats();
@@ -186,15 +234,17 @@ async function shoot() {
       if (st.slow?.by) throw new Error(`${shot}/${aspect}: the slow-line arm drew (${st.slow.by}); not a plate`);
       if (!st.frame) throw new Error(`${shot}/${aspect}: no pixel matrix (frame ${st.frameKind}); the manifest needs the map's own`);
       if (st.box.width !== A.vp.width || st.box.height !== A.vp.height) throw new Error(`${shot}/${aspect}: the map's box is ${st.box.width} x ${st.box.height}, not the window`);
+      if (q.has("elev") && Math.abs(st.cam.elevation - Number(q.get("elev"))) > 1e-6) throw new Error(`${shot}/${aspect}: the centre stands at ${st.cam.elevation} m, not the plain render's ${q.get("elev")}`);
       const png = await page.screenshot({ clip: st.box, type: "png" });
       const meta = await sharp(png).metadata();
       const name = `${shot}-${aspect}`;
       fs.writeFileSync(`${RAW}/${name}.png`, png);
-      fs.writeFileSync(`${RAW}/${name}.json`, JSON.stringify({ shot, aspect, w: A.vp.width, h: A.vp.height, dpr: A.dpr, px: { w: meta.width, h: meta.height }, cam: st.cam, ex: st.ex, ws: st.frame.ws, m: st.frame.m, render: RENDER[shot] ?? "", shotAt: new Date().toISOString() }, null, 1));
+      fs.writeFileSync(`${RAW}/${name}.json`, JSON.stringify({ shot, aspect, w: A.vp.width, h: A.vp.height, dpr: A.dpr, px: { w: meta.width, h: meta.height }, cam: st.cam, ex: st.ex, ws: st.frame.ws, m: st.frame.m, render: renderAll || RENDER[shot] || "", deep, shotAt: new Date().toISOString() }, null, 1));
       console.log(`${name.padEnd(24)} ${meta.width} x ${meta.height}  zoom ${st.zoom}  range ${st.range}  ${((Date.now() - t0) / 1000).toFixed(1)} s${errors.length ? `  (${errors.length} console errors)` : ""}`);
       errors.length = 0;
     }
     await ctx.close();
+    await plain?.ctx.close();
   }
   await browser.close();
 }
@@ -219,11 +269,21 @@ async function encode() {
       const g = GRADE[shot] ?? {};
       if (doEncode) {
         const gradedPng = await graded(`${RAW}/${name}.png`, g);
+        // Round 59: a denser plate over AVIF_CAP at its full width is written at AVIF_DENSE instead.
+        let avifOpts = AVIF;
+        {
+          const w = A.widths[0], h = Math.round((w * A.vp.height) / A.vp.width);
+          const probe = await sharp(gradedPng).resize(w, h, { kernel: "lanczos3" }).avif(AVIF).toBuffer();
+          if (probe.length > AVIF_CAP) {
+            avifOpts = { ...AVIF, quality: AVIF_DENSE };
+            console.log(`${name.padEnd(24)} avif ${(probe.length / 1024).toFixed(0)} KB at ${AVIF.quality} is over the cap: quality ${AVIF_DENSE}`);
+          }
+        }
         for (const w of A.widths) {
           const h = Math.round((w * A.vp.height) / A.vp.width);
           const scaled = sharp(gradedPng).resize(w, h, { kernel: "lanczos3" });
           const avif = `${OUT}/${name}-${w}.avif`, webp = `${OUT}/${name}-${w}.webp`;
-          await scaled.clone().avif(AVIF).toFile(avif);
+          await scaled.clone().avif(avifOpts).toFile(avif);
           await scaled.clone().webp(WEBP).toFile(webp);
           const ka = fs.statSync(avif).size, kw = fs.statSync(webp).size;
           total += ka + kw;
@@ -233,7 +293,7 @@ async function encode() {
         tiles[aspect].push({ name: shot, tile });
       }
       manifest[shot] ??= {};
-      manifest[shot][aspect] = { w: rec.w, h: rec.h, widths: A.widths, cam: rec.cam, ex: rec.ex ?? 1.6, ws: rec.ws, m: rec.m };
+      manifest[shot][aspect] = { w: rec.w, h: rec.h, widths: A.widths, cam: rec.cam, ex: rec.ex ?? 1.6, ws: rec.ws, m: rec.m, k: rec.deep ? 2 : 1 };
     }
   }
   // The manifest: every shot with both aspects, else the page would have no picture for one.
@@ -247,7 +307,7 @@ async function encode() {
       for (const a of Object.keys(ASPECTS)) {
         const p = manifest[s][a];
         const cam = `{ lng: ${round(p.cam.lng, 1e7)}, lat: ${round(p.cam.lat, 1e7)}, zoom: ${round(p.cam.zoom, 1e6)}, pitch: ${round(p.cam.pitch, 1e4)}, bearing: ${round(p.cam.bearing, 1e4)}, fov: ${round(p.cam.fov, 1e4)}, elevation: ${round(p.cam.elevation, 1e3)} }`;
-        lines.push(`    ${a}: { w: ${p.w}, h: ${p.h}, widths: [${p.widths.join(", ")}], cam: ${cam}, ex: ${p.ex}, ws: ${p.ws}, m: [${p.m.map((v) => (Number.isInteger(v) ? String(v) : v.toPrecision(15))).join(", ")}] },`);
+        lines.push(`    ${a}: { w: ${p.w}, h: ${p.h}, widths: [${p.widths.join(", ")}], cam: ${cam}, ex: ${p.ex}, ws: ${p.ws}, m: [${p.m.map((v) => (Number.isInteger(v) ? String(v) : v.toPrecision(15))).join(", ")}]${p.k !== 1 ? `, k: ${p.k}` : ""} },`);
       }
       lines.push("  },");
     }
