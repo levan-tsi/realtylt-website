@@ -96,6 +96,10 @@ export default async function HomePage() {
       const p = PLATES.hero[a];
       preload(plateSrc("hero", a, p.widths[0], "avif"), { as: "image", type: "image/avif", fetchPriority: "high", media: a === "tall" ? TALL_MEDIA : WIDE_MEDIA, imageSrcSet: plateSrcSet("hero", a, p, "avif"), imageSizes: "100vw" });
     }
+    // The lights (134 KB, cached an hour) asked for with the document too, not after hydration:
+    // measured cold at 1440, the fetch began at 678 ms and the lights were drawn at 1.0 s; the page's
+    // own script is what the lights wait for now.
+    preload("/api/lights", { as: "fetch", crossOrigin: "anonymous" });
   } else if (mapped) {
     preload(cover.tall, { as: "image", fetchPriority: "high", media: "(max-width: 1023px)" });
     preload(cover.wide, { as: "image", fetchPriority: "high", media: "(min-width: 1024px)" });

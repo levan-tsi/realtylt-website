@@ -599,13 +599,17 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
       install(c);
       void c.start();
       const noHomes = q.get("homes") === "0";
-      void loadLights().then((pts) => {
-        lightsState.current = !pts || noHomes ? "none" : "some";
-        syncClaims();
-        if (!pts || noHomes) return;
-        c.setHomes(homesOf(pts));
-      });
-      void loadElevation().then((g) => c.setElevation(g)).catch(() => {});
+      // The lights first, the elevation after them: the elevation (366 KB) only lifts the lights onto
+      // the terrain, a pixel or two at the territory, and on a slow line it was taking the lights'
+      // bandwidth (Slow 4G, measured: the lights drawn at 11.5 s with both in flight together).
+      void loadLights()
+        .then((pts) => {
+          lightsState.current = !pts || noHomes ? "none" : "some";
+          syncClaims();
+          if (!pts || noHomes) return;
+          c.setHomes(homesOf(pts));
+        })
+        .finally(() => void loadElevation().then((g) => c.setElevation(g)).catch(() => {}));
       return () => {
         c.stop();
         ctl.current = null;
