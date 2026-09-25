@@ -120,6 +120,17 @@ export interface Cover {
  * renderer asks for the live map on a plates page with `?ground=ml`. */
 export type GroundEngineName = "ml" | "plates";
 
+/** THE DATA CREDIT'S FIVE SECONDS (round 60; the owner asked for the credit at its legal minimum).
+ * The OSMF attribution guideline (osmfoundation.org/wiki/Licence/Attribution_Guidelines, read
+ * 2026-09-25): the notice "should not require individuals to interact with the map ... to see the
+ * attribution", must be "legible and understandable", sits "in a corner of the map", and "you may use
+ * a mechanism to fade/collapse the attribution ... automatically after five seconds", provided that
+ * "the user must still be able to find the licence information if they look for it, for example from
+ * an '(i)' button in the corner of the map"; for static images "one instance of attribution is
+ * sufficient" per document. So the two required names show for this long after the page opens (with
+ * JavaScript off they stay), then only the (i), which opens the whole notice. */
+export const CREDIT_SHOWN_MS = 5000;
+
 export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml", children }: { poster: Cover; tail?: MlTail; featured?: readonly FeaturedHome[]; engine?: GroundEngineName; children: ReactNode }) {
   const [engine, setEngine] = useState<GroundEngineName>(engineProp);
   useEffect(() => {
@@ -163,6 +174,29 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
   const [pinned, setPinned] = useState(false);
   const [js, setJs] = useState(false);
   useEffect(() => setJs(true), []);
+  // The data credit: the required line first (the server renders it, so it is there before any
+  // script and stays with JavaScript off), the (i) alone after CREDIT_SHOWN_MS, the whole notice
+  // while the (i) is open. Escape closes it.
+  const [credit, setCredit] = useState<"line" | "icon" | "panel">("line");
+  const creditRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const t = window.setTimeout(() => setCredit((m) => (m === "line" ? "icon" : m)), CREDIT_SHOWN_MS);
+    return () => window.clearTimeout(t);
+  }, []);
+  useEffect(() => {
+    // The lights keep out of the credit's box, whatever its size is now.
+    const el = creditRef.current, c = ctl.current;
+    if (el && c) {
+      const r = el.getBoundingClientRect();
+      c.setAvoid({ x: 0, y: r.top - 4, w: r.right + 4, h: window.innerHeight - r.top + 4 });
+    }
+    if (credit !== "panel") return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setCredit("icon");
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [credit]);
   const breath = useRef<HTMLDivElement>(null);
   const breathAnim = useRef<Animation | null>(null);
   useEffect(() => {
@@ -1180,25 +1214,51 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
           ))}
         </div>
       </div>
-      {/* THE DATA'S CREDIT (./style.ts ATTRIBUTION, as OpenFreeMap's and OpenStreetMap's terms ask):
-          bottom left, where the Google map kept its logo, over everything, never under a word of ours. */}
-      <p
+      {/* THE DATA'S CREDIT (./style.ts ATTRIBUTION; CREDIT_SHOWN_MS above for the guideline's words):
+          bottom left, where the Google map kept its logo, over everything, never under a word of ours.
+          The two required names for five seconds, then the (i); the (i) opens the whole notice, the
+          terrain's sources named there (public-domain data whose sources ask to be named) and
+          OpenFreeMap, whose name is optional. */}
+      <div
+        ref={creditRef}
         data-ml-credit
-        className="pointer-events-auto fixed bottom-2 left-3 z-[12] m-0 max-w-[176px] text-[11px] leading-[15px] text-white/60 [&_a]:underline-offset-2 hover:[&_a]:underline"
+        data-credit={credit}
+        className="pointer-events-auto fixed bottom-2 left-3 z-[12] text-[11px] leading-[15px] text-white/60"
         style={{ textShadow: "0 0 4px rgba(0,0,0,0.9)" }}
       >
-        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">
-          © OpenStreetMap contributors
-        </a>
-        <br />
-        <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">
-          © OpenMapTiles
-        </a>{" "}
-        ·{" "}
-        <a href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">
-          OpenFreeMap
-        </a>
-      </p>
+        {credit === "icon" ? null : (
+          <p className="m-0 max-w-[280px] [&_a]:underline-offset-2 hover:[&_a]:underline">
+            <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">
+              © OpenStreetMap contributors
+            </a>{" "}
+            ·{" "}
+            <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">
+              © OpenMapTiles
+            </a>
+            {credit === "panel" ? (
+              <>
+                <br />
+                Tiles served by{" "}
+                <a href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">
+                  OpenFreeMap
+                </a>
+                . Terrain: USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1 (Mapzen terrain tiles).
+              </>
+            ) : null}
+          </p>
+        )}
+        {credit === "line" ? null : (
+          <button
+            type="button"
+            aria-expanded={credit === "panel"}
+            aria-label={credit === "panel" ? "Hide the map data credits" : "Map data credits"}
+            onClick={() => setCredit((m) => (m === "panel" ? "icon" : "panel"))}
+            className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/40 font-serif text-[11px] italic leading-none text-white/70 transition-colors hover:border-white/80 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none"
+          >
+            i
+          </button>
+        )}
+      </div>
       <a
         ref={label}
         data-g3d-label

@@ -27,12 +27,11 @@ export function SceneCredit() {
   // ATTRIBUTION) and the terrain tiles' sources in the words their licence page gives. Its load cover
   // is a frame of the same map (scripts/make-ml-cover.mjs), so it adds no source of its own.
   // Round 58: the plates are pictures of that same map (scripts/make-plates.mjs): the same sources.
-  if (ground === "ml" || ground === "plates")
-    return (
-      <p className="max-w-full md:ml-6 md:border-l md:border-current/20 md:pl-6">
-        Map data: © OpenStreetMap contributors; tiles: © OpenMapTiles, OpenFreeMap. Terrain: Mapzen terrain tiles; USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1.
-      </p>
-    );
+  // Round 60 (the owner: the credit at its legal minimum): the corner credit on the map carries the
+  // whole notice, the two required names for five seconds and then an (i) that opens them with the
+  // terrain's sources (components/home/ml/MlGround.tsx; the OSMF attribution guideline allows the
+  // collapse and says one instance covers every picture on the page), so the footer says nothing.
+  if (ground === "ml" || ground === "plates") return null;
   const night = ground === "night";
   return (
     <p className="max-w-full md:ml-6 md:border-l md:border-current/20 md:pl-6">

@@ -233,14 +233,27 @@ describe("the footer over the scene", () => {
     expect(shell).toContain("style={style}");
   });
 
-  it("credits the MapLibre map's own sources on the home page when it or its plates are the ground (rounds 57.13, 58)", () => {
+  it("credits the MapLibre map's own sources in the map's corner, at the legal minimum (rounds 57.13, 58, 60)", () => {
+    // Round 60: the footer says nothing for the ml and plates grounds; the corner credit in the ground
+    // carries the whole notice (the OSMF attribution guideline, read 2026-09-25: the notice shows
+    // without interaction, may collapse automatically after five seconds, and an "(i)" in the corner
+    // must bring it back; one instance covers every picture on the page).
     const credit = fs.readFileSync(path.join(ROOT, "components/site/SceneCredit.tsx"), "utf8");
-    expect(credit).toContain('if (ground === "ml" || ground === "plates")');
-    expect(credit).toContain("© OpenStreetMap contributors");
-    expect(credit).toContain("© OpenMapTiles, OpenFreeMap");
-    expect(credit).toContain("USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1");
-    // The lab is gone (one source of truth): no route but the home page carries a credit.
+    expect(credit).toContain('if (ground === "ml" || ground === "plates") return null;');
     expect(credit).not.toContain("/lab/ml");
+    const ground = fs.readFileSync(path.join(ROOT, "components/home/ml/MlGround.tsx"), "utf8");
+    expect(ground).toContain("export const CREDIT_SHOWN_MS = 5000;");
+    expect(ground).toContain('href="https://www.openstreetmap.org/copyright"');
+    expect(ground).toContain("© OpenStreetMap contributors");
+    expect(ground).toContain('href="https://openmaptiles.org/"');
+    expect(ground).toContain("© OpenMapTiles");
+    // The terrain's sources are named in the opened notice (public-domain data whose sources ask to
+    // be named), and OpenFreeMap, whose name is optional, with them.
+    expect(ground).toContain("USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1");
+    expect(ground).toContain("OpenFreeMap");
+    // The (i): a real button, 24 px, that says what it opens.
+    expect(ground).toMatch(/aria-expanded=\{credit === "panel"\}/);
+    expect(ground).toContain('useState<"line" | "icon" | "panel">("line")');
     const attributions = fs.readFileSync(path.join(ROOT, "public/images/ATTRIBUTIONS.md"), "utf8");
     expect(attributions).toContain("scripts/make-ml-cover.mjs");
   });
