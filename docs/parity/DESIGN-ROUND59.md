@@ -363,3 +363,243 @@ Open from this verification: `public/plates` is 23 MB (from 11; the WebP fallbac
 it); the boot fetched `/api/lights` twice in 2 of 3 runs (131 KB became 263), which the builder
 also saw and did not touch: the orchestrator is looking into it (the page preloads it with
 `crossOrigin: "anonymous"` and the client fetches it plain).
+
+## §3 The flight as a film
+
+His sixth verdict: "it would move the map and go to that county where you are, but now it just
+disappears and appears close to that one." The design kept both halves of his fifth and sixth
+verdicts: nothing loads at the moment of a move, and the map moves. **The film is in.**
+
+### As built
+
+- **The path** (`components/home/plates/flight-path.ts`, pure, 8 tests): maplibre-gl 6.11's `flyTo`
+  ported (van Wijk and Nuij, `curve` 1.3 as the live controller passed, MapLibre's default easing
+  `bezier(0.25, 0.1, 0.25, 1)`, the bearing the shorter way round, pitch and the centre's height
+  linear in k). At k 0 it returns plate A's camera and at k 1 plate B's, exactly. Frame count
+  `round(flightMs(A, B) * 30 / 1000)` by `ml/shots.ts` flightMs: 55 to 78 frames, 1.84 to 2.56 s.
+- **The recorder** (`scripts/make-flights.mjs`, run with `node --experimental-strip-types`): for each
+  of the 16 adjacent pairs and both aspects, the running site pinned on the plate (`?plate=`) in the
+  plate's own geometry (deep: 2880 x 1800 css at 1, 780 x 1688 at 1.5; the plain hero and region:
+  1440 x 900 at 2, 390 x 844 at 3), and for every frame `jumpTo` its camera with the centre's height
+  held, wait for `idle` and then 250 ms with no render, read `liveFrame()` (the matrix and world
+  size), photograph. A pair whose plates were drawn differently (the plain hero or region beside a
+  deep plate; the phone's chapters on terrain level 10 beside the counties on 11) is shot twice, once
+  as each plate was, and the two renders dissolve between k 0.3 and 0.7 (5 of the 32 clips). The
+  grade is interpolated by k between plate A's and plate B's (make-plates.mjs GRADE and its LUT,
+  now exported). A speed-driven gaussian blur (sigma 0.01 x the frame's motion in device pixels, at
+  most 2.5; 0 at the two ends) stands for a shutter: mid-flight the ground moves 150 to 300 device
+  pixels a frame, no hairline is readable there, and a sharp one is what costs the encode its bytes.
+  Graded frames go to a lossless FFV1 master; the encodes come from it.
+- **Render-level joins**: the film's first and last frames against the plates' own raw pictures,
+  graded as the plates were: 64 joins, mean 0.03 levels, the worst 0.28.
+- **The encodes (after the orchestrator's decision, below)**: ONE codec an aspect. The laptop's clip
+  is VP9 in WebM at 1440 x 900, crf 46; the phone's is H.264 in MP4 at 780 x 1688, crf 30 (the
+  900 KB cap loop never had to raise either). 4:2:0, BT.709 limited range, tagged; a key frame
+  forced on the first and the last frame (the two frames a plate meets); the back clip is the master
+  reversed. The first encode (VP9 crf 40 and H.264 crf 27 for both aspects, 88.5 MB) is in the
+  history at `8929467`. The frames' cameras and matrices beside each pair
+  (`public/flights/<a>--<b>-<aspect>.json`, 13 to 18 KB), the manifest `plates/flights.gen.ts`
+  (generated; its truths in `flights.gen.test.ts`).
+- **The engine** (`plate-controller.ts`, `plate-motion.ts`, `plate-frame.ts`): a third layer above the
+  plates (`[data-plate-film]`: the clips' video elements and their own light canvas). A request for
+  an adjacent stop whose film is decoded (every byte buffered, frame 0 decoded, the matrices in)
+  plays it: the film's first frame dissolves in over plate A for 140 ms while both are still, the
+  clip plays, the lights are drawn on each presented frame (`requestVideoFrameCallback`, the frame
+  index from `mediaTime`; rAF and `currentTime` where it is missing) through that frame's matrix,
+  plate A's set of lights fading out and plate B's in over 80 percent of the flight (the live map's
+  rule), then at `ended` plate B is put under it and the film dissolves out onto it for 180 ms,
+  still. A request during a film hurries it (`filmHurry`: up to 4x, within 250 ms; a cut to plate B
+  past that, which a 2.6 s clip never reaches). Anything else is round 58's fade over: a
+  non-adjacent jump, a film not decoded, reduced motion, `?film=0`, and a refused `play()` (after
+  one refusal the page stops asking and fetches no more clips).
+- **Loading**: nothing before the page has loaded, its lights have arrived and the browser is idle;
+  then the film from the stop the page is on to the nearest different stop ahead (and behind, only
+  once the visitor has turned back up the page), each asked for after the plate it lands on is
+  decoded, the work done while the page is still (loading or letting go of a clip while a film
+  started cost that film a 50 to 110 ms frame, measured), at most four films kept. The formats the
+  browser plays are ranked by `mediaCapabilities` (a power-efficient decoder first), and a clip is
+  played in the first of them it was encoded in (`plate-frame.ts filmFormat`); if none, there is no
+  film: no video element, no fetch, the fade over. Proven with a `canPlayType` and `decodingInfo`
+  stub: at 1440 with WebM refused, and at 390 with MP4 refused, the move was a fade and the page held
+  0 video elements and fetched 0 clips; at 390 with WebM refused the phone's MP4 film played.
+- **Video elements held**: one per film decoded ahead (a src is never swapped on a playing element).
+  Measured over a walk of every stop: at most 4 at once on a laptop (`FILMS_KEPT.wide`), at most 2
+  on the phone (`FILMS_KEPT.tall`: the next film ahead and the one just played), and on the phone
+  they are MP4, not WebM. Where `requestVideoFrameCallback` is missing (Safari before 15.4) the
+  lights follow `currentTime` on each animation frame.
+
+### The spike (dutchess-county to orange, then hero to dutchess)
+
+The chain proved on one pair first: recorded in 82 s, render joins 0.00 and 0.01 levels, then hero to
+dutchess (the plain-to-deep pair: two renders dissolved) 0.00 and 0.00. The encode was the finding:
+at the plate's device size the content is expensive. Dutchess county to Orange, VP9, no blur:
+
+| encode | KB | levels off the master, first / mid / last frame |
+|---|---|---|
+| 2880, crf 32 | 4997 | 2.17 / 2.96 / 3.04 |
+| 2880, crf 44 | 1897 | 2.72 / 3.77 / 3.93 |
+| 2880, crf 56 | 604 | 3.81 / 4.80 / 5.21 |
+| 1440, crf 40 | 788 | 2.77 / 4.01 / 4.10 |
+| 1440, crf 46 | 435 | 3.28 / 4.57 / 4.74 |
+| AV1 (SVT, preset 5) 2880, crf 48 | 1179 | 3.86 / 4.09 / 3.60 (no gain over VP9 here) |
+| the 4:2:0 limited-range conversion alone (lossless VP9) | | 1.68 |
+
+With the speed blur: 2880 crf 46 1028 KB (the two key frames are 405 KB of it), 1440 crf 40
+559 KB. So the laptop's clip is 1440 wide for every screen (the film is motion; the plate it lands on
+is the sharp picture) and the phone's 780 wide.
+
+### The joins on screen (Chrome, the clip and the plate in one window, `_scratch-r59-join.mjs`)
+
+Levels apart (mean of the per-pixel largest channel difference), the clip's first frame against
+plate A and its last against plate B. The final encodes (wide VP9 crf 46, phone H.264 crf 30), with
+the first encode's (VP9 crf 40 both) in brackets:
+
+| pair | 1440 at 1x | 1440 at 2x | 390 at 3x |
+|---|---|---|---|
+| hero to dutchess | 2.75 / 3.21 (2.48 / 2.85) | 3.33 / 4.08 (3.02 / 3.70) | 3.66 / 3.64 (2.86 / 2.68) |
+| dutchess-county to orange | 3.21 / 3.21 (2.87 / 2.84) | 4.27 / 4.24 (3.91 / 3.84) | 4.02 / 5.12 (2.92 / 3.74) |
+| queens to brooklyn | 5.44 / 5.02 (5.24 / 4.68) | 7.19 / 7.25 (6.65 / 6.75) | 6.71 / 7.65 (4.89 / 5.71) |
+| harbour to region | 4.04 / 2.98 (3.75 / 2.60) | 5.61 / 3.61 (5.21 / 3.19) | 4.30 / 4.56 (3.37 / 3.07) |
+
+Only the valley pairs at 1x in the first encode sat under 3; the dense city plates (Queens,
+Brooklyn: grids edge to edge, their AVIF itself at quality 50) and every 2x screen (a 1440 clip
+against a 2880 plate) never did. That is why neither end is a cut: the film dissolves in over
+plate A (140 ms) and out onto plate B (180 ms) while both pictures are still, so the codec's levels
+arrive as a soft focus, never a step. Looked at frame by frame: Queens to Brooklyn at 2x (first
+encode) and on the phone (final encode, `cast/v2-qb-390/`, the landing frame by frame): no visible
+cut at either end.
+
+### The lights ride the film (`_scratch-r59-filmcal.mjs`)
+
+A film paused at a frame; its drawn lights against the live map jumped to that frame's recorded
+camera (the same homes, the live map's own matrix): **0.00 px mean, p95 and max** at hero to
+dutchess frames 19, 35, 55 (1440; 13 to 281 lights), queens to brooklyn 12, 30, 48, dutchess-county
+to orange 30, 50, and hero to dutchess on the phone at 20, 40, 60 (165 lights). The sync with the
+picture, by eye on a Queens to Brooklyn frame mid-flight (the 2x screencast): every light on land,
+none on the water, along the streets as on a plate.
+
+### The main thread and the frames
+
+- A walk of every stop with the films playing out (`_scratch-r59-walk.mjs --mode=stops`, 3.2 s a
+  stop): 16 of 16 transitions films, 0 dropped frames; the worst frame inside a film 27.8 ms at 1440
+  (0 over 34) and 20.9 ms on the phone (390, 3x); the film's light draw 0.58 to 0.85 ms mean, 2.6 ms
+  max at 1440, 0.31 ms mean on the phone; 0 long tasks during a film. A Chrome trace of that walk:
+  0 main-thread events of 50 ms or more; the video decoded by the GPU process's hardware decoder
+  (`D3D11VideoDecoder`, `MojoVideoDecoder` on the Media and GPU threads, not the main thread).
+- Round 58's walk (`_scratch-r58-transition.mjs`, a stop every 1.5 s, so the films are hurried or
+  queued): 1440 worst in-flight frame 34.7 ms, at the probe's instant scroll to the second Highlands
+  stop landing mid-film (the page's own raster of a new screen, as round 58 found for its 97 ms still
+  frames); the phone 20.9 ms. Its trace: 0 main-thread events of 25 ms or more.
+- After the re-encode (final clips): the stops walk 16 of 16 films at both widths, the worst in-film
+  frame 27.9 ms at 1440 in 2 of 4 walks (104 and 118 ms in the other two, at the second film's
+  start) and 27.6 ms on the phone; the light draw 0.70 ms mean at 1440, 0.35 on the phone. Round
+  58's walk: 1440 worst in-flight 41.6 ms (in flight to Staten Island, at the probe's instant jump),
+  the phone worst in-flight 27.7 ms.
+- The second film of a visit can open with one long frame (27 to 118 ms: a second hardware decoder
+  starting); it falls inside the 140 ms still dissolve, where no motion shows it.
+
+### Nothing loads on a move
+
+- A reader (`--mode=read`, one screen every 1.5 s, smooth scroll): 4 films and 4 fades; the fades are
+  the stops the reader passes in one step (highlands to ulster, ulster to putnam, putnam to queens,
+  queens to staten-island: not adjacent, so a fade by design), none a film not ready. That read
+  fetched 16 files, 3.0 MB. A read that stops at every stop fetches the 16 forward clips and their
+  matrices: 6.4 MB at 1440, 9.1 MB on the phone (the first encode: 10.5 and 10.5).
+- Outrun (Slow 4G, a scroll to the Dutchess chapter the moment the page shows): a fade, not a wait
+  for the clip; it landed 3.8 s later because the Dutchess PLATE was still arriving (the same with
+  `?film=0`: 3.7 s; the round 58 rule, the current picture holds until the next plate is in). Clips
+  are asked for only after the plate they land on is decoded, so a clip never delays a plate.
+- `play()` refused (a stub rejecting it, phone): the fade over ran, landed in 943 ms, and the page
+  stopped asking for films.
+
+### The cold boot (`_scratch-r58-boot.mjs`, medians of 3, 1440 at 2x)
+
+First encode: reveal 767 ms, lights 804 ms, LCP 260 ms, 1826 KB, no clip in it. Final encode:
+reveal 635 ms, lights 664 ms, LCP 268 ms, 1827 KB (a first series on the same build, the PC busier:
+862 / 1003 / 328; one run of the three fetched the Dutchess plate early, 2031 KB) (a second series on a busier PC:
+937 / 1056 / 328 with films, 894 / 981 / 408 with `?film=0`: the same within the noise). The phone:
+reveal 835, lights 934, LCP 348. The first clip (hero to dutchess, 355 KB now, 609 KB at the first
+encode, and its 15 KB of matrices) is asked for at 2.6 to 2.9 s, after the page's own half-second task at about 1.3 s and
+the browser's idle, and is in 5 ms later on this machine. A visitor scrolling in the first 2.6 s
+reaches the Dutchess stop only three screens down (the territory holds three stops), so the first
+film is there in practice; if not, that one move fades.
+
+### Reduced motion, JS off, the rest
+
+Reduced motion: no film layer, no clip fetched, no video element; one 400 ms opacity fade. JS off:
+the plate stands, nothing fetched. `?film=0`: round 58's fade over on the same build, no clip
+fetched. Calibration on the plates unchanged: 0.00 px at hero, Queens, Dutchess county, Putnam
+(1440) and hero, Queens (390). Hover at Queens 50 of 50 (run alone), hit test 0.009 ms. Contrast:
+390 zero under the floor; 1440 the same two header pills. Overflow 0 at 768 x 1024, 1024 x 768,
+1366 x 768, 1920 x 1080. tsc clean; vitest 2163 to 2189 (the path, the film's rules, the film
+neighbours, the manifest, one codec an aspect, the film's format).
+
+### The bytes (KB, `public/flights`)
+
+| clip set | n | min | median | max | total |
+|---|---|---|---|---|---|
+| wide 1440 VP9 WebM, crf 46 | 32 | 263 | 384 | 508 | 12.0 MB |
+| tall 780 H.264 MP4, crf 30 | 32 | 399 | 549 | 663 | 17.3 MB |
+| the frames' matrices (JSON) | 32 | 13 | 16 | 18 | 0.5 MB |
+
+`public/flights` is **30.1 MB** (96 files), inside the orchestrator's expected 30 to 36 MB. A visitor
+fetches one aspect's clips, lazily: 6.4 MB on a laptop and 9.1 MB on a phone for a read that stops
+at every stop, 3.0 MB for a quick read.
+
+**The levers, and what was taken (the orchestrator's decision, 2026-09-25).** The first encode was
+88.5 MB (VP9 crf 40 and H.264 crf 27, both aspects, both codecs). Taken:
+
+1. The laptop's H.264 set dropped (23.6 MB): the only desktop browser without VP9 in WebM is Safari
+   before 14.1 (April 2021), which gets the fade.
+2. The phone's VP9 set dropped (20.3 MB): iOS Safari plays WebM only from iOS 15 (September 2021),
+   decodes VP9 in hardware only from the A14 (iPhone 12 and later) and in software before it, and
+   there are reproducible reports of Safari crashing on iOS 17 and 18 on pages holding several WebM
+   video elements; H.264 decodes in hardware on every phone. Sources: https://caniuse.com/webm ,
+   https://en.wikipedia.org/wiki/WebM , https://github.com/fyrd/caniuse/issues/7541 ,
+   https://salivity.github.io/libvpx-vp9/article/does-ios-safari-support-vp9-video-playback .
+   `requestVideoFrameCallback` is Safari 15.4 and later
+   (https://caniuse.com/mdn-api_htmlvideoelement_requestvideoframecallback), so the `currentTime`
+   fallback is the path on older iOS.
+3. VP9 at crf 46 (the laptop's set 20.0 to 12.0 MB) and the phone's H.264 at crf 30 (23.7 to
+   17.3 MB).
+
+Not taken: back flights as fades (they are fetched only once a visitor turns up the page anyway),
+a lower frame rate, smaller clips.
+
+**What crf 46 and H.264 30 changed, looked at** (the same mid-flight frame, Queens to Brooklyn frame
+30, 2x crops): on the laptop the fine side streets in the far half of the frame go from faint lines
+to haze while the arterials and the near grid still read
+(`scripts/_scratch-r57/58/flights/look/qb-wide-crf40-vs-46.png`, crf 40 above, 46 below); on the
+phone the grid stays whole, its lines a touch softer with a little ringing
+(`look/qb-tall-vp9crf40-vs-h264crf30.png`, VP9 crf 40 left, H.264 crf 30 right). At 30 frames a
+second in flight neither shows; the plates the films land on are unchanged.
+
+### What a visitor sees (the frames looked at)
+
+- Hero to Dutchess, 1440 (`scripts/_scratch-r57/58/flights/cast/final-hero-1440/`): the territory
+  turns and sinks toward the valley, the city's lights sliding off the bottom, and the camera settles
+  over the Hudson with Poughkeepsie's grid coming up and its lights fading in.
+- Dutchess county to Orange, 1440 (`cast/final-dutchess-county-1440/`): Poughkeepsie's grid wheels
+  away, the river turns under the camera, and it lands over Newburgh's waterfront with its lights.
+- Queens to Brooklyn, 1440 (`cast/final-queens-1440/`): Flushing Meadows slides off to the right as
+  the map rotates south, the borough's lights drift with the streets, and Brooklyn's grid settles
+  with its lights.
+- Dutchess county to Orange, 390 (`cast/final-dco-390/`): the motion shows only above and below the
+  county list (the list's scrim covers the middle of the phone's screen): lights drifting in the
+  gaps.
+
+### Open
+
+- The joins rose with the lighter encode (above); the dissolves carry them, and the eye meets them
+  only as a film settles. The Queens and Brooklyn films on a 2x screen and on the phone are the
+  furthest from their plates (6.7 to 7.7 levels).
+- Mid-flight, between about 0.7 and 1.3 s of a county flight, the frame carries few lights: plate A's
+  lights have left the view and plate B's are still fading in (the live map's own plan rule). The
+  ground moves; the lights return as it lands.
+- The second film of a visit can open with one frame of 27 to 118 ms (a second hardware decoder
+  starting): seen in 2 of 4 walks at 1440 after the re-encode, inside the still 140 ms dissolve.
+- The first move up the page fades (the back films are asked for once the visitor turns).
+- Not verified: a real phone's decoder (Chrome's phone emulation on this PC decodes with the desktop
+  GPU), iOS Safari's MP4 path (built, served, stubbed; no iPhone here), Firefox.
+- Scratch on disk, gitignored: the lossless masters (4.1 GB) and sample raw frames (1.3 GB) under
+  `scripts/_scratch-r57/58/flights/`, kept for a re-encode; the orchestrator deletes them.
