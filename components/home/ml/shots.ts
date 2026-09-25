@@ -34,25 +34,34 @@ export const MAX_PITCH = 65;
 /* The phone's territory: the Google map's tall camera (156 km, tilt 46) at the brief's 55 degrees
  * put the city small at the foot of the band between the words; 140 km from a little further north
  * fills the band (frames scripts/_scratch-r57/12/compose-phone/). */
+/* Round 59 (docs/parity/DESIGN-ROUND59.md §2): the owner's "when you stand on Dutchess you don't see
+ * the city ... just highway lines and the river". The county cameras came down from 12 to 14 km to
+ * 9 to 10 km on their signature place, the valley chapters from 16 to 20 km to 11 to 12, so a town's
+ * street grid fills the picture (round 57.11 stood at 6 to 9 km on Google's map). Each laptop centre
+ * keeps the signature where round 57.12 put it on the screen (right of the list): the centre's offset
+ * from the signature is scaled with the range. */
 export const ML_SHOTS: Record<ShotName, { wide: MlShot; tall: MlShot }> = {
   hero: { wide: s(41.0093, -74.3582, 145_000, 55, 8), tall: s(40.93, -73.9, 140_000, 55, 340) },
-  dutchess: { wide: s(41.7259, -73.964, 16_000, 60, 5), tall: s(41.71, -73.945, 16_000, 60, 5) },
-  highlands: { wide: s(41.43, -73.975, 20_000, 60, 190), tall: s(41.43, -73.975, 20_000, 60, 190) },
-  westchester: { wide: s(41.07, -73.895, 16_000, 60, 265), tall: s(41.07, -73.895, 16_000, 60, 265) },
-  ulster: { wide: s(41.8884, -73.9953, 14_000, 60, 270), tall: s(41.9187, -73.9837, 14_000, 60, 270) },
-  "dutchess-county": { wide: s(41.7318, -73.9307, 14_000, 60, 80), tall: s(41.7004, -73.935, 14_000, 60, 80) },
-  orange: { wide: s(41.472, -74.0201, 14_000, 60, 270), tall: s(41.5023, -74.0086, 14_000, 60, 270) },
-  putnam: { wide: s(41.4386, -73.7208, 14_000, 60, 0), tall: s(41.43, -73.6804, 14_000, 60, 0) },
-  rockland: { wide: s(41.0778, -73.9561, 14_000, 60, 320), tall: s(41.0907, -73.9179, 14_000, 60, 320) },
-  "westchester-county": { wide: s(40.9309, -73.8073, 12_000, 60, 30), tall: s(40.9115, -73.7824, 12_000, 60, 30) },
+  dutchess: { wide: s(41.7211, -73.958, 11_000, 60, 5), tall: s(41.7102, -73.9449, 11_000, 60, 5) },
+  highlands: { wide: s(41.426, -73.9668, 12_000, 60, 190), tall: s(41.426, -73.9668, 12_000, 60, 190) },
+  westchester: { wide: s(41.0702, -73.8934, 11_000, 60, 265), tall: s(41.0702, -73.8934, 11_000, 60, 265) },
+  ulster: { wide: s(41.8992, -73.9912, 9_000, 60, 270), tall: s(41.9187, -73.9837, 9_000, 60, 270) },
+  "dutchess-county": { wide: s(41.7206, -73.9322, 9_000, 60, 80), tall: s(41.7004, -73.935, 9_000, 60, 80) },
+  orange: { wide: s(41.4828, -74.016, 9_000, 60, 270), tall: s(41.5023, -74.0086, 9_000, 60, 270) },
+  putnam: { wide: s(41.4361, -73.7093, 10_000, 60, 0), tall: s(41.43, -73.6804, 10_000, 60, 0) },
+  rockland: { wide: s(41.0824, -73.9425, 9_000, 60, 320), tall: s(41.0907, -73.9179, 9_000, 60, 320) },
+  "westchester-county": { wide: s(40.9261, -73.8011, 9_000, 60, 30), tall: s(40.9115, -73.7824, 9_000, 60, 30) },
   bronx: { wide: s(40.8415, -73.9479, 9_000, 60, 20), tall: s(40.8296, -73.9262, 9_000, 60, 20) },
   manhattan: { wide: s(40.7885, -73.9894, 9_000, 60, 30), tall: s(40.774, -73.9708, 9_000, 60, 30) },
   queens: { wide: s(40.7593, -73.8689, 10_000, 60, 20), tall: s(40.7461, -73.8448, 10_000, 60, 20) },
   brooklyn: { wide: s(40.6586, -73.9986, 10_000, 60, 340), tall: s(40.6602, -73.969, 10_000, 60, 340) },
   // Staten Island looks south-west over the island from the harbour (St. George in the foreground):
   // looking north from St. George, as the Google map did, left 22 of its 107 homes in the window at
-  // 1440 and 46 at 390; this holds 97 and 89 (scripts/_scratch-r57k-count.mjs).
-  "staten-island": { wide: s(40.6054, -74.0566, 14_000, 60, 200), tall: s(40.58, -74.15, 18_000, 60, 230) },
+  // 1440 and 46 at 390; at 14 and 18 km this held 97 and 89 (scripts/_scratch-r57k-count.mjs).
+  // Round 59 at 10 km: the laptop keeps the heading, St. George and the Verrazzano right of the list;
+  // the phone looks west-south-west over the ferry slips at St. George into the island (heading 200
+  // there was mostly harbour water).
+  "staten-island": { wide: s(40.6163, -74.0615, 10_000, 60, 200), tall: s(40.6347, -74.0942, 10_000, 60, 240) },
   harbour: { wide: s(40.685, -74.03, 10_000, 60, 40), tall: s(40.682, -74.042, 10_000, 60, 40) },
   region: { wide: s(40.98, -73.98, 60_000, 55, 10), tall: s(40.98, -73.98, 60_000, 55, 10) },
 };
