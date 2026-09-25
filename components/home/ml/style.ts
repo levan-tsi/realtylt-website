@@ -68,6 +68,36 @@ const ROADS: readonly { id: string; classes: string[]; alpha: number; w8: number
   { id: "road-motorway", classes: ["motorway"], alpha: 0.36, w8: 0.55, w16: 1.6, minzoom: 5 },
 ];
 
+/** THE PLATE STYLE (round 59, docs/parity/DESIGN-ROUND59.md §2): the county plates are rendered
+ * ONCE (scripts/make-plates.mjs), so they can afford what the live ladder leaves out for streaming.
+ * The owner: "when you stand on Dutchess you don't see the city or any buildings or street lines or
+ * anything, just highway lines and the river". Measured at the Dutchess county camera, the tiles
+ * already carry 275 minor roads that the live ladder drew at alpha 0.05 (a fade-in from zoom 12).
+ * Here every class is drawn from zoom 10 at a CONSTANT alpha, one step apart from the street to the
+ * motorway, a touch wider than the live hairlines so a street survives the AVIF; footpaths and
+ * tracks only as bridges (the Walkway over the Hudson is a path) and the railways faint. Still the
+ * moon's one blue-grey for every line. */
+const PLATE_ROADS: readonly { id: string; classes: string[]; alpha: number; w8: number; w16: number }[] = [
+  { id: "road-minor", classes: ["minor", "service"], alpha: 0.3, w8: 0.4, w16: 1.4 },
+  { id: "road-tertiary", classes: ["tertiary"], alpha: 0.36, w8: 0.45, w16: 1.5 },
+  { id: "road-secondary", classes: ["secondary"], alpha: 0.42, w8: 0.5, w16: 1.6 },
+  { id: "road-primary", classes: ["primary", "trunk"], alpha: 0.48, w8: 0.6, w16: 1.8 },
+  { id: "road-motorway", classes: ["motorway"], alpha: 0.56, w8: 0.7, w16: 2.0 },
+];
+/** Where every plate class starts: low enough that no class fades in at a county camera. */
+export const PLATE_ROADS_MINZOOM = 10;
+/** The plate's built land and buildings: a shade up from the live `town`, so a town reads as a
+ * place with no name, and the buildings a shade above the town they stand in. */
+export const PLATE = {
+  town: "#141922",
+  park: "#07090c",
+  building: "#151a23",
+  buildingTop: "#1f2632",
+  buildingsMinzoom: 12,
+  railAlpha: 0.16,
+  bridgePathAlpha: 0.3,
+} as const;
+
 const rgba = (hex: string, a: number) => {
   const n = parseInt(hex.slice(1), 16);
   return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
@@ -89,11 +119,23 @@ export const DEM_MAXZOOM = 12;
  * ground never goes bare while the full tiles arrive (the chapters and counties are zoom 12.8 up). */
 export const COARSE = { maxzoom: 6, below: 11.5, fullFrom: 10 } as const;
 
-export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggeration?: number; hillshade?: boolean; demTile?: number; demMaxzoom?: number; coarse?: { below: number; maxzoom: number } } = {}): StyleSpecification {
+/** `plate`: the plate style (the renderer's `?plate=` path only). `deep`: the plate is rendered at
+ * twice the css size (one zoom deeper, the same ground): its zoom stops move up one and its widths
+ * double, so the picture's lines are what the plain render would draw. */
+export type PlateOpt = { deep?: boolean };
+
+/** The deep render's terrain level: the one the plain render would draw at one zoom less. A 512 px
+ * terrarium tile is asked for at floor(zoom) - 1 (measured: the camera's centre elevation at the
+ * Dutchess and Putnam plates matched the plain render's to the millimetre with this level, and
+ * stood 1 to 5 m off with the deeper one, which moves the whole projection by up to 0.6 px). The map
+ * clamps its centre to that terrain, so the recorded matrix then equals the live map's, doubled. */
+export const deepDemMaxzoom = (deepZoom: number, demMaxzoom = DEM_MAXZOOM) => Math.min(demMaxzoom, Math.floor(deepZoom - 1) - 1);
+
+export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggeration?: number; hillshade?: boolean; demTile?: number; demMaxzoom?: number; coarse?: { below: number; maxzoom: number }; plate?: PlateOpt | false } = {}): StyleSpecification {
   const terrain = o.terrain ?? true;
   const buildings = o.buildings ?? true;
   const hillshade = o.hillshade ?? true;
-  const base = tiledLayers(hillshade, buildings);
+  const base = o.plate ? plateLayers(hillshade, buildings, o.plate.deep ? 1 : 0) : tiledLayers(hillshade, buildings);
   const layers: StyleSpecification["layers"] = o.coarse ? withCoarse(base, o.coarse) : base;
   return {
     version: 8,
@@ -132,6 +174,69 @@ function withCoarse(layers: StyleSpecification["layers"], c: { below: number }):
     out.push({ ...l, minzoom: Math.max(min, COARSE.fullFrom) });
   }
   return out;
+}
+
+/** The plate style's layers (PLATE_ROADS, PLATE). `dz`: the deep render's zoom shift (0 or 1): every
+ * zoom stop moves up by it and every width doubles with it, so a line keeps its size in the picture. */
+function plateLayers(hillshade: boolean, buildings: boolean, dz: number): StyleSpecification["layers"] {
+  const k = 2 ** dz;
+  const width = (w8: number, w16: number) => ["interpolate", ["exponential", 1.5], ["zoom"], 8 + dz, w8 * k, 16 + dz, w16 * k] as unknown as number;
+  const live = tiledLayers(hillshade, false);
+  const pick = (id: string) => live.find((l) => l.id === id)!;
+  const notTunnel = ["!=", ["get", "brunnel"], "tunnel"];
+  const line = (id: string, filter: unknown[], alpha: number, w8: number, w16: number) => ({
+    id,
+    type: "line" as const,
+    source: "omt",
+    "source-layer": "transportation",
+    minzoom: PLATE_ROADS_MINZOOM,
+    filter: filter as unknown as ["==", string, string],
+    layout: { "line-cap": "round" as const, "line-join": "round" as const },
+    // A constant alpha: the plate is one camera, nothing streams in, so nothing fades in.
+    paint: { "line-color": NIGHT.road, "line-opacity": alpha, "line-width": width(w8, w16) },
+  });
+  return [
+    pick("land"),
+    pick("wood"),
+    // Parks as dark as the wood: Central Park, Prospect Park and Flushing Meadows are the shapes a
+    // borough is known by, a dark field inside the lit grid.
+    { id: "park", type: "fill", source: "omt", "source-layer": "park", filter: ["==", ["get", "class"], "park"], paint: { "fill-color": PLATE.park, "fill-antialias": false } },
+    {
+      id: "town",
+      type: "fill",
+      source: "omt",
+      "source-layer": "landuse",
+      filter: ["match", ["get", "class"], ["residential", "commercial", "industrial", "retail", "railway"], true, false],
+      paint: { "fill-color": PLATE.town, "fill-antialias": false },
+    },
+    ...(hillshade ? [pick("relief")] : []),
+    pick("water"),
+    { ...pick("shore"), paint: { "line-color": NIGHT.road, "line-opacity": 0.22, "line-width": width(0.5, 1.2) } } as StyleSpecification["layers"][number],
+    { ...pick("stream"), paint: { "line-color": NIGHT.stream, "line-width": width(0.4, 1.6) } } as StyleSpecification["layers"][number],
+    line("rail", ["all", ["match", ["get", "class"], ["rail"], true, false], notTunnel], PLATE.railAlpha, 0.3, 1.0),
+    ...PLATE_ROADS.map((r) => line(r.id, ["all", ["match", ["get", "class"], r.classes, true, false], notTunnel], r.alpha, r.w8, r.w16)),
+    // Footpaths and tracks only where they cross water or a road: the Walkway over the Hudson is one.
+    line("road-bridge-path", ["all", ["match", ["get", "class"], ["path", "track"], true, false], ["==", ["get", "brunnel"], "bridge"]], PLATE.bridgePathAlpha, 0.4, 1.4),
+    ...(buildings
+      ? [
+          {
+            id: "buildings",
+            type: "fill-extrusion" as const,
+            source: "omt",
+            "source-layer": "building",
+            minzoom: PLATE.buildingsMinzoom + dz,
+            filter: ["!=", ["get", "hide_3d"], true] as unknown as ["==", string, string],
+            paint: {
+              "fill-extrusion-color": ["interpolate", ["linear"], ["coalesce", ["get", "render_height"], 6], 0, PLATE.building, 120, PLATE.buildingTop] as unknown as string,
+              "fill-extrusion-height": ["coalesce", ["get", "render_height"], 6] as unknown as number,
+              "fill-extrusion-base": ["coalesce", ["get", "render_min_height"], 0] as unknown as number,
+              "fill-extrusion-opacity": 0.95,
+              "fill-extrusion-vertical-gradient": true,
+            },
+          },
+        ]
+      : []),
+  ];
 }
 
 function tiledLayers(hillshade: boolean, buildings: boolean): StyleSpecification["layers"] {

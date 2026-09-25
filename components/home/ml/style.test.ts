@@ -1,5 +1,6 @@
+import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, nightStyle } from "./style";
+import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, PLATE, PLATE_ROADS_MINZOOM, deepDemMaxzoom, nightStyle } from "./style";
 
 /** The colours a style value names (hex or rgba), as [r, g, b]. */
 function rgbOf(v: string): [number, number, number] | null {
@@ -132,5 +133,79 @@ describe("the night style on a slow line", () => {
   it("leaves the fast line's style exactly as it was", () => {
     expect(nightStyle().sources["omt-coarse"]).toBeUndefined();
     expect(JSON.stringify(nightStyle({ coarse: undefined }))).toBe(JSON.stringify(nightStyle()));
+  });
+});
+
+/** Round 59: the plate style (the renderer's `?plate=` path only). */
+describe("the plate style", () => {
+  const p = nightStyle({ plate: {} });
+  const lines = p.layers.filter((l) => l.type === "line" && (l.id.startsWith("road") || l.id === "rail")) as { id: string; minzoom?: number; paint: Record<string, unknown>; filter: unknown }[];
+  const classes = (l: { filter: unknown }) => JSON.stringify(l.filter);
+  it("draws every road class, the street to the motorway", () => {
+    for (const c of ["minor", "service", "tertiary", "secondary", "primary", "trunk", "motorway"]) expect(lines.some((l) => classes(l).includes(`"${c}"`)), c).toBe(true);
+  });
+  it("draws each at a constant alpha from zoom 10 or lower: no fade-in ladder", () => {
+    for (const l of lines) {
+      expect(typeof l.paint["line-opacity"], l.id).toBe("number");
+      expect(l.minzoom ?? 0, l.id).toBeLessThanOrEqual(10);
+    }
+    expect(PLATE_ROADS_MINZOOM).toBeLessThanOrEqual(10);
+  });
+  it("draws the streets at a readable alpha, each class a step above the one below", () => {
+    const a = (id: string) => lines.find((l) => l.id === id)!.paint["line-opacity"] as number;
+    expect(a("road-minor")).toBeGreaterThanOrEqual(0.26);
+    const ladder = ["road-minor", "road-tertiary", "road-secondary", "road-primary", "road-motorway"].map(a);
+    for (let i = 1; i < ladder.length; i++) expect(ladder[i]).toBeGreaterThan(ladder[i - 1]);
+    // every live class is brighter on the plate
+    const live = nightStyle().layers;
+    for (const id of ["road-minor", "road-tertiary", "road-secondary", "road-primary", "road-motorway"]) {
+      const lo = JSON.stringify((live.find((l) => l.id === id) as { paint: Record<string, unknown> }).paint["line-opacity"]);
+      const liveMax = Math.max(...(lo.match(/\d+(\.\d+)?/g) ?? []).map(Number).filter((x) => x < 1));
+      expect(a(id), id).toBeGreaterThan(liveMax);
+    }
+  });
+  it("raises buildings from zoom 12, lifts the built land a shade, and adds no hue", () => {
+    const b = p.layers.find((l) => l.type === "fill-extrusion")!;
+    expect(b.minzoom).toBe(12);
+    const town = p.layers.find((l) => l.id === "town") as unknown as { paint: Record<string, string> };
+    const lum = (hex: string) => rgbOf(hex)!.reduce((s, x) => s + x, 0);
+    expect(lum(town.paint["fill-color"])).toBeGreaterThan(lum(NIGHT.town));
+    expect(town.paint["fill-color"]).toBe(PLATE.town);
+    for (const v of colours(p)) {
+      const [r, , bl] = rgbOf(v)!;
+      expect(bl, v).toBeGreaterThanOrEqual(r);
+    }
+    for (const l of lines) expect(l.paint["line-color"], l.id).toBe(NIGHT.road);
+  });
+  it("the deep render moves every zoom stop up one and doubles every width, so a line keeps its size in the picture", () => {
+    const d = nightStyle({ plate: { deep: true } });
+    for (const l of lines) {
+      const dl = d.layers.find((x) => x.id === l.id) as unknown as { paint: Record<string, unknown> };
+      const [, , , z1, w1, z2, w2] = l.paint["line-width"] as number[];
+      const [, , , dz1, dw1, dz2, dw2] = dl.paint["line-width"] as number[];
+      expect([dz1 - z1, dz2 - z2, dw1 / w1, dw2 / w2], l.id).toEqual([1, 1, 2, 2]);
+    }
+    expect(d.layers.find((l) => l.type === "fill-extrusion")!.minzoom).toBe(13);
+  });
+  it("the deep render asks for the terrain the plain render would draw (floor(zoom - 1) - 1, capped)", () => {
+    expect(deepDemMaxzoom(13.97)).toBe(11);
+    expect(deepDemMaxzoom(13.27)).toBe(11);
+    expect(deepDemMaxzoom(14.2)).toBe(12);
+    expect(deepDemMaxzoom(15.1)).toBe(DEM_MAXZOOM);
+    expect(deepDemMaxzoom(15.1, 15)).toBe(13);
+  });
+});
+
+/** Round 59: the live map's style is the streaming ladder and must not move when the plate style is
+ * added. The fingerprints were taken from the style as it stood before the plate option existed. */
+describe("the live style, byte for byte", () => {
+  const sha = (x: unknown) => createHash("sha256").update(JSON.stringify(x)).digest("hex").slice(0, 16);
+  it("is the round 58 document without the plate option", () => {
+    expect([
+      sha(nightStyle()),
+      sha(nightStyle({ terrain: false, hillshade: false, coarse: { below: COARSE.below, maxzoom: COARSE.maxzoom } })),
+      sha(nightStyle({ buildings: false })),
+    ]).toEqual(["e44bfb7e13e7c826", "22293f065bc168d7", "95391bbfb1b10ed5"]);
+    expect(sha(nightStyle({ plate: false }))).toBe(sha(nightStyle()));
   });
 });
