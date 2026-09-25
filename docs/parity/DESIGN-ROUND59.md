@@ -114,3 +114,16 @@ live and does not use them.
 - On the phone, the lights under the words' scrim (the county list, the lead form) read as dim
   tan dots whatever their colour: the scrim, not the light. A question for the owner's look, not
   changed here.
+
+### The orchestrator's verification of §1 (2026-09-25)
+
+Re-run on the rebuilt :3102, nothing else running: tsc clean; vitest 2153 passed, 0 failed; the
+calibration probe at the territory and Queens 0.00 px mean, p95 and max (443 and 754 common
+lights); hover at Queens 1440: 50 of 50 named the nearest light, hit test 0.015 ms mean; the
+phone's taps at the territory 30 of 30 and at Queens 5 of 5. Two instrument findings, not product:
+the same hover probe run BESIDE the calibration probe (two headed Chromes) named 15 of 50 and
+35 none, so a pointer probe is run alone; the hover probe's phone mode died at Queens because its
+"hide" tap aims at `document.querySelector('h1,h2')`, the hero heading, off screen at Queens, so
+the label stayed open and a later tap landed on it, which opens the listing (by design). Looked
+at: the Queens frame at 2x (small pale-yellow lamps, apart from the blue-grey roads, no bloom),
+the territory at 1440 and 390 (a warm scatter over the valley and the city). The default A stands.
