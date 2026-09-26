@@ -94,7 +94,8 @@ const FLY_IN_SCALE = 1.6;
 /** Films kept decoded at most, one video element each (the ones near the page, then the most
  * recently near). The phone keeps two: the fewest that still decode the next film ahead while the
  * one just played can be played back (a phone's browser holding many video elements is the crash
- * pattern the record §3 cites). */
+ * pattern the record §3 cites). Round 63: three for the length of a flick's route, back to two when
+ * it lands (warmFilms). */
 const FILMS_KEPT = { wide: 4, tall: 2 } as const;
 
 export class PlateController implements GroundEngine {
@@ -510,6 +511,10 @@ export class PlateController implements GroundEngine {
     // Loading a clip (a decoder made) or letting one go (a decoder torn down) while a film starts
     // cost that film a 50 to 110 ms frame (measured: scripts/_scratch-r59-hitch.mjs). So the work
     // waits for the page to be still: after the landing, or a moment with no transition asked for.
+    // Round 63: a phone flying a route keeps one more decoder until it lands, so none is torn down
+    // mid-film (measured, _scratch-r58-transition --phone: frames over 34 ms 13 -> 7; the landing
+    // job lets it go).
+    const keep = FILMS_KEPT[aspect] + (aspect === "tall" && this.motion.motion ? 1 : 0);
     const job = () => {
       // Films no longer near are let go only past FILMS_KEPT, oldest first (a decoder torn down is
       // the other half of that cost; the page may also come back to them).
@@ -521,7 +526,7 @@ export class PlateController implements GroundEngine {
         }
       }
       for (const [id, e] of this.films) {
-        if (this.films.size + [...want].filter((w) => !this.films.has(w)).length <= FILMS_KEPT[aspect]) break;
+        if (this.films.size + [...want].filter((w) => !this.films.has(w)).length <= keep) break;
         if (want.has(id) || this.playing?.entry === e) continue;
         this.dropFilm(e);
         this.films.delete(id);
