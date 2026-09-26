@@ -1,3 +1,13 @@
+# NEXT = ROUND 63, THE PHONE SECOND PASS. READ `docs/handoff/WEBSITE-R63-HANDOFF.md` §0 FIRST.
+
+His look on his phone after round 62 (2026-09-26 evening): (1) no black behind the words on a phone:
+the map edge to edge from the header down, the words and the boxes see-through ("we're limiting the
+map really bad"); (2) the zoomed-out map looks a little pixelated, black patches cover it; (3) a thumb
+scroll through the counties should fly like a chip tap does (today the map "just appears" after a
+wait); (4) titles in sentence case and the small items, site-wide; parks and water colours KEEP.
+
+---
+
 # ROUND 62 (THE PHONE) DONE 2026-09-26: the map shows on a phone again. READ `docs/parity/DESIGN-ROUND62.md`.
 
 One agent (his /website order: no subagents), the three builders' scopes in turn. His words were "map
