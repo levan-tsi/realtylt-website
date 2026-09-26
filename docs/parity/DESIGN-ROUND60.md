@@ -190,3 +190,162 @@ is fragile and is on the fifth builder's list. Looked at: /search (the pills, th
 headed window), /buying (the photo hero, the white primary button), /connect (the dark page around
 Google's white calendar, which Google paints), the featured rail. The /search place box stays taller
 than the pills by the pinned instrument geometry; it reads as the primary control and is left.
+
+## §2 The rest of the dark site (builder 5)
+
+Every surface below was opened on the production build (:3102) and looked at, at 1440 and 390 (320 for
+overflow on the changed ones). Probes block `/api/media/`, `app.realtylt.com` and any MLS host by CDP;
+`/api/lead` and `/api/activity` are answered locally with `{ok:true}` so a form can succeed without
+reaching the CRM (it never did: every form run printed its mocked post count).
+
+### 2.1 The chat panel (`public/rlt-chat.js`)
+
+The launcher was navy; the panel it opened was the old white one with a blue header. Now the whole
+panel is night, in the site's tokens written into the script's CONFIG (it is a static script outside
+the stylesheet):
+
+| part | colour | measured |
+|---|---|---|
+| ground (panel, header, list, composer, footer) | `#0d0d0d` (the card), a 14% white hairline for the edge on black | |
+| text | moon `#f2f2ee` | 17.3:1 |
+| quiet text (subtitle, footer, system line, placeholder) | haze `#9b9b96` | 7.0:1 |
+| ours | a hairline bubble on the ground (`#242424`) | |
+| the visitor's | the raised step `#1a1a1a`, moon text | 15.5:1 |
+| Levan's own replies | our bubble with a 3px porchlight bar and a porchlight tag | 7.2:1 |
+| Send, the live mic | porchlight `#28a8e0`, a `#050505` glyph; hover `#52bae6` | 7.5:1, 9.2:1 |
+| chips, mic, composer edge | `#63635f` (a step over the page's `#5e5e5a`, which is 2.98 on this card) | 3.2:1 |
+| failure line | `#f4b8b3` on `#1c1010` | 10.9:1 |
+
+The composer is 16px at every width (was 14 on a desktop), chips 14px pills, the message text 15px,
+the close control 44px with a moon focus ring (every control has one now), the scrollbar and native
+parts dark (`color-scheme: dark`). The launcher is untouched. Test: `lib/chat-panel-night.test.ts`
+(8), beside the launcher and CSP tests, all green. Looked at in a HEADED Chrome at 1440 and 390 with a
+sample conversation injected into the DOM (nothing sent): `docs/design-r60/chat-panel.jpg` (before
+1440 | after 1440 | before 390 | after 390; probe `scripts/_scratch-r60-chat.mjs`, `--before` serves
+HEAD's file). NOT DONE: the byte copy of this file in the /ai repo is left alone; it still has the
+white panel until someone copies this file there.
+
+### 2.2 Dialogs and overlays
+
+`scripts/_scratch-r60-dialogs.mjs` opens each for real and runs the light scan, the contrast walker
+and the 16px check INSIDE the dialog (`scripts/_scratch-r60-scan.mjs`); the quiz and the qualifying
+wizard are walked step by step by their first answer. Final build:
+
+| surface | how opened | ground | light | contrast | <16px (390) |
+|---|---|---|---|---|---|
+| sign-in modal | header Sign in | #111 | 0 | 0 | 0 |
+| mobile menu (390) | Open menu | #050505 | 0 | 0 | 0 |
+| Top areas flyout (1440) | the caret | #050505 | 0 | 0 (was 2: its group labels at haze/70, 3.98:1, now haze) | - |
+| save-search dialog | Save search on /search | #111 | 0 | 0 | 0 |
+| place suggestions | "Yon" in /search's box | #111 | 0 | 0 | 0 |
+| plan quiz | /plan?quiz=1, walked to step 7 | scrim + #111 | 0 | 0 | 0 |
+| tour sheet (390) / tour form (1440) | Schedule a tour on a listing | #050505 | 1* | 0 | 0 |
+| offer sheet | Make an offer | #050505 | 0 | 0 | 0 |
+| /connect form sheet | its button | #050505 | 0 | 0 | 0 |
+| gallery lightbox | the hero photo | black 95% | 0 | 0 | 0 |
+| qualifying wizard | /selling hero form submitted (mocked), walked to its last step | #050505 | 0 | 0 | 0 |
+| account menu | signed in (§2.3) | #111 | 0 | 0 | - |
+
+\* the selected day ("Today 25 Sep") is a moon chip with dark text at 18.2:1: the selected state,
+the same inverted pill the site uses for every active chip. Kept.
+
+Consent: the forms carry ONE consent checkbox, unticked, optional (`ConsentCheckbox`); there are no
+consent radios in the codebase. Its behaviour is untouched; its invalid state had a light rose ground
+where no `dark` prop is passed, now `night:bg-rose-400/10`. Sheets: `docs/design-r60/dialogs-1440.jpg`,
+`docs/design-r60/dialogs-390.jpg`.
+
+Found while looking: the listing page's photo band is a `.daylight` section, so every photo tile
+WAITING for its picture showed the day's near-white `mist` (the skeleton in `MlsImage`): big white
+boxes on a black page until the photo landed. Now the night's raised step:
+`docs/design-r60/listing-skeleton.jpg` (before | after).
+
+### 2.3 The portal
+
+The e2e portal account does not exist between runs (it is SQL-created and deleted per test, and
+creating an auth user is not a builder's call), so `scripts/_scratch-r60-portal.mjs` answers the
+browser's Supabase host LOCALLY: a fake session for "Probe Visitor", an in-memory `portal_reports`
+table, `[]` for the rest. No request reached Supabase; our own `/api/reports/*` answered the generator
+from the listings DB, and the page's own generator made a market report and a home-value report.
+
+Before, signed in: the portal's header band and the "Your agent, on call" panel were `bg-ink` bands
+that had turned moon-white on the night page; the market report's stat cards were WHITE WITH WHITE
+FIGURES (1.1:1, invisible), the home card the same, the report-type switch a white box. Now: the
+header and the agent panel keep their dark design under `.daylight` (the panel with a hairline so its
+edge shows on black), every `bg-white` card is `bg-card`, the error notes take a night ground, the
+header's strong half is plain (one weight). Final: overview, saved homes, saved searches, reports,
+profile, a market report, a home-value report and the account menu: light 0, contrast 0 at both
+widths, except two DISABLED buttons ("Send" before a message is typed, "Save adjustments" before a
+change) at 3.9 and 2.7, which WCAG exempts. Printed reports keep the day values (`@media print`
+re-points `.nocturne`; the estimate panel is `.daylight`): black on white paper. Sheets:
+`docs/design-r60/portal.jpg` (overview 1440, market and home-value reports 390, each before | after),
+`docs/design-r60/portal-reports-1440.jpg`.
+
+### 2.4 The blog's scenes and the index
+
+The light scene primitives (Plate, Calculator, Grid) are already on tokens (`bg-mist`, `bg-paper`)
+and read night; the sweep found the Conversation scene's (and the flagship's Teardown's) VISITOR
+bubble white: it is `bg-river`, and at night `river` is the moon (the focus ring). It keeps its navy,
+`#102c54`, with moon text (12.4:1): the scene's own language, no new hue. Faint labels lifted to the
+floor: the flagship's "You called" 11px label (3.0:1, /35 to /50) and its dimmed "9:00 am" (/40 to /50;
+the 20px "am" was 3.66:1 on a phone), a conversation's timestamps, a plate's photo credit. The
+flagship's approved dark scenes are otherwise untouched. The blog index hero's blue radial glow is
+REMOVED (a blue cast with no source in the picture; no new hues), and its strong half with it.
+
+### 2.5 /auth/reset, /listing/[id], /thank-you, the 404, the sitemap
+
+All dark in the sweep at both widths: `/auth/reset` (the expired-link state; its red error text was
+red-600, 4.2:1 on black, now red-400 7.4:1 at night, the same fix in `Field`'s two error lines),
+`/listing/<key>` (a 308 to the listing page, which is §1's), `/thank-you`, `?c=1`, `?c=0`, the 404 and
+/sitemap. /auth/reset was also shot at 320: no overflow.
+
+### 2.6 The home rail card's ground
+
+`components/idx/ListingCard.tsx`: the rail card's `<article>` was literally `bg-white` (a dark cover
+painted over it). Now `bg-card`. The page is unchanged: calibration 0.00 px at the territory and
+Queens, hover 50 of 50 alone, and the look (`docs/design-r60/home-rail.jpg`, before | after at 1440
+and 390) identical; the light scan no longer reports the card.
+
+### 2.7 Dead day markup and one weight per heading
+
+- The footer's day logo is removed (the root is always `.nocturne`, the `night:hidden` cut could never
+  show, not even in print). Only the night cut remains.
+- The `dark ? ... : ...` branches in Field, TestimonialCard and Conversation are NOT dead: `dark` is
+  the photo-hero / dark-band variant (rendered inside `.daylight`) and the other branch is the night
+  page's. Both render today; kept.
+- One weight per heading: 25 headings carried `<strong className="font-bold">`, and the utility beat
+  the night rule's `inherit` (measured: h1 620, its strong half 700). The class is dropped from every
+  one; the plain `strong` inherits at night (measured on /buying after: 620/620, 600/600) and is bold on paper.
+- Also: the financing phone mock's "5-year total" was a moon-white box (now a night panel with a
+  hairline), the Top areas flyout's group labels at haze. Looks of the changed surfaces (the phone mock,
+  the navy visitor bubble, /auth/reset, the blog hero, the one-weight h1, the dark photo band at 390):
+  `docs/design-r60/surfaces-b5.jpg`.
+
+### 2.8 Left as decided
+
+The /search place box (pinned geometry, the orchestrator's call) and Google's white calendar embed on
+/connect (Google paints it; the frame keeps its 16px radius).
+
+### 2.9 Gates (final build, HEAD `e3b693f`)
+
+- `npx tsc --noEmit` clean; `npx vitest run` 2236 passed, 0 failed (was 2218; +8 chat panel, +10
+  `lib/dark-surfaces.test.ts`).
+- `node scripts/qa-crawl.mjs http://127.0.0.1:3102`: ALL PASS (250 internal links, no overflow at 390,
+  the county pages in-county).
+- The light-surface scan over 106 routes (every page, every blog post, every service page, the
+  listing, /listing/<key>, the thank-you states, /auth/reset, /portal) at 1440 and 390: every light
+  surface left is a control with dark text at 18.2:1 or better (the white primary buttons, the listing
+  cards' "Coming Soon" status chips on photographs, the device mocks' buttons). 0 with light text, 0
+  covering text. The dialogs and the portal: §2.2, §2.3.
+- The contrast walker over the same 106 routes: 1440, 4 under the floor, all Google's own map
+  attribution on /search; 390, 0 (after the "am" fix, rechecked on the final build).
+- JavaScript off: all 18 routes dark (`_scratch-r60-nojs.mjs`).
+- The home page: `_scratch-r58-calib.mjs --shots=hero,queens` 0.00 px both; `_scratch-r57l-hover.mjs`
+  alone 50 of 50 (a first run right after a server restart read 45 with 5 "none"; the rerun alone, 50).
+
+### 2.10 Open
+
+- The /ai repo's copy of `rlt-chat.js` still opens the white panel (not this repo's to change).
+- The portal was looked at through a local Supabase mock, not a real signed-in account; the pages and
+  data shapes are the real ones, the rows are made up.
+- The listing cards' "Coming Soon" / "New" status chips stay white on photographs (a white pill on a
+  photograph is white by nature, §1.1).
