@@ -14,6 +14,9 @@
  *
  * The map takes no pointer (`interactive: false`, its box `pointer-events: none`): the page scrolls
  * as it always has, and hover, tap and click are ours, hit-tested against the lights we drew. */
+// MapLibre's own stylesheet travels with this module (round 61): MlGround imports the controller
+// only when the live map is the ground, so the plates page no longer blocks its first paint on it.
+import "maplibre-gl/dist/maplibre-gl.css";
 import type { Map as MlMap, StyleSpecification } from "maplibre-gl";
 import { sampleHeight, type ElevationGrid } from "../night/elevation";
 import type { ShotName } from "../night/shots";

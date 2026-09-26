@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import posthog from "posthog-js";
 
 /**
  * PostHog product analytics (round 39, owner-approved 2026-08-24).
@@ -21,29 +20,48 @@ import posthog from "posthog-js";
  *
  * The phc_ token is the PUBLIC project token (it ships in page JavaScript on every PostHog
  * install by design) — hardcoded in the gtag idiom one component over.
+ *
+ * LOADED AFTER THE PAGE (round 61): the library is 254 KB of script (82 KB over the wire), and
+ * imported statically it sat in the layout's first bundle, so every page downloaded and parsed it
+ * before it could hydrate (the home page's lights waited on it). It is now its own chunk, asked for
+ * once the browser is idle after hydration (at most 2 s later); the init and its options are
+ * unchanged, and the preset's initial $pageview is sent at init as before.
  */
 const POSTHOG_KEY = "phc_qZwzHefJot7V88DgPgDjZsihQn7LYVELki2M8kHhaow9";
 
 export function PostHogInit() {
   useEffect(() => {
-    if (posthog.__loaded) return;
-    posthog.init(POSTHOG_KEY, {
-      api_host: "/relay-ph",
-      ui_host: "https://us.posthog.com",
-      // PostHog's own recommended baseline (their Next.js guide). MEASURED before this:
-      // hand-setting capture_pageview: "history_change" on 1.418 sent $pageleave but never
-      // an initial-load $pageview — the Activity feed showed leaves with no views. The
-      // dated preset carries the corrected pageview semantics.
-      defaults: "2025-05-24",
-      persistence: "localStorage",
-      // Honour Do Not Track (and Global Privacy Control, which posthog-js reads the same way):
-      // no capture at all for a visitor who asked not to be tracked (owner's privacy check 2026-09-24).
-      respect_dnt: true,
-      capture_pageleave: true,
-      session_recording: {
-        maskAllInputs: true,
-      },
-    });
+    let off = false;
+    const go = () => void import("posthog-js").then(({ default: posthog }) => !off && init(posthog), () => {});
+    // Safari before 16.4 has no requestIdleCallback: a timer there.
+    const idle = typeof window.requestIdleCallback === "function";
+    const id = idle ? window.requestIdleCallback(go, { timeout: 2000 }) : window.setTimeout(go, 1);
+    return () => {
+      off = true;
+      if (idle) window.cancelIdleCallback(id);
+      else window.clearTimeout(id);
+    };
   }, []);
   return null;
+}
+
+function init(posthog: typeof import("posthog-js").default) {
+  if (posthog.__loaded) return;
+  posthog.init(POSTHOG_KEY, {
+    api_host: "/relay-ph",
+    ui_host: "https://us.posthog.com",
+    // PostHog's own recommended baseline (their Next.js guide). MEASURED before this:
+    // hand-setting capture_pageview: "history_change" on 1.418 sent $pageleave but never
+    // an initial-load $pageview — the Activity feed showed leaves with no views. The
+    // dated preset carries the corrected pageview semantics.
+    defaults: "2025-05-24",
+    persistence: "localStorage",
+    // Honour Do Not Track (and Global Privacy Control, which posthog-js reads the same way):
+    // no capture at all for a visitor who asked not to be tracked (owner's privacy check 2026-09-24).
+    respect_dnt: true,
+    capture_pageleave: true,
+    session_recording: {
+      maskAllInputs: true,
+    },
+  });
 }

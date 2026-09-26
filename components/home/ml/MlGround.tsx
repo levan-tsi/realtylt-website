@@ -1,6 +1,5 @@
 "use client";
 
-import "maplibre-gl/dist/maplibre-gl.css";
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type CSSProperties, type MouseEvent as ReactMouseEvent, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { loadLights } from "@/lib/idx/lights-client";
@@ -20,7 +19,6 @@ import { focusOf } from "../g3d/cameras";
 import { featuredGlyph } from "../g3d/glyph";
 import { applyClaims, claims, type LightsState, type MapState } from "../g3d/claims";
 import { clickAction, labelContent, namesOverlap, openPoint, placeHoverLabel, tapNext, type LabelContent, type Rect, type TapState } from "../g3d/interaction";
-import { MlController } from "./controller";
 import type { GroundEngine } from "./engine";
 import { ML_SHOTS } from "./shots";
 import { projectedItems } from "./names";
@@ -677,64 +675,85 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
     // The slow line (./slow-line.ts), known up front from the browser; `?slow=1` and `?slow=0` force
     // either arm for a measurement.
     const slow = q.get("slow") === "1" || (q.get("slow") !== "0" && slowConnection((navigator as Navigator & { connection?: { effectiveType?: string } }).connection));
-    const c = new MlController({
-      ...shared,
-      slow,
-      watchFirstTile: q.get("slow") !== "0",
-      canvas: lightCanvas.current,
-      revealOn: q.get("cover") === "0" ? "paint" : "idle",
-      revealCapMs: num("cap") ?? REVEAL_CAP_MS,
-      terrain: q.get("terrain") !== "0",
-      buildings: q.get("buildings") !== "0",
-      hillshade: q.get("hillshade") !== "0",
-      exaggeration: num("exag"),
-      demTile: q.get("dem") ? Number(q.get("dem")!.split(":")[0]) || undefined : undefined,
-      demMaxzoom: q.get("dem") ? Number(q.get("dem")!.split(":")[1]) || undefined : undefined,
-      pixelRatio: num("pr"),
-      // Round 59: a pinned shot is a plate being rendered, so it takes the plate style (style.ts
-      // PLATE_ROADS: the whole street grid, the built land a shade up, buildings from zoom 12);
-      // `?pstyle=0` shows it in the live style for comparison, `?deep=1` marks the deep render (twice
-      // the css size, one zoom deeper: the style keeps its lines the picture's size).
-      plate: pin && q.get("pstyle") !== "0" ? { deep: q.get("deep") === "1" } : undefined,
-      // `?elev=` holds the deep render's centre at the plain render's height (controller.ts).
-      centerElevation: pin ? num("elev") : undefined,
-      onReveal: () => {
-        setRevealed(true);
-        mapState.current = "live";
-        if (lightsState.current === "some" && c.stats().planned === 0) lightsState.current = "none";
-        syncClaims();
-        setPosterGone(true);
-        labelsPlaced.current = false;
-        showTerritoryRef.current();
+    // Round 61: the live map's controller (and MapLibre's stylesheet, imported there) is its own chunk,
+    // asked for here only when the live map is the ground (`?ground=ml`, the plates' renderer). In the
+    // page's own chunk it was 20 KB of script and an 83 KB render-blocking stylesheet on every visit.
+    let stopped = false;
+    let live: { stop: () => void } | null = null;
+    void import("./controller").then(
+      ({ MlController }) => {
+        if (stopped) return;
+        const c = new MlController({
+          ...shared,
+          slow,
+          watchFirstTile: q.get("slow") !== "0",
+          canvas: lightCanvas.current,
+          revealOn: q.get("cover") === "0" ? "paint" : "idle",
+          revealCapMs: num("cap") ?? REVEAL_CAP_MS,
+          terrain: q.get("terrain") !== "0",
+          buildings: q.get("buildings") !== "0",
+          hillshade: q.get("hillshade") !== "0",
+          exaggeration: num("exag"),
+          demTile: q.get("dem") ? Number(q.get("dem")!.split(":")[0]) || undefined : undefined,
+          demMaxzoom: q.get("dem") ? Number(q.get("dem")!.split(":")[1]) || undefined : undefined,
+          pixelRatio: num("pr"),
+          // Round 59: a pinned shot is a plate being rendered, so it takes the plate style (style.ts
+          // PLATE_ROADS: the whole street grid, the built land a shade up, buildings from zoom 12);
+          // `?pstyle=0` shows it in the live style for comparison, `?deep=1` marks the deep render (twice
+          // the css size, one zoom deeper: the style keeps its lines the picture's size).
+          plate: pin && q.get("pstyle") !== "0" ? { deep: q.get("deep") === "1" } : undefined,
+          // `?elev=` holds the deep render's centre at the plain render's height (controller.ts).
+          centerElevation: pin ? num("elev") : undefined,
+          onReveal: () => {
+            setRevealed(true);
+            mapState.current = "live";
+            if (lightsState.current === "some" && c.stats().planned === 0) lightsState.current = "none";
+            syncClaims();
+            setPosterGone(true);
+            labelsPlaced.current = false;
+            showTerritoryRef.current();
+          },
+          onError: (m) => {
+            if (failed.current) return;
+            failed.current = true;
+            mapState.current = "failed";
+            syncClaims();
+            setError(m);
+            setPosterGone(false);
+            c.layer?.stop();
+            if (lightCanvas.current) lightCanvas.current.style.visibility = "hidden";
+            showTerritoryRef.current();
+            console.warn("[ml]", m);
+          },
+        });
+        live = c;
+        install(c);
+        const mapEl = el.querySelector<HTMLElement>("[data-ml-map]");
+        if (!mapEl) return;
+        void c.start(mapEl);
+        const noHomes = q.get("homes") === "0";
+        void loadLights().then((pts) => {
+          lightsState.current = !pts || noHomes ? "none" : "some";
+          syncClaims();
+          if (!pts || noHomes) return;
+          c.setHomes(homesOf(pts));
+        });
+        // Our homes' heights on the terrain (367 KB); the flat map of a slow line needs none.
+        if (!slow) void loadElevation().then((g) => c.setElevation(g)).catch(() => {});
       },
-      onError: (m) => {
-        if (failed.current) return;
+      (e: Error) => {
+        // The chunk did not arrive: the same path as a map that failed to start (the cover stays).
+        if (stopped || failed.current) return;
         failed.current = true;
         mapState.current = "failed";
         syncClaims();
-        setError(m);
-        setPosterGone(false);
-        c.layer?.stop();
-        if (lightCanvas.current) lightCanvas.current.style.visibility = "hidden";
+        setError(`the map's code did not load: ${e.message}`);
         showTerritoryRef.current();
-        console.warn("[ml]", m);
       },
-    });
-    install(c);
-    const mapEl = el.querySelector<HTMLElement>("[data-ml-map]");
-    if (!mapEl) return;
-    void c.start(mapEl);
-    const noHomes = q.get("homes") === "0";
-    void loadLights().then((pts) => {
-      lightsState.current = !pts || noHomes ? "none" : "some";
-      syncClaims();
-      if (!pts || noHomes) return;
-      c.setHomes(homesOf(pts));
-    });
-    // Our homes' heights on the terrain (367 KB); the flat map of a slow line needs none.
-    if (!slow) void loadElevation().then((g) => c.setElevation(g)).catch(() => {});
+    );
     return () => {
-      c.stop();
+      stopped = true;
+      live?.stop();
       ctl.current = null;
     };
   }, [engine, measure, flyTo, hideHover, hideLabel]);

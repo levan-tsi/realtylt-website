@@ -10,10 +10,8 @@ import { DriftRail } from "@/components/idx/DriftRail";
 import { RailPager } from "@/components/idx/RailPager";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
-import { NightGround } from "@/components/home/night/NightGround";
-import { AreaChapter } from "@/components/home/night/AreaChapter";
-import { G3dGround } from "@/components/home/g3d/G3dGround";
-import { G3dAreaChapter } from "@/components/home/g3d/G3dAreaChapter";
+// The other grounds, split into chunks of their own (round 61, components/home/other-grounds.ts).
+import { AreaChapter, G3dAreaChapter, G3dGround, NightGround } from "@/components/home/other-grounds";
 import { MlGround } from "@/components/home/ml/MlGround";
 import { MlAreaChapter } from "@/components/home/ml/MlAreaChapter";
 import { MAPLIBRE_URL } from "@/components/home/ml/style";
