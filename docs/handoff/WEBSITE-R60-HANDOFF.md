@@ -8,6 +8,7 @@
   to `main` at 22:25:59 and verified LIVE at realtylt.com (`docs/parity/DESIGN-ROUND60.md` §3).
   **The next session is the MAP ROUND: `docs/handoff/WEBSITE-R61-MAP-ROUND-BRIEF.md`.** The
   paragraphs below describe the state before that push and stay for the record.
+- **22:40: BUILDER 6 (Opus) STARTED on the map round's §1, THE FIRST SECOND** (the bundle map, the splits, the lights' first draw, the rise, the HTML), from `docs/handoff/WEBSITE-R61-MAP-ROUND-BRIEF.md`; its record goes to `docs/parity/DESIGN-ROUND61.md` §1. If this session ended: verify its commits with the round 58/59 gate set on a rebuild from HEAD (boot, see, calibration 0.00 px, the walk, hover alone, reduced motion, JS off, the crawler, the light scan), look at the see frames, then push and probe live.
 
 - **LIVE**: `c07889f` on `main` at realtylt.com (public): round 59 (yellow lights, county plates,
   the film), the lights fetched once, the map credit at its legal minimum (five seconds, then the
