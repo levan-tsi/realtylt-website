@@ -82,7 +82,7 @@ export function MlAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
                     aria-pressed={on}
                     onClick={() => goTo(row.shot)}
                     className={`min-h-[40px] shrink-0 rounded-full border px-4 text-[15px] font-medium tracking-[-0.005em] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight motion-reduce:transition-none ${
-                      on ? "border-ink bg-ink text-paper" : "border-line-strong bg-night-deep/45 text-ink-soft backdrop-blur-md hover:border-stone hover:text-ink"
+                      on ? "border-ink bg-ink text-paper" : "border-line-strong bg-night-deep/80 text-ink-soft backdrop-blur-md hover:border-stone hover:text-ink"
                     } ${PRESS}`}
                   >
                     {row.name}
