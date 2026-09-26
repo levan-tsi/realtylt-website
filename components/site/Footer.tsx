@@ -55,21 +55,14 @@ export function Footer() {
         </section>
 
         <div data-quiet>
-          {/* Both cuts are in the HTML and the ground picks one, so the footer stays a server
-              component; the night cut is the same artwork with the navy lit (round 53). */}
-          <Image
-            src="/logo-realtylt.png"
-            alt="RealtyLT"
-            width={200}
-            height={41}
-            className="h-auto w-44 night:hidden"
-          />
+          {/* The night cut: the same artwork with the navy lit (round 53). The whole site is night
+              since round 60, so the day cut that sat beside it could never show and is gone. */}
           <Image
             src="/logo-realtylt-night.png"
             alt="RealtyLT"
             width={200}
             height={41}
-            className="hidden h-auto w-44 night:block"
+            className="h-auto w-44"
           />
 
           <p className="t-eyebrow mt-9 text-ink">Reach out</p>

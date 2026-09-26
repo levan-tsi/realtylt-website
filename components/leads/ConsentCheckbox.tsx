@@ -22,7 +22,7 @@ export function ConsentCheckbox({ dark = false, invalid = false }: { dark?: bool
   return (
     <label
       className={`-mx-3 flex cursor-pointer items-start gap-2.5 rounded-xl px-3 py-2.5 transition-colors duration-150 ${
-        invalid ? (dark ? "bg-rose-400/10" : "bg-rose-50") : ""
+        invalid ? (dark ? "bg-rose-400/10" : "bg-rose-50 night:bg-rose-400/10") : ""
       }`}
     >
       <input

@@ -315,7 +315,7 @@ export function Header() {
                             key={g.id}
                             className={gi > 0 ? "border-l border-line pl-6" : undefined}
                           >
-                            <p className="whitespace-nowrap px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.14em] text-stone/70 night:text-[13px] night:font-medium night:normal-case night:tracking-normal">
+                            <p className="whitespace-nowrap px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.14em] text-stone night:text-[13px] night:font-medium night:normal-case night:tracking-normal">
                               {g.label}
                             </p>
                             <ul>
