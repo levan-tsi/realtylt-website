@@ -77,7 +77,7 @@ export default function ProfilePage() {
           <p
             role={note.kind === "error" ? "alert" : "status"}
             className={`rounded-xl px-3 py-2 text-sm ${
-              note.kind === "error" ? "bg-red-50 text-red-700" : "bg-mist text-ink-soft"
+              note.kind === "error" ? "bg-red-50 text-red-700 night:bg-paper night:text-ink night:ring-1 night:ring-red-500/50" : "bg-mist text-ink-soft"
             }`}
           >
             {note.text}

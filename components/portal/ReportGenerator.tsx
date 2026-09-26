@@ -206,7 +206,7 @@ export function ReportGenerator() {
       <div
         role="tablist"
         aria-label="Report type"
-        className="mt-5 inline-flex rounded-xl border border-ink/15 bg-white p-1"
+        className="mt-5 inline-flex rounded-xl border border-ink/15 bg-card p-1"
       >
         {(
           [
@@ -286,7 +286,7 @@ export function ReportGenerator() {
       )}
 
       {error && (
-        <p role="alert" className="mt-4 rounded-xl border border-red-500/40 bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p role="alert" className="mt-4 rounded-xl border border-red-500/40 bg-red-50 px-3 py-2 text-sm text-red-700 night:bg-paper night:text-ink">
           {error}
         </p>
       )}

@@ -155,7 +155,7 @@ function CmaBody({ report }: { report: PortalReport }) {
     <>
       {/* Subject + estimate hero */}
       <section className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-        <div className="rounded-2xl border border-ink/10 bg-white p-6 md:p-8">
+        <div className="rounded-2xl border border-ink/10 bg-card p-6 md:p-8">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-stone">Your home</p>
           <p className="mt-2 text-xl font-bold text-ink">{subject.address}</p>
           <p className="text-sm text-stone">
@@ -378,7 +378,7 @@ function MarketBody({ report }: { report: PortalReport }) {
         <Metric label="Typical range" value={`${usdShort(stats.typicalLow)}–${usdShort(stats.typicalHigh)}`} />
       </section>
 
-      <section aria-labelledby="bands-heading" className="rounded-2xl border border-ink/10 bg-white p-6 md:p-8">
+      <section aria-labelledby="bands-heading" className="rounded-2xl border border-ink/10 bg-card p-6 md:p-8">
         <h2 id="bands-heading" className="font-display text-xl text-ink">Where prices land</h2>
         <ul className="mt-5 space-y-3">
           {stats.priceBands.map((b) => (
@@ -397,7 +397,7 @@ function MarketBody({ report }: { report: PortalReport }) {
       </section>
 
       <section className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-2xl border border-ink/10 bg-white p-6">
+        <div className="rounded-2xl border border-ink/10 bg-card p-6">
           <h2 className="font-display text-lg text-ink">By bedrooms</h2>
           <ul className="mt-4 space-y-2.5">
             {stats.bedsDistribution.map((b) => (
@@ -411,7 +411,7 @@ function MarketBody({ report }: { report: PortalReport }) {
             ))}
           </ul>
         </div>
-        <div className="rounded-2xl border border-ink/10 bg-white p-6">
+        <div className="rounded-2xl border border-ink/10 bg-card p-6">
           <h2 className="font-display text-lg text-ink">Property type</h2>
           <ul className="mt-4 space-y-2.5">
             {stats.propertyTypeSplit.map((b) => (
@@ -442,7 +442,7 @@ function Spec({ label, value }: { label: string; value: string | number }) {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-ink/10 bg-white p-5">
+    <div className="rounded-2xl border border-ink/10 bg-card p-5">
       <p className="text-2xl font-light text-ink md:text-3xl">{value}</p>
       <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-stone">{label}</p>
     </div>

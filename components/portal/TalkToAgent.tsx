@@ -65,7 +65,7 @@ export function TalkToAgent({
   return (
     <section
       aria-labelledby="talk-heading"
-      className="overflow-hidden rounded-2xl bg-ink text-paper"
+      className="daylight overflow-hidden rounded-2xl border border-white/10 bg-ink text-paper"
     >
       <div className="p-6 md:p-8">
         <p className="text-xs font-bold uppercase tracking-[0.22em] text-porchlight">

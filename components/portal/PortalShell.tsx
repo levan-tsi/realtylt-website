@@ -25,16 +25,16 @@ export function PortalShell({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <header className="bg-ink py-10 text-paper">
+      <header className="daylight bg-ink py-10 text-paper">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-paper/60">My Portal</p>
           <h1 className="t-h1 mt-2">
             {user ? (
               <>
-                Welcome{firstName ? <>, <strong>{firstName}</strong></> : null}
+                Welcome{firstName ? `, ${firstName}` : null}
               </>
             ) : (
-              <>Your <strong>RealtyLT</strong> account</>
+              <>Your RealtyLT account</>
             )}
           </h1>
           {user && (
