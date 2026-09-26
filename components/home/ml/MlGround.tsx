@@ -1226,8 +1226,11 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
         className="pointer-events-auto fixed bottom-2 left-3 z-[12] text-[11px] leading-[15px] text-white/60"
         style={{ textShadow: "0 0 4px rgba(0,0,0,0.9)" }}
       >
-        {credit === "icon" ? null : (
-          <p className="m-0 max-w-[280px] [&_a]:underline-offset-2 hover:[&_a]:underline">
+        {/* Laptops: the required line for CREDIT_SHOWN_MS (the server renders it; JavaScript off keeps
+            it). Phones: never the line, the (i) alone from the start (the guideline: "mobile devices may
+            have attribution after one interaction ... an icon or link that opens a pop-up"). */}
+        {credit === "line" ? (
+          <p className="m-0 hidden max-w-[280px] md:block [&_a]:underline-offset-2 hover:[&_a]:underline">
             <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">
               © OpenStreetMap contributors
             </a>{" "}
@@ -1235,29 +1238,40 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
             <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">
               © OpenMapTiles
             </a>
-            {credit === "panel" ? (
-              <>
-                <br />
-                Tiles served by{" "}
-                <a href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">
-                  OpenFreeMap
-                </a>
-                . Terrain: USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1 (Mapzen terrain tiles).
-              </>
-            ) : null}
           </p>
-        )}
-        {credit === "line" ? null : (
-          <button
-            type="button"
-            aria-expanded={credit === "panel"}
-            aria-label={credit === "panel" ? "Hide the map data credits" : "Map data credits"}
-            onClick={() => setCredit((m) => (m === "panel" ? "icon" : "panel"))}
-            className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/40 font-serif text-[11px] italic leading-none text-white/70 transition-colors hover:border-white/80 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none"
+        ) : null}
+        {/* The (i) is a <details>, so the notice opens with no script at all (a phone with JavaScript
+            off still reaches it); the page keeps its state in step for Escape and the keep-out box. */}
+        <details
+          className={credit === "line" ? "md:hidden" : undefined}
+          open={credit === "panel"}
+          onToggle={(e) => {
+            const open = (e.currentTarget as HTMLDetailsElement).open;
+            setCredit((m) => (open ? "panel" : m === "panel" ? "icon" : m));
+          }}
+        >
+          <summary
+            aria-label="Map data credits"
+            className="inline-flex h-6 w-6 cursor-pointer list-none items-center justify-center rounded-full border border-white/40 font-serif text-[11px] italic leading-none text-white/70 transition-colors [&::-webkit-details-marker]:hidden hover:border-white/80 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none"
           >
             i
-          </button>
-        )}
+          </summary>
+          <p className="m-0 mt-1 max-w-[280px] [&_a]:underline-offset-2 hover:[&_a]:underline">
+            <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">
+              © OpenStreetMap contributors
+            </a>{" "}
+            ·{" "}
+            <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">
+              © OpenMapTiles
+            </a>
+            <br />
+            Tiles served by{" "}
+            <a href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">
+              OpenFreeMap
+            </a>
+            . Terrain: USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1 (Mapzen terrain tiles).
+          </p>
+        </details>
       </div>
       <a
         ref={label}

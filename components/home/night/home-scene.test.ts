@@ -251,8 +251,14 @@ describe("the footer over the scene", () => {
     // be named), and OpenFreeMap, whose name is optional, with them.
     expect(ground).toContain("USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1");
     expect(ground).toContain("OpenFreeMap");
-    // The (i): a real button, 24 px, that says what it opens.
-    expect(ground).toMatch(/aria-expanded=\{credit === "panel"\}/);
+    // The (i): a <details> whose summary is the 24 px disc, so the notice opens with no script at all
+    // (a phone, where the line never shows, still reaches it with JavaScript off); the line is for
+    // laptops only (hidden below md) and only while the state is "line".
+    expect(ground).toContain('open={credit === "panel"}');
+    expect(ground).toContain('<summary');
+    expect(ground).toContain('aria-label="Map data credits"');
+    expect(ground).toContain('className="m-0 hidden max-w-[280px] md:block');
+    expect(ground).toContain('className={credit === "line" ? "md:hidden" : undefined}');
     expect(ground).toContain('useState<"line" | "icon" | "panel">("line")');
     const attributions = fs.readFileSync(path.join(ROOT, "public/images/ATTRIBUTIONS.md"), "utf8");
     expect(attributions).toContain("scripts/make-ml-cover.mjs");
