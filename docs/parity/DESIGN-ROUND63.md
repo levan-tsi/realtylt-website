@@ -132,3 +132,15 @@ in Title Case), then by a source sweep of JSX text and labels.
   plate compared at 1:1.
 - The blog post titles' case (his call).
 - The 1440 hold frame at Dutchess (97 ms, pre-existing, unchanged).
+
+## 8. Live, after the push (`1f6014d`)
+
+Deployed within about 60 s (the /who-we-are chips in sentence case on realtylt.com); the live phone
+first screens photographed at 390 x 664, 390 x 844 and 320 x 568, no overflow.
+`_scratch-r59-live.mjs --base=https://realtylt.com`: plates, lights drawn and fetched once, the
+credit's (i), CSP silent, no page errors, the first film played on scroll, at 1440 and 390. Its
+failures, each read: the two noindex checks (by design, the site is public); six plain GETs answered
+429 (Vercel's bot protection challenges non-browser fetches; the same resources loaded in the
+browser); "no film in the first screen" at both widths: the first film is warmed on purpose once
+the page has loaded and the lights are in (`openFilms`, round 59), and the laptop's path is
+untouched this round (the A/B), so the check predates that design, not this round.
