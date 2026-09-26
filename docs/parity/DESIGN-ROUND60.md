@@ -173,3 +173,20 @@ Started or not looked at in every state:
   `<strong className="font-bold">` half render that half at 700 beside 600-620 (the utility beats the
   night rule's `inherit`); visible on /buying's hero and a few `t-h2`s. Reads fine; the round-53 rule
   says the night does not use the one-bold-word device, so a later pass may drop those `strong`s.
+
+### The orchestrator's verification of §1 (2026-09-25, on a rebuild from HEAD `bf0bdc8`)
+
+tsc clean; vitest 2218 passed, 0 failed. The crawler: 350 internal links resolve, no overflow at 390,
+the county pages in-county. The home page after the theme flip: calibration 0.00 px at the territory
+and Queens with the live map's light counts; hover 50 of 50 alone. JavaScript off: dark from the
+server on every route tried. The contrast walker at 1440 over 20 routes: 4 under the floor, all four
+Google's own attribution inside the /search map, none ours. A light-surface scan of every route at
+1440 and 390 (`scripts/_scratch-r60-light.mjs`: any opaque background above 0.5 luminance holding
+text, outside media): every hit is the site's white primary button with dark text at 18:1 or better,
+except the home page's listing cards, which the scan reports as white with light text (the article's
+`bg-card` computes white there) while the painted card is dark and readable at both widths (looked at:
+`scripts/_scratch-r60/look/home-{1440,390}-find.png`): a dark cover paints over a white ground, which
+is fragile and is on the fifth builder's list. Looked at: /search (the pills, the Bed list dark in a
+headed window), /buying (the photo hero, the white primary button), /connect (the dark page around
+Google's white calendar, which Google paints), the featured rail. The /search place box stays taller
+than the pills by the pinned instrument geometry; it reads as the primary control and is left.
