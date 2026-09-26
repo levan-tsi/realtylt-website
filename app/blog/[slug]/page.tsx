@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound, permanentRedirect } from "next/navigation";
+import { permanentRedirect, redirect } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { ArticleBody } from "@/components/blog/ArticleBody";
 import { ArticleToc } from "@/components/blog/ArticleToc";
@@ -11,7 +11,7 @@ import { AuthorCard } from "@/components/blog/AuthorCard";
 import { ColdOpen } from "@/components/blog/scenes/ColdOpen";
 import { FlagshipToc } from "@/components/blog/FlagshipToc";
 import { renderScene, sceneBand } from "@/components/blog/scenes/registry";
-import { aliasTarget, fmtDate, getArticle, getArticles, type Article } from "@/lib/blog";
+import { aliasTarget, fmtDate, getArticle, getArticles, missingPostTarget, type Article } from "@/lib/blog";
 import { flagshipToc } from "@/lib/blog/flagship";
 import { hasScenes, parseOutline, renderFlagshipBands } from "@/lib/blog/markdown";
 import { relatedArticles } from "@/lib/blog/related";
@@ -26,8 +26,8 @@ export const revalidate = 300;
 
 // Pre-render every article known at build time (static stubs + everything already
 // published from the CRM). dynamicParams stays TRUE so a post published AFTER this build
-// still resolves on first request — an unknown or unpublished slug falls through to
-// notFound() below, so drafts 404 exactly like a typo does.
+// still resolves on first request — an unknown or unpublished slug falls through to the
+// redirect below (a stand-in or the blog), so a draft is as invisible as a typo.
 export async function generateStaticParams() {
   const articles = await getArticles();
   return articles.map((a) => ({ slug: a.slug }));
@@ -94,7 +94,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) {
     const target = aliasTarget(slug);
     if (target) permanentRedirect(`/blog/${target}`);
-    notFound();
+    // 2026-09-26: never "not found" for a /blog/ address: a pending article's stand-in, else the
+    // blog (lib/blog/index.ts missingPostTarget), both temporary so a future post takes the address.
+    redirect(missingPostTarget(slug));
   }
 
   const url = articleUrl(post);

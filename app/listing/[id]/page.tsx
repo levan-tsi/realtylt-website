@@ -1,4 +1,4 @@
-import { notFound, permanentRedirect } from "next/navigation";
+import { permanentRedirect, redirect } from "next/navigation";
 import { getListingCached } from "@/components/listing/ListingDetail";
 import { listingPath } from "@/lib/idx/listing-url";
 
@@ -12,6 +12,7 @@ export const revalidate = 600;
 export default async function LegacyListingRedirect({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const l = await getListingCached(id);
-  if (!l) notFound();
+  // Gone from the market: the search, not "not found" (this old form carries no town to read).
+  if (!l) redirect("/search");
   permanentRedirect(listingPath(l));
 }
