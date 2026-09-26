@@ -114,6 +114,18 @@ export function filmOf(manifest: FilmManifest, from: ShotName | null, to: ShotNa
   if (manifest[`${to}--${from}`]) return { key: `${to}--${from}`, reverse: true };
   return null;
 }
+/** Round 63: the plates in the order their films join them (each recorded flight joins a plate to
+ * the next one on the page), the ladder a scroll's route walks (plate-motion.ts routeHop). */
+export function filmLadder(manifest: FilmManifest): ShotName[] {
+  const pairs = Object.keys(manifest).map((k) => k.split("--") as [ShotName, ShotName]);
+  if (!pairs.length) return [];
+  const out: ShotName[] = [pairs[0][0]];
+  for (;;) {
+    const next = pairs.find(([x, y]) => x === out[out.length - 1] && !out.includes(y));
+    if (!next) return out;
+    out.push(next[1]);
+  }
+}
 export const filmSrc = (from: ShotName, to: ShotName, aspect: PlateAspect, width: number, format: FilmFormat) => `/flights/${from}--${to}-${aspect}-${width}.${format}`;
 export const filmDataSrc = (key: string, aspect: PlateAspect) => `/flights/${key}-${aspect}.json`;
 /** The format a clip is played in: the first of the browser's playable formats (best first) the

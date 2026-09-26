@@ -3,7 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { FLIGHTS } from "./flights.gen";
 import { PLATES } from "./plates.gen";
-import { coverFit, filmOf, filmSrc, framePlate, plateProjector, type FilmFrame, type PlateAspect } from "./plate-frame";
+import { coverFit, filmLadder, filmOf, filmSrc, framePlate, plateProjector, type FilmFrame, type PlateAspect } from "./plate-frame";
 import { AREA_FLIGHT, FLIGHT, type ShotName } from "../night/shots";
 import { flightMs } from "../ml/shots";
 import { rangeForZoom } from "../ml/geo";
@@ -121,5 +121,15 @@ describe("the recorded flights", () => {
     expect(framePlate(c, d.frames, 0, true, 1.6, 40).m).toEqual(d.frames[c.n].m);
     expect(framePlate(c, d.frames, c.n, true, 1.6, 40).m).toEqual(d.frames[0].m);
     expect(framePlate(c, d.frames, 3, false, 1.6, 40).k).toBe(2);
+  });
+});
+
+describe("the films' ladder (round 63)", () => {
+  it("walks every plate in page order, each joined to the next by a film", () => {
+    const ladder = filmLadder(FLIGHTS);
+    expect(ladder.length).toBe(Object.keys(FLIGHTS).length + 1);
+    expect(ladder.slice(0, 2)).toEqual(["hero", "dutchess"]);
+    for (let i = 1; i < ladder.length; i++) expect(FLIGHTS[`${ladder[i - 1]}--${ladder[i]}`]).toBeDefined();
+    expect(ladder.indexOf("orange") - ladder.indexOf("ulster")).toBe(2);
   });
 });

@@ -464,6 +464,15 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
       return;
     }
     clearTimeout(settle.current);
+    // Round 63: on a phone the map goes the moment the page crosses into a stop, as a chip tap's
+    // smooth scroll makes it go. Waiting for the scroll to settle held a thumb's flick until its
+    // momentum died (measured: 1.5 to 2.3 s) and then jumped several stops in one fade. The
+    // controller queues and hurries what arrives while it flies, and routes a jump of two or three
+    // plates through the ones between (plates/plate-motion.ts routeHop).
+    if (window.innerWidth < 1024) {
+      flyTo(name);
+      return;
+    }
     settle.current = setTimeout(() => {
       if (!override.current) flyTo(name);
     }, SETTLE_MS);

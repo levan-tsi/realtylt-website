@@ -31,8 +31,8 @@ import { FLY_IN_MS } from "../g3d/interaction";
 import { mercX, mercY } from "../ml/geo";
 import type { MlStats } from "../ml/controller";
 import type { GroundEngine } from "../ml/engine";
-import { aspectFor, coverFit, filmDataSrc, filmFormat, filmOf, filmSrc, filmWidth, framePlate, plateProjector, plateRange, plateSrc, plateSrcSet, type CoverFit, type FilmClip, type FilmFormat, type FilmFrame, type FilmManifest, type Plate, type PlateAspect, type PlateFormat, type PlateManifest, type Projector } from "./plate-frame";
-import { FADE_MS, FADE_REDUCED_MS, FILM_IN_MS, FILM_OUT_MS, PUSH_TO, SETTLE_FROM, filmHurry, finished, hurryRate, idle, request, useFilm, type Motion, type MotionState } from "./plate-motion";
+import { aspectFor, coverFit, filmDataSrc, filmFormat, filmLadder, filmOf, filmSrc, filmWidth, framePlate, plateProjector, plateRange, plateSrc, plateSrcSet, type CoverFit, type FilmClip, type FilmFormat, type FilmFrame, type FilmManifest, type Plate, type PlateAspect, type PlateFormat, type PlateManifest, type Projector } from "./plate-frame";
+import { FADE_MS, FADE_REDUCED_MS, FILM_IN_MS, FILM_OUT_MS, PUSH_TO, SETTLE_FROM, filmHurry, finished, hurryRate, idle, request, routeHop, useFilm, type Motion, type MotionState } from "./plate-motion";
 import { frameAt } from "./flight-path";
 
 /** One layer's elements: the picture (four sources: AVIF and WebP, the tall and the wide), its image,
@@ -327,7 +327,7 @@ export class PlateController implements GroundEngine {
     }
     if (this.flyInAnim && name === this.motion.at) this.undoFlyIn();
     const now = performance.now();
-    const step = request(this.motion, name, now, this.fadeMs(), this.filmMs);
+    const step = request(this.motion, name, now, this.fadeMs(), this.filmMs, this.route);
     this.motion = step.state;
     if (step.action === "start") void this.begin(step.state.motion!);
     else if (step.action === "queue") this.hurry(now);
@@ -498,6 +498,15 @@ export class PlateController implements GroundEngine {
     const at = this.motion.motion?.to ?? this.motion.at;
     if (at && from && at !== from && filmOf(M, at, from)) want.add(`${at}>${from}>${aspect}`);
     if (this.playing) want.add(this.playing.entry.id);
+    // Round 63: a phone flying through its stops keeps its two decoders for the flight: the film
+    // playing and the next one of the route, from where the map is going toward where the page now
+    // is (routeHop). The films round the page come back when it lands (land()).
+    if (aspect === "tall" && this.motion.motion) {
+      want.clear();
+      if (this.playing) want.add(this.playing.entry.id);
+      const step = at && from && at !== from ? (this.route(at, from) ?? (filmOf(M, at, from) ? from : null)) : null;
+      if (at && step) want.add(`${at}>${step}>${aspect}`);
+    }
     // Loading a clip (a decoder made) or letting one go (a decoder torn down) while a film starts
     // cost that film a 50 to 110 ms frame (measured: scripts/_scratch-r59-hitch.mjs). So the work
     // waits for the page to be still: after the landing, or a moment with no transition asked for.
@@ -531,6 +540,13 @@ export class PlateController implements GroundEngine {
     };
     // The first films (the page just opened, nothing moving yet) at once.
     if (!this.films.size && !this.motion.motion) job();
+    // Round 63: a phone moving through its stops loads the next clip now. Waiting for stillness meant
+    // a flick's second and third hops always faded (the map is never still during one).
+    else if (this.aspect() === "tall" && this.motion.motion) {
+      this.calmJob = null;
+      clearTimeout(this.calmTimer);
+      job();
+    }
     else this.calm(job);
   }
 
@@ -657,6 +673,15 @@ export class PlateController implements GroundEngine {
     v.remove();
   }
 
+  /** Round 63: on a phone, a jump of two or three plates flies through the ones between (their films
+   * ready). The laptop keeps its straight transitions (approved as they are). */
+  private ladder: ShotName[] | null = null;
+  private route = (from: ShotName, to: ShotName): ShotName | null => {
+    if (!this.opts.films || this.aspect() !== "tall") return null;
+    this.ladder ??= filmLadder(this.opts.films);
+    return routeHop(this.ladder, from, to);
+  };
+
   /** The film's length if the flight from -> to plays as a film now (plate-motion.ts useFilm). */
   private filmMs = (from: ShotName, to: ShotName): number | null => {
     const e = this.films.get(`${from}>${to}>${this.aspect()}`);
@@ -756,6 +781,8 @@ export class PlateController implements GroundEngine {
     }
     this.fs.played++;
     this.logKind(e.key + (e.reverse ? " back" : ""), "film");
+    // A hop with its target queued behind it (routeHop) is played hurried, as a queued request is.
+    if (this.motion.next) this.hurry(performance.now());
   }
 
   /** The film's end: plate B on under it, the film fades out onto it, then the stop lands. */
@@ -917,6 +944,8 @@ export class PlateController implements GroundEngine {
       if (this.lastNames.length) this.warmFilms(this.lastNames);
     }
     const inc = this.slots[1 - this.cur], out = this.slots[this.cur];
+    // Round 63: a hop of a phone's route: the next hop's clip is wanted now, from where this one lands.
+    if (m.then && this.aspect() === "tall") this.warmFilms(this.lastNames);
     this.flights++;
     this.startedAt = Math.round(performance.now());
     this.opts.onFlightStart();
@@ -935,7 +964,7 @@ export class PlateController implements GroundEngine {
     // A plate asked for while this one decoded: nothing of this one is on screen yet, so it is
     // simply not shown and the later one goes.
     const queued = this.motion.next;
-    if (queued && queued !== m.to) {
+    if (queued && queued !== m.to && queued !== m.then) {
       this.motion = idle(this.motion.at);
       this.flyToShot(queued);
       return;
@@ -1017,11 +1046,14 @@ export class PlateController implements GroundEngine {
     const now = Math.round(performance.now());
     this.st.stops.push({ shot: inc.shot, startedAt: this.startedAt, landedAt: now, idleMs: 0 });
     if (this.st.stops.length > 60) this.st.stops.shift();
-    const step = finished(this.motion, now, this.fadeMs(), this.filmMs);
+    const step = finished(this.motion, now, this.fadeMs(), this.filmMs, this.route);
     this.motion = step.state;
     this.opts.onLand();
     if (step.action === "start") void this.begin(step.state.motion!);
     else if (this.calmJob) {
+      // Round 63: on a phone the waiting job is made again from where the map landed (one made
+      // mid-flick would let go the clips the page needs now).
+      if (this.aspect() === "tall") this.warmFilms(this.lastNames);
       clearTimeout(this.calmTimer);
       this.calmTimer = setTimeout(() => this.flushCalm(), 120);
     }

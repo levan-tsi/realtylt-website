@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { FADE_MS, FILM_MAX_RATE, filmNeighbours, HURRY_MS, SETTLE_FROM, filmHurry, finished, hurryRate, idle, neighbours, progress, request, settleScale, useFilm, type FilmChooser } from "./plate-motion";
+import { FADE_MS, FILM_MAX_RATE, filmNeighbours, HURRY_MS, SETTLE_FROM, filmHurry, finished, hurryRate, idle, neighbours, routeHop, progress, request, settleScale, useFilm, type FilmChooser } from "./plate-motion";
+import type { ShotName } from "../night/shots";
 
 describe("a plate asked for", () => {
   it("the first plate is a cut: there is nothing to fade from", () => {
@@ -170,5 +171,48 @@ describe("which films to have ready (round 59)", () => {
     expect(filmNeighbours(names, 4)).toEqual(["highlands", "westchester", "dutchess"]);
     expect(filmNeighbours(names, 6)).toEqual(["westchester", "highlands"]);
     expect(filmNeighbours(names, 9)).toEqual([]);
+  });
+});
+
+// Round 63 (the owner: a thumb scroll should "take you there with the map moving", as a chip tap
+// does): a jump of two or three stops flies through the plates in between when their films are
+// ready, instead of fading straight to the far one.
+describe("the route through the plates in between", () => {
+  const order = ["ulster", "dutchess-county", "orange", "putnam", "rockland"] as const;
+  const films: FilmChooser = () => 2000;
+  const route = (from: string, to: string) => routeHop(order as unknown as ShotName[], from as ShotName, to as ShotName);
+
+  it("the first hop is the next plate toward the target, either way", () => {
+    expect(routeHop([...order], "ulster", "putnam")).toBe("dutchess-county");
+    expect(routeHop([...order], "rockland", "dutchess-county")).toBe("putnam");
+  });
+
+  it("no hop for a neighbour, a far jump, or a plate off the route", () => {
+    expect(routeHop([...order], "ulster", "dutchess-county")).toBeNull();
+    expect(routeHop([...order], "ulster", "rockland")).toBeNull();
+    expect(routeHop([...order], "hero", "orange")).toBeNull();
+  });
+
+  it("an idle plate asked two stops on flies the first hop and keeps the target queued", () => {
+    const r = request(idle("ulster"), "orange", 0, FADE_MS, films, route);
+    expect(r.action).toBe("start");
+    expect(r.state.motion).toMatchObject({ from: "ulster", to: "dutchess-county", film: true, then: "orange" });
+    expect(r.state.next).toBe("orange");
+    const f = finished(r.state, 2000, FADE_MS, films, route);
+    expect(f.action).toBe("start");
+    expect(f.state.motion).toMatchObject({ from: "dutchess-county", to: "orange", film: true });
+    expect(f.state.next).toBeNull();
+  });
+
+  it("a hop whose film is not ready is not taken: the far plate fades in directly", () => {
+    const only: FilmChooser = (a, b) => (a === "ulster" && b === "orange" ? 2000 : null);
+    const r = request(idle("ulster"), "orange", 0, FADE_MS, only, route);
+    expect(r.state.motion).toEqual({ from: "ulster", to: "orange", startedAt: 0, ms: 2000, film: true });
+    expect(r.state.next).toBeNull();
+  });
+
+  it("without a route nothing changes", () => {
+    const r = request(idle("ulster"), "orange", 0, FADE_MS, films);
+    expect(r.state.motion).toEqual({ from: "ulster", to: "orange", startedAt: 0, ms: 2000, film: true });
   });
 });

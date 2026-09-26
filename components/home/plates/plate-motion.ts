@@ -24,10 +24,29 @@ export interface Motion {
   ms: number;
   /** Round 59: a recorded flight plays (./flight-path.ts, the film), not the fade over. */
   film?: boolean;
+  /** Round 63: this transition is a hop on the way to `then` (queued as `next`), see routeHop. */
+  then?: ShotName;
 }
 
 /** Which films are ready to play: from, to, and the film's length in ms, or null for the fade. */
 export type FilmChooser = (from: ShotName, to: ShotName) => number | null;
+
+/** The first plate to fly to on the way from one plate to another, or null to go straight there. */
+export type Router = (from: ShotName, to: ShotName) => ShotName | null;
+
+/** Round 63 (the owner: a thumb scroll should "take you there with the map moving", as a chip tap
+ * does): a flick crosses two or three stops, and a jump between plates that are not neighbours has
+ * no film, so it faded. On the ladder of plates the films join (`order`, each next to the one its
+ * film reaches), the first hop toward a target up to `max` plates away; null for a neighbour, a
+ * far jump (a fade says "elsewhere" better than a string of films) or a plate off the ladder. */
+export const ROUTE_MAX_HOPS = 3;
+export function routeHop(order: readonly ShotName[], from: ShotName, to: ShotName, max = ROUTE_MAX_HOPS): ShotName | null {
+  const i = order.indexOf(from), j = order.indexOf(to);
+  if (i < 0 || j < 0) return null;
+  const d = Math.abs(j - i);
+  if (d < 2 || d > max) return null;
+  return order[i + Math.sign(j - i)] ?? null;
+}
 
 export interface MotionState {
   /** The plate on screen at full strength. */
@@ -48,7 +67,7 @@ export type Step = { state: MotionState; action: "none" | "start" | "queue" | "c
  *  - "queue": a transition runs; hurry it, this one follows;
  *  - "cut": no picture is on yet (the first plate): show it at once.
  * `ms` is the fade's length (reduced motion: FADE_REDUCED_MS). */
-export function request(state: MotionState, shot: ShotName, now: number, ms = FADE_MS, film?: FilmChooser): Step {
+export function request(state: MotionState, shot: ShotName, now: number, ms = FADE_MS, film?: FilmChooser, route?: Router): Step {
   if (state.motion) {
     if (state.motion.to === shot && state.next === null) return { state, action: "none" };
     if (state.motion.to === shot) return { state: { ...state, next: null }, action: "none" };
@@ -56,7 +75,15 @@ export function request(state: MotionState, shot: ShotName, now: number, ms = FA
   }
   if (state.at === shot) return { state, action: "none" };
   if (state.at === null) return { state: { at: shot, motion: null, next: null }, action: "cut" };
-  return { state: { at: state.at, motion: startOf(state.at, shot, now, ms, film), next: null }, action: "start" };
+  return { state: { at: state.at, ...planOf(state.at, shot, now, ms, film, route) }, action: "start" };
+}
+
+/** The transition toward `to`: through the route's first hop when its film is ready (the target
+ * stays queued), else straight there. */
+function planOf(from: ShotName, to: ShotName, now: number, ms: number, film?: FilmChooser, route?: Router): { motion: Motion; next: ShotName | null } {
+  const hop = route?.(from, to) ?? null;
+  if (hop && hop !== to && (film?.(from, hop) ?? null) !== null) return { motion: { ...startOf(from, hop, now, ms, film), then: to }, next: to };
+  return { motion: startOf(from, to, now, ms, film), next: null };
 }
 
 /** A transition from one plate to another: the film if one is ready, else the fade over. */
@@ -67,11 +94,11 @@ function startOf(from: ShotName, to: ShotName, now: number, ms: number, film?: F
 
 /** The running transition has ended (its fade finished). The arriving plate is on; a queued plate
  * starts its own transition now. */
-export function finished(state: MotionState, now: number, ms = FADE_MS, film?: FilmChooser): Step {
+export function finished(state: MotionState, now: number, ms = FADE_MS, film?: FilmChooser, route?: Router): Step {
   const m = state.motion;
   if (!m) return { state, action: "none" };
   const at = m.to;
-  if (state.next && state.next !== at) return { state: { at, motion: startOf(at, state.next, now, ms, film), next: null }, action: "start" };
+  if (state.next && state.next !== at) return { state: { at, ...planOf(at, state.next, now, ms, film, route) }, action: "start" };
   return { state: { at, motion: null, next: null }, action: "none" };
 }
 
