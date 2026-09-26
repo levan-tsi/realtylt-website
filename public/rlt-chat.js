@@ -42,7 +42,7 @@
     BRAND_COLOR_DARK: '#0d47a1',
     // THE LAUNCHER WEARS THE LOGO'S NAVY (owner's order 2026-09-25: "a dark color blue that our logo
     // has, the second one"). The logo carries the bright R blue and this navy; the bright one read as
-    // a light-blue dot on the black site. White glyph on it 13.6:1; the hover a step lighter, 10.5:1.
+    // a light-blue dot on the black site. White glyph on it 13.7:1; the hover a step lighter, 10.2:1.
     // A white hairline at 22% draws the disc's edge on the black ground (the navy alone is 1.5:1).
     LAUNCHER_COLOR: '#0f2e53',
     LAUNCHER_HOVER: '#1a4270',
