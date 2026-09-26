@@ -2,7 +2,9 @@
 
 His verdict 2026-09-26 on realtylt.com from his phone: the computer is "amazing", the phone is "not as
 effective": the map is not really shown, a dark cloud sits at the bottom-left (the old credit corner's
-shade, to verify), and the phone needs a lot of polish. Process he ordered: ONE Opus session that
+shade, to verify), and the phone needs a lot of polish; then: "it has to figure out the way how to
+show what we have on the phone too, properly. It lost all the effect on the phone" (a design problem
+first: the handoff §0 lists directions and asks for side-by-side phone compositions). Process he ordered: ONE Opus session that
 plans, then three builder agents one at a time, verifying each itself; desktop must not regress.
 Since round 61 also live: dead links redirect automatically (sold homes to their town's search, unknown
 blog addresses to a stand-in or the blog), the sitemap and SEO audit clean, the Google Maps keys split

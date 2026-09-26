@@ -7,6 +7,24 @@ computer. Computer is amazing, but phone, it's not looking as effective. Map is 
 on the bottom of the left side it has like a dark cloud around it, and that has to be gone as well. It
 needs a lot of polish for the phone version."
 
+**And then, the round's real goal in his words:** "It has to figure out the way how to show what we have
+on the phone too, properly. It lost all the effect on the phone." This is a DESIGN problem before it is a
+polish problem: on a laptop the effect is the lit night map as the page's ground, the lights you can
+point at, and the flight between places, with the words set beside it. On a phone the same page stacks
+the words over the map and covers it, so the effect disappears. The planner's first job is to decide how
+the phone shows the effect, then build it. Directions to weigh, measured and looked at, not assumed:
+- give the map its own moments on a phone: a first screen where the lit territory fills most of the
+  screen and the words are few and small (the headline and the search), the rest below the fold;
+- between sections, let the map breathe: a stretch of the page with no words where the plate and the
+  film play full screen (the phone's scroll is the flight), instead of every section's text over it;
+- scrims only as big as the words they protect, never a wash over the whole map;
+- the lights sized and spaced for a thumb and a small screen, the tap label readable;
+- the county list on a phone: a compact form that leaves the place visible (for example a horizontal
+  row of chips or a short list under the picture, not over it).
+Make two or three phone compositions of the first screen and one county stop, look at them side by side
+(frames at 390 x 844), pick the one that brings the effect back, record why in the round's record, then
+split the build across the three builders.
+
 **The process he ordered for this round:** ONE Opus session (no Fable orchestrator: usage is spent). That
 session plans the round itself, then runs **three builder agents, one at a time** (Agent tool,
 `model: "opus"`, each finishing and being verified before the next starts), each polishing a part of
