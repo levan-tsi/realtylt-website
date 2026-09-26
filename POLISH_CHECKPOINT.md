@@ -1,3 +1,22 @@
+# ROUND 62 (THE PHONE) DONE 2026-09-26: the map shows on a phone again. READ `docs/parity/DESIGN-ROUND62.md`.
+
+One agent (his /website order: no subagents), the three builders' scopes in turn. His words were "map
+is not really shown", "a dark cloud" bottom left, "it lost all the effect". Done: the first screen is
+the headline at the top, the lit city (the Bronx, Manhattan, Queens, Brooklyn) open in the middle, a
+two-line count and the search at the foot, the two boxed links just below (chosen from three
+compositions framed side by side); the cloud was a phone foot shade plus three credit-corner holes
+sized for the old two-line credit, all gone below lg; Where we work is a pinned stage on a phone
+(the county is the picture, a short panel with chips, the scroll is the flight); found walking the
+site: /search opened on one street number (Mixed sorted by address), the mortgage breakdown was
+invisible on the night, a heading widow, Market Insights cards, "a Orange County". Before/after:
+`docs/design-r62/before-after-*.jpg`. Gates on a production build: tsc clean, vitest 2272, the 1440
+home frames identical to the pre-round build at all 20 stops, calibration 0.00 px, taps 30/30, hover
+50/50, films play, no long task over 150 ms, contrast and light scans clean of ours, JS off and
+reduced motion OK, qa-crawl ALL PASS. NEXT: his verdict on his phone (a real iPhone is still
+unverified); open items in the record §4.
+
+---
+
 # NEXT = ROUND 62, THE PHONE. READ `docs/handoff/WEBSITE-R62-PHONE-POLISH-HANDOFF.md` §0 FIRST. START THERE.
 
 His verdict 2026-09-26 on realtylt.com from his phone: the computer is "amazing", the phone is "not as
