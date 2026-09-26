@@ -222,11 +222,14 @@ export default async function HomePage() {
               <p className={`t-lead rise rise-2 max-w-[30rem] text-ink-soft max-lg:text-[17px] ${halo}`}>
                 {activeCount ? (
                   <>
-                    <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale
-                    right now<span className="max-lg:hidden">, from Poughkeepsie to the five boroughs</span>. {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}
+                    <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale{" "}
+                    <span className="max-lg:hidden">right now, from Poughkeepsie to the five boroughs.</span>
+                    <span className="lg:hidden">right now.</span> {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}
                   </>
                 ) : (
-                  <>Homes for sale right now<span className="max-lg:hidden">, from Poughkeepsie to the five boroughs</span>. {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}</>
+                  <>
+                    Homes for sale <span className="max-lg:hidden">right now, from Poughkeepsie to the five boroughs.</span>
+                    <span className="lg:hidden">right now.</span> {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}</>
                 )}
               </p>
               {/* One instrument (components/search-instrument.test.ts pins the geometry: 16px

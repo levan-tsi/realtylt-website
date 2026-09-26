@@ -23,7 +23,9 @@ describe("the phone's first screen", () => {
   });
 
   it("keeps the count short on a phone and the laptop's sentence whole", () => {
-    expect(page.match(/<span className="max-lg:hidden">, from Poughkeepsie to the five boroughs<\/span>/g)).toHaveLength(2);
+    // Whole runs per layout: a span boundary inside "boroughs." moved the laptop's period by a pixel.
+    expect(page.match(/<span className="max-lg:hidden">right now, from Poughkeepsie to the five boroughs\.<\/span>/g)).toHaveLength(2);
+    expect(page.match(/<span className="lg:hidden">right now\.<\/span>/g)).toHaveLength(2);
     expect(page).toContain("t-lead rise rise-2 max-w-[30rem] text-ink-soft max-lg:text-[17px]");
   });
 
