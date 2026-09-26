@@ -66,14 +66,21 @@ const TOWN_SHADE = {
 /** The data's credit, bottom left (the Google map's logo corner): no name, light or word of ours
  * goes there. */
 const CREDIT_CORNER = { w: 180, h: 54 };
+/** Round 62: on a phone the credit is only its 24 px (i) from the start, so the corner kept clear of
+ * names and lights is the (i)'s own, and no hole is cut in the words or the shades there (the old
+ * two-line corner left a dark ring round the (i), the owner's "dark cloud" bottom left). */
+const PHONE_CREDIT_CORNER = { w: 48, h: 44 };
+const creditCorner = () => (window.innerWidth >= 1024 ? CREDIT_CORNER : PHONE_CREDIT_CORNER);
+const NO_HOLE_ON_PHONE = "max-lg:[mask-image:none]! max-lg:[-webkit-mask-image:none]!";
 const CREDIT_HOLE = "radial-gradient(210px 64px at 84px 100%, transparent 0, transparent 62%, #000 100%)";
-const FOOT_SHADE = "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.86) 66%, rgba(0,0,0,0.86) 72%, rgba(0,0,0,0.15) 100%)";
-const FOOT_HOLE_IMAGE = "radial-gradient(300px 92px at 84px 100%, transparent 0, transparent 42%, #000 100%)";
-const FOOT_HOLE = { WebkitMaskImage: FOOT_HOLE_IMAGE, maskImage: FOOT_HOLE_IMAGE } as const;
 
 const SCRIMS = 6;
 const SCRIM_PAD = 20;
 const SCRIM_FEATHER = 150;
+/** Round 62: a phone's shade hugs its words (a 150 px feather on a 390 px screen shaded the whole
+ * first screen and hid the map). */
+const PHONE_SCRIM_PAD = 12;
+const PHONE_SCRIM_FEATHER = 56;
 const SOFT_SHARE = 0.4;
 const LEAD_SHARE = 0.6;
 const ramp = (dir: string, f: number) => {
@@ -149,7 +156,6 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
   const scrimSizes = useRef<string[]>([]);
   const topScrim = useRef<HTMLDivElement>(null);
   const scrimLayer = useRef<HTMLDivElement>(null);
-  const footShade = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const holeY = useRef(-1);
   const ctl = useRef<GroundEngine | null>(null);
@@ -262,7 +268,8 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
       range.selectNodeContents(e);
       for (const r of range.getClientRects()) push(r);
     });
-    push({ left: 0, top: vp.height - CREDIT_CORNER.h, width: CREDIT_CORNER.w, height: CREDIT_CORNER.h });
+    const cc = creditCorner();
+    push({ left: 0, top: vp.height - cc.h, width: cc.w, height: cc.h });
     const placed = new Map(placeLabels(items, avoid, vp).map((p) => [p.id, p]));
     for (const [id, e] of els) {
       const p = placed.get(id);
@@ -319,7 +326,8 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
       const r = e.getBoundingClientRect();
       if (r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < vp.height) avoid.push({ x: r.left, y: r.top, w: r.width, h: r.height });
     });
-    avoid.push({ x: 0, y: vp.height - CREDIT_CORNER.h, w: CREDIT_CORNER.w, h: CREDIT_CORNER.h });
+    const cc = creditCorner();
+    avoid.push({ x: 0, y: vp.height - cc.h, w: cc.w, h: cc.h });
     const placed = new Map(placeLabels(items, avoid, vp, { pad: 12, gap: 10 }).map((p) => [p.id, p]));
     for (const [id, e] of els) {
       const p = placed.get(id);
@@ -364,8 +372,9 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
   // credit corner's hole moves by the element's own mask-position (nothing inherits it).
   const placeScrims = useCallback(() => {
     const vh = window.innerHeight;
-    const reach = SCRIM_PAD + SCRIM_FEATHER;
     const wide = window.innerWidth >= 1024;
+    const feather = wide ? SCRIM_FEATHER : PHONE_SCRIM_FEATHER;
+    const reach = (wide ? SCRIM_PAD : PHONE_SCRIM_PAD) + feather;
     const shareOf = (q: string | undefined) => (!wide ? 1 : q === "soft" ? SOFT_SHARE : q === "lead" ? LEAD_SHARE : 1);
     const blocks = [...document.querySelectorAll<HTMLElement>("[data-quiet]")]
       .map((el) => ({ r: el.getBoundingClientRect(), share: shareOf(el.dataset.quiet) }))
@@ -386,7 +395,6 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
       }
     }
     if (topScrim.current) topScrim.current.style.transform = `translate3d(0, ${-Math.min(window.scrollY, 400)}px, 0)`;
-    if (footShade.current) footShade.current.style.opacity = String(Math.max(0, 1 - window.scrollY / 320));
     if (tailVeil.current && t?.veil) {
       const k = Math.min(1, Math.max(0, (vh - footTop) / (vh * 0.5)));
       const max = window.innerWidth < 1024 ? (t.veilPhone ?? t.veil) : t.veil;
@@ -401,11 +409,12 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
         continue;
       }
       const r = b.r;
-      const size = `${Math.round(r.width)}x${Math.round(r.height)}`;
+      const size = `${Math.round(r.width)}x${Math.round(r.height)}x${feather}`;
       if (scrimSizes.current[k] !== size) {
         scrimSizes.current[k] = size;
         el.style.width = `${Math.round(r.width) + 2 * reach}px`;
         el.style.height = `${Math.round(r.height) + 2 * reach}px`;
+        el.style.maskImage = el.style.webkitMaskImage = featherMask(feather);
       }
       el.style.transform = `translate3d(${Math.round(r.left) - reach}px, ${Math.round(r.top) - reach}px, 0)`;
       el.style.opacity = String(b.share);
@@ -500,7 +509,8 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
     const w = Math.ceil(Math.max(textW(content.town, 13, 500), row, addrW)) + 26;
     const h = 16 + 2 + 18 + (content.price ? 22 : 0) + (addr ? 37 : 0);
     const vp = { width: window.innerWidth, height: window.innerHeight };
-    const avoid: Rect[] = [{ x: 0, y: vp.height - CREDIT_CORNER.h, w: CREDIT_CORNER.w, h: CREDIT_CORNER.h }];
+    const cc = creditCorner();
+    const avoid: Rect[] = [{ x: 0, y: vp.height - cc.h, w: cc.w, h: cc.h }];
     const hr = headerRect.current;
     if (hr && hr.y + hr.h - window.scrollY > 0) avoid.push({ ...hr, y: hr.y - window.scrollY });
     avoid.push(...(wordBoxes.current ??= readWordBoxes(vp)));
@@ -580,7 +590,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
     };
     const install = (c: GroundEngine) => {
       ctl.current = c;
-      c.setAvoid({ x: 0, y: window.innerHeight - CREDIT_CORNER.h, w: CREDIT_CORNER.w, h: CREDIT_CORNER.h });
+      c.setAvoid({ x: 0, y: window.innerHeight - creditCorner().h, w: creditCorner().w, h: creditCorner().h });
       (window as unknown as { __ml?: unknown }).__ml = {
         ctl: c,
         engine,
@@ -766,7 +776,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
       const c = ctl.current;
       if (c) {
         c.resized();
-        c.setAvoid({ x: 0, y: window.innerHeight - CREDIT_CORNER.h, w: CREDIT_CORNER.w, h: CREDIT_CORNER.h });
+        c.setAvoid({ x: 0, y: window.innerHeight - creditCorner().h, w: creditCorner().w, h: creditCorner().h });
       }
       scrimSizes.current = [];
       wordBoxes.current = null;
@@ -829,7 +839,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
         if (r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < vp.height && r.right > 0 && r.left < vp.width) solids.push({ x: r.left, y: r.top, w: r.width, h: r.height });
       });
       const spot = openPoint(solids, vp, card ? { x: card.left + card.width / 2, y: card.top + card.height / 2 } : { x: vp.width / 2, y: vp.height / 2 }, {
-        avoid: [{ x: 0, y: vp.height - CREDIT_CORNER.h, w: CREDIT_CORNER.w, h: CREDIT_CORNER.h }],
+        avoid: [{ x: 0, y: vp.height - creditCorner().h, w: creditCorner().w, h: creditCorner().h }],
       });
       c.flyToHome(h, spot, 1800);
       c.lightFeatured(h.id);
@@ -1173,7 +1183,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
         </div>
       ) : null}
       <div className="pointer-events-none fixed inset-0 z-[2]" data-g3d-shades>
-        <div ref={scrimLayer} aria-hidden className="absolute inset-0 overflow-hidden" style={mask}>
+        <div ref={scrimLayer} aria-hidden className={`absolute inset-0 overflow-hidden ${NO_HOLE_ON_PHONE}`} style={mask}>
           {Array.from({ length: SCRIMS }, (_, k) => (
             <div
               key={k}
@@ -1201,8 +1211,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
         >
           <div className="absolute inset-x-0 top-0 h-[72px] lg:hidden" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0) 100%)" }} />
         </div>
-        <div ref={footShade} aria-hidden className="absolute inset-x-0 bottom-0 h-[26svh] lg:hidden" style={{ background: FOOT_SHADE, ...FOOT_HOLE }} />
-        {tail?.veil ? <div ref={tailVeil} aria-hidden className="absolute inset-0 bg-black" style={{ opacity: 0, ...mask }} /> : null}
+        {tail?.veil ? <div ref={tailVeil} aria-hidden className={`absolute inset-0 bg-black ${NO_HOLE_ON_PHONE}`} style={{ opacity: 0, ...mask }} /> : null}
         <div ref={labelLayer} aria-hidden data-g3d-territory className="absolute inset-0 transition-opacity duration-[250ms] ease-out motion-reduce:transition-none" style={{ opacity: 0 }}>
           {TERRITORY_LABELS.map((l) => (
             <span
@@ -1315,7 +1324,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
           <span className="text-[14px] font-semibold leading-[20px] text-ink">View</span>
         </span>
       </a>
-      <div ref={contentRef} className="relative z-10" style={CLEAR_STYLE}>
+      <div ref={contentRef} className={`relative z-10 ${NO_HOLE_ON_PHONE}`} style={CLEAR_STYLE}>
         {children}
       </div>
     </AreaContext.Provider>

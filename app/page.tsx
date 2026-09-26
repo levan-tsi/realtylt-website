@@ -193,7 +193,12 @@ export default async function HomePage() {
               column covers the whole first screen whether or not it has words at that point. */}
           {/* On the real map the phone's words stop 96 px above the bottom so the two links sit
               above Google's logo corner, which nothing of ours may cover (round 56 phase 1b). */}
-          <div className={`rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 ${mapped ? "pb-24" : "pb-10"} pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40`}>
+          {/* Round 62 (the owner on his phone: "it lost all the effect"): on a phone the first screen
+              is the headline at the top, the lit city in the open middle and a short count with the
+              search at the foot, over the ocean where the territory has no lights. The two boxed
+              links wait just below the first screen (the row after this column). The foot stops
+              56 px up: the map credit is only its 24 px (i) on a phone now. */}
+          <div className="rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 pb-14 pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40">
             {/* Round 57.2: the eyebrow and the headline are each their own quiet block, so the map's
                 shadow can be lighter under the large, bold headline ("soft", G3dGround SOFT_SHARE, at
                 lg) and full under the small grey eyebrow (measured with the contrast kit). */}
@@ -212,14 +217,16 @@ export default async function HomePage() {
             </div>
 
             <div data-quiet="lead" className="pointer-events-auto mt-10 max-w-[36rem] lg:mt-9">
-              <p className={`t-lead rise rise-2 max-w-[30rem] text-ink-soft ${halo}`}>
+              {/* On a phone the count is a two-line caption over the search (17 px, the reach of
+                  the towns is already the eyebrow's), so the city above it stays open. */}
+              <p className={`t-lead rise rise-2 max-w-[30rem] text-ink-soft max-lg:text-[17px] ${halo}`}>
                 {activeCount ? (
                   <>
                     <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale
-                    right now, from Poughkeepsie to the five boroughs. {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}
+                    right now<span className="max-lg:hidden">, from Poughkeepsie to the five boroughs</span>. {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}
                   </>
                 ) : (
-                  <>Homes for sale right now, from Poughkeepsie to the five boroughs. {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}</>
+                  <>Homes for sale right now<span className="max-lg:hidden">, from Poughkeepsie to the five boroughs</span>. {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}</>
                 )}
               </p>
               {/* One instrument (components/search-instrument.test.ts pins the geometry: 16px
@@ -250,25 +257,9 @@ export default async function HomePage() {
                   Search
                 </button>
               </form>
-              {/* Round 58 (the owner's fifth verdict): the two links under the search "should be
-                  a small box or something to differentiate, so people know it's a clickable CTA".
-                  Two small boxed controls in the search box's own glass: 12 px radius (the
-                  buttons' step of the scale), a hairline, the night buttons' 15 px semibold, no
-                  arrow, 40 px tall (the tap floor and more), the border and the fill answering a
-                  hover, the porchlight ring answering the keyboard. */}
-              <p className="rise rise-4 mt-5 flex flex-wrap gap-x-3 gap-y-3">
-                {[
-                  { href: "/home-value", label: "What is my home worth?" },
-                  { href: "/selling", label: "Sell with us" },
-                ].map((c) => (
-                  <Link
-                    key={c.href}
-                    href={c.href}
-                    className={`inline-flex min-h-[40px] items-center rounded-xl border border-line-strong bg-night-deep/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night-deep/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
-                  >
-                    {c.label}
-                  </Link>
-                ))}
+              {/* The two boxed links (HeroLinks below): here on a laptop, below the first screen on a phone. */}
+              <p className="rise rise-4 mt-5 flex flex-wrap gap-x-3 gap-y-3 max-lg:hidden">
+                <HeroLinks />
               </p>
               {/* What the lights are, said once and small, with the data's source: this is
                   listing data drawn on the land, so it carries the MLS credit the rails below
@@ -300,8 +291,11 @@ export default async function HomePage() {
               </p>
             </div>
           </div>
-          {/* From lg only. On a phone the search box and its two links already end the first
-              screen, and the cue sat on top of "What is my home worth?". */}
+          {/* The phone's two links, just below its first screen (the laptop's sit under the search). */}
+          <p data-quiet className="pointer-events-auto relative z-10 flex flex-wrap gap-x-3 gap-y-3 px-4 pb-6 lg:hidden">
+            <HeroLinks />
+          </p>
+          {/* From lg only. On a phone the search box ends the first screen. */}
           <div data-g3d-avoid className="absolute inset-x-0 bottom-3 z-10 hidden justify-center lg:flex">
             <ScrollCue targetId="value" label="Scroll to the next section" />
           </div>
@@ -485,5 +479,30 @@ export default async function HomePage() {
         </section>
       </Ground>
     </div>
+  );
+}
+
+/** Round 58 (the owner's fifth verdict): the two links under the search "should be a small box or
+ * something to differentiate, so people know it's a clickable CTA". Two small boxed controls in the
+ * search box's own glass: 12 px radius (the buttons' step of the scale), a hairline, the night
+ * buttons' 15 px semibold, no arrow, 40 px tall (the tap floor and more), the border and the fill
+ * answering a hover, the porchlight ring answering the keyboard. Rendered twice, one of them hidden:
+ * under the search on a laptop, below the first screen on a phone (round 62). */
+function HeroLinks() {
+  return (
+    <>
+      {[
+        { href: "/home-value", label: "What is my home worth?" },
+        { href: "/selling", label: "Sell with us" },
+      ].map((c) => (
+        <Link
+          key={c.href}
+          href={c.href}
+          className={`inline-flex min-h-[40px] items-center rounded-xl border border-line-strong bg-night-deep/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night-deep/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
+        >
+          {c.label}
+        </Link>
+      ))}
+    </>
   );
 }
