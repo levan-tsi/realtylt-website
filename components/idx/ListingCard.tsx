@@ -281,7 +281,7 @@ export function ListingCard({
        overflow. It is the site's ring colour, so it is navy on a day page and moonlight on a night
        one (18.2:1 there), and the 4px it needs inside the map view's scrolling results panel is the
        same 4px that panel already reserves. Nothing changes at rest. */
-    <article className="lift group relative overflow-hidden rounded-2xl bg-white has-[>a:focus-visible]:outline-2 has-[>a:focus-visible]:outline-offset-2 has-[>a:focus-visible]:outline-river">
+    <article className="lift group relative overflow-hidden rounded-2xl bg-card has-[>a:focus-visible]:outline-2 has-[>a:focus-visible]:outline-offset-2 has-[>a:focus-visible]:outline-river">
         <Link href={listingPath(l)} className="absolute inset-0 z-10">
         <span className="sr-only">{`${l.address}, ${l.city}, ${formatPrice(l.price)}`}</span>
       </Link>

@@ -111,7 +111,10 @@ export function MlsImage({
     <>
       {/* Skeleton shimmer while queued and until the first byte lands (and between silent
           retries) — never a flash of the placeholder. Static block for reduced-motion users. */}
-      {!loaded && <div className="rlt-skeleton absolute inset-0 bg-mist motion-reduce:animate-none" aria-hidden />}
+      {/* The night's raised step, not `mist`: the listing page's photo band is a `.daylight`
+          section (its overlay pills keep the day's black), where `mist` is the day's near-white,
+          so every waiting tile flashed white on the dark page (round 60). */}
+      {!loaded && <div className="rlt-skeleton absolute inset-0 bg-night-raise motion-reduce:animate-none" aria-hidden />}
       {/* Held tiles stay mounted behind `display:none` rather than unmounting: the element (and so
           the page's photo count) is real, but a lazy image that is never displayed never fetches. */}
       <div className={admitted ? "absolute inset-0" : "hidden"}>
