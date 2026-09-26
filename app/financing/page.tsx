@@ -54,7 +54,7 @@ export default function FinancingPage() {
             you can check against any lender.
           </p>
           <div className="mt-8 flex justify-center">
-            <Button href="/connect" variant="light">Book Free Consultation</Button>
+            <Button href="/connect" variant="light">Book a free consultation</Button>
           </div>
         </div>
       </section>
@@ -66,7 +66,7 @@ export default function FinancingPage() {
         <div className="mx-auto grid max-w-[1250px] gap-8 px-4 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16 lg:px-8">
           <Reveal>
             <SectionHeading as="h2">
-              <span id="demystify-heading">Demystifying Home Loans</span>
+              <span id="demystify-heading">Demystifying home loans</span>
             </SectionHeading>
           </Reveal>
           <Reveal delay={100}>
@@ -118,7 +118,7 @@ export default function FinancingPage() {
                 </svg>
               </span>
               <p className="mt-4 text-center text-xs font-bold uppercase tracking-[0.18em] text-stone">
-                Loan Pre-Approval Letter
+                Loan pre-approval letter
               </p>
               <p className="mt-5 text-center text-[11px] uppercase tracking-[0.14em] text-stone">Loan amount</p>
               <p className="text-center text-3xl font-bold text-porchlight-deep">$455,000</p>
@@ -201,7 +201,7 @@ export default function FinancingPage() {
                 splitName
                 hideReason
                 defaultReason="I'm interested in buying a home"
-                submitLabel="Let's Get Started"
+                submitLabel="Let's get started"
                 successTitle="On it."
                 successBody="We'll reach out shortly to connect you with the right lender."
               />
@@ -266,7 +266,7 @@ export default function FinancingPage() {
               is recorded and you get the keys.
             </p>
             <div className="mt-7">
-              <Button href="/buying" variant="outline-light">See The Full Buying Process</Button>
+              <Button href="/buying" variant="outline-light">See the full buying process</Button>
             </div>
           </Reveal>
         </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getDirectory, sectionCount, type DirectoryLink } from "./directory";
+import { sentenceCase } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Site Map",
@@ -66,7 +67,7 @@ export default async function SiteMapPage() {
                       href={`#${s.id}`}
                       className="flex items-baseline justify-between gap-4 py-2.5 text-ink transition-colors hover:text-river"
                     >
-                      {s.title}
+                      {sentenceCase(s.title)}
                       <span className="font-mono text-xs text-stone">{sectionCount(s)}</span>
                     </a>
                   </li>
@@ -80,7 +81,7 @@ export default async function SiteMapPage() {
               <section key={section.id} aria-labelledby={`sm-${section.id}`} className="scroll-mt-8" id={section.id}>
                 <div className="flex items-baseline justify-between gap-4 pb-3">
                   <h2 id={`sm-${section.id}`} className="t-h3 text-ink">
-                    {section.title}
+                    {sentenceCase(section.title)}
                   </h2>
                   <span className="font-mono text-xs text-stone">{sectionCount(section)}</span>
                 </div>

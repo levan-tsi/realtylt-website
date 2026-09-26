@@ -893,6 +893,17 @@ body.rlt-quiz-open .rlt-panel {
   }
 }
 
+/* Round 63 (the owner: the ALL CAPS labels, "fix those"): no label on the site is set in capitals.
+   The small tracked-out caps labels (`uppercase tracking-[0.1em]` across /selling, /financing, the
+   listing page, the blog, the county chips...) read in sentence case, and the letter-spacing that
+   was there for capitals goes with them. Words written in capitals (acronyms, MLS data) are
+   untouched. Unlayered on purpose: inside @layer components the `uppercase` utility would win
+   whatever the specificity. */
+.nocturne .uppercase {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
 /* Round 63 (the owner on his phone: "make them see-through so the map is fully visible"): below lg no
    black shade stands behind the home's words. Each word carries the map's own label shadow (the
    county names' recipe, components/home/ml/MlGround.tsx LABEL_SHADOW) and the boxes are glass without

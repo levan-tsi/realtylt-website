@@ -128,7 +128,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
             withAddress
             defaultAddress={confirmedAddress ?? address}
             defaultReason="I'm interested in selling a home"
-            submitLabel="Get My Home Value"
+            submitLabel="Get my home value"
             successTitle="Request received."
             successBody="We're pulling your comps now. Expect to hear from us within the day."
           />
@@ -173,7 +173,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
         name="address"
         autoComplete="street-address"
         required
-        placeholder="Enter Home Address"
+        placeholder="Enter the home address"
         className="min-w-0 flex-1 bg-transparent px-4 py-2.5 text-sm text-ink placeholder:text-stone focus:outline-none"
       />
       <label htmlFor="hv-unit" className="sr-only">

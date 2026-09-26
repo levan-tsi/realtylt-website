@@ -121,7 +121,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
         )}
         <div className="relative mx-auto max-w-[1250px] px-4 py-20 md:py-24 lg:px-8">
           <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-paper/60">
-            <Link href="/top-areas" className="inline-flex min-h-6 items-center hover:text-paper">Top Areas</Link> / {short}
+            <Link href="/top-areas" className="inline-flex min-h-6 items-center hover:text-paper">Top areas</Link> / {short}
           </nav>
           <h1 id="county-hero" className="t-h1 mt-3 text-paper">
             {c ? (
@@ -214,7 +214,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
-              <span id="county-listings">Homes for Sale in {short}</span>
+              <span id="county-listings">Homes for sale in {short}</span>
             </SectionHeading>
           </Reveal>
           {result.listings.length === 0 ? (
@@ -241,7 +241,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
           )}
           <div className="mt-8 text-center">
             <Button href={`/search?county=${areaSlug}`} variant="outline">
-              See All {onMarket.toLocaleString("en-US")} Listings
+              See all {onMarket.toLocaleString("en-US")} listings
             </Button>
           </div>
           <MlsAttribution dataLastUpdated={result.dataLastUpdated} fixtureMode={fixture} className="mt-8" />
@@ -255,9 +255,9 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
             Buying or selling in {short}? We know these {c ? "roads" : "neighborhoods"}.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Button href="/connect" variant="light">Talk To A Local Agent</Button>
+            <Button href="/connect" variant="light">Talk to a local agent</Button>
             <Button href="/home-value" variant="outline-light">
-              What&rsquo;s My {short} Home Worth?
+              What&rsquo;s my {short} home worth?
             </Button>
           </div>
         </div>

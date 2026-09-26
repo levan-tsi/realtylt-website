@@ -30,7 +30,7 @@ export function MarketInsights({
         { title: "Current Listings", sub: "New in the last 30 days", value: insights.newLast30.toLocaleString("en-US") },
         { title: "Average Price", sub: "Active listings", value: `$${insights.avgPrice.toLocaleString("en-US")}` },
         {
-          title: "Average Days on Market",
+          title: "Average days on market",
           sub: "Active listings",
           value: `${insights.avgDom.toLocaleString("en-US")} ${insights.avgDom === 1 ? "day" : "days"}`,
         },

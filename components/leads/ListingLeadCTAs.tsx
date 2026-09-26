@@ -139,14 +139,14 @@ export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: 
           onClick={() => openTour()}
           className="rounded-xl bg-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
-          Schedule a Tour
+          Schedule a tour
         </button>
         <button
           type="button"
           onClick={() => setModal("offer")}
           className="rounded-xl border border-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
-          Make an Offer
+          Make an offer
         </button>
       </div>
 
@@ -158,7 +158,7 @@ export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: 
           onClick={() => setModal("offer")}
           className="mt-3 w-full rounded-xl border border-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
-          Make an Offer
+          Make an offer
         </button>
       </div>
 
@@ -259,7 +259,7 @@ function InlineTourCard({
             onClick={() => onOpenTour(date)}
             className="mt-4 w-full rounded-xl bg-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
           >
-            In Person Tour
+            In-person tour
           </button>
         </div>
       ) : (

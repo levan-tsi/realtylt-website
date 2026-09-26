@@ -512,7 +512,7 @@ export async function ListingDetail({ id }: { id: string }) {
                     // read the listing id out of the source URL.
                     addressValue={fullAddress({ address: l.address, city: l.city, state: l.state, zip: l.zip })}
                     qualifier={infoRequestQualifier({ mlsNumber, listPrice: l.price })}
-                    submitLabel="Request Info / Tour"
+                    submitLabel="Request info or a tour"
                     successTitle="Request sent."
                     successBody={`We'll get back to you about ${l.address} shortly.`}
                   />

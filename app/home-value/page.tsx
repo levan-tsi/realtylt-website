@@ -63,7 +63,7 @@ export default async function HomeValuePage({
             id="hv-hero"
             className="t-h1 mx-auto max-w-4xl text-paper [text-shadow:0_1px_10px_rgba(0,0,0,0.45)]"
           >
-            How Much Is Your Home Really Worth?
+            How much is your home really worth?
           </h1>
           <div className="mt-8">
             <HomeValueForm defaultAddress={address} />
@@ -83,7 +83,7 @@ export default async function HomeValuePage({
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
-              <span id="hv-how">A Valuation You Can Actually Act On</span>
+              <span id="hv-how">A valuation you can actually act on</span>
             </SectionHeading>
           </Reveal>
           <ol className="mt-12 grid gap-6 md:grid-cols-3">

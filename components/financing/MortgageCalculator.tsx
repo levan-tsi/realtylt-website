@@ -88,11 +88,11 @@ export function MortgageCalculator({
             A heading is a heading: this panel now speaks the display face like the black band
             below it. Rendered both ways at docs/r33/listing/calc-compare.png. */}
         <h2 id="calc-heading" className="t-h3">
-          Estimate Your Monthly Payment
+          Estimate your monthly payment
         </h2>
         <p className="t-small mt-3 max-w-md text-paper/70">
           Estimate your mortgage payment, including the principal and interest, taxes, insurance,
-          HOA, and Private Mortgage Insurance.
+          HOA, and private mortgage insurance.
         </p>
         <div className="mt-7 grid gap-x-8 gap-y-5 sm:grid-cols-2">
           {FIELDS.map((f) => (
@@ -177,7 +177,7 @@ export function MortgageCalculator({
             <p className="text-center font-mono text-[40px] font-semibold leading-none tracking-tight text-ink md:text-5xl">
               {Number.isFinite(r.monthlyTotal) ? money(r.monthlyTotal) : "—"}
             </p>
-            <p className="mt-3 text-center text-sm text-stone">Estimated Monthly Payment</p>
+            <p className="mt-3 text-center text-sm text-stone">Estimated monthly payment</p>
             <div
               className="mt-6 flex h-10 w-full overflow-hidden rounded-full border-2 border-line"
               role="img"
@@ -242,7 +242,7 @@ export function MortgageCalculator({
                 </div>
               </div>
             </div>
-            <p className="mt-4 text-center text-sm text-stone">Estimated Monthly Payment</p>
+            <p className="mt-4 text-center text-sm text-stone">Estimated monthly payment</p>
           </>
         )}
 

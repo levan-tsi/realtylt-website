@@ -32,7 +32,7 @@ export default function ReviewsPage() {
           </p>
           <div className="mt-7">
             <Button href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" variant="light">
-              Read All Reviews On Google
+              Read all reviews on Google
             </Button>
           </div>
         </div>
@@ -43,7 +43,7 @@ export default function ReviewsPage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
-              <span id="quotes-heading">In Their Words</span>
+              <span id="quotes-heading">In their words</span>
             </SectionHeading>
           </Reveal>
           <ul className="mt-10 grid gap-6 md:grid-cols-3">

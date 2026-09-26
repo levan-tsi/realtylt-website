@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { SITE, TOP_AREA_GROUPS } from "@/lib/site";
+import { SITE, TOP_AREA_GROUPS, areaName } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Who We Are | Levan Tsiklauri, United Real Estate",
@@ -105,7 +105,7 @@ export default function WhoWeArePage() {
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
-              <span id="values-heading">What You Can Hold Us To</span>
+              <span id="values-heading">What you can hold us to</span>
             </SectionHeading>
           </Reveal>
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
@@ -125,7 +125,7 @@ export default function WhoWeArePage() {
       <section className="sec-sm bg-paper" aria-labelledby="serve-heading">
         <div className="mx-auto max-w-[1250px] px-4 text-center lg:px-8">
           <h2 id="serve-heading" className="t-h3 text-ink">
-            Where We Work
+            Where we work
           </h2>
           {/* TOP_AREA_GROUPS, not a flat SERVED_AREAS loop, for three reasons found by driving
               this page in round 29.
@@ -158,9 +158,9 @@ export default function WhoWeArePage() {
                         // The SAME pill the home areas strip draws, character for character.
                         // These are the same eleven links; two shapes for one set of objects is
                         // the drift that reads as unconsidered.
-                        className="inline-flex min-h-[36px] items-center rounded-full border border-line px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+                        className="inline-flex min-h-[36px] items-center rounded-full border border-line px-4 text-[14px] font-medium text-stone transition-colors hover:border-ink hover:bg-ink hover:text-paper"
                       >
-                        {item.label}
+                        {areaName(item.label)}
                       </Link>
                     </li>
                   ))}

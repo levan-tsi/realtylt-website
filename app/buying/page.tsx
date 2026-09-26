@@ -114,7 +114,7 @@ export default async function BuyingPage() {
                 <rect x="3" y="4" width="18" height="18" rx="2" />
                 <path d="M16 2v4M8 2v4M3 10h18" />
               </svg>
-              Book Free Consultation
+              Book a free consultation
             </TrackedButton>
           </div>
           {/* /80 to match /selling's twin line. This one measured ABOVE the floor at every width
@@ -139,7 +139,7 @@ export default async function BuyingPage() {
         <div className="mx-auto grid max-w-[1250px] gap-8 px-4 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16 lg:px-8">
           <Reveal>
             <SectionHeading as="h2">
-              <span id="process-heading">The Home Buying Process</span>
+              <span id="process-heading">The home buying process</span>
             </SectionHeading>
           </Reveal>
           <Reveal delay={100}>
@@ -274,7 +274,7 @@ export default async function BuyingPage() {
                   questions so you can make an informed decision.
                 </p>
                 <div className="mt-6">
-                  <Button href="/saved" variant="outline">Your Saved Homes</Button>
+                  <Button href="/saved" variant="outline">Your saved homes</Button>
                 </div>
               </div>
             </div>
@@ -311,7 +311,7 @@ export default async function BuyingPage() {
                 </p>
               </div>
               <div className="text-center lg:text-right">
-                <Button href="/connect" variant="light">Book Your Free Consultation</Button>
+                <Button href="/connect" variant="light">Book your free consultation</Button>
                 <p className="mt-3 text-xs tracking-wide text-paper/60">
                   No cost to buyers · Ever
                 </p>
@@ -382,7 +382,7 @@ function AlertsMock({ listings }: { listings: Listing[] }) {
       {/* Phone */}
       <Phone width={218}>
         <div className="px-3 pb-4">
-          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Recent Listings</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Recent listings</p>
           <ul className="mt-2 space-y-2">
             {feed.map((l) => (
               <li key={l.id} className="flex items-center gap-2">
@@ -487,7 +487,7 @@ function TourSchedulerCard({
         <p className="mt-1 truncate text-sm italic text-ink-soft">{addr}</p>
         {/* Tabs (decorative) */}
         <div aria-hidden className="mt-4 grid grid-cols-2 text-center text-xs font-bold uppercase tracking-wide">
-          <span className="border-b-2 border-ink pb-2 text-ink">Schedule a Tour</span>
+          <span className="border-b-2 border-ink pb-2 text-ink">Schedule a tour</span>
           <span className="border-b border-line pb-2 text-stone">Request Info</span>
         </div>
         {/* Date strip (decorative) */}
@@ -505,7 +505,7 @@ function TourSchedulerCard({
           ))}
         </div>
         <div aria-hidden className="mt-4 rounded-xl bg-ink py-2.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-paper">
-          In Person Tour
+          In-person tour
         </div>
       </div>
     </figure>

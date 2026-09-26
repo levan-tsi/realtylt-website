@@ -472,7 +472,7 @@ export function Header() {
                         onClick={closeMobile}
                         className="block py-2 text-sm uppercase text-stone night:text-base night:normal-case underline underline-offset-4 hover:text-ink"
                       >
-                        All Top Areas
+                        All top areas
                       </Link>
                     </div>
                   )}

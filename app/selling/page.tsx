@@ -175,7 +175,7 @@ export default async function SellingPage() {
                   numbers" — said the same thing as the footnote the form already ends on ("Takes
                   less than 60 seconds"), eleven words higher up and above the fold. The form is
                   four visible fields; a person can see that. */}
-              <h2 className="t-title mb-5 text-paper">Get Your Cash Offer &amp; Home Value</h2>
+              <h2 className="t-title mb-5 text-paper">Get your cash offer &amp; home value</h2>
               <LeadForm
                 dark
                 compact
@@ -186,7 +186,7 @@ export default async function SellingPage() {
                 defaultReason="I'm interested in selling a home"
                 namePlaceholder="Full Name"
                 addressPlaceholder="Full Property Address"
-                submitLabel="Get My Free Offer & Analysis"
+                submitLabel="Get my free offer & analysis"
                 footnote="Takes less than 60 seconds"
                 successTitle="Request received."
                 successBody="We'll get to work on your numbers and reach out within the day, usually much sooner."
@@ -201,7 +201,7 @@ export default async function SellingPage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
-              <span id="paths-heading">Choose the Path That&rsquo;s Right for You</span>
+              <span id="paths-heading">Choose the path that&rsquo;s right for you</span>
             </SectionHeading>
             <p className="mx-auto mt-4 max-w-xl text-center text-stone">
               Every home and situation is different. We offer two solutions so you get the outcome
@@ -213,25 +213,25 @@ export default async function SellingPage() {
             <Reveal>
               <PathCard
                 badge="Fastest"
-                title="Fast Cash Offer"
+                title="Fast cash offer"
                 subtitle="Get cash in 15-30 days. Perfect for homes that need work or sellers who need speed."
                 banner="Free cash offer in 24-48 hours"
                 points={CASH_POINTS}
                 fitsLabel="Perfect if you have:"
                 fits={CASH_FITS}
-                cta="Get Your Free Cash Offer"
+                cta="Get your free cash offer"
               />
             </Reveal>
             <Reveal delay={120}>
               <PathCard
                 badge="Highest price"
-                title="Traditional Listing"
+                title="Traditional listing"
                 subtitle="Get maximum value. Perfect for move-in-ready homes and sellers who have time."
                 banner="Get top market value"
                 points={LIST_POINTS}
                 fitsLabel="Perfect if you want:"
                 fits={LIST_FITS}
-                cta="Get Free Consultation"
+                cta="Get a free consultation"
               />
             </Reveal>
           </div>
@@ -256,7 +256,7 @@ export default async function SellingPage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <h2 id="clients-heading" className="text-center text-xl font-bold uppercase tracking-[0.14em] text-ink">
-              What Our Clients Say
+              What our clients say
             </h2>
           </Reveal>
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
@@ -299,7 +299,7 @@ export default async function SellingPage() {
               Want to know what your home is worth?
             </p>
             <div className="mt-7">
-              <ScrollToFormButton variant="light">Get My Home Value &amp; Cash Offer</ScrollToFormButton>
+              <ScrollToFormButton variant="light">Get my home value &amp; cash offer</ScrollToFormButton>
             </div>
           </Reveal>
 
@@ -311,7 +311,7 @@ export default async function SellingPage() {
             >
               <figcaption className="flex items-baseline justify-between border-b border-line pb-4">
                 <span className="text-sm font-bold uppercase tracking-[0.12em] text-ink">
-                  Comparable Property Statistics
+                  Comparable property statistics
                 </span>
                 <span className="text-xs font-bold text-porchlight-deep">15 comps</span>
               </figcaption>
@@ -441,7 +441,7 @@ export default async function SellingPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading dark as="h2">
-              <span id="loop-heading">Stay in the Loop, <strong>Every Step of the Way</strong></span>
+              <span id="loop-heading">Stay in the loop, <strong>every step of the way</strong></span>
             </SectionHeading>
             <p className="t-lead mt-3 max-w-lg text-paper">
               Real-time updates until your home is sold
@@ -453,7 +453,7 @@ export default async function SellingPage() {
               &ldquo;what&rsquo;s going on?&rdquo;
             </p>
             <div className="mt-7">
-              <ScrollToFormButton variant="light">Get Your Free Cash Offer &amp; Analysis</ScrollToFormButton>
+              <ScrollToFormButton variant="light">Get your free cash offer &amp; analysis</ScrollToFormButton>
             </div>
             <p className="mt-3 text-xs tracking-wide text-paper/60">
               Takes under a minute. No obligation.
@@ -463,7 +463,7 @@ export default async function SellingPage() {
             <Laptop tone="dark">
               <div className="daylight flex h-full w-full flex-col bg-[#0d1319] text-paper">
                 <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
-                  <span className="text-xs font-bold tracking-wide">Your Seller Portal</span>
+                  <span className="text-xs font-bold tracking-wide">Your seller portal</span>
                   <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-porchlight">
                     <span className="h-1.5 w-1.5 rounded-full bg-porchlight" /> Live
                   </span>

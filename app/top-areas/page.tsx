@@ -47,7 +47,7 @@ export default function TopAreasPage() {
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
-              <span id="county-cards">Where Do You See Yourself?</span>
+              <span id="county-cards">Where do you see yourself?</span>
             </SectionHeading>
           </Reveal>
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -86,7 +86,7 @@ export default function TopAreasPage() {
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
-              <span id="borough-cards">The Five Boroughs</span>
+              <span id="borough-cards">The five boroughs</span>
             </SectionHeading>
           </Reveal>
           <p className="mx-auto mt-3 max-w-2xl text-center text-stone">
@@ -122,7 +122,7 @@ export default function TopAreasPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Button href="/connect">Talk It Through With Us</Button>
-            <Button href="/search" variant="outline">Browse All Listings</Button>
+            <Button href="/search" variant="outline">Browse all listings</Button>
           </div>
         </div>
       </section>

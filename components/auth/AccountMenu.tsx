@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth/AuthProvider";
 
 const MENU = [
-  { href: "/portal", label: "My Portal" },
+  { href: "/portal", label: "My portal" },
   { href: "/portal/collections", label: "Saved Homes" },
   { href: "/portal/searches", label: "Saved Searches" },
   { href: "/portal/reports", label: "My Reports" },

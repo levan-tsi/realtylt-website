@@ -56,7 +56,7 @@ describe("the county hero counts the homes /search will show", () => {
       /<dd[^>]*>\{onMarket\.toLocaleString\("en-US"\)\}<\/dd>/,
     );
     expect(page, "the See All button lost its Active-scoped count").toContain(
-      'See All {onMarket.toLocaleString("en-US")} Listings',
+      'See all {onMarket.toLocaleString("en-US")} listings',
     );
     // The whole point: neither surface may go back to the unscoped total.
     expect(page).not.toContain("result.total.toLocaleString");
