@@ -102,7 +102,7 @@ export function ResponseGap() {
 
             {/* The answer, too late. Dimmed on purpose. */}
             <div className="shrink-0 md:text-right">
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-paper/35">
+              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-paper/50">
                 You called
               </p>
               <p className="mt-1.5 text-4xl font-light leading-none tracking-[-0.02em] text-paper/40 md:mt-2 md:text-5xl">

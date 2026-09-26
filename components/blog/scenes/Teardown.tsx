@@ -44,7 +44,7 @@ export function Teardown() {
                       <p
                         className={`rounded-2xl px-5 py-3.5 leading-[1.6] ${
                           visitor
-                            ? "bg-river text-paper"
+                            ? "bg-river text-paper night:bg-[#102c54] night:text-moon"
                             : "bg-paper text-ink-soft shadow-raise"
                         }`}
                       >

@@ -66,7 +66,7 @@ export function Plate({
               className={`mt-5 max-w-2xl text-sm leading-relaxed ${dark ? "text-paper/60" : "text-stone"}`}
             >
               {caption}{" "}
-              <span className={dark ? "text-paper/35" : "text-stone/70"}>{credit}</span>
+              <span className={dark ? "text-paper/50" : "text-stone"}>{credit}</span>
             </figcaption>
           </figure>
         </Reveal>

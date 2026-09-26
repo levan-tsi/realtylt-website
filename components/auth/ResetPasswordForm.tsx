@@ -106,7 +106,7 @@ export function ResetPasswordForm() {
         />
       </div>
       {error && (
-        <p role="alert" className="mt-3 t-small text-red-600">
+        <p role="alert" className="mt-3 t-small text-red-600 night:text-red-400">
           {error}
         </p>
       )}

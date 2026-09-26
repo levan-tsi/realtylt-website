@@ -119,7 +119,7 @@ export function Conversation({
                         </span>
                         <span
                           className={`ml-auto shrink-0 text-[11px] uppercase tracking-[0.12em] tabular-nums ${
-                            dark ? "text-paper/40" : "text-stone/80"
+                            dark ? "text-paper/60" : "text-stone"
                           }`}
                         >
                           {t.at}
@@ -146,7 +146,9 @@ export function Conversation({
                         <p
                           className={`rounded-2xl px-5 py-3.5 leading-[1.6] ${
                             them
-                              ? "bg-river text-paper"
+                              ? // The river's day navy on the night too: at night `river` is the
+                                // moon (the focus ring), which turned this bubble white (round 60).
+                                "bg-river text-paper night:bg-[#102c54] night:text-moon"
                               : dark
                                 ? "bg-white/[0.07] text-paper shadow-edge"
                                 : "bg-paper text-ink-soft shadow-raise"

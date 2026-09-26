@@ -140,7 +140,7 @@ export default function FinancingPage() {
                   </svg>
                   <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-stone">Authorized signature</p>
                 </div>
-                <p className="w-fit -rotate-3 border-2 border-red-600 px-3 py-1 text-sm font-bold uppercase tracking-[0.18em] text-red-600">
+                <p className="w-fit -rotate-3 border-2 border-red-600 px-3 py-1 text-sm font-bold uppercase tracking-[0.18em] text-red-600 night:border-red-400 night:text-red-400">
                   Approved
                 </p>
               </div>
@@ -312,9 +312,9 @@ function HomeownershipPhoneMock() {
               </div>
             ))}
           </dl>
-          <div className="mt-5 rounded-xl bg-ink px-4 py-3 text-center">
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-paper/70">5-year total</p>
-            <p className="text-2xl font-bold text-paper">+$33,078</p>
+          <div className="mt-5 rounded-xl border border-line bg-mist px-4 py-3 text-center">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-stone">5-year total</p>
+            <p className="text-2xl font-bold text-ink">+$33,078</p>
           </div>
           <figcaption className="mt-3 text-center text-[10px] text-stone">
             Illustrative estimate, not a guarantee.

@@ -96,7 +96,7 @@ function FieldShell({ label, error, dark = false, hideLabel = false, id, childre
           {label}
         </label>
         {error && (
-          <p role="alert" className="mt-1 text-xs text-red-600">
+          <p role="alert" className="mt-1 text-xs text-red-600 night:text-red-400">
             {error}
           </p>
         )}
@@ -119,7 +119,7 @@ function FieldShell({ label, error, dark = false, hideLabel = false, id, childre
       </label>
       {children}
       {error && (
-        <p role="alert" className="mt-1 text-xs text-red-600">
+        <p role="alert" className="mt-1 text-xs text-red-600 night:text-red-400">
           {error}
         </p>
       )}
