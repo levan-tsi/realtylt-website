@@ -147,10 +147,12 @@ export class LightLayer {
     this.resize();
   }
 
-  /** The canvas to its box, at the screen's pixel density. */
+  /** The canvas to its box, at the screen's pixel density. Round 63: up to 3, an iPhone's own (the
+   * owner's "looks a little pixelated": at a cap of 2 every light was drawn at two thirds of the
+   * phone's density and stretched, soft over a plate rendered at 3x). */
   resize() {
     const c = this.canvas;
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const dpr = Math.min(3, window.devicePixelRatio || 1);
     if (dpr !== this.dpr) {
       this.bakes.clear();
       this.lastBase = [];
