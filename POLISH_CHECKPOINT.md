@@ -1,4 +1,16 @@
-# ROUND 61 (THE MAP ROUND) DEPLOYED 2026-09-26 MORNING (`521a60a` on main, live at realtylt.com). START HERE.
+# NEXT = ROUND 62, THE PHONE. READ `docs/handoff/WEBSITE-R62-PHONE-POLISH-HANDOFF.md` §0 FIRST. START THERE.
+
+His verdict 2026-09-26 on realtylt.com from his phone: the computer is "amazing", the phone is "not as
+effective": the map is not really shown, a dark cloud sits at the bottom-left (the old credit corner's
+shade, to verify), and the phone needs a lot of polish. Process he ordered: ONE Opus session that
+plans, then three builder agents one at a time, verifying each itself; desktop must not regress.
+Since round 61 also live: dead links redirect automatically (sold homes to their town's search, unknown
+blog addresses to a stand-in or the blog), the sitemap and SEO audit clean, the Google Maps keys split
+(browser key locked to our sites and local ports; server key limited to four APIs).
+
+---
+
+# ROUND 61 (THE MAP ROUND) DEPLOYED 2026-09-26 MORNING (`521a60a` on main, live at realtylt.com).
 
 Done and live: the first second (the first bundle 1,186 to 857 KB parsed, the HTML 354 to 275 KB,
 the lights drawn ~150 ms sooner, the hero's rise 0.45 s); PostHog replay's canvas capture OFF in code
