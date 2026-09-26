@@ -247,3 +247,16 @@ across the valley and the city, whole by about 1.2 s.
   second" on a first visit is now about 0.75 s to the plate with its names and ~1 s to the lights.
 - The lights' 600 ms fade-in is round 58's approved arrival; shortening it would bring them whole
   ~300 ms sooner. Not changed (motion he approved).
+
+### The orchestrator's verification of §1 and the replay fix (2026-09-26)
+
+Re-run on a rebuild from HEAD: tsc clean, vitest 2248, the crawler ALL PASS, JS off dark with the
+plate standing and the claims hidden, the light scan unchanged, calibration 0.00 px at the territory,
+Queens and Dutchess county with matching counts, hover 50 of 50 alone, the walk p50 6.9 ms, reduced
+motion one 400 ms fade. Builder 6's open item was the biggest thing on the first screen: PostHog's
+session replay, told by the project's remote config to record canvases at 3 fps, serialised the
+2880 x 1800 light canvases in ONE main-thread task of 1,735 to 1,773 ms about 1.3 s after every load
+(`scripts/_scratch-r61-longtask.mjs`). Fixed in our init (`captureCanvas: { recordCanvas: false }`,
+read before the remote setting; replays keep pages, clicks and masked inputs): after, no task over
+115 ms and the lights drawn at 464 to 559 ms. Committed as `e5b1dd3` and deployed with builder 6's
+work (`8804a61..e5b1dd3`).
