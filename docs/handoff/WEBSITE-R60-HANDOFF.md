@@ -1,4 +1,39 @@
-# Website round 60 handoff (written 2026-09-25 at the close of round 59)
+# Website round 60 handoff (written 2026-09-25 at the close of round 59; state updated 2026-09-25 evening)
+
+## STATE AT 2026-09-25 EVENING (read this before §0 if you are picking the session up)
+
+- **LIVE**: `c07889f` on `main` at realtylt.com (public): round 59 (yellow lights, county plates,
+  the film), the lights fetched once, the map credit at its legal minimum (five seconds, then the
+  (i); phones the (i) only; nothing in the footer). Verified live with a browser probe.
+- **THE DARK SITE (round 60), his order "we're making it dark"**: builder 4 DONE and verified
+  (`79c0c35` to `bf0bdc8` + `ea8085b`: the root is `.nocturne`, `color-scheme: dark`, /search's
+  filters are pills and the Bed list is dark, the chat launcher navy, every Call label carries the
+  number; vitest 2218). **Builder 5 was RUNNING when this was written** (an Opus agent on the rest:
+  the chat PANEL dark, which the owner repeated as a must, every dialog and overlay, /portal, the
+  blog's light scenes, /auth/reset, the old /listing route, the listing card's own ground, dead day
+  markup, one weight per heading). Its record is "§2 The rest of the dark site" in
+  `docs/parity/DESIGN-ROUND60.md`; its commits are on the branch after `ea8085b`.
+- **WHAT TO DO WHEN BUILDER 5 IS DONE (or if it never reported): verify, then push.** On a rebuild
+  from HEAD (PowerShell: stop the :3102 listener, `npx next build`, `Start-Process node ... next
+  start -p 3102` with `RLT_LAB=1`): `npx tsc --noEmit`; `npx vitest run` (2218 or more, 0 failed);
+  `node scripts/qa-crawl.mjs http://127.0.0.1:3102` ALL PASS; `node scripts/_scratch-r60-light.mjs`
+  (every hit a white primary button with dark text, nothing else; also with the dialogs open);
+  `node scripts/_scratch-r60-contrast.mjs` (0 of ours under the floor at 1440 and 390);
+  `node scripts/_scratch-r60-nojs.mjs`; `node scripts/_scratch-r58-calib.mjs --shots=hero,queens`
+  (0.00 px); `node scripts/_scratch-r57l-hover.mjs` ALONE (50 of 50); the chat panel opened in a
+  headed Chrome at 1440 and 390 and LOOKED at; the sheets under `docs/design-r60/` looked at. Then
+  `git push origin HEAD:main` (a public deploy; the owner said "deploy yourself once all the pages are
+  in dark mode and everything works properly and white background is not covering text"), then the
+  live probe `node scripts/_scratch-r59-live.mjs --base=https://realtylt.com` (expect the two
+  noindex checks to FAIL, correctly: the site is indexable) and `scripts/_scratch-r59-challenge.mjs`.
+- **THEN the map round**: `docs/handoff/WEBSITE-R61-MAP-ROUND-BRIEF.md` (the first second, the light
+  density, the parks and water tints for his decision, the carried items).
+- **Vercel**: no firewall config, no password; Vercel's own bot mitigation challenges non-browser
+  fetches (429); real browsers get 200. Runtime errors in the deploy's first hours: one DB timeout on
+  one listing page's area insights, one media ECONNRESET (a long-standing class); no 5xx cluster.
+- The owner's Fable quota was at 99 percent when this was written: the next session may run on
+  Opus; everything needed is in this file, `POLISH_CHECKPOINT.md`, `docs/parity/DESIGN-ROUND60.md`
+  and the memory (`~/realtylt-claude-config/memory/MEMORY.md`, the NEXT WEBSITE SESSION block).
 
 Read this first, then `docs/parity/DESIGN-ROUND59.md` (§1 the lights, §2 the county plates, §3 the
 film, §4 the orchestrator's close). The `/website` command text is stale (a round-11 brief); this
