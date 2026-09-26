@@ -363,7 +363,7 @@ function QualifyingWizard({
 
   return (
     <div
-      className="rlt-fade-in fixed inset-0 z-[1000000] flex items-end justify-center bg-ink/70 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6"
+      className="rlt-fade-in fixed inset-0 z-[1000000] flex items-end justify-center bg-night-deep/80 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) finish();
       }}
@@ -492,7 +492,7 @@ function QualifyingWizard({
                 onChange={(e) => setCallTimes(e.target.value)}
                 rows={3}
                 placeholder="e.g. weekday evenings, or Saturday morning"
-                className="min-h-24 w-full resize-y rounded-xl border border-line-strong bg-white px-3.5 py-3 text-sm text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40"
+                className="min-h-24 w-full resize-y rounded-xl border border-line-strong bg-paper px-3.5 py-3 text-sm text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40"
               />
               <button
                 type="submit"

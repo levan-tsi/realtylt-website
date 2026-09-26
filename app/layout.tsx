@@ -86,7 +86,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${lato.variable} ${newsreader.variable}`}>
+    // `nocturne` on the root (round 60, the owner's "we're making it dark"): every page, portal and
+    // the chat launcher sit inside the night scope, server-rendered, so the dark needs no script
+    // (app/globals.css `.nocturne`).
+    <html lang="en" className={`${lato.variable} ${newsreader.variable} nocturne`}>
       <body>
         <script
           type="application/ld+json"

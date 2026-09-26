@@ -442,8 +442,11 @@
 }
 }
 
+/* Round 60: the whole site is night (the owner's seventh verdict, "we're making it dark"), so the
+   root's scheme is dark: the viewport's scrollbar, the overscroll canvas and every native control
+   and popup (a <select>'s option list above all) paint in the dark scheme from the first byte. */
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
@@ -463,7 +466,17 @@ body {
    literal on a photograph already says text-white / bg-black and is unaffected. River is the
    site's focus-ring colour; navy on night would be invisible, so here the ring is porchlight
    (6.47:1). The Header, the Footer and each page's wrapper carry the class on the same
-   routes (lib/site.ts NIGHT_ROUTES). */
+   routes (lib/site.ts NIGHT_ROUTES).
+
+   ROUND 60: THE WHOLE SITE IS NIGHT. The class now sits on <html> (app/layout.tsx), so every page,
+   every portal (the sign-in modal, the dialogs) and the chat launcher are inside it, and the
+   server-rendered HTML is dark with scripting off. Why a class on the root and not the night values
+   written into @theme: (1) every rule, `night:` variant and test written since round 53 keeps
+   working unchanged, and the home page, which is finished, sees exactly the tokens it saw; (2) the
+   day values stay in @theme and under `.daylight`, one explicit class, for the few surfaces that
+   must be light (a white pill on a photograph, Google's own popup, paper: see @media print at the
+   end of this file). ONE mechanism: `.nocturne` re-points the tokens, `night:` states a
+   component's night look (it now matches on every page), `.daylight` is the way back out. */
 .nocturne {
   --color-paper: var(--color-night);
   --color-mist: var(--color-night-raise);
@@ -512,19 +525,15 @@ body {
   --rlt-pop-text: 13px;
   --rlt-pop-small: 12px;
 }
-/* ── /search only (round 54). `color-scheme: dark` hands the browser its own selection colour,
-   and on this page you meet it immediately: the Save-search dialog opens with the name already
-   selected, so the first thing a visitor sees in it is a band of Chrome's blue-green on a page
-   that has no colour but a warm light. Selecting a price or an address in the results does the
-   same. The page picks instead: its own white, with the night as the ink. Scoped to this route
-   rather than to `.nocturne`, because the home page is finished and is not mine to re-tint. */
-.rlt-search ::selection {
-  background-color: var(--color-moon);
-  color: var(--color-night);
-}
-.rlt-search::selection {
-  background-color: var(--color-moon);
-  color: var(--color-night);
+/* ── The selection (round 54 on /search, round 60 everywhere). `color-scheme: dark` hands the
+   browser its own selection colour, a band of Chrome's blue-green on a site that has no colour
+   but a warm light (the Save-search dialog opens with its name already selected). The site picks
+   instead: the ink as the band and the paper as its text, white on night and, inside a
+   `.daylight` surface, black on white. */
+.nocturne ::selection,
+.nocturne::selection {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
 }
 
 /* The ground itself, in @layer base so a utility on the same element (the home header's
@@ -540,41 +549,23 @@ body {
 }
 /* The overscroll bounce and any sliver between header, page and footer show the body, so the
    body goes to night with them rather than flashing white at the edges of a dark page. */
-body:has(.nocturne) {
+.nocturne body {
   background-color: var(--color-night);
 }
-/* The chat launcher (public/rlt-chat.js, byte-exact from the live site, which paints it #1557b0)
-   was a second, off-palette blue on the night pages. There it wears the page's own action blue
-   with a night glyph (the icon strokes currentColor): 6.47:1. Specificity beats the widget's own
-   injected rule; every other page keeps the widget exactly as shipped. */
-body:has(.nocturne) .rlt-bubble {
-  background: var(--color-porchlight);
-  color: var(--color-night);
-}
-body:has(.nocturne) .rlt-bubble:hover {
-  background: #4dbbe9;
-}
-/* The launcher lives outside every .nocturne wrapper, so its ring kept the day's river: navy on
-   the night ground, 1.26:1 (round 53 check). */
-body:has(.nocturne) .rlt-bubble:focus-visible {
-  outline-color: var(--color-porchlight);
-}
-/* The skip link sits outside every page wrapper (app/layout.tsx), so on a night page the first Tab
-   met the day's black pill in Lato with a navy ring at 1.26:1 on the night header. There it is the
-   night's own moonlit control with the porchlight ring (round 53 polish). */
-body:has(.nocturne) > a[href="#main"]:focus {
+/* The chat launcher's colour lives in public/rlt-chat.js itself since round 60 (the logo's navy, the
+   owner's order); the porchlight override that stood here would now resolve to the moon and paint a
+   white disc. Its ring is the site's own: the launcher sits inside the root scope, so the
+   `:focus-visible` rule below draws it in the moon. */
+/* The skip link, the night's own moonlit control (round 53 polish). */
+.nocturne body > a[href="#main"]:focus {
   background-color: var(--color-moon);
   color: var(--color-night);
   font-family: var(--font-grotesk);
   font-weight: 600;
   border-radius: 12px;
 }
-/* ...and its ring. `var(--color-porchlight)` was the intent, but the skip link is a direct child
-   of BODY and so sits outside every `.nocturne` scope: the variable resolves to the root's value,
-   which is the brand blue, and the first Tab on a black page met an off-palette blue ring at
-   2.4:1 against its own white pill (round 54, builder 3, measured). The moon is named outright.
-   The ring reads against the 2px of night the offset leaves between it and the pill. */
-body:has(.nocturne) > a[href="#main"]:focus-visible {
+/* ...and its ring, the moon named outright (round 54). */
+.nocturne body > a[href="#main"]:focus-visible {
   outline-color: var(--color-moon);
 }
 /* ...and the way back out. A few things on a night page are white BY NATURE and must keep the
@@ -989,6 +980,70 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 12px 12px;
+}
+
+/* ── A SELECT'S OPTIONS ARE PAINTED, NEVER GUESSED (round 60, the owner's Bed filter). On Windows
+   Chrome a native <select>'s popup is drawn by the browser from the element's colour scheme and
+   its options' own colours. /search's filters inherited the page's light text colour into their
+   options while the popup was drawn in the light scheme: light text on a white list, invisible
+   until the hover highlight painted a row. The root is `color-scheme: dark` now; this states the
+   options outright as well, from the tokens, so the list is the night's raised surface with the
+   night's text (15.9:1) and, inside a `.daylight` surface, the day's. */
+option,
+optgroup {
+  background-color: var(--color-mist);
+  color: var(--color-ink);
+}
+option:disabled {
+  color: var(--color-stone);
+}
+
+/* ── THE FILTER PILL (round 60, "make it better and round, not boxes"). A native <select> worn as
+   a pill: keyboard, screen reader and the phone's own picker come free, and the box is gone. One
+   height (44px) with the segments beside it, a hairline edge, the haze chevron drawn back in
+   (filled, for the reason the select rule above gives) and room for it on the right. A pill with
+   a value chosen says so with the moon edge and text (SearchClient passes `data-set`). */
+.rlt-pill-select {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2.75rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-line-strong);
+  background-color: transparent;
+  padding-inline: 1rem 2.25rem;
+  /* 16px on a phone: the iOS focus-zoom floor above, which this class would otherwise out-rank. */
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1.93 5.07L5.43 8.57A.8 .8 0 0 0 6.57 7.43L3.07 3.93A.8 .8 0 0 0 1.93 5.07ZM6.57 8.57L10.07 5.07A.8 .8 0 0 0 8.93 3.93L5.43 7.43A.8 .8 0 0 0 6.57 8.57Z' fill='%239b9b96'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 11px 11px;
+  transition:
+    border-color 0.15s var(--ease-out),
+    color 0.15s var(--ease-out),
+    background-color 0.15s var(--ease-out);
+}
+.rlt-pill-select:hover {
+  border-color: var(--color-stone);
+  color: var(--color-ink);
+}
+.rlt-pill-select[data-set] {
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+}
+@media (min-width: 768px) {
+  .rlt-pill-select {
+    font-size: 15px;
+  }
+}
+@media (forced-colors: active) {
+  .rlt-pill-select {
+    -webkit-appearance: auto;
+    appearance: auto;
+    background-image: none;
+  }
 }
 
 /* Checkboxes at blue hour (round 53 polish). Chromium drew them in its own dark scheme: a neutral
@@ -1879,5 +1934,24 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   figure,
   table {
     break-inside: avoid-page;
+  }
+
+  /* PAPER IS DAY (round 60). The site is night on screen, but a browser prints without background
+     graphics by default: the black ground drops out and the moon-white text would print white on
+     white. On paper every surface takes the day's values back (the same values as @theme and
+     `.daylight`), so a printed listing or report is black ink on white. */
+  .nocturne {
+    --color-paper: #ffffff;
+    --color-mist: #f3f5f8;
+    --color-ink: #000000;
+    --color-ink-soft: #222222;
+    --color-stone: #6f6f6f;
+    --color-line: #dddddd;
+    --color-line-strong: #cccccc;
+    --color-river: #102c54;
+    --color-porchlight: #28a8e0;
+    --color-porchlight-deep: #1c729a;
+    --color-card: #ffffff;
+    color-scheme: light;
   }
 }

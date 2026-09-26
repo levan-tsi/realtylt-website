@@ -1,42 +1,37 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { NIGHT_ROUTES, areaName, isNightRoute } from "./site";
+import { areaName } from "./site";
 import { chipStateStyles } from "@/components/idx/map-shared";
 
-/** ROUND 53: THE BLUE-HOUR LOOK IS SCOPED, AND THE SCOPE HAS TWO HALVES THAT MUST AGREE.
- * The page's own wrapper carries `.nocturne` (so the tokens re-point for everything inside it),
- * and the Header and Footer read NIGHT_ROUTES to dress the chrome around the page. A route in
- * the list without the wrapper would put night chrome around a white page; a wrapper without
- * the entry would put a white header on a night page. */
+/** ROUND 60: THE WHOLE SITE IS NIGHT (the owner's seventh verdict, "we're making it dark").
+ * Rounds 53 to 59 scoped the look to two routes (a NIGHT_ROUTES list the chrome read, and a
+ * wrapper on each page). The scope is now the root element itself, server-rendered, so no page,
+ * portal or pending state can be born white, and there is no list left to fall out of step. */
 const root = join(__dirname, "..");
 const read = (p: string) => readFileSync(join(root, p), "utf8");
-const pageFile = (route: string) => (route === "/" ? "app/page.tsx" : `app${route}/page.tsx`);
 
-describe("the night routes", () => {
-  it.each(NIGHT_ROUTES.map((r) => [r]))("%s wears the night on its page wrapper", (route) => {
-    // Round 54: the home page's wrapper also carries the stacking utilities its fixed scene
-    // needs (`isolate relative`), so the class is first in the list rather than alone.
-    expect(read(pageFile(route))).toMatch(/className="nocturne(?=[ "])/);
+describe("the night is the root", () => {
+  it("puts .nocturne on <html> in the root layout (server-rendered: the dark needs no script)", () => {
+    expect(read("app/layout.tsx")).toMatch(/<html lang="en" className=\{`[^`]*\bnocturne\b[^`]*`\}>/);
   });
 
-  it("dresses /search's pending state too, so a slow navigation never flashes a white skeleton", () => {
-    expect(read("app/search/loading.tsx")).toMatch(/className="nocturne"/);
+  it("sets the root's colour scheme to dark, so native popups (a <select>'s options) paint dark", () => {
+    const css = read("app/globals.css");
+    expect(css).toMatch(/:root \{\s*color-scheme: dark;\s*\}/);
+    expect(css).not.toMatch(/:root \{\s*color-scheme: light;/);
   });
 
-  it("is read by the chrome", () => {
-    expect(read("components/site/Header.tsx")).toMatch(/isNightRoute\(pathname\)/);
-    const shell = read("components/site/FooterShell.tsx");
-    expect(shell).toMatch(/usePathname\(\)/);
-    expect(shell).toMatch(/isNightRoute\(pathname\)/);
+  it("keeps no per-route switch: the chrome wears the class outright", () => {
+    expect(read("lib/site.ts")).not.toMatch(/NIGHT_ROUTES|isNightRoute/);
+    expect(read("components/site/Header.tsx")).toMatch(/<header className=\{`nocturne /);
+    expect(read("components/site/FooterShell.tsx")).toMatch(/<footer className=\{`nocturne /);
   });
 
-  it("matches the routes exactly, not by prefix", () => {
-    expect(isNightRoute("/")).toBe(true);
-    expect(isNightRoute("/search")).toBe(true);
-    expect(isNightRoute("/selling")).toBe(false);
-    expect(isNightRoute("/search/anything")).toBe(false);
-    expect(isNightRoute(null)).toBe(false);
+  it("prints on day values: paper is white and the ink black under @media print", () => {
+    const css = read("app/globals.css");
+    const print = css.slice(css.lastIndexOf("@media print"));
+    expect(print).toMatch(/\.nocturne \{[^}]*--color-paper: #ffffff;[^}]*--color-ink: #000000;[^}]*color-scheme: light;/);
   });
 
   it("re-points the tokens a component paints with, and has a way back out for things white by nature", () => {
@@ -192,8 +187,10 @@ describe("focus rings the night would otherwise swallow (round 53 check)", () =>
     expect(css).toMatch(/\.nocturne \.bg-ink\.night\\:bg-night-deep :focus-visible\s*\{\s*outline-color:\s*var\(--color-porchlight\)/);
     expect(read("components/site/Footer.tsx")).toMatch(/className="bg-ink [^"]*night:bg-night-deep/);
   });
-  it("rings the chat launcher in porchlight on a night page (it sits outside every .nocturne wrapper)", () => {
-    expect(css).toMatch(/body:has\(\.nocturne\) \.rlt-bubble:focus-visible\s*\{\s*outline-color:\s*var\(--color-porchlight\)/);
+  it("leaves the chat launcher to the widget's own colour (round 60): no night override would paint it white", () => {
+    // Inside the root scope --color-porchlight IS the moon, so the old override would now draw a
+    // white disc; the launcher's navy lives in public/rlt-chat.js (lib/chat-launcher-colour.test.ts).
+    expect(css).not.toMatch(/\.rlt-bubble\s*\{[^}]*var\(--color-porchlight\)/);
   });
   it("leaves ring room inside /search's two phone scrollers, which clip what paints outside them", () => {
     const rows = read("components/search/SearchClient.tsx").match(/className="-mx-4 flex [^"]*overflow-x-auto[^"]*"/g) ?? [];

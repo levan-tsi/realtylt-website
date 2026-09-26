@@ -79,7 +79,7 @@ export function LeadSheet({
   if (typeof document === "undefined") return null;
   return createPortal(
     <div
-      className="rlt-fade-in fixed inset-0 z-[1000001] flex items-end justify-center bg-ink/70 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6"
+      className="rlt-fade-in fixed inset-0 z-[1000001] flex items-end justify-center bg-night-deep/80 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}

@@ -2,14 +2,13 @@
 
 import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { isNightRoute } from "@/lib/site";
 
-/** The footer's own element, so the (server) Footer can wear the blue-hour tokens on the routes
- * whose page does (lib/site.ts NIGHT_ROUTES). usePathname renders on the server too, so the
- * class is in the first HTML and there is no light-to-dark flash. */
+/** The footer's own element, so the (server) Footer can take the home page's stacking and ground.
+ * usePathname renders on the server too, so the result is in the first HTML. The night tokens
+ * come from the root since round 60 (app/layout.tsx); the class stays so the footer's own rules
+ * (`.nocturne .bg-ink.night:bg-night-deep`) keep their scope. */
 export function FooterShell({ className, children }: { className: string; children: ReactNode }) {
   const pathname = usePathname();
-  const night = isNightRoute(pathname);
   // THE HOME PAGE ONLY. Its night flight is a canvas fixed behind the page, inside a wrapper that
   // is its own stacking context, which paints the whole wrapper above the ordinary flow: without a
   // position of its own the footer ended up UNDER the scene, with the lights running through the
@@ -25,7 +24,7 @@ export function FooterShell({ className, children }: { className: string; childr
   // Home only; every other footer, day or night, is byte-identical (footer-stacking.test.ts).
   const style = pathname === "/" ? { backgroundColor: "transparent" as const } : undefined;
   return (
-    <footer className={`${night ? "nocturne " : ""}${overScene}${className}`} style={style}>
+    <footer className={`nocturne ${overScene}${className}`} style={style}>
       {children}
     </footer>
   );

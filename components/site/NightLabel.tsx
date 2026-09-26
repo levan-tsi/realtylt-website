@@ -1,10 +1,7 @@
-"use client";
+import { sentenceCase } from "@/lib/site";
 
-import { usePathname } from "next/navigation";
-import { isNightRoute, sentenceCase } from "@/lib/site";
-
-/** A label the day pages keep as written and the blue-hour pages set in sentence case (round 53),
- * for server components that cannot read the route themselves. Renders the text only. */
+/** A label stored in Title Case, set in sentence case the way every page sets its labels (round 53
+ * on the night pages, round 60 everywhere). Renders the text only. */
 export function NightLabel({ text }: { text: string }) {
-  return <>{isNightRoute(usePathname()) ? sentenceCase(text) : text}</>;
+  return <>{sentenceCase(text)}</>;
 }

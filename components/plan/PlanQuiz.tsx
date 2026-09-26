@@ -171,11 +171,11 @@ function useAreaCounts(slugs: CountySlug[]): Record<string, number> {
 // ── Shared control styles (the site's grammar: 16px cards, chip selection states). ──────
 const shapeCls = (active: boolean) =>
   `group flex min-h-28 flex-col items-center justify-center gap-2.5 rounded-2xl border px-3 py-5 text-center transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
-    active ? "border-ink bg-ink text-paper" : "border-line-strong bg-white text-ink hover:bg-mist"
+    active ? "border-ink bg-ink text-paper" : "border-line-strong bg-paper text-ink hover:bg-mist"
   }`;
 const chipCls = (active: boolean) =>
   `rounded-xl border px-3.5 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
-    active ? "border-ink bg-ink text-paper" : "border-line-strong bg-white text-ink-soft hover:bg-mist"
+    active ? "border-ink bg-ink text-paper" : "border-line-strong bg-paper text-ink-soft hover:bg-mist"
   }`;
 const skipCls =
   "text-xs font-bold uppercase tracking-[0.12em] text-stone underline underline-offset-4 transition-colors hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river";
@@ -337,7 +337,7 @@ function QuizTakeover({
       aria-modal="true"
       aria-labelledby="plan-quiz-title"
       onKeyDown={onKeyDown}
-      className="fixed inset-0 z-[100] flex items-end justify-center bg-ink/60 sm:items-center sm:p-6"
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-night-deep/75 sm:items-center sm:p-6"
     >
       <div
         ref={panelRef}
@@ -421,7 +421,7 @@ function QuizTakeover({
                       type="button"
                       onClick={() => set("monthly", m)}
                       className={`rounded-2xl border py-4 text-center transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
-                        answers.monthly === m ? "border-ink bg-ink text-paper" : "border-line-strong bg-white text-ink hover:bg-mist"
+                        answers.monthly === m ? "border-ink bg-ink text-paper" : "border-line-strong bg-paper text-ink hover:bg-mist"
                       }`}
                     >
                       <span className="block text-base font-bold tabular-nums">{fmtMoney(m)}</span>
@@ -744,7 +744,7 @@ function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<ty
           placeholder="Name"
           aria-label="Name"
           required
-          className="rounded-xl border border-line-strong bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-stone focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river"
+          className="rounded-xl border border-line-strong bg-paper px-3.5 py-2.5 text-sm text-ink placeholder:text-stone focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river"
         />
         <input
           name="email"
@@ -753,7 +753,7 @@ function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<ty
           placeholder="Email"
           aria-label="Email"
           required
-          className="rounded-xl border border-line-strong bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-stone focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river"
+          className="rounded-xl border border-line-strong bg-paper px-3.5 py-2.5 text-sm text-ink placeholder:text-stone focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river"
         />
         <input
           name="phone"
@@ -761,7 +761,7 @@ function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<ty
           autoComplete="tel"
           placeholder="Phone (optional)"
           aria-label="Phone, optional"
-          className="rounded-xl border border-line-strong bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-stone focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river"
+          className="rounded-xl border border-line-strong bg-paper px-3.5 py-2.5 text-sm text-ink placeholder:text-stone focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river"
         />
       </div>
       <input type="text" name="rlt_hp" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />

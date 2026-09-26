@@ -235,7 +235,6 @@ export default async function HomePage() {
                 </label>
                 <LocationSuggest
                   id="home-search"
-                  dark
                   anchor="form"
                   placeholder="Town, zip or address"
                   // max-[359px]: at 320 the placeholder read "Town, zip or ac": 152px of words in

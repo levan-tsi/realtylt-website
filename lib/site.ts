@@ -112,16 +112,10 @@ export const TOP_AREA_GROUPS = [
 export const areaName = (label: string): string =>
   label.toLowerCase().replace(/(^|\s)\S/g, (m) => m.toUpperCase());
 
-/** The routes that wear the round-53 blue-hour look (app/globals.css `.nocturne`). The page's
- * own wrapper carries the class; the Header and Footer read this list so the chrome around the
- * page matches it. Extending the look to another page is one entry here plus its wrapper. */
-export const NIGHT_ROUTES = ["/", "/search"] as const;
-export const isNightRoute = (pathname: string | null | undefined): boolean =>
-  (NIGHT_ROUTES as readonly string[]).includes(pathname ?? "");
-
-/** "Plan Your Purchase" -> "Plan your purchase", for labels a night page shows but a day page
- * must keep as written. Only plain Title-case words drop: an acronym or a name with inner
- * capitals ("AI", "DMCA", "RealtyLT") is left alone, and so is the first word. */
+/** "Plan Your Purchase" -> "Plan your purchase". The site sets every label in sentence case (the
+ * night's rule since round 53, every page since round 60). Only plain Title-case words drop: an
+ * acronym or a name with inner capitals ("AI", "DMCA", "RealtyLT") is left alone, and so is the
+ * first word. */
 export const sentenceCase = (label: string): string =>
   label
     .split(" ")

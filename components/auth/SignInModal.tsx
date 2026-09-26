@@ -2,11 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
 import { useAuth } from "@/components/auth/AuthProvider";
-import { isNightRoute, SITE } from "@/lib/site";
+import { SITE } from "@/lib/site";
 
 type Notice = { kind: "error" | "info"; text: string } | null;
 
@@ -17,9 +16,9 @@ export function SignInModal() {
    * all-caps black button, floating on a black page. It was the loudest thing on /search.
    * The panel carries the class itself on those routes, exactly as the suggestion list does when
    * it portals to <body> (LocationSuggest): every token inside re-points at once, so the fields,
-   * the buttons and the type all take the night's own values without a second design. The
-   * BACKDROP stays outside it on purpose — `bg-ink/60` inside the scope would be a white scrim. */
-  const night = isNightRoute(usePathname());
+   * the buttons and the type all take the night's own values without a second design.
+   * Round 60: the whole site is night (the class is on <html>), so the backdrop is inside the scope
+   * too, where `bg-ink/60` is a WHITE scrim; it names the night's black instead. */
   const {
     modalOpen,
     modalMode,
@@ -175,7 +174,7 @@ export function SignInModal() {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-ink/60 px-4 py-10 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-night-deep/70 px-4 py-10 backdrop-blur-sm"
       role="presentation"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) closeSignIn();
@@ -187,9 +186,7 @@ export function SignInModal() {
         aria-modal="true"
         aria-labelledby="auth-modal-title"
         onKeyDown={onPanelKeyDown}
-        className={`relative w-full max-w-[400px] rounded-2xl p-7 shadow-float ${
-          night ? "nocturne border border-line bg-mist text-ink" : "bg-white"
-        }`}
+        className="nocturne relative w-full max-w-[400px] rounded-2xl border border-line bg-mist p-7 text-ink shadow-float"
       >
         <button
           type="button"

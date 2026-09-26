@@ -60,7 +60,7 @@ export function NoPhoto({ caption = true }: { caption?: boolean } = {}) {
   // Both cuts ship and the ground picks one (round 53): on a blue-hour page the light panel read
   // as a white card punched out of the night, so there the night cut (below) shows instead.
   return (
-    <div className="absolute inset-0 bg-mist" aria-hidden>
+    <div className="nocturne absolute inset-0 bg-mist" aria-hidden>
       <Image
         src={caption ? "/images/mls/coming-soon.svg" : "/images/mls/coming-soon-notext.svg"}
         alt=""

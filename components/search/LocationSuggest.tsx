@@ -3,8 +3,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { usePathname, useRouter } from "next/navigation";
-import { isNightRoute } from "@/lib/site";
+import { useRouter } from "next/navigation";
 import { getRecentSearches, recordRecentSearch } from "@/lib/saved";
 import { useSaved } from "@/components/auth/SavedProvider";
 
@@ -38,7 +37,6 @@ export function LocationSuggest({
   placeholder,
   className,
   defaultValue = "",
-  dark = false,
   onPick,
   anchor = "input",
 }: {
@@ -47,8 +45,6 @@ export function LocationSuggest({
   placeholder: string;
   className: string;
   defaultValue?: string;
-  /** Dropdown on a dark hero vs a white page. */
-  dark?: boolean;
   /** When set, selection calls this instead of navigating (search page filters). */
   onPick?: (s: Suggestion) => void;
   /** "form": the dropdown spans the nearest positioned ancestor (a composed search bar that
@@ -56,9 +52,8 @@ export function LocationSuggest({
   anchor?: "input" | "form";
 }) {
   const router = useRouter();
-  // The list is portalled to <body>, outside the page's blue-hour wrapper, so on a night route it
-  // carries the class itself and paints from the night tokens (round 53).
-  const night = isNightRoute(usePathname());
+  // The list is portalled to <body>; it carries the night class itself (round 53), which since round
+  // 60 is also the root's, so it paints from the night tokens on every page.
   const { searches: savedSearches } = useSaved();
   const listId = useId();
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -399,7 +394,7 @@ export function LocationSuggest({
               : undefined
           }
           className={`${anchorRect ? "z-[60] overflow-y-auto overscroll-contain" : `absolute inset-x-0 top-full z-30 ${anchor === "form" ? "mt-2" : "mt-1"}`} overflow-x-hidden rounded-xl border shadow-lift ${
-            night ? "nocturne border-line-strong bg-mist" : dark ? "border-paper/20 bg-ink" : "border-ink/15 bg-white"
+            "nocturne border-line-strong bg-mist"
           }`}
         >
           {visible.map((s, i) => (
@@ -409,9 +404,7 @@ export function LocationSuggest({
               {showingHistory && s.group !== visible[i - 1]?.group && (
                 <span
                   aria-hidden
-                  className={`block px-4 pb-1 pt-3 ${
-                    night ? "text-[13px] font-medium text-stone" : `text-[11px] font-bold uppercase tracking-[0.12em] ${dark ? "text-paper/40" : "text-stone"}`
-                  }`}
+                  className="block px-4 pb-1 pt-3 text-[13px] font-medium text-stone"
                 >
                   {s.group}
                 </span>
@@ -426,24 +419,18 @@ export function LocationSuggest({
                   // and a tint of it. The first cut used the page ground (bg-paper) on the
                   // raised list, 1.14:1, so a keyboard visitor could not see which row the
                   // arrows were on. Every row reserves the bar's width, so nothing shifts.
-                  night
-                    ? i === active ? "border-l-[3px] border-porchlight bg-porchlight/15 text-ink" : "border-l-[3px] border-transparent text-ink-soft"
-                    : dark
-                      ? i === active ? "bg-white/15 text-paper" : "text-paper/90"
-                      : i === active ? "bg-mist text-ink" : "text-ink-soft"
+                  i === active ? "border-l-[3px] border-porchlight bg-porchlight/15 text-ink" : "border-l-[3px] border-transparent text-ink-soft"
                 }`}
               >
                 <span>{s.label}</span>
-                <span className={`shrink-0 ${night ? "text-[13px] text-stone" : `text-[11px] uppercase tracking-[0.12em] ${dark ? "text-paper/50" : "text-stone"}`}`}>
+                <span className="shrink-0 text-[13px] text-stone">
                   {s.count
                     ? `${s.count.toLocaleString("en-US")} homes`
                     : s.kind === "address"
                       ? "View home"
                       : s.kind === "text"
                         ? ""
-                        : night
-                          ? s.kind.charAt(0).toUpperCase() + s.kind.slice(1)
-                          : s.kind}
+                        : s.kind.charAt(0).toUpperCase() + s.kind.slice(1)}
                 </span>
               </button>
             </li>
@@ -469,13 +456,13 @@ export function LocationSuggest({
               : undefined
           }
           className={`pointer-events-none px-4 py-3 ${anchorRect ? "z-[60]" : `absolute inset-x-0 top-full z-30 ${anchor === "form" ? "mt-2" : "mt-1"}`} rounded-xl border shadow-lift ${
-            night ? "nocturne border-line-strong bg-mist" : dark ? "border-paper/20 bg-ink" : "border-ink/15 bg-white"
+            "nocturne border-line-strong bg-mist"
           }`}
         >
-          <p className={`text-sm ${night ? "text-ink" : dark ? "text-paper" : "text-ink"}`}>
+          <p className={`text-sm text-ink`}>
             No place matches &ldquo;{value.trim()}&rdquo;.
           </p>
-          <p className={`mt-1 text-[13px] ${night ? "text-stone" : dark ? "text-paper/70" : "text-stone"}`}>
+          <p className={`mt-1 text-[13px] text-stone`}>
             Press Search to look for it in the listings themselves.
           </p>
         </div>,

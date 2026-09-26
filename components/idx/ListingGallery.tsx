@@ -229,7 +229,7 @@ function Lightbox({
       aria-modal="true"
       aria-label={`Photos for ${address}`}
       onKeyDown={onKeyDown}
-      className="rlt-fade-in fixed inset-0 z-[1000000] flex flex-col bg-ink/95"
+      className="daylight rlt-fade-in fixed inset-0 z-[1000000] flex flex-col bg-ink/95"
     >
       {/* Top bar: tabs (left) + counter/close (right). Fixed height, no shift. */}
       <div className="flex shrink-0 items-center justify-between gap-3 px-4 pt-2 text-paper sm:px-6">

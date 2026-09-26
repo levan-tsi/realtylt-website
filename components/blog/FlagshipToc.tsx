@@ -305,7 +305,7 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
               type="button"
               aria-label="Close contents"
               onClick={() => setOpen(false)}
-              className="absolute inset-0 bg-ink/40"
+              className="absolute inset-0 bg-night-deep/60"
             />
             <div className="toc-sheet absolute inset-x-0 bottom-0 max-h-[70vh] overflow-y-auto rounded-t-2xl border-t border-line bg-paper px-4 pb-8 pt-3">
               <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-[#d9dde3]" aria-hidden />

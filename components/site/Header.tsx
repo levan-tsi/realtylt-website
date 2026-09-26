@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { AccountMenu } from "@/components/auth/AccountMenu";
 import { useSaved } from "@/components/auth/SavedProvider";
 import { PRESS } from "@/components/ui/Button";
-import { NAV, SITE, TOP_AREA_GROUPS, areaName, isNightRoute } from "@/lib/site";
+import { NAV, SITE, TOP_AREA_GROUPS, areaName } from "@/lib/site";
 
 /** A plus that becomes a minus — the affordance the owner asked for on the phone menu.
  * Drawn rather than typed so it stays crisp and carries no glyph baggage. */
@@ -73,11 +73,10 @@ export function Header() {
   const flyoutTrigger = useRef<HTMLButtonElement>(null);
   const areasTrigger = useRef<HTMLButtonElement>(null);
   const menuTrigger = useRef<HTMLButtonElement>(null);
-  // Round 53: on the blue-hour routes the header wears the night tokens, and on HOME it lies
+  // Round 53: the header wears the night tokens (every route since round 60), and on HOME it lies
   // over the hero map instead of standing on a white shelf above it, so the first screen is one
   // picture. It scrolls away with the page (not sticky): the map is the page's first statement
   // and a bar pinned across it forever would be the loudest thing on it.
-  const night = isNightRoute(pathname);
   const overHero = pathname === "/";
 
   const closeMobile = () => {
@@ -120,7 +119,7 @@ export function Header() {
   }, [flyout]);
 
   return (
-    <header className={`${night ? "nocturne" : ""} ${overHero ? "absolute inset-x-0 top-0 z-40 bg-transparent" : "bg-paper"}`}>
+    <header className={`nocturne ${overHero ? "absolute inset-x-0 top-0 z-40 bg-transparent" : "bg-paper"}`}>
       {/* ONE utility bar. This used to be two stacked strips — phone/Saved/Sign-in on #f3f5f8,
           then the Fair Housing Notice on #d3d6d9 — so every page opened with two greys close
           enough to read as an accident, and pushed the logo 42px further down. Merged: same
@@ -180,7 +179,7 @@ export function Header() {
         <div className="mx-auto flex max-w-[1250px] items-center justify-between gap-6 px-4 py-4 lg:px-8">
           <Link href="/" aria-label="RealtyLT home" className="shrink-0">
             <Image
-              src={night ? "/logo-realtylt-night.png" : "/logo-realtylt.png"}
+              src="/logo-realtylt-night.png"
               alt="RealtyLT"
               width={300}
               height={62}
@@ -194,7 +193,7 @@ export function Header() {
             type="button"
             // Night pages: without JavaScript this button can do nothing, and the folded link
             // list under the row is the menu there, so it steps aside (globals.css data-js-only).
-            {...(night ? { "data-js-only": "" } : {})}
+            data-js-only=""
             className={`-mr-2 p-2 text-stone hover:text-ink xl:hidden ${PRESS}`}
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
@@ -327,7 +326,7 @@ export function Header() {
                                     onClick={closeFlyout}
                                     className={`block whitespace-nowrap rounded-xl px-3 py-2 text-[13px] text-stone night:text-[15px] hover:bg-ink hover:text-paper ${PRESS}`}
                                   >
-                                    {night ? areaName(c.label) : c.label}
+                                    {areaName(c.label)}
                                   </Link>
                                 </li>
                               ))}
@@ -358,7 +357,7 @@ export function Header() {
               ].map((i) => (
                 <li key={`ns-${i.href}`}>
                   <a href={i.href} className="block py-1 text-stone hover:text-ink">
-                    {night && i.area ? areaName(i.label) : i.label}
+                    {i.area ? areaName(i.label) : i.label}
                   </a>
                 </li>
               ))}
@@ -368,16 +367,12 @@ export function Header() {
           // without JavaScript. Always open they were six rows on a phone and pushed the hero's
           // headline out of the first screen. From xl the main nav above is plain links that
           // work without scripting, so the fold is not repeated there.
-          return night ? (
+          return (
             <nav aria-label="Site links" className="border-b border-line bg-paper xl:hidden">
               <details className="mx-auto max-w-[1250px]">
                 <summary className="cursor-pointer px-4 py-3 text-[15px] font-medium text-ink lg:px-8">Menu</summary>
                 {list}
               </details>
-            </nav>
-          ) : (
-            <nav aria-label="Site links" className="border-b border-line bg-paper">
-              {list}
             </nav>
           );
         })()}
@@ -442,7 +437,7 @@ export function Header() {
                               onClick={closeMobile}
                               className="block py-2 text-sm uppercase text-stone night:text-base night:normal-case hover:text-ink"
                             >
-                              {night ? areaName(c.label) : c.label}
+                              {areaName(c.label)}
                             </Link>
                           </li>
                         ))}
@@ -466,7 +461,7 @@ export function Header() {
                                 onClick={closeMobile}
                                 className="block py-2 text-sm uppercase text-stone night:text-base night:normal-case hover:text-ink"
                               >
-                                {night ? areaName(c.label) : c.label}
+                                {areaName(c.label)}
                               </Link>
                             </li>
                           ))}
