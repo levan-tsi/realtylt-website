@@ -13,7 +13,7 @@ over kept for jumps, reduced motion and a codec the browser lacks (`?film=0` com
 lights are fetched ONCE (round 58's preload never matched; an inline early fetch). vitest 2189,
 tsc clean, the walk p50 6.9 ms, boot 635 / 664 / 268 ms. ~235 commits over main, NOTHING pushed;
 the film's history rewritten before any push so the branch carries the final clips only (an 88 MB
-first encode is not in it). HIS LOOK FIRST at :3102, then his go. Open: the film's weight on a
+first encode is not in it). HIS SEVENTH VERDICT: "definitely way better"; DEPLOYED on his word 2026-09-25: `c07889f` is on main and LIVE at realtylt.com (the site is PUBLIC and indexable; every push is a public deploy; the old "private noindex preview" wording is stale; verified live with a browser probe). NEXT, HIS ORDER: the DARK THEME on every other page (builder 4 running: the foundation, the /search filters, the listing page, the high-traffic pages; builder 5 the rest), the chat bubble in the logo's navy, the who-we-are Call label with the number, the map's credit already at its legal minimum (`c07889f`); pushed only after every page is looked at and scanned for light surfaces under text; then the map round (the first second, the light density, parks and water tints). Open: the film's weight on a
 phone (9.1 MB a full read) and its softness at 2x (masters kept for a re-encode), few lights
 mid-flight, the first move up fades, real iPhone / Safari / Firefox unverified, the disk at 97
 percent. Everything below is history.

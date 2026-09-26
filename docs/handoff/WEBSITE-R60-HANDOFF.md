@@ -29,8 +29,18 @@ Round 59 answered his sixth verdict in full; nothing is pushed. **His look comes
 6. **The MacBook** (2x): the plates are 2880 wide; the film's clip is 1440 and softer than the
    plate on that screen (open item).
 
-If the look passes: his go for the push to `main` deploys the private noindex site. If the film is
-too soft or too heavy: the lossless masters are on disk (§3) and a re-encode at another crf is a
+**DEPLOYED 2026-09-25 (his word "first deploy that two pages"): `c07889f` is on `main` and LIVE at
+realtylt.com.** The Vercel project's aliases are realtylt.com, www.realtylt.com and the vercel.app
+hosts; the site is indexable (no noindex header or meta): it has been the public site since the
+September SEO rounds. Every push to `main` is therefore a PUBLIC deploy, verified first (the older
+"private noindex preview" wording in earlier handoffs and in the `/website` command is stale). Verified
+on realtylt.com after the deploy (`scripts/_scratch-r59-live.mjs`, `_scratch-r59-challenge.mjs`): the
+plates ground at 1440 and 390, the plate revealed and 450 / 257 lights drawn, the credit collapsing to
+the (i), one request for the lights, the first film fetched and ready, CSP silent, no page errors, a
+fresh browser's documents all 200 with no challenge. Vercel's bot mitigation answers NON-browser
+clients (a plain fetch, whatever its user agent) with a 429 challenge page, so link checks against the
+live site must run through a browser, not fetch(); the local crawl is the gate. If the film is too
+soft or too heavy: the lossless masters are on disk (§3) and a re-encode at another crf is a
 30-minute job with no re-recording.
 
 ## 1. What round 59 did
@@ -71,7 +81,7 @@ probe's instant jump; boot at 1440 (medians): the plate on 635 ms, the lights 66
 ## 2. Where everything is
 
 - Worktree `C:\Users\Levan\realtylt-website-r53`, branch `design/futuristic-r53`, about 235 commits
-  over `main`, **NOTHING pushed** (a push deploys the private noindex site; his go).
+  over `main`; `c07889f` pushed and live at realtylt.com on 2026-09-25 (a push is a PUBLIC deploy).
 - The film: `components/home/plates/flight-path.ts` (the path, pure), `flights.gen.ts` (GENERATED:
   never edit, re-run the script), `plate-controller.ts` (the film layer, `filmFormat`, the warming,
   the fallbacks), `plate-motion.ts` (the rules, tested), `public/flights/` (64 clips + 32 matrix
@@ -137,5 +147,5 @@ Black ground, white type, the warm lights the only warmth (whitish-yellow, never
 yellow), no gradients, no new hues, radii 8/12/16/24, body 16 px plus on mobile, tap 24 px plus,
 focus 3:1 plus, reduced motion clean, JS off works (the plate), day pages byte-identical, no em
 dashes in visitor copy, no MLS Grid or media.mlsgrid.com call anywhere, probes block `/api/media/`
-and `/api/lead` by CDP. Launch stays gated: the owner clears `NEXT_PUBLIC_SITE_URL`, points the
-apex, then removes `PRELAUNCH=1`.
+and `/api/lead` by CDP. The site is LIVE and indexable at realtylt.com (the old launch-gate sentence
+about `PRELAUNCH=1` and the apex is history): a push to `main` goes to the public, after the gates.
