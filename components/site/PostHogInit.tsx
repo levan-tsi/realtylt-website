@@ -62,6 +62,11 @@ function init(posthog: typeof import("posthog-js").default) {
     capture_pageleave: true,
     session_recording: {
       maskAllInputs: true,
+      // Round 61, measured: the project's remote config asks the recorder to capture <canvas> at
+      // 3 fps, and it serialised the home page's 2880 x 1800 light canvases with toDataURL(): one
+      // main-thread task of 1.7 s about 1.3 s after every load (scripts/_scratch-r61-longtask.mjs).
+      // The local option is read before the remote one, so replays keep everything but canvases.
+      captureCanvas: { recordCanvas: false },
     },
   });
 }
