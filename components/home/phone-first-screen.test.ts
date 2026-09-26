@@ -25,7 +25,7 @@ describe("the phone's first screen", () => {
     // Whole runs per layout: a span boundary inside "boroughs." moved the laptop's period by a pixel.
     expect(page.match(/<span className="max-lg:hidden">right now, from Poughkeepsie to the five boroughs\.<\/span>/g)).toHaveLength(2);
     expect(page.match(/<span className="lg:hidden">right now\.<\/span>/g)).toHaveLength(2);
-    expect(page).toContain("t-lead rise rise-2 max-w-[30rem] text-ink-soft max-lg:text-[17px] max-lg:[text-wrap:pretty]");
+    expect(page).toContain("t-lead phone-halo rise rise-2 max-w-[30rem] text-ink-soft max-lg:text-[17px] max-lg:[text-wrap:pretty]");
   });
 
   it("ends the phone's first screen 44 px up and leaves the laptop's padding as it was", () => {
@@ -46,9 +46,14 @@ describe("the credit corner on a phone", () => {
     expect(ground).not.toContain("footShade");
   });
 
-  it("shades a phone's words with a short feather", () => {
-    expect(ground).toContain("const PHONE_SCRIM_FEATHER = 56;");
-    expect(ground).toContain("const feather = wide ? SCRIM_FEATHER : PHONE_SCRIM_FEATHER;");
+  // Round 63 (the owner: "make them see-through so the map is fully visible ... even on the top").
+  it("puts no shade behind a phone's words, not even the top one; the words carry the map's label shadow", () => {
+    expect(ground).toContain('const blocks = (wide ? [...document.querySelectorAll<HTMLElement>("[data-quiet]")] : [])');
+    expect(ground).toContain('className="absolute inset-x-0 top-0 h-[230px] max-lg:hidden"');
+    expect(ground).not.toContain("PHONE_SCRIM");
+    const css = fs.readFileSync(path.join(ROOT, "app/globals.css"), "utf8");
+    expect(css.replace(/\s+/g, " ")).toContain(".phone-halo, [data-shot] [data-quiet] { text-shadow: 0 0 1px rgba(0, 0, 0, 1), 0 0 3px rgba(0, 0, 0, 0.95), 0 0 12px rgba(0, 0, 0, 0.8); }");
+    for (const cls of ["t-eyebrow phone-halo", "t-display phone-halo", "search-instrument phone-glass"]) expect(page).toContain(cls);
   });
 });
 
