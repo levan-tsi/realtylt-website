@@ -89,6 +89,28 @@ to it); /connect shows (914) 875-2424 (the owner's order, lib/site.ts); Google's
 - Reduced motion OK; JS off: the plate stands, every page dark, the lists shown.
 - qa-crawl ALL PASS.
 
+## 5. After his first look on his phone (same day)
+
+His words: "much better on the phone", then (1) the search box and the two links had "a big gap" and
+the links were not visible without scrolling, and (2) "the map looks little low quality on the
+phone".
+
+1. The two boxed links are back directly under the search at every width (12 px under it on a phone),
+   the column's foot 44 px up; one render (`HeroLinks`). On the first screen at 390 x 664 / 844 and
+   375 x 667 on one row; at 360 they wrap and still show; at 320 x 568 the second row runs past the
+   first screen (rare size, left).
+2. The quality: the still plates are fine (the served AVIF at 1:1 is indistinguishable from the
+   lossless master; the rendered stop crisp at device pixels). The FILMS were the soft part: the phone
+   clips were H.264 at 780 x 1688 (two thirds of the phone's 1170) at crf 30, and a Queens frame had
+   lost the street grid the plate it lands on shows. All 32 phone clips re-encoded from the lossless
+   masters at 1170 x 2532, crf 28, `-tune animation`, a key frame at each end
+   (`scripts/_scratch-r62-reencode.sh`; the recording script's raw frame records were deleted in the
+   09-25 disk cleanup, so its own encode stage cannot run; `make-flights.mjs` carries the new setting
+   for the next recording). Weight: 1.1 to 1.3 MB a clip, 37 MB for the set (was 18). Cost measured in
+   headless desktop Chrome (software H.264): 1 to 4 frames over 34 ms per phone walk, max 63 ms, where
+   the 780 clips had none; p50 6.9 and p99 7.2 ms unchanged. A phone decodes H.264 in hardware; if a
+   real iPhone stutters, `git revert` the clip commit brings the 780 set back.
+
 ## 4. Open
 
 - A real iPhone (Safari's toolbar changes svh; the pinned stage and the first screen should be looked

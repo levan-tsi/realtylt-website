@@ -16,10 +16,9 @@ const page = fs.readFileSync(path.join(ROOT, "app/page.tsx"), "utf8");
 const ground = fs.readFileSync(path.join(ROOT, "components/home/ml/MlGround.tsx"), "utf8");
 
 describe("the phone's first screen", () => {
-  it("shows the two boxed links once per layout: under the search on a laptop, below the first screen on a phone", () => {
-    expect(page.match(/<HeroLinks \/>/g)).toHaveLength(2);
-    expect(page).toMatch(/className="rise rise-4 mt-5 flex flex-wrap gap-x-3 gap-y-3 max-lg:hidden">\s*<HeroLinks \/>/);
-    expect(page).toMatch(/className="pointer-events-auto relative z-10 flex flex-wrap gap-x-3 gap-y-3 px-4 pb-6 lg:hidden">\s*<HeroLinks \/>/);
+  it("keeps the two boxed links right under the search on a phone too (the owner: below the fold they were not seen)", () => {
+    expect(page.match(/<HeroLinks \/>/g)).toHaveLength(1);
+    expect(page).toMatch(/className="rise rise-4 mt-5 flex flex-wrap gap-x-3 gap-y-3 max-lg:mt-3">\s*<HeroLinks \/>/);
   });
 
   it("keeps the count short on a phone and the laptop's sentence whole", () => {
@@ -29,8 +28,8 @@ describe("the phone's first screen", () => {
     expect(page).toContain("t-lead rise rise-2 max-w-[30rem] text-ink-soft max-lg:text-[17px] max-lg:[text-wrap:pretty]");
   });
 
-  it("ends the phone's first screen 56 px up and leaves the laptop's padding as it was", () => {
-    expect(page).toContain("flex-col justify-between px-4 pb-14 pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40");
+  it("ends the phone's first screen 44 px up and leaves the laptop's padding as it was", () => {
+    expect(page).toContain("flex-col justify-between px-4 pb-11 pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40");
   });
 });
 
