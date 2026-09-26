@@ -1281,6 +1281,15 @@ option:disabled {
 .rise-5 {
   animation-delay: 0.32s;
 }
+/* The home page's hero (round 61, the first second): the same rise on the same curve in 0.45 s.
+   Looked at frame by frame at 1440 and 390 (docs/parity/DESIGN-ROUND61.md §1): it still reads as
+   the words rising into place, in the same order, and the last of them are whole about 0.2 s
+   sooner. Scoped to the home's hero section (the root is .nocturne since round 60, so a night
+   scope would have reached the blog's entrance, which keeps its 0.7 s). Reduced motion collapses
+   it as before (the global block's !important). */
+[data-shot="hero"] .rise {
+  animation-duration: 0.45s;
+}
 
 /* ── Blog article: section-by-section scroll reveal. ArticleSection.tsx only adds
    .will-reveal to sections still below the fold (and never under reduced motion / no JS),
