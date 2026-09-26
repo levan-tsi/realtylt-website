@@ -1,3 +1,19 @@
+# ROUND 61 (THE MAP ROUND) DEPLOYED 2026-09-26 MORNING (`521a60a` on main, live at realtylt.com). START HERE.
+
+Done and live: the first second (the first bundle 1,186 to 857 KB parsed, the HTML 354 to 275 KB,
+the lights drawn ~150 ms sooner, the hero's rise 0.45 s); PostHog replay's canvas capture OFF in code
+(it froze the page 1.7 s after every load; verified gone live); the light density at the close plates
+(the gap eases 14 to 9 px under 24 km, the budget up to 3x: Queens 760 to 1,141, harbour 548 to 862,
+the territory unchanged; hover 50 of 50, taps 30 of 30, calibration 0.00 px). Record:
+`docs/parity/DESIGN-ROUND61.md` §1 to §3. WAITING ON HIM: the parks-and-water tints,
+`docs/design-r61/tints-wide.jpg` / `tints-tall.jpg` (current, A, B); recommendation: A's green
+`#0b120e` for parks and wood, water a step under A (~`#02061a`, not yet rendered) or unchanged; a
+choice means re-rendering the county plates and re-recording the films (~2 h machine time). Open: the
+/ai repo's chat copy is still white; the portal seen through a mock; a real iPhone; the /search place
+box; two SEO 404s (an old blog slug, the old listing URL form).
+
+---
+
 # ROUND 60 CLOSED AND DEPLOYED 2026-09-25 EVENING: THE WHOLE SITE IS DARK, LIVE AT realtylt.com (`8804a61`). NEXT = THE MAP ROUND: READ `docs/handoff/WEBSITE-R61-MAP-ROUND-BRIEF.md` FIRST, THEN `docs/handoff/WEBSITE-R60-HANDOFF.md` (its STATE section) AND `docs/parity/DESIGN-ROUND60.md` §3. START THERE.
 
 His seventh verdict's order ("we're making it dark", "deploy yourself once all the pages are in dark
