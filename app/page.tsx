@@ -219,7 +219,7 @@ export default async function HomePage() {
             <div data-quiet="lead" className="pointer-events-auto mt-10 max-w-[36rem] lg:mt-9">
               {/* On a phone the count is a two-line caption over the search (17 px, the reach of
                   the towns is already the eyebrow's), so the city above it stays open. */}
-              <p className={`t-lead rise rise-2 max-w-[30rem] text-ink-soft max-lg:text-[17px] ${halo}`}>
+              <p className={`t-lead rise rise-2 max-w-[30rem] text-ink-soft max-lg:text-[17px] max-lg:[text-wrap:pretty] ${halo}`}>
                 {activeCount ? (
                   <>
                     <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale{" "}

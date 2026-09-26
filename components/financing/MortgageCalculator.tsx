@@ -271,7 +271,7 @@ export function MortgageCalculator({
             Honest: derived from the editable rate above, not a live "today's rate" feed. */}
         <div className="mt-6 border-t border-line-strong pt-5">
           <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone">Representative rates</p>
-          <ul className="mt-2 divide-y divide-[#d9dde2]">
+          <ul className="mt-2 divide-y divide-line">
             {REP_RATE_TERMS.map((term) => {
               const rate = representativeRate(values.ratePct, term);
               const active = values.termYears === term;
