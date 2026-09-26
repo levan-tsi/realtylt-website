@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AREA_FLIGHT, FLIGHT, SHOTS, type ShotName } from "../night/shots";
-import { CLOSE, HIGH, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, SIGNATURE, TUNED, CITY_GAP, MAX_LIGHTS, budgetFor, cameraFor, densityGap, focusOf, lightGap, pxPerLight, rawCamera } from "./cameras";
+import { CLOSE, HIGH, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, SIGNATURE, TUNED, CITY_GAP, CLOSE_AT, CLOSE_BOOST, CLOSE_FROM, CLOSE_GAP, MAX_LIGHTS, budgetFor, closeBoost, cameraFor, densityGap, focusOf, lightGap, pxPerLight, rawCamera } from "./cameras";
 import { project } from "./camera";
 
 const LAPTOP = 1440 / 900;
@@ -160,23 +160,65 @@ describe("how many homes a shot draws (round 57.2: the count follows the range)"
     }
   });
 
-  it("never more than one light per pxPerLight(range) square pixels of window, nor more than the layer can draw", () => {
+  it("never more than one light per pxPerLight(range) square pixels of window (times the close boost), nor more than the layer can draw", () => {
     for (const r of RANGES) {
-      expect(budgetFor(r, DESK)).toBeLessThanOrEqual(Math.floor((1440 * 900) / pxPerLight(r)));
-      expect(budgetFor(r, MOBILE)).toBeLessThanOrEqual(Math.floor((390 * 844) / pxPerLight(r, true)));
+      expect(budgetFor(r, DESK)).toBeLessThanOrEqual(Math.floor(((1440 * 900) / pxPerLight(r)) * closeBoost(r)));
+      expect(budgetFor(r, MOBILE)).toBeLessThanOrEqual(Math.floor(((390 * 844) / pxPerLight(r, true)) * closeBoost(r)));
       expect(budgetFor(r, DESK)).toBeLessThanOrEqual(MAX_LIGHTS);
     }
   });
 
-  it("keeps the mouse honest: a gap of 12 px at the territory, 14 to 20 at the chapters and cities, 14 for a finger", () => {
+  it("keeps the mouse honest: a gap of 12 px at the territory, 14 at the chapters' heights, 9 at the close plates, 14 for a finger", () => {
     expect(densityGap(145_000)).toBe(12);
     expect(densityGap(300_000)).toBe(12);
-    for (const r of [60_000, 48_000, 35_000, 21_000, 5_000]) expect(densityGap(r)).toBe(CITY_GAP);
+    for (const r of [60_000, 48_000, 35_000, CLOSE_FROM]) expect(densityGap(r)).toBe(CITY_GAP);
+    for (const r of [CLOSE_AT, 10_000, 9_000, 6_000, 3_000]) expect(densityGap(r)).toBe(CLOSE_GAP);
     expect(CITY_GAP).toBeGreaterThanOrEqual(14);
     expect(CITY_GAP).toBeLessThanOrEqual(20);
+    // under the pointer's 14 px reach, never under the brief's floor
+    expect(CLOSE_GAP).toBeGreaterThanOrEqual(8);
+    expect(CLOSE_GAP).toBeLessThan(14);
     for (const r of RANGES) expect(densityGap(r, true)).toBe(14);
-    // between, eased with the range (never a step of more than a pixel per 5 %)
-    for (let r = 130_000; r > 55_000; r /= 1.05) expect(Math.abs(densityGap(r / 1.05) - densityGap(r))).toBeLessThanOrEqual(1);
+    // between, eased with the range (never a step of more than a pixel per 5 %), all the way down
+    for (let r = 130_000; r > 3_000; r /= 1.05) expect(Math.abs(densityGap(r / 1.05) - densityGap(r))).toBeLessThanOrEqual(1);
+  });
+
+  // Round 61, the owner: "if it's going to overload it don't put them, but if we're zooming in at
+  // least put whatever can fit".
+  it("leaves the territory and the tail exactly as approved (round 57.8's count)", () => {
+    const before = (r: number, vp: { width: number; height: number }) => Math.min(MAX_LIGHTS, Math.floor((vp.width * vp.height) / pxPerLight(r, vp.width < 640)));
+    for (const vp of [DESK, MOBILE]) {
+      for (const r of [cameraFor("hero", LAPTOP).range, cameraFor("hero", PHONE).range, cameraFor("region", LAPTOP).range, 300_000, CLOSE_FROM]) {
+        expect(budgetFor(r, vp)).toBe(before(r, vp));
+      }
+    }
+    expect(densityGap(cameraFor("hero", LAPTOP).range)).toBe(12);
+    expect(densityGap(cameraFor("region", LAPTOP).range)).toBe(CITY_GAP);
+  });
+
+  it("gives the close plates (9 to 12 km) three times the count, under the layer's ceiling", () => {
+    for (const r of [12_000, 10_000, 9_000]) {
+      const old = Math.floor((1440 * 900) / pxPerLight(r));
+      expect(budgetFor(r, DESK)).toBe(Math.min(MAX_LIGHTS, Math.floor(((1440 * 900) / pxPerLight(r)) * CLOSE_BOOST)));
+      expect(budgetFor(r, DESK)).toBeGreaterThanOrEqual(2.9 * old);
+      expect(budgetFor(r, DESK)).toBeLessThanOrEqual(MAX_LIGHTS);
+    }
+    // the ramp between: more as the camera comes down, a few percent per 2 % of range at most
+    for (let r = CLOSE_FROM; r > CLOSE_AT; r /= 1.02) expect(closeBoost(r / 1.02) / closeBoost(r)).toBeLessThanOrEqual(1.035);
+    expect(closeBoost(CLOSE_FROM)).toBe(1);
+    expect(closeBoost(CLOSE_AT)).toBeCloseTo(CLOSE_BOOST, 6);
+  });
+
+  it("takes the page's comparison knobs: `?budget=` multiplies the count, `?gap=` sets one gap under 60 km", () => {
+    const b = budgetFor(145_000, DESK);
+    expect(Math.abs(budgetFor(145_000, DESK, 2) - 2 * b)).toBeLessThanOrEqual(1);
+    expect(budgetFor(10_000, DESK, 0.5)).toBeLessThan(budgetFor(10_000, DESK));
+    // nonsense is ignored
+    for (const s of [0, -1, 9, Number.NaN]) expect(budgetFor(10_000, DESK, s)).toBe(budgetFor(10_000, DESK));
+    // `?gap=14` is round 57.8's gap at every height
+    for (const r of [60_000, 21_000, 10_000, 5_000]) expect(densityGap(r, false, 14)).toBe(14);
+    expect(densityGap(145_000, false, 14)).toBe(12);
+    expect(densityGap(10_000, false, 3)).toBe(CLOSE_GAP);
   });
 
   it("keeps lights further apart on screen the higher the camera", () => {

@@ -147,6 +147,8 @@ export class PlateController implements GroundEngine {
       ha?: number;
       core?: readonly number[];
       cityGap?: number;
+      /** Round 61: `?budget=` multiplies the lights' count (cameras.ts budgetFor). */
+      budgetScale?: number;
       /** Round 59: the recorded flights, the film layer's elements, and `?film=0` (films off). */
       films?: FilmManifest;
       film?: PlateFilmEls | null;
@@ -448,7 +450,7 @@ export class PlateController implements GroundEngine {
         next: this.motion.next,
         warmed: [...this.warmed.keys()],
         aspect: this.aspect(),
-        films: { on: !!this.film, format: this.formats.join(",") || null, played: this.fs.played, fades: this.fs.fades, rejected: this.fs.rejected, ready: [...this.films.values()].filter((e) => e.ready).map((e) => e.id), last: this.fs.last, log: this.fs.log },
+        films: { on: !!this.film, format: this.formats.join(",") || null, played: this.fs.played, fades: this.fs.fades, rejected: this.fs.rejected, ready: [...this.films.values()].filter((e) => e.ready).map((e) => e.id), last: this.fs.last, log: this.fs.log, cost: filmCost(this.film?.layer) },
       },
     };
   }
@@ -1055,7 +1057,7 @@ export class PlateController implements GroundEngine {
     const vp = this.box();
     const range = plateRange(plate, s.fit);
     const focus = focusOf(name);
-    const budget = budgetFor(range, vp);
+    const budget = budgetFor(range, vp, this.opts.budgetScale);
     const gap = densityGap(range, isNarrow(vp), this.opts.cityGap);
     const proj = projectAllPlate(s.layer.homesEcef, at, plate.ex, vp, 8, h.county, focus, this.avoid);
     const vpc = { ...vp, fov: plate.cam.fov };
@@ -1077,6 +1079,13 @@ export class PlateController implements GroundEngine {
     }
   }
   private lightsMarked = false;
+}
+
+/** The film layer's per-frame light draw, ms (round 61: the probes read it; the bar is 3 ms mean). */
+function filmCost(L: LightLayer | undefined | null): { frames: number; meanMs: number; maxMs: number } | null {
+  if (!L) return null;
+  const c = L.cost;
+  return { frames: c.frames, meanMs: c.frames ? Math.round((c.totalMs / c.frames) * 1000) / 1000 : 0, maxMs: Math.round(c.maxMs * 100) / 100 };
 }
 
 /** A frame no home is projected with (the planner reads `proj`). */

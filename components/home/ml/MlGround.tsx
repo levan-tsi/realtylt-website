@@ -564,6 +564,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
       ha: num("ha"),
       core: q.get("core")?.split(",").map(Number),
       cityGap: num("gap"),
+      budgetScale: num("budget"),
       onLand: () => {
         labelsPlaced.current = false;
         showTerritoryRef.current();
@@ -701,7 +702,8 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
           // PLATE_ROADS: the whole street grid, the built land a shade up, buildings from zoom 12);
           // `?pstyle=0` shows it in the live style for comparison, `?deep=1` marks the deep render (twice
           // the css size, one zoom deeper: the style keeps its lines the picture's size).
-          plate: pin && q.get("pstyle") !== "0" ? { deep: q.get("deep") === "1" } : undefined,
+          // Round 61: `?tint=a|b`, the parks-and-water comparison (style.ts PLATE_TINTS; renderer only).
+          plate: pin && q.get("pstyle") !== "0" ? { deep: q.get("deep") === "1", tint: q.get("tint") === "a" || q.get("tint") === "b" ? (q.get("tint") as "a" | "b") : null } : undefined,
           // `?elev=` holds the deep render's centre at the plain render's height (controller.ts).
           centerElevation: pin ? num("elev") : undefined,
           onReveal: () => {

@@ -239,8 +239,25 @@ export const MAX_LIGHTS = 2_400;
 export const NARROW = 640;
 export const isNarrow = (viewport?: { width: number }) => !!viewport && viewport.width < NARROW;
 
-export function budgetFor(rangeMetres: number, viewport: { width: number; height: number } = { width: 1440, height: 900 }): number {
-  return Math.min(MAX_LIGHTS, Math.floor((viewport.width * viewport.height) / pxPerLight(rangeMetres, isNarrow(viewport))));
+/** THE CLOSE PLATES (round 61, the owner: "if it's going to overload it don't put them, but if we're
+ * zooming in at least put whatever can fit"). At the chapters, counties and boroughs (the plates sit
+ * at 9 to 12 km) the budget above bound Queens and the harbour at ~770 against 5,000 and 4,400 homes
+ * in view. Below CLOSE_FROM the budget rises as a power of the range to CLOSE_BOOST times at
+ * CLOSE_AT, so the GAP (densityGap's CLOSE_GAP) is what limits there: as many as fit. Above
+ * CLOSE_FROM (the territory at 145 km, the tail at 60) nothing changes: his approved scatter. The
+ * power (1.5) keeps the count a smooth function of the range (a few percent per 2 % of range). */
+export const CLOSE_FROM = 24_000;
+export const CLOSE_AT = 12_000;
+export const CLOSE_BOOST = 3;
+export function closeBoost(rangeMetres: number): number {
+  if (!(rangeMetres < CLOSE_FROM)) return 1;
+  return Math.min(CLOSE_BOOST, Math.pow(CLOSE_FROM / Math.max(1, rangeMetres), Math.log(CLOSE_BOOST) / Math.log(CLOSE_FROM / CLOSE_AT)));
+}
+
+/** `scale` is the page's `?budget=` comparison knob (a multiplier on the whole count, 0.1 to 8). */
+export function budgetFor(rangeMetres: number, viewport: { width: number; height: number } = { width: 1440, height: 900 }, scale = 1): number {
+  const s = scale >= 0.1 && scale <= 8 ? scale : 1;
+  return Math.min(MAX_LIGHTS, Math.floor(((viewport.width * viewport.height) / pxPerLight(rangeMetres, isNarrow(viewport))) * closeBoost(rangeMetres) * s));
 }
 
 /** The least distance, in css px, between two lights on screen (thinning.ts): wide apart at the
@@ -266,11 +283,21 @@ export function lightGap(rangeMetres: number): number {
 export const CITY_GAP = 14;
 export const TERRITORY_GAP = 12;
 export const FINGER_GAP = 14;
-export function densityGap(rangeMetres: number, narrow = false, cityGap = CITY_GAP): number {
+/** Round 61: at the close plates (at or under CLOSE_AT) the lights may stand 9 px apart, easing to
+ * CITY_GAP at CLOSE_FROM in log range. The hit test takes the NEAREST light within its 14 px, so two
+ * lights inside one reach resolve to the one under the pointer (the hover probe, the record §2). */
+export const CLOSE_GAP = 9;
+/** `cityGap` is the page's `?gap=` knob (4 to 30): one gap for every range under 60 km (`?gap=14` is
+ * the gap before round 61 everywhere). */
+export function densityGap(rangeMetres: number, narrow = false, cityGap?: number): number {
   if (narrow) return FINGER_GAP;
-  const city = cityGap >= 8 && cityGap <= 30 ? cityGap : CITY_GAP;
+  // The knob reaches down to 4 px (round 61): the film's draw was measured at three times the lights.
+  const knob = cityGap !== undefined && cityGap >= 4 && cityGap <= 30 ? cityGap : null;
+  const city = knob ?? CITY_GAP;
   const t = Math.min(1, Math.max(0, Math.log(rangeMetres / 60_000) / Math.log(120_000 / 60_000)));
-  return Math.round(city + (TERRITORY_GAP - city) * t);
+  if (t > 0 || knob !== null) return Math.round(city + (TERRITORY_GAP - city) * t);
+  const c = Math.min(1, Math.max(0, Math.log(rangeMetres / CLOSE_AT) / Math.log(CLOSE_FROM / CLOSE_AT)));
+  return Math.round(CLOSE_GAP + (CITY_GAP - CLOSE_GAP) * c);
 }
 
 /** The county an area shot keeps its homes to (the others are not drawn there), or null. */

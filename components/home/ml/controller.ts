@@ -71,7 +71,7 @@ export interface MlStats {
     aspect: "wide" | "tall";
     /** Round 59, the films: the transitions that played as films and as fades, the films decoded
      * ahead, the clip format, the frame the last film reached and its dropped frames. */
-    films?: { on: boolean; format: string | null; played: number; fades: number; rejected: number; ready: string[]; last: { key: string; frames: number; reached: number; drops: number; rate: number } | null; log: { key: string; kind: "film" | "fade"; at: number }[] };
+    films?: { on: boolean; format: string | null; played: number; fades: number; rejected: number; ready: string[]; last: { key: string; frames: number; reached: number; drops: number; rate: number } | null; log: { key: string; kind: "film" | "fade"; at: number }[]; cost?: { frames: number; meanMs: number; maxMs: number } | null };
   };
 }
 
@@ -148,6 +148,8 @@ export class MlController implements GroundEngine {
       ha?: number;
       core?: readonly number[];
       cityGap?: number;
+      /** Round 61: `?budget=` multiplies the lights' count (cameras.ts budgetFor). */
+      budgetScale?: number;
       /** The map's pixel ratio (`?pr=`, round 58: the plate renderer draws a phone plate at 3). The
        * page's own is the screen's, held to 2. */
       pixelRatio?: number;
@@ -568,7 +570,7 @@ export class MlController implements GroundEngine {
     const range = rangeForZoom(cam.zoom, cam.lat, vp.height, cam.fov);
     const name = this.goingTo ?? this.shot ?? "hero";
     const focus = focusOf(name);
-    const budget = budgetFor(range, vp);
+    const budget = budgetFor(range, vp, this.opts.budgetScale);
     const gap = densityGap(range, isNarrow(vp), this.opts.cityGap);
     const f = mlFrame(cam, vp);
     const proj = projectAllMl(layer.homesEcef, f, vp, 8, h.county, focus);
