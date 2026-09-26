@@ -42,7 +42,7 @@
     // white. We're making it dark"). The site's own night tokens, written out because this is a
     // static script outside the stylesheet: the card ground, a raised step, the hairline, the
     // control edge, the moon text, the haze text, and the porchlight blue for the one action
-    // (Send). Ratios measured in lib/chat-panel-night.test.ts: moon on the card 17.6:1, haze 7.1:1,
+    // (Send). Ratios measured in lib/chat-panel-night.test.ts: moon on the card 17.3:1, haze 7.0:1,
     // the dark glyph on porchlight 7.5:1, porchlight on the card 7.2:1, the control edge 3.2:1 (a step over the page's #5e5e5a, which is 3.0 on this card).
     PANEL: '#0d0d0d',
     RAISE: '#1a1a1a',
@@ -758,7 +758,7 @@
         background: ${CONFIG.PANEL};
         flex-shrink: 0;
       }
-      /* The one red, kept for a failure only and dimmed to the night: 9.6:1. */
+      /* The one red, kept for a failure only and dimmed to the night: 10.9:1. */
       .rlt-error {
         background: #1c1010;
         box-shadow: inset 0 0 0 1px #4a2323;

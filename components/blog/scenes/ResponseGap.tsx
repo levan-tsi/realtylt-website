@@ -105,7 +105,7 @@ export function ResponseGap() {
               <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-paper/50">
                 You called
               </p>
-              <p className="mt-1.5 text-4xl font-light leading-none tracking-[-0.02em] text-paper/40 md:mt-2 md:text-5xl">
+              <p className="mt-1.5 text-4xl font-light leading-none tracking-[-0.02em] text-paper/50 md:mt-2 md:text-5xl">
                 9:00 <span className="text-xl tracking-[0.08em] md:text-2xl">am</span>
               </p>
             </div>
