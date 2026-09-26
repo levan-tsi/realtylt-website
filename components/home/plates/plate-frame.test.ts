@@ -95,7 +95,7 @@ describe("the plate's projector", () => {
 });
 
 describe("the film's format (round 59)", () => {
-  const wide = { webm: [1440], mp4: [] as number[] }, tall = { webm: [] as number[], mp4: [780] };
+  const wide = { webm: [1440], mp4: [] as number[] }, tall = { webm: [] as number[], mp4: [1170] };
   it("the first playable format the clip was encoded in, or none", () => {
     expect(filmFormat(wide, ["webm", "mp4"])).toBe("webm");
     expect(filmFormat(wide, ["mp4", "webm"])).toBe("webm");

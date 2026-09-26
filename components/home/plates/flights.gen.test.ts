@@ -51,16 +51,18 @@ describe("the recorded flights", () => {
       }
   });
 
-  it("one codec an aspect: the laptop's VP9 in WebM at 1440, the phone's H.264 in MP4 at 780", () => {
+  it("one codec an aspect: the laptop's VP9 in WebM at 1440, the phone's H.264 in MP4 at its own 1170 (round 62)", () => {
     for (const [a, b] of PAIRS) {
       const f = FLIGHTS[`${a}--${b}`];
       expect(f.wide.webm).toEqual([1440]);
       expect(f.wide.mp4).toEqual([]);
       expect(f.tall.webm).toEqual([]);
-      expect(f.tall.mp4).toEqual([780]);
+      expect(f.tall.mp4).toEqual([1170]);
       // and no file of the other codec is left to be referenced
       expect(fs.existsSync(pub(filmSrc(a, b, "wide", 1440, "mp4")))).toBe(false);
-      expect(fs.existsSync(pub(filmSrc(a, b, "tall", 780, "webm")))).toBe(false);
+      expect(fs.existsSync(pub(filmSrc(a, b, "tall", 1170, "webm")))).toBe(false);
+      // and the soft 780 clips are gone
+      expect(fs.existsSync(pub(filmSrc(a, b, "tall", 780, "mp4")))).toBe(false);
     }
   });
 

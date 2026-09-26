@@ -78,10 +78,16 @@ const DISSOLVE = { lo: 0.3, hi: 0.7 };
  * crashed on pages holding several WebM videos; H.264 decodes in hardware on every phone). The
  * orchestrator's decision (round 59): VP9 crf 46, H.264 crf 30. A clip over CAP is encoded again at
  * a lower quality and the table says so. */
-const ENC = { wide: { vp9: [1440], h264: [] }, tall: { vp9: [], h264: [780] } };
-const CRF = { wide: { vp9: Number(flag("crf", "46")), h264: 30 }, tall: { vp9: 46, h264: Number(flag("crft", "30")) } };
+// Round 62 (the owner on his phone: the map "looks little low quality"): the phone's clip at the
+// phone's own width, 1170 x 2532, crf 28 with `-tune animation` (flat fills and hard lines); the 780
+// clip at crf 30 had lost the street grid the plate it lands on shows (docs/parity/DESIGN-ROUND62.md
+// §5). About 1.3 MB a clip instead of 0.6.
+const ENC = { wide: { vp9: [1440], h264: [] }, tall: { vp9: [], h264: [1170] } };
+const CRF = { wide: { vp9: Number(flag("crf", "46")), h264: 30 }, tall: { vp9: 46, h264: Number(flag("crft", "28")) } };
 const CRF_MAX = { vp9: 52, h264: 34 };
 const CAP = 900 * 1024;
+/** Round 62: the phone's full-width clip is allowed more before its quality is stepped down. */
+const CAP_TALL = 1800 * 1024;
 
 export const PAIRS = SHOTS.slice(0, -1).map((a, i) => [a, SHOTS[i + 1]]);
 const pairName = (a, b) => `${a}--${b}`;
@@ -337,7 +343,7 @@ function encodeOne(master, out, codec, w, h, G, reverse, crf, n) {
   // A key frame at each end: the two frames the plates meet are the clip's sharpest (the joins).
   const keys = ["-force_key_frames", `expr:eq(n,0)+eq(n,${n})`];
   if (codec === "vp9") ffmpeg(["-i", master, "-vf", vf(w, h, G, reverse), ...keys, "-c:v", "libvpx-vp9", "-b:v", "0", "-crf", String(crf), "-row-mt", "1", "-deadline", "good", "-cpu-used", "1", "-g", "600", "-an", ...TAGS, out]);
-  else ffmpeg(["-i", master, "-vf", vf(w, h, G, reverse), ...keys, "-c:v", "libx264", "-crf", String(crf), "-preset", "slow", "-profile:v", "high", "-an", "-movflags", "+faststart", ...TAGS, out]);
+  else ffmpeg(["-i", master, "-vf", vf(w, h, G, reverse), ...keys, "-c:v", "libx264", "-crf", String(crf), "-preset", "slow", "-profile:v", "high", "-tune", "animation", "-an", "-movflags", "+faststart", ...TAGS, out]);
   return fs.statSync(out).size;
 }
 
@@ -358,7 +364,7 @@ async function encode() {
             const out = `${OUT}/${from}--${to}-${aspect}-${w}.${ext}`;
             let crf = CRF[aspect][codec];
             let size = encodeOne(master, out, codec, w, h, G, reverse, crf, rec.n);
-            while (size > CAP && crf < CRF_MAX[codec]) {
+            while (size > (aspect === "tall" ? CAP_TALL : CAP) && crf < CRF_MAX[codec]) {
               crf += 2;
               size = encodeOne(master, out, codec, w, h, G, reverse, crf, rec.n);
             }
