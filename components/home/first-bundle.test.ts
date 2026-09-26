@@ -59,14 +59,10 @@ describe("the home page's first bundle (round 61)", () => {
     expect(css).toMatch(/\[data-shot="hero"\] \.rise \{\s*animation-duration: 0\.45s;\s*\}/);
   });
 
-  it("everything below the hero is its own hydration unit", () => {
-    const page = read("app/page.tsx");
-    const hero = page.indexOf('data-shot="hero"');
-    const open = page.indexOf("<Suspense>");
-    const intake = page.indexOf('<section id="value"');
-    expect(hero).toBeGreaterThan(0);
-    expect(open).toBeGreaterThan(hero);
-    expect(open).toBeLessThan(intake);
-    expect(page.indexOf("</Suspense>")).toBeLessThan(page.indexOf("</Ground>"));
+  it("no Suspense boundary round the page's sections: it streamed them into a hidden div (JS off saw nothing below the hero)", () => {
+    // Tried in round 61 for an earlier hydration of the ground: the prerender put everything below
+    // the hero into `<div hidden id="S:0">` for an inline script to reveal, so with JavaScript off
+    // the rails, the intake and the rest were never shown; the gain was within the noise.
+    expect(read("app/page.tsx")).not.toContain("<Suspense");
   });
 });

@@ -28,7 +28,7 @@ import { TESTIMONIALS } from "@/content/testimonials";
 import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
 import { getActiveSaleCount, isDbConfigured } from "@/lib/idx/db";
 import { OG_DEFAULTS, SITE } from "@/lib/site";
-import { Suspense, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { EARLY_LIGHTS_SCRIPT } from "@/lib/idx/lights-client";
 
 /** THE LIGHTS' EARLY FETCH (round 59): one line of script at the top of the page starts the fetch
@@ -307,11 +307,6 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Round 61: everything below the first screen is its own hydration unit. The server's
-            markup is the same (a Suspense boundary with nothing to wait for renders inline); the
-            client commits the ground and the hero first, so the plate's engine and its lights
-            start without waiting for the rails, the intake and the rest to hydrate. */}
-        <Suspense>
         {/* ── The intake (round 50, owner-directed). One question (buy, sell, or both), then the
             two or three that matter, then a name. The camera has climbed the river to Dutchess,
             where our office is; the scene dims a third so the panel reads over it. */}
@@ -488,7 +483,6 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
-        </Suspense>
       </Ground>
     </div>
   );
