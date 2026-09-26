@@ -15,7 +15,8 @@ const read = (f: string) => fs.readFileSync(path.join(ROOT, f), "utf8");
 describe("sentence case, site-wide", () => {
   it("sets no label in capitals on the night site, and drops the capitals' tracking with them", () => {
     const css = read("app/globals.css").replace(/\s+/g, " ");
-    expect(css).toContain(".nocturne .uppercase { text-transform: none; letter-spacing: normal; }");
+    expect(css).toContain(".nocturne .uppercase { text-transform: none; }");
+    expect(css).toContain('.nocturne .uppercase:not([class*="night:tracking"]) { letter-spacing: normal; }');
     expect(read("app/layout.tsx")).toMatch(/className=\{`[^`]*\bnocturne\b/);
   });
 

@@ -901,6 +901,9 @@ body.rlt-quiz-open .rlt-panel {
    whatever the specificity. */
 .nocturne .uppercase {
   text-transform: none;
+}
+/* ...but not a label that already set its own night tracking (the header's `night:tracking-*`). */
+.nocturne .uppercase:not([class*="night:tracking"]) {
   letter-spacing: normal;
 }
 
