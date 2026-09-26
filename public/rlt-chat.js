@@ -40,6 +40,12 @@
     VOICE_LAUNCH: 'on',
     BRAND_COLOR: '#1557b0',
     BRAND_COLOR_DARK: '#0d47a1',
+    // THE LAUNCHER WEARS THE LOGO'S NAVY (owner's order 2026-09-25: "a dark color blue that our logo
+    // has, the second one"). The logo carries the bright R blue and this navy; the bright one read as
+    // a light-blue dot on the black site. White glyph on it 13.6:1; the hover a step lighter, 10.5:1.
+    // A white hairline at 22% draws the disc's edge on the black ground (the navy alone is 1.5:1).
+    LAUNCHER_COLOR: '#0f2e53',
+    LAUNCHER_HOVER: '#1a4270',
     BRAND_NAME: 'Levan Tsiklauri',
     GREETING: "Hey! Looking for a home in Westchester, the Hudson Valley, or anywhere in the city? I can pull live MLS listings and get you connected with Levan directly. What are you searching for?",
     INITIAL_CHIPS: ['Show me 3-bed homes under $700k', 'Condos under $1M', 'Talk to Levan'],
@@ -406,18 +412,18 @@
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        background: ${CONFIG.BRAND_COLOR};
+        background: ${CONFIG.LAUNCHER_COLOR};
         color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.22), 0 6px 20px rgba(0,0,0,0.55);
         z-index: 999998;
         transition: transform 0.2s, background 0.2s;
         border: none;
       }
-      .rlt-bubble:hover { background: ${CONFIG.BRAND_COLOR}; transform: scale(1.06); }
+      .rlt-bubble:hover { background: ${CONFIG.LAUNCHER_HOVER}; transform: scale(1.06); }
       .rlt-bubble svg { width: 28px; height: 28px; }
       .rlt-bubble-badge {
         position: absolute;
