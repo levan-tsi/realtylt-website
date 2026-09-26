@@ -66,7 +66,7 @@ export default function ThankYouPage() {
           stays a server component and still renders completely with JavaScript off. */}
       <ThankYouConversion />
 
-      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="ty-heading">
+      <section className="daylight relative isolate overflow-hidden bg-ink" aria-labelledby="ty-heading">
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element -- one static art-directed hero */}
           {/* ROUND 38 — THE PHOTOGRAPH THE OWNER ASKED TO HAVE CHANGED.

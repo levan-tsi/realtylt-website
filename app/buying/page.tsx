@@ -49,7 +49,7 @@ export default async function BuyingPage() {
       {/* ── Hero. A house among trees, under the same monochrome grade every other hero on
           the site now carries. The vendor's interior-with-staircase shot had no licence
           record. */}
-      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="buying-hero">
+      <section className="daylight relative isolate overflow-hidden bg-ink" aria-labelledby="buying-hero">
         <div className="absolute inset-0">
           <Image
             src="/images/lifestyle/buying.jpg"
@@ -166,7 +166,7 @@ export default async function BuyingPage() {
       </section>
 
       {/* ── Steps 1–2 — live: black band, light+bold headings, white outline CTAs */}
-      <section className="sec bg-ink text-paper" aria-labelledby="steps-heading">
+      <section className="daylight sec bg-ink text-paper" aria-labelledby="steps-heading">
         <div className="mx-auto max-w-[1250px] space-y-20 px-4 lg:px-8">
           <h2 id="steps-heading" className="sr-only">
             From search to keys
@@ -286,7 +286,7 @@ export default async function BuyingPage() {
       </section>
 
       {/* ── Step 4 — live: black section */}
-      <section className="sec bg-ink text-paper" aria-labelledby="close-heading">
+      <section className="daylight sec bg-ink text-paper" aria-labelledby="close-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <div className="grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
@@ -357,7 +357,7 @@ function SearchLaptop({ listings }: { listings: Listing[] }) {
   return (
     <figure className="mx-auto w-full max-w-xl" aria-label="Our home-search results on a laptop">
       <Laptop>
-        <div className="flex h-full w-full flex-col bg-white">
+        <div className="flex h-full w-full flex-col bg-paper">
           <BrowserChrome url="realtylt.com/search" />
           {/* results grid */}
           <div className="grid flex-1 grid-cols-3 gap-2 p-2.5">
@@ -414,7 +414,7 @@ function AlertsMock({ listings }: { listings: Listing[] }) {
           showing a competitor's demo as though it were ours. */}
       <div
         aria-hidden
-        className="absolute bottom-0 right-0 w-[230px] rounded-2xl border border-line bg-white p-4 text-ink shadow-float sm:w-[260px]"
+        className="nocturne absolute bottom-0 right-0 w-[230px] rounded-2xl border border-line bg-card p-4 text-ink shadow-float sm:w-[260px]"
       >
         <p className="font-display text-[15px] leading-tight text-ink">Save this search</p>
         <p className="mt-1 text-[10px] leading-snug text-stone">
@@ -462,7 +462,7 @@ function TourSchedulerCard({
 
   return (
     <figure
-      className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-line bg-white shadow-float"
+      className="nocturne mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-line bg-card shadow-float"
       aria-label="Example home with tour-scheduling options"
     >
       <div className="relative aspect-[3/2] bg-mist">

@@ -285,7 +285,7 @@ function InlineTourCard({
  * focus-trap / Escape / scroll-lock contract these two sheets rely on. */
 
 const fieldCls =
-  "w-full rounded-xl border border-line-strong bg-white px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40";
+  "w-full rounded-xl border border-line-strong bg-paper px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40";
 
 function SuccessBody({ title, body, onClose }: { title: string; body: string; onClose: () => void }) {
   return (

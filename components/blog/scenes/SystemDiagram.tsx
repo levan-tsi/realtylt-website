@@ -29,10 +29,10 @@ export function SystemDiagram() {
   const alt = `The chain from question to booked call: ${SYSTEM_STEPS.map((s) => s.label).join(", ")}`;
 
   return (
-    <section className="bg-ink py-24 text-paper md:py-32" aria-label="How the assistant is wired">
+    <section className="daylight bg-ink py-24 text-paper md:py-32" aria-label="How the assistant is wired">
       <div className="mx-auto max-w-6xl px-4 lg:px-8">
         <Reveal>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/45">The system</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/60">The system</p>
           <h2 className="mt-6 max-w-2xl text-2xl font-light leading-[1.25] tracking-[-0.015em] md:text-[34px]">
             What it is connected to.
           </h2>

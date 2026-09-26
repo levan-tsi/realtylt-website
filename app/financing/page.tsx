@@ -21,7 +21,7 @@ export default function FinancingPage() {
   return (
     <>
       {/* ── Hero — live: light photo, centered "The Home Loan Process" */}
-      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="financing-hero">
+      <section className="daylight relative isolate overflow-hidden bg-ink" aria-labelledby="financing-hero">
         <div className="absolute inset-0">
           {/* A desk mid-paperwork (CC0). Same subject as the vendor's unlicensed shot, and
               it was already sitting in the licensed library unused. */}
@@ -84,7 +84,7 @@ export default function FinancingPage() {
       </section>
 
       {/* ── Get pre-approval — live: black section, white letter card */}
-      <section className="sec relative isolate overflow-hidden bg-ink text-paper" aria-labelledby="preapproval-heading">
+      <section className="daylight sec relative isolate overflow-hidden bg-ink text-paper" aria-labelledby="preapproval-heading">
         {/* Parallax backdrop — live's lending-stats.jpg at 0.45 (fixed desktop, static mobile /
             reduced-motion). Self-hosted from images.brivityidx.com/.../uploads/219/lending-stats.jpg. */}
         <div
@@ -111,7 +111,7 @@ export default function FinancingPage() {
           </Reveal>
           <Reveal delay={140}>
             {/* Pre-approval letter card — circled check, accented amount, signature, stamp, dots */}
-            <figure className="mx-auto max-w-sm rounded-2xl bg-white p-6 shadow-float sm:p-8" aria-label="Illustrative pre-approval letter">
+            <figure className="nocturne mx-auto max-w-sm rounded-2xl border border-line bg-card p-6 shadow-float sm:p-8" aria-label="Illustrative pre-approval letter">
               <span className="mx-auto grid h-11 w-11 place-items-center rounded-full border-2 border-porchlight text-porchlight-deep" aria-hidden>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m5 12.5 4.5 4.5L19 7" />
@@ -240,7 +240,7 @@ export default function FinancingPage() {
       </section>
 
       {/* ── Closing — live: black section */}
-      <section className="sec relative isolate overflow-hidden bg-ink text-paper" aria-labelledby="closing-heading">
+      <section className="daylight sec relative isolate overflow-hidden bg-ink text-paper" aria-labelledby="closing-heading">
         {/* Parallax backdrop — live's Financing-closing-the-deal.jpg at 0.45 (fixed desktop,
             static mobile / reduced-motion). Self-hosted from uploads/4595/. */}
         <div
@@ -341,14 +341,14 @@ function ApplicationBrowserMock() {
       className="mx-auto w-full max-w-xl"
       aria-label="Illustration of a loan application moving through processing"
     >
-      <div className="overflow-hidden rounded-xl border border-line-strong bg-white shadow-float">
+      <div className="overflow-hidden rounded-xl border border-line-strong bg-paper shadow-float">
         <div className="flex items-center gap-2 border-b border-line bg-mist px-3 py-2.5">
           <span className="flex gap-1.5" aria-hidden>
             <span className="h-2.5 w-2.5 rounded-full bg-[#e0533d]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#e8b13a]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#4caf67]" />
           </span>
-          <span className="ml-1 flex h-5 flex-1 items-center rounded-full bg-white px-2 text-[10px] text-stone">
+          <span className="ml-1 flex h-5 flex-1 items-center rounded-full bg-paper px-2 text-[10px] text-stone">
             realtylt.com/loan-status
           </span>
         </div>

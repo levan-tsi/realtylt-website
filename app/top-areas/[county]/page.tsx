@@ -112,7 +112,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
       />
       {/* ── Hero — counties use their landscape photo; boroughs use a clean flat-ink band
           (no fabricated borough imagery), same title + stats + breadcrumb. */}
-      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="county-hero">
+      <section className="daylight relative isolate overflow-hidden bg-ink" aria-labelledby="county-hero">
         {c && (
           <div className="absolute inset-0">
             <Image src={c.heroImage} alt="" fill priority sizes="100vw" className="object-cover opacity-50" />
@@ -188,7 +188,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
                 </div>
               </Reveal>
               <Reveal delay={120}>
-                <div className="h-full rounded-2xl border border-line bg-white p-7">
+                <div className="h-full rounded-2xl border border-line bg-card p-7">
                   <h3 className="t-title text-ink">Towns we work</h3>
                   <ul className="mt-4 flex flex-wrap gap-2">
                     {c.towns.map((t) => (
@@ -249,7 +249,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
       </section>
 
       {/* ── Area CTA */}
-      <section className="sec-sm bg-ink text-paper" aria-label={`Work with us in ${name}`}>
+      <section className="daylight sec-sm bg-ink text-paper" aria-label={`Work with us in ${name}`}>
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-5 px-4 text-center lg:px-8">
           <p className="t-lead max-w-2xl">
             Buying or selling in {short}? We know these {c ? "roads" : "neighborhoods"}.

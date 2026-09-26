@@ -250,7 +250,7 @@ export async function ListingDetail({ id }: { id: string }) {
       {/* ── Gallery. ListingPhotos owns which photos actually exist (a tile whose media never
           arrives is dropped, never swapped for the "coming soon" artwork beside real photos) and
           keeps the no-JS <details> fallback for scripting-off visitors. */}
-      <section className="bg-ink" aria-label="Photos">
+      <section className="daylight bg-ink" aria-label="Photos">
         <ListingPhotos
           photos={photos}
           guaranteed={gallery.mirrored}
@@ -460,7 +460,7 @@ export async function ListingDetail({ id }: { id: string }) {
                 through — measured 836px tall inside the old wrapper, 1941px as a stretched cell,
                 which silently turned the sticky contact card into an ordinary scrolling one. */}
             <aside className="self-start lg:sticky lg:top-24">
-              <div className="rounded-2xl border border-ink/10 bg-white p-6 shadow-float md:p-7">
+              <div className="rounded-2xl border border-ink/10 bg-card p-6 shadow-float md:p-7">
                 {/* Primary conversion CTAs (live parity): tour + offer, each a bottom-sheet modal. */}
                 <ListingLeadCTAs
                   infoTargetId="listing-info-form"
@@ -549,7 +549,7 @@ export async function ListingDetail({ id }: { id: string }) {
           full-width bands read cramped against the same bands on /buying and /financing. The
           facts section above deliberately keeps its tighter 40px top — it sits directly under
           the photo band and 80px there pushes the price out of the first viewport. */}
-      <section className="sec-sm bg-ink text-paper" aria-labelledby="never-miss-heading">
+      <section className="daylight sec-sm bg-ink text-paper" aria-labelledby="never-miss-heading">
         <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 md:flex-row md:items-center md:justify-between lg:px-8">
           <div>
             <h2 id="never-miss-heading" className="t-h2 text-paper">

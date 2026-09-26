@@ -76,7 +76,7 @@ export function MortgageCalculator({
   return (
     <div className="grid gap-0 overflow-hidden rounded-2xl lg:grid-cols-[1.1fr_1fr]">
       {/* Inputs — live: black panel, underline inputs */}
-      <div className="bg-ink p-6 text-paper md:p-10">
+      <div className="daylight bg-ink p-6 text-paper md:p-10">
         {/* Was `text-2xl font-bold uppercase tracking-wide` — 24px, a size the type scale does
             not contain, in the uppercase-bold-sans voice that already belongs to `.t-eyebrow`.
             A heading is a heading: this panel now speaks the display face like the black band

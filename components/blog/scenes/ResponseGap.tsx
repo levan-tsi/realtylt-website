@@ -37,7 +37,7 @@ import { Reveal } from "@/components/ui/Reveal";
  */
 export function ResponseGap() {
   return (
-    <section className="response-gap relative isolate overflow-hidden bg-ink py-24 text-paper md:py-36">
+    <section className="daylight response-gap relative isolate overflow-hidden bg-ink py-24 text-paper md:py-36">
       <style>{`
         @keyframes gap-draw   { from { transform: scaleX(0); } }
         @keyframes gap-draw-y { from { transform: scaleY(0); } }
@@ -54,7 +54,7 @@ export function ResponseGap() {
 
       <div className="mx-auto max-w-6xl px-4 lg:px-8">
         <Reveal>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/45">The gap</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/60">The gap</p>
         </Reveal>
 
         <Reveal delay={100} className="mt-14 md:mt-20">

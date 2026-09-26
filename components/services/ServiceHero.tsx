@@ -8,7 +8,7 @@ import { aiJourneyHref, type Service } from "@/lib/services";
  * to be information. The figure carries the picture weight instead, and it says something. */
 export function ServiceHero({ service }: { service: Service }) {
   return (
-    <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="service-title">
+    <section className="daylight relative isolate overflow-hidden bg-ink" aria-labelledby="service-title">
       {/* Signal glow — a low-alpha porchlight core echoing the /ai page's luminous hub, so the
           ink hero reads as "one bright point in the dark" rather than a flat black slab. Purely
           decorative, behind content (-z-10 within the section's isolate stacking context). */}

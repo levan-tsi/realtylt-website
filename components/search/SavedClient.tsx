@@ -108,7 +108,7 @@ export function SavedClient({
                 {searches.map((s) => (
                   <li
                     key={s.id}
-                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-ink/10 bg-white px-5 py-4"
+                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-ink/10 bg-card px-5 py-4"
                   >
                     <div>
                       <p className="font-semibold text-ink">{s.label}</p>

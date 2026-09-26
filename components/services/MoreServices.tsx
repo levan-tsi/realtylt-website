@@ -27,9 +27,9 @@ export function MoreServices({ services }: { services: Service[] }) {
           </div>
         </Reveal>
 
-        <ul className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-[#e3e6ea] sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
-            <Reveal key={s.slug} as="li" delay={(i % 3) * 90} className="min-w-0 bg-white">
+            <Reveal key={s.slug} as="li" delay={(i % 3) * 90} className="min-w-0 bg-card">
               <Link
                 href={`/services/${s.slug}`}
                 className="group flex h-full flex-col p-6 transition-colors hover:bg-mist"

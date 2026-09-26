@@ -31,7 +31,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
   // feeling like a trap.
   if (address !== null && intent === null) {
     return (
-      <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-float md:p-7">
+      <div className="nocturne mx-auto w-full max-w-lg rounded-2xl border border-line bg-mist p-6 text-left shadow-float md:p-7">
         {/* The confirmation and the fork share one screen. Live splits them across two, but the
             second screen exists there only to carry the Edit link, and "Use a different address"
             already sits at the bottom of this one. Renders nothing at all unless Google places
@@ -91,7 +91,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
   if (address !== null && intent === "value") {
     const target = `/portal/reports?address=${encodeURIComponent(confirmedAddress ?? address)}`;
     return (
-      <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-float md:p-7">
+      <div className="nocturne mx-auto w-full max-w-lg rounded-2xl border border-line bg-mist p-6 text-left shadow-float md:p-7">
         <h2 className="t-h3 text-ink">Your market report</h2>
         <p className="mt-2 t-small leading-[1.6] text-stone">
           We build it from our own live inventory: active, pending and sold homes near{" "}
@@ -117,7 +117,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
 
   if (address !== null) {
     return (
-      <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-float md:p-7">
+      <div className="nocturne mx-auto w-full max-w-lg rounded-2xl border border-line bg-mist p-6 text-left shadow-float md:p-7">
         <p className="t-small leading-relaxed text-stone">
           Almost there. Tell us where to send the numbers for{" "}
           <strong className="text-ink">{confirmedAddress}</strong>.
@@ -163,7 +163,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
        onto the container. */
     <form
       onSubmit={onFindOut}
-      className="search-instrument mx-auto flex w-full max-w-2xl items-center gap-2 rounded-2xl border border-white bg-white p-2"
+      className="search-instrument nocturne mx-auto flex w-full max-w-2xl items-center gap-2 rounded-2xl border border-line-strong bg-night-deep/70 p-2 backdrop-blur-md transition-colors focus-within:border-stone hover:border-stone/70"
     >
       <label htmlFor="hv-address" className="sr-only">
         Home address
@@ -193,9 +193,9 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
            control — answering a mousedown with nothing (hover 68.9% of its clip, press 0%).
            Same nested-control reasoning as the home hero's SEARCH: not a <Button>, but it
            presses the way the site presses. */
-        className={`shrink-0 rounded-lg bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper hover:bg-ink-soft ${PRESS}`}
+        className={`shrink-0 rounded-lg bg-ink px-6 py-3 text-[15px] font-semibold text-paper hover:bg-ink-soft ${PRESS}`}
       >
-        Find Out
+        Find out
       </button>
     </form>
   );

@@ -183,7 +183,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {...(scenes?.hero ?? {})}
           />
         ) : (
-        <header className="relative isolate overflow-hidden bg-ink text-paper">
+        <header className="daylight relative isolate overflow-hidden bg-ink text-paper">
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0"
@@ -254,6 +254,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   key={`scene-${i}`}
                   id={`scene-${band.scene}`}
                   data-band={sceneBand(band.scene, scenes)}
+                  // Round 60: a scene designed as a dark band keeps the day's tokens (black ground,
+                  // white type), exactly as drawn; inside the night scope its bg-ink would be white.
+                  className={sceneBand(band.scene, scenes) === "dark" ? "daylight" : undefined}
                 >
                   {renderScene(band.scene, scenes)}
                 </div>
@@ -375,7 +378,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         {/* ── Ask us. Suppressed on the flagship, where scene 9 IS the close: two dark
             call-to-action bands in a row cancel each other out. */}
         {!flagship && (
-        <section className="sec-sm bg-ink text-center text-paper">
+        <section className="daylight sec-sm bg-ink text-center text-paper">
           <div className="mx-auto max-w-2xl px-4">
             <p className="text-2xl font-light leading-snug md:text-3xl">
               Have a question this post did not answer?

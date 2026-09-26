@@ -48,7 +48,7 @@ const STAGES: { title: string; body: string; href: string; label: string }[] = [
 export default function PlanPage() {
   return (
     <>
-      <header className="bg-ink py-10 text-paper">
+      <header className="daylight bg-ink py-10 text-paper">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-paper/60">Plan</p>
           <h1 className="t-h1 mt-2">
@@ -119,7 +119,7 @@ export default function PlanPage() {
             </a>
             <a
               href={`sms:${SITE.phoneE164}`}
-              className="rounded-xl border-2 border-ink bg-white px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+              className="rounded-xl border-2 border-ink bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
             >
               Text us
             </a>

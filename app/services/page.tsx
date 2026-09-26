@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 function ServiceCard({ service, large = false }: { service: Service; large?: boolean }) {
   return (
     <article
-      className={`group relative flex h-full flex-col rounded-2xl border border-line bg-white transition-colors hover:border-ink/35 ${
+      className={`group relative flex h-full flex-col rounded-2xl border border-line bg-card transition-colors hover:border-ink/35 ${
         large ? "p-7 md:p-8" : "p-6"
       }`}
     >
@@ -108,7 +108,7 @@ export default function ServicesIndexPage() {
       ))}
 
       {/* ── Hero */}
-      <section className="bg-ink" aria-labelledby="services-title">
+      <section className="daylight bg-ink" aria-labelledby="services-title">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 md:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:px-8">
           <div className="self-center">
             <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-paper/60">
@@ -257,7 +257,7 @@ export default function ServicesIndexPage() {
       </section>
 
       {/* ── Close */}
-      <section className="sec-sm bg-ink text-paper" aria-labelledby="close-heading">
+      <section className="daylight sec-sm bg-ink text-paper" aria-labelledby="close-heading">
         <div className="mx-auto flex max-w-4xl flex-col items-center px-4 text-center lg:px-8">
           <Reveal>
             <h2 id="close-heading" className="t-h2">

@@ -168,7 +168,7 @@ function CmaBody({ report }: { report: PortalReport }) {
           </dl>
         </div>
 
-        <div className="flex flex-col justify-center rounded-2xl bg-ink p-6 text-paper md:p-8">
+        <div className="daylight flex flex-col justify-center rounded-2xl bg-ink p-6 text-paper md:p-8">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-porchlight">Estimated market value</p>
           {estimate.insufficient ? (
             <p className="mt-3 text-lg font-light text-paper/80">

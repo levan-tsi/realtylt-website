@@ -36,7 +36,7 @@ export default async function BlogIndexPage() {
   return (
     <>
       {/* ── Hero — ink editorial band, cohesive with the article pages. */}
-      <header className="relative isolate overflow-hidden bg-ink text-paper">
+      <header className="daylight relative isolate overflow-hidden bg-ink text-paper">
         {/* Cold Spring, looking up the Hudson. The old vendor's stock photograph of a woman
             at a laptop had no licence record and said nothing about this place. */}
         <div aria-hidden className="pointer-events-none absolute inset-0">

@@ -26,7 +26,7 @@ export function BudgetBridge() {
   return (
     <div className="grid overflow-hidden rounded-3xl lg:grid-cols-[1fr_1.15fr]">
       {/* Inputs — the calculator's ink panel, three questions only. */}
-      <div className="bg-ink p-6 text-paper md:p-10">
+      <div className="daylight bg-ink p-6 text-paper md:p-10">
         <h2 className="text-2xl font-bold uppercase tracking-wide">What feels comfortable each month?</h2>
         <p className="mt-3 max-w-md t-small leading-relaxed text-paper/70">
           Start from the payment, not the price. We turn your monthly number into a price range

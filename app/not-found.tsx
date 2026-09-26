@@ -4,7 +4,7 @@ import { SITE } from "@/lib/site";
 
 export default function NotFound() {
   return (
-    <section className="bg-ink py-24 text-paper md:py-36">
+    <section className="daylight bg-ink py-24 text-paper md:py-36">
       <div className="mx-auto max-w-2xl px-4 text-center">
         <p className="text-xs font-bold uppercase tracking-[0.24em] text-paper/60">404</p>
         <h1 className="t-h1 mt-3">

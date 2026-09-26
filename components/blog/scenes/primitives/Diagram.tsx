@@ -51,7 +51,7 @@ export function Diagram({
       <div className="mx-auto max-w-6xl px-4 lg:px-8">
         <Reveal>
           <p
-            className={`text-xs font-bold uppercase tracking-[0.2em] ${dark ? "text-paper/45" : "text-stone"}`}
+            className={`text-xs font-bold uppercase tracking-[0.2em] ${dark ? "text-paper/60" : "text-stone"}`}
           >
             {eyebrow}
           </p>
@@ -162,7 +162,7 @@ export function Diagram({
           </div>
           <p
             className={`mt-5 text-[11px] font-bold uppercase tracking-[0.16em] lg:hidden ${
-              dark ? "text-paper/40" : "text-stone/80"
+              dark ? "text-paper/60" : "text-stone/80"
             }`}
           >
             Scroll to follow the chain

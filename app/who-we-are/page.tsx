@@ -33,7 +33,7 @@ export default function WhoWeArePage() {
       {/* ── Hero. The New Croton Dam, under the same monochrome grade as every other hero.
           What was here was an unlicensed stock photograph of an eight-person office, on the
           page that then explains RealtyLT is one person. */}
-      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="wwa-hero">
+      <section className="daylight relative isolate overflow-hidden bg-ink" aria-labelledby="wwa-hero">
         <div className="absolute inset-0">
           <Image
             src="/images/counties/westchester.jpg"
@@ -74,7 +74,10 @@ export default function WhoWeArePage() {
             </h2>
             <p className="mt-1 text-stone">Investor &amp; REALTOR&reg;</p>
             <div className="mx-auto mt-7 flex w-fit flex-wrap justify-center gap-3">
-              <Button href={SITE.phoneHref}>Call</Button>
+              {/* The number is IN the label (round 60): on a computer a tel: link opens nothing, and
+                  the owner, clicking "Call" on his own profile, saw nothing happen. A desktop click
+                  that dials nothing still hands the visitor the number. */}
+              <Button href={SITE.phoneHref}>Call {SITE.phone}</Button>
               <Button href="/connect">Contact</Button>
             </div>
           </Reveal>
@@ -108,7 +111,7 @@ export default function WhoWeArePage() {
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
             {VALUES.map((v, i) => (
               <Reveal key={v.title} as="li" delay={i * 110}>
-                <div className="h-full rounded-2xl border border-line bg-white p-7">
+                <div className="h-full rounded-2xl border border-line bg-card p-7">
                   <h3 className="t-title text-ink">{v.title}</h3>
                   <p className="t-small mt-3 text-stone">{v.body}</p>
                 </div>

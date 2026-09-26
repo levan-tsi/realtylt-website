@@ -215,15 +215,15 @@ export function Calculator({
 
           {/* ── Result. Dark panel with the house top-edge light catch. */}
           <div
-            className="flex flex-col justify-center rounded-2xl bg-ink p-8 text-paper sm:p-10"
+            className="daylight flex flex-col justify-center rounded-2xl bg-ink p-8 text-paper sm:p-10"
             style={{ boxShadow: "inset 0 1px 0 rgb(255 255 255 / 0.07)" }}
           >
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/55">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/65">
               {resultLabel}
             </p>
             <p className="mt-4 flex flex-wrap items-baseline gap-x-3 text-5xl font-light leading-none tracking-[-0.03em] tabular-nums md:text-6xl">
               {fmt(result.value, result.step.format)}
-              <span className="text-base font-normal tracking-normal text-paper/55">
+              <span className="text-base font-normal tracking-normal text-paper/65">
                 {result.step.unit}
               </span>
             </p>
@@ -242,7 +242,7 @@ export function Calculator({
                   >
                     <dt className="text-sm leading-snug text-paper/70">
                       {r.step.label}
-                      <span className="mt-0.5 block text-xs text-paper/40">{r.factor}</span>
+                      <span className="mt-0.5 block text-xs text-paper/60">{r.factor}</span>
                     </dt>
                     <dd
                       className={`shrink-0 text-right tabular-nums ${
@@ -250,7 +250,7 @@ export function Calculator({
                       }`}
                     >
                       {fmt(r.value, r.step.format)}
-                      <span className="ml-1.5 text-xs font-normal text-paper/40">
+                      <span className="ml-1.5 text-xs font-normal text-paper/60">
                         {r.step.unit}
                       </span>
                     </dd>

@@ -36,10 +36,10 @@ export function Film({
   ariaLabel: string;
 }) {
   return (
-    <section className="bg-ink py-24 text-paper md:py-32" aria-label={ariaLabel}>
+    <section className="daylight bg-ink py-24 text-paper md:py-32" aria-label={ariaLabel}>
       <div className="mx-auto max-w-6xl px-4 lg:px-8">
         <Reveal>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/45">{eyebrow}</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/60">{eyebrow}</p>
           <h2 className="mt-6 max-w-2xl text-2xl font-light leading-[1.25] tracking-[-0.015em] md:text-[34px]">
             {heading}
           </h2>

@@ -62,7 +62,7 @@ export function ColdOpen({
   return (
     <header
       data-band="dark"
-      className="cold-open relative isolate flex min-h-[82vh] items-center overflow-hidden bg-ink text-paper md:min-h-[88vh]"
+      className="daylight cold-open relative isolate flex min-h-[82vh] items-center overflow-hidden bg-ink text-paper md:min-h-[88vh]"
     >
       <style>{`
         @keyframes cold-open-breath {

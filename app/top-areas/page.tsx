@@ -18,7 +18,7 @@ export default function TopAreasPage() {
   return (
     <>
       {/* ── Hero — thin photo band, centered light+bold title */}
-      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="areas-hero">
+      <section className="daylight relative isolate overflow-hidden bg-ink" aria-labelledby="areas-hero">
         <div className="absolute inset-0">
           <Image
             src="/images/counties/dutchess.jpg"
@@ -53,7 +53,7 @@ export default function TopAreasPage() {
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {COUNTY_CONTENT.map((c, i) => (
               <Reveal key={c.slug} as="li" delay={(i % 3) * 110}>
-                <article className="lift group relative h-full overflow-hidden rounded-2xl border border-line bg-white">
+                <article className="lift group relative h-full overflow-hidden rounded-2xl border border-line bg-card">
                   <Link href={`/top-areas/${c.slug}`} className="absolute inset-0 z-10"><span className="sr-only">{`Explore ${c.name}`}</span></Link>
                   <div className="photo-zoom relative aspect-[16/9] overflow-hidden">
                     <Image
@@ -95,11 +95,11 @@ export default function TopAreasPage() {
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {BOROUGH_CONTENT.map((b, i) => (
               <Reveal key={b.slug} as="li" delay={(i % 3) * 110}>
-                <article className="lift group relative h-full overflow-hidden rounded-2xl border border-line bg-white">
+                <article className="lift group relative h-full overflow-hidden rounded-2xl border border-line bg-card">
                   <Link href={`/top-areas/${b.slug}`} className="absolute inset-0 z-10"><span className="sr-only">{`Explore ${b.name}`}</span></Link>
-                  <div className="flex items-center justify-between bg-ink px-5 py-4">
-                    <h3 className="t-title text-paper">{b.name}</h3>
-                    <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-paper/60">New York City</span>
+                  <div className="flex items-center justify-between border-b border-line bg-mist px-5 py-4">
+                    <h3 className="t-title text-ink">{b.name}</h3>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-stone">New York City</span>
                   </div>
                   <div className="p-5">
                     <p className="t-small leading-relaxed text-stone">{b.tagline}</p>

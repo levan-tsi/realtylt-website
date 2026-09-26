@@ -151,8 +151,8 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
               <path d="M4 6h10M4 12h16M4 18h12" strokeLinecap="round" />
             </svg>
             <span className="min-w-0 truncate">
-              <span className="hidden text-paper/55 min-[560px]:inline">On this page</span>
-              <span className="mx-1.5 hidden text-paper/30 min-[560px]:inline">/</span>
+              <span className="hidden text-paper/65 min-[560px]:inline">On this page</span>
+              <span aria-hidden className="mx-1.5 hidden text-paper/40 min-[560px]:inline">/</span>
               <span className="font-bold">{activeText}</span>
             </span>
           </button>

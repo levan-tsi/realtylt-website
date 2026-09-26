@@ -79,7 +79,7 @@ export function StatBars({
       <div className="mx-auto max-w-6xl px-4 lg:px-8">
         <Reveal>
           <p
-            className={`text-xs font-bold uppercase tracking-[0.2em] ${dark ? "text-paper/45" : "text-stone"}`}
+            className={`text-xs font-bold uppercase tracking-[0.2em] ${dark ? "text-paper/60" : "text-stone"}`}
           >
             {eyebrow}
           </p>

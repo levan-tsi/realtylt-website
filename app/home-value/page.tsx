@@ -41,7 +41,7 @@ export default async function HomeValuePage({
     <>
       {/* ── Hero + form — live: near-full-viewport BRIGHT dusk photo (luminance ~88, no dark
           wash), bold headline 64px w700 in Montserrat (matched exactly, see the font import). */}
-      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="hv-hero">
+      <section className="daylight relative isolate overflow-hidden bg-ink" aria-labelledby="hv-hero">
         <div className="absolute inset-0">
           <Image
             src="/images/lifestyle/selling.jpg"
@@ -89,7 +89,7 @@ export default async function HomeValuePage({
           <ol className="mt-12 grid gap-6 md:grid-cols-3">
             {STEPS.map((s, i) => (
               <Reveal key={s.title} as="li" delay={i * 120}>
-                <div className="h-full rounded-2xl border border-line bg-white p-7">
+                <div className="h-full rounded-2xl border border-line bg-card p-7">
                   <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone">Step {i + 1} of 3</p>
                   <h3 className="t-title mt-2 text-ink">{s.title}</h3>
                   <p className="t-small mt-3 text-stone">{s.body}</p>

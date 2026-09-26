@@ -87,7 +87,7 @@ export default async function SellingPage() {
   return (
     <>
       {/* ── Hero: headline + 60-second form card */}
-      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="selling-hero">
+      <section className="daylight relative isolate overflow-hidden bg-ink" aria-labelledby="selling-hero">
         <div className="absolute inset-0 overflow-hidden">
           <Image
             src="/images/hero/hudson-twilight.jpg"
@@ -238,7 +238,7 @@ export default async function SellingPage() {
 
           {/* No-pressure banner — live: black band */}
           <Reveal className="mt-12">
-            <aside className="bg-ink px-6 py-8 text-center text-paper md:px-12">
+            <aside className="daylight bg-ink px-6 py-8 text-center text-paper md:px-12">
               <p className="text-lg font-bold uppercase tracking-wide">
                 Not sure which option is best? We&rsquo;ll show you both, no pressure.
               </p>
@@ -280,7 +280,7 @@ export default async function SellingPage() {
       </section>
 
       {/* ── Pricing strategy (15 comps) */}
-      <section className="sec bg-ink text-paper" aria-labelledby="pricing-heading">
+      <section className="daylight sec bg-ink text-paper" aria-labelledby="pricing-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading dark as="h2">
@@ -306,7 +306,7 @@ export default async function SellingPage() {
           {/* Comparable Property Statistics — live: WHITE card w/ blue bars + suggested range */}
           <Reveal delay={150}>
             <figure
-              className="rounded-2xl bg-white p-6 text-ink shadow-float md:p-8"
+              className="nocturne rounded-2xl border border-line bg-card p-6 text-ink shadow-float md:p-8"
               aria-label="Comparable property statistics: 5 active, 5 pending, 5 sold, with a suggested list-price range"
             >
               <figcaption className="flex items-baseline justify-between border-b border-line pb-4">
@@ -437,7 +437,7 @@ export default async function SellingPage() {
       </section>
 
       {/* ── Stay in the loop — text left, seller-portal laptop right */}
-      <section className="sec bg-ink text-paper" aria-labelledby="loop-heading">
+      <section className="daylight sec bg-ink text-paper" aria-labelledby="loop-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading dark as="h2">
@@ -461,7 +461,7 @@ export default async function SellingPage() {
           </Reveal>
           <Reveal delay={150}>
             <Laptop tone="dark">
-              <div className="flex h-full w-full flex-col bg-[#0d1319] text-paper">
+              <div className="daylight flex h-full w-full flex-col bg-[#0d1319] text-paper">
                 <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
                   <span className="text-xs font-bold tracking-wide">Your Seller Portal</span>
                   <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-porchlight">
@@ -529,7 +529,7 @@ function PathCard({
   cta: string;
 }) {
   return (
-    <article className="relative mt-8 flex h-full flex-col rounded-2xl border-2 border-ink bg-white">
+    <article className="relative mt-8 flex h-full flex-col rounded-2xl border border-line-strong bg-card">
       {/* Floating badge, centred on the card's top edge. Not aria-hidden any more: it carries
           the one word that distinguishes the two paths, so a screen reader needs it. */}
       <span className="absolute -top-[18px] left-1/2 z-10 inline-flex -translate-x-1/2 items-center whitespace-nowrap rounded-full bg-ink px-5 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-paper shadow-lift">
@@ -537,10 +537,10 @@ function PathCard({
       </span>
       {/* black header block — live: title, subtitle, then the key-benefit banner over a
           translucent top border, all on black */}
-      <div className="rounded-t-2xl bg-ink px-6 pb-6 pt-11 text-center">
-        <h3 className="text-xl font-bold uppercase tracking-wide text-paper">{title}</h3>
-        <p className="t-small mx-auto mt-2 max-w-xs text-paper/70">{subtitle}</p>
-        <p className="mt-5 border-t border-white/30 pt-4 text-sm font-bold uppercase tracking-wide text-paper">
+      <div className="rounded-t-2xl bg-mist px-6 pb-6 pt-11 text-center">
+        <h3 className="text-xl font-bold uppercase tracking-wide text-ink">{title}</h3>
+        <p className="t-small mx-auto mt-2 max-w-xs text-stone">{subtitle}</p>
+        <p className="mt-5 border-t border-line pt-4 text-sm font-bold uppercase tracking-wide text-ink">
           {banner}
         </p>
       </div>
@@ -590,7 +590,7 @@ function DeviceCollage({ listings }: { listings: Listing[] }) {
   return (
     <figure className="relative mx-auto max-w-xl pb-10 pr-6 sm:pb-6 sm:pr-10" aria-label="Your listing marketed across every device and portal">
       <Laptop>
-        <div className="flex h-full w-full flex-col bg-white">
+        <div className="flex h-full w-full flex-col bg-paper">
           <BrowserChrome url="realtylt.com/search" />
           {/* results grid */}
           <div className="grid flex-1 grid-cols-3 gap-2 p-2.5">

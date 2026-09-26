@@ -16,7 +16,7 @@ export default function ReviewsPage() {
   return (
     <>
       {/* ── Hero */}
-      <section className="sec-sm bg-ink text-paper" aria-labelledby="reviews-hero">
+      <section className="daylight sec-sm bg-ink text-paper" aria-labelledby="reviews-hero">
         <div className="mx-auto max-w-7xl px-4 text-center lg:px-8">
           <h1 id="reviews-hero" className="t-h1 mx-auto max-w-2xl">
             What Our <strong>Clients Say</strong>

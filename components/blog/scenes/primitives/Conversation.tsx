@@ -65,7 +65,7 @@ export function Conversation({
       <div className="mx-auto max-w-6xl px-4 lg:px-8">
         <Reveal>
           <p
-            className={`text-xs font-bold uppercase tracking-[0.2em] ${dark ? "text-paper/45" : "text-stone"}`}
+            className={`text-xs font-bold uppercase tracking-[0.2em] ${dark ? "text-paper/60" : "text-stone"}`}
           >
             {eyebrow}
           </p>
@@ -85,7 +85,7 @@ export function Conversation({
           {/* ── What they experienced */}
           <Reveal>
             <p
-              className={`text-[11px] font-bold uppercase tracking-[0.18em] ${dark ? "text-paper/45" : "text-stone"}`}
+              className={`text-[11px] font-bold uppercase tracking-[0.18em] ${dark ? "text-paper/60" : "text-stone"}`}
             >
               {turnsHeading}
             </p>
@@ -155,7 +155,7 @@ export function Conversation({
                           {t.text}
                         </p>
                         <p
-                          className={`mt-1.5 px-1 text-[11px] uppercase tracking-[0.12em] ${dark ? "text-paper/45" : "text-stone"}`}
+                          className={`mt-1.5 px-1 text-[11px] uppercase tracking-[0.12em] ${dark ? "text-paper/60" : "text-stone"}`}
                         >
                           {them ? themLabel : usLabel} / {t.at}
                         </p>
@@ -170,7 +170,7 @@ export function Conversation({
           {/* ── What fired behind it */}
           <Reveal delay={140}>
             <p
-              className={`text-[11px] font-bold uppercase tracking-[0.18em] ${dark ? "text-paper/45" : "text-stone"}`}
+              className={`text-[11px] font-bold uppercase tracking-[0.18em] ${dark ? "text-paper/60" : "text-stone"}`}
             >
               {eventsHeading}
             </p>
@@ -209,7 +209,7 @@ export function Conversation({
                       </div>
                       <span
                         className={`ml-auto shrink-0 text-[11px] uppercase tracking-[0.12em] tabular-nums ${
-                          dark ? "text-paper/45" : "text-stone"
+                          dark ? "text-paper/60" : "text-stone"
                         }`}
                       >
                         {e.at}

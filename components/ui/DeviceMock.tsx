@@ -51,9 +51,9 @@ export function Phone({
       className={`bg-graphite shadow-float ${className}`}
       style={{ width, borderRadius: radius, borderWidth: bezel, borderStyle: "solid", borderColor: "var(--color-graphite)", ...style }}
     >
-      <div className="overflow-hidden bg-white" style={{ borderRadius: screenRadius }}>
+      <div className="nocturne overflow-hidden bg-paper" style={{ borderRadius: screenRadius }}>
         {speaker && (
-          <div className="flex items-center justify-center bg-white" style={{ height: Math.round(width * 0.09) }}>
+          <div className="flex items-center justify-center bg-paper" style={{ height: Math.round(width * 0.09) }}>
             <span className="h-1.5 rounded-full bg-line" style={{ width: Math.round(width * 0.24) }} aria-hidden />
           </div>
         )}
@@ -90,7 +90,7 @@ export function Laptop({
         }}
       >
         <div
-          className="relative aspect-[16/10] overflow-hidden bg-black"
+          className="nocturne relative aspect-[16/10] overflow-hidden bg-black"
           style={{ borderRadius: LAPTOP.screenRadius }}
         >
           {children}
@@ -118,7 +118,7 @@ export function BrowserChrome({ url }: { url: string }) {
         <span className="h-2.5 w-2.5 rounded-full bg-[#e8b13a]" />
         <span className="h-2.5 w-2.5 rounded-full bg-[#4caf67]" />
       </span>
-      <span className="ml-1 flex h-5 flex-1 items-center rounded-[4px] bg-white px-2 text-[10px] text-stone">
+      <span className="ml-1 flex h-5 flex-1 items-center rounded-[4px] bg-paper px-2 text-[10px] text-stone">
         {url}
       </span>
     </div>

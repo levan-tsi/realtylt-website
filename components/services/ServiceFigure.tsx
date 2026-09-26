@@ -59,7 +59,7 @@ export function ServiceFigure({ figure }: { figure: Figure }) {
                   : "ml-auto max-w-[88%] rounded-2xl rounded-tr-lg border border-paper/15 px-4 py-3"
               }
             >
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/45">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/60">
                 {t.who === "ai" ? "Assistant" : "Visitor"}
               </p>
               <p
@@ -103,7 +103,7 @@ export function ServiceFigure({ figure }: { figure: Figure }) {
   if (figure.kind === "records") {
     return (
       <Shell caption={figure.caption} footnote={figure.footnote}>
-        <div className="flex items-baseline justify-between gap-4 pb-3 text-[10px] font-bold uppercase tracking-[0.16em] text-paper/40">
+        <div className="flex items-baseline justify-between gap-4 pb-3 text-[10px] font-bold uppercase tracking-[0.16em] text-paper/60">
           <span>{figure.headers.before}</span>
           <span className="text-right">{figure.headers.after}</span>
         </div>
