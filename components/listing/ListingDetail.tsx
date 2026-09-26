@@ -556,7 +556,8 @@ export async function ListingDetail({ id }: { id: string }) {
               Never miss a property
             </h2>
             <p className="mt-2 text-paper/75">
-              Be the first to know when a {county?.name ?? "local"} {isRental ? "rental" : "home"} hits the market.
+              {/* "an Orange County home", "an Ulster County rental" (round 62: it read "a Orange"). */}
+              Be the first to know when {/^[AEIOU]/i.test(county?.name ?? "local") ? "an" : "a"} {county?.name ?? "local"} {isRental ? "rental" : "home"} hits the market.
             </p>
           </div>
           <Link

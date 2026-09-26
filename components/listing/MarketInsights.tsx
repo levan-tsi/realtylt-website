@@ -53,11 +53,13 @@ export function MarketInsights({
           <>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {cards.map((c) => (
-                <div key={c.title} className="flex flex-col items-center rounded-2xl border border-ink/12 bg-card px-5 py-8 text-center">
+                // Round 62: on a phone each card is one row (the label left, the number right), so the
+                // three facts take a third of the screen instead of all of it.
+                <div key={c.title} className="flex flex-col items-center rounded-2xl border border-ink/12 bg-card px-5 py-8 text-center max-sm:grid max-sm:grid-cols-[1fr_auto] max-sm:items-center max-sm:gap-x-4 max-sm:py-4 max-sm:text-left">
                   <p className="text-sm font-bold text-ink">{c.title}</p>
                   <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-stone">{c.sub}</p>
-                  <p className="mt-5 font-mono text-3xl font-semibold tracking-tight text-ink md:text-4xl">{c.value}</p>
-                  <p className="mt-3 text-[11px] uppercase tracking-[0.14em] text-stone">{stamp}</p>
+                  <p className="mt-5 font-mono text-3xl font-semibold tracking-tight text-ink max-sm:col-start-2 max-sm:row-span-3 max-sm:row-start-1 max-sm:mt-0 max-sm:text-[26px] md:text-4xl">{c.value}</p>
+                  <p className="mt-3 text-[11px] uppercase tracking-[0.14em] text-stone max-sm:mt-1">{stamp}</p>
                 </div>
               ))}
             </div>
