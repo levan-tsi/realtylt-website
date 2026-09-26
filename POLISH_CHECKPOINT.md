@@ -1,4 +1,24 @@
-# ROUND 59 CLOSED 2026-09-25: YELLOW LIGHTS, COUNTY PLATES WITH DEFINITION, THE FLIGHT AS A FILM. READ `docs/handoff/WEBSITE-R60-HANDOFF.md` §0 FIRST. START THERE.
+# ROUND 60 CLOSED AND DEPLOYED 2026-09-25 EVENING: THE WHOLE SITE IS DARK, LIVE AT realtylt.com (`8804a61`). NEXT = THE MAP ROUND: READ `docs/handoff/WEBSITE-R61-MAP-ROUND-BRIEF.md` FIRST, THEN `docs/handoff/WEBSITE-R60-HANDOFF.md` (its STATE section) AND `docs/parity/DESIGN-ROUND60.md` §3. START THERE.
+
+His seventh verdict's order ("we're making it dark", "deploy yourself once all the pages are in dark
+mode and everything works properly and white background is not covering text"): builder 4 made the
+root the night scope (`color-scheme: dark`, day values under `.daylight` and print), /search's
+filters pills with the Bed list dark, the chat launcher the logo's navy, every Call label with the
+number; builder 5 finished it (the chat PANEL dark, twelve dialogs opened and clean, the portal, the
+blog's light scenes, the routes, the rail card's own ground, one weight per heading). The
+orchestrator's gate on a rebuild from HEAD: tsc clean, vitest 2236, the crawler green, the
+light-surface scan clean (white primary buttons with dark text only), the contrast walker clean of
+ours, JS off dark, the home page's calibration 0.00 px and hover 50 of 50; then the push
+(`c07889f..8804a61`), then the live verification on realtylt.com (the dark root, the home page's
+engine at both widths, the pages at 390 looked at, no runtime errors). The map credit is at its
+legal minimum (five seconds then an (i); phones the (i) only; nothing in the footer). realtylt.com is
+PUBLIC: every push is a public deploy after the gates. Open: the /ai repo's chat copy, the portal
+seen through a mock, real iPhone / Safari / Firefox, the /search place box, Google's white calendar,
+two SEO 404 items. Everything below is history.
+
+---
+
+# ROUND 59 CLOSED 2026-09-25: YELLOW LIGHTS, COUNTY PLATES WITH DEFINITION, THE FLIGHT AS A FILM (deployed as `c07889f`).
 
 His sixth verdict answered in full (record `docs/parity/DESIGN-ROUND59.md`, a Fable orchestrator
 with three Opus builders one at a time, each verified on the running build): (1) the lights are

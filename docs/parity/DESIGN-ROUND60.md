@@ -349,3 +349,49 @@ The /search place box (pinned geometry, the orchestrator's call) and Google's wh
   data shapes are the real ones, the rows are made up.
 - The listing cards' "Coming Soon" / "New" status chips stay white on photographs (a white pill on a
   photograph is white by nature, §1.1).
+
+## §3 The orchestrator's verification of §2, the deploy, and the close (2026-09-25 evening)
+
+**Verified on a rebuild from HEAD `8804a61`, nothing else running.** tsc clean; vitest 2236 passed, 0
+failed (2189 at the round's start, 2218 after builder 4). The crawler: 250 internal links resolve, no
+overflow at 390, the county pages in-county. The light-surface scan over the routes at 1440 and 390:
+every hit a white primary button with dark text at 18:1 or better (the home page's cards no longer
+appear: their own ground is the night card now). Builder 5's dialogs probe, twelve dialogs and
+overlays opened for real at both widths (sign-in, the mobile menu, the Top areas flyout, save-search,
+the place suggestions, the plan quiz twice, the tour and offer sheets, the /connect form, the gallery,
+the qualifying wizard to its fields): light 0, contrast 0, no control under 16 px, the one hit the
+selected "Today" day chip (moon with dark text at 18.2:1, the site's active chip), the lead posts
+answered locally and none reaching the CRM. The contrast walker at 1440 over 20 routes: 4 under the
+floor, all Google's own attribution inside the /search map. JavaScript off: dark on every route.
+The home page: calibration 0.00 px mean, p95 and max at the territory (443 common lights) and Queens
+(754); hover at Queens 50 of 50 alone on the warm server (the first run straight after the restart
+read 45 of 50 with 5 none, as it did for both builders: a cold server misses the probe's 90 ms
+window; the second run is the one that counts). The chat panel opened on the final build at 1440 and
+390 and looked at: the night ground with a hairline edge, moon text, the visitor's bubble a raised
+step, the send control the porchlight blue, the input 16 px. The sheets under `docs/design-r60/`
+looked at: the chat panel before and after, the dialogs, the portal (its white header bands and the
+white stat cards with white figures gone), the listing skeleton, the home rail.
+
+**Deployed.** `git push origin HEAD:main` at 22:25:59 on the owner's standing word ("deploy yourself
+once all the pages are in dark mode and everything works properly and white background is not
+covering text"): `c07889f..8804a61`, Vercel deployment `dpl_AY9Kpun5pCscBbSijaY1YRLiHv4o`, READY,
+aliases realtylt.com, www.realtylt.com and the vercel.app hosts. **Verified live on realtylt.com**
+(a real browser; plain fetches are challenged by Vercel's bot mitigation): the root carries the
+night scope with `color-scheme: dark`, the body near black; the home page at 1440 and 390: the plates
+ground, the plate revealed (981 and 749 ms over the network), 450 and 257 lights drawn, the credit
+collapsed to the (i), the lights fetched once, the first film fetched and ready, CSP silent, no page
+errors; the live pages at 390 looked at: /search with its pills, /buying's dark photo hero with the
+number and the white primary button, /who-we-are with "Call (914) 506-5884", the home page's footer
+without a map credit, with the Equal Housing and REALTOR marks and the navy chat launcher. Vercel
+runtime errors in the deploy's first half hour: none.
+
+**Open, said plainly.** The /ai repo's copy of `rlt-chat.js` still opens the white panel (another
+repo). The portal was seen through a local Supabase mock, not a real signed-in account. Real iPhone,
+Safari and Firefox are unverified (`scripts/_scratch-r60-engines.mjs` runs the home page and /search
+on Playwright's WebKit and Firefox as an iPhone 13 and a laptop; the owner paused it; his iPhone on
+realtylt.com is the truest test, and a Vercel preview of a branch can serve the next round before it
+goes public). The /search place box stays taller than the pills (the pinned instrument). Google's
+calendar on /connect is white by Google's hand. Status chips on listing photos stay white on the
+photo by design. Two SEO items from the live 404s: an old blog slug
+(`/blog/when-to-sell-house-hudson-valley`) and the old listing URL form for homes that left the
+market. Next: the map round, `docs/handoff/WEBSITE-R61-MAP-ROUND-BRIEF.md`.

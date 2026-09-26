@@ -2,6 +2,13 @@
 
 ## STATE AT 2026-09-25 EVENING (read this before §0 if you are picking the session up)
 
+- **UPDATE 22:30: ROUND 60 IS CLOSED AND DEPLOYED.** Builder 5 finished (`2bcd899` to `8804a61`), the
+  orchestrator's gate passed on a rebuild from HEAD (vitest 2236, the crawler, the light scan, the
+  dialogs, the contrast walker, JS off, calibration 0.00 px, hover 50 of 50), `8804a61` was pushed
+  to `main` at 22:25:59 and verified LIVE at realtylt.com (`docs/parity/DESIGN-ROUND60.md` §3).
+  **The next session is the MAP ROUND: `docs/handoff/WEBSITE-R61-MAP-ROUND-BRIEF.md`.** The
+  paragraphs below describe the state before that push and stay for the record.
+
 - **LIVE**: `c07889f` on `main` at realtylt.com (public): round 59 (yellow lights, county plates,
   the film), the lights fetched once, the map credit at its legal minimum (five seconds, then the
   (i); phones the (i) only; nothing in the footer). Verified live with a browser probe.
