@@ -128,7 +128,7 @@ export function Header() {
           in the mobile menu, in the footer and on every CTA on the page; the Fair Housing
           Notice is a legal link and stays at every width.
           min-h + inline-flex give each link a >=24px pointer target (WCAG 2.5.8). */}
-      <div className={overHero ? "bg-transparent" : "bg-mist"}>
+      <div className={overHero ? "phone-halo bg-transparent" : "bg-mist"}>
         <div className="mx-auto flex h-10 max-w-[1250px] items-center justify-between gap-4 px-4 lg:px-8">
           <a
             href={SITE.phoneHref}

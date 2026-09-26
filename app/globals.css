@@ -893,6 +893,26 @@ body.rlt-quiz-open .rlt-panel {
   }
 }
 
+/* Round 63 (the owner on his phone: "make them see-through so the map is fully visible"): below lg no
+   black shade stands behind the home's words. Each word carries the map's own label shadow (the
+   county names' recipe, components/home/ml/MlGround.tsx LABEL_SHADOW) and the boxes are glass without
+   a fill. Unlayered on purpose, so it wins over a laptop's softer `halo` utility. */
+@media (max-width: 1023.98px) {
+  .phone-halo,
+  [data-shot] [data-quiet] {
+    text-shadow: 0 0 1px rgba(0, 0, 0, 1), 0 0 3px rgba(0, 0, 0, 0.95), 0 0 12px rgba(0, 0, 0, 0.8);
+  }
+  /* Dark words on a light button or chip carry no shadow (it would smudge them). */
+  :is(.phone-halo, [data-shot] [data-quiet]) .text-paper {
+    text-shadow: none;
+  }
+  .phone-glass {
+    background-color: transparent;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+}
+
 /* Round 62, "Where we work" on a phone (app/page.tsx, components/home/ml/MlAreaChapter.tsx): with
    JavaScript the stage is pinned for the section's passage and the map above it is the content; the
    eleven rows become the area under the camera and a row of chips (about a third of a screen of

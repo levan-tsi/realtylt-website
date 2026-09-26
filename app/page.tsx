@@ -202,13 +202,13 @@ export default async function HomePage() {
                 shadow can be lighter under the large, bold headline ("soft", G3dGround SOFT_SHARE, at
                 lg) and full under the small grey eyebrow (measured with the contrast kit). */}
             <div className="pointer-events-auto max-w-[36rem]">
-              <p data-quiet className={`t-eyebrow w-fit text-stone ${halo}`}>Hudson Valley and New York City</p>
+              <p data-quiet className={`t-eyebrow phone-halo w-fit text-stone ${halo}`}>Hudson Valley and New York City</p>
               {/* w-fit: the headline's box hugs its words (round 57). On a phone the map's names for
                   the valley stand to the right of "home.", and a column-wide box made them read as
                   sitting on the headline to the contrast kit, which photographs a text's box. The
                   break is explicit (round 57.2): with the words wrapping on their own, w-fit's
                   max-content was the one-line width and the box took the whole column again. */}
-              <h1 id="home-hero" data-quiet="soft" className="t-display rise mt-4 w-fit text-ink">
+              <h1 id="home-hero" data-quiet="soft" className="t-display phone-halo rise mt-4 w-fit text-ink">
                 Let&rsquo;s find{" "}
                 <br />
                 home.
@@ -218,7 +218,7 @@ export default async function HomePage() {
             <div data-quiet="lead" className="pointer-events-auto mt-10 max-w-[36rem] lg:mt-9">
               {/* On a phone the count is a two-line caption over the search (17 px, the reach of
                   the towns is already the eyebrow's), so the city above it stays open. */}
-              <p className={`t-lead rise rise-2 max-w-[30rem] text-ink-soft max-lg:text-[17px] max-lg:[text-wrap:pretty] ${halo}`}>
+              <p className={`t-lead phone-halo rise rise-2 max-w-[30rem] text-ink-soft max-lg:text-[17px] max-lg:[text-wrap:pretty] ${halo}`}>
                 {activeCount ? (
                   <>
                     <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale{" "}
@@ -237,7 +237,7 @@ export default async function HomePage() {
               <form
                 action="/search"
                 role="search"
-                className="search-instrument rise rise-3 relative mt-7 flex w-full max-w-[34rem] items-center gap-2 rounded-2xl border border-line-strong bg-night-deep/70 p-2 backdrop-blur-md transition-colors focus-within:border-stone hover:border-stone/70 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-porchlight"
+                className="search-instrument phone-glass rise rise-3 relative mt-7 flex w-full max-w-[34rem] items-center gap-2 rounded-2xl border border-line-strong bg-night-deep/70 p-2 backdrop-blur-md transition-colors focus-within:border-stone hover:border-stone/70 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-porchlight"
               >
                 <label htmlFor="home-search" className="sr-only">
                   Search for homes by town, zip, or address
@@ -499,7 +499,7 @@ function HeroLinks() {
         <Link
           key={c.href}
           href={c.href}
-          className={`inline-flex min-h-[40px] items-center rounded-xl border border-line-strong bg-night-deep/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night-deep/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
+          className={`phone-glass phone-halo inline-flex min-h-[40px] items-center rounded-xl border border-line-strong bg-night-deep/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night-deep/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
         >
           {c.label}
         </Link>

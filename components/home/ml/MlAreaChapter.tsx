@@ -51,7 +51,7 @@ export function MlAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
     {active ? (
       <div className="rlt-area-chips mt-5">
         <div className="flex items-end justify-between gap-4">
-          <div className="min-w-0">
+          <div className="phone-halo min-w-0">
             <p className="truncate text-[26px] font-medium leading-tight tracking-[-0.02em] text-ink">{active.name}</p>
             <p className="mt-1 text-[16px] tabular-nums text-ink-soft">
               {activeCount ? `${activeCount.toLocaleString("en-US")} ${activeCount === 1 ? "home" : "homes"} for sale` : " "}
@@ -59,7 +59,7 @@ export function MlAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
           </div>
           <Link
             href={active.href}
-            className={`inline-flex min-h-[40px] shrink-0 items-center rounded-xl border border-line-strong bg-night-deep/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night-deep/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
+            className={`phone-glass phone-halo inline-flex min-h-[40px] shrink-0 items-center rounded-xl border border-line-strong bg-night-deep/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night-deep/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
           >
             See homes
           </Link>
@@ -72,7 +72,7 @@ export function MlAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
         >
           {groups.map((group) => (
             <div key={group.id} className="contents">
-              <span className="shrink-0 pl-1 pr-1 text-[13px] text-stone first:pl-0">{group.label}</span>
+              <span className="phone-halo shrink-0 pl-1 pr-1 text-[13px] text-stone first:pl-0">{group.label}</span>
               {group.items.map((row) => {
                 const on = row.shot === active.shot;
                 return (
@@ -82,7 +82,7 @@ export function MlAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
                     aria-pressed={on}
                     onClick={() => goTo(row.shot)}
                     className={`min-h-[40px] shrink-0 rounded-full border px-4 text-[15px] font-medium tracking-[-0.005em] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight motion-reduce:transition-none ${
-                      on ? "border-ink bg-ink text-paper" : "border-line-strong bg-night-deep/80 text-ink-soft backdrop-blur-md hover:border-stone hover:text-ink"
+                      on ? "border-ink bg-ink text-paper" : "phone-glass phone-halo border-line-strong bg-night-deep/80 text-ink-soft backdrop-blur-md hover:border-stone hover:text-ink"
                     } ${PRESS}`}
                   >
                     {row.name}

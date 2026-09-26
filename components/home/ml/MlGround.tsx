@@ -88,10 +88,6 @@ const CREDIT_HOLE = "radial-gradient(210px 64px at 84px 100%, transparent 0, tra
 const SCRIMS = 6;
 const SCRIM_PAD = 20;
 const SCRIM_FEATHER = 150;
-/** Round 62: a phone's shade hugs its words (a 150 px feather on a 390 px screen shaded the whole
- * first screen and hid the map). */
-const PHONE_SCRIM_PAD = 12;
-const PHONE_SCRIM_FEATHER = 56;
 const SOFT_SHARE = 0.4;
 const LEAD_SHARE = 0.6;
 const ramp = (dir: string, f: number) => {
@@ -388,10 +384,12 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
   const placeScrims = useCallback(() => {
     const vh = window.innerHeight;
     const wide = window.innerWidth >= 1024;
-    const feather = wide ? SCRIM_FEATHER : PHONE_SCRIM_FEATHER;
-    const reach = (wide ? SCRIM_PAD : PHONE_SCRIM_PAD) + feather;
-    const shareOf = (q: string | undefined) => (!wide ? 1 : q === "soft" ? SOFT_SHARE : q === "lead" ? LEAD_SHARE : 1);
-    const blocks = [...document.querySelectorAll<HTMLElement>("[data-quiet]")]
+    const feather = SCRIM_FEATHER;
+    const reach = SCRIM_PAD + feather;
+    const shareOf = (q: string | undefined) => (q === "soft" ? SOFT_SHARE : q === "lead" ? LEAD_SHARE : 1);
+    // Round 63 (the owner: "make them see-through so the map is fully visible"): no shade at all on a
+    // phone; its words carry the map's own label shadow instead (app/globals.css .phone-halo).
+    const blocks = (wide ? [...document.querySelectorAll<HTMLElement>("[data-quiet]")] : [])
       .map((el) => ({ r: el.getBoundingClientRect(), share: shareOf(el.dataset.quiet) }))
       .filter(({ r }) => r.width > 8 && r.height > 8 && r.bottom > -reach && r.top < vh + reach)
       .sort((a, b) => b.r.width * b.r.height - a.r.width * a.r.height)
@@ -1228,11 +1226,10 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
         <div
           ref={topScrim}
           aria-hidden
-          className="absolute inset-x-0 top-0 h-[230px]"
+          // Round 63: a laptop's only; on a phone the map runs up to the logo and the menu.
+          className="absolute inset-x-0 top-0 h-[230px] max-lg:hidden"
           style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)", willChange: "transform" }}
-        >
-          <div className="absolute inset-x-0 top-0 h-[72px] lg:hidden" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0) 100%)" }} />
-        </div>
+        />
         {tail?.veil ? <div ref={tailVeil} aria-hidden className={`absolute inset-0 bg-black ${NO_HOLE_ON_PHONE}`} style={{ opacity: 0, ...mask }} /> : null}
         <div ref={labelLayer} aria-hidden data-g3d-territory className="absolute inset-0 transition-opacity duration-[250ms] ease-out motion-reduce:transition-none" style={{ opacity: 0 }}>
           {TERRITORY_LABELS.map((l) => (
