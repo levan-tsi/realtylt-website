@@ -404,3 +404,27 @@ the water and A is already "more than a little". My recommendation: A's green fo
 softer water was not rendered; it is one more shoot of three plates if he wants to see it. Choosing
 any tint means re-rendering every county plate and re-recording the films (the brief: about an hour of
 recording, 30 minutes of encoding, the joins re-measured).
+
+## §4 Dead links, the sitemap, SEO and the Google Maps bill (2026-09-26)
+
+**Dead links, automatic** (`20593ba`, deployed and followed live on realtylt.com): a home that left
+the market (sold, expired, withdrawn) no longer answers "not found": its old address, in either URL
+form, redirects (307) to the search for its town read from the address, else its ZIP, else the
+search; the old `/listing/<key>` form to the search. An unknown blog address goes to a stand-in for
+the five articles the CRM's seller emails link to that are not written yet
+(`lib/blog/index.ts` `PENDING_STAND_INS`), else to the blog; temporary, so a new article takes its
+address. Five tests. The sitemap: 106 entries on realtylt.com, 0 broken, 0 redirecting; the HTML
+sitemap's 110 links all 200.
+
+**SEO audit** (`scripts/seo-audit.mjs`, `BASE=http://127.0.0.1:3102`): 105 of 105 surfaces clean
+(titles, descriptions, one h1, canonicals equal to the page, og tags, anchor text, links in and out,
+the sitemap, JSON-LD), 15 adjudicated keyword items; with `--external` 351 outbound citations
+fetched, 0 broken, 2 bot-walled (dl.acm.org, nysenate.gov: alive for people). Live canonicals and
+the sitemap host are realtylt.com.
+
+**Google Maps** (the Cloud console as levan@realtylt.com, 2026-09-26): billing account "My Billing
+Account 1": $0 in September and $0 in August. One key ("Maps Platform API Key", project
+realtylt-crm) serves the CRM and the website, restricted to 35 APIs but NOT to our domains. Requests
+over 30 days: Maps JavaScript 4,276, Street View Static 2,162, Geocoding 536, Places (New) 386, Maps
+Static 89: all inside the free 10,000 a month per SKU (Essentials). Paid rates past the free tier:
+dynamic map loads $7 per 1,000, geocoding and place details $5 per 1,000, static $2 to $7 per 1,000.
