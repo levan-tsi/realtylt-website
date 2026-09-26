@@ -122,7 +122,9 @@ export function WhyCarousel() {
                 alt={s.caption}
                 fill
                 sizes="(max-width: 768px) 100vw, 768px"
-                priority={i === INITIAL_INDEX}
+                // No `priority` (round 61): the carousel sits six screens below the fold now, and
+                // its preload (106 KB) was fetched with the document ahead of the hero's plate (on
+                // Slow 4G it landed at 5.8 s, the plate at 6.6 s). Lazy, it loads on approach.
                 className="object-contain"
               />
             </div>

@@ -19,6 +19,7 @@ import { PLATES } from "@/components/home/plates/plates.gen";
 import { TALL_MEDIA, WIDE_MEDIA, plateSrc, plateSrcSet } from "@/components/home/plates/plate-frame";
 import { COVERS, coverFor, homeCover, homeMap } from "@/lib/home-map";
 import { listingPath } from "@/lib/idx/listing-url";
+import { forCard } from "@/lib/idx/card-listing";
 import { AREA_ROWS } from "@/components/home/night/areas";
 import { AREA_FLIGHT } from "@/components/home/night/shots";
 import { HomeIntake } from "@/components/home/HomeIntake";
@@ -337,7 +338,9 @@ export default async function HomePage() {
             </Reveal>
             {/* FEATURED DRIFTS, NEW LISTINGS DOES NOT, and that asymmetry is the point (round 31):
                 two sections that differ in WEIGHT read as two sections. */}
-            <DriftRail listings={featured} ariaLabel="Featured listings" />
+            {/* forCard (round 61): the cards' listings without the fields no card reads (the
+                descriptions, schools and the rest were ~110 KB of the page's payload). */}
+            <DriftRail listings={featured.map(forCard)} ariaLabel="Featured listings" />
             <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
             <div className="mt-10 text-center">
               <Button href="/search" variant="outline">See more listings</Button>
@@ -370,7 +373,7 @@ export default async function HomePage() {
               </div>
             </Reveal>
             <div className="mt-10">
-              <RailPager listings={fresh} ariaLabel="New listings" />
+              <RailPager listings={fresh.map(forCard)} ariaLabel="New listings" />
             </div>
             <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
           </div>

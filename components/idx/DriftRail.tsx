@@ -65,7 +65,7 @@ export function DriftRail({ listings, ariaLabel }: { listings: Listing[]; ariaLa
       className="flex shrink-0 gap-1 pr-3"
       {...(duplicate ? { "aria-hidden": true as const } : {})}
     >
-      {shown.map((l, i) => (
+      {shown.map((l) => (
         <li key={`${duplicate ? "dup" : "real"}-${l.id}`} className="box-content w-[78vw] shrink-0 p-2 sm:w-[340px]">
           {/* inert: the duplicate is scenery. Without it `aria-hidden` would be wrapping focusable
               links, which is the one thing aria-hidden must never do — a keyboard would tab into
@@ -74,8 +74,11 @@ export function DriftRail({ listings, ariaLabel }: { listings: Listing[]; ariaLa
               passed `"" as unknown as boolean` to satisfy the types, React dropped it as falsy,
               and the probe measured the consequence exactly: 0 inert blocks and 16 tabbable links
               where there should be 8. */}
+          {/* No `priority` on the first cards any more (round 61): the rail is the home page's
+              second section, below a full-screen map, and their two photos were preloaded with the
+              document, ahead of the hero's plate. Lazy, they load as the rail comes near. */}
           <div inert={duplicate}>
-            <ListingCard listing={l} priority={!duplicate && i < 2} />
+            <ListingCard listing={l} />
           </div>
         </li>
       ))}
