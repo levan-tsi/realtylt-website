@@ -228,6 +228,15 @@
 .t-h1 {
   text-wrap: balance;
 }
+/* Round 62: on a phone a section heading that breaks never leaves one word on its own line ("What
+   You Can Hold Us / To" on /who-we-are at 390). `pretty`, not `balance` (see above): it only pulls
+   a word down to keep the last line from standing alone. Phones only, so the laptop's breaks stay. */
+@media (max-width: 1023.98px) {
+  .t-h2,
+  .t-h3 {
+    text-wrap: pretty;
+  }
+}
 .t-h2 {
   font-family: var(--font-display);
   font-size: clamp(1.875rem, 1.35rem + 2.1vw, 2.75rem); /* 30 → 44 */

@@ -11,6 +11,9 @@ import {
 } from "@/lib/mortgage";
 
 const DONUT_R = 54;
+/** The breakdown's one hue (round 62): the page's stone, so it follows the night and the day and never
+ * paints a white block on the night (the owner: white on this site reads too bright). */
+const INK = "var(--color-stone)";
 const DONUT_C = 2 * Math.PI * DONUT_R;
 
 /** Mortgage calculator UI (brief §5C) — live math via lib/mortgage, Reset button.
@@ -59,14 +62,17 @@ export function MortgageCalculator({
   const [focused, setFocused] = useState<keyof MortgageInput | null>(null);
   const r = calcMortgage(values);
 
-  /* Live: monochrome breakdown — one hue (black) at graduating opacity. `stroke` draws the
-     donut arc / legend dot; `op` shades the financing segmented bar (same hue, 1.0..0.40). */
+  /* Live: monochrome breakdown — one hue at graduating opacity. Round 62: the hue is the stone token,
+     not black. The panel went dark in round 60 (bg-mist is the night's raise there) and a black
+     ladder on it drew an empty bar and five invisible dots; the stone is a mid grey at night and
+     by day, so the same ladder reads on either ground. `op` shades the bar, the donut's arcs
+     and the legend dots alike (1.0..0.40). */
   const rows = [
-    { key: "pi", label: "Principal & interest", amount: r.principalInterest, pct: r.breakdownPct.principalInterest, stroke: "#000000", op: 1, always: true },
-    { key: "tax", label: "Taxes", amount: r.monthlyTax, pct: r.breakdownPct.tax, stroke: "#4d4d4d", op: 0.85, always: true },
-    { key: "pmi", label: "PMI", amount: r.pmi, pct: r.breakdownPct.pmi, stroke: "#808080", op: 0.7 },
-    { key: "hoa", label: "HOA", amount: r.hoa, pct: r.breakdownPct.hoa, stroke: "#b3b3b3", op: 0.55 },
-    { key: "ins", label: "Insurance", amount: r.insurance, pct: r.breakdownPct.insurance, stroke: "#d9d9d9", op: 0.4 },
+    { key: "pi", label: "Principal & interest", amount: r.principalInterest, pct: r.breakdownPct.principalInterest, op: 1, always: true },
+    { key: "tax", label: "Taxes", amount: r.monthlyTax, pct: r.breakdownPct.tax, op: 0.85, always: true },
+    { key: "pmi", label: "PMI", amount: r.pmi, pct: r.breakdownPct.pmi, op: 0.7 },
+    { key: "hoa", label: "HOA", amount: r.hoa, pct: r.breakdownPct.hoa, op: 0.55 },
+    { key: "ins", label: "Insurance", amount: r.insurance, pct: r.breakdownPct.insurance, op: 0.4 },
   ];
   // Zero-value rows hide (HOA/Insurance/PMI); Principal & Taxes always show.
   const visibleRows = rows.filter((row) => row.always || (Number.isFinite(row.amount) && row.amount > 0));
@@ -198,7 +204,7 @@ export function MortgageCalculator({
               {rows.map((row) => {
                 const w = Number.isFinite(row.pct) && row.pct > 0 ? row.pct : 0;
                 return w > 0 ? (
-                  <div key={row.key} style={{ width: `${w}%`, backgroundColor: `rgb(0 0 0 / ${row.op})` }} />
+                  <div key={row.key} style={{ width: `${w}%`, backgroundColor: INK, opacity: row.op }} />
                 ) : null;
               })}
             </div>
@@ -210,7 +216,7 @@ export function MortgageCalculator({
             <div className="mx-auto flex items-center justify-center">
               <div className="relative h-44 w-44">
                 <svg viewBox="0 0 140 140" className="h-full w-full -rotate-90" role="img" aria-label="Monthly payment breakdown">
-                  <circle cx="70" cy="70" r={DONUT_R} fill="none" stroke="#d9dde2" strokeWidth="18" />
+                  <circle cx="70" cy="70" r={DONUT_R} fill="none" stroke="var(--color-line)" strokeWidth="18" />
                   {arcs.map((arc, i) =>
                     arc.dash > 0 ? (
                       <circle
@@ -219,7 +225,8 @@ export function MortgageCalculator({
                         cy="70"
                         r={DONUT_R}
                         fill="none"
-                        stroke={rows[i].stroke}
+                        stroke={INK}
+                        strokeOpacity={rows[i].op}
                         strokeWidth="18"
                         strokeDasharray={`${arc.dash} ${DONUT_C - arc.dash}`}
                         strokeDashoffset={arc.offset}
@@ -246,7 +253,7 @@ export function MortgageCalculator({
                 <span
                   aria-hidden
                   className="h-3 w-3 rounded-full"
-                  style={{ backgroundColor: variant === "bar" ? `rgb(0 0 0 / ${row.op})` : row.stroke }}
+                  style={{ backgroundColor: INK, opacity: row.op }}
                 />
                 {row.label}
               </dt>

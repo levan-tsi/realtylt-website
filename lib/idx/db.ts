@@ -286,10 +286,13 @@ export function searchFilters(p: SearchParams): string {
   return parts.join("&");
 }
 
-const ORDER: Record<SortKey, string> = {
-  // Alphabetical-by-address is deliberately meaningless w.r.t. price and age — combined with
-  // the daily-rotated window in search() it reads as a fresh high/low mix every day.
-  mixed: "address.asc,id.asc",
+export const ORDER: Record<SortKey, string> = {
+  // Round 62: NOT the address. A page of the ring is a contiguous block of the order, and an
+  // alphabetical block is one street number: /search opened on "34 Lawrence Lane, 34 Old Mountain
+  // Road, 34 Simonson Place, 34 Mott Street..." (live, 2026-09-26), which reads as broken. The
+  // listing id spreads a block over every town and price (interleaveByBand then mixes the prices
+  // within the page), and with the daily-rotated window in search() it is a fresh mix every day.
+  mixed: "id.asc",
   newest: "listed_at.desc,id.asc",
   oldest: "listed_at.asc,id.asc",
   // Own-office ("United Real Estate") listings first, then freshest — mirrors the home rails.
