@@ -112,7 +112,7 @@ export default async function SellingPage() {
                 turning it into one. This says what we do and what they do, in that order. */}
             <h1 id="selling-hero" className="t-h1 text-paper">
               We price your home two ways.{" "}
-              <strong className="font-bold">You decide.</strong>
+              <strong>You decide.</strong>
             </h1>
             {/* "for maximum profit" was a promise nobody can keep and the page does not try to
                 keep it anywhere below the fold — what it actually delivers is the two numbers
@@ -284,7 +284,7 @@ export default async function SellingPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading dark as="h2">
-              <span id="pricing-heading">Our <strong className="font-bold">Pricing Strategy</strong></span>
+              <span id="pricing-heading">Our <strong>Pricing Strategy</strong></span>
             </SectionHeading>
             <p className="t-lead mt-3 max-w-lg text-paper">
               We use the most accurate method to price your home
@@ -362,7 +362,7 @@ export default async function SellingPage() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading as="h2">
-              <span id="shine-heading">Making Your Listing <strong className="font-bold">Shine</strong></span>
+              <span id="shine-heading">Making Your Listing <strong>Shine</strong></span>
             </SectionHeading>
             <p className="t-lead mt-3 max-w-lg text-ink-soft">
               Photographs, virtual tours, 3D walkthroughs and videos
@@ -411,7 +411,7 @@ export default async function SellingPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading as="h2">
-              <span id="marketing-heading">Innovative <strong className="font-bold">Internet Marketing</strong></span>
+              <span id="marketing-heading">Innovative <strong>Internet Marketing</strong></span>
             </SectionHeading>
             <p className="t-lead mt-3 max-w-lg text-ink-soft">
               We know how to reach the 92% of buyers who search online
@@ -441,7 +441,7 @@ export default async function SellingPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading dark as="h2">
-              <span id="loop-heading">Stay in the Loop, <strong className="font-bold">Every Step of the Way</strong></span>
+              <span id="loop-heading">Stay in the Loop, <strong>Every Step of the Way</strong></span>
             </SectionHeading>
             <p className="t-lead mt-3 max-w-lg text-paper">
               Real-time updates until your home is sold

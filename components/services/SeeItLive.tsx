@@ -13,7 +13,7 @@ export function SeeItLive({ service, nodeIndex }: { service: Service; nodeIndex:
         <Reveal>
           <SectionHeading eyebrow="See it live" dark as="h2">
             <span id="live-heading">
-              Easier to understand when you can <strong className="font-bold">touch it</strong>
+              Easier to understand when you can <strong>touch it</strong>
             </span>
           </SectionHeading>
           <p className="mt-6 max-w-lg leading-relaxed text-paper/75">

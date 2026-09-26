@@ -25,7 +25,7 @@ export function Limits({ service }: { service: Service }) {
           <div className="lg:sticky lg:top-28">
             <SectionHeading eyebrow="Limits" as="h2">
               <span id="limits-heading">
-                What it <strong className="font-bold">does not do</strong>
+                What it <strong>does not do</strong>
               </span>
             </SectionHeading>
             <p className="mt-5 max-w-sm leading-relaxed text-stone">

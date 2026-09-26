@@ -171,7 +171,7 @@ export default function ServicesIndexPage() {
           <Reveal>
             <SectionHeading eyebrow="Start here" as="h2">
               <span id="flagship-heading">
-                The three that <strong className="font-bold">change a week</strong>
+                The three that <strong>change a week</strong>
               </span>
             </SectionHeading>
             <p className="mt-4 max-w-2xl leading-relaxed text-stone">
@@ -197,7 +197,7 @@ export default function ServicesIndexPage() {
           <Reveal>
             <SectionHeading eyebrow="The hub" as="h2">
               <span id="core-heading">
-                Everything else on the <strong className="font-bold">brain</strong>
+                Everything else on the <strong>brain</strong>
               </span>
             </SectionHeading>
           </Reveal>
@@ -218,7 +218,7 @@ export default function ServicesIndexPage() {
           <Reveal>
             <SectionHeading eyebrow="And the quiet ones" as="h2">
               <span id="more-heading">
-                The plumbing nobody <strong className="font-bold">brags about</strong>
+                The plumbing nobody <strong>brags about</strong>
               </span>
             </SectionHeading>
             <p className="mt-4 max-w-2xl leading-relaxed text-stone">

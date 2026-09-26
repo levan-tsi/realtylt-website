@@ -156,7 +156,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
           <div className="mx-auto max-w-7xl px-4 lg:px-8">
             <Reveal>
               <SectionHeading as="h2">
-                <span id="local-heading">Living in <strong className="font-bold">{c.short}</strong></span>
+                <span id="local-heading">Living in <strong>{c.short}</strong></span>
               </SectionHeading>
             </Reveal>
             <div className="mt-10 grid gap-10 lg:grid-cols-3">

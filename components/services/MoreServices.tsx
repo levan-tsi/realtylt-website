@@ -15,7 +15,7 @@ export function MoreServices({ services }: { services: Service[] }) {
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading eyebrow="Also built" as="h2">
               <span id="more-heading">
-                The rest of the <strong className="font-bold">machine</strong>
+                The rest of the <strong>machine</strong>
               </span>
             </SectionHeading>
             <Link

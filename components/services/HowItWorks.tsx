@@ -12,7 +12,7 @@ export function HowItWorks({ service }: { service: Service }) {
         <Reveal>
           <SectionHeading eyebrow="How it works" dark as="h2">
             <span id="how-heading">
-              What happens, <strong className="font-bold">in order</strong>
+              What happens, <strong>in order</strong>
             </span>
           </SectionHeading>
         </Reveal>

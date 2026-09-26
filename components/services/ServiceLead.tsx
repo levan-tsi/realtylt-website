@@ -17,7 +17,7 @@ export function ServiceLead({ service }: { service: Service }) {
       <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1fr_1.15fr] lg:gap-20 lg:px-8">
         <Reveal>
           <h2 id="lead-heading" className="t-h2 text-paper">
-            Want {service.name} <strong className="font-bold">running in your business?</strong>
+            Want {service.name} <strong>running in your business?</strong>
           </h2>
           <p className="mt-5 max-w-md leading-relaxed text-paper/75">
             Tell us what you do today and we will tell you honestly whether this is the right place to

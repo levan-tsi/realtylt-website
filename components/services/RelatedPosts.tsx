@@ -24,7 +24,7 @@ export async function RelatedPosts({ service }: { service: Service }) {
         <Reveal>
           <SectionHeading eyebrow="Read more" as="h2">
             <span id="related-heading">
-              Written up in <strong className="font-bold">more detail</strong>
+              Written up in <strong>more detail</strong>
             </span>
           </SectionHeading>
         </Reveal>

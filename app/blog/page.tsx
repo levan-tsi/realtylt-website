@@ -50,15 +50,12 @@ export default async function BlogIndexPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/55" />
         </div>
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(55% 80% at 50% -10%, rgba(40,168,224,0.13), transparent 66%)" }}
-        />
+        {/* Round 60: the blue radial glow that sat here is gone. On the black site it read as a
+            blue cast with no source in the picture (no new hues; every glow needs a source). */}
         <div className="relative mx-auto max-w-6xl px-4 py-20 md:py-24 lg:px-8">
           <p className="rise text-xs font-bold uppercase tracking-[0.22em] text-paper/55">The RealtyLT journal</p>
           <h1 className="t-h1 rise rise-2 mt-4 max-w-2xl">
-            Stay <strong className="font-bold">up to date</strong>
+            Stay up to date
           </h1>
           <p className="rise rise-3 mt-5 max-w-xl text-lg leading-relaxed text-paper/75">
             Straight talk on buying, selling, moving, and owning a home across the Hudson Valley, written from

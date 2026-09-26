@@ -15,7 +15,7 @@ export function UseCases({ service }: { service: Service }) {
         <Reveal>
           <SectionHeading eyebrow="Use cases" as="h2">
             <span id="cases-heading">
-              Where it <strong className="font-bold">earns its keep</strong>
+              Where it <strong>earns its keep</strong>
             </span>
           </SectionHeading>
         </Reveal>

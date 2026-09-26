@@ -11,7 +11,7 @@ export function WhatItIs({ service }: { service: Service }) {
         <Reveal>
           <SectionHeading eyebrow="What it is" as="h2">
             <span id="what-heading">
-              {service.name}, <strong className="font-bold">in plain terms</strong>
+              {service.name}, <strong>in plain terms</strong>
             </span>
           </SectionHeading>
           <div className="mt-6 space-y-5 text-lg leading-relaxed text-stone">

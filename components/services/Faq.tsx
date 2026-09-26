@@ -15,7 +15,7 @@ export function Faq({ service }: { service: Service }) {
           <div className="lg:sticky lg:top-28">
             <SectionHeading eyebrow="Questions" as="h2">
               <span id="faq-heading">
-                Asked and <strong className="font-bold">answered</strong>
+                Asked and <strong>answered</strong>
               </span>
             </SectionHeading>
             <p className="mt-5 max-w-sm leading-relaxed text-stone">
