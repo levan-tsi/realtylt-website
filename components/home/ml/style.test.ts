@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, PLATE, PLATE_ROADS_MINZOOM, deepDemMaxzoom, nightStyle } from "./style";
+import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, PLATE, PLATE_ROADS_MINZOOM, PLATE_TINTS, deepDemMaxzoom, nightStyle } from "./style";
 
 /** The colours a style value names (hex or rgba), as [r, g, b]. */
 function rgbOf(v: string): [number, number, number] | null {
@@ -207,5 +207,30 @@ describe("the live style, byte for byte", () => {
       sha(nightStyle({ buildings: false })),
     ]).toEqual(["e44bfb7e13e7c826", "22293f065bc168d7", "95391bbfb1b10ed5"]);
     expect(sha(nightStyle({ plate: false }))).toBe(sha(nightStyle()));
+  });
+});
+
+/** Round 61: the parks-and-water tints are a comparison for the owner, behind the plate option only. */
+describe("the plate tints (a comparison, not the live look)", () => {
+  const sha = (x: unknown) => createHash("sha256").update(JSON.stringify(x)).digest("hex").slice(0, 16);
+  const fill = (s: ReturnType<typeof nightStyle>, id: string) => (s.layers.find((l) => l.id === id) as { paint: Record<string, unknown> }).paint["fill-color"];
+  it("leaves the live style and the plate style without a tint as they were", () => {
+    expect(sha(nightStyle({ plate: { tint: null } }))).toBe(sha(nightStyle({ plate: {} })));
+    expect(sha(nightStyle({ plate: { deep: true, tint: null } }))).toBe(sha(nightStyle({ plate: { deep: true } })));
+    expect(sha(nightStyle())).toBe("e44bfb7e13e7c826");
+  });
+  it("changes only the wood, the parks and the water", () => {
+    for (const k of ["a", "b"] as const) {
+      const plain = nightStyle({ plate: {} });
+      const t = nightStyle({ plate: { tint: k } });
+      expect(fill(t, "wood")).toBe(PLATE_TINTS[k].green);
+      expect(fill(t, "park")).toBe(PLATE_TINTS[k].green);
+      expect(fill(t, "water")).toBe(PLATE_TINTS[k].water);
+      const other = (s: ReturnType<typeof nightStyle>) => JSON.stringify(s.layers.filter((l) => !["wood", "park", "water"].includes(l.id)));
+      expect(other(t)).toBe(other(plain));
+    }
+  });
+  it("stays near black: every tint channel under 0x32 (the land is 0x0a0c10), far under the lights", () => {
+    for (const t of Object.values(PLATE_TINTS)) for (const c of [t.green, t.water]) for (const v of rgbOf(c)!) expect(v).toBeLessThan(0x32);
   });
 });
