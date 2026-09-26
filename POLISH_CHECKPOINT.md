@@ -1,4 +1,28 @@
-# NEXT = ROUND 63, THE PHONE SECOND PASS. READ `docs/handoff/WEBSITE-R63-HANDOFF.md` §0 FIRST.
+# ROUND 63 (THE PHONE, SECOND PASS) DONE 2026-09-26. READ `docs/parity/DESIGN-ROUND63.md`.
+
+His four asks, done on one agent, each verified on a production build: (1) the words straight on
+the map on a phone: no scrim, no top scrim, glass boxes without fill; the words carry the map's
+county-label shadow; contrast kit on a phone 0 under the floor at p95; (2) "pixelated": the light
+canvas was capped at 2x on a 3x phone (every light stretched); now 3x. The deep territory plate
+was tried and NOT shipped (the renderer's tiles came back without roads today); (3) a thumb flick
+through the counties now moves the map about 90 ms after the page crosses a stop (was 1.5 to
+2.3 s) and flies through the stops between (six flicks: 11 films, 1 fade; was 2 films, 3 fades);
+cost on desktop Chrome's software decode: 7 frames over 34 ms in the walk (was 1); (4) sentence
+case site-wide (one unlayered rule for every `uppercase` label, 40-odd headings and buttons, the
+county chips, the 404), plus 320 x 568: both links on the first screen. The laptop is proven
+unchanged by an A/B against the pre-round build (1440 hero frames byte-identical; other stops
+differ only by the hourly sync's counts). Before/after: `docs/design-r63/before-after-phone.jpg`.
+DEPLOYED: pushed `1f6014d` to main after the gate (record §6); live at realtylt.com within about 60 s
+(the /who-we-are chips in sentence case), the live phone first screens photographed at 390 x 664,
+390 x 844 and 320 x 568 (no overflow).
+
+NEXT: his look on a real iPhone (the words on the map, a flick through the counties, the lights).
+Open (record §7): the plate renderer's tiles, then a deep territory plate at 1:1; the blog post
+titles' Title Case (his call: ~50 editorial headlines that are also the posts' `<title>`s).
+
+---
+
+# (was) NEXT = ROUND 63, THE PHONE SECOND PASS. READ `docs/handoff/WEBSITE-R63-HANDOFF.md` §0 FIRST.
 
 His look on his phone after round 62 (2026-09-26 evening): (1) no black behind the words on a phone:
 the map edge to edge from the header down, the words and the boxes see-through ("we're limiting the
