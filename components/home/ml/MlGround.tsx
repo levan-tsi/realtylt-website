@@ -46,8 +46,19 @@ import { filmNeighbours, neighbours } from "../plates/plate-motion";
 interface AreaValue {
   current: AreaShot | null;
   point: (area: AreaShot | null) => void;
+  /** Round 62: scroll the page to where the camera stands over this area (the phone's county
+   * chips: on a phone the scroll is the flight, so a chip moves the scroll, not the camera). */
+  goTo: (area: AreaShot) => void;
 }
-const AreaContext = createContext<AreaValue>({ current: null, point: () => {} });
+const AreaContext = createContext<AreaValue>({ current: null, point: () => {}, goTo: () => {} });
+
+/** Round 62: a section marked `data-pin="phone"` pins its stage (`data-pin-stage`, sticky) on a phone,
+ * so its shots are spread over the scroll during which the stage is pinned, not over the section's
+ * whole passage through the window (driver.ts shotStops' span), or the first and last areas would
+ * be reached while the stage is still sliding in or already leaving. */
+export function pinnedSpan(top: number, height: number, vh: number): { top: number; height: number } {
+  return { top: top + vh / 2, height: Math.max(1, height - vh) };
+}
 export const useMlArea = () => useContext(AreaContext);
 
 const isArea = (n: ShotName): n is AreaShot => n in AREA_COUNTY_OF;
@@ -351,9 +362,13 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
 
   const measure = useCallback(() => {
     const y = window.scrollY;
+    const vh = window.innerHeight;
     const found: ShotSection[] = [...document.querySelectorAll<HTMLElement>("[data-shot]")].map((el) => {
       const r = el.getBoundingClientRect();
-      return { shots: (el.dataset.shot ?? "hero").split(",").filter(Boolean) as ShotName[], top: r.top + y, height: r.height, veil: 0 };
+      const shots = (el.dataset.shot ?? "hero").split(",").filter(Boolean) as ShotName[];
+      const stage = el.dataset.pin === "phone" && window.innerWidth < 1024 ? el.querySelector<HTMLElement>("[data-pin-stage]") : null;
+      if (stage && getComputedStyle(stage).position === "sticky") return { shots, ...pinnedSpan(r.top + y, r.height, vh), veil: 0 };
+      return { shots, top: r.top + y, height: r.height, veil: 0 };
     });
     const t = tailRef.current;
     sections.current = t ? withTail(found, document.documentElement.scrollHeight, { shots: [t.shot], veil: 0 }) : found;
@@ -1090,12 +1105,19 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
     [flyTo, schedule],
   );
 
+  const goTo = useCallback((area: AreaShot) => {
+    const stop = stops.current.find((x) => x.name === area);
+    if (!stop) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.round(stop.anchor), behavior: reduced ? "auto" : "smooth" });
+  }, []);
+
   const mask = { WebkitMaskImage: CREDIT_HOLE, maskImage: CREDIT_HOLE } as const;
   const coverOn = engine === "ml" && !noCover;
   const plates = engine === "plates";
 
   return (
-    <AreaContext.Provider value={{ current, point }}>
+    <AreaContext.Provider value={{ current, point, goTo }}>
       <div ref={host} className="pointer-events-none fixed inset-0 z-0 bg-black" data-ml-ground data-plates={plates ? "1" : undefined} data-ml-error={error ?? undefined}>
         {plates ? (
           // THE PLATES (round 58): two layers, each a picture of the map and the canvas our lights are

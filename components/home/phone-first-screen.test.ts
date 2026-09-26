@@ -50,3 +50,25 @@ describe("the credit corner on a phone", () => {
     expect(ground).toContain("const feather = wide ? SCRIM_FEATHER : PHONE_SCRIM_FEATHER;");
   });
 });
+
+describe("where we work on a phone", () => {
+  const css = fs.readFileSync(path.join(ROOT, "app/globals.css"), "utf8");
+  const chapter = fs.readFileSync(path.join(ROOT, "components/home/ml/MlAreaChapter.tsx"), "utf8");
+
+  it("pins the stage only on a phone with JavaScript, and shows the chips only there", () => {
+    const at = css.indexOf("@media (max-width: 1023.98px) and (scripting: enabled)");
+    expect(at).toBeGreaterThan(0);
+    const block = css.slice(at, css.indexOf("\n}\n", at));
+    expect(block).toMatch(/\.rlt-areas-stage \{[^}]*position: sticky;[^}]*height: 100svh;/);
+    expect(block).toMatch(/\.rlt-area-chips \{\s*display: block;/);
+    expect(css).toMatch(/\.rlt-area-chips \{\s*display: none;\s*\}/);
+    expect(page).toContain('data-pin="phone"');
+    expect(page).toContain("data-pin-stage");
+  });
+
+  it("makes a chip scroll to its area (the scroll is the flight), and the county's page one link away", () => {
+    expect(chapter).toContain("onClick={() => goTo(row.shot)}");
+    expect(chapter).toContain("aria-pressed={on}");
+    expect(chapter).toMatch(/href=\{active\.href\}[\s\S]{0,700}See homes/);
+  });
+});

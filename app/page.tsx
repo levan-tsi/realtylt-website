@@ -373,16 +373,19 @@ export default async function HomePage() {
             that area's homes burn and the rest of the map falls to near black. Hovering a row or
             reaching it with the keyboard flies there at once. On a phone it is a plain tappable
             list; the scene frames whichever row was last touched.
-            The tall block and the sticky list give the flight room to breathe on a laptop; on a
-            phone the section is its natural height and nothing is pinned. */}
+            The tall block and the sticky list give the flight room to breathe on a laptop. Round 62:
+            on a phone with JavaScript the stage is pinned too (app/globals.css .rlt-areas), the map
+            fills the screen above a short panel (the area under the camera and a row of chips) and
+            the scroll is the flight; without JavaScript it is the plain list at its natural height. */}
         <section
           data-shot={AREA_FLIGHT.join(",")}
           data-veil="0.2"
           data-veil-phone="0.72"
-          className="sec lg:min-h-[240vh]"
+          data-pin="phone"
+          className="rlt-areas sec lg:min-h-[240vh]"
           aria-labelledby="areas-heading"
         >
-          <div className="mx-auto max-w-[1250px] px-4 lg:sticky lg:top-24 lg:px-8">
+          <div data-pin-stage className="rlt-areas-stage mx-auto max-w-[1250px] px-4 lg:sticky lg:top-24 lg:px-8">
             {/* The index keeps to the left half from lg and the scene owns the right, where the
                 county the page is on is burning on its own. `data-quiet` hands the scene that
                 box so the words never have a contour through them. */}
@@ -393,7 +396,7 @@ export default async function HomePage() {
                     <span>Where we work</span>
                   </span>
                 </SectionHeading>
-                <p className="mt-5 max-w-md text-stone">
+                <p className="rlt-areas-lede mt-5 max-w-md text-stone">
                   Six counties of the Hudson Valley and all five boroughs.{" "}
                   {mapped ? <span data-lights-claim>Every light is a home for sale there right now.</span> : "Every bright light is a home for sale there right now."}
                 </p>

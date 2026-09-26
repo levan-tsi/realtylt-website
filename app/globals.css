@@ -884,6 +884,35 @@ body.rlt-quiz-open .rlt-panel {
   }
 }
 
+/* Round 62, "Where we work" on a phone (app/page.tsx, components/home/ml/MlAreaChapter.tsx): with
+   JavaScript the stage is pinned for the section's passage and the map above it is the content; the
+   eleven rows become the area under the camera and a row of chips (about a third of a screen of
+   scroll per area). Without JavaScript, or on a laptop, the lists as before. */
+.rlt-area-chips {
+  display: none;
+}
+@media (max-width: 1023.98px) and (scripting: enabled) {
+  .rlt-areas {
+    min-height: 460svh;
+  }
+  .rlt-areas-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* The chips stay above the chat launcher (bottom right, about 80 px) and the credit's (i). */
+    padding-bottom: 88px;
+  }
+  .rlt-areas :is(.rlt-areas-lede, .rlt-area-lists) {
+    display: none;
+  }
+  .rlt-area-chips {
+    display: block;
+  }
+}
+
 /* A placeholder that only ever resolves once React hydrates. With scripting off it would sit
    there saying "Loading…" forever, under the <noscript> block that already explained the
    situation, so hide it. Mark any such placeholder with data-js-only. */

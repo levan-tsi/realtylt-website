@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { PRESS } from "@/components/ui/Button";
 import { loadLights } from "@/lib/idx/lights-client";
@@ -11,7 +11,8 @@ import type { AreaRow } from "../night/AreaChapter";
  * this ground's context instead of the Google map's; the same rows, counts and hover / focus / tap. */
 
 export function MlAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
-  const { current, point } = useMlArea();
+  const { current, point, goTo } = useMlArea();
+  const chipRow = useRef<HTMLDivElement>(null);
   const [counts, setCounts] = useState<Record<string, number> | null>(null);
 
   useEffect(() => {
@@ -29,8 +30,71 @@ export function MlAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
     { id: "city", label: "New York City", items: rows.filter((r) => r.group === "city") },
   ];
 
+  const active = rows.find((r) => r.shot === current) ?? rows[0];
+  const activeCount = active ? counts?.[active.slug] : undefined;
+
+  // The chip under the camera stays in view as the scroll flies from area to area.
+  useEffect(() => {
+    const row = chipRow.current;
+    const chip = row?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (!row || !chip || row.offsetParent === null) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    row.scrollTo({ left: chip.offsetLeft - (row.clientWidth - chip.offsetWidth) / 2, behavior: reduced ? "auto" : "smooth" });
+  }, [current]);
+
   return (
-    <div className="mt-10 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:mt-12">
+    <>
+    {/* ROUND 62, THE PHONE (app/globals.css .rlt-areas): the stage is pinned and the map above it is
+        the content, so the eleven rows become the area under the camera, its homes, and a row of
+        chips. The scroll is the flight: scrolling moves the camera from area to area, and a chip
+        scrolls the page to its area. Shown only on a phone with JavaScript; otherwise the lists. */}
+    {active ? (
+      <div className="rlt-area-chips mt-5">
+        <div className="flex items-end justify-between gap-4">
+          <div className="min-w-0">
+            <p className="truncate text-[26px] font-medium leading-tight tracking-[-0.02em] text-ink">{active.name}</p>
+            <p className="mt-1 text-[16px] tabular-nums text-ink-soft">
+              {activeCount ? `${activeCount.toLocaleString("en-US")} ${activeCount === 1 ? "home" : "homes"} for sale` : " "}
+            </p>
+          </div>
+          <Link
+            href={active.href}
+            className={`inline-flex min-h-[40px] shrink-0 items-center rounded-xl border border-line-strong bg-night-deep/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night-deep/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
+          >
+            See homes
+          </Link>
+        </div>
+        <div
+          ref={chipRow}
+          role="group"
+          aria-label="Areas"
+          className="-mx-4 mt-4 flex items-center gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {groups.map((group) => (
+            <div key={group.id} className="contents">
+              <span className="shrink-0 pl-1 pr-1 text-[13px] text-stone first:pl-0">{group.label}</span>
+              {group.items.map((row) => {
+                const on = row.shot === active.shot;
+                return (
+                  <button
+                    key={row.slug}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() => goTo(row.shot)}
+                    className={`min-h-[40px] shrink-0 rounded-full border px-4 text-[15px] font-medium tracking-[-0.005em] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight motion-reduce:transition-none ${
+                      on ? "border-ink bg-ink text-paper" : "border-line-strong bg-night-deep/45 text-ink-soft backdrop-blur-md hover:border-stone hover:text-ink"
+                    } ${PRESS}`}
+                  >
+                    {row.name}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+    ) : null}
+    <div className="rlt-area-lists mt-10 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:mt-12">
       {groups.map((group) => (
         <div key={group.id}>
           <h3 className="t-eyebrow text-stone">{group.label}</h3>
@@ -88,5 +152,6 @@ export function MlAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
         </div>
       ))}
     </div>
+    </>
   );
 }
