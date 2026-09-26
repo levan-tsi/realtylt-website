@@ -38,8 +38,21 @@
     // It gates one boolean in voiceSupported() and nothing else, so the lit path and the dark
     // path are the same code.
     VOICE_LAUNCH: 'on',
-    BRAND_COLOR: '#1557b0',
-    BRAND_COLOR_DARK: '#0d47a1',
+    // THE PANEL IS NIGHT (round 60, the owner: "do all the other pages as well so they are not
+    // white. We're making it dark"). The site's own night tokens, written out because this is a
+    // static script outside the stylesheet: the card ground, a raised step, the hairline, the
+    // control edge, the moon text, the haze text, and the porchlight blue for the one action
+    // (Send). Ratios measured in lib/chat-panel-night.test.ts: moon on the card 17.6:1, haze 7.1:1,
+    // the dark glyph on porchlight 7.5:1, porchlight on the card 7.2:1, the control edge 3.2:1 (a step over the page's #5e5e5a, which is 3.0 on this card).
+    PANEL: '#0d0d0d',
+    RAISE: '#1a1a1a',
+    HAIRLINE: '#242424',
+    EDGE: '#63635f',
+    MOON: '#f2f2ee',
+    HAZE: '#9b9b96',
+    ACTION: '#28a8e0',
+    ACTION_HOVER: '#52bae6',
+    ACTION_INK: '#050505',
     // THE LAUNCHER WEARS THE LOGO'S NAVY (owner's order 2026-09-25: "a dark color blue that our logo
     // has, the second one"). The logo carries the bright R blue and this navy; the bright one read as
     // a light-blue dot on the black site. White glyph on it 13.7:1; the hover a step lighter, 10.2:1.
@@ -442,9 +455,12 @@
         width: 380px;
         height: 660px;
         max-height: calc(100vh - 120px);
-        background: #fff;
+        background: ${CONFIG.PANEL};
+        color: ${CONFIG.MOON};
+        color-scheme: dark;
         border-radius: 16px;
-        box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+        /* A hairline draws the panel's edge on the black page (a shadow alone vanishes on black). */
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.14), 0 16px 48px rgba(0,0,0,0.6);
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -464,8 +480,9 @@
         transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, visibility 0s linear 0s;
       }
       .rlt-header {
-        background: ${CONFIG.BRAND_COLOR};
-        color: #fff;
+        background: ${CONFIG.PANEL};
+        color: ${CONFIG.MOON};
+        border-bottom: 1px solid ${CONFIG.HAIRLINE};
         padding: 16px 18px;
         display: flex;
         align-items: center;
@@ -473,24 +490,31 @@
         flex-shrink: 0;
       }
       .rlt-header-title { font-size: 16px; font-weight: 600; line-height: 1.2; }
-      .rlt-header-sub { font-size: 12px; opacity: 0.85; margin-top: 2px; }
-      .rlt-header-actions { display: flex; gap: 6px; }
+      .rlt-header-sub { font-size: 12px; color: ${CONFIG.HAZE}; margin-top: 2px; }
+      .rlt-avatar {
+        width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+        background: ${CONFIG.RAISE}; box-shadow: inset 0 0 0 1px ${CONFIG.HAIRLINE};
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 700; font-size: 14px; color: ${CONFIG.MOON};
+      }
+      .rlt-header-actions { display: flex; gap: 0; }
       .rlt-header-btn {
         background: none;
         border: none;
-        color: #fff;
+        color: ${CONFIG.MOON};
         cursor: pointer;
         padding: 10px;
         border-radius: 8px;
-        opacity: 0.85;
-        font-size: 11px;
+        font-size: 12px;
         min-height: 44px;
         min-width: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      .rlt-header-btn:hover { background: rgba(255,255,255,0.15); opacity: 1; }
+      .rlt-header-btn:hover { background: ${CONFIG.RAISE}; }
+      .rlt-header-btn:focus-visible { outline: 2px solid ${CONFIG.MOON}; outline-offset: -2px; }
+      .rlt-close-btn { font-size: 18px; line-height: 1; }
       .rlt-msgs {
         flex: 1;
         /* min-height:0 lets the message list be the ONE region that gives and takes height: it grows
@@ -498,29 +522,32 @@
            below keep their own height instead of squeezing the conversation. */
         min-height: 0;
         overflow-y: auto;
+        scrollbar-color: ${CONFIG.EDGE} transparent;
         padding: 16px;
         display: flex;
         flex-direction: column;
         gap: 12px;
-        background: #fafafa;
+        background: ${CONFIG.PANEL};
       }
       .rlt-msg {
         max-width: 80%;
         padding: 10px 14px;
         border-radius: 16px;
-        font-size: 14px;
+        font-size: 15px;
         line-height: 1.45;
         word-wrap: break-word;
       }
-      .rlt-msg-bot { background: #f1f3f4; color: #1f2937; align-self: flex-start; border-bottom-left-radius: 4px; white-space: normal; }
-      /* A reply Levan typed himself in the CRM. Same bubble, tinted and tagged, so it is
+      /* OURS AND THE VISITOR'S, told apart without a new hue: ours is drawn (a hairline on the
+         ground, left), the visitor's is filled (the raised step, right). */
+      .rlt-msg-bot { background: transparent; box-shadow: inset 0 0 0 1px ${CONFIG.HAIRLINE}; color: ${CONFIG.MOON}; align-self: flex-start; border-bottom-left-radius: 4px; white-space: normal; }
+      /* A reply Levan typed himself in the CRM. Same bubble, marked and tagged, so it is
          obvious at a glance which words are his and which are the assistant's. */
-      .rlt-msg-agent { background: #eaf1fb; box-shadow: inset 3px 0 0 ${CONFIG.BRAND_COLOR}; }
+      .rlt-msg-agent { box-shadow: inset 0 0 0 1px ${CONFIG.HAIRLINE}, inset 3px 0 0 ${CONFIG.ACTION}; }
       .rlt-agent-tag {
         display: block;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 600;
-        color: ${CONFIG.BRAND_COLOR_DARK};
+        color: ${CONFIG.ACTION};
         margin-bottom: 4px;
       }
       /* WHO IS ON THE OTHER END, at the moment it changes. The tag above says whose words a
@@ -534,15 +561,16 @@
         padding: 2px 0;
         font-size: 12px;
         line-height: 1.35;
-        color: #6b7280;
+        color: ${CONFIG.HAZE};
         text-align: center;
       }
-      .rlt-msg-user { background: ${CONFIG.BRAND_COLOR}; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; white-space: pre-wrap; }
-      .rlt-msg a { color: inherit; text-decoration: underline; word-break: break-all; }
-      .rlt-msg-bot a { color: ${CONFIG.BRAND_COLOR}; }
+      .rlt-msg-user { background: ${CONFIG.RAISE}; color: ${CONFIG.MOON}; align-self: flex-end; border-bottom-right-radius: 4px; white-space: pre-wrap; }
+      .rlt-msg a { color: inherit; text-decoration: underline; text-underline-offset: 2px; word-break: break-all; }
+      .rlt-msg-bot a { color: ${CONFIG.ACTION}; }
+      .rlt-msg a:focus-visible { outline: 2px solid ${CONFIG.MOON}; outline-offset: 2px; border-radius: 2px; }
       .rlt-msg-bot ul { margin: 4px 0 4px 16px; padding: 0; }
       .rlt-msg-bot li { margin: 2px 0; }
-      .rlt-msg-bot code { background: #e8eaed; border-radius: 3px; padding: 1px 4px; font-size: 13px; font-family: monospace; }
+      .rlt-msg-bot code { background: ${CONFIG.RAISE}; border-radius: 3px; padding: 1px 4px; font-size: 13px; font-family: monospace; }
       .rlt-chips {
         display: flex;
         flex-wrap: wrap;
@@ -551,24 +579,26 @@
         flex-shrink: 0;
       }
       .rlt-chip {
-        background: #fff;
-        border: 1px solid ${CONFIG.BRAND_COLOR};
-        color: ${CONFIG.BRAND_COLOR};
-        border-radius: 16px;
+        background: transparent;
+        border: 1px solid ${CONFIG.EDGE};
+        color: ${CONFIG.MOON};
+        border-radius: 9999px;
         padding: 10px 16px;
-        font-size: 12px;
+        font-size: 14px;
         cursor: pointer;
-        transition: background 0.15s, color 0.15s;
+        transition: background 0.15s, border-color 0.15s;
         min-height: 44px;
         display: inline-flex;
         align-items: center;
       }
-      .rlt-chip:hover { background: ${CONFIG.BRAND_COLOR}; color: #fff; }
+      .rlt-chip:hover { background: ${CONFIG.RAISE}; border-color: ${CONFIG.MOON}; }
+      .rlt-chip:focus-visible { outline: 2px solid ${CONFIG.MOON}; outline-offset: 2px; }
       .rlt-typing {
         display: inline-flex;
         gap: 4px;
         padding: 12px 14px;
-        background: #f1f3f4;
+        background: transparent;
+        box-shadow: inset 0 0 0 1px ${CONFIG.HAIRLINE};
         border-radius: 16px;
         align-self: flex-start;
         border-bottom-left-radius: 4px;
@@ -576,7 +606,7 @@
       .rlt-typing span {
         width: 6px;
         height: 6px;
-        background: #999;
+        background: ${CONFIG.HAZE};
         border-radius: 50%;
         animation: rlt-bounce 1.2s infinite;
       }
@@ -587,26 +617,30 @@
         30% { transform: translateY(-4px); opacity: 1; }
       }
       .rlt-input-wrap {
-        border-top: 1px solid #e5e7eb;
+        border-top: 1px solid ${CONFIG.HAIRLINE};
         padding: 12px;
         display: flex;
         gap: 8px;
-        background: #fff;
+        background: ${CONFIG.PANEL};
         flex-shrink: 0;
       }
       .rlt-input {
         flex: 1;
-        border: 1px solid #d1d5db;
+        background: #050505;
+        color: ${CONFIG.MOON};
+        caret-color: ${CONFIG.MOON};
+        border: 1px solid ${CONFIG.EDGE};
         border-radius: 9999px;
         padding: 10px 14px;
-        font-size: 14px;
+        font-size: 16px;
         resize: none;
         outline: none;
         font-family: inherit;
         max-height: 96px;
         line-height: 1.4;
       }
-      .rlt-input:focus { border-color: ${CONFIG.BRAND_COLOR}; }
+      .rlt-input::placeholder { color: ${CONFIG.HAZE}; opacity: 1; }
+      .rlt-input:focus { border-color: ${CONFIG.MOON}; box-shadow: 0 0 0 1px ${CONFIG.MOON}; }
       /* THE MIC TOOK 50px OFF THE COMPOSER, and the placeholder is what paid.
          Measured against the unmodified file (08-compare-baseline.mjs): at 390 the input went
          314px -> 266px, and "Ask about a listing, an area, anything..." stopped fitting on one
@@ -620,8 +654,8 @@
         text-overflow: ellipsis;
       }
       .rlt-send {
-        background: ${CONFIG.BRAND_COLOR};
-        color: #fff;
+        background: ${CONFIG.ACTION};
+        color: ${CONFIG.ACTION_INK};
         border: none;
         border-radius: 50%;
         width: 44px;
@@ -632,17 +666,18 @@
         justify-content: center;
         flex-shrink: 0;
       }
-      .rlt-send:hover { background: ${CONFIG.BRAND_COLOR_DARK}; }
-      .rlt-send:disabled { background: #c5c8cf; cursor: not-allowed; }
+      .rlt-send:hover { background: ${CONFIG.ACTION_HOVER}; }
+      .rlt-send:focus-visible { outline: 2px solid ${CONFIG.MOON}; outline-offset: 2px; }
+      .rlt-send:disabled { background: ${CONFIG.RAISE}; color: ${CONFIG.HAZE}; cursor: not-allowed; }
       .rlt-send svg { width: 18px; height: 18px; }
       /* ── CLICK TO TALK ────────────────────────────────────────────────────────────────────
          The mic sits to the LEFT of the composer, opposite Send, so the row reads talk / type /
          send and neither button is the odd one out. Same 44px target as Send, same radius, and
-         it borrows the panel's own blue rather than introducing a colour. */
+         it borrows the panel's own colours rather than introducing one. */
       .rlt-mic {
-        background: #fff;
-        color: ${CONFIG.BRAND_COLOR};
-        border: 1px solid #d1d5db;
+        background: transparent;
+        color: ${CONFIG.MOON};
+        border: 1px solid ${CONFIG.EDGE};
         border-radius: 9999px;
         min-width: 44px;
         height: 44px;
@@ -659,17 +694,17 @@
       /* The word beside the glyph is what turns a symbol into an invitation to talk. It rides on
          desktop, where the composer has the room; the phone stylesheet drops it back to a circle. */
       .rlt-mic-text { font-size: 13px; font-weight: 600; line-height: 1; }
-      .rlt-mic:hover { border-color: ${CONFIG.BRAND_COLOR}; background: #f4f8fd; }
-      .rlt-mic:focus-visible { outline: 2px solid ${CONFIG.BRAND_COLOR_DARK}; outline-offset: 2px; }
-      .rlt-mic:disabled { color: #9ca3af; border-color: #e5e7eb; cursor: not-allowed; background: #fff; }
+      .rlt-mic:hover { border-color: ${CONFIG.MOON}; background: ${CONFIG.RAISE}; }
+      .rlt-mic:focus-visible { outline: 2px solid ${CONFIG.MOON}; outline-offset: 2px; }
+      .rlt-mic:disabled { color: ${CONFIG.HAZE}; border-color: ${CONFIG.HAIRLINE}; cursor: not-allowed; background: transparent; }
       .rlt-mic svg { width: 18px; height: 18px; }
       /* Live: the button IS the stop control, so it has to stop looking like an invitation. */
       .rlt-mic.rlt-mic-live {
-        background: ${CONFIG.BRAND_COLOR};
-        border-color: ${CONFIG.BRAND_COLOR};
-        color: #fff;
+        background: ${CONFIG.ACTION};
+        border-color: ${CONFIG.ACTION};
+        color: ${CONFIG.ACTION_INK};
       }
-      .rlt-mic.rlt-mic-live:hover { background: ${CONFIG.BRAND_COLOR_DARK}; }
+      .rlt-mic.rlt-mic-live:hover { background: ${CONFIG.ACTION_HOVER}; }
 
       /* THE STATE STRIP. The owner asked to SEE the talking state, so this is a row and not a
          tooltip: a label that names what is happening plus three bars that move with the real
@@ -679,10 +714,10 @@
         align-items: center;
         gap: 10px;
         padding: 8px 16px;
-        border-top: 1px solid #e5e7eb;
-        background: #f7f9fc;
+        border-top: 1px solid ${CONFIG.HAIRLINE};
+        background: ${CONFIG.PANEL};
         font-size: 12px;
-        color: #374151;
+        color: ${CONFIG.MOON};
         flex-shrink: 0;
       }
       .rlt-voice[data-on="1"] { display: flex; }
@@ -693,7 +728,7 @@
         width: 3px;
         height: 4px;
         border-radius: 9999px;
-        background: ${CONFIG.BRAND_COLOR};
+        background: ${CONFIG.ACTION};
         transform-origin: bottom;
         transform: scaleY(1);
         transition: transform 0.08s linear;
@@ -701,7 +736,7 @@
       .rlt-voice-end {
         background: none;
         border: none;
-        color: ${CONFIG.BRAND_COLOR_DARK};
+        color: ${CONFIG.ACTION};
         font-size: 12px;
         font-weight: 600;
         cursor: pointer;
@@ -710,22 +745,24 @@
         min-height: 32px;
         flex-shrink: 0;
       }
-      .rlt-voice-end:hover { background: rgba(21,87,176,0.08); }
-      .rlt-voice-end:focus-visible { outline: 2px solid ${CONFIG.BRAND_COLOR_DARK}; outline-offset: 1px; }
+      .rlt-voice-end:hover { background: ${CONFIG.RAISE}; }
+      .rlt-voice-end:focus-visible { outline: 2px solid ${CONFIG.MOON}; outline-offset: 1px; }
       /* A bubble still being spoken. Quiet, so a finished line and a forming one are not the
          same weight, and the visitor can tell which words are settled. */
       .rlt-msg-live { opacity: 0.7; }
       .rlt-footer {
         text-align: center;
         font-size: 11px;
-        color: #6b7280;
+        color: ${CONFIG.HAZE};
         padding: 6px 12px;
-        background: #fff;
+        background: ${CONFIG.PANEL};
         flex-shrink: 0;
       }
+      /* The one red, kept for a failure only and dimmed to the night: 9.6:1. */
       .rlt-error {
-        background: #fef2f2;
-        color: #991b1b;
+        background: #1c1010;
+        box-shadow: inset 0 0 0 1px #4a2323;
+        color: #f4b8b3;
         padding: 10px 14px;
         border-radius: 8px;
         font-size: 13px;
@@ -845,7 +882,7 @@
   panel.innerHTML = `
     <div class="rlt-header">
       <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;">LT</div>
+        <div class="rlt-avatar">LT</div>
         <div>
           <div class="rlt-header-title">${CONFIG.BRAND_NAME}</div>
           <div class="rlt-header-sub">RealtyLT · REALTOR® in NY · Live MLS</div>
