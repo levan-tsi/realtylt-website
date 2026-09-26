@@ -260,3 +260,147 @@ session replay, told by the project's remote config to record canvases at 3 fps,
 read before the remote setting; replays keep pages, clicks and masked inputs): after, no task over
 115 ms and the lights drawn at 464 to 559 ms. Committed as `e5b1dd3` and deployed with builder 6's
 work (`8804a61..e5b1dd3`).
+
+## §2 The light density (builder 7)
+
+The owner: "it feels like there are more but we didn't put all of them ... if it's going to overload
+it don't put them, but if we're zooming in at least put whatever can fit".
+
+**What changed** (`components/home/g3d/cameras.ts`). Below 24 km (`CLOSE_FROM`) the budget rises as a
+power of the range (1.585, a few percent per 2 % of range, so still one smooth function) to three
+times (`CLOSE_BOOST`) at 12 km (`CLOSE_AT`) and under, where every chapter, county and borough plate
+stands (9 to 12 km); the gap eases in log range from `CITY_GAP` 14 px at 24 km to `CLOSE_GAP` 9 px at
+12 km. At and above 24 km nothing moved: the territory (145 km) and the tail (60 km) draw exactly
+round 57.8's count and gap (tested). `MAX_LIGHTS` stays 2,400 (the close budget tops out at ~2,355 at
+9 km; nothing reaches it, see below). The phone keeps `FINGER_GAP` 14 px and takes the same budget
+rise. Two knobs for his comparison, beside each other in the page's query: `?budget=` multiplies the
+count (0.1 to 8), `?gap=` sets one gap for every range under 60 km (now 4 to 30 px; `?gap=14` is the
+old gap everywhere, `?gap=14&budget=0.34` is close to the old look at every stop). The live map and
+the plates both take them (`budgetScale`, `cityGap`), so the calibration still compares like with like.
+
+**Drawn at each stop, before / after** (the frames probe; the landing's own count):
+
+| stop | 1440 before | 1440 after | 390 before | 390 after |
+|---|---|---|---|---|
+| territory (hero) | 445 | 445 | 257 | 257 |
+| Dutchess chapter | 279 | 322 | 167 | 167 |
+| Highlands | 216 | 275 | 112 | 112 |
+| Westchester chapter | 307 | 412 | 118 | 119 |
+| Ulster | 123 | 142 | 91 | 91 |
+| Dutchess county | 252 | 288 | 141 | 140 |
+| Orange | 286 | 350 | 171 | 172 |
+| Putnam | 99 | 111 | 52 | 52 |
+| Rockland | 381 | 481 | 131 | 131 |
+| Westchester county | 548 | 646 | 192 | 192 |
+| the Bronx | 271 | 380 | 115 | 115 |
+| Manhattan | 169 | 192 | 130 | 130 |
+| Queens | 760 | 1,141 | 286 | 286 |
+| Brooklyn | 239 | 264 | 140 | 139 |
+| Staten Island | 61 | 69 | 46 | 45 |
+| the harbour | 548 | 862 | 196 | 196 |
+| the tail (region) | 531 | 531 | 324 | 324 |
+
+**Why not the brief's 2,500 at Queens or 1,500 at Manhattan: what limits now** (measured,
+`scripts/_scratch-r61/density-why.mjs`: the homes in the window, those in the stop's county, their
+distinct positions at 1 px, and the most a greedy 9 px and 14 px gap could hold). The brief's targets
+counted every home in the WINDOW; a county stop draws only its county's homes, and many share a
+building (condos). Queens: 5,009 in the window, 2,949 in Queens, 1,965 distinct places, at most 1,134
+at 9 px: drawn 1,141. Manhattan: 1,826 in the window, only 270 in Manhattan (the rest are Queens,
+Brooklyn and New Jersey across the rivers), 245 distinct, 190 at 9 px: drawn 192. The Bronx 1,031 in
+county, 701 distinct, 386 at 9 px: 380. Dutchess county 369 in county, 350 distinct, 285 at 9 px: 288
+(all its homes would need lights closer than 9 px, i.e. two lamps touching). `?budget=8` changes no
+close stop at all: the budget no longer binds anywhere below 12 km; the 9 px gap is what limits,
+which is "whatever can fit" with each lamp still its own. On the phone the finger's 14 px binds at
+every close stop (Queens 286 against a budget of ~1,400), so the phone is unchanged, as the brief's
+"keep the finger gap at 14" implies.
+
+**Hover and taps** (each run ALONE on a warm server). Queens 1440: 50 of 50 named the nearest light
+(two runs, 0.009 to 0.012 ms per hit test); the first run after the restart named 45 and 5 none (the
+known cold under-count). Two lights inside one 14 px reach, proved directly
+(`scripts/_scratch-r61/hover-pairs.mjs`): 431 pairs of drawn lights 9 to 14 px apart at Queens; 25
+pairs, the pointer at 30 % of the way from A to B then at 70 %: 50 of 50 named the nearer one. Phone
+taps: the territory 30 of 30, Queens 26 of 26 (only 26 lights stand on open map there on a phone, the
+list covers the rest). The tap probe had two instrument faults, fixed in `_scratch-r57l-hover.mjs`:
+its "hide" tap aimed at the hero's heading, off screen at Queens (round 59's finding), and any spot on
+screen there is inside a county row's link, so the label now closes by Escape; and a light's 7 px aim
+error could land on a link beside it, so a candidate must have open map 8 px all round.
+
+**The frame budget.** The walk at 1440 (`_scratch-r58-transition.mjs`, now also printing the film
+layer's cost): p50 6.9, p95 7.1, p99 7.2 ms, max 90.3 (still at Dutchess, frame ~872, the same frame
+before the change: 90.4 and 97.3 in two base runs), the landing layer 0.86 ms mean / 2.4 max over 32
+draws (base 0.84 / 3.3), the film's per-frame light draw 0.74 ms mean / 4.1 max over 2,232 frames of 9
+films (the film layer's cost is now in `stats().plates.films.cost`). The densest legs alone
+(`scripts/_scratch-r61/film-cost.mjs`, each flight measured on its own):
+
+| leg (lights at the two ends) | old density (`?gap=14&budget=0.34`) | after | `?gap=5` |
+|---|---|---|---|
+| Westchester county to the Bronx | 1.01 / 2.0 ms (546, 271) | 1.27 / 2.6 (644, 380) | 1.36 / 3.0 (735, 531) |
+| Manhattan to Queens | 0.87 / 1.5 (170, 775) | 1.14 / 2.3 (192, 1,141) | 1.49 / 2.6 (218, 1,489) |
+| Queens to Brooklyn | 0.91 / 1.5 (775, 239) | 1.27 / 2.1 (1,141, 264) | 1.48 / 2.4 (1,489, 285) |
+
+(mean / max per frame). The draw grows about linearly with the lights (0.87 ms for 945 on the
+Manhattan leg, 1.49 for 1,707); three times the old lights (~2,800) would be about 2.5 ms mean by that
+slope. That is an EXTRAPOLATION: no stop can be made to hold three times the old count (even at 5 px
+Queens holds 1,502), so it was not measured. At the shipped density every leg is under 1.3 ms mean.
+The phone's walk: p50 6.9 ms, the film 0.37 to 0.40 ms mean; its landing layer shows a max of 26.8 and
+27.5 ms (mean 1.8 to 1.9) in two runs, at the same drawn counts as before (the phone's plan did not
+change), so most likely the first bake at 3x density, but NOT compared against the base build.
+
+**Calibration** (`_scratch-r58-calib.mjs --shots=hero,queens,dutchess-county`): 1440 the territory
+445 / 445 lights (443 common), Queens 1,138 live map / 1,137 plates, Dutchess county 286 / 286, all
+0.00 px mean, p95 and max; the phone 253 / 251, 283 / 278, 137 / 137, 0.00 px.
+
+**Looked at** (`docs/design-r61/density-wide.jpg`, 1440 before and after at seven stops, 636 KB;
+`density-tall.jpg`, 390, 274 KB; the frames in `scripts/_scratch-r61/density/{before,after}`, and
+Queens cropped at 1:1). Queens after: separate small warm-yellow lamps over the grid, a dark street
+between most of them, no halo touching the next, the Flushing name clear; denser than before and still
+lamps, not a blanket. The Bronx and Westchester county fill in along their streets the same way; the
+valley stops change little because their counties hold few homes. The phone frames are the same
+before and after.
+
+Gates: tsc clean; vitest 2254 (from 2248: the close budget and gap, the territory and tail unchanged,
+the knobs, the tints); the long-task probe 0 tasks of 100 ms+ in two runs (lights at 426 and 430 ms);
+reduced motion one 400 ms fade; JS off the plate stands, claims hidden, at 1440 and 390; the crawler
+ALL PASS.
+
+## §3 The tint comparison (builder 7; HIS DECISION, nothing live changed)
+
+The owner: "should we give park areas a little bit of green, not in a way to take attention, just dark
+green, in contrast with the night map, and the lakes or oceans a little bit bluish, but to stay in our
+colors."
+
+Built as a plate-style option only (`components/home/ml/style.ts` `PLATE_TINTS`, `nightStyle({ plate:
+{ tint: "a" | "b" } })`, the renderer's `?tint=a|b` on a pinned `?plate=` page): it recolours the wood,
+the park and the water fills and nothing else (tested); the live style's fingerprints and the untinted
+plate style are byte for byte as before (tested). The three plates (Dutchess county, Putnam, Queens,
+both aspects, the deep render) were shot three times into a scratch directory
+(`make-plates.mjs --stage=shoot --deep=1 --raw=scripts/_scratch-r61/tints/raw-{0,a,b} --render=tint=a`),
+graded and encoded exactly as the live plates (`scripts/_scratch-r61/tints-encode.mjs`), and each
+render's recorded matrix equals the live manifest's to 1e-15, so our lights land where they do on the
+page. Then the home page itself was photographed at each stop with the plate's image requests answered
+from the scratch encodes by the probe's router (`scripts/_scratch-r61/tints-shoot.mjs`: nothing on the
+site changes), our lights on. `public/plates`, the manifest and the films are untouched.
+
+| | parks and wood | water |
+|---|---|---|
+| current | `#07090c` (wood and parks, a shade under the land `#0a0c10`) | `#010309` |
+| A, subtle | `#0b120e` | `#03081a` |
+| B, a touch more | `#0d1610` | `#051030` |
+
+Sheets: `docs/design-r61/tints-wide.jpg` (1440 with the page's words, 453 KB), `tints-tall.jpg` (390,
+the page's words hidden so the ground can be judged, our lights on, 371 KB) and `tints-tall-page.jpg`
+(390 as a visitor sees it, 316 KB: the words cover most of the map at these three stops).
+
+**What I saw and my recommendation.** The two colours do not behave alike. The water is a large flat
+field, and because the current water is darker than the land, any blue lift turns it from a hole into
+a surface: at A the Hudson at Poughkeepsie, the Putnam reservoirs and Flushing Bay already read as a
+clear navy, and at B (with the valley plates' 1.25 grade on top) as a saturated royal blue, a new hue
+that competes with the lamps on the Putnam and Dutchess plates. The green is the opposite: the parks
+and woods are broken up by the relief and the town fill, and even at B it reads only on a large park
+(the state park south of Carmel, a muted moss) and is invisible at Queens' scale. So B is too much for
+the water and A is already "more than a little". My recommendation: A's green for the parks and wood
+(`#0b120e`, quiet, "in our colours"), and if he wants the water bluish at all, a step under A
+(about `#02061a` to `#020514`), not B; the lights stay the brightest thing on every candidate. That
+softer water was not rendered; it is one more shoot of three plates if he wants to see it. Choosing
+any tint means re-rendering every county plate and re-recording the films (the brief: about an hour of
+recording, 30 minutes of encoding, the joins re-measured).
