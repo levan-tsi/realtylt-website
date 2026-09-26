@@ -186,7 +186,7 @@ export default function ConnectPage() {
                   href={SITE.connectPhoneHref}
                   className="inline-flex min-h-6 items-center font-bold text-ink underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
                 >
-                  Call or text
+                  Call or text {SITE.connectPhone}
                 </a>{" "}
                 and we&rsquo;ll find a time. Evenings and weekends included.
               </p>
@@ -215,7 +215,7 @@ export default function ConnectPage() {
             <BookingFrame
               src={BOOKING_EMBED_URL}
               title="Book an appointment with Levan Tsiklauri (Google Calendar)"
-              className="block h-[1040px] w-full border-0 md:h-[899px]"
+              className="block h-[1040px] w-full rounded-2xl border-0 md:h-[899px]"
             />
 
             {/* THE EMBED-IS-BROKEN FALLBACK stays under the thing it is a fallback for. The other
