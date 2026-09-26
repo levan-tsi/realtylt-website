@@ -230,8 +230,14 @@ export class PlateController implements GroundEngine {
     try {
       // The server rendered the territory in the first layer (app/page.tsx): decoding it is all; any
       // other first shot (the page opened scrolled down) is set and decoded now.
-      if (first.el.img.dataset.shot !== shot) this.setSources(first.el.picture, first.el.img, shot);
-      await this.decoded(first.el.img);
+      const img = first.el.img;
+      if (img.dataset.shot !== shot) this.setSources(first.el.picture, img, shot);
+      // Round 61: a picture already in (the usual case: the server's territory, its bytes preloaded
+      // with the document and landed long before the script) is on screen at full strength, so there
+      // is nothing to wait for. Awaiting `decode()` on it resolved only after the rest of the page
+      // had hydrated (a task queued behind React's; measured: the engine up at ~500 ms, the reveal
+      // and the lights at ~700), so the plate's lights waited ~200 ms on work that is not theirs.
+      if (!(img.complete && img.naturalWidth > 0)) await this.decoded(img);
     } catch (e) {
       return this.fail(`the plate did not load: ${(e as Error).message}`);
     }
@@ -1063,7 +1069,14 @@ export class PlateController implements GroundEngine {
     s.levels = levels;
     s.layer.fadeMs = fadeMs;
     s.layer.plan(plan, instant || this.opts.reduced, levels);
+    // Round 61: the moment the first lights are on their way in, on the navigation's clock (the
+    // boot probes read it; polling for it was late by up to a frame and a task).
+    if (plan.length && !this.lightsMarked) {
+      this.lightsMarked = true;
+      performance.mark("ml:lights");
+    }
   }
+  private lightsMarked = false;
 }
 
 /** A frame no home is projected with (the planner reads `proj`). */

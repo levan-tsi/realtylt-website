@@ -13,9 +13,14 @@ let pending: Promise<LightPoints | null> | null = null;
  * response's `Vary` the likely reason), so the request now IS the fetch, not a hint about it. */
 export const EARLY_LIGHTS_KEY = "__rltLights";
 
-function takeEarly(): Promise<Response> | null {
+/** Round 61: the early script parses the answer too (`EARLY_LIGHTS_SCRIPT`), so the JSON is read
+ * while the page is still waiting for its bundle, not after hydration; the window holds the parsed
+ * lights (a failed or non-OK answer rejects, and the next caller fetches afresh). */
+export const EARLY_LIGHTS_SCRIPT = `window.${EARLY_LIGHTS_KEY}=fetch("/api/lights").then(function(r){if(!r.ok)throw new Error("lights "+r.status);return r.json()});window.${EARLY_LIGHTS_KEY}.catch(function(){});`;
+
+function takeEarly(): Promise<PackedLights> | null {
   if (typeof window === "undefined") return null;
-  const w = window as unknown as Record<string, Promise<Response> | undefined>;
+  const w = window as unknown as Record<string, Promise<PackedLights> | undefined>;
   const p = w[EARLY_LIGHTS_KEY];
   if (!p) return null;
   delete w[EARLY_LIGHTS_KEY];
@@ -23,8 +28,7 @@ function takeEarly(): Promise<Response> | null {
 }
 
 export function loadLights(): Promise<LightPoints | null> {
-  pending ??= (takeEarly() ?? fetch("/api/lights"))
-    .then((r) => r.json() as Promise<PackedLights>)
+  pending ??= (takeEarly() ?? fetch("/api/lights").then((r) => r.json() as Promise<PackedLights>))
     .then((p) => {
       const pts = unpackLights(p);
       return pts.x.length ? pts : null;

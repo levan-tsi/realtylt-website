@@ -27,15 +27,16 @@ import { TESTIMONIALS } from "@/content/testimonials";
 import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
 import { getActiveSaleCount, isDbConfigured } from "@/lib/idx/db";
 import { OG_DEFAULTS, SITE } from "@/lib/site";
-import type { ReactNode } from "react";
-import { EARLY_LIGHTS_KEY } from "@/lib/idx/lights-client";
+import { Suspense, type ReactNode } from "react";
+import { EARLY_LIGHTS_SCRIPT } from "@/lib/idx/lights-client";
 
 /** THE LIGHTS' EARLY FETCH (round 59): one line of script at the top of the page starts the fetch
  * of /api/lights while the document is still parsing, ahead of the page's own bundle, and leaves
- * the promise on the window for lib/idx/lights-client.ts to take (its `takeEarly`). The trailing
- * catch keeps a failed early fetch from logging as unhandled; the client sees the failure itself
- * and fetches again. With JavaScript off nothing runs and the plate stands as before. */
-const EARLY_LIGHTS = `window.${EARLY_LIGHTS_KEY}=fetch("/api/lights");window.${EARLY_LIGHTS_KEY}.catch(function(){});`;
+ * the promise on the window for lib/idx/lights-client.ts to take (its `takeEarly`); since round 61
+ * the promise is of the parsed answer, so the JSON is read before hydration. The trailing catch
+ * keeps a failed early fetch from logging as unhandled; the client sees the failure itself and
+ * fetches again. With JavaScript off nothing runs and the plate stands as before. */
+const EARLY_LIGHTS = EARLY_LIGHTS_SCRIPT;
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
@@ -305,6 +306,11 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* Round 61: everything below the first screen is its own hydration unit. The server's
+            markup is the same (a Suspense boundary with nothing to wait for renders inline); the
+            client commits the ground and the hero first, so the plate's engine and its lights
+            start without waiting for the rails, the intake and the rest to hydrate. */}
+        <Suspense>
         {/* ── The intake (round 50, owner-directed). One question (buy, sell, or both), then the
             two or three that matter, then a name. The camera has climbed the river to Dutchess,
             where our office is; the scene dims a third so the panel reads over it. */}
@@ -479,6 +485,7 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+        </Suspense>
       </Ground>
     </div>
   );

@@ -22,7 +22,8 @@ describe("the lights client and the page's early fetch (round 59)", () => {
     const fetch = vi.fn(async () => response());
     vi.stubGlobal("fetch", fetch);
     const { loadLights, EARLY_LIGHTS_KEY } = await import("./lights-client");
-    g.window![EARLY_LIGHTS_KEY] = Promise.resolve(response());
+    // Round 61: the page's script leaves the PARSED answer (its JSON read before hydration).
+    g.window![EARLY_LIGHTS_KEY] = Promise.resolve(packed);
     const pts = await loadLights();
     expect(pts?.x.length).toBe(1);
     expect(fetch).not.toHaveBeenCalled();
@@ -40,6 +41,30 @@ describe("the lights client and the page's early fetch (round 59)", () => {
     expect(pts?.x.length).toBe(1);
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith("/api/lights");
+  });
+
+  it("the page's inline script fetches /api/lights once and leaves the parsed answer (round 61)", async () => {
+    const fetch = vi.fn(async () => ({ ok: true, status: 200, json: async () => packed }) as unknown as Response);
+    vi.stubGlobal("fetch", fetch);
+    const { loadLights, EARLY_LIGHTS_KEY, EARLY_LIGHTS_SCRIPT } = await import("./lights-client");
+    new Function("window", EARLY_LIGHTS_SCRIPT)(g.window);
+    expect(fetch).toHaveBeenCalledWith("/api/lights");
+    expect(await (g.window![EARLY_LIGHTS_KEY] as Promise<unknown>)).toEqual(packed);
+    const pts = await loadLights();
+    expect(pts?.x.length).toBe(1);
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("a non-OK answer to the inline script rejects, and the client fetches afresh", async () => {
+    const fetch = vi.fn(async () => ({ ok: false, status: 503, json: async () => ({ error: "busy" }) }) as unknown as Response);
+    vi.stubGlobal("fetch", fetch);
+    const { loadLights, EARLY_LIGHTS_SCRIPT } = await import("./lights-client");
+    new Function("window", EARLY_LIGHTS_SCRIPT)(g.window);
+    expect(await loadLights()).toBeNull();
+    fetch.mockImplementation(async () => response());
+    const pts = await loadLights();
+    expect(pts?.x.length).toBe(1);
+    expect(fetch).toHaveBeenCalledTimes(2);
   });
 
   it("a failed early fetch is not remembered: the next caller fetches afresh", async () => {
