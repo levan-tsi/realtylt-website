@@ -15,8 +15,8 @@ export default function NotFound() {
           all still here.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button href="/search" variant="light">Search Homes</Button>
-          <Button href="/" variant="outline-light">Back To Home</Button>
+          <Button href="/search" variant="light">Search homes</Button>
+          <Button href="/" variant="outline-light">Back to home</Button>
         </div>
         <p className="mt-8 text-sm text-paper/50">
           Or just call us:{" "}
