@@ -39,6 +39,15 @@ PRIVATE, noindex production at realtylt-website.vercel.app. Windows box; in git-
   16px cards/media · 24px large panels · rounded-full pills. Body ≥16px on mobile,
   controls floored at 16px (iOS zoom), tap targets ≥24px, focus-visible ≥3:1,
   reduced-motion clean, works with JS disabled.
+- GOOGLE MAPS KEYS (split 2026-09-26, Google Cloud project `realtylt-crm`, console as
+  levan@realtylt.com with `?authuser=levan@realtylt.com`): `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` is
+  the BROWSER key "RealtyLT browser key (websites only)" (ends `ZTwU`), locked to realtylt.com,
+  www, app.realtylt.com, realtylt-website.vercel.app and local http://localhost / 127.0.0.1 on
+  ports 3000, 3001, 3021, 3100, 3101, 3102, 3777; APIs: Maps JavaScript, Geocoding, Places (New).
+  On Vercel it must be type **Config** (a Secret can never become Config: delete and re-add). A
+  new local port needs adding to the key (Google rejects `localhost:*`). The website has NO
+  server-side Google call. The CRM's server key is separate (`GOOGLE_MAPS_API_KEY`, see the CRM).
+  Never paste a key into a doc, commit or chat; `.env.local` holds it locally (gitignored).
 - LAUNCH IS GATED: the site is noindex on purpose. The launch switches
   (NEXT_PUBLIC_SITE_URL, apex DNS, PRELAUNCH=1) are the OWNER'S, in that order. Never
   remove noindex.
