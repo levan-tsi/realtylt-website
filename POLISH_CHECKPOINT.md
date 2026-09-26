@@ -12,8 +12,12 @@ invisible on the night, a heading widow, Market Insights cards, "a Orange County
 `docs/design-r62/before-after-*.jpg`. Gates on a production build: tsc clean, vitest 2272, the 1440
 home frames identical to the pre-round build at all 20 stops, calibration 0.00 px, taps 30/30, hover
 50/50, films play, no long task over 150 ms, contrast and light scans clean of ours, JS off and
-reduced motion OK, qa-crawl ALL PASS. NEXT: his verdict on his phone (a real iPhone is still
-unverified); open items in the record §4.
+reduced motion OK, qa-crawl ALL PASS. HIS FIRST LOOK ("much better on the phone") asked for two
+more, both DONE and live (4830990): the two boxed links right under the search on the first screen,
+and the phone's flight films re-encoded at the phone's own 1170 x 2532 (the 780 clips had lost the
+street grid; record §5, +19 MB for the set, 1 to 4 frames over 34 ms per walk in desktop Chrome's
+software decode). NEXT: his verdict on a real iPhone (flights smooth? the county walk's length?);
+open items in the record §4.
 
 ---
 
