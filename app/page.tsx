@@ -215,7 +215,7 @@ export default async function HomePage() {
               </h1>
             </div>
 
-            <div data-quiet="lead" className="pointer-events-auto mt-10 max-w-[36rem] lg:mt-9">
+            <div data-quiet="lead" className="pointer-events-auto mt-10 max-w-[36rem] max-[359px]:mt-6 lg:mt-9">
               {/* On a phone the count is a two-line caption over the search (17 px, the reach of
                   the towns is already the eyebrow's), so the city above it stays open. */}
               <p className={`t-lead phone-halo rise rise-2 max-w-[30rem] text-ink-soft max-lg:text-[17px] max-lg:[text-wrap:pretty] ${halo}`}>
@@ -223,12 +223,12 @@ export default async function HomePage() {
                   <>
                     <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale{" "}
                     <span className="max-lg:hidden">right now, from Poughkeepsie to the five boroughs.</span>
-                    <span className="lg:hidden">right now.</span> {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}
+                    <span className="lg:hidden">right now.</span> {mapped ? <span data-lights-claim className="max-[359px]:hidden">Every light on the map is one of them.</span> : "The bright lights below are them."}
                   </>
                 ) : (
                   <>
                     Homes for sale <span className="max-lg:hidden">right now, from Poughkeepsie to the five boroughs.</span>
-                    <span className="lg:hidden">right now.</span> {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}</>
+                    <span className="lg:hidden">right now.</span> {mapped ? <span data-lights-claim className="max-[359px]:hidden">Every light on the map is one of them.</span> : "The bright lights below are them."}</>
                 )}
               </p>
               {/* One instrument (components/search-instrument.test.ts pins the geometry: 16px
@@ -237,7 +237,7 @@ export default async function HomePage() {
               <form
                 action="/search"
                 role="search"
-                className="search-instrument phone-glass rise rise-3 relative mt-7 flex w-full max-w-[34rem] items-center gap-2 rounded-2xl border border-line-strong bg-night-deep/70 p-2 backdrop-blur-md transition-colors focus-within:border-stone hover:border-stone/70 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-porchlight"
+                className="search-instrument phone-glass rise rise-3 relative mt-7 max-[359px]:mt-5 flex w-full max-w-[34rem] items-center gap-2 rounded-2xl border border-line-strong bg-night-deep/70 p-2 backdrop-blur-md transition-colors focus-within:border-stone hover:border-stone/70 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-porchlight"
               >
                 <label htmlFor="home-search" className="sr-only">
                   Search for homes by town, zip, or address
@@ -250,7 +250,7 @@ export default async function HomePage() {
                   // 108px, because the empty field also reserved the clear button's 23px. The night
                   // rule in globals.css drops that reserve while the placeholder shows, and 8px off
                   // the field's inset and 16px off the action's bring the room to 155px.
-                  className="w-full bg-transparent px-4 py-3 text-[17px] text-ink placeholder:text-stone focus:outline-none max-[359px]:px-3"
+                  className="phone-halo w-full bg-transparent px-4 py-3 text-[17px] text-ink placeholder:text-stone focus:outline-none max-[359px]:px-3"
                 />
                 <button
                   type="submit"
