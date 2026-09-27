@@ -41,7 +41,13 @@ export const MAX_PITCH = 65;
  * keeps the signature where round 57.12 put it on the screen (right of the list): the centre's offset
  * from the signature is scaled with the range. */
 export const ML_SHOTS: Record<ShotName, { wide: MlShot; tall: MlShot }> = {
-  hero: { wide: s(41.0093, -74.3582, 145_000, 55, 8), tall: s(40.93, -73.9, 140_000, 55, 340) },
+  // Round 64, the owner (2026-09-27): the laptop's first screen showed "a lot of area of the map of the
+  // Jersey that we're not serving at all"; zoom in to the areas we cover. At heading 8 the old camera
+  // was already the tightest that holds the whole territory right of the words (a fit of its edge
+  // towns, scripts/_scratch-r64-heroopts.mjs), so the closer camera turns: heading -15, pitch 60, the
+  // Hudson a diagonal up the frame, the city large at the lower right, Kingston to Tottenville still in
+  // the window at 1440 and at 1920's crop, less New Jersey under the headline. The phone unchanged.
+  hero: { wide: s(40.8866, -74.3111, 110_800, 60, 345), tall: s(40.93, -73.9, 140_000, 55, 340) },
   dutchess: { wide: s(41.7211, -73.958, 11_000, 60, 5), tall: s(41.7102, -73.9449, 11_000, 60, 5) },
   highlands: { wide: s(41.426, -73.9668, 12_000, 60, 190), tall: s(41.426, -73.9668, 12_000, 60, 190) },
   westchester: { wide: s(41.0702, -73.8934, 11_000, 60, 265), tall: s(41.0702, -73.8934, 11_000, 60, 265) },

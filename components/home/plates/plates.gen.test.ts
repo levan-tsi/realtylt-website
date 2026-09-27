@@ -63,7 +63,7 @@ describe("the plates manifest", () => {
       }
   });
 
-  it("round 59: every county plate stands at most 10 km from its place, the chapters at most 12, the territory as it was", () => {
+  it("round 59: every county plate stands at most 10 km from its place, the chapters at most 12, the territory as shots.ts has it", () => {
     // the range read back from the recorded camera for the render's own height and lens: a deep
     // plate's doubled height and zoom + 1 give the same metres
     const range = (p: Plate) => rangeForZoom(p.cam.zoom, p.cam.lat, p.h, p.cam.fov);
@@ -71,7 +71,9 @@ describe("the plates manifest", () => {
       for (const s of Object.keys(AREA_COUNTY_OF) as ShotName[]) expect(range(PLATES[s][a]), `${s}/${a}`).toBeLessThanOrEqual(10_000 + 1);
       for (const s of ["dutchess", "highlands", "westchester"] as const) expect(range(PLATES[s][a]), `${s}/${a}`).toBeLessThanOrEqual(12_000 + 1);
     }
-    expect(Math.round(range(PLATES.hero.wide))).toBe(145_000);
+    // Round 64: the laptop's territory came in from 145 km to 110.8 km (shots.ts, the owner's "zoom in
+    // to the areas that we cover"); the phone's as it was.
+    expect(Math.round(range(PLATES.hero.wide))).toBe(110_800);
     expect(Math.round(range(PLATES.hero.tall))).toBe(140_000);
     expect(Math.round(range(PLATES.region.wide))).toBe(60_000);
   });
