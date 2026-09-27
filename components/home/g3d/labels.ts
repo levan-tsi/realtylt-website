@@ -57,8 +57,9 @@ export interface PlacedLabel extends Box {
  * land: Manhattan on the park (the island's south is where Google writes "New York"), Brooklyn
  * and Queens inland, the Bronx north of the Cross Bronx, Staten Island on the Greenbelt,
  * Westchester between White Plains and the reservoirs, Rockland west of the Tappan Zee, Putnam
- * round Carmel, Orange between Goshen and Newburgh, Dutchess east of Poughkeepsie, Ulster west of
- * the river at New Paltz and Kerhonkson. */
+ * round Carmel, Orange between Goshen and Newburgh, Dutchess round LaGrange, Ulster at Gardiner
+ * (round 64: at 41.76 / -73.74 and 41.8 / -74.2, under the closer laptop camera, both names stood
+ * under the header row on a short 1920 x 960 or 900 window and were dropped). */
 const ANCHORS: Record<string, [number, number]> = {
   manhattan: [40.785, -73.965],
   brooklyn: [40.645, -73.945],
@@ -69,8 +70,8 @@ const ANCHORS: Record<string, [number, number]> = {
   rockland: [41.16, -74.04],
   putnam: [41.43, -73.75],
   orange: [41.4, -74.32],
-  dutchess: [41.76, -73.74],
-  ulster: [41.8, -74.2],
+  dutchess: [41.67, -73.78],
+  ulster: [41.68, -74.13],
 };
 
 /** Who wins a crowded spot: Manhattan first (the one name every stranger knows), then the
