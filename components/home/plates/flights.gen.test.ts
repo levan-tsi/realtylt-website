@@ -3,7 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { FLIGHTS } from "./flights.gen";
 import { PLATES } from "./plates.gen";
-import { coverFit, filmLadder, filmOf, filmSrc, framePlate, plateProjector, type FilmFrame, type PlateAspect } from "./plate-frame";
+import { coverFit, filmLadder, filmOf, filmSrc, filmWidth, framePlate, plateProjector, type FilmFrame, type PlateAspect } from "./plate-frame";
 import { AREA_FLIGHT, FLIGHT, type ShotName } from "../night/shots";
 import { flightMs } from "../ml/shots";
 import { rangeForZoom } from "../ml/geo";
@@ -51,10 +51,14 @@ describe("the recorded flights", () => {
       }
   });
 
-  it("one codec an aspect: the laptop's VP9 in WebM at 1440, the phone's H.264 in MP4 at its own 1170 (round 62)", () => {
+  it("one codec an aspect: the laptop's VP9 in WebM at 1440 and its plate's 2880 (round 64), the phone's H.264 in MP4 at its own 1170 (round 62)", () => {
     for (const [a, b] of PAIRS) {
       const f = FLIGHTS[`${a}--${b}`];
-      expect(f.wide.webm).toEqual([1440]);
+      expect(f.wide.webm).toEqual([1440, 2880]);
+      // a 2x laptop takes the 2880 clip, a 1x one the 1440 (plate-frame.ts filmWidth, the window's device width)
+      expect(filmWidth(f.wide.webm, 2880)).toBe(2880);
+      expect(filmWidth(f.wide.webm, 1440)).toBe(1440);
+      for (const w of f.wide.webm) for (const [x, y] of [[a, b], [b, a]]) expect(fs.existsSync(pub(filmSrc(x, y, "wide", w, "webm"))), `${x}--${y} ${w}`).toBe(true);
       expect(f.wide.mp4).toEqual([]);
       expect(f.tall.webm).toEqual([]);
       expect(f.tall.mp4).toEqual([1170]);

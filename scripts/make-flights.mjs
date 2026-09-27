@@ -82,12 +82,22 @@ const DISSOLVE = { lo: 0.3, hi: 0.7 };
 // phone's own width, 1170 x 2532, crf 28 with `-tune animation` (flat fills and hard lines); the 780
 // clip at crf 30 had lost the street grid the plate it lands on shows (docs/parity/DESIGN-ROUND62.md
 // §5). About 1.3 MB a clip instead of 0.6.
-const ENC = { wide: { vp9: [1440], h264: [] }, tall: { vp9: [], h264: [1170] } };
+// Round 64 (the owner: "we shouldn't lose the quality of the map, even on the computer"): the laptop's
+// 1440 clip was shown at twice its size on a 2x screen (1.33x at 1920) and the street grid went soft
+// mid-flight; the clip at the plate's own 2880 as well, crf 46, for any window over 1440 device
+// pixels (plate-frame.ts filmWidth), the 1440 kept for a 1x screen. 2880 clips: 0.76 to 1.8 MB, 38 MB
+// the set. Measured on the production build before choosing it: frames over 34 ms in flight no worse
+// than the 1440 set (docs/parity/DESIGN-ROUND64-QUALITY.md).
+const ENC = { wide: { vp9: [1440, 2880], h264: [] }, tall: { vp9: [], h264: [1170] } };
 const CRF = { wide: { vp9: Number(flag("crf", "46")), h264: 30 }, tall: { vp9: 46, h264: Number(flag("crft", "28")) } };
 const CRF_MAX = { vp9: 52, h264: 34 };
 const CAP = 900 * 1024;
 /** Round 62: the phone's full-width clip is allowed more before its quality is stepped down. */
 const CAP_TALL = 1800 * 1024;
+/** Round 64: the laptop's 2880 clip is allowed what its four times the pixels need (1.8 MB the densest
+ * at crf 46) before its quality is stepped down. */
+const CAP_WIDE_FULL = 2400 * 1024;
+const capOf = (aspect, w) => (aspect === "tall" ? CAP_TALL : w > 1440 ? CAP_WIDE_FULL : CAP);
 
 export const PAIRS = SHOTS.slice(0, -1).map((a, i) => [a, SHOTS[i + 1]]);
 const pairName = (a, b) => `${a}--${b}`;
@@ -366,7 +376,7 @@ async function encode() {
             const out = `${OUT}/${from}--${to}-${aspect}-${w}.${ext}`;
             let crf = CRF[aspect][codec];
             let size = encodeOne(master, out, codec, w, h, G, reverse, crf, rec.n);
-            while (size > (aspect === "tall" ? CAP_TALL : CAP) && crf < CRF_MAX[codec]) {
+            while (size > capOf(aspect, w) && crf < CRF_MAX[codec]) {
               crf += 2;
               size = encodeOne(master, out, codec, w, h, G, reverse, crf, rec.n);
             }

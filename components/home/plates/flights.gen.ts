@@ -7,67 +7,67 @@ import type { FilmManifest } from "./plate-frame";
 
 export const FLIGHTS: FilmManifest = {
   "hero--dutchess": {
-    wide: { fps: 30, n: 75, ms: 2513, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 75, ms: 2513, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 77, ms: 2558, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "dutchess--highlands": {
-    wide: { fps: 30, n: 64, ms: 2123, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 64, ms: 2123, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 63, ms: 2113, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "highlands--westchester": {
-    wide: { fps: 30, n: 65, ms: 2177, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 65, ms: 2177, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 65, ms: 2177, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "westchester--ulster": {
-    wide: { fps: 30, n: 74, ms: 2478, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 74, ms: 2478, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 75, ms: 2488, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "ulster--dutchess-county": {
-    wide: { fps: 30, n: 60, ms: 2013, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 60, ms: 2013, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 62, ms: 2053, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "dutchess-county--orange": {
-    wide: { fps: 30, n: 62, ms: 2077, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 62, ms: 2077, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 61, ms: 2037, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "orange--putnam": {
-    wide: { fps: 30, n: 62, ms: 2068, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 62, ms: 2068, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 63, ms: 2089, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "putnam--rockland": {
-    wide: { fps: 30, n: 66, ms: 2205, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 66, ms: 2205, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 66, ms: 2196, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "rockland--westchester-county": {
-    wide: { fps: 30, n: 61, ms: 2019, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 61, ms: 2019, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 61, ms: 2037, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "westchester-county--bronx": {
-    wide: { fps: 30, n: 59, ms: 1960, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 59, ms: 1960, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 59, ms: 1955, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "bronx--manhattan": {
-    wide: { fps: 30, n: 55, ms: 1839, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 55, ms: 1839, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 55, ms: 1845, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "manhattan--queens": {
-    wide: { fps: 30, n: 57, ms: 1898, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 57, ms: 1898, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 57, ms: 1903, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "queens--brooklyn": {
-    wide: { fps: 30, n: 59, ms: 1961, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 59, ms: 1961, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 58, ms: 1943, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "brooklyn--staten-island": {
-    wide: { fps: 30, n: 55, ms: 1843, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 55, ms: 1843, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 57, ms: 1901, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "staten-island--harbour": {
-    wide: { fps: 30, n: 56, ms: 1860, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 56, ms: 1860, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 55, ms: 1839, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "harbour--region": {
-    wide: { fps: 30, n: 72, ms: 2404, w: 2880, h: 1800, k: 2, webm: [1440], mp4: [] },
+    wide: { fps: 30, n: 72, ms: 2404, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 72, ms: 2404, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
 };
