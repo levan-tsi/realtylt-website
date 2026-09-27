@@ -184,7 +184,11 @@ async function shoot() {
     // holds (`?elev=`): the matrix is then the live map's exactly, doubled.
     const plain = deep ? await open({ width: A.vp.width / 2, height: A.vp.height / 2 }, 1, A.mobile) : null;
     for (const shot of wanted) {
-      const q = new URLSearchParams({ ground: "ml", plate: shot, cover: "0", homes: "0", slow: "0", pr: String(A.dpr), ...(deep ? { deep: "1" } : {}) });
+      // Round 64: a plain (not deep) plate is shot in the LIVE style (`?pstyle=0`), as every plain plate
+      // and film was (round 58, make-flights.mjs). Without it the pinned page takes round 59's plate
+      // style, whose roads start at zoom 10 (style.ts PLATE_ROADS_MINZOOM): the territory, at zoom 9,
+      // came back with no road at all (the "missing roads" of 2026-09-26).
+      const q = new URLSearchParams({ ground: "ml", plate: shot, cover: "0", homes: "0", slow: "0", pr: String(A.dpr), ...(deep ? { deep: "1" } : { pstyle: "0" }) });
       for (const [k, v] of new URLSearchParams(renderAll || RENDER[shot] || "")) q.set(k, v);
       const t0 = Date.now();
       if (plain) {
