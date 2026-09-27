@@ -234,3 +234,28 @@ describe("the plate tints (a comparison, not the live look)", () => {
     for (const t of Object.values(PLATE_TINTS)) for (const c of [t.green, t.water]) for (const v of rgbOf(c)!) expect(v).toBeLessThan(0x32);
   });
 });
+
+/** Round 64: the territory and region plates are deep renders in the LIVE style (`?pstyle=live`), so
+ * their far roads are drawn continuous instead of as dotted beads. The page never passes `plate`. */
+describe("the live style one zoom deeper (the territory plates)", () => {
+  const sha = (x: unknown) => createHash("sha256").update(JSON.stringify(x)).digest("hex").slice(0, 16);
+  const layer = (s: ReturnType<typeof nightStyle>, id: string) => s.layers.find((l) => l.id === id) as { minzoom?: number; paint: Record<string, unknown> };
+  it("leaves the page's style as it was, and is the live style itself when not deep", () => {
+    expect(sha(nightStyle())).toBe("e44bfb7e13e7c826");
+    expect(sha(nightStyle({ plate: { live: true } }).layers)).toBe(sha(nightStyle().layers));
+  });
+  it("moves every zoom stop up one and doubles every width, so the picture's lines are the live ones", () => {
+    const live = nightStyle(), deep = nightStyle({ plate: { live: true, deep: true } });
+    expect(deep.layers.map((l) => l.id)).toEqual(live.layers.map((l) => l.id));
+    for (const id of ["road-minor", "road-tertiary", "road-secondary", "road-primary", "road-motorway"]) {
+      const a = layer(live, id), b = layer(deep, id);
+      expect(b.minzoom).toBe((a.minzoom ?? 0) + 1);
+      const wa = a.paint["line-width"] as number[], wb = b.paint["line-width"] as number[];
+      expect([wb[3], wb[4], wb[5], wb[6]]).toEqual([(wa[3] as number) + 1, (wa[4] as number) * 2, (wa[5] as number) + 1, (wa[6] as number) * 2]);
+      expect(b.paint["line-opacity"]).toEqual((a.paint["line-opacity"] as unknown[]).map((v, i) => (i === 3 || i === 5 ? (v as number) + 1 : v)));
+      expect(b.paint["line-color"]).toBe(a.paint["line-color"]);
+    }
+    expect(layer(deep, "buildings").minzoom).toBe(BUILDINGS_MINZOOM + 1);
+    for (const id of ["land", "wood", "town", "relief", "water"]) expect(JSON.stringify(layer(deep, id))).toBe(JSON.stringify(layer(live, id)));
+  });
+});

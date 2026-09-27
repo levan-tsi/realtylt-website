@@ -98,7 +98,9 @@ const plateRec = (shot, aspect) => JSON.parse(fs.readFileSync(`${PLATE_RAW}/${sh
 /** A plate's camera in the deep geometry (a plain plate: the same ground one zoom deeper). */
 const deepCam = (rec) => ({ lng: rec.cam.lng, lat: rec.cam.lat, zoom: rec.cam.zoom + (rec.deep ? 0 : 1), pitch: rec.cam.pitch, bearing: rec.cam.bearing, elevation: rec.cam.elevation });
 /** How a plate was drawn: plain, or deep on which terrain level (style.ts deepDemMaxzoom). */
-const cfgOf = (rec) => (rec.deep ? `deep${Math.min(12, Math.floor(rec.cam.zoom - 1) - 1)}` : "plain");
+// Round 64: a live-style deep plate (make-plates.mjs LIVE_DEEP) is its own drawing: a pair with one is
+// shot twice and dissolved, like the plain hero was.
+const cfgOf = (rec) => (rec.deep ? `deep${Math.min(12, Math.floor(rec.cam.zoom - 1) - 1)}${rec.live ? "-live" : ""}` : "plain");
 
 /** shots.ts flightMs and geo.ts rangeForZoom (the numbers the live controller flew by; the manifest
  * test holds every clip's frame count to them). */
@@ -156,7 +158,7 @@ async function shoot() {
         });
         // The page pinned on this pass's plate exactly as make-plates.mjs drew it: the deep render in
         // the plate style, the plain one in the live style (round 58's), its centre's height held.
-        const q = new URLSearchParams({ ground: "ml", plate: pass.shot, cover: "0", homes: "0", slow: "0", pr: String(g.dpr), elev: String(pass.rec.cam.elevation), ...(deep ? { deep: "1" } : { pstyle: "0" }) });
+        const q = new URLSearchParams({ ground: "ml", plate: pass.shot, cover: "0", homes: "0", slow: "0", pr: String(g.dpr), elev: String(pass.rec.cam.elevation), ...(deep ? { deep: "1", ...(pass.rec.live ? { pstyle: "live" } : {}) } : { pstyle: "0" }) });
         await page.goto(`${base}/?${q}`, { waitUntil: "domcontentloaded" });
         await page.waitForFunction(() => {
           const s = window.__ml?.stats();

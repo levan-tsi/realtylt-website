@@ -21,6 +21,10 @@
 // Round 59: the county, chapter and harbour plates are DEEP renders (`--deep=1`, see below); the
 // territory and the tail are plain. Re-render a deep shot with `--deep=1 --only=<shots>`.
 //
+// Round 64: the territory and the tail (LIVE_DEEP) are deep renders too, but in the LIVE style
+// (`?pstyle=live`, style.ts PlateOpt.live): their roads were dotted beads at zoom 9 to 10. Render
+// them with `--deep=1 --only=hero,region`.
+//
 // The server must be running the production build with the MapLibre ground reachable
 // (`NEXT_PUBLIC_HOME_MAP` unset or `ml`... the ground the page draws is decided by lib/home-map.ts;
 // the renderer asks for the MapLibre ground with `?ground=ml`). No MLS Grid call: `/api/media/` and
@@ -60,6 +64,10 @@ const SHEETS = "docs/design-r59";
 
 /** The page's shots, in the order a reader meets them (components/home/night/shots.ts FLIGHT and
  * AREA_FLIGHT; the MapLibre cameras are components/home/ml/shots.ts ML_SHOTS). */
+/** Round 64: the deep renders drawn in the live style, not the plate style (the owner's approved
+ * territory look, only without the beaded roads). make-flights.mjs reads `live` from the record. */
+export const LIVE_DEEP = new Set(["hero", "region"]);
+
 export const SHOTS = ["hero", "dutchess", "highlands", "westchester", "ulster", "dutchess-county", "orange", "putnam", "rockland", "westchester-county", "bronx", "manhattan", "queens", "brooklyn", "staten-island", "harbour", "region"];
 
 /** The two aspects: the laptop (1440 x 900 css at 2x) and the phone (390 x 844 css at 3x). The
@@ -188,7 +196,7 @@ async function shoot() {
       // and film was (round 58, make-flights.mjs). Without it the pinned page takes round 59's plate
       // style, whose roads start at zoom 10 (style.ts PLATE_ROADS_MINZOOM): the territory, at zoom 9,
       // came back with no road at all (the "missing roads" of 2026-09-26).
-      const q = new URLSearchParams({ ground: "ml", plate: shot, cover: "0", homes: "0", slow: "0", pr: String(A.dpr), ...(deep ? { deep: "1" } : { pstyle: "0" }) });
+      const q = new URLSearchParams({ ground: "ml", plate: shot, cover: "0", homes: "0", slow: "0", pr: String(A.dpr), ...(deep ? { deep: "1", ...(LIVE_DEEP.has(shot) ? { pstyle: "live" } : {}) } : { pstyle: "0" }) });
       for (const [k, v] of new URLSearchParams(renderAll || RENDER[shot] || "")) q.set(k, v);
       const t0 = Date.now();
       if (plain) {
@@ -201,7 +209,16 @@ async function shoot() {
           return !!s && (s.error || (s.firstIdleAt != null && !s.flying));
         }, null, { timeout: 90000 });
         await plain.page.waitForTimeout(1800);
-        const e = await plain.page.evaluate(() => { const m = window.__ml.ctl.map; return (m.transform ?? m._camera?.transform ?? {}).elevation ?? 0; });
+        // Round 64: the terrain under the centre can arrive after the first idle (the hero once read
+        // 0 m here, 88.8 m on a second run): read until two readings a second apart agree.
+        const readE = () => plain.page.evaluate(() => { const m = window.__ml.ctl.map; return (m.transform ?? m._camera?.transform ?? {}).elevation ?? 0; });
+        let e = await readE();
+        for (let i = 0; i < 8; i++) {
+          await plain.page.waitForTimeout(1000);
+          const e2 = await readE();
+          if (e2 === e) break;
+          e = e2;
+        }
         q.set("elev", String(e));
       }
       await page.goto(`${base}/?${q}`, { waitUntil: "domcontentloaded" });
@@ -247,7 +264,7 @@ async function shoot() {
       const meta = await sharp(png).metadata();
       const name = `${shot}-${aspect}`;
       fs.writeFileSync(`${RAW}/${name}.png`, png);
-      fs.writeFileSync(`${RAW}/${name}.json`, JSON.stringify({ shot, aspect, w: A.vp.width, h: A.vp.height, dpr: A.dpr, px: { w: meta.width, h: meta.height }, cam: st.cam, ex: st.ex, ws: st.frame.ws, m: st.frame.m, render: renderAll || RENDER[shot] || "", deep, shotAt: new Date().toISOString() }, null, 1));
+      fs.writeFileSync(`${RAW}/${name}.json`, JSON.stringify({ shot, aspect, w: A.vp.width, h: A.vp.height, dpr: A.dpr, px: { w: meta.width, h: meta.height }, cam: st.cam, ex: st.ex, ws: st.frame.ws, m: st.frame.m, render: renderAll || RENDER[shot] || "", deep, live: deep && LIVE_DEEP.has(shot), shotAt: new Date().toISOString() }, null, 1));
       console.log(`${name.padEnd(24)} ${meta.width} x ${meta.height}  zoom ${st.zoom}  range ${st.range}  ${((Date.now() - t0) / 1000).toFixed(1)} s${errors.length ? `  (${errors.length} console errors)` : ""}`);
       errors.length = 0;
     }

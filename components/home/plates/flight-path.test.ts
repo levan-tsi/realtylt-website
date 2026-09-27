@@ -89,7 +89,9 @@ describe("the flight's path", () => {
   });
 
   it("does not depend on the window's scale: twice the css size one zoom deeper is the same flight", () => {
-    const A = camOf("hero", false), B = { ...camOf("dutchess"), zoom: camOf("dutchess").zoom - 1 };
+    // Round 64: the hero is a deep plate now too, so both ends are taken in the deep geometry and moved
+    // one zoom out for the window-sized flight.
+    const A = { ...camOf("hero"), zoom: camOf("hero").zoom - 1 }, B = { ...camOf("dutchess"), zoom: camOf("dutchess").zoom - 1 };
     const plain = flightFrames(A, B, { width: 1440, height: 900 }, 60);
     const deep = flightFrames(camOf("hero"), camOf("dutchess"), DEEP, 60);
     for (let i = 0; i <= 60; i++) {

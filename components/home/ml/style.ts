@@ -122,7 +122,13 @@ export const COARSE = { maxzoom: 6, below: 11.5, fullFrom: 10 } as const;
 /** `plate`: the plate style (the renderer's `?plate=` path only). `deep`: the plate is rendered at
  * twice the css size (one zoom deeper, the same ground): its zoom stops move up one and its widths
  * double, so the picture's lines are what the plain render would draw. */
-export type PlateOpt = { deep?: boolean; tint?: keyof typeof PLATE_TINTS | null };
+export type PlateOpt = { deep?: boolean; tint?: keyof typeof PLATE_TINTS | null; live?: boolean };
+// Round 64, `live`: the LIVE style (tiledLayers) instead of the plate style, one zoom deeper when
+// `deep` (the territory and region plates, renderer only: `?plate=...&deep=1&pstyle=live`). The live
+// style at the territory's zoom 9 to 10 drapes its hairlines on the terrain from a texture too coarse
+// for them, and the far roads came out as dotted beads (docs/parity/DESIGN-ROUND64-QUALITY.md); one
+// zoom deeper, with every zoom stop moved up one and every width doubled, the same lines are drawn
+// continuous. The page itself never passes `plate`, so dz is 0 and the live look is unchanged.
 
 /** Round 61, A COMPARISON FOR THE OWNER, NOT THE LIVE LOOK ("should we give park areas a little bit
  * of green, not in a way to take attention, just dark green ... and the lakes or oceans a little bit
@@ -146,7 +152,8 @@ export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggera
   const terrain = o.terrain ?? true;
   const buildings = o.buildings ?? true;
   const hillshade = o.hillshade ?? true;
-  const base = o.plate ? plateLayers(hillshade, buildings, o.plate.deep ? 1 : 0, o.plate.tint ? PLATE_TINTS[o.plate.tint] ?? null : null) : tiledLayers(hillshade, buildings);
+  const dz = o.plate && o.plate.deep ? 1 : 0;
+  const base = o.plate && o.plate.live ? tiledLayers(hillshade, buildings, dz) : o.plate ? plateLayers(hillshade, buildings, o.plate.deep ? 1 : 0, o.plate.tint ? PLATE_TINTS[o.plate.tint] ?? null : null) : tiledLayers(hillshade, buildings);
   const layers: StyleSpecification["layers"] = o.coarse ? withCoarse(base, o.coarse) : base;
   return {
     version: 8,
@@ -252,7 +259,8 @@ function plateLayers(hillshade: boolean, buildings: boolean, dz: number, tint: P
   ];
 }
 
-function tiledLayers(hillshade: boolean, buildings: boolean): StyleSpecification["layers"] {
+function tiledLayers(hillshade: boolean, buildings: boolean, dz = 0): StyleSpecification["layers"] {
+  const k = 2 ** dz;
   return [
     { id: "land", type: "background", paint: { "background-color": NIGHT.land } },
     { id: "wood", type: "fill", source: "omt", "source-layer": "landcover", filter: ["==", ["get", "class"], "wood"], paint: { "fill-color": NIGHT.wood, "fill-antialias": false } },
@@ -289,7 +297,7 @@ function tiledLayers(hillshade: boolean, buildings: boolean): StyleSpecification
       type: "line",
       source: "omt",
       "source-layer": "water",
-      paint: { "line-color": NIGHT.road, "line-opacity": 0.22, "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 8, 0.5, 16, 1.2] as unknown as number },
+      paint: { "line-color": NIGHT.road, "line-opacity": 0.22, "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 8 + dz, 0.5 * k, 16 + dz, 1.2 * k] as unknown as number },
     },
     {
       id: "stream",
@@ -297,21 +305,21 @@ function tiledLayers(hillshade: boolean, buildings: boolean): StyleSpecification
       source: "omt",
       "source-layer": "waterway",
       filter: ["match", ["get", "class"], ["river", "canal"], true, false],
-      paint: { "line-color": NIGHT.stream, "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 8, 0.4, 16, 1.6] },
+      paint: { "line-color": NIGHT.stream, "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 8 + dz, 0.4 * k, 16 + dz, 1.6 * k] },
     },
     ...ROADS.map((r) => ({
       id: r.id,
       type: "line" as const,
       source: "omt",
       "source-layer": "transportation",
-      minzoom: r.minzoom,
+      minzoom: r.minzoom + dz,
       filter: ["all", ["match", ["get", "class"], r.classes, true, false], ["!=", ["get", "brunnel"], "tunnel"]] as unknown as ["==", string, string],
       layout: { "line-cap": "round" as const, "line-join": "round" as const },
       paint: {
         "line-color": NIGHT.road,
         // Fades in over its first zoom, so a class never pops in.
-        "line-opacity": ["interpolate", ["linear"], ["zoom"], r.minzoom, 0, r.minzoom + 1, r.alpha] as unknown as number,
-        "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 8, r.w8, 16, r.w16] as unknown as number,
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], r.minzoom + dz, 0, r.minzoom + 1 + dz, r.alpha] as unknown as number,
+        "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 8 + dz, r.w8 * k, 16 + dz, r.w16 * k] as unknown as number,
       },
     })),
     ...(buildings
@@ -321,7 +329,7 @@ function tiledLayers(hillshade: boolean, buildings: boolean): StyleSpecification
             type: "fill-extrusion" as const,
             source: "omt",
             "source-layer": "building",
-            minzoom: BUILDINGS_MINZOOM,
+            minzoom: BUILDINGS_MINZOOM + dz,
             filter: ["!=", ["get", "hide_3d"], true] as unknown as ["==", string, string],
             paint: {
               "fill-extrusion-color": ["interpolate", ["linear"], ["coalesce", ["get", "render_height"], 6], 0, NIGHT.building, 120, NIGHT.buildingTop] as unknown as string,
