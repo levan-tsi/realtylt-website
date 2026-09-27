@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { driftAdvance, driftSpeed, scrolledByHand } from "./drift";
+import { driftAdvance, driftEase, driftSpeed, driftSplit, scrolledByHand } from "./drift";
 
 describe("the drifting rail's speed", () => {
   it("is the marquee's: one set of cards in cards x seconds-per-card", () => {
@@ -50,5 +50,45 @@ describe("telling a person's scroll from the driver's own", () => {
   it("notices a flick, a drag or a wheel", () => {
     expect(scrolledByHand(140, 100.4)).toBe(true);
     expect(scrolledByHand(0, 100.4)).toBe(true);
+  });
+});
+
+describe("the drift's sub-pixel split (round 64)", () => {
+  it("gives the scroller whole pixels and the track the remainder, summing to the position", () => {
+    for (const pos of [0, 0.357, 1, 12.999, 2783.4]) {
+      const { scroll, frac } = driftSplit(pos);
+      expect(Number.isInteger(scroll)).toBe(true);
+      expect(frac).toBeGreaterThanOrEqual(0);
+      expect(frac).toBeLessThan(1);
+      expect(scroll + frac).toBeCloseTo(pos, 9);
+    }
+  });
+
+  it("moves the visible position by the exact fraction each frame, never in whole-pixel steps", () => {
+    let pos = 0;
+    const seen: number[] = [];
+    for (let i = 0; i < 10; i++) {
+      pos = driftAdvance(pos, 0.3, 2880);
+      const { scroll, frac } = driftSplit(pos);
+      seen.push(scroll + frac);
+    }
+    for (let i = 1; i < seen.length; i++) expect(seen[i] - seen[i - 1]).toBeCloseTo(0.3, 9);
+  });
+});
+
+describe("the drift's eased stop and start (round 64)", () => {
+  it("glides toward the target and settles on it exactly", () => {
+    let v = 1;
+    const trail: number[] = [];
+    for (let i = 0; i < 200; i++) trail.push((v = driftEase(v, 0, 1 / 60, 0.25)));
+    expect(trail[0]).toBeLessThan(1);
+    expect(trail[0]).toBeGreaterThan(0.9);
+    for (let i = 1; i < trail.length; i++) expect(trail[i]).toBeLessThanOrEqual(trail[i - 1]);
+    expect(trail.at(-1)).toBe(0);
+  });
+
+  it("holds without time passing and snaps when there is no time constant", () => {
+    expect(driftEase(0.4, 1, 0, 0.25)).toBe(0.4);
+    expect(driftEase(0.4, 1, 1 / 60, 0)).toBe(1);
   });
 });
