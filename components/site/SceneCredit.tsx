@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { isHomePath } from "@/lib/site";
 import { homeMap } from "@/lib/home-map";
 
 /** The terrain and night-lights credit for the home page's ground, in the footer's legal strip.
@@ -20,7 +21,7 @@ import { homeMap } from "@/lib/home-map";
  * Natural Earth's land (public domain; no credit is required, it is named because it is used). */
 export function SceneCredit() {
   const pathname = usePathname();
-  if (pathname !== "/") return null;
+  if (!isHomePath(pathname)) return null;
   const ground = homeMap({ NEXT_PUBLIC_HOME_MAP: process.env.NEXT_PUBLIC_HOME_MAP, NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY });
   // Round 57.13: the MapLibre night map (the default ground) credits its own sources: the vector
   // map's data (the corner of the map carries the same names, components/home/ml/style.ts

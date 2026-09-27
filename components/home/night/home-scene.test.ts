@@ -225,11 +225,11 @@ describe("the footer over the scene", () => {
   const shell = fs.readFileSync(path.join(ROOT, "components/site/FooterShell.tsx"), "utf8");
 
   it("is positioned on the home page only, so no other page's stacking changes", () => {
-    expect(shell).toContain('pathname === "/" ? "relative z-10 " : ""');
+    expect(shell).toContain('isHomePath(pathname) ? "relative z-10 " : ""');
   });
 
   it("lets the scene through on the home page only, and by inline style so class order cannot decide it", () => {
-    expect(shell).toContain('pathname === "/" ? { backgroundColor: "transparent" as const } : undefined');
+    expect(shell).toContain('isHomePath(pathname) ? { backgroundColor: "transparent" as const } : undefined');
     expect(shell).toContain("style={style}");
   });
 
@@ -266,7 +266,7 @@ describe("the footer over the scene", () => {
 
   it("carries the terrain credit on the home page only, in the words the sources ask for", () => {
     const credit = fs.readFileSync(path.join(ROOT, "components/site/SceneCredit.tsx"), "utf8");
-    expect(credit).toContain('if (pathname !== "/") return null;');
+    expect(credit).toContain('if (!isHomePath(pathname)) return null;');
     expect(credit).toContain("Terrain: Mapzen; USGS 3DEP, SRTM, GMTED2010 and NHD; NOAA ETOPO1.");
     expect(fs.readFileSync(path.join(ROOT, "public/images/ATTRIBUTIONS.md"), "utf8")).toContain(
       "Terrain: Mapzen; USGS 3DEP, SRTM, GMTED2010 and NHD;",

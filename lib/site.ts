@@ -177,3 +177,9 @@ export const INTEREST_REASONS = [
 ] as const;
 
 export type InterestReason = (typeof INTEREST_REASONS)[number];
+
+/** The home page, as `usePathname()` reports it on the server. A regeneration of the cached home
+ * page on Vercel (app/page.tsx `revalidate`) renders it as "/index", not "/" (found live on
+ * 2026-09-27: the RSC tree read ["","index"]). Every component that dresses itself for the home
+ * page (the header over the hero, the footer over the scene, the scene credit) asks this. */
+export const isHomePath = (pathname: string | null | undefined): boolean => pathname === "/" || pathname === "/index";
