@@ -64,11 +64,15 @@ describe("what each shot shows", () => {
       expect(p!.y, what).toBeLessThan(LAPTOP.height - 10);
     }
   });
-  it("the territory on a phone: the city, Long Island's west and the river to Poughkeepsie inside the window", () => {
+  // Round 64, the owner on his iPhone: "zoom in more ... we don't have to show all ... Manhattan, part
+  // of Queens and Westchester and whatever fits". The phone's territory came in to 60 km, so the river
+  // to Poughkeepsie is no longer asked for: the city and southern Westchester are.
+  it("the territory on a phone: Westchester, the Bronx, Manhattan, Queens and Brooklyn inside the window", () => {
     for (const [what, lat, lng] of [
       ["Manhattan", 40.78, -73.97],
-      ["Poughkeepsie", 41.7, -73.92],
-      ["the Rockaways", 40.585, -73.82],
+      ["the Bronx", 40.845, -73.875],
+      ["Queens", 40.715, -73.81],
+      ["Brooklyn", 40.645, -73.945],
       ["White Plains", 41.034, -73.763],
     ] as const) {
       const p = where("hero", PHONE, lat, lng);
