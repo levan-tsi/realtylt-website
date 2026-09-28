@@ -7,7 +7,9 @@ His report: header and footer gone on realtylt.com, the laptop hero shows too mu
 - 28a3086 + a62cc72 hero/region plates deep in the live style (continuous roads, the phone's "pixelated"); laptop films also at 2880 for 2x screens (+38 MB optional). Region calibration 0.10 px (camera identical to before).
 - 7c8a032 + e7b2740 Dutchess/Ulster labels lower so short 1920 windows keep them (7c8a032 went out with one red test; fixed in e7b2740; pushes now gated on vitest exit code).
 
-NEXT: his look (laptop first screen, rail, phone map sharpness). Open: 1920 x 900 drops Ulster; blog post titles' case (his call); a real iPhone check of the flick through the counties (round 63).
+- 469c218 (after his phone look: "squeezed", merging roads pixelated) the PHONE hero comes in to the city: P4, s(40.7871, -73.8758, 60_000, 60, 20), chosen from four options rendered on the real page (scripts/_scratch-r64/phone/SHEET-*.jpg); bright highway knots in the middle band 0.097% -> 0.013%; hero--dutchess tall film re-recorded; names Westchester, the Bronx, Manhattan, Queens, Brooklyn at 390x844 (the valley counties are no longer named on the phone first screen; 320x568 shows only Queens). Gates: phone calib 0.00 px, taps 30/30, walk 15 films/1 fade unchanged, contrast p95 0 under (p99: single lights behind the headline), vitest 2290. LIVE, looked at on realtylt.com.
+
+NEXT: his look (laptop first screen, rail, the new phone first screen). Open: 1920 x 900 drops Ulster; blog post titles' case (his call); a real iPhone check of the flick through the counties (round 63).
 
 ---
 
