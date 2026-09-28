@@ -1,3 +1,16 @@
+# ROUND 64 (2026-09-27) DONE AND LIVE (e7b2740). Record: docs/parity/DESIGN-ROUND64-QUALITY.md + the commits below.
+
+His report: header and footer gone on realtylt.com, the laptop hero shows too much New Jersey, the listing rail lags, then polish the map quality (phone and laptop); three builders, checked each time. Done, one builder at a time, each re-verified by the orchestrator before its push:
+- 6fc27e3 THE BUG: Vercel ISR regenerates / as usePathname "/index"; header/footer/scene credit asked === "/" and rendered their inner-page selves UNDER the fixed map. isHomePath() now; verified live on a REGENERATED page.
+- 5f5655f Featured rail glides sub-pixel (0 still frames, was 535 of 844). The New listings rail untouched (his word).
+- 7185989 + 832d192 laptop hero reframed on the territory (heading -15, pitch 60, 110.8 km; phone hero unchanged); plate renderer shoots plain plates in the live style again (the missing roads).
+- 28a3086 + a62cc72 hero/region plates deep in the live style (continuous roads, the phone's "pixelated"); laptop films also at 2880 for 2x screens (+38 MB optional). Region calibration 0.10 px (camera identical to before).
+- 7c8a032 + e7b2740 Dutchess/Ulster labels lower so short 1920 windows keep them (7c8a032 went out with one red test; fixed in e7b2740; pushes now gated on vitest exit code).
+
+NEXT: his look (laptop first screen, rail, phone map sharpness). Open: 1920 x 900 drops Ulster; blog post titles' case (his call); a real iPhone check of the flick through the counties (round 63).
+
+---
+
 # ROUND 63 (THE PHONE, SECOND PASS) DONE 2026-09-26. READ `docs/parity/DESIGN-ROUND63.md`.
 
 His four asks, done on one agent, each verified on a production build: (1) the words straight on
