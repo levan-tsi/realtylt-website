@@ -46,15 +46,8 @@ export const ML_SHOTS: Record<ShotName, { wide: MlShot; tall: MlShot }> = {
   // was already the tightest that holds the whole territory right of the words (a fit of its edge
   // towns, scripts/_scratch-r64-heroopts.mjs), so the closer camera turns: heading -15, pitch 60, the
   // Hudson a diagonal up the frame, the city large at the lower right, Kingston to Tottenville still in
-  // the window at 1440 and at 1920's crop, less New Jersey under the headline.
-  // Round 64, the owner on his iPhone (2026-09-27): the phone's first screen was "squeezed in", the
-  // roads where they merge "pixelated and low quality ... zoom in more ... we don't have to show all
-  // ... Manhattan, part of Queens and Westchester and whatever fits". The phone comes in from 140 km
-  // to 60 km, pitch 60, heading 20: Westchester at the top, the Bronx, Manhattan, Queens and Brooklyn
-  // below, the Hudson up the phone, the ocean behind the count and the search. At 140 km the bright
-  // highway knots covered 0.097% of the middle band, here 0.013% (option P4 of four, chosen by the
-  // orchestrator from sheets of the real page, scripts/_scratch-r64/phone/).
-  hero: { wide: s(40.8866, -74.3111, 110_800, 60, 345), tall: s(40.7871, -73.8758, 60_000, 60, 20) },
+  // the window at 1440 and at 1920's crop, less New Jersey under the headline. The phone unchanged.
+  hero: { wide: s(40.8866, -74.3111, 110_800, 60, 345), tall: s(40.93, -73.9, 140_000, 55, 340) },
   dutchess: { wide: s(41.7211, -73.958, 11_000, 60, 5), tall: s(41.7102, -73.9449, 11_000, 60, 5) },
   highlands: { wide: s(41.426, -73.9668, 12_000, 60, 190), tall: s(41.426, -73.9668, 12_000, 60, 190) },
   westchester: { wide: s(41.0702, -73.8934, 11_000, 60, 265), tall: s(41.0702, -73.8934, 11_000, 60, 265) },

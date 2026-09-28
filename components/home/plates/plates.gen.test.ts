@@ -72,10 +72,9 @@ describe("the plates manifest", () => {
       for (const s of ["dutchess", "highlands", "westchester"] as const) expect(range(PLATES[s][a]), `${s}/${a}`).toBeLessThanOrEqual(12_000 + 1);
     }
     // Round 64: the laptop's territory came in from 145 km to 110.8 km (shots.ts, the owner's "zoom in
-    // to the areas that we cover"); the phone's from 140 km to 60 km (the owner on his iPhone: the
-    // merging roads "pixelated ... zoom in more", Manhattan, Queens and Westchester are enough).
+    // to the areas that we cover"); the phone's as it was.
     expect(Math.round(range(PLATES.hero.wide))).toBe(110_800);
-    expect(Math.round(range(PLATES.hero.tall))).toBe(60_000);
+    expect(Math.round(range(PLATES.hero.tall))).toBe(140_000);
     expect(Math.round(range(PLATES.region.wide))).toBe(60_000);
   });
 
