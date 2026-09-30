@@ -149,3 +149,17 @@ credit, the chat launcher. Nothing ships to `main` but bug fixes until he has se
   shows 95 km (P3, heading 350) keeping Dutchess, Putnam, Rockland, Westchester and Staten Island
   and losing Ulster and Orange under the headline; 60 km was rejected. Candidates go between 140
   and 95 km with the four valley names kept right of the words and no lamp at the water's edge.
+
+## 7. Added by his word during the round (2026-09-30): the simplification sweep
+
+Before the round ends, ONE Opus 5.5 builder (F, after E, before the orchestrator's final pass) goes
+through the whole code and makes it simpler: dead code removed, anything extra that makes the code
+heavy and is not needed removed, under these guards: (a) every removal is PROVEN unused (an
+unused-export analysis, a grep for every symbol, the routes and the tests), (b) the site is A/B'd
+against the pre-sweep build in the same session at every stop and size (frames identical, the walk
+numbers identical, calibration 0.00 px, taps and hover unchanged, JS off and reduced motion clean,
+the crawler green), and the bundle and the page weight are measured before and after, (c) nothing in
+security, consent, CSP, RLS, the MLS sync or the lead path is touched, (d) removal only, no
+rewrites, no "improvements" beyond what a removal needs, (e) tests: green, and the count may fall
+only by tests that tested deleted dead code, each one named. The orchestrator then re-verifies its
+work on the running build and makes the final run itself.
