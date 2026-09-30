@@ -69,9 +69,15 @@ export interface MlTail {
   veilPhone?: number;
 }
 
+/** Round 65: the shades and scrims over the map are the page's own night (the token), not black: on the
+ * lifted map (palette P1, greys G3) a black box reads as a black patch. The same alphas as before. */
+const night = (a: number) => `color-mix(in srgb, var(--color-night) ${Math.round(a * 100)}%, transparent)`;
+const PHONE_SHADE = `linear-gradient(to bottom, ${night(0.8)} 0%, ${night(0.46)} 14%, ${night(0.12)} 30%, ${night(0.12)} 46%, ${night(0.55)} 60%, ${night(0.86)} 72%, ${night(0.9)} 100%)`;
+const LAPTOP_SHADE = `radial-gradient(66% 88% at 14% 74%, ${night(0.93)} 0%, ${night(0.88)} 30%, ${night(0.6)} 56%, ${night(0.22)} 80%, ${night(0)} 100%)`;
+const TOP_BAND = `linear-gradient(to bottom, ${night(0.86)} 0%, ${night(0.78)} 42%, ${night(0.3)} 75%, ${night(0)} 100%)`;
 const LABEL_SHADOW = "0 0 1px rgba(0,0,0,1), 0 0 3px rgba(0,0,0,0.95), 0 0 12px rgba(0,0,0,0.8)";
 const TOWN_SHADE = {
-  background: "radial-gradient(closest-side, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%)",
+  background: `radial-gradient(closest-side, ${night(0.6)} 0%, ${night(0.6)} 50%, ${night(0)} 100%)`,
   padding: "8px 16px",
 } as const;
 /** The data's credit, bottom left (the Google map's logo corner): no name, light or word of ours
@@ -1131,7 +1137,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
 
   return (
     <AreaContext.Provider value={{ current, point, goTo }}>
-      <div ref={host} className="pointer-events-none fixed inset-0 z-0 bg-black" data-ml-ground data-plates={plates ? "1" : undefined} data-ml-error={error ?? undefined}>
+      <div ref={host} className="pointer-events-none fixed inset-0 z-0 bg-night" data-ml-ground data-plates={plates ? "1" : undefined} data-ml-error={error ?? undefined}>
         {plates ? (
           // THE PLATES (round 58): two layers, each a picture of the map and the canvas our lights are
           // drawn on (plus-lighter, within the layer, so the lights fade with their picture). The first
@@ -1175,12 +1181,12 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh]">
           <div
             className="absolute inset-0 lg:hidden"
-            style={{ background: "linear-gradient(to bottom, rgba(5,5,5,0.80) 0%, rgba(5,5,5,0.46) 14%, rgba(5,5,5,0.12) 30%, rgba(5,5,5,0.12) 46%, rgba(5,5,5,0.55) 60%, rgba(5,5,5,0.86) 72%, rgba(5,5,5,0.9) 100%)" }}
+            style={{ background: PHONE_SHADE }}
           />
-          <div className="absolute inset-x-0 top-0 h-[230px]" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)" }} />
+          <div className="absolute inset-x-0 top-0 h-[230px]" style={{ background: TOP_BAND }} />
           <div
             className="absolute inset-0 hidden lg:block"
-            style={{ background: "radial-gradient(66% 88% at 14% 74%, rgba(5,5,5,0.93) 0%, rgba(5,5,5,0.88) 30%, rgba(5,5,5,0.6) 56%, rgba(5,5,5,0.22) 80%, rgba(5,5,5,0) 100%)" }}
+            style={{ background: LAPTOP_SHADE }}
           />
         </div>
       ) : null}
@@ -1196,7 +1202,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
           data-g3d-poster
           data-g3d-cover
           data-state={posterGone ? "gone" : "on"}
-          className={`pointer-events-none ${pinned && !error ? "fixed" : "absolute"} inset-x-0 top-0 z-[1] h-[100svh] bg-black bg-cover bg-center bg-no-repeat bg-[image:var(--g3d-tall)] lg:bg-[image:var(--g3d-wide)] transition-opacity duration-[700ms] ease-in-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
+          className={`pointer-events-none ${pinned && !error ? "fixed" : "absolute"} inset-x-0 top-0 z-[1] h-[100svh] bg-night bg-cover bg-center bg-no-repeat bg-[image:var(--g3d-tall)] lg:bg-[image:var(--g3d-wide)] transition-opacity duration-[700ms] ease-in-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
           style={{ "--g3d-tall": `url(${poster.tall})`, "--g3d-wide": `url(${poster.wide})` } as CSSProperties}
         >
           {js && !error ? (
@@ -1206,12 +1212,12 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
             <>
               <div
                 className="absolute inset-0 lg:hidden"
-                style={{ background: "linear-gradient(to bottom, rgba(5,5,5,0.80) 0%, rgba(5,5,5,0.46) 14%, rgba(5,5,5,0.12) 30%, rgba(5,5,5,0.12) 46%, rgba(5,5,5,0.55) 60%, rgba(5,5,5,0.86) 72%, rgba(5,5,5,0.9) 100%)" }}
+                style={{ background: PHONE_SHADE }}
               />
-              <div className="absolute inset-x-0 top-0 h-[230px]" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)" }} />
+              <div className="absolute inset-x-0 top-0 h-[230px]" style={{ background: TOP_BAND }} />
               <div
                 className="absolute inset-0 hidden lg:block"
-                style={{ background: "radial-gradient(66% 88% at 14% 74%, rgba(5,5,5,0.93) 0%, rgba(5,5,5,0.88) 30%, rgba(5,5,5,0.6) 56%, rgba(5,5,5,0.22) 80%, rgba(5,5,5,0) 100%)" }}
+                style={{ background: LAPTOP_SHADE }}
               />
             </>
           )}
@@ -1228,7 +1234,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
               className="absolute left-0 top-0"
               style={{
                 opacity: 0,
-                background: "rgba(0,0,0,0.8)",
+                background: night(0.8),
                 WebkitMaskImage: featherMask(SCRIM_FEATHER),
                 maskImage: featherMask(SCRIM_FEATHER),
                 WebkitMaskComposite: "source-in",
@@ -1243,9 +1249,9 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
           aria-hidden
           // Round 63: a laptop's only; on a phone the map runs up to the logo and the menu.
           className="absolute inset-x-0 top-0 h-[230px] max-lg:hidden"
-          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)", willChange: "transform" }}
+          style={{ background: TOP_BAND, willChange: "transform" }}
         />
-        {tail?.veil ? <div ref={tailVeil} aria-hidden className={`absolute inset-0 bg-black ${NO_HOLE_ON_PHONE}`} style={{ opacity: 0, ...mask }} /> : null}
+        {tail?.veil ? <div ref={tailVeil} aria-hidden className={`absolute inset-0 bg-night ${NO_HOLE_ON_PHONE}`} style={{ opacity: 0, ...mask }} /> : null}
         <div ref={labelLayer} aria-hidden data-g3d-territory className="absolute inset-0 transition-opacity duration-[250ms] ease-out motion-reduce:transition-none" style={{ opacity: 0 }}>
           {TERRITORY_LABELS.map((l) => (
             <span
@@ -1282,12 +1288,13 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
           bottom left, where the Google map kept its logo, over everything, never under a word of ours.
           The two required names for five seconds, then the (i); the (i) opens the whole notice, the
           terrain's sources named there (public-domain data whose sources ask to be named) and
-          OpenFreeMap, whose name is optional. */}
+          OpenFreeMap, whose name is optional. Round 65: the ink-soft at full opacity (the white at 60 %
+          measured 3.4:1 on the map; a credit must be legible, not merely present). */}
       <div
         ref={creditRef}
         data-ml-credit
         data-credit={credit}
-        className="pointer-events-auto fixed bottom-2 left-3 z-[12] text-[11px] leading-[15px] text-white/60"
+        className="pointer-events-auto fixed bottom-2 left-3 z-[12] text-[11px] leading-[15px] text-ink-soft"
         style={{ textShadow: "0 0 4px rgba(0,0,0,0.9)" }}
       >
         {/* Laptops: the required line for CREDIT_SHOWN_MS (the server renders it; JavaScript off keeps
@@ -1316,7 +1323,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
         >
           <summary
             aria-label="Map data credits"
-            className="inline-flex h-6 w-6 cursor-pointer list-none items-center justify-center rounded-full border border-white/40 font-serif text-[11px] italic leading-none text-white/70 transition-colors [&::-webkit-details-marker]:hidden hover:border-white/80 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none"
+            className="inline-flex h-6 w-6 cursor-pointer list-none items-center justify-center rounded-full border border-white/40 font-serif text-[11px] italic leading-none text-ink-soft transition-colors [&::-webkit-details-marker]:hidden hover:border-white/80 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none"
           >
             i
           </summary>
@@ -1346,7 +1353,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
         aria-hidden
         onClick={onLabelClick}
         className="fixed left-0 top-0 z-[15] block whitespace-nowrap rounded-lg px-3 py-2 text-ink no-underline transition-opacity ease-out motion-reduce:transition-none [-webkit-tap-highlight-color:transparent]"
-        style={{ opacity: 0, pointerEvents: "none", background: "rgba(8,8,8,0.94)", border: "1px solid rgba(255,255,255,0.14)", boxShadow: "0 6px 12px rgba(0,0,0,0.35)", transitionDuration: "120ms" }}
+        style={{ opacity: 0, pointerEvents: "none", background: "color-mix(in srgb, var(--color-night-raise) 94%, transparent)", border: "1px solid rgba(255,255,255,0.14)", boxShadow: "0 6px 12px rgba(0,0,0,0.35)", transitionDuration: "120ms" }}
       >
         <span ref={labelTown} className="block text-[13px] font-medium leading-[18px] text-ink-soft" />
         <span ref={labelRow} className="mt-0.5 items-baseline gap-2" style={{ display: "none" }}>

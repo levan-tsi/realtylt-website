@@ -163,7 +163,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
        onto the container. */
     <form
       onSubmit={onFindOut}
-      className="search-instrument nocturne mx-auto flex w-full max-w-2xl items-center gap-2 rounded-2xl border border-line-strong bg-night-deep/70 p-2 backdrop-blur-md transition-colors focus-within:border-stone hover:border-stone/70"
+      className="search-instrument nocturne mx-auto flex w-full max-w-2xl items-center gap-2 rounded-2xl border border-line-strong bg-night/70 p-2 backdrop-blur-md transition-colors focus-within:border-stone hover:border-stone/70"
     >
       <label htmlFor="hv-address" className="sr-only">
         Home address

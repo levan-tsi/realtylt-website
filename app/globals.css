@@ -57,10 +57,13 @@
   /* ROUND 54: the owner turned the navy down ("black and white ... was better", 2026-09-22) and
      chose a black ground with white type. The names stay (every night-scoped call site keeps
      working); the values are now neutral: no blue cast in the ground, the text a warm white.
-     moon 18.16:1 and haze 7.30:1 on night, measured. The light in the scene stays warm. */
-  --color-night: #050505;
+     moon 18.16:1 and haze 7.30:1 on night, measured. The light in the scene stays warm.
+     ROUND 65 (G3, docs/parity/DESIGN-ROUND65.md §9): his "it looks really dark", so the ground
+     lifts to a dim charcoal with the map: moon 16.4:1, haze 6.6:1 on night, measured. night-deep
+     stays true black for what must dim the page (the dialogs' and drawers' backdrops). */
+  --color-night: #131417;
   --color-night-deep: #000000;
-  --color-night-raise: #111111;
+  --color-night-raise: #1b1d21;
   --color-moon: #f2f2ee;
   --color-haze: #9b9b96;
   --color-window: #f6c781;
@@ -492,42 +495,42 @@ body {
   --color-ink: var(--color-moon);
   --color-ink-soft: #cfcfca;
   --color-stone: var(--color-haze);
-  --color-line: #242424;
-  --color-line-strong: #5e5e5a;
+  --color-line: #2a2b2f;
+  --color-line-strong: #6d6d67;
   /* Black and white (round 54): the action and focus colour inside the scope is the white itself,
      so every ring, underline, active row and progress bar that said porchlight reads white here.
      The AI nav item escapes through --color-brand-r. */
   --color-porchlight: var(--color-moon);
   --color-river: var(--color-moon);
   --color-porchlight-deep: var(--color-moon);
-  --color-card: #0d0d0d;
+  --color-card: #171a1e;
   --font-display: var(--font-grotesk);
   --font-sans: var(--font-grotesk);
   --font-mono: var(--font-grotesk);
   /* The map's pins on the night basemap (components/idx/map-shared.ts): moonlight chips with
      night ink, the chosen one in porchlight, dots ringed in night so they sit on the map. */
   --rlt-chip-bg: #f2f2ee;
-  --rlt-chip-ink: #050505;
+  --rlt-chip-ink: var(--color-night);
   /* Round 54: the CHOSEN home is the one that is lit. Warm face, night ink (12.6:1), a night
      outline so it separates from the basemap, and the halo — the same mark the plain dots wear,
      one step brighter. Before this the active chip was black-on-black-basemap with a white
      outline, which read as a chip that had gone OUT rather than one that had come on. */
   --rlt-chip-active: var(--color-window);
-  --rlt-chip-active-ink: #050505;
-  --rlt-chip-active-shadow: 0 0 0 2px #050505, 0 0 22px 2px rgb(246 199 129 / 0.55), 0 3px 12px rgb(0 0 0 / 0.5);
-  --rlt-dot-ring: #050505;
+  --rlt-chip-active-ink: var(--color-night);
+  --rlt-chip-active-shadow: 0 0 0 2px var(--color-night), 0 0 22px 2px rgb(246 199 129 / 0.55), 0 3px 12px rgb(0 0 0 / 0.5);
+  --rlt-dot-ring: var(--color-night);
   /* ...and the map popup's action, built outside React, sets its label in sentence case. */
   --rlt-pop-case: none;
   --rlt-pop-track: normal;
   --rlt-pop-size: 14px;
   --rlt-pop-badge-size: 12px;
   --rlt-pop-font: var(--font-grotesk);
-  --rlt-pop-bg: #111111;
-  --rlt-pop-frame: #1c1c1c;
+  --rlt-pop-bg: var(--color-night-raise);
+  --rlt-pop-frame: var(--color-line);
   --rlt-pop-ink: #f2f2ee;
   --rlt-pop-muted: #9b9b96;
   --rlt-pop-action: #f2f2ee;
-  --rlt-pop-action-ink: #050505;
+  --rlt-pop-action-ink: var(--color-night);
   --rlt-pop-radius: 12px;
   --rlt-pop-pad: 9px;
   --rlt-pop-title: 15px;
@@ -594,6 +597,13 @@ body {
   --color-porchlight-deep: #1c729a;
   --color-card: #ffffff;
   color-scheme: light;
+}
+/* Round 65: a band that is `.daylight` (so its pills and inputs keep the day's ink) and painted
+   `bg-ink` was drawn in the day's ink, true black: invisible on the old #050505 ground, a black
+   seam on the lifted night (the listing page's photo band, the inner pages' sections, the blog's
+   scenes). It is the page's own night instead; the photo viewer (`bg-ink/95`) stays black. */
+.nocturne .daylight.bg-ink {
+  background-color: var(--color-night);
 }
 
 /* Visible keyboard focus everywhere (a11y floor).
@@ -1654,7 +1664,7 @@ option:disabled {
    line so it reads on a white chip and on a warm one alike (round 54). */
 .nocturne .rlt-price-chip:focus-visible .rlt-chip-face,
 .nocturne .leaflet-marker-icon:focus-visible .rlt-price-chip {
-  box-shadow: 0 0 0 2px #050505, 0 0 0 4px #f2f2ee !important;
+  box-shadow: 0 0 0 2px var(--color-night), 0 0 0 4px #f2f2ee !important;
 }
 /* Map dots (Zillow-style thinning, round 23): a home whose price pill has no pixel room wears
    less ink — a 12px mark centred in a 24px hit target (the tap-target gate binds on a map
@@ -1732,7 +1742,7 @@ option:disabled {
    this page uses and only 1.3:1 against the ground around it. Night: the page's own white ring,
    held off the light by a night-coloured inner ring, so it reads at 15:1 on the basemap. */
 .nocturne .rlt-map-dot:focus-visible::before {
-  box-shadow: 0 0 0 2px #050505, 0 0 0 4px #f2f2ee, 0 0 16px 1px rgb(246 199 129 / 0.7);
+  box-shadow: 0 0 0 2px var(--color-night), 0 0 0 4px #f2f2ee, 0 0 16px 1px rgb(246 199 129 / 0.7);
 }
 
 /* THE PREVIEW ARRIVES FROM THE PIN IT BELONGS TO.

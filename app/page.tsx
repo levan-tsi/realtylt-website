@@ -237,7 +237,7 @@ export default async function HomePage() {
               <form
                 action="/search"
                 role="search"
-                className="search-instrument phone-glass rise rise-3 relative mt-7 max-[359px]:mt-5 flex w-full max-w-[34rem] items-center gap-2 rounded-2xl border border-line-strong bg-night-deep/70 p-2 backdrop-blur-md transition-colors focus-within:border-stone hover:border-stone/70 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-porchlight"
+                className="search-instrument phone-glass rise rise-3 relative mt-7 max-[359px]:mt-5 flex w-full max-w-[34rem] items-center gap-2 rounded-2xl border border-line-strong bg-night/70 p-2 backdrop-blur-md transition-colors focus-within:border-stone hover:border-stone/70 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-porchlight"
               >
                 <label htmlFor="home-search" className="sr-only">
                   Search for homes by town, zip, or address
@@ -499,7 +499,7 @@ function HeroLinks() {
         <Link
           key={c.href}
           href={c.href}
-          className={`phone-glass phone-halo inline-flex min-h-[40px] items-center rounded-xl border border-line-strong bg-night-deep/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night-deep/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
+          className={`phone-glass phone-halo inline-flex min-h-[40px] items-center rounded-xl border border-line-strong bg-night/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
         >
           {c.label}
         </Link>

@@ -59,7 +59,7 @@ export function MlAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
           </div>
           <Link
             href={active.href}
-            className={`phone-glass phone-halo inline-flex min-h-[40px] shrink-0 items-center rounded-xl border border-line-strong bg-night-deep/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night-deep/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
+            className={`phone-glass phone-halo inline-flex min-h-[40px] shrink-0 items-center rounded-xl border border-line-strong bg-night/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
           >
             See homes
           </Link>
@@ -82,7 +82,7 @@ export function MlAreaChapter({ rows }: { rows: readonly AreaRow[] }) {
                     aria-pressed={on}
                     onClick={() => goTo(row.shot)}
                     className={`min-h-[40px] shrink-0 rounded-full border px-4 text-[15px] font-medium tracking-[-0.005em] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight motion-reduce:transition-none ${
-                      on ? "border-ink bg-ink text-paper" : "phone-glass phone-halo border-line-strong bg-night-deep/80 text-ink-soft backdrop-blur-md hover:border-stone hover:text-ink"
+                      on ? "border-ink bg-ink text-paper" : "phone-glass phone-halo border-line-strong bg-night/80 text-ink-soft backdrop-blur-md hover:border-stone hover:text-ink"
                     } ${PRESS}`}
                   >
                     {row.name}
