@@ -359,7 +359,11 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
   const measure = useCallback(() => {
     const y = window.scrollY;
     const vh = window.innerHeight;
-    const found: ShotSection[] = [...document.querySelectorAll<HTMLElement>("[data-shot]")].map((el) => {
+    // Round 65: the page's sections only. The plate layers carry `data-shot` too (the shot they hold);
+    // counted as sections they stood at the scroll position of the measure (they are fixed), so a
+    // re-measure far down the page (the body resized) clamped every stop after them to that point
+    // and the map stopped following the page (measured at the phone's tail: every anchor 9960).
+    const found: ShotSection[] = [...document.querySelectorAll<HTMLElement>("[data-shot]")].filter((el) => !el.closest("[data-ml-ground]")).map((el) => {
       const r = el.getBoundingClientRect();
       const shots = (el.dataset.shot ?? "hero").split(",").filter(Boolean) as ShotName[];
       const stage = el.dataset.pin === "phone" && window.innerWidth < 1024 ? el.querySelector<HTMLElement>("[data-pin-stage]") : null;
