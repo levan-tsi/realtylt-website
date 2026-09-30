@@ -163,3 +163,31 @@ security, consent, CSP, RLS, the MLS sync or the lead path is touched, (d) remov
 rewrites, no "improvements" beyond what a removal needs, (e) tests: green, and the count may fall
 only by tests that tested deleted dead code, each one named. The orchestrator then re-verifies its
 work on the running build and makes the final run itself.
+
+## 8. The framing decision (2026-09-30, builder B's sheets in `scripts/_scratch-r65/frame/sheets/`)
+
+Builder B rendered seven laptop and seven phone candidates as production would shoot them (its
+renderer reproduces the shipped plates to encoding noise), composed them on the real page with the
+lights and names placed by the page itself, and measured each: the lights' span, the unserved land
+in view (a hand-drawn NJ/PA polygon, Sullivan/Greene, Long Island/Connecticut), lights over water,
+the names placed per size. Two findings bind: hiding New Jersey entirely under the words only
+exposes Long Island and the Sound on the right (W1 to W3: unserved land unchanged at 43 to 48 %),
+and a Bergen wedge cannot vanish while Rockland and Orange stay in view. What works is turning and
+tilting so the valley lies diagonally and fills the right side.
+
+- **Laptop: W10** `s(40.9075, -74.1464, 79_077, 68, 330)`. The lights span x 367 to 1413 of 1440
+  (today 607 to 1365); unserved land in view 45 % to 33 % at 1440 and 55 % to 40 % at 1920x940; no
+  light on water; Ulster and Dutchess named at every size including 1920x940, where today's frame
+  drops Ulster under the header; Staten Island, Tottenville and the Rockaway shore crop (his word:
+  Staten Island may go). Fallback **W12** `s(40.9333, -74.1811, 91_888, 66, 334)`: milder, nothing
+  cut on the east, all eleven names at 940.
+- **Phone: T1 and T2, both shown to him live.** T1 `s(40.9620, -73.9485, 119_000, 60, 342)` is the
+  safe step: the only new frame that keeps Ulster, Dutchess, Putnam and Rockland at 390x664 (what an
+  iPhone with Safari's bars shows). T2 `s(40.9596, -73.9593, 111_000, 64, 350)` is closer (225 lights
+  in the window against 173 today), no light on water; it loses Ulster at 664. Both put the south
+  shore and the ocean under the lead and the search block. P3 (95 km) loses Orange and Ulster at
+  844; T5 (95 km) has the dot on the Rockaway shore he rejected.
+- Open, not a camera question: at 320x568 the words cover nearly the whole map in every frame (2 to
+  3 names survive); a layout change, for the polish round.
+- Previews: `r65-preview-a` = the new look on today's framing; `r65-preview-b` = W10 + T1;
+  `r65-preview-c` = W10 + T2.
