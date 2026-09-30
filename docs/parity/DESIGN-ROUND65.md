@@ -127,3 +127,25 @@ Builders, one at a time, each re-verified by the orchestrator on the running bui
 The parks (his 09-26 word, not revisited on 09-30), the lamp colour and glow (approved in round 59),
 the county-name type on the map, the sentence-case rule, the boxed CTAs, the search strip, the
 credit, the chat launcher. Nothing ships to `main` but bug fixes until he has seen the preview.
+
+## 6. Decisions taken by the orchestrator before the builders (2026-09-30, from rendered sheets)
+
+- **Type shortlist** (`scripts/_scratch-r65/type-specimen.mjs`: nine families on the night ground,
+  headline 92 px, lead 22 px, body 17 px, buttons, county labels): three go to the real pages,
+  against the current Bricolage. (1) **Schibsted Grotesk**, one family for everything: editorial,
+  a little character in the t and a, calm at 17 px. (2) **Instrument Sans**, one family: crisp,
+  slightly narrow, the cleanest body of the nine. (3) **Newsreader** (already in the repo) for the
+  headlines with **Hanken Grotesk** for everything else: the only one that changes the feel
+  outright, a magazine's serif over the night map, quiet at body size. Rejected on the sheet:
+  Onest and Albert Sans (correct and anonymous), Familjen Grotesk (condensed, hard), Geist (a
+  developer tool's face). All are SIL Open Font License, served through `next/font/google` as
+  Lato and Newsreader already are (self-hosted at build).
+- **The logo's blue** (`scripts/_scratch-r65/logo-mock.mjs`: the wordmark recoloured on the real
+  header over the hero and over /selling): the wordmark in the mark's own `#27a7df` reads as one
+  brand colour and holds 7.5:1 on the ground; a lifted navy (`#4a82d0`, `#5b93dd`) reads as a
+  second, weaker blue beside the mark. Ship the mark blue in the preview; show him the lifted navy
+  beside it on the sheet.
+- **The phone framing bracket:** round 64's sheet (`scripts/_scratch-r64/phone/SHEET-390x844.jpg`)
+  shows 95 km (P3, heading 350) keeping Dutchess, Putnam, Rockland, Westchester and Staten Island
+  and losing Ulster and Orange under the headline; 60 km was rejected. Candidates go between 140
+  and 95 km with the four valley names kept right of the words and no lamp at the water's edge.
