@@ -55,6 +55,22 @@ describe("the hero's packed lights", () => {
     expect(p.counts).toEqual([2, 1]);
   });
 
+  it("treats a home the geocoder could not place (the column's null) as unmeasured too", () => {
+    // Round 65: the generated column is null, not false, for a home that was tried and not placed;
+    // 831 of them were drawn at their zip's centre, 46 in one Newburgh jitter box. A row with no
+    // flag at all is still taken as measured.
+    const p = packLights(
+      [
+        { lat: 41.5, lng: -73.97, city: "Beacon", geocoded: true },
+        { lat: 41.5, lng: -73.97, city: "Beacon", geocoded: null },
+        { lat: 41.7, lng: -73.93, city: "Fishkill" },
+      ],
+      BOX,
+    );
+    expect(unpackLights(p).x.length).toBe(2);
+    expect(p.counts).toEqual([2, 1]);
+  });
+
   it("gives each town the county most of its homes are in, and totals every county", () => {
     const p = packLights(
       [
