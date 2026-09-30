@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, LOOK0, ML_HOSTS, NIGHT, PALETTES, PLATE, PLATE_ROADS_MINZOOM, PLATE_TINTS, deepDemMaxzoom, nightStyle } from "./style";
+import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, PLATE, PLATE_ROADS_MINZOOM, PLATE_TINTS, deepDemMaxzoom, nightStyle } from "./style";
 
 /** The colours a style value names (hex or rgba), as [r, g, b]. */
 function rgbOf(v: string): [number, number, number] | null {
@@ -23,7 +23,8 @@ describe("the night style's tokens", () => {
       expect(c, k).not.toBeNull();
       const lum = (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255;
       // the ground tones sit near black; only the road hairline and the moon's highlight are lighter
-      expect(lum, k).toBeLessThan(k === "road" || k === "moon" ? 0.7 : 0.12);
+      // round 65 palette P1: the ground lifted a step and the river line blue (0.182, the town 0.136), cap 0.12 to 0.2
+      expect(lum, k).toBeLessThan(k === "road" || k === "moon" ? 0.7 : 0.2);
     }
   });
   it("carry no warmth: every colour is as blue as it is red (the listings' lights are the only warm thing)", () => {
@@ -205,8 +206,13 @@ describe("the live style, byte for byte", () => {
       sha(nightStyle()),
       sha(nightStyle({ terrain: false, hillshade: false, coarse: { below: COARSE.below, maxzoom: COARSE.maxzoom } })),
       sha(nightStyle({ buildings: false })),
-    ]).toEqual(["e44bfb7e13e7c826", "22293f065bc168d7", "95391bbfb1b10ed5"]);
+    ]).toEqual(["e0777653339fe13f", "7a1da6cc908c78e9", "21d2ca8ee549e4d7"]); // re-pinned: round 65 palette P1
     expect(sha(nightStyle({ plate: false }))).toBe(sha(nightStyle()));
+  });
+  it("bakes round 65's P1 exactly: the plate styles are the study's ?pal=p1 documents (ef678e6)", () => {
+    expect(sha(nightStyle({ plate: {} }))).toBe("711449970a8ed3e4");
+    expect(sha(nightStyle({ plate: { deep: true } }))).toBe("144a0234a527a703");
+    expect(sha(nightStyle({ plate: { live: true, deep: true } }))).toBe("fedb79df89c0f8c2");
   });
 });
 
@@ -217,7 +223,7 @@ describe("the plate tints (a comparison, not the live look)", () => {
   it("leaves the live style and the plate style without a tint as they were", () => {
     expect(sha(nightStyle({ plate: { tint: null } }))).toBe(sha(nightStyle({ plate: {} })));
     expect(sha(nightStyle({ plate: { deep: true, tint: null } }))).toBe(sha(nightStyle({ plate: { deep: true } })));
-    expect(sha(nightStyle())).toBe("e44bfb7e13e7c826");
+    expect(sha(nightStyle())).toBe("e0777653339fe13f"); // re-pinned: round 65 palette P1
   });
   it("changes only the wood, the parks and the water", () => {
     for (const k of ["a", "b"] as const) {
@@ -241,7 +247,7 @@ describe("the live style one zoom deeper (the territory plates)", () => {
   const sha = (x: unknown) => createHash("sha256").update(JSON.stringify(x)).digest("hex").slice(0, 16);
   const layer = (s: ReturnType<typeof nightStyle>, id: string) => s.layers.find((l) => l.id === id) as { minzoom?: number; paint: Record<string, unknown> };
   it("leaves the page's style as it was, and is the live style itself when not deep", () => {
-    expect(sha(nightStyle())).toBe("e44bfb7e13e7c826");
+    expect(sha(nightStyle())).toBe("e0777653339fe13f"); // re-pinned: round 65 palette P1
     expect(sha(nightStyle({ plate: { live: true } }).layers)).toBe(sha(nightStyle().layers));
   });
   it("moves every zoom stop up one and doubles every width, so the picture's lines are the live ones", () => {
@@ -257,45 +263,5 @@ describe("the live style one zoom deeper (the territory plates)", () => {
     }
     expect(layer(deep, "buildings").minzoom).toBe(BUILDINGS_MINZOOM + 1);
     for (const id of ["land", "wood", "town", "relief", "water"]) expect(JSON.stringify(layer(deep, id))).toBe(JSON.stringify(layer(live, id)));
-  });
-});
-
-/** Round 65: the lighter-look palettes are a study for the owner, behind the plate option only. The
- * fingerprints of every style the page and the shipped plates use were taken at d4648e9, before the
- * option existed. */
-describe("the lighter-look palettes (a study, not the live look)", () => {
-  const sha = (x: unknown) => createHash("sha256").update(JSON.stringify(x)).digest("hex").slice(0, 16);
-  const layer = (s: ReturnType<typeof nightStyle>, id: string) => s.layers.find((l) => l.id === id) as { paint: Record<string, unknown> };
-  it("leaves the live style, the plate style and the live-deep plates byte for byte as they were", () => {
-    expect(sha(nightStyle())).toBe("e44bfb7e13e7c826");
-    expect(sha(nightStyle({ plate: {} }))).toBe("fd27e4bbeac7a78c");
-    expect(sha(nightStyle({ plate: { deep: true } }))).toBe("876b406319fe2db7");
-    expect(sha(nightStyle({ plate: { live: true, deep: true } }))).toBe("efd7e889ae9755a2");
-    expect(sha(nightStyle({ plate: { deep: true, pal: null } }))).toBe("876b406319fe2db7");
-    expect(sha(nightStyle({ plate: { live: true, deep: true, pal: null } }))).toBe("efd7e889ae9755a2");
-  });
-  it("is today's night when no palette is asked (LOOK0 reads NIGHT and PLATE)", () => {
-    expect([LOOK0.land, LOOK0.water, LOOK0.town, LOOK0.plateTown, LOOK0.park, LOOK0.roadLift]).toEqual([NIGHT.land, NIGHT.water, NIGHT.town, PLATE.town, PLATE.park, 0]);
-  });
-  it("reaches both plate styles: the ground, the water, the relief, the sky and the roads", () => {
-    for (const k of ["p1", "p2", "p3"] as const) {
-      const P = PALETTES[k];
-      for (const o of [{ deep: true, pal: k }, { live: true, deep: true, pal: k }]) {
-        const s = nightStyle({ plate: o });
-        expect(layer(s, "land").paint["background-color"]).toBe(P.land);
-        expect(layer(s, "water").paint["fill-color"]).toBe(P.water);
-        expect(layer(s, "relief").paint["hillshade-exaggeration"]).toBe(P.relief);
-        expect(s.sky?.["horizon-color"]).toBe(P.horizon);
-        const base = nightStyle({ plate: { ...o, pal: null } });
-        const op = (x: ReturnType<typeof nightStyle>) => JSON.stringify(layer(x, "road-motorway").paint["line-opacity"]);
-        expect(op(s)).not.toBe(op(base));
-      }
-    }
-  });
-  it("stays a night: every ground tone under 0x60 on every channel, a river line under the road hairline", () => {
-    for (const P of Object.values(PALETTES)) {
-      for (const c of [P.land, P.town, P.wood, P.water, P.plateTown, P.park, P.plateBuildingTop]) for (const v of rgbOf(c)!) expect(v).toBeLessThan(0x60);
-      for (const v of rgbOf(P.stream)!) expect(v).toBeLessThan(rgbOf(NIGHT.road)![2]);
-    }
   });
 });

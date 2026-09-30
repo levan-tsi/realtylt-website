@@ -29,23 +29,25 @@ export const MAPLIBRE_URL = "/maplibre/6.11.2/maplibre-gl.mjs";
 export const ATTRIBUTION = "© OpenStreetMap contributors · © OpenMapTiles · OpenFreeMap";
 
 /** The night's tokens. Ground tones are near black and cool; the moon is the one light the style
- * casts (the hillshade's lit faces), the road hairline its reflection. */
+ * casts (the hillshade's lit faces), the road hairline its reflection. Round 65 lifted the ground a step
+ * and turned the water blue (his "light it up a bit more ... very blue"; palette P1 of
+ * docs/parity/DESIGN-ROUND65.md §9, with the hillshade at 0.38 / 0.7 and every road class +0.04). */
 export const NIGHT = {
-  land: "#0a0c10",
+  land: "#151922",
   /** Built-up land (landuse residential, commercial): a shade up, so a town reads as a place. */
-  town: "#0f1218",
-  wood: "#07090c",
-  water: "#010309",
+  town: "#1d2330",
+  wood: "#0f1319",
+  water: "#071a3d",
   /** Rivers and streams drawn as lines, a touch above the water so a river reads at any zoom. */
-  stream: "#0a1426",
+  stream: "#12325f",
   road: "#9fb0cc",
-  building: "#080a0e",
-  buildingTop: "#12161e",
+  building: "#12151c",
+  buildingTop: "#1c212b",
   moon: "#8fa6d0",
   shadow: "#000000",
   sky: "#000000",
-  horizon: "#0a0e17",
-  fog: "#06080d",
+  horizon: "#151b27",
+  fog: "#0e1118",
 } as const;
 
 /** The terrain's height, 1 = true. Chosen by frames (the record's round 12): the valley is low
@@ -61,11 +63,11 @@ const DEM = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}
 
 /** A road class's hairline: its brightest alpha and its width, px, at zoom 8 and at zoom 16. */
 const ROADS: readonly { id: string; classes: string[]; alpha: number; w8: number; w16: number; minzoom: number }[] = [
-  { id: "road-minor", classes: ["minor", "service"], alpha: 0.16, w8: 0.3, w16: 1.0, minzoom: 12 },
-  { id: "road-tertiary", classes: ["tertiary"], alpha: 0.2, w8: 0.3, w16: 1.1, minzoom: 10 },
-  { id: "road-secondary", classes: ["secondary"], alpha: 0.24, w8: 0.35, w16: 1.2, minzoom: 8 },
-  { id: "road-primary", classes: ["primary", "trunk"], alpha: 0.3, w8: 0.45, w16: 1.4, minzoom: 6 },
-  { id: "road-motorway", classes: ["motorway"], alpha: 0.36, w8: 0.55, w16: 1.6, minzoom: 5 },
+  { id: "road-minor", classes: ["minor", "service"], alpha: 0.2, w8: 0.3, w16: 1.0, minzoom: 12 },
+  { id: "road-tertiary", classes: ["tertiary"], alpha: 0.24, w8: 0.3, w16: 1.1, minzoom: 10 },
+  { id: "road-secondary", classes: ["secondary"], alpha: 0.28, w8: 0.35, w16: 1.2, minzoom: 8 },
+  { id: "road-primary", classes: ["primary", "trunk"], alpha: 0.34, w8: 0.45, w16: 1.4, minzoom: 6 },
+  { id: "road-motorway", classes: ["motorway"], alpha: 0.4, w8: 0.55, w16: 1.6, minzoom: 5 },
 ];
 
 /** THE PLATE STYLE (round 59, docs/parity/DESIGN-ROUND59.md §2): the county plates are rendered
@@ -78,21 +80,21 @@ const ROADS: readonly { id: string; classes: string[]; alpha: number; w8: number
  * tracks only as bridges (the Walkway over the Hudson is a path) and the railways faint. Still the
  * moon's one blue-grey for every line. */
 const PLATE_ROADS: readonly { id: string; classes: string[]; alpha: number; w8: number; w16: number }[] = [
-  { id: "road-minor", classes: ["minor", "service"], alpha: 0.3, w8: 0.4, w16: 1.4 },
-  { id: "road-tertiary", classes: ["tertiary"], alpha: 0.36, w8: 0.45, w16: 1.5 },
-  { id: "road-secondary", classes: ["secondary"], alpha: 0.42, w8: 0.5, w16: 1.6 },
-  { id: "road-primary", classes: ["primary", "trunk"], alpha: 0.48, w8: 0.6, w16: 1.8 },
-  { id: "road-motorway", classes: ["motorway"], alpha: 0.56, w8: 0.7, w16: 2.0 },
+  { id: "road-minor", classes: ["minor", "service"], alpha: 0.34, w8: 0.4, w16: 1.4 },
+  { id: "road-tertiary", classes: ["tertiary"], alpha: 0.4, w8: 0.45, w16: 1.5 },
+  { id: "road-secondary", classes: ["secondary"], alpha: 0.46, w8: 0.5, w16: 1.6 },
+  { id: "road-primary", classes: ["primary", "trunk"], alpha: 0.52, w8: 0.6, w16: 1.8 },
+  { id: "road-motorway", classes: ["motorway"], alpha: 0.6, w8: 0.7, w16: 2.0 },
 ];
 /** Where every plate class starts: low enough that no class fades in at a county camera. */
 export const PLATE_ROADS_MINZOOM = 10;
 /** The plate's built land and buildings: a shade up from the live `town`, so a town reads as a
  * place with no name, and the buildings a shade above the town they stand in. */
 export const PLATE = {
-  town: "#141922",
-  park: "#07090c",
-  building: "#151a23",
-  buildingTop: "#1f2632",
+  town: "#1f2636",
+  park: "#0f1319",
+  building: "#1e2530",
+  buildingTop: "#2a3240",
   buildingsMinzoom: 12,
   railAlpha: 0.16,
   bridgePathAlpha: 0.3,
@@ -122,7 +124,7 @@ export const COARSE = { maxzoom: 6, below: 11.5, fullFrom: 10 } as const;
 /** `plate`: the plate style (the renderer's `?plate=` path only). `deep`: the plate is rendered at
  * twice the css size (one zoom deeper, the same ground): its zoom stops move up one and its widths
  * double, so the picture's lines are what the plain render would draw. */
-export type PlateOpt = { deep?: boolean; tint?: keyof typeof PLATE_TINTS | null; live?: boolean; pal?: keyof typeof PALETTES | null };
+export type PlateOpt = { deep?: boolean; tint?: keyof typeof PLATE_TINTS | null; live?: boolean };
 // Round 64, `live`: the LIVE style (tiledLayers) instead of the plate style, one zoom deeper when
 // `deep` (the territory and region plates, renderer only: `?plate=...&deep=1&pstyle=live`). The live
 // style at the territory's zoom 9 to 10 drapes its hairlines on the terrain from a texture too coarse
@@ -141,78 +143,6 @@ export const PLATE_TINTS: Record<"a" | "b", PlateTint> = {
   b: { green: "#0d1610", water: "#051030" },
 };
 
-/** THE GROUND'S TONES as one set: what a palette study may move. LOOK0 is today's night, read from
- * NIGHT and PLATE, so the live style built from it is the same document. */
-export type Look = {
-  land: string;
-  town: string;
-  wood: string;
-  water: string;
-  stream: string;
-  building: string;
-  buildingTop: string;
-  horizon: string;
-  fog: string;
-  plateTown: string;
-  park: string;
-  plateBuilding: string;
-  plateBuildingTop: string;
-  /** The hillshade: the moonlit faces' alpha and the relief's exaggeration. */
-  highlight: number;
-  relief: number;
-  /** Added to every road class's alpha (live and plate), so the lines keep their contrast over a lighter land. */
-  roadLift: number;
-};
-export const LOOK0: Look = {
-  land: NIGHT.land,
-  town: NIGHT.town,
-  wood: NIGHT.wood,
-  water: NIGHT.water,
-  stream: NIGHT.stream,
-  building: NIGHT.building,
-  buildingTop: NIGHT.buildingTop,
-  horizon: NIGHT.horizon,
-  fog: NIGHT.fog,
-  plateTown: PLATE.town,
-  park: PLATE.park,
-  plateBuilding: PLATE.building,
-  plateBuildingTop: PLATE.buildingTop,
-  highlight: 0.3,
-  relief: 0.6,
-  roadLift: 0,
-};
-
-/** Round 65, A STUDY FOR THE OWNER, NOT THE LIVE LOOK ("it looks really dark ... light it up a bit
- * more, in general not too dark on the map ... a little more colour to the water, very blue"). The
- * plate renderer's `?pal=p1|p2|p3` only (plate and live-deep alike): p1 the land lifted a step with a
- * blue water, p2 the same with a very blue water, p3 the lifted land with a water clearly blue yet a
- * touch under the land. No plate or film carries one until he chooses (docs/parity/DESIGN-ROUND65.md). */
-// Tuned on the real page (scripts/_scratch-r65/look/): the brief's first lift (land #10131a) moved the
-// page's mean only 15.9 to 19.2 of 255 under the words' scrims, so the land stands a step higher; the
-// wood and the parks keep today's step under it (left at #07090c they read as black holes on it).
-const LIFTED: Partial<Look> = {
-  land: "#151922",
-  town: "#1d2330",
-  wood: "#0f1319",
-  building: "#12151c",
-  buildingTop: "#1c212b",
-  horizon: "#151b27",
-  fog: "#0e1118",
-  plateTown: "#1f2636",
-  park: "#0f1319",
-  plateBuilding: "#1e2530",
-  plateBuildingTop: "#2a3240",
-  highlight: 0.38,
-  relief: 0.7,
-  roadLift: 0.04,
-};
-export const PALETTES: Record<"p1" | "p2" | "p3", Look> = {
-  p1: { ...LOOK0, ...LIFTED, water: "#071a3d", stream: "#12325f" },
-  p2: { ...LOOK0, ...LIFTED, water: "#0b2452", stream: "#1a4585" },
-  p3: { ...LOOK0, ...LIFTED, water: "#061534", stream: "#0f2a55" },
-};
-const lift = (a: number, look: Look) => Math.round((a + look.roadLift) * 1000) / 1000;
-
 /** The deep render's terrain level: the one the plain render would draw at one zoom less. A 512 px
  * terrarium tile is asked for at floor(zoom) - 1 (measured: the camera's centre elevation at the
  * Dutchess and Putnam plates matched the plain render's to the millimetre with this level, and
@@ -225,8 +155,7 @@ export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggera
   const buildings = o.buildings ?? true;
   const hillshade = o.hillshade ?? true;
   const dz = o.plate && o.plate.deep ? 1 : 0;
-  const look = (o.plate && o.plate.pal && PALETTES[o.plate.pal]) || LOOK0;
-  const base = o.plate && o.plate.live ? tiledLayers(hillshade, buildings, dz, look) : o.plate ? plateLayers(hillshade, buildings, o.plate.deep ? 1 : 0, o.plate.tint ? PLATE_TINTS[o.plate.tint] ?? null : null, look) : tiledLayers(hillshade, buildings);
+  const base = o.plate && o.plate.live ? tiledLayers(hillshade, buildings, dz) : o.plate ? plateLayers(hillshade, buildings, o.plate.deep ? 1 : 0, o.plate.tint ? PLATE_TINTS[o.plate.tint] ?? null : null) : tiledLayers(hillshade, buildings);
   const layers: StyleSpecification["layers"] = o.coarse ? withCoarse(base, o.coarse) : base;
   return {
     version: 8,
@@ -239,8 +168,8 @@ export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggera
     ...(terrain ? { terrain: { source: "dem", exaggeration: o.exaggeration ?? EXAGGERATION } } : {}),
     sky: {
       "sky-color": NIGHT.sky,
-      "horizon-color": look.horizon,
-      "fog-color": look.fog,
+      "horizon-color": NIGHT.horizon,
+      "fog-color": NIGHT.fog,
       "fog-ground-blend": 0.6,
       "horizon-fog-blend": 0.7,
       "sky-horizon-blend": 0.6,
@@ -269,10 +198,10 @@ function withCoarse(layers: StyleSpecification["layers"], c: { below: number }):
 
 /** The plate style's layers (PLATE_ROADS, PLATE). `dz`: the deep render's zoom shift (0 or 1): every
  * zoom stop moves up by it and every width doubles with it, so a line keeps its size in the picture. */
-function plateLayers(hillshade: boolean, buildings: boolean, dz: number, tint: PlateTint | null = null, look: Look = LOOK0): StyleSpecification["layers"] {
+function plateLayers(hillshade: boolean, buildings: boolean, dz: number, tint: PlateTint | null = null): StyleSpecification["layers"] {
   const k = 2 ** dz;
   const width = (w8: number, w16: number) => ["interpolate", ["exponential", 1.5], ["zoom"], 8 + dz, w8 * k, 16 + dz, w16 * k] as unknown as number;
-  const live = tiledLayers(hillshade, false, 0, look);
+  const live = tiledLayers(hillshade, false);
   const pick = (id: string) => live.find((l) => l.id === id)!;
   const notTunnel = ["!=", ["get", "brunnel"], "tunnel"];
   const line = (id: string, filter: unknown[], alpha: number, w8: number, w16: number) => ({
@@ -293,21 +222,21 @@ function plateLayers(hillshade: boolean, buildings: boolean, dz: number, tint: P
     tinted(pick("wood"), tint?.green),
     // Parks as dark as the wood: Central Park, Prospect Park and Flushing Meadows are the shapes a
     // borough is known by, a dark field inside the lit grid.
-    { id: "park", type: "fill", source: "omt", "source-layer": "park", filter: ["==", ["get", "class"], "park"], paint: { "fill-color": tint?.green ?? look.park, "fill-antialias": false } },
+    { id: "park", type: "fill", source: "omt", "source-layer": "park", filter: ["==", ["get", "class"], "park"], paint: { "fill-color": tint?.green ?? PLATE.park, "fill-antialias": false } },
     {
       id: "town",
       type: "fill",
       source: "omt",
       "source-layer": "landuse",
       filter: ["match", ["get", "class"], ["residential", "commercial", "industrial", "retail", "railway"], true, false],
-      paint: { "fill-color": look.plateTown, "fill-antialias": false },
+      paint: { "fill-color": PLATE.town, "fill-antialias": false },
     },
     ...(hillshade ? [pick("relief")] : []),
     tinted(pick("water"), tint?.water),
     { ...pick("shore"), paint: { "line-color": NIGHT.road, "line-opacity": 0.22, "line-width": width(0.5, 1.2) } } as StyleSpecification["layers"][number],
-    { ...pick("stream"), paint: { "line-color": look.stream, "line-width": width(0.4, 1.6) } } as StyleSpecification["layers"][number],
+    { ...pick("stream"), paint: { "line-color": NIGHT.stream, "line-width": width(0.4, 1.6) } } as StyleSpecification["layers"][number],
     line("rail", ["all", ["match", ["get", "class"], ["rail"], true, false], notTunnel], PLATE.railAlpha, 0.3, 1.0),
-    ...PLATE_ROADS.map((r) => line(r.id, ["all", ["match", ["get", "class"], r.classes, true, false], notTunnel], lift(r.alpha, look), r.w8, r.w16)),
+    ...PLATE_ROADS.map((r) => line(r.id, ["all", ["match", ["get", "class"], r.classes, true, false], notTunnel], r.alpha, r.w8, r.w16)),
     // Footpaths and tracks only where they cross water or a road: the Walkway over the Hudson is one.
     line("road-bridge-path", ["all", ["match", ["get", "class"], ["path", "track"], true, false], ["==", ["get", "brunnel"], "bridge"]], PLATE.bridgePathAlpha, 0.4, 1.4),
     ...(buildings
@@ -320,7 +249,7 @@ function plateLayers(hillshade: boolean, buildings: boolean, dz: number, tint: P
             minzoom: PLATE.buildingsMinzoom + dz,
             filter: ["!=", ["get", "hide_3d"], true] as unknown as ["==", string, string],
             paint: {
-              "fill-extrusion-color": ["interpolate", ["linear"], ["coalesce", ["get", "render_height"], 6], 0, look.plateBuilding, 120, look.plateBuildingTop] as unknown as string,
+              "fill-extrusion-color": ["interpolate", ["linear"], ["coalesce", ["get", "render_height"], 6], 0, PLATE.building, 120, PLATE.buildingTop] as unknown as string,
               "fill-extrusion-height": ["coalesce", ["get", "render_height"], 6] as unknown as number,
               "fill-extrusion-base": ["coalesce", ["get", "render_min_height"], 0] as unknown as number,
               "fill-extrusion-opacity": 0.95,
@@ -332,18 +261,18 @@ function plateLayers(hillshade: boolean, buildings: boolean, dz: number, tint: P
   ];
 }
 
-function tiledLayers(hillshade: boolean, buildings: boolean, dz = 0, look: Look = LOOK0): StyleSpecification["layers"] {
+function tiledLayers(hillshade: boolean, buildings: boolean, dz = 0): StyleSpecification["layers"] {
   const k = 2 ** dz;
   return [
-    { id: "land", type: "background", paint: { "background-color": look.land } },
-    { id: "wood", type: "fill", source: "omt", "source-layer": "landcover", filter: ["==", ["get", "class"], "wood"], paint: { "fill-color": look.wood, "fill-antialias": false } },
+    { id: "land", type: "background", paint: { "background-color": NIGHT.land } },
+    { id: "wood", type: "fill", source: "omt", "source-layer": "landcover", filter: ["==", ["get", "class"], "wood"], paint: { "fill-color": NIGHT.wood, "fill-antialias": false } },
     {
       id: "town",
       type: "fill",
       source: "omt",
       "source-layer": "landuse",
       filter: ["match", ["get", "class"], ["residential", "commercial", "industrial", "retail"], true, false],
-      paint: { "fill-color": look.town, "fill-antialias": false },
+      paint: { "fill-color": NIGHT.town, "fill-antialias": false },
     },
     ...(hillshade
       ? [
@@ -354,15 +283,15 @@ function tiledLayers(hillshade: boolean, buildings: boolean, dz = 0, look: Look 
             paint: {
               "hillshade-illumination-direction": 250,
               "hillshade-illumination-altitude": 30,
-              "hillshade-exaggeration": look.relief,
+              "hillshade-exaggeration": 0.7,
               "hillshade-shadow-color": NIGHT.shadow,
-              "hillshade-highlight-color": rgba(NIGHT.moon, look.highlight),
+              "hillshade-highlight-color": rgba(NIGHT.moon, 0.38),
               "hillshade-accent-color": NIGHT.shadow,
             },
           },
         ]
       : []),
-    { id: "water", type: "fill", source: "omt", "source-layer": "water", paint: { "fill-color": look.water, "fill-antialias": false } },
+    { id: "water", type: "fill", source: "omt", "source-layer": "water", paint: { "fill-color": NIGHT.water, "fill-antialias": false } },
     // The shore, a moonlit hairline: where the land meets the water is what makes the Hudson, the
     // Sound and the harbour read at every height (the water alone is barely darker than the land).
     {
@@ -378,7 +307,7 @@ function tiledLayers(hillshade: boolean, buildings: boolean, dz = 0, look: Look 
       source: "omt",
       "source-layer": "waterway",
       filter: ["match", ["get", "class"], ["river", "canal"], true, false],
-      paint: { "line-color": look.stream, "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 8 + dz, 0.4 * k, 16 + dz, 1.6 * k] },
+      paint: { "line-color": NIGHT.stream, "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 8 + dz, 0.4 * k, 16 + dz, 1.6 * k] },
     },
     ...ROADS.map((r) => ({
       id: r.id,
@@ -391,7 +320,7 @@ function tiledLayers(hillshade: boolean, buildings: boolean, dz = 0, look: Look 
       paint: {
         "line-color": NIGHT.road,
         // Fades in over its first zoom, so a class never pops in.
-        "line-opacity": ["interpolate", ["linear"], ["zoom"], r.minzoom + dz, 0, r.minzoom + 1 + dz, lift(r.alpha, look)] as unknown as number,
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], r.minzoom + dz, 0, r.minzoom + 1 + dz, r.alpha] as unknown as number,
         "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 8 + dz, r.w8 * k, 16 + dz, r.w16 * k] as unknown as number,
       },
     })),
@@ -405,7 +334,7 @@ function tiledLayers(hillshade: boolean, buildings: boolean, dz = 0, look: Look 
             minzoom: BUILDINGS_MINZOOM + dz,
             filter: ["!=", ["get", "hide_3d"], true] as unknown as ["==", string, string],
             paint: {
-              "fill-extrusion-color": ["interpolate", ["linear"], ["coalesce", ["get", "render_height"], 6], 0, look.building, 120, look.buildingTop] as unknown as string,
+              "fill-extrusion-color": ["interpolate", ["linear"], ["coalesce", ["get", "render_height"], 6], 0, NIGHT.building, 120, NIGHT.buildingTop] as unknown as string,
               "fill-extrusion-height": ["coalesce", ["get", "render_height"], 6] as unknown as number,
               "fill-extrusion-base": ["coalesce", ["get", "render_min_height"], 0] as unknown as number,
               "fill-extrusion-opacity": 0.95,
