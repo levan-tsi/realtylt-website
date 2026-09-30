@@ -80,6 +80,8 @@ interface FilmEntry {
   frames: FilmFrame[] | null;
   ready: boolean;
   failed: boolean;
+  /** Whether it is ready now (every byte buffered, the first frame decoded, the frames in). */
+  check: () => void;
 }
 
 /** The plates a featured home is looked for on, closest pictures first (the counties, the harbour,
@@ -89,7 +91,7 @@ const HOME_PLATES: readonly ShotName[] = ["ulster", "dutchess-county", "orange",
 
 /** The settle's curve as CSS (plate-motion.ts settleScale is the same ease-out cubic). */
 const SETTLE_EASE = "cubic-bezier(0.33, 1, 0.68, 1)";
-/** Round 65: how far into a film's play the laptop's waiting film work runs (past the dissolve in and
+/** Round 65: how far into a film's play the waiting film work runs (past the dissolve in and
  * the first frames, before a hurried film could end). */
 const QUIET_AFTER_MS = 250;
 /** How far the click's fly-in pushes into the picture. */
@@ -537,7 +539,10 @@ export class PlateController implements GroundEngine {
     // its stops keeps only its two decoders for the flight. Round 65: the laptop, which keeps four,
     // wants the route's next hop beside the films round the page.
     const moving = !!this.motion.motion;
-    const { want, next, keep } = filmWants({ names, at: this.motion.motion?.to ?? this.motion.at, moving, aspect, playing: this.playing?.entry.id ?? null, backward: this.backward, film: (a, b) => filmOf(M, a, b), route: this.route });
+    // The film playing, or the one about to (its plate still decoding in begin): never let go.
+    const m = this.motion.motion;
+    const playing = this.playing?.entry.id ?? (m?.film && m.from ? `${m.from}>${m.to}>${aspect}` : null);
+    const { want, next, keep } = filmWants({ names, at: m?.to ?? this.motion.at, moving, aspect, playing, backward: this.backward, film: (a, b) => filmOf(M, a, b), route: this.route, quiet: this.quiet });
     // Loading a clip (a decoder made) or letting one go (a decoder torn down) while a film starts
     // cost that film a 50 to 110 ms frame (measured: scripts/_scratch-r59-hitch.mjs). So the work
     // waits for the page to be still: after the landing, or a moment with no transition asked for.
@@ -602,7 +607,7 @@ export class PlateController implements GroundEngine {
    * no film starting, ending or hurried). */
   private quiet = false;
   private flushQuiet() {
-    if (!this.calmJob || this.stopped) return;
+    if (this.stopped) return;
     this.calmJob = null;
     this.quiet = true;
     try {
@@ -713,7 +718,7 @@ export class PlateController implements GroundEngine {
     v.disablePictureInPicture = true;
     v.preload = "auto";
     v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0";
-    const e: FilmEntry = { id, key: which.key, reverse: which.reverse, aspect, clip, video: v, frames: null, ready: false, failed: false };
+    const e: FilmEntry = { id, key: which.key, reverse: which.reverse, aspect, clip, video: v, frames: null, ready: false, failed: false, check: () => {} };
     this.films.set(id, e);
     f.el.root.insertBefore(v, f.el.canvas);
     const cw = this.box().width;
@@ -725,7 +730,12 @@ export class PlateController implements GroundEngine {
       const whole = b.length > 0 && b.end(b.length - 1) >= v.duration - 0.05 && b.start(0) <= 0.05;
       if (v.readyState >= 4 && whole) e.ready = true;
     };
+    // Round 65: also asked when a film is wanted (filmMs): on a slow line the last bytes can land
+    // after the last of these events (measured, a phone at 8 Mbps: a clip buffered whole, 2.43 of
+    // 2.43 s, still not ready, and its move faded).
+    e.check = check;
     v.addEventListener("canplaythrough", check);
+    v.addEventListener("suspend", check);
     v.addEventListener("progress", check);
     v.addEventListener("loadeddata", check);
     v.addEventListener("error", () => (e.failed = true));
@@ -784,6 +794,7 @@ export class PlateController implements GroundEngine {
   /** The film's length if the flight from -> to plays as a film now (plate-motion.ts useFilm). */
   private filmMs = (from: ShotName, to: ShotName): number | null => {
     const e = this.films.get(`${from}>${to}>${this.aspect()}`);
+    if (e && !e.ready) e.check();
     const ready = !!e && e.ready && !e.failed && !!e.frames && e.video.readyState >= 3 && !e.video.seeking && e.video.currentTime === 0;
     const recorded = !!(this.film && this.opts.films && filmOf(this.opts.films, from, to));
     const ok = useFilm({ recorded, ready, reduced: this.opts.reduced, off: !!this.opts.filmOff || this.fs.rejected > 0 });
@@ -882,12 +893,12 @@ export class PlateController implements GroundEngine {
     }
     this.fs.played++;
     this.logKind(e.key + (e.reverse ? " back" : ""), "film");
-    // Round 65: the laptop's waiting film work runs a moment into the play, the film steady (a phone
-    // keeps its clips ahead for the landing: its two decoders are the film playing and the next).
-    if (this.aspect() === "wide")
-      setTimeout(() => {
-        if (this.playing === run && !run.ending) this.flushQuiet();
-      }, QUIET_AFTER_MS);
+    // Round 65: the waiting film work runs a moment into the play, the film steady: the clips ahead
+    // are asked for now, not at the landing (a phone, whose clips are ~1.2 MB, took them at the
+    // landing: on a slow line every second move then faded, measured at 8 Mbps with 3 s a stop).
+    setTimeout(() => {
+      if (this.playing === run && !run.ending) this.flushQuiet();
+    }, QUIET_AFTER_MS);
     // A hop with its target queued behind it (routeHop) is played hurried, as a queued request is.
     if (this.motion.next) this.hurry(performance.now());
   }

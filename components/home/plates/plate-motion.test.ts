@@ -282,3 +282,13 @@ describe("a still map holds a moment for its film (holdForFilm)", () => {
     expect(holdForFilm({ ...ok, off: true })).toBe(false);
   });
 });
+
+describe("a moving phone at its film's quiet moment (filmWants quiet)", () => {
+  const ladder = filmLadder(FLIGHTS);
+  const base = { backward: false, film: (a: ShotName, b: ShotName) => filmOf(FLIGHTS, a, b), route: (a: ShotName, b: ShotName) => routeHop(ladder, a, b) };
+  it("takes the film ahead beside the one playing, within its three decoders", () => {
+    const r = filmWants({ ...base, names: ["highlands", "westchester", "dutchess"], at: "highlands", moving: true, aspect: "tall", playing: "dutchess>highlands>tall", quiet: true });
+    expect([...r.want].sort()).toEqual(["dutchess>highlands>tall", "highlands>westchester>tall"]);
+    expect(r.keep).toBe(FILMS_KEPT.tall + 1);
+  });
+});

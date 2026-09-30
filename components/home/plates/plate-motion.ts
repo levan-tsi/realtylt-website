@@ -137,7 +137,9 @@ export const FILMS_KEPT = { wide: 4, tall: 2 } as const;
  *    where the page now is, or the first hop of a route there (`route`), when it was recorded;
  *  - the film playing.
  * A phone that is moving keeps only the film playing and `next` (its two decoders for a flick; the
- * films round the page come back when it lands). `keep` is how many may stay decoded. */
+ * films round the page come back when it lands), except at a film's quiet moment (`quiet`, round
+ * 65: well into its play), when it takes the films round the page too, within its three.
+ * `keep` is how many may stay decoded. */
 export function filmWants(o: {
   names: readonly ShotName[];
   at: ShotName | null;
@@ -147,6 +149,7 @@ export function filmWants(o: {
   backward: boolean;
   film: (from: ShotName, to: ShotName) => { reverse: boolean } | null;
   route: Router;
+  quiet?: boolean;
 }): { want: Set<string>; next: string | null; keep: number } {
   const { names, at, moving, aspect } = o;
   const id = (a: ShotName, b: ShotName) => `${a}>${b}>${aspect}`;
@@ -159,7 +162,7 @@ export function filmWants(o: {
     }
   const step = at && from && at !== from ? (o.route(at, from) ?? (o.film(at, from) ? from : null)) : null;
   const next = at && step ? id(at, step) : null;
-  if (moving && aspect === "tall") want.clear();
+  if (moving && aspect === "tall" && !o.quiet) want.clear();
   if (next) want.add(next);
   if (o.playing) want.add(o.playing);
   return { want, next, keep: FILMS_KEPT[aspect] + (moving ? 1 : 0) };
