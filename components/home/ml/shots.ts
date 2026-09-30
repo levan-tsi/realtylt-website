@@ -29,7 +29,8 @@ const s = (lat: number, lng: number, range: number, pitch: number, bearing: numb
 /** The lens, degrees of the window's height: the Google map's (../g3d/cameras.ts TUNED). */
 export const LENS = { wide: 40, tall: 58 } as const;
 export const MIN_PITCH = 55;
-export const MAX_PITCH = 65;
+// Round 65: 68 for the laptop hero W10 (docs/parity/DESIGN-ROUND65.md §8); the chapters stay 55 to 65.
+export const MAX_PITCH = 68;
 
 /* The phone's territory: the Google map's tall camera (156 km, tilt 46) at the brief's 55 degrees
  * put the city small at the foot of the band between the words; 140 km from a little further north

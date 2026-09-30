@@ -260,7 +260,18 @@ async function shoot() {
       if (!st.frame) throw new Error(`${shot}/${aspect}: no pixel matrix (frame ${st.frameKind}); the manifest needs the map's own`);
       if (st.box.width !== A.vp.width || st.box.height !== A.vp.height) throw new Error(`${shot}/${aspect}: the map's box is ${st.box.width} x ${st.box.height}, not the window`);
       if (q.has("elev") && Math.abs(st.cam.elevation - Number(q.get("elev"))) > 1e-6) throw new Error(`${shot}/${aspect}: the centre stands at ${st.cam.elevation} m, not the plain render's ${q.get("elev")}`);
-      const png = await page.screenshot({ clip: st.box, type: "png" });
+      // Round 65: the picture is taken only once it has stopped changing. The hero's deep render came
+      // back three times with its near field bare (tiles not yet drawn at the idle, the round-64 trap
+      // of DESIGN-ROUND64-QUALITY.md §5); the same URL a few seconds later drew every tile. Two shots
+      // 1.5 s apart must be byte-identical (the render is deterministic once the tiles are in).
+      let png = await page.screenshot({ clip: st.box, type: "png" });
+      for (let i = 0; ; i++) {
+        await page.waitForTimeout(1500);
+        const again = await page.screenshot({ clip: st.box, type: "png" });
+        if (again.equals(png)) break;
+        png = again;
+        if (i === 20) throw new Error(`${shot}/${aspect}: the map is still changing after 30 s`);
+      }
       const meta = await sharp(png).metadata();
       const name = `${shot}-${aspect}`;
       fs.writeFileSync(`${RAW}/${name}.png`, png);

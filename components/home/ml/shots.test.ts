@@ -16,7 +16,8 @@ describe("the shot table", () => {
   it("has every shot the page flies to", () => {
     for (const n of LADDER) expect(ML_SHOTS[n], n).toBeDefined();
   });
-  it("tilts every shot 55 to 65 degrees", () => {
+  // Round 65: MAX_PITCH 68 for the laptop's first screen (W10); the other shots stay 55 to 65.
+  it("tilts every shot 55 to 68 degrees", () => {
     for (const [n, t] of Object.entries(ML_SHOTS))
       for (const c of [t.wide, t.tall]) {
         expect(c.pitch, n).toBeGreaterThanOrEqual(MIN_PITCH);
@@ -44,11 +45,12 @@ describe("the shot table", () => {
 });
 
 describe("what each shot shows", () => {
-  it("the territory: Staten Island to Poughkeepsie, the Sound to the Shawangunks, in the laptop's free side", () => {
+  // Round 65, W10 (docs/parity/DESIGN-ROUND65.md §8): closer and turned, so Staten Island's south
+  // shore, the Rockaways and Port Chester crop by decision (his word: Staten Island may go); the city
+  // and the valley to the Shawangunks stay in the laptop's free side.
+  it("the territory: the city to Poughkeepsie and the Shawangunks, in the laptop's free side", () => {
     const places: [string, number, number][] = [
-      ["Staten Island's south shore", 40.52, -74.2],
-      ["the Rockaways", 40.585, -73.82],
-      ["Port Chester on the Sound", 41.0, -73.665],
+      ["Manhattan", 40.78, -73.97],
       ["Poughkeepsie", 41.7, -73.92],
       ["New Paltz", 41.75, -74.087],
       ["Middletown", 41.446, -74.422],
