@@ -1008,8 +1008,10 @@ export async function getSyncWatermark(): Promise<{ watermark: string; baselineC
  * address becomes a light (lib/idx/lights.ts): a zip-centroid fallback sits in a jitter box, and
  * at the hero's scale a few dozen of those draw a square no real street makes. The unmeasured
  * rows still count toward their town's number. `geocoded` is the generated boolean column, so no
- * JSONB is read. Our own database only; this never touches MLS Grid. */
-export type LightRow = { lat: number; lng: number; city: string; county: string; geocoded: boolean };
+ * JSONB is read; it is NULL for a home the geocoder was asked about and could not place (only the
+ * geocodeTried marker is set then), and the packer treats null as a guess too (round 65: 831 such
+ * homes were being drawn at their zip's centre). Our own database only; this never touches MLS Grid. */
+export type LightRow = { lat: number; lng: number; city: string; county: string; geocoded: boolean | null };
 export async function getLightRows(): Promise<LightRow[]> {
   const base = `idx_listings?select=lat,lng,city,county,geocoded&${searchFilters({ status: "Active" })}&order=id.asc`;
   const first = await onceRetried(() => rest<LightRow>(`${base}&limit=${PIN_CHUNK}`, { count: true }));

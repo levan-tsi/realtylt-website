@@ -51,10 +51,13 @@ export function townName(raw: string): string {
 }
 
 /** `geocoded: false` rows count toward their town and are not drawn (a zip-centroid position
- * is a guess, and a few dozen guesses in one jitter box draw a square). A row without the flag
- * is treated as measured. */
+ * is a guess, and a few dozen guesses in one jitter box draw a square). So are `null` rows, which
+ * is what the database says for a home the geocoder was asked about and could not place (the
+ * generated column stays null; only the geocodeTried marker is set): round 65 found 831 of them
+ * drawn at their zip's centre, 46 in one Newburgh box. A row WITHOUT the flag (undefined) is
+ * treated as measured. */
 export function packLights(
-  rows: readonly { lat: number; lng: number; city: string; county?: string; geocoded?: boolean }[],
+  rows: readonly { lat: number; lng: number; city: string; county?: string; geocoded?: boolean | null }[],
   box: LightBox,
 ): PackedLights {
   const towns: string[] = [];
@@ -87,7 +90,7 @@ export function packLights(
       votes.set(t, v);
     }
   }
-  const lit = rows.filter((r) => r.geocoded !== false && inBox(r));
+  const lit = rows.filter((r) => r.geocoded !== false && r.geocoded !== null && inBox(r));
   const view = new DataView(new ArrayBuffer(lit.length * 6));
   lit.forEach((r, i) => {
     const t = townOf(r.city);
