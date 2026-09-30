@@ -1,3 +1,9 @@
+# NEXT = ROUND 65 (Fable 5.1 orchestrator + Opus builders, 5+ rounds, 700-800k): READ `docs/handoff/WEBSITE-R65-HANDOFF.md` §0 FIRST.
+
+Phone AND desktop: every scroll transition should move (some just appear), less New Jersey / closer and sharper map, a lighter look (lighter greys, map lit up a bit, bluer water), the blue logo instead of white, a better font; show him a PREVIEW before shipping.
+
+---
+
 # ROUND 64 (2026-09-27) DONE AND LIVE (e7b2740). Record: docs/parity/DESIGN-ROUND64-QUALITY.md + the commits below.
 
 His report: header and footer gone on realtylt.com, the laptop hero shows too much New Jersey, the listing rail lags, then polish the map quality (phone and laptop); three builders, checked each time. Done, one builder at a time, each re-verified by the orchestrator before its push:
