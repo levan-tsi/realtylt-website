@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PLATE_BREAKPOINT, TALL_MEDIA, WIDE_MEDIA, aspectFor, coverFit, filmFormat, plateProjector, plateRange, plateSrc, plateSrcSet, visiblePlateRect, type Plate } from "./plate-frame";
+import { FILM_SLOW_MBPS, PLATE_BREAKPOINT, TALL_MEDIA, WIDE_MEDIA, aspectFor, coverFit, filmFormat, filmWidthFor, plateProjector, plateRange, plateSrc, plateSrcSet, visiblePlateRect, type Plate } from "./plate-frame";
 import { mercX, mercY, rangeForZoom } from "../ml/geo";
 
 /** A matrix that maps world pixels straight to css pixels (w = 1): x = X, y = Y. Column-major as
@@ -103,5 +103,25 @@ describe("the film's format (round 59)", () => {
     expect(filmFormat(tall, ["webm", "mp4"])).toBe("mp4");
     expect(filmFormat(tall, ["webm"])).toBeNull();
     expect(filmFormat(tall, [])).toBeNull();
+  });
+});
+
+// Round 65: the clip's width by the line (a 2x laptop's 2880 set is ~1.3 MB a clip, the 1440 ~0.4).
+describe("the clip width by the line (filmWidthFor)", () => {
+  const wide = [1440, 2880], tall = [1170];
+  it("a good or unknown line keeps the device's width: the sharp set on a 2x laptop", () => {
+    expect(filmWidthFor(wide, 2880, 1440, null)).toBe(2880);
+    expect(filmWidthFor(wide, 2880, 1440, FILM_SLOW_MBPS)).toBe(2880);
+    expect(filmWidthFor(wide, 2880, 1440, 50)).toBe(2880);
+  });
+  it("a slow line takes one clip pixel per css pixel", () => {
+    expect(filmWidthFor(wide, 2880, 1440, FILM_SLOW_MBPS - 0.1)).toBe(1440);
+    expect(filmWidthFor(wide, 2880, 1440, 0)).toBe(1440);
+  });
+  it("a 1x laptop and the phone's single set are unchanged either way", () => {
+    expect(filmWidthFor(wide, 1440, 1440, 2)).toBe(1440);
+    expect(filmWidthFor(wide, 1440, 1440, null)).toBe(1440);
+    expect(filmWidthFor(tall, 780, 390, 2)).toBe(1170);
+    expect(filmWidthFor(tall, 780, 390, null)).toBe(1170);
   });
 });

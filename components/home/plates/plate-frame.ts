@@ -135,6 +135,15 @@ export function filmFormat(clip: Pick<FilmClip, "webm" | "mp4">, playable: reado
 }
 /** The width to fetch: the smallest at least the window's device width, else the largest. */
 export const filmWidth = (widths: readonly number[], deviceWidth: number) => [...widths].sort((a, b) => a - b).find((w) => w >= deviceWidth) ?? Math.max(...widths);
+/** Round 65, A SLOW LINE: under this many Mbps (measured on the clips already fetched, or the
+ * browser's own estimate before the first) a 2x screen takes the clip one pixel per css pixel (the
+ * laptop's 1440 set, ~0.4 MB) instead of the device's (2880, ~1.3 MB): measured at 8 Mbps, the 2880
+ * clips were still buffering when their move came (the moves waited, then faded), the 1440 in time.
+ * A good line keeps the sharp set. */
+export const FILM_SLOW_MBPS = 8;
+export function filmWidthFor(widths: readonly number[], deviceWidth: number, cssWidth: number, mbps: number | null): number {
+  return mbps !== null && mbps < FILM_SLOW_MBPS ? filmWidth(widths, cssWidth) : filmWidth(widths, deviceWidth);
+}
 
 /** A recorded frame as a plate (the same fit, projector and range as a picture's), the frame index
  * read backwards for the back flight. */

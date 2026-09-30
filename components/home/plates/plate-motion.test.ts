@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { FADE_MS, FILM_MAX_RATE, filmNeighbours, HURRY_MS, SETTLE_FROM, filmHurry, finished, hurryRate, idle, neighbours, routeHop, progress, request, settleScale, useFilm, type FilmChooser } from "./plate-motion";
+import { FADE_MS, FILM_HOLD_MS, FILM_MAX_RATE, FILMS_KEPT, filmNeighbours, filmWants, holdForFilm, HURRY_MS, SETTLE_FROM, filmHurry, finished, hurryRate, idle, neighbours, routeHop, progress, request, settleScale, useFilm, type FilmChooser } from "./plate-motion";
 import type { ShotName } from "../night/shots";
+import { FLIGHTS } from "./flights.gen";
+import { filmLadder, filmOf } from "./plate-frame";
 
 describe("a plate asked for", () => {
   it("the first plate is a cut: there is nothing to fade from", () => {
@@ -214,5 +216,69 @@ describe("the route through the plates in between", () => {
   it("without a route nothing changes", () => {
     const r = request(idle("ulster"), "orange", 0, FADE_MS, films);
     expect(r.state.motion).toEqual({ from: "ulster", to: "orange", startedAt: 0, ms: 2000, film: true });
+  });
+});
+
+// Round 65: which clips are asked for, on both surfaces (the laptop's seven fades in a walk were
+// every one a clip never asked for while the map was moving).
+describe("the films wanted decoded (filmWants)", () => {
+  const ladder = filmLadder(FLIGHTS);
+  const film = (a: ShotName, b: ShotName) => filmOf(FLIGHTS, a, b);
+  const route = (a: ShotName, b: ShotName) => routeHop(ladder, a, b);
+  const base = { playing: null, backward: false, film, route };
+
+  it("a still laptop at the territory, the page crossed into Dutchess: that flight and the one ahead", () => {
+    const r = filmWants({ ...base, names: ["dutchess", "highlands", "hero"], at: "hero", moving: false, aspect: "wide" });
+    expect(r.next).toBe("hero>dutchess>wide");
+    expect([...r.want].sort()).toEqual(["dutchess>highlands>wide", "hero>dutchess>wide"]);
+    expect(r.keep).toBe(FILMS_KEPT.wide);
+  });
+
+  it("a moving laptop keeps the films round the page, the next flight and the one playing, and one decoder more", () => {
+    const r = filmWants({ ...base, names: ["highlands", "westchester", "dutchess"], at: "dutchess", moving: true, aspect: "wide", playing: "hero>dutchess>wide" });
+    expect(r.next).toBe("dutchess>highlands>wide");
+    expect([...r.want].sort()).toEqual(["dutchess>highlands>wide", "hero>dutchess>wide", "highlands>westchester>wide"]);
+    expect(r.keep).toBe(FILMS_KEPT.wide + 1);
+  });
+
+  it("a moving phone keeps only its two decoders: the film playing and the next flight", () => {
+    const r = filmWants({ ...base, names: ["highlands", "westchester", "dutchess"], at: "dutchess", moving: true, aspect: "tall", playing: "hero>dutchess>tall" });
+    expect([...r.want].sort()).toEqual(["dutchess>highlands>tall", "hero>dutchess>tall"]);
+    expect(r.keep).toBe(FILMS_KEPT.tall + 1);
+  });
+
+  it("a page two stops ahead of the map wants the route's first hop, on the laptop too", () => {
+    const r = filmWants({ ...base, names: ["orange", "putnam", "dutchess-county"], at: "ulster", moving: false, aspect: "wide" });
+    expect(r.next).toBe("ulster>dutchess-county>wide");
+    expect(r.want.has("ulster>dutchess-county>wide")).toBe(true);
+  });
+
+  it("a far jump has no next flight (it fades); the map already where the page is has none either", () => {
+    expect(filmWants({ ...base, names: ["queens", "brooklyn", "manhattan"], at: "hero", moving: false, aspect: "wide" }).next).toBeNull();
+    expect(filmWants({ ...base, names: ["queens", "brooklyn", "manhattan"], at: "queens", moving: false, aspect: "wide" }).next).toBeNull();
+  });
+
+  it("the films behind only once the visitor has turned; the flight back about to be asked for always", () => {
+    const down = filmWants({ ...base, names: ["highlands", "westchester", "dutchess"], at: "westchester", moving: false, aspect: "wide" });
+    expect(down.want.has("highlands>dutchess>wide")).toBe(false);
+    expect(down.next).toBe("westchester>highlands>wide");
+    const up = filmWants({ ...base, names: ["highlands", "westchester", "dutchess"], at: "westchester", moving: false, aspect: "wide", backward: true });
+    expect(up.want.has("highlands>dutchess>wide")).toBe(true);
+  });
+});
+
+describe("a still map holds a moment for its film (holdForFilm)", () => {
+  const ok = { recorded: true, ready: false, coming: true, reduced: false, off: false, waited: 0 };
+  it("holds while the clip is on its way, up to FILM_HOLD_MS", () => {
+    expect(holdForFilm(ok)).toBe(true);
+    expect(holdForFilm({ ...ok, waited: FILM_HOLD_MS - 1 })).toBe(true);
+    expect(holdForFilm({ ...ok, waited: FILM_HOLD_MS })).toBe(false);
+  });
+  it("never for a clip that is in, one never recorded or failed, reduced motion or films off", () => {
+    expect(holdForFilm({ ...ok, ready: true })).toBe(false);
+    expect(holdForFilm({ ...ok, recorded: false })).toBe(false);
+    expect(holdForFilm({ ...ok, coming: false })).toBe(false);
+    expect(holdForFilm({ ...ok, reduced: true })).toBe(false);
+    expect(holdForFilm({ ...ok, off: true })).toBe(false);
   });
 });

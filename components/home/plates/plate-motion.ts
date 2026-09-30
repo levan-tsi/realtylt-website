@@ -122,6 +122,58 @@ export function useFilm(o: { recorded: boolean; ready: boolean; reduced: boolean
   return o.recorded && o.ready && !o.reduced && !o.off;
 }
 
+/** Films kept decoded at most, one video element each (the ones near the page, then the most
+ * recently near). The phone keeps two: the fewest that still decode the next film ahead while the
+ * one just played can be played back (a phone's browser holding many video elements is the crash
+ * pattern the record §3 cites). Round 63: one more for the length of a flick's route, back when it
+ * lands. Round 65: the laptop too keeps one more while the map moves (none torn down mid-film). */
+export const FILMS_KEPT = { wide: 4, tall: 2 } as const;
+
+/** WHICH FILMS TO HAVE DECODED (round 59, rounds 63 and 65), as ids `from>to>aspect`:
+ *  - the film from the page's plate (`names[0]`) to each neighbour ahead, and behind once the
+ *    visitor has turned back up the page (`backward`; a reader goes down, and the films behind
+ *    would double what a read fetches);
+ *  - `next`, the flight about to be asked for: from where the map is (or is going, `at`) toward
+ *    where the page now is, or the first hop of a route there (`route`), when it was recorded;
+ *  - the film playing.
+ * A phone that is moving keeps only the film playing and `next` (its two decoders for a flick; the
+ * films round the page come back when it lands). `keep` is how many may stay decoded. */
+export function filmWants(o: {
+  names: readonly ShotName[];
+  at: ShotName | null;
+  moving: boolean;
+  aspect: "wide" | "tall";
+  playing: string | null;
+  backward: boolean;
+  film: (from: ShotName, to: ShotName) => { reverse: boolean } | null;
+  route: Router;
+}): { want: Set<string>; next: string | null; keep: number } {
+  const { names, at, moving, aspect } = o;
+  const id = (a: ShotName, b: ShotName) => `${a}>${b}>${aspect}`;
+  const from = names[0];
+  const want = new Set<string>();
+  if (from)
+    for (const to of names.slice(1)) {
+      const w = to !== from ? o.film(from, to) : null;
+      if (w && (!w.reverse || o.backward)) want.add(id(from, to));
+    }
+  const step = at && from && at !== from ? (o.route(at, from) ?? (o.film(at, from) ? from : null)) : null;
+  const next = at && step ? id(at, step) : null;
+  if (moving && aspect === "tall") want.clear();
+  if (next) want.add(next);
+  if (o.playing) want.add(o.playing);
+  return { want, next, keep: FILMS_KEPT[aspect] + (moving ? 1 : 0) };
+}
+
+/** Round 65: how long a transition asked for on a STILL map waits for its film's clip when the clip
+ * is on its way (asked for, not failed): the first move after the page opens, the first move back up
+ * the page (the films behind are only fetched once the visitor turns), a slow line. Past it, the
+ * fade over. A map already moving never waits (a queued request is hurried instead). */
+export const FILM_HOLD_MS = 500;
+export function holdForFilm(o: { recorded: boolean; ready: boolean; coming: boolean; reduced: boolean; off: boolean; waited: number }, max = FILM_HOLD_MS): boolean {
+  return o.recorded && !o.ready && o.coming && !o.reduced && !o.off && o.waited < max;
+}
+
 /** The fastest a film is played when hurried (a request during it). */
 export const FILM_MAX_RATE = 4;
 /** A request during a film: the rate that ends it within `within` ms (1 to FILM_MAX_RATE), or
