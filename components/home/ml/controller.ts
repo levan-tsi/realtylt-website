@@ -71,7 +71,7 @@ export interface MlStats {
     aspect: "wide" | "tall";
     /** Round 59, the films: the transitions that played as films and as fades, the films decoded
      * ahead, the clip format, the frame the last film reached and its dropped frames. */
-    films?: { on: boolean; format: string | null; played: number; fades: number; rejected: number; ready: string[]; last: { key: string; frames: number; reached: number; drops: number; rate: number } | null; log: { key: string; kind: "film" | "fade"; at: number }[]; cost?: { frames: number; meanMs: number; maxMs: number } | null };
+    films?: { on: boolean; format: string | null; played: number; fades: number; rejected: number; ready: string[]; last: { key: string; frames: number; reached: number; drops: number; rate: number } | null; log: { key: string; kind: "film" | "fade"; at: number; why?: string }[]; cost?: { frames: number; meanMs: number; maxMs: number } | null };
   };
 }
 
