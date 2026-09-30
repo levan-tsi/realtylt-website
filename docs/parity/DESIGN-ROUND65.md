@@ -191,3 +191,33 @@ tilting so the valley lies diagonally and fills the right side.
   3 names survive); a layout change, for the polish round.
 - Previews: `r65-preview-a` = the new look on today's framing; `r65-preview-b` = W10 + T1;
   `r65-preview-c` = W10 + T2.
+
+## 9. The palette decision (2026-09-30, builder C's studies in `scripts/_scratch-r65/look/sheets/`)
+
+Builder C rendered three lifted palettes (its P1 to P3) as hero and Queens plates at both aspects,
+composed them on the real page with today's greys and two lifted sets, and measured everything:
+plate luminance (hero wide 14.9 to 28.8 of 255 under P1; the page's own mean at 1440 from 15.9 to
+26.5 with the greys lifted), road-over-land contrast (held or improved, 2.21 to 2.31 at the Queens
+grid), every text token on every ground (no floor broken in any set), the parks (a matching step
+up is needed or they read as black blotches), the covers (not served on the plates ground, so not
+re-made).
+
+- **Map: P1.** Land `#151922`, town `#1d2330`, wood and park `#0f1319`, live buildings
+  `#12151c`/`#1c212b`, horizon `#151b27`, fog `#0e1118`, plate town `#1f2636`, plate buildings
+  `#1e2530`/`#2a3240`, hillshade highlight 0.38 and exaggeration 0.7, every road class +0.04 alpha,
+  water `#071a3d`, stream `#12325f`. The water is about level with the land in luminance and
+  clearly blue: his "very blue" said plainly. P2 (`#0b2452`) turns the phone's lower third into a
+  bright blue panel and lights up New Jersey's lakes; P3 (`#061534`, a touch under the land) is the
+  calmer fallback if he finds P1's phone band too blue.
+- **Site greys: G3**, one step past the builder's G2, because a lift he cannot see counts as
+  nothing: night `#131417`, raise `#1b1d21`, card `#171a1e`, line `#2a2b2f`, line-strong lifted to
+  the first value at or above 3.2:1 on the raised ground (the builder's `#6e6e68` class; today's
+  `#5e5e5a` is 2.9:1 there, under the floor already). Text floors at G3: moon 16.4:1, ink-soft
+  11.8:1, haze 6.6:1, brand-r 6.8:1.
+- **Carried into the re-render:** the home map's hard-coded black scrims (`MlGround.tsx` the
+  per-word boxes and the top band, the JS-off shades, `#050505` in globals.css) move onto the night
+  token or they read as black patches on the lifted map; the listing page's photo band is not on
+  the tokens and would show as a black seam; the map credit (11 px at 60 % alpha) is 3.4:1 today
+  and must go to full opacity or its own backing.
+- The renderer-only `?pal=` option (ef678e6) served the study; the chosen values are baked into
+  the style and the option removed, with the style test's fingerprints re-pinned on purpose.
