@@ -52,7 +52,7 @@ export const ML_SHOTS: Record<ShotName, { wide: MlShot; tall: MlShot }> = {
   // diagonally and fills the right side: the lights span x 367 to 1413 of 1440 (was 607 to 1365), the
   // unserved land in view 45 % to 33 % (55 % to 40 % at 1920x940), Ulster and Dutchess named at every
   // size; Staten Island and the Rockaway shore crop (his word: Staten Island may go). Phone unchanged.
-  hero: { wide: s(40.9075, -74.1464, 79_077, 68, 330), tall: s(40.93, -73.9, 140_000, 55, 340) },
+  hero: { wide: s(40.9075, -74.1464, 79_077, 68, 330), tall: s(40.962, -73.9485, 119_000, 60, 342) },
   dutchess: { wide: s(41.7211, -73.958, 11_000, 60, 5), tall: s(41.7102, -73.9449, 11_000, 60, 5) },
   highlands: { wide: s(41.426, -73.9668, 12_000, 60, 190), tall: s(41.426, -73.9668, 12_000, 60, 190) },
   westchester: { wide: s(41.0702, -73.8934, 11_000, 60, 265), tall: s(41.0702, -73.8934, 11_000, 60, 265) },
