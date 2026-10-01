@@ -303,3 +303,26 @@ at hero and Queens on both surfaces; Queens phone taps 30 of 30 on 229 lights; t
 first screens looked at. Left on purpose: the blog post titles' Title Case (his call), product
 names, the MLS status chips, the "Staten Island" name near the words at 1920x940 (a placement
 question for the final pass).
+
+## 13. The sweep and the orchestrator's final pass (2026-10-01)
+
+Builder F's sweep (02be366 to eb6bef2): the retired Google 3D and three.js night-flight grounds
+(their components, the /lab/night route, the other-grounds split, the g3d/night branches of the
+page and of lib/home-map.ts), the `three` package, SceneCredit (it rendered nothing on any page),
+G3dController and the five modules only it used, the night scene's light builders and four
+helpers, six unreferenced exports: 7,676 lines deleted, 51 files, 109 tests that tested deleted
+code (named in the commits), vitest 2319 to 2210, all green; the home route's first load 262 to
+254 kB. The site proved unchanged against the pre-sweep build frame by frame at every stop and
+size (21 frames and three first screens identical, the rest live-data drift), the walks, calib,
+hover, taps, crawler, walker, scan, JS off and reduced motion identical. The orchestrator then
+removed what the sweep left for its call (44da9bb): the Google and dusk/day covers, the old no-JS
+poster, their two maker scripts and `g3d/night.ts` (only those scripts imported it), with the
+seven ATTRIBUTIONS rows. Kept on purpose: Lato (live on the /search map's labels), the night
+covers (the renderer's live-map ground), the hero and editorial assets recorded as kept.
+
+The orchestrator's own pass on the rebuilt HEAD: tsc clean; vitest 2210 (exit 0); every page's
+first screen at 1440 and 390 (`scripts/_scratch-r65/final/pages-*.jpg`), the seventeen home stops
+on both surfaces (`stops-*.jpg`), the reveal strip, all looked at; crawler ALL PASS; JS off dark
+on every page at the new ground; reduced motion one 400 ms fade; the light scan at its baseline;
+the contrast walker clean. Left: the "Staten Island" name under the footnote at 1920x940 (the
+island enters the wider frame; the name is right, its spot is busy).
