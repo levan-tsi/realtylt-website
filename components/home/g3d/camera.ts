@@ -154,20 +154,3 @@ export function cameraToFraming(cam: MapCamera, fov: number, moon: [number, numb
   const east = ground * Math.sin(h), north = ground * Math.cos(h);
   return { pos: [tx - east, targetKm + drop, tz + north], target: [tx, targetKm * EXAGGERATION, tz], fov, moon };
 }
-
-/** The short way round between two headings, in degrees (-180..180]. */
-export function headingDelta(a: number, b: number): number {
-  const d = (((b - a) % 360) + 540) % 360 - 180;
-  return d === -180 ? 180 : d;
-}
-
-/** A flight's length, for its duration: how far the eye travels (km) and how far it turns. */
-export function flightMillis(a: MapCamera, b: MapCamera, min = 1600, max = 2600): number {
-  const ea = toEcef(eyeOf(a).lat, eyeOf(a).lng, eyeOf(a).altitude);
-  const eb = toEcef(eyeOf(b).lat, eyeOf(b).lng, eyeOf(b).altitude);
-  const km = Math.hypot(ea[0] - eb[0], ea[1] - eb[1], ea[2] - eb[2]) / 1000;
-  const turn = Math.abs(headingDelta(a.heading, b.heading));
-  // 0 km -> min; ~120 km or a half turn -> max.
-  const k = Math.min(1, Math.max(km / 120, turn / 180));
-  return Math.round(min + (max - min) * Math.sqrt(k));
-}

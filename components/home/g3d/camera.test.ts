@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cameraFrame, cameraToFraming, eyeOf, flightMillis, framingToCamera, fromEcef, headingDelta, project, toEcef, type MapCamera } from "./camera";
+import { cameraFrame, cameraToFraming, eyeOf, framingToCamera, fromEcef, project, toEcef, type MapCamera } from "./camera";
 import { lngLatToWorld, over } from "../night/world";
 
 const VP = { width: 1440, height: 900, fov: 35 };
@@ -119,23 +119,5 @@ describe("a night framing as Google's camera", () => {
       expect(back.tilt).toBeCloseTo(c.tilt, 1);
       expect(back.heading).toBeCloseTo(c.heading, 1);
     }
-  });
-});
-
-describe("a flight's length", () => {
-  const a: MapCamera = { center: { lat: 41.5, lng: -73.95, altitude: 0 }, range: 30_000, tilt: 50, heading: 0 };
-  it("stays inside 1.6 to 2.6 seconds and grows with the distance", () => {
-    const near = flightMillis(a, { ...a, center: { ...a.center, lat: 41.52 } });
-    const far = flightMillis(a, { ...a, center: { lat: 40.7, lng: -74, altitude: 0 } });
-    expect(near).toBeGreaterThanOrEqual(1600);
-    expect(far).toBeLessThanOrEqual(2600);
-    expect(far).toBeGreaterThan(near);
-    expect(flightMillis(a, a)).toBe(1600);
-  });
-
-  it("turns the short way round", () => {
-    expect(headingDelta(350, 10)).toBe(20);
-    expect(headingDelta(10, 350)).toBe(-20);
-    expect(headingDelta(0, 180)).toBe(180);
   });
 });

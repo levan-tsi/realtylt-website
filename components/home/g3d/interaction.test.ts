@@ -1,14 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { project } from "./camera";
 import {
   EDGE,
   OFFSET,
   SCAN,
   SCAN_MAX,
-  cameraShowing,
   clickAction,
-  FLY_IN_DEPTH,
-  flyInCamera,
   labelContent,
   openPoint,
   placeHoverLabel,
@@ -214,27 +210,6 @@ describe("what a click on a light does", () => {
   });
 });
 
-describe("the fly-in", () => {
-  const from = (range: number) => ({ center: { lat: 41, lng: -74, altitude: 0 }, range, tilt: 55, heading: 8, fov: 40 });
-
-  it("comes down to 1.5 km from a close shot", () => {
-    expect(flyInCamera({ lat: 41.7, lng: -73.93 }, from(8_000)).range).toBe(1500);
-  });
-
-  it("never dives more than FLY_IN_DEPTH times closer (tiles must keep up in 700 ms)", () => {
-    expect(flyInCamera({ lat: 41.7, lng: -73.93 }, from(145_000)).range).toBe(Math.round(145_000 / FLY_IN_DEPTH));
-    expect(flyInCamera({ lat: 41.7, lng: -73.93 }, from(48_000)).range).toBe(8000);
-  });
-
-  it("stands over the home at tilt 60, keeping the heading", () => {
-    const c = flyInCamera({ lat: 41.7, lng: -73.93 }, from(145_000));
-    expect(c.center).toEqual({ lat: 41.7, lng: -73.93, altitude: 0 });
-    expect(c.tilt).toBe(60);
-    expect(c.heading).toBe(8);
-    expect(c.fov).toBe(40);
-  });
-});
-
 describe("the phone's tap, then open", () => {
   const idle: TapState = { shown: null };
 
@@ -289,17 +264,6 @@ describe("a featured home shown where the page leaves the map open (the keyboard
     expect(openPoint([{ x: 0, y: 0, w: 1440, h: 900 }], vp, { x: 700, y: 400 })).toBeNull();
   });
 
-  it("solves the camera that puts the home on that point", () => {
-    const home = { lat: 41.68, lng: -73.84 };
-    const base = { center: { ...home, altitude: 0 }, range: 2600, tilt: 55, heading: 0, fov: 40 };
-    for (const target of [{ x: 60, y: 450 }, { x: 900, y: 780 }, { x: 1380, y: 120 }]) {
-      const cam = cameraShowing(home, target, base, vp);
-      const p = project(cam, { ...vp, fov: 40 }, home.lat, home.lng)!;
-      expect(Math.hypot(p.x - target.x, p.y - target.y)).toBeLessThan(2);
-      expect(cam.range).toBe(2600);
-      expect(cam.tilt).toBe(55);
-    }
-  });
 });
 
 describe("our names under an open label (round 57.6)", () => {

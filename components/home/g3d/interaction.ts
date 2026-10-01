@@ -6,8 +6,6 @@
  * scripts/_scratch-r56-tab.mjs): hover is our projection of the drawn homes plus a 14 px hit test
  * (controller.ts, G3dGround.tsx), and the keyboard reaches the featured homes through their cards
  * on the page. */
-import { project } from "./camera";
-import type { G3dCamera } from "./cameras";
 
 export interface Rect {
   x: number;
@@ -156,10 +154,6 @@ export const FLY_IN_MS = 600;
  * sixth of the range (24 km from the territory, 8 km from a county, 3.5 km from a borough) keeps
  * the picture a picture all the way down, and from a close shot it is the 1.5 km of the brief. */
 export const FLY_IN_DEPTH = 6;
-export function flyInCamera(home: { lat: number; lng: number }, from: G3dCamera): G3dCamera {
-  const range = Math.round(Math.max(1500, (from.range > 0 ? from.range : 25_000) / FLY_IN_DEPTH));
-  return { center: { lat: home.lat, lng: home.lng, altitude: 0 }, range, tilt: 60, heading: from.heading, fov: from.fov };
-}
 
 export interface TapState {
   /** The home whose label the phone is showing, or null. */
@@ -210,35 +204,6 @@ export function openPoint(
     }
   }
   return best;
-}
-
-/** The camera, at `base`'s range, tilt, heading and lens, whose view puts `home` at `target` (css
- * px): Newton's method on the center's latitude and longitude with a numerical Jacobian of our own
- * projection (camera.ts); four steps bring it within a pixel. */
-export function cameraShowing(
-  home: { lat: number; lng: number; alt?: number },
-  target: { x: number; y: number },
-  base: G3dCamera,
-  vp: { width: number; height: number },
-): G3dCamera {
-  const view = { ...vp, fov: base.fov };
-  const at = (lat: number, lng: number) => project({ ...base, center: { lat, lng, altitude: base.center.altitude } }, view, home.lat, home.lng, home.alt ?? 0);
-  let lat = home.lat, lng = home.lng;
-  const h = 1e-5;
-  for (let k = 0; k < 6; k++) {
-    const p = at(lat, lng);
-    if (!p) break;
-    const ex = target.x - p.x, ey = target.y - p.y;
-    if (Math.hypot(ex, ey) < 0.25) break;
-    const pa = at(lat + h, lng), pb = at(lat, lng + h);
-    if (!pa || !pb) break;
-    const a = (pa.x - p.x) / h, c = (pa.y - p.y) / h, b = (pb.x - p.x) / h, d = (pb.y - p.y) / h;
-    const det = a * d - b * c;
-    if (Math.abs(det) < 1e-9) break;
-    lat += (d * ex - b * ey) / det;
-    lng += (-c * ex + a * ey) / det;
-  }
-  return { ...base, center: { lat: Math.round(lat * 1e7) / 1e7, lng: Math.round(lng * 1e7) / 1e7, altitude: base.center.altitude } };
 }
 
 /** Round 57.6: does one of our names (its box) stand under an open label (its box grown by `pad`

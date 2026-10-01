@@ -14,8 +14,7 @@
  *    and the camera's position lags by design. It is the average of the visible sections' veils,
  *    weighted by how much of the WINDOW each one covers, so the scene dims as the cards arrive and
  *    lifts again as they leave. */
-import { AREA_COUNTY_OF, type ShotName } from "./shots";
-import type { CountySlugName } from "./lights";
+import type { ShotName } from "./shots";
 
 export interface ShotSection {
   /** One or more shots; the section's scroll span is shared evenly among them. */
@@ -110,9 +109,4 @@ export function veilAt(sections: readonly ShotSection[], scrollY: number, viewpo
     weight += overlap;
   }
   return weight > 0 ? sum / weight : 0;
-}
-
-/** The county a shot lights, or null for the chapters that light none. */
-export function countyOfShot(name: ShotName): CountySlugName | null {
-  return (AREA_COUNTY_OF as Partial<Record<ShotName, CountySlugName>>)[name] ?? null;
 }

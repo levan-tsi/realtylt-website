@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { countyOfShot, shotPosition, shotStops, veilAt, withTail, type ShotSection } from "./driver";
+import { shotPosition, shotStops, veilAt, withTail, type ShotSection } from "./driver";
 import { AREA_FLIGHT } from "./shots";
 
 const VH = 900;
@@ -151,16 +151,5 @@ describe("the last leg, below the page's last section (the footer)", () => {
     expect(withTail(page, 6930, tail)).toEqual(page);
     expect(withTail([], 9000, tail)).toEqual([]);
     expect(withTail(page, DOC, { shots: [], veil: 0.9 })).toEqual(page);
-  });
-});
-
-describe("which county a shot lights", () => {
-  it("names one for every area shot and none for a chapter", () => {
-    expect(countyOfShot("ulster")).toBe("ulster");
-    expect(countyOfShot("dutchess-county")).toBe("dutchess");
-    expect(countyOfShot("staten-island")).toBe("staten-island");
-    expect(countyOfShot("hero")).toBeNull();
-    // "dutchess" is the CHAPTER over Poughkeepsie, not the county's own area shot.
-    expect(countyOfShot("dutchess")).toBeNull();
   });
 });
