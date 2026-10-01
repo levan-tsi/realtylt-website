@@ -17,7 +17,7 @@
  *  - s3.amazonaws.com: the Terrain Tiles on AWS Open Data (Mapzen's joerd, terrarium PNGs), whose
  *    licence page asks that the sources be named ("United States 3DEP (formerly NED) and global
  *    GMTED2010 and SRTM terrain data courtesy of the U.S. Geological Survey", "ETOPO1 ... NOAA"): the
- *    footer's credit does (components/site/SceneCredit.tsx). */
+ *    map corner's credit does (components/home/ml/MlGround.tsx). */
 import type { StyleSpecification } from "maplibre-gl";
 
 export const ML_HOSTS = ["tiles.openfreemap.org", "s3.amazonaws.com"] as const;

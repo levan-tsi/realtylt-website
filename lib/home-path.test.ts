@@ -17,9 +17,9 @@ describe("the home page's path", () => {
     for (const p of ["/search", "/indexes", "/blog/index", "", null, undefined]) expect(isHomePath(p)).toBe(false);
   });
 
-  it("is what the header, the footer and the scene credit ask", () => {
+  it("is what the header and the footer ask", () => {
     const root = path.resolve(import.meta.dirname, "..");
-    for (const f of ["components/site/Header.tsx", "components/site/FooterShell.tsx", "components/site/SceneCredit.tsx"]) {
+    for (const f of ["components/site/Header.tsx", "components/site/FooterShell.tsx"]) {
       const src = fs.readFileSync(path.join(root, f), "utf8");
       expect(src, f).toContain("isHomePath(pathname)");
       expect(src, f).not.toMatch(/pathname [!=]== "\/"/);

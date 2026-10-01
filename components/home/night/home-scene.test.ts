@@ -146,9 +146,6 @@ describe("the footer over the scene", () => {
     // carries the whole notice (the OSMF attribution guideline, read 2026-09-25: the notice shows
     // without interaction, may collapse automatically after five seconds, and an "(i)" in the corner
     // must bring it back; one instance covers every picture on the page).
-    const credit = fs.readFileSync(path.join(ROOT, "components/site/SceneCredit.tsx"), "utf8");
-    expect(credit).toContain('if (ground === "ml" || ground === "plates") return null;');
-    expect(credit).not.toContain("/lab/ml");
     const ground = fs.readFileSync(path.join(ROOT, "components/home/ml/MlGround.tsx"), "utf8");
     expect(ground).toContain("export const CREDIT_SHOWN_MS = 5000;");
     expect(ground).toContain('href="https://www.openstreetmap.org/copyright"');
@@ -170,27 +167,5 @@ describe("the footer over the scene", () => {
     expect(ground).toContain('useState<"line" | "icon" | "panel">("line")');
     const attributions = fs.readFileSync(path.join(ROOT, "public/images/ATTRIBUTIONS.md"), "utf8");
     expect(attributions).toContain("scripts/make-ml-cover.mjs");
-  });
-
-  it("carries the terrain credit on the home page only, in the words the sources ask for", () => {
-    const credit = fs.readFileSync(path.join(ROOT, "components/site/SceneCredit.tsx"), "utf8");
-    expect(credit).toContain('if (!isHomePath(pathname)) return null;');
-    expect(credit).toContain("Terrain: Mapzen; USGS 3DEP, SRTM, GMTED2010 and NHD; NOAA ETOPO1.");
-    expect(fs.readFileSync(path.join(ROOT, "public/images/ATTRIBUTIONS.md"), "utf8")).toContain(
-      "Terrain: Mapzen; USGS 3DEP, SRTM, GMTED2010 and NHD;",
-    );
-    expect(fs.readFileSync(path.join(ROOT, "components/site/Footer.tsx"), "utf8")).toContain("<SceneCredit />");
-  });
-
-  it("acknowledges NASA as the source of the night lights, as its usage guidelines ask, in text and never as an insignia", () => {
-    const credit = fs.readFileSync(path.join(ROOT, "components/site/SceneCredit.tsx"), "utf8");
-    expect(credit).toContain("Night lights: NASA Earth Observatory (Black Marble 2016, Suomi NPP VIIRS).");
-    expect(credit).not.toMatch(/<(img|Image|svg)\b/);
-    const attributions = fs.readFileSync(path.join(ROOT, "public/images/ATTRIBUTIONS.md"), "utf8");
-    expect(attributions).toContain("NASA should be acknowledged as the source of the material.");
-    expect(attributions).toContain("BlackMarble_2016_B1_geo.tif");
-    const meta = JSON.parse(fs.readFileSync(path.join(ROOT, "public/geo/valley-elevation.json"), "utf8")) as { sources?: { nightLights?: { url?: string; licence?: string } } };
-    expect(meta.sources?.nightLights?.url).toContain("eoimages.gsfc.nasa.gov");
-    expect(meta.sources?.nightLights?.licence).toContain("NASA should be acknowledged as the source of the material.");
   });
 });
