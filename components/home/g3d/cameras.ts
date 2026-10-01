@@ -10,7 +10,7 @@
  * The night flight lifted its terrain 6x and its lights were drawn on a black ground, so the six
  * chapters framed for that world read differently over real imagery: TUNED holds them as set by
  * eye, with the reason. The eleven county shots are the derived cameras unchanged. */
-import { AREA_COUNTY_OF, AREA_FLIGHT, FLIGHT, SHOTS, framingFor, type ShotName } from "../night/shots";
+import { AREA_COUNTY_OF, AREA_FLIGHT, SHOTS, framingFor, type ShotName } from "../night/shots";
 import { framingToCamera, type MapCamera } from "./camera";
 
 export interface G3dCamera extends MapCamera {
@@ -310,5 +310,3 @@ export function densityGap(rangeMetres: number, narrow = false, cityGap?: number
 export function focusOf(name: ShotName): string | null {
   return (AREA_COUNTY_OF as Partial<Record<ShotName, string>>)[name] ?? null;
 }
-
-export const FLIGHT_SHOTS = FLIGHT;

@@ -1334,7 +1334,3 @@ export const POSTS: BlogPost[] = ([
   },
 
 ] as BlogPost[]).sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
-
-export function getPost(slug: string): BlogPost | undefined {
-  return POSTS.find((p) => p.slug === slug);
-}

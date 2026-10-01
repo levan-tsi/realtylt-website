@@ -26,12 +26,6 @@ export const COUNTY_BOUNDS: Record<CountySlug, MapBounds> = {
  * Matches the served-region boxes in scripts/build-zip-centroids.mjs. */
 export const SERVED_REGION: MapBounds = { south: 40.49, north: 42.14, west: -74.75, east: -73.51 };
 
-/** The six Top-Areas counties' combined extent (the union of the Dutchess/Westchester/Putnam/
- * Rockland/Ulster/Orange boxes above). No longer the default frame (SERVED_REGION is, since
- * the boroughs joined the default scope) — kept for callers that mean specifically the
- * Hudson Valley. */
-export const HUDSON_VALLEY: MapBounds = { south: 40.8902, north: 42.1357, west: -74.7481, east: -73.5129 };
-
 /** Frame for the current county filter (or the whole served region when none). */
 export function boundsForCounty(county: string): MapBounds {
   return COUNTY_BOUNDS[county as CountySlug] ?? SERVED_REGION;

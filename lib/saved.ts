@@ -54,10 +54,6 @@ export function toggleFavorite(id: string): boolean {
   return next.includes(id);
 }
 
-export function removeFavorite(id: string) {
-  write(FAV_KEY, getFavorites().filter((f) => f !== id));
-}
-
 function isSavedSearch(v: unknown): v is SavedSearch {
   const s = v as SavedSearch;
   return (
@@ -87,10 +83,6 @@ export function saveSearch(label: string, query: string): SavedSearch {
 
 export function removeSearch(id: string) {
   write(SEARCH_KEY, getSavedSearches().filter((s) => s.id !== id));
-}
-
-export function savedCount(): number {
-  return getFavorites().length + getSavedSearches().length;
 }
 
 /* ── RECENT SEARCHES ─────────────────────────────────────────────────────────────────────────
@@ -143,10 +135,6 @@ export function recordRecentSearch(entry: Omit<RecentSearch, "at">) {
   if (!label || !href) return;
   const rest = getRecentSearches().filter((r) => r.href !== href);
   write(RECENT_KEY, [{ ...entry, label, href, at: new Date().toISOString() }, ...rest].slice(0, RECENT_MAX));
-}
-
-export function clearRecentSearches() {
-  write(RECENT_KEY, []);
 }
 
 /** Wipe device-local favorites + searches. Called once after they've been migrated into a
