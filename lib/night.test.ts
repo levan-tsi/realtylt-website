@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { areaName } from "./site";
 import { chipStateStyles } from "@/components/idx/map-shared";
@@ -200,5 +200,38 @@ describe("focus rings the night would otherwise swallow (round 53 check)", () =>
     // widths (round 54 took the county chips to 768, where their seven pills stop wrapping to
     // two rows), so the rule each one needs is the one that matches its own breakpoint.
     for (const row of rows) expect(row).toMatch(/max-(sm|md):-my-1 max-(sm|md):py-1/);
+  });
+});
+
+/** ROUND 65: ONE FAMILY ON THE NIGHT ROOT. Schibsted Grotesk, self-hosted by next/font, carries every
+ * word: the three night faces point at it, the popup and the skip link through --font-grotesk, the
+ * chat widget through --font-sans, the map's names by reading a label's computed family. */
+describe("the night root's family", () => {
+  const css = read("app/globals.css");
+  const layout = read("app/layout.tsx");
+  it("loads Schibsted Grotesk through next/font (latin, swap) as --font-schibsted on <html>", () => {
+    expect(layout).toMatch(/const schibsted = Schibsted_Grotesk\(\{[^}]*subsets: \["latin"\][^}]*display: "swap"[^}]*variable: "--font-schibsted"/);
+    expect(layout).toMatch(/<html lang="en" className=\{`[^`]*\$\{schibsted\.variable\}[^`]*\bnocturne\b[^`]*`\}>/);
+  });
+  it("points the night token at it, and the night scope's display, sans and mono at the token", () => {
+    expect(css).toMatch(/--font-grotesk: var\(--font-schibsted\),/);
+    for (const t of ["--font-display", "--font-sans", "--font-mono", "--rlt-pop-font"])
+      expect(css).toMatch(new RegExp(String.raw`\.nocturne \{[^}]*--color-card: #171a1e;[^}]*${t}: var\(--font-grotesk\);`));
+  });
+  it("ships no Bricolage: no face, no file, no preload", () => {
+    expect(css).not.toMatch(/font-family: "Bricolage|bricolage\.woff2/);
+    for (const f of ["app/page.tsx", "app/search/page.tsx"]) expect(read(f)).not.toMatch(/bricolage\.woff2/);
+    expect(existsSync(join(root, "public/fonts/bricolage.woff2"))).toBe(false);
+  });
+  it("sets the chat widget in the page's family, the system face only where the token is undefined", () => {
+    expect(read("public/rlt-chat.js")).toMatch(/font-family: var\(--font-sans, -apple-system,/);
+  });
+  it("turns tabular figures off on the night root, unlayered (Schibsted's tnum widens the comma)", () => {
+    const i = css.indexOf(".nocturne .tabular-nums {");
+    expect(i).toBeGreaterThan(-1);
+    expect(css.slice(i, i + 80)).toMatch(/font-variant-numeric: normal;/);
+    // unlayered: right after the selection rule, outside @layer components (where a utility would win)
+    expect(i).toBeGreaterThan(css.indexOf(".nocturne::selection {"));
+    expect(i).toBeLessThan(css.indexOf("@layer base {", css.indexOf(".nocturne::selection {")));
   });
 });

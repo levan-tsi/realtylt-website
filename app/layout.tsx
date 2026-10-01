@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Lato, Newsreader } from "next/font/google";
+import { Lato, Newsreader, Schibsted_Grotesk } from "next/font/google";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Providers } from "@/components/auth/Providers";
@@ -30,6 +30,19 @@ const newsreader = Newsreader({
   weight: ["200", "300", "400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-newsreader",
+});
+
+// The night's one family since round 65: every word on the night root (display, body, controls,
+// the map's names, the popup, the chat). Schibsted Grotesk (SIL OFL 1.1), chosen from a nine-family
+// specimen on the night ground (docs/parity/DESIGN-ROUND65.md §6): editorial, a little character in
+// the t and a, calm at 17 px. Variable (wght 400-900) in one file; upright only, as Bricolage was.
+// Self-hosted at build, and next/font's size-adjusted local fallback keeps the swap from moving the
+// page. Newsreader stays for the one thing still set in it (the home testimonial, in its italic);
+// Lato is only the @theme default outside the night scope, which no page renders, so it never loads.
+const schibsted = Schibsted_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-schibsted",
 });
 
 export const metadata: Metadata = {
@@ -89,7 +102,7 @@ export default function RootLayout({
     // `nocturne` on the root (round 60, the owner's "we're making it dark"): every page, portal and
     // the chat launcher sit inside the night scope, server-rendered, so the dark needs no script
     // (app/globals.css `.nocturne`).
-    <html lang="en" className={`${lato.variable} ${newsreader.variable} nocturne`}>
+    <html lang="en" className={`${lato.variable} ${newsreader.variable} ${schibsted.variable} nocturne`}>
       <body>
         <script
           type="application/ld+json"

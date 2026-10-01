@@ -4,14 +4,6 @@
    states its night look next to its day look instead of the page overriding it from outside. */
 @custom-variant night (&:where(.nocturne, .nocturne *));
 
-@font-face {
-  font-family: "Bricolage Grotesque";
-  src: url("/fonts/bricolage.woff2") format("woff2");
-  font-weight: 200 800;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* ── RealtyLT design tokens — matched to the LIVE realtylt.com (Brivity) look.
    Extracted 2026-07-10 via Playwright getComputedStyle — see docs/DESIGN-MATCH.md.
    Live values: body/nav gray #808080, headings/CTAs black, alt-section bg #f3f5f8,
@@ -74,10 +66,11 @@
   /* A listing card's own body. White by day; .nocturne re-points it, so the one card component
      sits correctly on both grounds without knowing which page it is on. */
   --color-card: #ffffff;
-  /* Bricolage Grotesque, the face the owner picked for /ai (2026-07-14), byte-identical file, so
-     realtylt.com and realtylt.com/ai set type as one company. Variable: opsz 12-96, wght
-     200-800. SIL Open Font License 1.1 (Mathieu Triay). Used only inside .nocturne. */
-  --font-grotesk: "Bricolage Grotesque", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* The night family (round 65): Schibsted Grotesk, self-hosted by next/font in app/layout.tsx,
+     which defines --font-schibsted on <html> as the face plus its size-adjusted local fallback.
+     Variable, wght 400-900, SIL Open Font License 1.1. It replaced Bricolage Grotesque (round 53,
+     the /ai face), which no longer ships with this site. Used only inside .nocturne. */
+  --font-grotesk: var(--font-schibsted), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   /* Display = headlines only. Body/UI stays Lato. See docs/parity/DESIGN-ROUND11.md.
      Georgia is the fallback because it is the metric-nearest serif everyone already has,
@@ -384,30 +377,33 @@
    the night steps are set heavy and tight, the way /ai sets its headlines, and the one-bold-
    word device (`strong` inside a headline) flattens to the same weight: accenting one word is
    the commonest generated-headline tell, and the night pages do not use it. Sizes follow
-   Bringhurst's scale: display 56 -> 100, h1 44 -> 72, h2 36 -> 60, h3 24 -> 30. */
+   Bringhurst's scale: display 56 -> 100, h1 44 -> 72, h2 36 -> 60, h3 24 -> 30.
+   Round 65, Schibsted Grotesk: one weight (600) for every step, and the tracking opened from
+   Bricolage's -0.034 to -0.04em to -0.015 to -0.03em. Schibsted is wider with a taller x-height,
+   and at -0.04em its words closed up ("home two ways" read as one word on /selling at 1440). */
 .nocturne .t-display {
   font-size: clamp(3.5rem, 2.3rem + 5vw, 6.25rem);
   line-height: 0.98;
-  letter-spacing: -0.034em;
+  letter-spacing: -0.028em;
   font-weight: 600;
 }
 .nocturne .t-h1 {
   font-size: clamp(2.75rem, 1.9rem + 3.6vw, 4.5rem);
   line-height: 1;
-  letter-spacing: -0.04em;
-  font-weight: 620;
+  letter-spacing: -0.03em;
+  font-weight: 600;
 }
 .nocturne .t-h2 {
   font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
   line-height: 1.02;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.026em;
   font-weight: 600;
 }
 .nocturne .t-h3 {
   font-size: clamp(1.5rem, 1.3rem + 0.8vw, 1.875rem);
   line-height: 1.15;
-  letter-spacing: -0.02em;
-  font-weight: 580;
+  letter-spacing: -0.015em;
+  font-weight: 600;
 }
 .nocturne :is(.t-display, .t-h1, .t-h2, .t-h3) :is(strong, b) {
   font-weight: inherit;
@@ -546,6 +542,15 @@ body {
 .nocturne::selection {
   background-color: var(--color-ink);
   color: var(--color-paper);
+}
+/* Round 65: Schibsted Grotesk's tabular figures (`tnum`) set the comma and the point on a full
+   figure's width too, so "15,691" read "15 , 691" and every price "$1 , 250 , 000" (measured at 40 px:
+   the comma 11.3 px proportional, 25.4 px tabular). No CSS can make the digits tabular and the
+   separators not, so on the night root `tabular-nums` falls back to the face's proportional figures.
+   The cost: a counting number (the pagers, the calculators) moves its trailing edge by a few pixels
+   as it changes. Unlayered (outside @layer components), so it wins over the utility. */
+.nocturne .tabular-nums {
+  font-variant-numeric: normal;
 }
 
 /* The ground itself, in @layer base so a utility on the same element (the home header's

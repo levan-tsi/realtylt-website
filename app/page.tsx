@@ -64,9 +64,6 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  // The display face, fetched with the page instead of discovered by the stylesheet (round 53):
-  // without it the header's text swapped face after first paint and moved /search's content.
-  preload("/fonts/bricolage.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   const idx = getIdxClient();
   // Pull a 24-deep pool per rail (exactly 3 pages of 8) so the rails page like live's.
   const [featured, fresh] = await Promise.all([idx.getFeatured(24), idx.getNew(24)]);

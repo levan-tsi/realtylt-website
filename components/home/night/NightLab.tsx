@@ -120,7 +120,7 @@ function Lab({ params }: { params: URLSearchParams }) {
       )}
       {params.get("mock") === "1" && (
         // A stand-in for the home hero's words, only to judge the composition (not the real copy).
-        <div aria-hidden className="pointer-events-none fixed inset-0" style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif", color: "#f6f4ef" }}>
+        <div aria-hidden className="pointer-events-none fixed inset-0" style={{ fontFamily: "var(--font-sans)", color: "#f6f4ef" }}>
           <div data-quiet className="absolute left-5 right-5 top-[88px] md:hidden">
             <p className="text-[15px] opacity-70">Hudson Valley and New York City</p>
           </div>

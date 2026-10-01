@@ -415,7 +415,9 @@
     style.id = styleId;
     style.textContent = `
       .rlt-bubble, .rlt-panel, .rlt-msg, .rlt-chip, .rlt-input, .rlt-send {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        /* The site's own family (round 65): the page's night token when the widget sits on our pages,
+           the system face anywhere the token is not defined. */
+        font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
         box-sizing: border-box;
       }
       .rlt-bubble {
