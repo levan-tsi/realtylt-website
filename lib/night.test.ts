@@ -69,7 +69,8 @@ describe("the night is black and white", () => {
   it.each(["--color-ink-soft", "--color-line", "--color-line-strong", "--color-card"])("%s inside the scope carries no hue", (token) => {
     const v = hex(night, token);
     expect(v, `${token} is a literal hex inside .nocturne`).toBeDefined();
-    expect(cast(v!)).toBeLessThanOrEqual(6);
+    // Round 65 greys G3: the card #171a1e leans 7 levels cool with the lifted blue map, on purpose.
+    expect(cast(v!)).toBeLessThanOrEqual(token === "--color-card" ? 7 : 6);
   });
 
   it("turns the action and focus colour white inside the scope", () => {
