@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AREA_FLIGHT, FLIGHT, SHOTS, type ShotName } from "../night/shots";
-import { CLOSE, HIGH, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, SIGNATURE, TUNED, CITY_GAP, CLOSE_AT, CLOSE_BOOST, CLOSE_FROM, CLOSE_GAP, MAX_LIGHTS, budgetFor, closeBoost, cameraFor, densityGap, focusOf, lightGap, pxPerLight, rawCamera } from "./cameras";
+import { CLOSE, HIGH, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, SIGNATURE, TUNED, CITY_GAP, CLOSE_AT, CLOSE_BOOST, CLOSE_FROM, FINGER_CLOSE_GAP, FINGER_GAP, CLOSE_GAP, MAX_LIGHTS, budgetFor, closeBoost, cameraFor, densityGap, focusOf, lightGap, pxPerLight, rawCamera } from "./cameras";
 import { project } from "./camera";
 
 const LAPTOP = 1440 / 900;
@@ -168,7 +168,7 @@ describe("how many homes a shot draws (round 57.2: the count follows the range)"
     }
   });
 
-  it("keeps the mouse honest: a gap of 12 px at the territory, 14 at the chapters' heights, 9 at the close plates, 14 for a finger", () => {
+  it("keeps the mouse honest: a gap of 12 px at the territory, 14 at the chapters' heights, 9 at the close plates, 14 for a finger (11 at the close plates)", () => {
     expect(densityGap(145_000)).toBe(12);
     expect(densityGap(300_000)).toBe(12);
     for (const r of [60_000, 48_000, 35_000, CLOSE_FROM]) expect(densityGap(r)).toBe(CITY_GAP);
@@ -178,7 +178,14 @@ describe("how many homes a shot draws (round 57.2: the count follows the range)"
     // under the pointer's 14 px reach, never under the brief's floor
     expect(CLOSE_GAP).toBeGreaterThanOrEqual(8);
     expect(CLOSE_GAP).toBeLessThan(14);
-    for (const r of RANGES) expect(densityGap(r, true)).toBe(14);
+    // A finger: 14 px from CLOSE_FROM up; round 65, at the close plates (at or under CLOSE_AT)
+    // FINGER_CLOSE_GAP, easing between in log range, a pixel at most per 5 % of range.
+    for (const r of RANGES.filter((r) => r >= CLOSE_FROM)) expect(densityGap(r, true)).toBe(FINGER_GAP);
+    for (const r of [CLOSE_AT, 10_000, 9_000, 6_000, 3_000]) expect(densityGap(r, true)).toBe(FINGER_CLOSE_GAP);
+    expect(FINGER_GAP).toBe(14);
+    expect(FINGER_CLOSE_GAP).toBeGreaterThanOrEqual(11);
+    expect(FINGER_CLOSE_GAP).toBeLessThan(FINGER_GAP);
+    for (let r = 130_000; r > 3_000; r /= 1.05) expect(Math.abs(densityGap(r / 1.05, true) - densityGap(r, true))).toBeLessThanOrEqual(1);
     // between, eased with the range (never a step of more than a pixel per 5 %), all the way down
     for (let r = 130_000; r > 3_000; r /= 1.05) expect(Math.abs(densityGap(r / 1.05) - densityGap(r))).toBeLessThanOrEqual(1);
   });

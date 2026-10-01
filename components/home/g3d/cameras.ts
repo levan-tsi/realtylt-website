@@ -287,16 +287,22 @@ export const FINGER_GAP = 14;
  * CITY_GAP at CLOSE_FROM in log range. The hit test takes the NEAREST light within its 14 px, so two
  * lights inside one reach resolve to the one under the pointer (the hover probe, the record §2). */
 export const CLOSE_GAP = 9;
+/** Round 65 (E): a finger at the close plates. Every phone county and borough plate sat at FINGER_GAP
+ * (14 px) while the laptop went to 9: at or under CLOSE_AT the phone's lights may stand this close,
+ * easing back to FINGER_GAP at CLOSE_FROM in log range. Its tap takes the NEAREST light within 22 px,
+ * so lights inside one reach resolve to the one under the finger (taps 30 of 30 at the hero and at
+ * Queens, scripts/_scratch-r57l-hover.mjs --phone). */
+export const FINGER_CLOSE_GAP = 11;
 /** `cityGap` is the page's `?gap=` knob (4 to 30): one gap for every range under 60 km (`?gap=14` is
  * the gap before round 61 everywhere). */
 export function densityGap(rangeMetres: number, narrow = false, cityGap?: number): number {
-  if (narrow) return FINGER_GAP;
+  const c = Math.min(1, Math.max(0, Math.log(rangeMetres / CLOSE_AT) / Math.log(CLOSE_FROM / CLOSE_AT)));
+  if (narrow) return Math.round(FINGER_CLOSE_GAP + (FINGER_GAP - FINGER_CLOSE_GAP) * c);
   // The knob reaches down to 4 px (round 61): the film's draw was measured at three times the lights.
   const knob = cityGap !== undefined && cityGap >= 4 && cityGap <= 30 ? cityGap : null;
   const city = knob ?? CITY_GAP;
   const t = Math.min(1, Math.max(0, Math.log(rangeMetres / 60_000) / Math.log(120_000 / 60_000)));
   if (t > 0 || knob !== null) return Math.round(city + (TERRITORY_GAP - city) * t);
-  const c = Math.min(1, Math.max(0, Math.log(rangeMetres / CLOSE_AT) / Math.log(CLOSE_FROM / CLOSE_AT)));
   return Math.round(CLOSE_GAP + (CITY_GAP - CLOSE_GAP) * c);
 }
 
