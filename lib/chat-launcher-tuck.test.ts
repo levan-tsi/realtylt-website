@@ -33,6 +33,16 @@ describe("the chat launcher's first-screen tuck", () => {
     expect(js).toMatch(/const TUCK_UNTIL = \(\) => Math\.round\(window\.innerHeight \* 0\.6\)/);
   });
 
+  it("a tucked launcher is hidden outright: out of the tab order and the hit test (round 65)", () => {
+    const rule = js.match(/\.rlt-bubble--tucked \{([^}]*)\}/);
+    expect(rule, "the tucked rule").not.toBeNull();
+    expect(rule![1]).toMatch(/opacity: 0;/);
+    expect(rule![1]).toMatch(/visibility: hidden;/);
+    expect(rule![1]).toMatch(/pointer-events: none;/);
+    // The fade out still plays: visibility flips only after it.
+    expect(js).toMatch(/\.rlt-bubble--tucked \{ transition: [^}]*visibility 0s linear 0\.25s; \}/);
+  });
+
   it("skips the tuck on the AI page, decided by detectPersona() and nothing configurable", () => {
     const block = js.match(
       /if \(detectPersona\(\) !== 'aipage'\) \{\s*bubble\.classList\.add\('rlt-bubble--tucked'\);[\s\S]*?syncBubble\(\);\s*\}/,

@@ -804,15 +804,20 @@
            60x60 circle (3600px²), an input on /portal, "See Home Value" in the home hero.
            A phone has no room to move it to, so it waits instead: nothing floats over the
            first impression, and it fades in as soon as the visitor starts reading. Desktop
-           is untouched (it has the margin to spare). */
+           is untouched (it has the margin to spare).
+           Round 65: tucked is also visibility: hidden, so the waiting launcher is out of the tab
+           order and the accessibility tree as well as the hit test (it was a focusable invisible
+           button over /selling's Email field); visibility flips after the fade out. */
         .rlt-bubble--tucked {
           opacity: 0;
+          visibility: hidden;
           pointer-events: none;
           transform: translateY(10px) scale(0.9);
         }
       }
       @media (max-width: 480px) and (prefers-reduced-motion: no-preference) {
-        .rlt-bubble { transition: transform 0.25s ease, opacity 0.25s ease, background 0.2s; }
+        .rlt-bubble { transition: transform 0.25s ease, opacity 0.25s ease, background 0.2s, visibility 0s linear 0s; }
+        .rlt-bubble--tucked { transition: transform 0.25s ease, opacity 0.25s ease, background 0.2s, visibility 0s linear 0.25s; }
       }
       /* THE METER IS THE ONLY THING HERE THAT MOVES, so it is the only thing to turn off. The
          label still names the state, so somebody who has asked for less motion loses the
