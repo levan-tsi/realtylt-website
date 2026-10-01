@@ -44,7 +44,7 @@ export function MarketInsights({
       className="sec-sm scroll-mt-16 border-t border-ink/10 bg-paper"
     >
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <p className="t-eyebrow text-stone">Market Insights</p>
+        <p className="t-eyebrow text-stone">Market insights</p>
         <h2 id="market-insights-heading" className="mt-2 t-h3 text-ink">
           The market around {insights?.scope === "county" ? countyName : `${city}, NY`}
         </h2>

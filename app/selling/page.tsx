@@ -137,8 +137,8 @@ export default async function SellingPage() {
               {/* The divider is a BETWEEN mark, so it only exists where the row is one line. At
                   390 the three items wrap and "Free Consultation" started its line with a
                   hanging rule and 32px of empty indent; below sm the gap alone separates them. */}
-              <span className="sm:border-l sm:border-paper/25 sm:pl-8">Fast Response</span>
-              <span className="sm:border-l sm:border-paper/25 sm:pl-8">Free Consultation</span>
+              <span className="sm:border-l sm:border-paper/25 sm:pl-8">Fast response</span>
+              <span className="sm:border-l sm:border-paper/25 sm:pl-8">Free consultation</span>
             </div>
             {/* /80, not /60. Same lesson as the /connect eyebrow, one size up: 12px at 40%
                 translucency over a photograph measured 4.32:1 at 320 against a 4.5 floor. The

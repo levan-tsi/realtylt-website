@@ -70,7 +70,7 @@ export function ConnectFormModal() {
                 stack
                 fullWidthSubmit
                 source="connect-modal"
-                submitLabel="Send Message"
+                submitLabel="Send message"
                 successTitle="Message sent."
                 successBody="Thanks. We usually reply within the hour, seven days a week."
               />

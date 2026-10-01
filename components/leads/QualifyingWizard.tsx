@@ -498,7 +498,7 @@ function QualifyingWizard({
                 type="submit"
                 className="mt-4 rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft"
               >
-                Request My Call
+                Request my call
               </button>
             </form>
           )}

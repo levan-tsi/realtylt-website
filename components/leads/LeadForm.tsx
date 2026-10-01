@@ -42,7 +42,7 @@ export function LeadForm({
   defaultReason,
   defaultAddress,
   footnote,
-  submitLabel = "Send Message",
+  submitLabel = "Send message",
   successTitle = "Message sent.",
   successBody = "Thanks. We usually reply within the hour, seven days a week.",
   source,

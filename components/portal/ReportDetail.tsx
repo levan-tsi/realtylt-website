@@ -235,7 +235,7 @@ function CmaBody({ report }: { report: PortalReport }) {
                   <th className="py-2 pr-3 font-bold">Use</th>
                   <th className="py-2 pr-3 font-bold">Comparable listing</th>
                   <th className="py-2 pr-3 text-right font-bold">Beds/Baths</th>
-                  <th className="py-2 pr-3 text-right font-bold">Sq Ft</th>
+                  <th className="py-2 pr-3 text-right font-bold">Sq ft</th>
                   <th className="py-2 pr-3 text-right font-bold">Price</th>
                   <th className="py-2 text-right font-bold">$/Sq Ft</th>
                 </tr>

@@ -45,6 +45,15 @@ describe("sentence case, site-wide", () => {
     gone["app/buying/page.tsx"].push("Start Your <strong>", "<strong>Listing Alerts<", "<strong>See Listings<", "Making An <strong>");
     gone["app/selling/page.tsx"].push("<strong>Pricing Strategy<", "Making Your Listing", "<strong>Internet Marketing<");
     gone["app/financing/page.tsx"].push("Find The Right");
+    Object.assign(gone, {
+      "components/leads/ConnectFormModal.tsx": ['"Send Message"'],
+      "components/leads/LeadForm.tsx": ['"Send Message"'],
+      "components/leads/ListingLeadCTAs.tsx": ['"Submit Offer"'],
+      "components/leads/QualifyingWizard.tsx": ["Request My Call"],
+      "components/search/SavedClient.tsx": ['"Turn On Alerts"'],
+      "components/auth/AccountMenu.tsx": ["Sign Out"],
+      "components/listing/MarketInsights.tsx": [">Market Insights<"],
+    });
     gone["app/top-areas/page.tsx"].push("Talk It Through With Us");
     gone["app/reviews/page.tsx"].push("What Our <strong>");
     for (const [file, strings] of Object.entries(gone)) for (const s of strings) expect(read(file), `${file}: ${s}`).not.toContain(s);

@@ -190,7 +190,7 @@ export default async function BuyingPage() {
                   smartphone.
                 </p>
                 <div className="mt-6">
-                  <Button href="/search" variant="outline-light">Start Searching</Button>
+                  <Button href="/search" variant="outline-light">Start searching</Button>
                 </div>
               </div>
               <SearchLaptop listings={listings} />
@@ -488,7 +488,7 @@ function TourSchedulerCard({
         {/* Tabs (decorative) */}
         <div aria-hidden className="mt-4 grid grid-cols-2 text-center text-xs font-bold uppercase tracking-wide">
           <span className="border-b-2 border-ink pb-2 text-ink">Schedule a tour</span>
-          <span className="border-b border-line pb-2 text-stone">Request Info</span>
+          <span className="border-b border-line pb-2 text-stone">Request info</span>
         </div>
         {/* Date strip (decorative) */}
         <div aria-hidden className="mt-4 grid grid-cols-3 gap-2">

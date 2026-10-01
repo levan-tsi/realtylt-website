@@ -179,7 +179,7 @@ export function SavedClient({
                 <LeadForm
                   compact
                   defaultReason="I'm interested in buying a home"
-                  submitLabel="Turn On Alerts"
+                  submitLabel="Turn on alerts"
                   successTitle="Alerts requested."
                   successBody="We have your searches. We'll confirm your alerts by email shortly."
                   savedSearches={alertPayload}

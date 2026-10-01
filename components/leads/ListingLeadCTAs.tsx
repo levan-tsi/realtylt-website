@@ -207,7 +207,7 @@ function InlineTourCard({
           Request a Tour
         </button>
         <button type="button" aria-pressed={tab === "info"} onClick={() => setTab("info")} className={tabCls(tab === "info")}>
-          Request Info
+          Request info
         </button>
       </div>
 
@@ -272,7 +272,7 @@ function InlineTourCard({
             onClick={onRequestInfo}
             className="mt-3 w-full rounded-xl border border-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
           >
-            Request Info
+            Request info
           </button>
         </div>
       )}
@@ -723,7 +723,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
             disabled={state === "submitting"}
             className="mt-5 w-full rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft disabled:opacity-60"
           >
-            {state === "submitting" ? "Sending…" : "Submit Offer"}
+            {state === "submitting" ? "Sending…" : "Submit offer"}
           </button>
           <p className="t-fine mt-3 text-stone">
             Sending an offer starts a conversation with our team. It isn&rsquo;t a binding contract.

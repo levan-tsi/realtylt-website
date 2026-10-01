@@ -89,7 +89,7 @@ export function AccountMenu() {
             }}
             className="block w-full border-t border-line px-4 py-2 text-left text-sm text-stone transition-colors hover:bg-ink hover:text-paper"
           >
-            Sign Out
+            Sign out
           </button>
         </div>
       )}
