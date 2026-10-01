@@ -244,3 +244,33 @@ files and manifest lines each needs; each calibrates at 0.00 px when swapped in.
 Known and accepted: the region plate's 0.10 px (laptop) / 0.06 px (phone) predates the round
 (round 64 recorded the same); seven phone valley film ends differ from their plates only in the
 top eighth (far terrain the film draws where the plate leaves sky), as the round-59 set did.
+
+## 11. The type and the logo (builder D, 2026-09-30; orchestrator-verified)
+
+Commit 3e030b5: **Schibsted Grotesk** (SIL OFL, through `next/font/google`, one latin woff2 of
+46.9 KB against Bricolage's 76.9) is the night root's one family: `--font-grotesk` now points at
+`--font-schibsted`, so display, body, controls, the map's county names (the canvas reads the
+label's computed family), the /search popup and the chat widget (`var(--font-sans)` with the old
+system stack as its fallback) all follow. Bricolage's `@font-face`, its woff2 and two preloads
+are gone; a copy of the file sits under `scripts/_scratch-r65/type/`. Headline tracking opened a
+step (display -0.028 em, h1 -0.03, h2 -0.026, h3 -0.015; the words had closed up), every night
+heading at 600, body 400. Tabular figures are OFF on the night root: Schibsted's tabular setting
+gives the comma a full figure's width ("15 , 691"); the cost is a counting number's trailing edge
+moving a few pixels. Layout shift from the font swap 0.0003 at most; body 16 px at 390; every
+input 16 px; the nav row 942 px inside its 1250 at 1280 and 1440; the hero headline on two lines
+at 390 and 320. The home testimonial keeps Newsreader italic (round 53's "a person's own voice";
+his call if he wants it in Schibsted too). Correction to §1: Lato and Newsreader were not used
+under `.daylight` or print either; Lato never loaded.
+
+The alternative (Newsreader headlines with Hanken Grotesk) is rendered beside Schibsted on the
+same pages for the record (`scripts/_scratch-r65/type/sheets/schibsted-vs-alt-*.jpg`).
+
+The logo (1baf57e) verified on the header at 1440, 1920x940, 390 and 320 over the map and on
+inner pages, the footer, the phone menu, print (6.74:1 on the night ground, 6.17:1 on the raised
+header; the share card and favicon keep the day logo). Brand note for him: realtylt.com/ai (its
+own repo) still sets Bricolage, so the two no longer share a face until /ai follows.
+
+Orchestrator's gate: tsc clean, vitest 2309 of 2309 (exit 0), the before/after sheets looked at
+(home 1440, /selling 390). One finding handed to the polish round: on /selling at 390 the chat
+launcher sits hidden (`opacity: 0; pointer-events: none`) over the form's Email input 2.5 s after
+load, so a tap at its spot focuses the input (`scripts/_scratch-r65/launcher-why.mjs`).
