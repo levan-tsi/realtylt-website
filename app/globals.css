@@ -601,8 +601,11 @@ body {
 /* Round 65: a band that is `.daylight` (so its pills and inputs keep the day's ink) and painted
    `bg-ink` was drawn in the day's ink, true black: invisible on the old #050505 ground, a black
    seam on the lifted night (the listing page's photo band, the inner pages' sections, the blog's
-   scenes). It is the page's own night instead; the photo viewer (`bg-ink/95`) stays black. */
-.nocturne .daylight.bg-ink {
+   scenes). It is the page's own night instead; the photo viewer (`bg-ink/95`) stays black. The
+   blog's dark scenes put the `.daylight` on a wrapper (`[data-band="dark"]`, app/blog/[slug]) and
+   the `bg-ink` on the scene's own section, its direct child. */
+.nocturne .daylight.bg-ink,
+.nocturne [data-band="dark"] > .bg-ink {
   background-color: var(--color-night);
 }
 
