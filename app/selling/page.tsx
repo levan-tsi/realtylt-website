@@ -284,7 +284,7 @@ export default async function SellingPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading dark as="h2">
-              <span id="pricing-heading">Our <strong>Pricing Strategy</strong></span>
+              <span id="pricing-heading">Our <strong>pricing strategy</strong></span>
             </SectionHeading>
             <p className="t-lead mt-3 max-w-lg text-paper">
               We use the most accurate method to price your home
@@ -362,7 +362,7 @@ export default async function SellingPage() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading as="h2">
-              <span id="shine-heading">Making Your Listing <strong>Shine</strong></span>
+              <span id="shine-heading">Making your listing <strong>shine</strong></span>
             </SectionHeading>
             <p className="t-lead mt-3 max-w-lg text-ink-soft">
               Photographs, virtual tours, 3D walkthroughs and videos
@@ -411,7 +411,7 @@ export default async function SellingPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading as="h2">
-              <span id="marketing-heading">Innovative <strong>Internet Marketing</strong></span>
+              <span id="marketing-heading">Innovative <strong>internet marketing</strong></span>
             </SectionHeading>
             <p className="t-lead mt-3 max-w-lg text-ink-soft">
               We know how to reach the 92% of buyers who search online

@@ -47,7 +47,7 @@ export default function WhoWeArePage() {
         </div>
         <div className="relative mx-auto max-w-[1250px] px-4 py-24 text-center md:py-32 lg:px-8">
           <h1 id="wwa-hero" className="t-h1 text-paper">
-            Who <strong>We Are</strong>
+            Who <strong>we are</strong>
           </h1>
         </div>
       </section>

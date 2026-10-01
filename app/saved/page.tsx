@@ -23,7 +23,7 @@ export default async function SavedPage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-paper/60">Saved</p>
           <h1 className="t-h1 mt-2">
-            Your <strong>Homes &amp; Searches</strong>
+            Your <strong>homes &amp; searches</strong>
           </h1>
           {/* Auth-aware: "on this device" is false for a signed-in visitor, whose saves are
               account-bound. SavedHeroNote carries both truthful versions. */}

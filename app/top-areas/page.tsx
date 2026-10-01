@@ -121,7 +121,7 @@ export default function TopAreasPage() {
             Not sure which county fits? That&rsquo;s literally our job.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Button href="/connect">Talk It Through With Us</Button>
+            <Button href="/connect">Talk it through with us</Button>
             <Button href="/search" variant="outline">Browse all listings</Button>
           </div>
         </div>

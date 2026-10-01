@@ -36,6 +36,17 @@ describe("sentence case, site-wide", () => {
       "app/top-areas/[county]/page.tsx": [">Talk To A Local Agent<", ">Homes for Sale in {short}<"],
       "app/reviews/page.tsx": ["Read All Reviews On Google", ">In Their Words<"],
     };
+    // Round 65 (E), the ones the scan still found (scripts/_scratch-r65/polish/case-scan.mjs).
+    Object.assign(gone, {
+      "app/saved/page.tsx": ["<strong>Homes &amp; Searches</strong>"],
+      "app/who-we-are/page.tsx": ["Who <strong>We Are</strong>"],
+      "app/thank-you/page.tsx": ["Browse Homes"],
+    });
+    gone["app/buying/page.tsx"].push("Start Your <strong>", "<strong>Listing Alerts<", "<strong>See Listings<", "Making An <strong>");
+    gone["app/selling/page.tsx"].push("<strong>Pricing Strategy<", "Making Your Listing", "<strong>Internet Marketing<");
+    gone["app/financing/page.tsx"].push("Find The Right");
+    gone["app/top-areas/page.tsx"].push("Talk It Through With Us");
+    gone["app/reviews/page.tsx"].push("What Our <strong>");
     for (const [file, strings] of Object.entries(gone)) for (const s of strings) expect(read(file), `${file}: ${s}`).not.toContain(s);
     expect(read("app/buying/page.tsx")).toContain(">The home buying process<");
     expect(read("app/reviews/page.tsx")).toContain("Read all reviews on Google");

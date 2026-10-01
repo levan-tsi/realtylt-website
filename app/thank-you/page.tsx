@@ -156,7 +156,7 @@ export default function ThankYouPage() {
               buttons in one column read as a composed unit instead of two afterthoughts. */}
           <div className="rise rise-4 mt-9 flex w-full max-w-[21rem] flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:gap-4">
             <Button href="/search" variant="light" className="w-full sm:w-auto">
-              Browse Homes
+              Browse homes
             </Button>
             <Button href={SITE.phoneHref} variant="outline-light" className="w-full sm:w-auto">
               Call {SITE.phone}

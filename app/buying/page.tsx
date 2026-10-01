@@ -177,7 +177,7 @@ export default async function BuyingPage() {
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div>
                 <h3 className="t-h2">
-                  Start Your <strong>Home Search</strong>
+                  Start your <strong>home search</strong>
                 </h3>
                 <p className="t-lead mt-2 text-paper">
                   Search for homes wherever you are
@@ -202,7 +202,7 @@ export default async function BuyingPage() {
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div>
                 <h3 className="t-h2">
-                  Get <strong>Listing Alerts</strong>
+                  Get <strong>listing alerts</strong>
                 </h3>
                 {/* The claim this block used to make was "delivered straight to your inbox the
                     moment they go up for sale" — an automated, real-time promise. Nothing sends
@@ -262,7 +262,7 @@ export default async function BuyingPage() {
               </svg>
               <div className="relative">
                 <h3 id="save-heading" className="t-h2 text-ink">
-                  Save and <strong>See Listings</strong>
+                  Save and <strong>see listings</strong>
                 </h3>
                 <p className="t-lead mt-2 text-ink-soft">
                   Favorite properties and tour homes
@@ -292,7 +292,7 @@ export default async function BuyingPage() {
             <div className="grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
               <div>
                 <h3 id="close-heading" className="t-h2">
-                  Making An <strong>Offer And Closing</strong>
+                  Making an <strong>offer and closing</strong>
                 </h3>
                 <p className="t-lead mt-2 text-paper">
                   We&rsquo;re with you till the end
