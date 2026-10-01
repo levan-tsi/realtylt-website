@@ -57,7 +57,7 @@ describe("the night is black and white", () => {
     return Math.max(r, g, b) - Math.min(r, g, b);
   };
 
-  it.each(["--color-night", "--color-night-deep", "--color-night-raise", "--color-moon", "--color-haze"])(
+  it.each(["--color-night", "--color-night-deep", "--color-night-sink", "--color-night-raise", "--color-moon", "--color-haze"])(
     "%s carries no hue (channels within 6 of each other)",
     (token) => {
       const v = hex(theme, token);
@@ -185,8 +185,8 @@ describe("/search's pending state is drawn in the page's own frame", () => {
 describe("focus rings the night would otherwise swallow (round 53 check)", () => {
   const css = read("app/globals.css");
   it("rings the footer strip's links in porchlight, and the strip still wears the classes that rule matches", () => {
-    expect(css).toMatch(/\.nocturne \.bg-ink\.night\\:bg-night-deep :focus-visible\s*\{\s*outline-color:\s*var\(--color-porchlight\)/);
-    expect(read("components/site/Footer.tsx")).toMatch(/className="bg-ink [^"]*night:bg-night-deep/);
+    expect(css).toMatch(/\.nocturne \.bg-ink\.night\\:bg-night-sink :focus-visible\s*\{\s*outline-color:\s*var\(--color-porchlight\)/);
+    expect(read("components/site/Footer.tsx")).toMatch(/className="bg-ink [^"]*night:bg-night-sink/);
   });
   it("leaves the chat launcher to the widget's own colour (round 60): no night override would paint it white", () => {
     // Inside the root scope --color-porchlight IS the moon, so the old override would now draw a

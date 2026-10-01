@@ -172,7 +172,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="bg-ink text-paper/70 night:bg-night-deep night:text-haze">
+      <div className="bg-ink text-paper/70 night:bg-night-sink night:text-haze">
         {/* A pure utility strip. It used to open with a second copyright notice — "© 2026
             RealtyLT" sitting directly under "© 2026 Levan Tsiklauri | United Real Estate. Each
             office is independently owned and operated." two strips apart. One of them had to

@@ -55,6 +55,10 @@
      stays true black for what must dim the page (the dialogs' and drawers' backdrops). */
   --color-night: #131417;
   --color-night-deep: #000000;
+  /* Round 65 (E): one step under the night, for what sits recessed IN the page rather than dims it:
+     the footer's legal strip and the form fields' wells. True black there read as a seam and as
+     holes under the lifted greys. */
+  --color-night-sink: #0e0f12;
   --color-night-raise: #1b1d21;
   --color-moon: #f2f2ee;
   --color-haze: #9b9b96;
@@ -639,7 +643,7 @@ body {
    day and night-deep on a night page, so the rule above drew its links' rings in paper, which there
    IS the night: 1.08:1 on night-deep, measured by a real Tab. The page's focus colour instead,
    ~7:1 (round 53 check). */
-.nocturne .bg-ink.night\:bg-night-deep :focus-visible {
+.nocturne .bg-ink.night\:bg-night-sink :focus-visible {
   outline-color: var(--color-porchlight);
 }
 
