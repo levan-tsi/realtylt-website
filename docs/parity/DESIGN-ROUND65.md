@@ -221,3 +221,26 @@ re-made).
   and must go to full opacity or its own backing.
 - The renderer-only `?pal=` option (ef678e6) served the study; the chosen values are baked into
   the style and the option removed, with the style test's fingerprints re-pinned on purpose.
+
+## 10. The look baked and the one re-render (builder C2, 2026-09-30; orchestrator-verified)
+
+Commits 5bb8b93 (P1 into the style, the `?pal=` study option removed, fingerprints re-pinned),
+3eb7705 (G3 greys; every hard-coded black on the night surfaces onto the tokens: the home map's
+word scrims and top band, the JS-off shades, the chip inks and rings, the popup, about forty
+`.daylight bg-ink` bands including the listing photo band, the blog's dark scenes; the map credit
+at full opacity, 11.05:1), 637344c (the laptop hero at W10), 71f2a75 (the plate renderer waits for
+a picture that has stopped changing: W10's steep foreground came back bare three times), 33c970b
+(the phone's see-through words kept at 4.5:1 on the lighter map), 6172c8c (every plate re-rendered,
+23.9 to 25.8 MB), 717e505 (every film re-recorded, 92.3 to 98.9 MB). `line-strong` is `#6d6d67`
+(3.24:1 on the raised ground; today's `#5e5e5a` was 2.9:1 there). The logo's wordmark in the mark's
+blue went in beside it (1baf57e).
+
+Orchestrator's own gate on the rebuilt branch: tsc clean; vitest 2304 of 2304, exit 0 (the four
+study-only tests left with the option, one added); calibration and the laptop walk below; the home
+first screen at 1440 and the phone sheet looked at. The preview variants (today's laptop hero;
+the phone's T1 and T2) sit uncommitted under `scripts/_scratch-r65/variants/` with a README of the
+files and manifest lines each needs; each calibrates at 0.00 px when swapped in.
+
+Known and accepted: the region plate's 0.10 px (laptop) / 0.06 px (phone) predates the round
+(round 64 recorded the same); seven phone valley film ends differ from their plates only in the
+top eighth (far terrain the film draws where the plate leaves sky), as the round-59 set did.
