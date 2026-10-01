@@ -44,10 +44,14 @@
     // control edge, the moon text, the haze text, and the porchlight blue for the one action
     // (Send). Ratios measured in lib/chat-panel-night.test.ts: moon on the card 17.3:1, haze 7.0:1,
     // the dark glyph on porchlight 7.5:1, porchlight on the card 7.2:1, the control edge 3.2:1 (a step over the page's #5e5e5a, which is 3.0 on this card).
-    PANEL: '#0d0d0d',
-    RAISE: '#1a1a1a',
-    HAIRLINE: '#242424',
-    EDGE: '#63635f',
+    // Round 65 (E): lifted with the site (G3): the panel is the site's card, its raised step one over
+    // it, the hairline the site's line, the control edge its line-strong, the field a sink under the
+    // panel. At round 60's #0d0d0d it sat darker than the page it floats over (#131417), a hole.
+    PANEL: '#171a1e',
+    RAISE: '#1f2226',
+    HAIRLINE: '#2a2b2f',
+    EDGE: '#6d6d67',
+    FIELD: '#0e0f12',
     MOON: '#f2f2ee',
     HAZE: '#9b9b96',
     ACTION: '#28a8e0',
@@ -628,7 +632,7 @@
       }
       .rlt-input {
         flex: 1;
-        background: #050505;
+        background: ${CONFIG.FIELD};
         color: ${CONFIG.MOON};
         caret-color: ${CONFIG.MOON};
         border: 1px solid ${CONFIG.EDGE};

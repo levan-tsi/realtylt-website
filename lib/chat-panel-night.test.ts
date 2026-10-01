@@ -38,7 +38,12 @@ describe("the chat panel at night", () => {
   const INK = config("ACTION_INK");
 
   it("sits on a near-black ground", () => {
-    expect(lum(PANEL)).toBeLessThan(0.01);
+    // Round 65: the site's card (G3, #171a1e, luminance ~0.010), never darker than the page it
+    // floats over (night #131417), and the field a sink under it.
+    expect(lum(PANEL)).toBeLessThan(0.012);
+    expect(lum(PANEL)).toBeGreaterThan(lum("#131417"));
+    expect(rule(".rlt-input")).toContain("background: ${CONFIG.FIELD};");
+    expect(lum(config("FIELD"))).toBeLessThan(lum(PANEL));
     expect(rule(".rlt-panel")).toContain("background: ${CONFIG.PANEL};");
     expect(rule(".rlt-header")).toContain("background: ${CONFIG.PANEL};");
     expect(rule(".rlt-input-wrap")).toContain("background: ${CONFIG.PANEL};");
