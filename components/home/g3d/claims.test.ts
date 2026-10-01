@@ -24,10 +24,9 @@ describe("what the home page's words may claim", () => {
     for (const l of ["pending", "some", "none"] as const) expect(claims("failed", l)).toEqual({ map: false, point: false, lights: true });
   });
 
-  it("the page renders the cover state: the Google and pointing claims hidden, the lights shown", () => {
+  it("the page renders the cover state: the pointing claim hidden, the lights shown", () => {
     const page = readFileSync("app/page.tsx", "utf8");
-    // rendered invisible (their room kept, so the reveal moves nothing), the lights shown
-    expect(page).toMatch(/<span data-map-claim className="invisible">/);
+    // rendered invisible (its room kept, so the reveal moves nothing), the lights shown
     expect(page).toMatch(/<span data-point-claim className="invisible">/);
     expect((page.match(/data-lights-claim(?! hidden)/g) ?? []).length).toBeGreaterThanOrEqual(3);
   });

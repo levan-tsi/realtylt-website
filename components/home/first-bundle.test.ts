@@ -9,21 +9,6 @@ const read = (p: string) => fs.readFileSync(path.join(process.cwd(), p), "utf8")
 const imports = (src: string) => [...src.matchAll(/^import\s[^;]*?from\s+"([^"]+)";?|^import\s+"([^"]+)";?/gm)].map((m) => m[1] ?? m[2]);
 
 describe("the home page's first bundle (round 61)", () => {
-  it("app/page.tsx imports no other ground directly: they come from the client-side split", () => {
-    const page = imports(read("app/page.tsx"));
-    for (const p of ["@/components/home/night/NightGround", "@/components/home/night/AreaChapter", "@/components/home/g3d/G3dGround", "@/components/home/g3d/G3dAreaChapter"]) {
-      expect(page, p).not.toContain(p);
-    }
-    expect(page).toContain("@/components/home/other-grounds");
-    const split = read("components/home/other-grounds.ts");
-    expect(split.startsWith('"use client";')).toBe(true);
-    for (const m of ["NightGround", "AreaChapter", "G3dGround", "G3dAreaChapter"]) {
-      expect(split).toMatch(new RegExp(`export const ${m} = dynamic\\(\\(\\) => import\\(`));
-    }
-    // A static import of any of them in the split module would undo it.
-    expect(imports(split)).toEqual(["next/dynamic"]);
-  });
-
   it("the plates ground loads the live map's controller (and MapLibre's stylesheet) only when the live map is the ground", () => {
     const ground = read("components/home/ml/MlGround.tsx");
     const statics = imports(ground);

@@ -24,7 +24,7 @@ import { describe, expect, it } from "vitest";
 
 const route = fs.readFileSync(path.join(process.cwd(), "app/api/idx/suggest/route.ts"), "utf8");
 const lantern = fs.readFileSync(path.join(process.cwd(), "components/home/night/lights.ts"), "utf8");
-const lanternCallers = ["components/home/night/NightScene.tsx", "components/home/night/NightGround.tsx"].map((f) => fs.readFileSync(path.join(process.cwd(), f), "utf8"));
+const lanternCallers = ["components/home/ml/MlGround.tsx"].map((f) => fs.readFileSync(path.join(process.cwd(), f), "utf8"));
 const query = fs.readFileSync(path.join(process.cwd(), "lib/idx/query.ts"), "utf8");
 
 describe("the suggest index counts the same homes /search shows", () => {

@@ -78,20 +78,6 @@ describe("the home page's sections and the scene's shots", () => {
     expect(page.indexOf('id="home-hero"')).toBeGreaterThan(lantern);
   });
 
-  it("gives the STILL the quiet the live scene gets, since a still cannot be told where the words are", () => {
-    const ground = fs.readFileSync(path.join(ROOT, "components/home/night/NightGround.tsx"), "utf8");
-    // The two scrims live INSIDE the poster element, so they fade with it and leave nothing behind,
-    // and they follow the words: vertical on a phone (headline high, search low), one soft ellipse
-    // in the bottom left on a laptop. Without them the count sentence sat on the brightest part of
-    // the city with JavaScript off (round 54, builder 3: measured at 1.3:1 at 390).
-    const poster = ground.slice(ground.indexOf("backgroundImage: `url(${poster})`"));
-    expect(poster).toContain("lg:hidden");
-    expect(poster).toContain("hidden lg:block");
-    expect((poster.match(/rgba\(5,5,5,/g) ?? []).length).toBeGreaterThanOrEqual(8);
-    // ...and the poster is never dissolved into an empty canvas.
-    expect(ground).toContain("if (!h.stats().lights) return;");
-  });
-
   it("rises each section heading once from a line, on the night page only", () => {
     const css = fs.readFileSync(path.join(ROOT, "app/globals.css"), "utf8");
     expect(css).toContain(".nocturne .mask-line");
@@ -101,15 +87,6 @@ describe("the home page's sections and the scene's shots", () => {
     expect(guard).toMatch(/@media \(scripting: none\), \(prefers-reduced-motion: reduce\) \{\s*\.nocturne \.mask-line/);
     // Every section heading on the home page uses it.
     expect((page.match(/className="mask-line"/g) ?? []).length).toBeGreaterThanOrEqual(4);
-  });
-
-  it("carries a still of the scene for a visitor with no JavaScript and no WebGL", () => {
-    // Round 57: one poster for both grounds, named once (`const POSTER`) and handed to each.
-    const m = /(?:poster="|const POSTER = ")([^"]+)"/.exec(page);
-    expect(m, "the hero lost its poster").not.toBeNull();
-    expect(fs.existsSync(path.join(ROOT, "public", m![1]))).toBe(true);
-    // ...and the licence lives with the rest of the artwork.
-    expect(fs.readFileSync(path.join(ROOT, "public/images/ATTRIBUTIONS.md"), "utf8")).toContain(m![1].replace(/^\//, "public/"));
   });
 
   it("has let go of the flat canvases the scene replaced", () => {
@@ -149,75 +126,6 @@ describe("the eleven areas the chapter names", () => {
       expect(COUNTY_SLUGS as readonly string[], row.slug).toContain(row.slug);
       expect(AREA_COUNTY_OF[row.shot]).toBe(row.slug);
     }
-    const chapter = fs.readFileSync(path.join(ROOT, "components/home/night/AreaChapter.tsx"), "utf8");
-    expect(chapter).toContain("counts?.[row.slug]");
-    // The counts come from the fetch the scene already makes, not a second request.
-    expect(chapter).toContain("loadLights()");
-  });
-});
-
-describe("the scene's programs are compiled before the clouds arrive", () => {
-  // Measured in the owner's Chrome on the real GPU (round 55): the first render with the light
-  // and haze materials linked their programs and blocked on it for 199 to 227 ms, mid-intro. The
-  // link now runs through compileAsync (KHR_parallel_shader_compile) against stand-in geometries
-  // while the worker builds, and neither cloud is added until it is done.
-  const scene = fs.readFileSync(path.join(ROOT, "components/home/night/scene.ts"), "utf8");
-
-  it("starts the compile as soon as the materials exist, before the terrain is even fetched", () => {
-    const compile = scene.indexOf("renderer.compileAsync(");
-    expect(compile).toBeGreaterThan(0);
-    expect(compile).toBeLessThan(scene.indexOf("await buildTerrain()"));
-    expect(compile).toBeLessThan(scene.indexOf("loadElevationPixels("));
-  });
-
-  it("compiles all four programs: dust, lights, haze and the depth mesh", () => {
-    const warm = scene.slice(scene.indexOf("const programsReady"), scene.indexOf("renderer.compileAsync("));
-    for (const m of ["dustMat", "lightMat", "hazeMat", "depthMat"]) expect(warm).toContain(m);
-  });
-
-  it("adds no cloud before the programs are ready, and never waits on a driver that stays silent", () => {
-    const dust = scene.slice(scene.indexOf("async function buildDustCloud()"), scene.indexOf("async function buildLightCloud()"));
-    const lights = scene.slice(scene.indexOf("async function buildLightCloud()"), scene.indexOf("// ---- camera"));
-    expect(dust.indexOf("await programsReady")).toBeGreaterThan(0);
-    expect(dust.indexOf("await programsReady")).toBeLessThan(dust.indexOf("new THREE.Points("));
-    expect(lights.indexOf("await programsReady")).toBeGreaterThan(0);
-    expect(lights.indexOf("await programsReady")).toBeLessThan(lights.indexOf("new THREE.Points("));
-    expect(scene).toMatch(/Promise\.race\(\[renderer\.compileAsync\(warm, camera\), new Promise\(\(r\) => setTimeout\(r, \d+\)\)\]\)/);
-  });
-});
-
-describe("the frame that receives the clouds does as little as possible", () => {
-  // Measured in the owner's Chrome (round 55): the worker's terrain reply was consumed in one
-  // 60 to 91 ms frame (the light math on the main thread, then a 43 ms upload of the dust's
-  // 36 MB in the first frame that drew it). The light math now runs in the worker, in one bundle
-  // shared with the main-thread fallback, and the dust goes up in pieces, one per frame.
-  const scene = fs.readFileSync(path.join(ROOT, "components/home/night/scene.ts"), "utf8");
-  const worker = fs.readFileSync(path.join(ROOT, "components/home/night/build.worker.ts"), "utf8");
-
-  it("asks the worker for the lights and builds the same bundle itself only when it cannot", () => {
-    expect(worker).toContain("buildLightBundle(req.pts, grid, dust, req.areaGain)");
-    expect(worker).toContain("bundleTransfer(bundle)");
-    expect(scene).toContain('ask({ kind: "lights", pts, areaGain })');
-    expect(scene).toMatch(/: buildLightBundle\(pts, grid, /);
-    // The scene no longer does the light math itself.
-    for (const fn of ["buildLights(", "buildHaze(", "countyRaster(", "countyLightBoxes(", "countyAreaGains(", "townCentroids("]) expect(scene).not.toContain(fn);
-  });
-
-  it("holds the dust as pieces of a bounded size and adds one per frame", () => {
-    const m = /const DUST_CHUNK = ([\d_]+);/.exec(scene);
-    expect(m).not.toBeNull();
-    const grains = Number(m![1].replace(/_/g, ""));
-    // 36 bytes a grain: under 8 MB a piece, and not so small that a phone's 400k cloud dribbles in.
-    expect(grains * 36).toBeLessThan(8 * 1024 * 1024);
-    expect(grains).toBeGreaterThanOrEqual(100_000);
-    const loop = scene.slice(scene.indexOf("for (const c of chunks.slice(1))"), scene.indexOf("async function buildLightCloud()"));
-    expect(loop).toContain("await nextFrame();");
-    expect(loop.indexOf("await nextFrame();")).toBeLessThan(loop.indexOf("add(c);"));
-  });
-
-  it("fetches the programs' uniform locations off-frame, after the link", () => {
-    const warm = scene.slice(scene.indexOf("const programsReady"), scene.indexOf('performance.mark("night:programs")'));
-    expect(warm.indexOf("compileAsync(")).toBeLessThan(warm.indexOf("getUniforms()"));
   });
 });
 
@@ -284,27 +192,5 @@ describe("the footer over the scene", () => {
     const meta = JSON.parse(fs.readFileSync(path.join(ROOT, "public/geo/valley-elevation.json"), "utf8")) as { sources?: { nightLights?: { url?: string; licence?: string } } };
     expect(meta.sources?.nightLights?.url).toContain("eoimages.gsfc.nasa.gov");
     expect(meta.sources?.nightLights?.licence).toContain("NASA should be acknowledged as the source of the material.");
-  });
-});
-
-describe("the poster, the still that covers the first screen", () => {
-  const ground = fs.readFileSync(path.join(ROOT, "components/home/night/NightGround.tsx"), "utf8");
-
-  it("leaves at once when the visitor scrolls, instead of sitting as a frozen strip until the intro ends (round 55, the owner's freeze)", () => {
-    // The still is absolute to the page, so a scroll before the intro's end left it as a frozen
-    // picture across the top of the window with a hard seam, for up to four seconds. A visitor
-    // who scrolls has stopped waiting: the still drops on the first scroll, quickly.
-    expect(ground).toMatch(/addEventListener\("scroll", onScroll/);
-    expect(ground).toMatch(/window\.scrollY > 24\)\s*\{\s*dropPosterNow\(\)/);
-    expect(ground).toContain('posterQuick ? "duration-[400ms]" : "duration-[1100ms]"');
-  });
-
-  it("drops it on ready too, when the visitor scrolled while the clouds were building", () => {
-    expect(ground).toMatch(/if \(window\.scrollY > 24\) \{\s*dropPosterNow\(\);\s*return;/);
-  });
-
-  it("only where WebGL exists, because without it the still is the hero", () => {
-    expect(ground).toMatch(/glOk\.current && window\.scrollY > 24/);
-    expect(ground).toMatch(/getContext\("webgl2"\) \|\| c\.getContext\("webgl"\)/);
   });
 });

@@ -10,14 +10,12 @@ import { DriftRail } from "@/components/idx/DriftRail";
 import { RailPager } from "@/components/idx/RailPager";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
-// The other grounds, split into chunks of their own (round 61, components/home/other-grounds.ts).
-import { AreaChapter, G3dAreaChapter, G3dGround, NightGround } from "@/components/home/other-grounds";
 import { MlGround } from "@/components/home/ml/MlGround";
 import { MlAreaChapter } from "@/components/home/ml/MlAreaChapter";
 import { MAPLIBRE_URL } from "@/components/home/ml/style";
 import { PLATES } from "@/components/home/plates/plates.gen";
 import { TALL_MEDIA, WIDE_MEDIA, plateSrc, plateSrcSet } from "@/components/home/plates/plate-frame";
-import { COVERS, coverFor, homeCover, homeMap } from "@/lib/home-map";
+import { COVERS, homeMap } from "@/lib/home-map";
 import { listingPath } from "@/lib/idx/listing-url";
 import { forCard } from "@/lib/idx/card-listing";
 import { AREA_ROWS } from "@/components/home/night/areas";
@@ -42,10 +40,6 @@ const EARLY_LIGHTS = EARLY_LIGHTS_SCRIPT;
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
-
-/** The night flight's still (scripts/make-night-poster.mjs): our artwork, the night ground's first
- * screen and its whole picture with JavaScript off. The real map has its own covers (COVERS). */
-const POSTER = "/images/home-night-poster.webp";
 
 export const metadata: Metadata = {
   title: "RealtyLT | Hudson Valley & NYC Homes for Sale",
@@ -78,21 +72,16 @@ export default async function HomePage() {
   // simply says "Homes for sale", rather than print a number nobody measured.
   const activeCount = isDbConfigured() ? await getActiveSaleCount().catch(() => null) : null;
   // THE GROUND (lib/home-map.ts): since round 57.13 the MapLibre night map with our homes lit on it
-  // (components/home/ml/, keyless); Google's 3D map when `NEXT_PUBLIC_HOME_MAP=g3d` and the key is
-  // present; our own night flight when `NEXT_PUBLIC_HOME_MAP=night`. One page, one set of sections;
-  // the few words that describe the picture follow the ground, so no version says something untrue
-  // about what is behind it. `mapped`: a real map with our lights on it (MapLibre's or Google's),
-  // whose words are the same; only Google's says "Map: Google.".
-  const ground = homeMap({ NEXT_PUBLIC_HOME_MAP: process.env.NEXT_PUBLIC_HOME_MAP, NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY });
-  const g3d = ground === "g3d";
-  const mapped = ground !== "night";
+  // (components/home/ml/, keyless); since round 58 the plates of that map. One page, one set of
+  // sections.
+  const ground = homeMap({ NEXT_PUBLIC_HOME_MAP: process.env.NEXT_PUBLIC_HOME_MAP });
   // Round 57.2: on the real map the hero's small words carry their own soft shadow, so the scrim
-  // under them can be lighter and read as shade rather than a panel (G3dGround SCRIM_*).
-  const halo = mapped ? "[text-shadow:0_0_2px_rgba(0,0,0,0.6),0_0_14px_rgba(0,0,0,0.65)]" : "";
-  // On a real map our cover is the load cover: fetched with the document, not when the CSS asks,
-  // the tall still for a phone and the wide one for a laptop (round 57.2). Each map's cover is its
-  // own first frame from its own camera (lib/home-map.ts coverFor; round 57.13).
-  const cover = coverFor(ground, homeCover({ NEXT_PUBLIC_HOME_COVER: process.env.NEXT_PUBLIC_HOME_COVER }));
+  // under them can be lighter and read as shade rather than a panel.
+  const halo = "[text-shadow:0_0_2px_rgba(0,0,0,0.6),0_0_14px_rgba(0,0,0,0.65)]";
+  // On the live map our cover is the load cover: fetched with the document, not when the CSS asks,
+  // the tall still for a phone and the wide one for a laptop (round 57.2); the map's own first frame
+  // from its own camera (lib/home-map.ts; round 57.13).
+  const cover = COVERS.night;
   if (ground === "plates") {
     // Round 58: the territory plate IS the first screen (components/home/plates/), asked for with the
     // document at the density the screen needs (the srcset's widths, 100vw); AVIF, which every
@@ -108,7 +97,7 @@ export default async function HomePage() {
     // round 59 measured that Chrome never matched the page's fetch to that preload (two full
     // downloads on every cold visit, the second at ~550 ms), so the request is now started by the
     // inline script at the top of the page (EARLY_LIGHTS) and taken by lib/idx/lights-client.ts.
-  } else if (mapped) {
+  } else {
     preload(cover.tall, { as: "image", fetchPriority: "high", media: "(max-width: 1023px)" });
     preload(cover.wide, { as: "image", fetchPriority: "high", media: "(min-width: 1024px)" });
   }
@@ -127,34 +116,17 @@ export default async function HomePage() {
     .filter((l) => l.lat && l.lng)
     .slice(0, 8)
     .map((l) => ({ id: l.id, lat: l.lat, lng: l.lng, title: `$${l.price.toLocaleString("en-US")}, ${l.address}, ${l.city}`, href: listingPath(l), price: l.price, beds: l.beds, baths: l.baths, address: l.address, city: l.city }));
-  const Ground = ({ children }: { children: ReactNode }) =>
-    ground === "ml" || ground === "plates" ? (
-      <MlGround engine={ground} poster={cover} tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }} featured={featuredHomes}>
-        {children}
-      </MlGround>
-    ) : g3d ? (
-      <G3dGround
-        poster={cover}
-        covers={COVERS}
-        tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }}
-        featured={featuredHomes}
-      >
-        {children}
-      </G3dGround>
-    ) : (
-      <NightGround poster={POSTER} tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }}>
-        {children}
-      </NightGround>
-    );
+  const Ground = ({ children }: { children: ReactNode }) => (
+    <MlGround engine={ground} poster={cover} tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }} featured={featuredHomes}>
+      {children}
+    </MlGround>
+  );
 
   return (
-    // ── THE GROUND. Since round 57 it is Google's 3D map by default (components/home/g3d/, one
-    // `flyCameraTo` per section, the same `data-shot` contract below); the night flight is the
-    // fallback. What follows describes the night flight, whose shots the map's cameras derive from.
-    // ── THE NIGHT FLIGHT (round 54). The page is one aerial scene and scrolling is the camera
+    // ── THE FLIGHT (round 54; the night flight's shots, which the map's cameras derive from). The page is one aerial scene and scrolling is the camera
     // flying through it: the harbour, up the river to Dutchess, the Highlands, the Tappan Zee,
     // the eleven areas one at a time, back over the harbour and out to the whole region. The
-    // scene is a fixed canvas BEHIND everything (components/home/night/NightGround.tsx); every
+    // scene is a fixed layer BEHIND everything (components/home/ml/MlGround.tsx); every
     // section below says which shot it holds the camera on and how far it dims the scene so its
     // own words can be read. Nothing here needs the scene: the headline, the count, the search
     // box, the listings and every link are server-rendered and work with no JavaScript at all.
@@ -163,7 +135,7 @@ export default async function HomePage() {
     // the ground colour and below the content (z-10) without escaping into the footer.
     // `.nocturne` re-points the site's tokens to the night (app/globals.css).
     <div className="nocturne isolate relative">
-      {ground === "plates" || ground === "ml" ? <script dangerouslySetInnerHTML={{ __html: EARLY_LIGHTS }} /> : null}
+      <script dangerouslySetInnerHTML={{ __html: EARLY_LIGHTS }} />
       {/* Round 65: the first plate eases in from the moment its bytes land (components/home/plates/plate-reveal.ts). */}
       {ground === "plates" ? <script dangerouslySetInnerHTML={{ __html: PLATE_REVEAL_SCRIPT }} /> : null}
       {/* `tail`: the flight does not stop where the page's sections do. Everything below them is
@@ -199,7 +171,7 @@ export default async function HomePage() {
               lights. The foot stops 44 px up: the map credit is only its 24 px (i) on a phone now. */}
           <div className="rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 pb-11 pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40">
             {/* Round 57.2: the eyebrow and the headline are each their own quiet block, so the map's
-                shadow can be lighter under the large, bold headline ("soft", G3dGround SOFT_SHARE, at
+                shadow can be lighter under the large, bold headline ("soft", MlGround SOFT_SHARE, at
                 lg) and full under the small grey eyebrow (measured with the contrast kit). */}
             <div className="pointer-events-auto max-w-[36rem]">
               <p data-quiet className={`t-eyebrow phone-halo w-fit text-stone ${halo}`}>Hudson Valley and New York City</p>
@@ -223,12 +195,12 @@ export default async function HomePage() {
                   <>
                     <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale{" "}
                     <span className="max-lg:hidden">right now, from Poughkeepsie to the five boroughs.</span>
-                    <span className="lg:hidden">right now.</span> {mapped ? <span data-lights-claim className="max-[359px]:hidden">Every light on the map is one of them.</span> : "The bright lights below are them."}
+                    <span className="lg:hidden">right now.</span> <span data-lights-claim className="max-[359px]:hidden">Every light on the map is one of them.</span>
                   </>
                 ) : (
                   <>
                     Homes for sale <span className="max-lg:hidden">right now, from Poughkeepsie to the five boroughs.</span>
-                    <span className="lg:hidden">right now.</span> {mapped ? <span data-lights-claim className="max-[359px]:hidden">Every light on the map is one of them.</span> : "The bright lights below are them."}</>
+                    <span className="lg:hidden">right now.</span> <span data-lights-claim className="max-[359px]:hidden">Every light on the map is one of them.</span></>
                 )}
               </p>
               {/* One instrument (components/search-instrument.test.ts pins the geometry: 16px
@@ -268,29 +240,14 @@ export default async function HomePage() {
                   listing data drawn on the land, so it carries the MLS credit the rails below
                   carry. In the text column, never over the city. */}
               <p data-quiet className={`mt-10 hidden w-fit max-w-[26rem] text-[13px] leading-snug text-stone lg:block ${halo}`}>
-                {mapped ? (
-                  <>
-                    {/* The claims follow the runtime (round 57.2, components/home/g3d/claims.ts):
-                        Google and the pointing are said only while the live map with its lights
-                        stands behind, so JS off or a failed map says nothing untrue. Round 57.5:
-                        they come LAST and are hidden by visibility, their room kept, so showing
-                        them at the reveal moves nothing (CLS). */}
-                    <span data-lights-claim>Every light is a home listed on OneKey&reg; MLS, standing where it stands. </span>
-                    <span data-point-claim className="invisible">
-                      Point at one to see its town and price.{" "}
-                    </span>
-                    {g3d ? (
-                      <span data-map-claim className="invisible">
-                        Map: Google.
-                      </span>
-                    ) : null}
-                  </>
-                ) : (
-                  <>
-                    The bright lights are homes listed on OneKey&reg; MLS, each standing where it stands;
-                    the faint ones are the towns' own light, seen from orbit. Point at a home to see its town.
-                  </>
-                )}
+                {/* The claims follow the runtime (round 57.2, components/home/g3d/claims.ts): the
+                    pointing is said only while the live map with its lights stands behind, so JS
+                    off or a failed map says nothing untrue. Round 57.5: it comes LAST and is hidden
+                    by visibility, its room kept, so showing it at the reveal moves nothing (CLS). */}
+                <span data-lights-claim>Every light is a home listed on OneKey&reg; MLS, standing where it stands. </span>
+                <span data-point-claim className="invisible">
+                  Point at one to see its town and price.{" "}
+                </span>
               </p>
             </div>
           </div>
@@ -397,16 +354,16 @@ export default async function HomePage() {
                 </SectionHeading>
                 <p className="rlt-areas-lede mt-5 max-w-md text-stone">
                   Six counties of the Hudson Valley and all five boroughs.{" "}
-                  {mapped ? <span data-lights-claim>Every light is a home for sale there right now.</span> : "Every bright light is a home for sale there right now."}
+                  <span data-lights-claim>Every light is a home for sale there right now.</span>
                 </p>
               </Reveal>
-              {ground === "ml" || ground === "plates" ? <MlAreaChapter rows={AREA_ROWS} /> : g3d ? <G3dAreaChapter rows={AREA_ROWS} /> : <AreaChapter rows={AREA_ROWS} />}
+              <MlAreaChapter rows={AREA_ROWS} />
             </div>
           </div>
         </section>
 
         {/* ── Why work with us: arriving over the harbour, the densest light on the map. The pull
-            back to the whole region is the NightGround's `tail` now, so it happens as the footer
+            back to the whole region is the ground's `tail` now, so it happens as the footer
             arrives rather than half a section early. */}
         <section data-shot="harbour" data-veil="0.7" data-veil-phone="0.9" className="sec" aria-labelledby="why-heading">
           {/* The harbour is the densest light on the map and this section is nearly all words, so

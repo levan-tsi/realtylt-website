@@ -22,7 +22,7 @@ import { homeMap } from "@/lib/home-map";
 export function SceneCredit() {
   const pathname = usePathname();
   if (!isHomePath(pathname)) return null;
-  const ground = homeMap({ NEXT_PUBLIC_HOME_MAP: process.env.NEXT_PUBLIC_HOME_MAP, NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY });
+  const ground = homeMap({ NEXT_PUBLIC_HOME_MAP: process.env.NEXT_PUBLIC_HOME_MAP });
   // Round 57.13: the MapLibre night map (the default ground) credits its own sources: the vector
   // map's data (the corner of the map carries the same names, components/home/ml/style.ts
   // ATTRIBUTION) and the terrain tiles' sources in the words their licence page gives. Its load cover
