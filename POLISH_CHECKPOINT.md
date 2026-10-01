@@ -1,6 +1,23 @@
-# NEXT = ROUND 65 (Fable 5.1 orchestrator + Opus builders, 5+ rounds, 700-800k): READ `docs/handoff/WEBSITE-R65-HANDOFF.md` §0 FIRST.
+# ROUND 65 DONE ON THE BRANCH, 2026-10-01: THREE PREVIEWS FOR HIS LOOK, NOTHING ON MAIN. Record: `docs/parity/DESIGN-ROUND65.md` (§1 to §13).
 
-Phone AND desktop: every scroll transition should move (some just appear), less New Jersey / closer and sharper map, a lighter look (lighter greys, map lit up a bit, bluer water), the blue logo instead of white, a better font; show him a PREVIEW before shipping.
+His five asks (2026-09-30), all built on `design/futuristic-r53` (HEAD `330fffb`, 53 commits over live `81c0fe1`), Fable orchestrating, six Opus builders one at a time, each re-verified on the running build:
+- **Every scroll moves, both surfaces.** Laptop walk 9 films / 7 fades to 16 / 0; phone 15 / 1 to 16 / 0; the first move after load a film from 0.3 s; a stops-measure bug found (fixed plate layers counted as page sections). A slow line gets the 1440 clips; a still map holds for a clip only while it can land in time. The first plate now eases in over 320 ms (it popped).
+- **Less New Jersey, sharper.** Laptop hero at W10 `s(40.9075, -74.1464, 79_077, 68, 330)`: the valley diagonal, unserved land in view 45 % to 33 % (55 to 40 at 1920x940), Ulster kept at his window, Staten Island crops. Phone: two closer candidates rendered for him, T1 119 km (keeps the four valley names at 390x664) and T2 111 km (closer, Ulster lost at 664); today's 140 km also kept. Phone close plates draw lights 11 px apart (Queens 276 to 356).
+- **Lighter, bluer.** Map palette P1 baked and every plate and film re-rendered (land #151922, water #071a3d, parks a step under the land, hillshade 0.38/0.7): the hero plate's mean luminance 14.9 to 28.8 of 255. Site greys G3 (night #131417, raise #1b1d21, card #171a1e, line #2a2b2f, line-strong #6d6d67, a sink #0e0f12 for the legal strip and field wells); every hard-coded black moved onto the tokens; the map credit at 11:1.
+- **The logo in blue:** the night wordmark in the mark's own #27a7df (6.7:1); the lifted navy read as a second blue.
+- **The type:** Schibsted Grotesk for all the text on the night root (one 47 KB woff2), Bricolage removed; tracking opened a step, tabular figures off (the family's tabular comma is a full figure wide), no layout shift; the home testimonial keeps Newsreader italic.
+- **His added order, the simplification sweep:** the retired Google 3D and three.js grounds, the `three` package, dead controllers, helpers, covers, scripts: 7,676 lines and 51 files gone, 109 tests of deleted code named, the site proved unchanged frame by frame; home first load 262 to 254 kB.
+- **Found on the way, fixed:** 831 homes the geocoder could not place were drawn at their zip centre (a61994b); the hourly photo-count job had died at the database's 120 s default since 09-27, leaving 597 new listings out of the rails (fixed live on the cron entry, recorded in `supabase/migrations/idx_photos_servable_timeout.sql`).
+
+**Gate on the final build:** tsc clean; vitest 2210 of 2210 (2319 before the sweep's named removals); calibration 0.00 px at hero, Queens and Dutchess on both surfaces (region 0.10, as before); walks 16/0 both; hover 50/50; taps 30/30 at hero and Queens; crawler ALL PASS; JS off dark everywhere; reduced motion one fade; light scan at baseline; contrast walker clean; every page's first screen and all 17 stops looked at on both surfaces.
+
+**THE PREVIEWS (he signs in to Vercel once; the bypass secret is not available on this plan):**
+- a, the new look on today's framing: https://realtylt-website-git-r65-preview-a-levans-projects-a543d940.vercel.app
+- b, W10 laptop + T1 phone: https://realtylt-website-git-r65-preview-b-levans-projects-a543d940.vercel.app
+- c, W10 laptop + T2 phone: https://realtylt-website-git-r65-preview-c-levans-projects-a543d940.vercel.app
+Side-by-side sheets: `scripts/_scratch-r65/final/SHEET-laptop.jpg`, `SHEET-phone.jpg`.
+
+**NEXT = HIS VERDICT.** On his yes: merge `design/futuristic-r53` (+ the chosen phone variant from `scripts/_scratch-r65/variants/`, applied with `scripts/_scratch-r65/apply-variant.mjs`, or preview-a's laptop frame) to main after the gate, verify the regenerated live page (header/footer, `_scratch-r64-watch.mjs`), then a real iPhone check. His calls: the blog titles' Title Case; realtylt.com/ai still sets Bricolage (brand unity); the testimonial's italic serif; a one-off second geocoder pass for the 831 unplaced addresses; the "Staten Island" name near the words at 1920x940.
 
 ---
 
