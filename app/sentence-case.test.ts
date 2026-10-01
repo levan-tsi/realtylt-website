@@ -52,9 +52,10 @@ describe("sentence case, site-wide", () => {
       "components/leads/QualifyingWizard.tsx": ["Request My Call"],
       "components/search/SavedClient.tsx": ['"Turn On Alerts"'],
       "components/auth/AccountMenu.tsx": ["Sign Out"],
-      "components/listing/MarketInsights.tsx": [">Market Insights<"],
+      "components/listing/MarketInsights.tsx": [">Market Insights<", '"Current Listings"', '"Average Price"'],
     });
     gone["app/top-areas/page.tsx"].push("Talk It Through With Us");
+    gone["app/buying/page.tsx"].push(">Save a Search<", ">Start Searching<");
     gone["app/reviews/page.tsx"].push("What Our <strong>");
     for (const [file, strings] of Object.entries(gone)) for (const s of strings) expect(read(file), `${file}: ${s}`).not.toContain(s);
     expect(read("app/buying/page.tsx")).toContain(">The home buying process<");

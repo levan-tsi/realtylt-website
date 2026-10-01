@@ -232,7 +232,7 @@ export default async function BuyingPage() {
                   and we will email you as new homes come on that match it.
                 </p>
                 <div className="mt-6">
-                  <Button href="/search" variant="outline-light">Save a Search</Button>
+                  <Button href="/search" variant="outline-light">Save a search</Button>
                 </div>
               </div>
               <div>

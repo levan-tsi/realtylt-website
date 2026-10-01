@@ -27,8 +27,8 @@ export function MarketInsights({
 
   const cards = insights
     ? [
-        { title: "Current Listings", sub: "New in the last 30 days", value: insights.newLast30.toLocaleString("en-US") },
-        { title: "Average Price", sub: "Active listings", value: `$${insights.avgPrice.toLocaleString("en-US")}` },
+        { title: "Current listings", sub: "New in the last 30 days", value: insights.newLast30.toLocaleString("en-US") },
+        { title: "Average price", sub: "Active listings", value: `$${insights.avgPrice.toLocaleString("en-US")}` },
         {
           title: "Average days on market",
           sub: "Active listings",
