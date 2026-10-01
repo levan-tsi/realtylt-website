@@ -274,3 +274,32 @@ Orchestrator's gate: tsc clean, vitest 2309 of 2309 (exit 0), the before/after s
 (home 1440, /selling 390). One finding handed to the polish round: on /selling at 390 the chat
 launcher sits hidden (`opacity: 0; pointer-events: none`) over the form's Email input 2.5 s after
 load, so a tap at its spot focuses the input (`scripts/_scratch-r65/launcher-why.mjs`).
+
+## 12. The polish round (builder E, 2026-09-30; orchestrator-verified)
+
+Thirteen commits, 9dc3a68 to 8ab0b42. The named items: (1) the first plate eases in over 320 ms
+the first frame its picture is complete (`plate-reveal.ts`; a fade started on the image's `load`
+event flashed in one run of six because the event can fire after the paint), boot medians
+unchanged (reveal 553 to 557 ms at 1440, LCP 312 to 304, text); (2) the still map's 500 ms hold
+stops as soon as the clip's own download rate says it cannot land in time (`clipEta`): on a
+20 Mbps phone an early first scroll faded at +90 to +256 ms instead of standing 500 ms and fading
+anyway; (3) the phone's close plates draw lights 11 px apart (`FINGER_CLOSE_GAP`, easing to 14 at
+24 km): Queens 276 to 356, the harbour 195 to 275, the hero and region unchanged, taps 30 of 30 at
+the hero and at Queens; (4) under 375 px the first hero link takes its short label so both links
+sit on one row: the map window at 320x568 40 to 77 px, 2 county names, 360x640 65 to 117 px;
+(5) a tucked phone chat launcher is `visibility: hidden` as well (it was a focusable invisible
+button over /selling's Email field), checked hittable where shown on 17 pages at both widths;
+(6) the mortgage breakdown's amounts line up (the share has its own right-aligned slot; tabular
+figures stay off); (7) a new `--color-night-sink #0e0f12` for the footer's legal strip and every
+form field's well (true black read as a seam and as holes); (8) the chat panel on the G3 greys,
+thirteen light-variant buttons from pure white to the moon, all eleven dialogs, the 404 and the
+blog looked at. The walkthrough: a class of Title Case that round 63's string checks could not
+see (words split around a `<strong>`) in headings, buttons and labels on 22 pages and the
+dialogs, each with a test; 2309 to 2319 tests.
+
+Orchestrator's gate on the rebuilt HEAD: tsc clean; vitest 2319 of 2319 (exit 0); laptop walk 16
+films / 0 fades (max frame 48.7 ms), phone walk 16 / 0 (5 frames over 34 ms); calibration 0.00 px
+at hero and Queens on both surfaces; Queens phone taps 30 of 30 on 229 lights; the three phone
+first screens looked at. Left on purpose: the blog post titles' Title Case (his call), product
+names, the MLS status chips, the "Staten Island" name near the words at 1920x940 (a placement
+question for the final pass).
