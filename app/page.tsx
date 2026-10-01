@@ -492,16 +492,26 @@ export default async function HomePage() {
 function HeroLinks() {
   return (
     <>
+      {/* Round 65 (E): under 375 px the two boxes wrapped onto two rows and the words covered the
+          map (320 x 568: a 40 px window, one county named); the nav's own short label keeps them
+          on one row there. */}
       {[
-        { href: "/home-value", label: "What is my home worth?" },
-        { href: "/selling", label: "Sell with us" },
+        { href: "/home-value", label: "What is my home worth?", short: "Home value" },
+        { href: "/selling", label: "Sell with us", short: null },
       ].map((c) => (
         <Link
           key={c.href}
           href={c.href}
           className={`phone-glass phone-halo inline-flex min-h-[40px] items-center rounded-xl border border-line-strong bg-night/45 px-4 text-[15px] font-semibold tracking-[-0.005em] text-ink backdrop-blur-md hover:border-stone hover:bg-night/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight ${PRESS}`}
         >
-          {c.label}
+          {c.short ? (
+            <>
+              <span className="max-[374px]:hidden">{c.label}</span>
+              <span className="min-[375px]:hidden">{c.short}</span>
+            </>
+          ) : (
+            c.label
+          )}
         </Link>
       ))}
     </>

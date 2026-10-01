@@ -21,6 +21,12 @@ describe("the phone's first screen", () => {
     expect(page).toMatch(/className="rise rise-4 mt-5 flex flex-wrap gap-x-3 gap-y-3 max-lg:mt-3">\s*<HeroLinks \/>/);
   });
 
+  it("keeps the two links on one row under 375 px with the nav's short label (round 65, 320 x 568)", () => {
+    expect(page).toContain('{ href: "/home-value", label: "What is my home worth?", short: "Home value" }');
+    expect(page).toContain('<span className="max-[374px]:hidden">{c.label}</span>');
+    expect(page).toContain('<span className="min-[375px]:hidden">{c.short}</span>');
+  });
+
   it("keeps the count short on a phone and the laptop's sentence whole", () => {
     // Whole runs per layout: a span boundary inside "boroughs." moved the laptop's period by a pixel.
     expect(page.match(/<span className="max-lg:hidden">right now, from Poughkeepsie to the five boroughs\.<\/span>/g)).toHaveLength(2);
