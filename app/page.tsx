@@ -30,6 +30,7 @@ import { getActiveSaleCount, isDbConfigured } from "@/lib/idx/db";
 import { OG_DEFAULTS, SITE } from "@/lib/site";
 import type { ReactNode } from "react";
 import { EARLY_LIGHTS_SCRIPT } from "@/lib/idx/lights-client";
+import { PLATE_REVEAL_SCRIPT } from "@/components/home/plates/plate-reveal";
 
 /** THE LIGHTS' EARLY FETCH (round 59): one line of script at the top of the page starts the fetch
  * of /api/lights while the document is still parsing, ahead of the page's own bundle, and leaves
@@ -163,6 +164,8 @@ export default async function HomePage() {
     // `.nocturne` re-points the site's tokens to the night (app/globals.css).
     <div className="nocturne isolate relative">
       {ground === "plates" || ground === "ml" ? <script dangerouslySetInnerHTML={{ __html: EARLY_LIGHTS }} /> : null}
+      {/* Round 65: the first plate eases in from the moment its bytes land (components/home/plates/plate-reveal.ts). */}
+      {ground === "plates" ? <script dangerouslySetInnerHTML={{ __html: PLATE_REVEAL_SCRIPT }} /> : null}
       {/* `tail`: the flight does not stop where the page's sections do. Everything below them is
           the footer, and without a last leg the scene simply ended at the footer's top edge —
           a straight line straight through the middle of the region shot. The camera holds the
