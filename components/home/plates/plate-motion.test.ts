@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FADE_MS, FILM_HOLD_MS, FILM_MAX_RATE, FILMS_KEPT, filmNeighbours, filmWants, holdForFilm, HURRY_MS, SETTLE_FROM, filmHurry, finished, hurryRate, idle, neighbours, routeHop, progress, request, settleScale, useFilm, type FilmChooser } from "./plate-motion";
+import { clipEta, FADE_MS, FILM_HOLD_MS, FILM_MAX_RATE, FILMS_KEPT, filmNeighbours, filmWants, holdForFilm, HURRY_MS, SETTLE_FROM, filmHurry, finished, hurryRate, idle, neighbours, routeHop, progress, request, settleScale, useFilm, type FilmChooser } from "./plate-motion";
 import type { ShotName } from "../night/shots";
 import { FLIGHTS } from "./flights.gen";
 import { filmLadder, filmOf } from "./plate-frame";
@@ -280,6 +280,23 @@ describe("a still map holds a moment for its film (holdForFilm)", () => {
     expect(holdForFilm({ ...ok, coming: false })).toBe(false);
     expect(holdForFilm({ ...ok, reduced: true })).toBe(false);
     expect(holdForFilm({ ...ok, off: true })).toBe(false);
+  });
+  it("does not wait for a clip whose own rate says it will miss the hold (round 65, E)", () => {
+    // A phone clip 1.03 s of 2.6 s in after 300 ms: ~460 ms more; with 100 ms waited it misses 500.
+    const eta = clipEta(1.03, 2.6, 300)!;
+    expect(eta).toBeGreaterThan(400);
+    expect(holdForFilm({ ...ok, waited: 100, eta })).toBe(false);
+    // The laptop's clip nearly in: wait for it.
+    expect(holdForFilm({ ...ok, waited: 100, eta: clipEta(2.4, 2.6, 300) })).toBe(true);
+    // Nothing known yet: the plain hold.
+    expect(holdForFilm({ ...ok, waited: 100, eta: null })).toBe(true);
+  });
+  it("clipEta: null until the download says something, 0 once buffered whole", () => {
+    expect(clipEta(0, 2.6, 300)).toBeNull();
+    expect(clipEta(1, NaN, 300)).toBeNull();
+    expect(clipEta(1, 2.6, 20)).toBeNull();
+    expect(clipEta(2.6, 2.6, 300)).toBe(0);
+    expect(clipEta(1.3, 2.6, 200)).toBeCloseTo(200);
   });
 });
 

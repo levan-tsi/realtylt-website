@@ -32,7 +32,7 @@ import { mercX, mercY } from "../ml/geo";
 import type { MlStats } from "../ml/controller";
 import type { GroundEngine } from "../ml/engine";
 import { aspectFor, coverFit, filmDataSrc, filmFormat, filmLadder, filmOf, filmSrc, filmWidthFor, framePlate, plateProjector, plateRange, plateSrc, plateSrcSet, type CoverFit, type FilmClip, type FilmFormat, type FilmFrame, type FilmManifest, type Plate, type PlateAspect, type PlateFormat, type PlateManifest, type Projector } from "./plate-frame";
-import { FADE_MS, FADE_REDUCED_MS, FILM_IN_MS, FILM_OUT_MS, PUSH_TO, SETTLE_FROM, filmHurry, filmWants, finished, holdForFilm, hurryRate, idle, request, routeHop, useFilm, type Motion, type MotionState } from "./plate-motion";
+import { clipEta, FADE_MS, FADE_REDUCED_MS, FILM_IN_MS, FILM_OUT_MS, PUSH_TO, SETTLE_FROM, filmHurry, filmWants, finished, holdForFilm, hurryRate, idle, request, routeHop, useFilm, type Motion, type MotionState } from "./plate-motion";
 import { frameAt } from "./flight-path";
 
 /** One layer's elements: the picture (four sources: AVIF and WebP, the tall and the wide), its image,
@@ -80,6 +80,8 @@ interface FilmEntry {
   frames: FilmFrame[] | null;
   ready: boolean;
   failed: boolean;
+  /** When its clip was asked for (performance.now()): its download rate, for the hold (clipEta). */
+  askedAt: number;
   /** Whether it is ready now (every byte buffered, the first frame decoded, the frames in). */
   check: () => void;
 }
@@ -373,7 +375,13 @@ export class PlateController implements GroundEngine {
     if (this.motion.motion || !at || at === name || !M || !this.film) return false;
     const hop = this.route(at, name) ?? name;
     const e = this.films.get(`${at}>${hop}>${this.aspect()}`);
-    return holdForFilm({ recorded: !!filmOf(M, at, hop), ready: this.filmMs(at, hop) !== null, coming: e ? !e.failed : this.fs.rejected === 0 && !(this.formatsKnown && !this.formats.length), reduced: this.opts.reduced, off: !!this.opts.filmOff, waited });
+    // Round 65 (E): a clip that will not be in within the hold is not waited for (clipEta).
+    let eta: number | null = null;
+    if (e && !e.ready) {
+      const b = e.video.buffered;
+      eta = clipEta(b.length ? b.end(b.length - 1) : 0, e.video.duration, performance.now() - e.askedAt);
+    }
+    return holdForFilm({ recorded: !!filmOf(M, at, hop), ready: this.filmMs(at, hop) !== null, coming: e ? !e.failed : this.fs.rejected === 0 && !(this.formatsKnown && !this.formats.length), reduced: this.opts.reduced, off: !!this.opts.filmOff, waited, eta });
   }
 
   /** A featured card's focus: the closest plate the home stands on, with room round it; the open
@@ -718,7 +726,7 @@ export class PlateController implements GroundEngine {
     v.disablePictureInPicture = true;
     v.preload = "auto";
     v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0";
-    const e: FilmEntry = { id, key: which.key, reverse: which.reverse, aspect, clip, video: v, frames: null, ready: false, failed: false, check: () => {} };
+    const e: FilmEntry = { id, key: which.key, reverse: which.reverse, aspect, clip, video: v, frames: null, ready: false, failed: false, askedAt: performance.now(), check: () => {} };
     this.films.set(id, e);
     f.el.root.insertBefore(v, f.el.canvas);
     const cw = this.box().width;

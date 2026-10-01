@@ -173,8 +173,21 @@ export function filmWants(o: {
  * the page (the films behind are only fetched once the visitor turns), a slow line. Past it, the
  * fade over. A map already moving never waits (a queued request is hurried instead). */
 export const FILM_HOLD_MS = 500;
-export function holdForFilm(o: { recorded: boolean; ready: boolean; coming: boolean; reduced: boolean; off: boolean; waited: number }, max = FILM_HOLD_MS): boolean {
+/** `eta`: the ms the clip still needs (clipEta), when its download has shown a rate. Round 65 (E):
+ * a clip that cannot land within the hold is not waited for; the fade goes at once. Measured on a
+ * phone at 20 Mbps, scrolled 0 to 600 ms after the reveal: the 1.3 MB clip needed 0.7 to 1.1 s, so
+ * four moves in five stood still for the whole 500 ms and then faded anyway. */
+export function holdForFilm(o: { recorded: boolean; ready: boolean; coming: boolean; reduced: boolean; off: boolean; waited: number; eta?: number | null }, max = FILM_HOLD_MS): boolean {
+  if (o.eta != null && o.waited + o.eta > max) return false;
   return o.recorded && !o.ready && o.coming && !o.reduced && !o.off && o.waited < max;
+}
+/** The ms a clip still needs to be buffered whole, from its own progress: `buffered` media seconds of
+ * `duration` in `elapsed` ms since it was asked for; null while that says nothing yet (no bytes, no
+ * duration, under 50 ms in). */
+export function clipEta(buffered: number, duration: number, elapsed: number): number | null {
+  if (!(duration > 0) || !(buffered > 0) || elapsed < 50) return null;
+  if (buffered >= duration - 0.05) return 0;
+  return ((duration - buffered) * elapsed) / buffered;
 }
 
 /** The fastest a film is played when hurried (a request during it). */
