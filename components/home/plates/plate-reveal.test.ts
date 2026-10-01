@@ -22,7 +22,7 @@ function run(reduced: boolean) {
     const due = queue.splice(0);
     for (const f of due) f();
   };
-  const makeImg = () => (page.img = { complete: false, naturalWidth: 0, animate: (frames: unknown, opts: { duration: number; easing: string }) => animated.push({ frames, opts }) });
+  const makeImg = () => (page.img = { complete: false as boolean, naturalWidth: 0, animate: (frames: unknown, opts: { duration: number; easing: string }) => animated.push({ frames, opts }) });
   return { queue, frame, page, animated, asked, makeImg };
 }
 
