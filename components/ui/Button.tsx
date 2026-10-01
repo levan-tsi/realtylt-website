@@ -65,7 +65,7 @@ const variants: Record<Variant, string> = {
   "outline-light":
     "rounded-xl uppercase tracking-[0.1em] border border-paper text-paper hover:bg-paper hover:text-ink",
   light:
-    "rounded-xl uppercase tracking-[0.1em] bg-paper text-ink hover:-translate-y-0.5 hover:bg-mist hover:shadow-lift",
+    "rounded-xl uppercase tracking-[0.1em] bg-paper text-ink hover:-translate-y-0.5 hover:bg-mist hover:shadow-lift night:bg-moon night:hover:bg-mist",
   // Night: the ghost is a text link, so it sits on the same left edge as the text it belongs to
   // (with px-5 it hung 20px inside the ledger's sentences and under a section heading); the
   // 44px height still gives it its tap target. Underlined at rest in the page's quiet line.

@@ -165,3 +165,10 @@ describe("design system — the tokens exist", () => {
     ]);
   });
 });
+
+describe("the light button at night (round 65)", () => {
+  it("wears the moon like the primary, not pure white (white read too bright beside its twins)", () => {
+    const src = fs.readFileSync(path.join(import.meta.dirname, "ui/Button.tsx"), "utf8");
+    expect(src).toMatch(/light:\s*\n\s*"[^"]*bg-paper[^"]*night:bg-moon night:hover:bg-mist"/);
+  });
+});
