@@ -430,7 +430,7 @@ export default async function HomePage() {
                 the display face, the claim as a sentence, and the thing a visitor can DO about
                 it. Rendered on the SERVER with no count-up and no interim state. */}
             <Reveal>
-              <p className="mx-auto mt-10 max-w-xl text-center leading-[1.75] text-stone">
+              <p className="mx-auto mt-10 max-w-xl text-center leading-[1.75] text-stone max-lg:text-ink-soft">
                 Every screen above is our own product, running on live MLS data. The rest of the
                 case is three numbers.
               </p>
