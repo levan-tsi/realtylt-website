@@ -257,9 +257,12 @@ export function MortgageCalculator({
                 />
                 {row.label}
               </dt>
-              <dd className="text-ink">
-                {Number.isFinite(row.amount) ? money(row.amount) : "—"}{" "}
-                <span className="text-stone">
+              {/* Round 65: the share in its own right-aligned slot, so the amounts' right edges line
+                  up as a column (the night root's figures are proportional, and the shares' widths
+                  differ: "(86.6%)" against "(3.2%)" moved the amounts by up to 17 px). */}
+              <dd className="flex items-baseline justify-end gap-1.5 text-ink">
+                <span>{Number.isFinite(row.amount) ? money(row.amount) : "—"}</span>
+                <span className="min-w-[3.75rem] text-right text-stone">
                   ({Number.isFinite(row.pct) ? row.pct.toFixed(1) : "0"}%)
                 </span>
               </dd>

@@ -14,3 +14,10 @@ describe("the payment breakdown on the night", () => {
     expect(src).not.toContain("#d9dde2");
   });
 });
+
+describe("the breakdown's amounts as a column (round 65)", () => {
+  it("sets each share in its own right-aligned slot, so the amounts' right edges line up", () => {
+    expect(src).toContain('<dd className="flex items-baseline justify-end gap-1.5 text-ink">');
+    expect(src).toContain('<span className="min-w-[3.75rem] text-right text-stone">');
+  });
+});
