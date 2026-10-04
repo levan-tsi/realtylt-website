@@ -354,7 +354,14 @@ export default async function HomePage() {
                 </SectionHeading>
                 <p className="rlt-areas-lede mt-5 max-w-md text-stone">
                   Six counties of the Hudson Valley and all five boroughs.{" "}
-                  <span data-lights-claim>Every light is a home for sale there right now.</span>
+                  {/* Round 66 (the owner: "if it adds up" on the zoom): the county counts beside
+                      this list are every home for sale there; a county stop draws as many lights
+                      as the gap allows, 19 to 62% of that count on a laptop, and each light's glow
+                      is weighted by the homes within reach of it (../components/home/g3d/
+                      light-plan.ts). The second sentence says so. The phone hides this paragraph. */}
+                  <span data-lights-claim>
+                    Every light is a home for sale there right now. Where homes crowd, one light stands for several.
+                  </span>
                 </p>
               </Reveal>
               <MlAreaChapter rows={AREA_ROWS} />

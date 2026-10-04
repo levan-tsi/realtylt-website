@@ -30,4 +30,15 @@ describe("what the home page's words may claim", () => {
     expect(page).toMatch(/<span data-point-claim className="invisible">/);
     expect((page.match(/data-lights-claim(?! hidden)/g) ?? []).length).toBeGreaterThanOrEqual(3);
   });
+
+  it("says at 'Where we work' that one light stands for several where homes crowd", () => {
+    // Round 66, measured on the build (scripts/_scratch-r66/ratio/ratio.mjs): a county stop draws
+    // 19 to 62% of the count printed beside it on a laptop (Queens 1,103 lights for 5,642 homes),
+    // every home in the frame within reach of a light whose glow is weighted by the homes it stands
+    // for. The sentence sits inside the lights claim, so it leaves with it if the lights fail.
+    const page = readFileSync("app/page.tsx", "utf8");
+    expect(page.replace(/\s+/g, " ")).toContain(
+      "<span data-lights-claim> Every light is a home for sale there right now. Where homes crowd, one light stands for several. </span>",
+    );
+  });
 });
