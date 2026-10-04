@@ -310,3 +310,61 @@ unless it is asked first; `--shots=putnam,region` gives Putnam 0.00 and the regi
 suite at 42d024f run today in a temporary worktree passes 2,192. This round: 2,194 after the bake (four
 study tests out, two park tests in), 2,205 after builder 2 (eight geocode tests, three title tests).
 
+### 6d. The logo, the ratio and the walkthrough (builder 3, 2026-10-04 afternoon; the orchestrator's calls)
+
+**The logo: lift3 ships.** Builder 3 answered the page's own logo request with each candidate file, so
+the mocks are the real header (home over the hero, /selling, the footer, the phone menu; 1440 and 390),
+and measured every wordmark pixel against the pixels behind it. Median / worst 5 % of strokes on the
+home header at 1440 and 390: his file as is 1.31 / 1.28 and 1.23 / 1.07 (invisible; the cyan R floats
+alone); lift3 `#3d74b8` 3.79 / 3.71 and 3.56 / 3.09; lift4 `#4a82d0` 4.66 / 4.57 and 4.38 / 3.80; his
+exact file on a paper plate 13.85 on the paper and the plate 18:1 against the ground (a sticker, the
+brightest thing in the header); today's cyan wordmark 6.63 / 6.50 and 6.23 / 5.41. The two blues stay
+apart (the wordmark against the R mark): his navy 5.07:1, lift3 1.75:1, lift4 1.42:1. The orchestrator
+looked at the sheets and the 1:1 crops: lift3 keeps his navy's hue (OKLCH 255) and keeps the R mark and
+the Y's stroke distinct, so it reads as HIS logo, calm beside the lamps; lift4 reads as one mid blue;
+the plate is a sticker; the file as is cannot be seen. WCAG 1.4.3 exempts logotypes; the floor here is
+legibility, and 3.1 at worst over the phone's Hudson is read on the sheet as legible. Sheets:
+`scripts/_scratch-r66/logo/sheets/`, numbers `results.json`.
+
+**The ratio ("if it adds up"):** measured with the page's own packer and projection at the 17 stops on
+both surfaces (`scripts/_scratch-r66/ratio/`). What holds: every light is a real listing at its real
+address, and at every close stop every home in the frame has a drawn light within 1.5 gaps (100 %; 96 %
+at the laptop hero, 93 % at the region), each light's glow already weighted by the homes it stands for
+(`light-plan.ts`). What does not add up: the counts. A county plate holds 19 to 87 % of its county
+(Ulster 21 %, Queens 52 %, Rockland 87 % on the laptop); inside the frame the gap thins the dense
+places (Queens draws 1,103 of 2,865 in frame on the laptop, 340 of 2,006 on the phone; the Bronx 36 % /
+17 %; the harbour 19 % / 6 %) while the valley draws most (Putnam 96 % / 69 %, Ulster 94 % / 71 %); the
+phone draws about half of the laptop everywhere; and 0.5 to 10.7 % of a county's panel count cannot be
+placed (the valley's numberless lots). The hero draws 474 / 248 lights for 14,988 / 14,791 homes in frame
+(3 % / 2 %; the approved scatter). Decision: the counts stay (they are true and "See homes" delivers all
+of them); the hero sentence stays (true: every light is one of them); the one place the numbers and the
+lights sit side by side, the laptop's "Where we work" sentence, says it plainly: "Every light is a home
+for sale there right now. Where homes crowd, one light stands for several."
+
+**The walkthrough (phase 1, b7e8ef0):** five clear defects fixed, each with a test: two-word Title Case
+survivors round 65's scan could not see ("Top Areas", "Site Map" and its rows, "Get Pre-Approval",
+"Application & Processing", the /search screen-reader h1, the "AI Services" breadcrumbs, and on every
+listing "Market Insights", "Make an Offer", "Request a Tour"); the phone photo viewer's top bar (labels
+folding, the close ring squeezed to 31x44 at 320; now 44x44 at every width); the footer's copyright line
+wider than its cap since the font swap ("operated." alone on a line at 1280 to 1920); the floating "On
+this page" pill shown with JavaScript off (a button that opened nothing); the chat panel's header
+breaking inside "Live MLS" at 380 px. Scans on the final build: crawler ALL PASS; the contrast walker
+clean at 390 and, at 1440, only /search's four Google map-credit strings at 1.03 (as in round 65); the
+light-surface scan at 60, equal to the baseline; JS off dark and readable on 24 pages at both widths, 0
+overflow; reduced motion one 400 ms fade; eleven dialogs plus the phone menu dark and clean; focus rings
+on 810 of 811 and 367 of 368 elements (the miss is the credit link inside the closed (i) panel, an
+instrument artifact); 0 overflow on 26 pages at 1440, 390 and 320; 0 JS errors. Looked at and right:
+the city parks on the hero read as parks at 1440 and as small dark patches at 390; the Highlands' green
+behind the testimonial reads as forest; Flushing Meadows is a park at 1:1; the first second is words,
+the plate at ~414 ms, the names at ~660, the lights at ~740.
+
+Left as judgement calls, decided: the "On this page" pill covering the h1 at 320 and body at 390 with
+JavaScript on (phase 2: it waits until the reader is past the title block); "Map View" to "Map view"
+("Street View" stays, Google's name). Left open: a listing page with JavaScript off shows 18 controls
+that do nothing (the site works without JavaScript; a listing's offer, share, save and photo viewer do
+not); the /connect booking widget is a white third-party card on the dark page (known since round 60);
+on the phone the Highlands horizon puts a dense row of lamps behind "Featured listings" (the tall camera
+sees to the horizon); /financing's pre-approval text sits over a busy photo on the phone (reads, but no
+probe measures it). Builder 3 also found the worktree's `node_modules` damaged (section 6e) and repaired
+it with `npm install`, the lockfile untouched.
+
