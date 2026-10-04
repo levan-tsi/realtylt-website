@@ -179,7 +179,7 @@ export function Header() {
         <div className="mx-auto flex max-w-[1250px] items-center justify-between gap-6 px-4 py-4 lg:px-8">
           <Link href="/" aria-label="RealtyLT home" className="shrink-0">
             <Image
-              src="/logo-realtylt-night.png"
+              src="/logo-realtylt-navy.png"
               alt="RealtyLT"
               width={300}
               height={62}

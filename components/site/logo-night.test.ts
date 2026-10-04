@@ -19,7 +19,7 @@ const hex = (d: Buffer, i: number) => "#" + [d[i], d[i + 1], d[i + 2]].map((v) =
 describe("the night logo", () => {
   it("is his file with the navy lifted to #3d74b8 and nothing else changed", async () => {
     const day = await read("public/logo-realtylt.png");
-    const night = await read("public/logo-realtylt-night.png");
+    const night = await read("public/logo-realtylt-navy.png");
     expect([night.info.width, night.info.height]).toEqual([5670, 1167]);
     expect([day.info.width, day.info.height]).toEqual([5670, 1167]);
     const counts = { dayNavy: 0, dayMark: 0, dayOther: 0, nightLift: 0, nightMark: 0, nightOther: 0, alphaMoved: 0, misplaced: 0 };

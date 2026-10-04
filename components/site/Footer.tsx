@@ -57,7 +57,7 @@ export function Footer() {
           {/* The night cut: the same artwork with the navy lit (round 53). The whole site is night
               since round 60, so the day cut that sat beside it could never show and is gone. */}
           <Image
-            src="/logo-realtylt-night.png"
+            src="/logo-realtylt-navy.png"
             alt="RealtyLT"
             width={200}
             height={41}
