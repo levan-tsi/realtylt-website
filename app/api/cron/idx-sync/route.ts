@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { applyGeocodes, applyIdxSync, applySoldGeocodes, getMirrorState, getSyncWatermark, listPendingGeocodes, listPendingSoldGeocodes } from "@/lib/idx/db";
-import { censusCsvRow, parseCensusBatch, withoutUnit, type GeocodeRow } from "@/lib/idx/geocode";
+import { censusCsvRow, parseCensusBatch, retryStreet, type GeocodeRow } from "@/lib/idx/geocode";
 import { geocodePending, geocodeSoldPending } from "@/lib/idx/geocode-runner";
 import { runInRefreshContext } from "@/lib/idx/mls-fetch";
 import { MlsGridClient } from "@/lib/idx/mls-grid";
@@ -86,11 +86,12 @@ const GEOCODE_WALL_MS = 25_000;
 const SOLD_GEOCODE_BUDGET = Math.max(0, Number(process.env.SOLD_GEOCODE_BUDGET) || 300);
 
 /** The U.S. Census Bureau's batch geocoder: free, keyless, no account, and NOT MLS Grid — this
- * adds no load to the feed's rate limits. Unit numbers get one retry on the building. */
+ * adds no load to the feed's rate limits. Unit numbers get one retry on the building; round 66: a
+ * Queens number asked with its hyphen back on that retry (lib/idx/geocode.mjs retryStreet). */
 async function censusGeocode(rows: readonly GeocodeRow[], wallMs: number, streetOnly = false):
   Promise<{ hits: ReturnType<typeof parseCensusBatch>["hits"]; misses: GeocodeRow[] }> {
   const fd = new FormData();
-  const lines = rows.map((r) => censusCsvRow(r, streetOnly ? withoutUnit(r.address) : r.address));
+  const lines = rows.map((r) => censusCsvRow(r, streetOnly ? retryStreet(r.address, r.zip) : r.address));
   fd.append("addressFile", new Blob([lines.join("\n") + "\n"], { type: "text/csv" }), "a.csv");
   fd.append("benchmark", "Public_AR_Current");
   const res = await fetch("https://geocoding.geo.census.gov/geocoder/locations/addressbatch", {
@@ -101,7 +102,7 @@ async function censusGeocode(rows: readonly GeocodeRow[], wallMs: number, street
   if (!res.ok) throw new Error(`census ${res.status}`);
   const { hits, misses } = parseCensusBatch(await res.text(), rows);
   if (!streetOnly && misses.length) {
-    const retryable = misses.filter((r) => withoutUnit(r.address) && withoutUnit(r.address) !== r.address);
+    const retryable = misses.filter((r) => retryStreet(r.address, r.zip) && retryStreet(r.address, r.zip) !== r.address);
     if (retryable.length) {
       const second = await censusGeocode(retryable, wallMs, true).catch(() => ({ hits: [], misses: retryable }));
       const placed = new Set(second.hits.map((h) => h.id));

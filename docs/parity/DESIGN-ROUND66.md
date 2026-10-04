@@ -221,3 +221,63 @@ Then ONE re-render of every plate and film with the three picks baked (the `?pal
 fingerprints re-pinned on purpose), run by the orchestrator as a background process so the box stays
 free for the next builder.
 
+### 6b. The geocoding and the titles (builder 2, 2026-10-04; the orchestrator's calls)
+
+**The pipeline, as read:** a row is "tried, not placed" when `geocoded` is null and `listing.geocodeTried`
+carries the stamp `idx_geocode_apply` writes for a miss; the hourly pass never re-asks a stamped row,
+`--retry` asks every active null row. An address goes to the Census as written, with one second ask
+without its unit; the gate accepts a point inside the territory and within 15 km of the stored zip's
+centroid (Exact and Non_Exact alike), and Google answers only at ROOFTOP or RANGE_INTERPOLATED. The 17
+null rows that already held a geocode fail the address-key condition (the geocode was measured for an
+address or zip the feed has since changed; in at least seven the old answer was a different place), which
+is the rule working as meant.
+
+**The 847, classified:** no house number 360 (bare road 262, tbd 42, "Lot N" 33, number 0 15,
+intersections 5, unit only 3); numbered and missed 273; unit suffix 131; Queens hyphenated numbers 70;
+ranges 9; "Lot N" plus a number 4. Read-only experiments on the misses: the Queens hyphen restored placed
+33 of 38, all on the same house and street; a unit list written with "/" placed 1; the numberless streets
+0 of 360, the ranges' first number 0 of 9, "Lot N" stripped 0 of 4, asking without the city or the zip
+placed wrong towns (Sunset Lane, New Hampton to East Hampton, 193 km).
+
+**Done (04e516a):** `retryStreet(address, zip)` builds the second ask: the unit off, and in a Queens zip a
+4-to-5-digit number gets its hyphen back; `withoutUnit` accepts "/" in a unit token; the acceptance rule
+unchanged; eight tests. The real `--retry` wrote 45 placements through the RPC (Queens hyphen 35, unit 5,
+numbered 5; Exact 41, Non_Exact 4) and re-stamped 790. Headline: `geocoded` true 26,336 to 26,381, null
+847 to 802. In the lights' scope (Active, for sale, the $10k floor): 15,039 of 15,608 placed, 96.4 %;
+Queens 5,594 of 5,644 (99.1 %), the Bronx 99.1 %, Brooklyn 99.5 %, Manhattan 99.4 %, Staten Island
+97.2 %, Rockland 96.9 %, Westchester 96.1 %, Putnam 94.5 %, Orange 90.8 %, Dutchess 89.7 %, Ulster
+88.9 %. The valley's gap is the numberless land lots (309 of the 360 are Land).
+
+**The orchestrator wired the same second ask into the hourly sync's geocode step** (the two calls in
+`app/api/cron/idx-sync/route.ts`, off-limits to a builder; no MLS call is touched), so a new Queens
+listing gets its hyphen retry every tick instead of waiting for a one-off run.
+
+**What is left, sized for his Google pass (blocked: `GOOGLE_MAPS_API_KEY` is not on this box and the
+Vercel connector cannot list the CRM's variables):** 430 numbered rows a ROOFTOP or RANGE_INTERPOLATED
+answer could place (278 in the lights' scope), 12 the gate rejects on a zip typo in the feed, 360 with no
+house number that no geocoder places at building grade. Cost at the script's own estimate: about $4 for
+the 802 (`node scripts/backfill-geocodes.mjs --google --retry` once the key is in `.env.local`; without a
+server key the script falls back to the referrer-locked browser key and would re-stamp every row
+placing nothing). Round 30's Google pass placed 56 % of what it asked; about 240 of the 430 is a guess,
+not a measurement.
+
+**Two rule changes NOT made, for a later call:** (1) a Non_Exact census answer can land on the wrong
+street (KEY1041042 "50 North Broadway #6H, White Plains" placed at "50 S Broadway"): a check that the
+matched street's directional and name agree with the ask would refuse it; (2) the 12 gate rejections are
+the right building against a zip typo (12545 vs 12546, 11023 vs 10023 and the like) or five Kingston
+homes 15.1 to 16.5 km from the 12401 centroid; measuring against the matched zip when the city agrees
+would place about ten. Both are agent-executable in `lib/idx/geocode.mjs` `rejectReason` with tests.
+Also found: 21 active rows sit at 0,0 in `idx_listings` (none geocoded, all hidden).
+
+**"Does it add up" at the close zoom** is measured after the re-render (section 6c).
+
+**The titles (aec7e67):** the 57 post titles in `content/blog/posts.ts` to sentence case by hand (names,
+places, months, acronyms and I kept; the first word after a "?" or a quoted question capitalised; after a
+colon lowercase, as the posts' own headings are); every surface reads the one field (the post h1, og and
+twitter titles, the image alt, the share row, the related cards, the index cards, RelatedPosts, the JSON-LD
+headline and breadcrumb, the directory that feeds /sitemap and llms.txt), so nothing else changed;
+`content/blog/titles.test.ts` fails a Title Case title under an explicit allowlist (red before, green
+after). Kept as they were, on purpose: the `<title>` tags (`seoTitle`; round 63 ruled page titles are not
+headings and `app/sentence-case.test.ts` pins that), and the one CRM-authored post in `blog_posts`
+("Hudson Valley Market Check-In: ...", a database row the CRM owns).
+
