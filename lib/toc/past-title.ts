@@ -14,8 +14,11 @@ import { useEffect, useState } from "react";
  * LAST marked element is the one that has to clear the viewport. Without a mark the h1 is used, and
  * a page with neither shows the pill at once (the old behaviour) rather than never.
  *
- * An IntersectionObserver, not a scroll listener: it fires on the first observation too, so a page
- * restored mid-scroll shows the pill straight away. Server render and first paint: false, so the
+ * A scroll listener read once a frame, not an IntersectionObserver: at 320x568 a flagship's
+ * standfirst starts below the first screen, and a jump (an anchor, End, a fling) can carry it from
+ * below the viewport to above it without ever intersecting, which an observer never reports
+ * (measured: the pill stayed away 340px past the title). One getBoundingClientRect per frame while
+ * scrolling, the same cost as the rail's band tone. Server render and first paint: false, so the
  * pill is never in the first screen's HTML. */
 export function usePastTitle(): boolean {
   const [past, setPast] = useState(false);
@@ -23,13 +26,26 @@ export function usePastTitle(): boolean {
   useEffect(() => {
     const marked = document.querySelectorAll<HTMLElement>("[data-toc-after]");
     const block = marked.length ? marked[marked.length - 1] : document.querySelector<HTMLElement>("h1");
-    if (!block || typeof IntersectionObserver === "undefined") {
+    if (!block) {
       setPast(true);
       return;
     }
-    const io = new IntersectionObserver(([e]) => setPast(!e.isIntersecting && e.boundingClientRect.bottom <= 0));
-    io.observe(block);
-    return () => io.disconnect();
+    let raf = 0;
+    const compute = () => {
+      raf = 0;
+      setPast(block.getBoundingClientRect().bottom <= 0);
+    };
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(compute);
+    };
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    compute();
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   return past;

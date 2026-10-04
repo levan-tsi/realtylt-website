@@ -146,7 +146,12 @@ describe("the floating table-of-contents pill is centred on the viewport", () =>
   it("the hook waits for the LAST marked element to leave the top of the viewport", () => {
     const src = fs.readFileSync(path.join(ROOT, "lib/toc/past-title.ts"), "utf8");
     expect(src).toContain("marked[marked.length - 1]");
-    expect(src).toContain("!e.isIntersecting && e.boundingClientRect.bottom <= 0");
+    // Read on scroll, not by an IntersectionObserver: a jump can carry the standfirst from below
+    // the viewport to above it without intersecting, which an observer never reports (measured
+    // at 320x568 on a flagship post: the pill stayed away 340px past the title).
+    expect(src).toContain("setPast(block.getBoundingClientRect().bottom <= 0)");
+    expect(src).toContain('window.addEventListener("scroll", schedule, { passive: true })');
+    expect(src).not.toContain("new IntersectionObserver");
     expect(src).toMatch(/useState\(false\)/);
   });
 });
