@@ -281,3 +281,32 @@ after). Kept as they were, on purpose: the `<title>` tags (`seoTitle`; round 63 
 headings and `app/sentence-case.test.ts` pins that), and the one CRM-authored post in `blog_posts`
 ("Hudson Valley Market Check-In: ...", a database row the CRM owns).
 
+### 6c. The re-render and the orchestrator's gates on it (2026-10-04, 10:26 to 12:20 ET)
+
+The runner (`scripts/_scratch-r66/rr-*.log`): 34 plates shot in 6 minutes (0 errors), encoded to 136
+files at 25.5 MB; 32 film pairs shot in 47 minutes, graded in 4, encoded in 20 to 96 clips at 100 MB;
+both manifests unchanged (no camera moved; hero--dutchess wide n 75 at 2,513 ms as before). Three flight
+matrices changed in their z column only (indices 2, 6, 10, 14: the near and far planes the terrain's
+loaded tiles set), which cannot move a light on screen; the calibration below proves it. The first run
+died on its first plate (`readE` through a null map handle while the ground re-mounted under the load of
+a parallel test run); the plain pass now waits for its map (4a3f8fa) and the second run went through.
+
+Film ends against their plates: laptop 0.00 to 0.14 levels; phone 0.00 to 0.60 at the valley ends
+(putnam--rockland's last frame 0.60, ulster's 0.44; round 65 had up to 0.37), the far horizon under the
+stronger relief, covered by the dissolve.
+
+| gate | laptop 1440x900 | phone 390x844 |
+|---|---|---|
+| calibration (`_scratch-r58-calib.mjs`) hero / Queens / Dutchess / Putnam | 0.00 / 0.00 / 0.00 / 0.00 px | 0.00 / 0.00 / 0.00 / 0.00 px |
+| region | 0.10 px (as in rounds 64 and 65) | (not re-run) |
+| walk (`_scratch-r58-transition.mjs`) | 16 films / 0 fades, max frame 48.4 ms on the second run (a one-off 173.8 ms on the first run after the rebuild) | 16 films / 0 fades, max frame 76 ms |
+| phone contrast kit (`_scratch-r57l-contrast.mjs --phone`), p95 | | lowest 4.86 (the MLS line at the Highlands, floor 4.5); the p99 lows are single lights behind text, as in round 65 |
+| hover / taps (`_scratch-r57l-hover.mjs`) at Queens | 50 of 50 named the nearest light, click routes in 684 ms | 30 of 30 at the hero and at Queens |
+
+A trap in the calibration script: its fourth stop reads NaN (the plates engine still on the third stop)
+unless it is asked first; `--shots=putnam,region` gives Putnam 0.00 and the region 0.10.
+
+**The test baseline, measured:** round 65's record said 2,210 after the sweep, an arithmetic figure; the
+suite at 42d024f run today in a temporary worktree passes 2,192. This round: 2,194 after the bake (four
+study tests out, two park tests in), 2,205 after builder 2 (eight geocode tests, three title tests).
+
