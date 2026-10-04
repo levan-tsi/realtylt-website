@@ -410,3 +410,40 @@ JavaScript off shows controls that do nothing; the /connect booking widget is a 
 the phone's Highlands horizon lamps behind "Featured listings"; /financing's phone text over a busy
 photo; realtylt.com/ai still sets Bricolage; the `<title>` tags keep Title Case by round 63's rule.
 
+### 6f. His evening questions (2026-10-04): the key, the database's safety, the green
+
+**The Google geocoding key.** Not on this machine (no CRM checkout on Windows, no env file in the WSL
+lane, no Vercel CLI, and the Vercel connector may not list either project's variables). In Google Cloud
+(project realtylt-crm) the "Maps Platform API Key" of 2026-07-16 allows the Geocoding, Maps Static,
+Places (New) and Street View Static APIs with no application restriction, so it is the right key for
+the one-off pass; revealing it is a step the permission system keeps for the owner. His one step: on
+the key's page press "Show key", copy it, and in the terminal run
+`! powershell -c "Add-Content C:\Users\Levan\realtylt-website-r53\.env.local ('GOOGLE_MAPS_API_KEY=' + (Get-Clipboard))"`
+(the value never appears in the conversation); then `node scripts/backfill-geocodes.mjs --google --retry
+--dry` and the same without `--dry` (811 rows now, about $4). The browser key is never used for this:
+it is locked to the sites' referrers by design, and a bulk job behind a page would be a way around that
+lock, which the permission system also refused.
+
+**The database's safety (Supabase's advisors, security):** four tables had row level security off and
+one view ran as its definer; both fixed (31dc8e2, applied through the connector). What remains is by
+design and needs a CRM-side review, not a patch from here: 50 SECURITY DEFINER functions the anon role
+may execute, every one gated by a shared secret (`p_secret`, checked against the hashed
+`chat_app_secrets` and the site secret), a Twilio signature (`p_canonical`, `p_signature`) or meant as a
+public endpoint (the published report readers by uuid, the lead forms, the view counters); two trigger
+functions and `is_crm_staff` are executable by anon but harmless. The one thing worth doing in a CRM
+session: revoke anon EXECUTE on the maintenance functions the CRM server alone calls
+(`chat_kb_replace_doc`, `chat_kb_set_embedding`, `chat_kb_list_unembedded`, `chat_embedding_account`),
+so a leaked chat secret cannot rewrite the knowledge base. Nothing secret sits in the website's browser
+bundle: the only public variables are the site URL and the referrer-locked Maps key; the Supabase anon
+key is public by design behind RLS. The performance advisors are informational (unindexed foreign keys,
+RLS policies re-evaluating auth per row, unused indexes), the CRM's to take or leave.
+
+**The green, his doubt ("I kind of like it, but not sure; another colour, or keep it dark?"):** the
+orchestrator's recommendation is to keep it, keep it dark, and bring no third colour: the map's voice is
+the lamps on a dark ground with the water as its one colour; a second natural hue only earns its place
+at this chroma, and a brighter or warmer colour family would pull the eye from the lamps (the lesson of
+round 38). What the next round can polish is the hue, not the amount: on the blue-grey land the fill
+reads a touch teal (the measured OKLCH hue of the woods on the plate is 171 to 186 against a true forest
+green near 145), so one cheap study, three fills side by side at the same darkness (as shipped, a step
+greener, grey), rendered on the real page without a re-render, then his pick, then the one re-render.
+
