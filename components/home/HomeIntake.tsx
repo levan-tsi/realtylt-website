@@ -92,7 +92,7 @@ export function HomeIntake() {
           A few quick questions, then how to reach you. A person reads every answer and comes
           back with something specific, not a newsletter.
         </p>
-        <p className="mt-5 max-w-md leading-[1.7] text-stone">
+        <p className="mt-5 max-w-md leading-[1.7] text-stone max-lg:text-ink-soft">
           Selling gets real comps and a number. Buying gets homes that fit and a plan for the
           money. Either way, someone answers seven days a week.
         </p>
