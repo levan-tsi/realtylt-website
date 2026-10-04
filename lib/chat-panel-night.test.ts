@@ -81,6 +81,12 @@ describe("the chat panel at night", () => {
     expect(js).toMatch(/\.rlt-header-btn:focus-visible \{ outline: 2px solid \$\{CONFIG\.MOON\}/);
   });
 
+  it("keeps each part of the header's second line whole, so no word wraps alone", () => {
+    // Round 66: "Live MLS" broke as "Live" / "MLS" in the 380px laptop panel.
+    expect(js).toContain('<div class="rlt-header-sub"><span>RealtyLT</span> · <span>REALTOR® in NY</span> · <span>Live MLS</span></div>');
+    expect(js).toContain(".rlt-header-sub span { white-space: nowrap; }");
+  });
+
   it("brings no white ground back into the panel", () => {
     const styles = js.slice(js.indexOf(".rlt-panel {"), js.indexOf("document.head.appendChild(style)"));
     expect(styles).not.toMatch(/background: (#fff\b|#ffffff|white|#f[0-9a-f]{5})/i);

@@ -497,6 +497,9 @@
       }
       .rlt-header-title { font-size: 16px; font-weight: 600; line-height: 1.2; }
       .rlt-header-sub { font-size: 12px; color: ${CONFIG.HAZE}; margin-top: 2px; }
+      /* Round 66: each part of the line stays whole, so a wrap falls between parts ("MLS" stood
+         alone on a second line in the 380px laptop panel). */
+      .rlt-header-sub span { white-space: nowrap; }
       .rlt-avatar {
         width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
         background: ${CONFIG.RAISE}; box-shadow: inset 0 0 0 1px ${CONFIG.HAIRLINE};
@@ -896,7 +899,7 @@
         <div class="rlt-avatar">LT</div>
         <div>
           <div class="rlt-header-title">${CONFIG.BRAND_NAME}</div>
-          <div class="rlt-header-sub">RealtyLT · REALTOR® in NY · Live MLS</div>
+          <div class="rlt-header-sub"><span>RealtyLT</span> · <span>REALTOR® in NY</span> · <span>Live MLS</span></div>
         </div>
       </div>
       <div class="rlt-header-actions">
