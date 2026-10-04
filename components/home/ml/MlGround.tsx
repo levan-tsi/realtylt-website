@@ -745,7 +745,8 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
           // `?pstyle=0` shows it in the live style for comparison, `?deep=1` marks the deep render (twice
           // the css size, one zoom deeper: the style keeps its lines the picture's size).
           // Round 61: `?tint=a|b`, the parks-and-water comparison (style.ts PLATE_TINTS; renderer only).
-          plate: pin && q.get("pstyle") === "live" ? { deep: q.get("deep") === "1", live: true } : pin && q.get("pstyle") !== "0" ? { deep: q.get("deep") === "1", tint: q.get("tint") === "a" || q.get("tint") === "b" ? (q.get("tint") as "a" | "b") : null } : undefined,
+          // Round 66: `?pal=<id>`, the look study (style.ts PALETTES; renderer only, both plate styles).
+          plate: pin && q.get("pstyle") === "live" ? { deep: q.get("deep") === "1", live: true, pal: q.get("pal") } : pin && q.get("pstyle") !== "0" ? { deep: q.get("deep") === "1", tint: q.get("tint") === "a" || q.get("tint") === "b" ? (q.get("tint") as "a" | "b") : null, pal: q.get("pal") } : undefined,
           // Round 64: `?pstyle=live` renders the pinned shot in the live style, one zoom deeper with `?deep=1`
           // (style.ts PlateOpt.live: the territory and region plates).
           // `?elev=` holds the deep render's centre at the plain render's height (controller.ts).

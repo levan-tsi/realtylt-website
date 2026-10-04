@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, PLATE, PLATE_ROADS_MINZOOM, PLATE_TINTS, deepDemMaxzoom, nightStyle } from "./style";
+import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, PLATE, PLATE_ROADS_MINZOOM, PLATE_TINTS, PALETTES, deepDemMaxzoom, nightStyle } from "./style";
 
 /** The colours a style value names (hex or rgba), as [r, g, b]. */
 function rgbOf(v: string): [number, number, number] | null {
@@ -263,5 +263,42 @@ describe("the live style one zoom deeper (the territory plates)", () => {
     }
     expect(layer(deep, "buildings").minzoom).toBe(BUILDINGS_MINZOOM + 1);
     for (const id of ["land", "wood", "town", "relief", "water"]) expect(JSON.stringify(layer(deep, id))).toBe(JSON.stringify(layer(live, id)));
+  });
+});
+
+/** Round 66: the look studies are a study for the owner, behind the plate option only (`?pal=`). */
+describe("the round 66 look studies (a study, not the live look)", () => {
+  const sha = (x: unknown) => createHash("sha256").update(JSON.stringify(x)).digest("hex").slice(0, 16);
+  const changed = (a: ReturnType<typeof nightStyle>, b: ReturnType<typeof nightStyle>) => a.layers.filter((l, i) => JSON.stringify(l) !== JSON.stringify(b.layers[i])).map((l) => l.id);
+  const kinds = [{}, { deep: true }, { live: true, deep: true }];
+  it("leaves every plate style as pinned without a palette, or with one it does not know", () => {
+    for (const pal of [null, undefined, "", "x", "constructor", "__proto__", "w0"]) {
+      expect(sha(nightStyle({ plate: { pal } }))).toBe("711449970a8ed3e4");
+      expect(sha(nightStyle({ plate: { deep: true, pal } }))).toBe("144a0234a527a703");
+      expect(sha(nightStyle({ plate: { live: true, deep: true, pal } }))).toBe("fedb79df89c0f8c2");
+    }
+    expect(sha(nightStyle())).toBe("e0777653339fe13f");
+  });
+  it("the three controls are one document (g0 and l0 are w2)", () => {
+    for (const k of kinds) for (const c of ["g0", "l0"]) expect(sha(nightStyle({ plate: { ...k, pal: c } }))).toBe(sha(nightStyle({ plate: { ...k, pal: "w2" } })));
+  });
+  it("each study moves only the layers it names", () => {
+    const want: Record<string, [string, string[], string[]]> = {
+      w1: ["w0", ["water", "stream"], ["water", "stream"]],
+      w2: ["w0", ["water", "stream"], ["water", "stream"]],
+      w3: ["w0", ["water", "stream"], ["water", "stream"]],
+      g1: ["w2", ["wood", "park"], ["wood"]],
+      g2: ["w2", ["wood", "park"], ["wood"]],
+      g3: ["w2", ["wood", "park"], ["wood"]],
+      l1: ["w2", ["relief"], ["relief"]],
+      l2: ["w2", ["town", "relief", "buildings"], ["town", "relief"]],
+    };
+    for (const [pal, [ref, plate, live]] of Object.entries(want)) {
+      expect(changed(nightStyle({ plate: { deep: true, pal } }), nightStyle({ plate: { deep: true, pal: ref } }))).toEqual(plate);
+      expect(changed(nightStyle({ plate: { live: true, deep: true, pal } }), nightStyle({ plate: { live: true, deep: true, pal: ref } }))).toEqual(live);
+    }
+  });
+  it("stays a night: every studied tone under 0x60 on every channel", () => {
+    for (const P of Object.values(PALETTES)) for (const c of [P.wood, P.park, P.water, P.stream, P.town, P.plateTown, P.plateBuilding]) for (const v of rgbOf(c)!) expect(v).toBeLessThan(0x60);
   });
 });
