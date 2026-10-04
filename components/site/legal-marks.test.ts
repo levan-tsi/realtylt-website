@@ -52,7 +52,7 @@ function logoHeights(src: string): number[] {
   const out: number[] = [];
   for (const block of src.split("<Image")) {
     // The night cut of the wordmark counts too: since round 60 every page wears it.
-    if (!/\/logo-realtylt(-night)?\.png/.test(block)) continue;
+    if (!/\/logo-realtylt(-navy)?\.png/.test(block)) continue;
     const w = Number(block.match(/width=\{(\d+)\}/)?.[1]);
     const h = Number(block.match(/height=\{(\d+)\}/)?.[1]);
     const cls = block.match(/className="([^"]+)"/)?.[1] ?? "";
