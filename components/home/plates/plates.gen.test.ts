@@ -74,7 +74,8 @@ describe("the plates manifest", () => {
     // Round 64: the laptop's territory came in from 145 km to 110.8 km (shots.ts, the owner's "zoom in
     // to the areas that we cover"); the phone's as it was.
     // Round 65: the laptop at W10, 79.1 km (docs/parity/DESIGN-ROUND65.md §8).
-    expect(Math.round(range(PLATES.hero.wide))).toBe(79_077);
+    // Round 66: back to 110.8 km, his pick of preview a (docs/parity/DESIGN-ROUND66.md §0).
+    expect(Math.round(range(PLATES.hero.wide))).toBe(110_800);
     expect(Math.round(range(PLATES.hero.tall))).toBe(140_000);
     expect(Math.round(range(PLATES.region.wide))).toBe(60_000);
   });

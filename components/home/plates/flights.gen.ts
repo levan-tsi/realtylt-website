@@ -7,7 +7,7 @@ import type { FilmManifest } from "./plate-frame";
 
 export const FLIGHTS: FilmManifest = {
   "hero--dutchess": {
-    wide: { fps: 30, n: 74, ms: 2475, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
+    wide: { fps: 30, n: 75, ms: 2513, w: 2880, h: 1800, k: 2, webm: [1440, 2880], mp4: [] },
     tall: { fps: 30, n: 77, ms: 2558, w: 780, h: 1688, k: 2, webm: [], mp4: [1170] },
   },
   "dutchess--highlands": {
