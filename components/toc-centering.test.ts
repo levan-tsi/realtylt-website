@@ -102,4 +102,18 @@ describe("the floating table-of-contents pill is centred on the viewport", () =>
       expect(src).toMatch(/max-w-\[calc\(100%-10\.5rem\)\]/);
     });
   }
+
+  for (const file of TOCS) {
+    it(`${file} hides its trigger when JavaScript is off (it opens React state, nothing else)`, () => {
+      // Round 66, the JS-off pass: the pill sat on the first screen of every flagship post and
+      // service page with scripting off, a button that could open nothing. The header's menu
+      // button already steps aside the same way (globals.css @media (scripting: none)).
+      const src = fs.readFileSync(path.join(ROOT, file), "utf8");
+      // The attribute itself (alone on its line), not the `[data-toc-trigger]` selector above it.
+      const i = src.search(/^\s*data-toc-trigger\s*$/m);
+      expect(i, "the data-toc-trigger attribute").toBeGreaterThan(-1);
+      const tag = src.slice(i, src.indexOf("onClick=", i));
+      expect(tag).toContain('data-js-only=""');
+    });
+  }
 });

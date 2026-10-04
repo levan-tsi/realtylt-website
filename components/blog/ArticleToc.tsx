@@ -139,6 +139,9 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
           <button
             type="button"
             data-toc-trigger
+            // Without JavaScript this pill opens nothing (its sheet is React state), so it steps
+            // aside like the header's menu button (globals.css data-js-only, round 66).
+            data-js-only=""
             onClick={() => setOpen(true)}
             aria-haspopup="dialog"
             aria-expanded={open}
