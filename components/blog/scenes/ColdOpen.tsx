@@ -185,12 +185,14 @@ export function ColdOpen({
 
         <div aria-hidden className="rise rise-3 mt-10 h-px w-full max-w-3xl bg-white/12 md:mt-12" />
 
-        <h1 className="t-h1 rise rise-3 mt-9 max-w-3xl md:mt-10">
+        {/* data-toc-after: the title block the "On this page" pill waits to see scrolled past
+            (lib/toc/past-title.ts, round 66). */}
+        <h1 data-toc-after="" className="t-h1 rise rise-3 mt-9 max-w-3xl md:mt-10">
           {title}
         </h1>
 
         {excerpt && (
-          <p className="rise rise-4 mt-5 max-w-2xl text-lg leading-relaxed text-paper/70">{excerpt}</p>
+          <p data-toc-after="" className="rise rise-4 mt-5 max-w-2xl text-lg leading-relaxed text-paper/70">{excerpt}</p>
         )}
 
         <div className="rise rise-4 mt-8 flex flex-wrap items-center gap-x-4 gap-y-3 text-sm text-paper/65">

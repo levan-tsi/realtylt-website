@@ -116,4 +116,37 @@ describe("the floating table-of-contents pill is centred on the viewport", () =>
       expect(tag).toContain('data-js-only=""');
     });
   }
+
+  // Round 66: with JavaScript on, the pill sat over a flagship post's h1 on the first screen at
+  // 320x568 and over the standfirst or body text at 390x844. It now waits until the reader has
+  // scrolled past the title block (lib/toc/past-title.ts), so it is never in the first screen.
+  for (const file of TOCS) {
+    it(`${file} renders its trigger only once the title block is past`, () => {
+      const src = fs.readFileSync(path.join(ROOT, file), "utf8");
+      expect(src).toContain('import { usePastTitle } from "@/lib/toc/past-title";');
+      expect(src).toContain("const past = usePastTitle();");
+      expect(src).toMatch(/\{!open && past && \(/);
+    });
+  }
+
+  /** The pages whose title block the pill waits for: each marks its h1 and its standfirst. */
+  const TITLE_BLOCKS = [
+    "components/blog/scenes/ColdOpen.tsx",
+    "app/blog/[slug]/page.tsx",
+    "components/services/ServiceHero.tsx",
+  ];
+  for (const file of TITLE_BLOCKS) {
+    it(`${file} marks its h1 and its standfirst as the title block`, () => {
+      const src = fs.readFileSync(path.join(ROOT, file), "utf8");
+      expect(src).toMatch(/<h1[^>]*data-toc-after=""/);
+      expect(src).toMatch(/<p data-toc-after=""/);
+    });
+  }
+
+  it("the hook waits for the LAST marked element to leave the top of the viewport", () => {
+    const src = fs.readFileSync(path.join(ROOT, "lib/toc/past-title.ts"), "utf8");
+    expect(src).toContain("marked[marked.length - 1]");
+    expect(src).toContain("!e.isIntersecting && e.boundingClientRect.bottom <= 0");
+    expect(src).toMatch(/useState\(false\)/);
+  });
 });

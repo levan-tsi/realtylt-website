@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { scrollToId, useScrollSpy } from "@/lib/toc/scroll-spy";
+import { usePastTitle } from "@/lib/toc/past-title";
 import type { TocItem } from "@/lib/blog/toc";
 
 /** Hovering table of contents with scroll-spy.
@@ -17,6 +18,8 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
   const [activeId, setActiveId] = useScrollSpy(items.map((i) => i.id));
   const [open, setOpen] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
+  // Round 66: the pill waits until the title block (the article header's h1 and standfirst) is past.
+  const past = usePastTitle();
 
   const jump = useCallback(
     (e: React.MouseEvent, id: string) => {
@@ -135,7 +138,7 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
 
       {/* ── Mobile floating trigger + bottom sheet */}
       <div className="lg:hidden">
-        {!open && (
+        {!open && past && (
           <button
             type="button"
             data-toc-trigger
@@ -148,7 +151,7 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
             /* Width cap + prefix give-way: components/blog/FlagshipToc.tsx documents both.
              * The old max-w-[86vw] cleared the chat launcher only because the labels here
              * happened to be short; a long heading grew the pill under the bubble. */
-            className="fixed bottom-5 left-1/2 z-50 flex max-w-[calc(100%-10.5rem)] -translate-x-1/2 items-center gap-2.5 rounded-full border border-white/12 bg-ink px-5 py-3 text-sm text-paper shadow-float"
+            className="rlt-fade-in fixed bottom-5 left-1/2 z-50 flex max-w-[calc(100%-10.5rem)] -translate-x-1/2 items-center gap-2.5 rounded-full border border-white/12 bg-ink px-5 py-3 text-sm text-paper shadow-float"
           >
             <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4 shrink-0 fill-none stroke-current" strokeWidth="1.9">
               <path d="M4 6h10M4 12h16M4 18h12" strokeLinecap="round" />

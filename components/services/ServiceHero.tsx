@@ -38,13 +38,16 @@ export function ServiceHero({ service }: { service: Service }) {
             <span aria-hidden className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-porchlight" />
             {service.eyebrow}
           </p>
+          {/* data-toc-after: the title block the "On this page" pill waits to see scrolled past
+              (lib/toc/past-title.ts, round 66). */}
           <h1
             id="service-title"
+            data-toc-after=""
             className="t-h1 mt-3 max-w-xl text-paper"
           >
             {service.title}
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-paper/80">{service.lede}</p>
+          <p data-toc-after="" className="mt-6 max-w-xl text-lg leading-relaxed text-paper/80">{service.lede}</p>
 
           <ul className="mt-8 flex flex-wrap gap-2" aria-label="What it runs on">
             {service.specs.map((s) => (

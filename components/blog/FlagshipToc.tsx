@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { scrollToId, useScrollSpy } from "@/lib/toc/scroll-spy";
 import { tocRailStyle, useTocSafeEdge } from "@/lib/toc/safe-edge";
+import { usePastTitle } from "@/lib/toc/past-title";
 
 export interface FlagshipTocItem {
   id: string;
@@ -74,6 +75,8 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
   // 256 = card chrome (64) + the widest label we allow (12rem). The rail places itself so a
   // card that wide still ends before the measured text edge.
   const railStyle = tocRailStyle(useTocSafeEdge(), 256);
+  // Round 66: the pill waits until the title block (the cold open's h1 and standfirst) is past.
+  const past = usePastTitle();
 
   const jump = useCallback(
     (e: React.MouseEvent, id: string) => {
@@ -225,7 +228,7 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
           Shown whenever the rail is NOT — a runtime decision now, not just a breakpoint: a wide
           viewport whose gutter cannot hold a readable label gets the sheet too. */}
       <div className={railStyle ? "min-[1360px]:hidden" : ""}>
-        {!open && (
+        {!open && past && (
           // Centred ON THE VIEWPORT, and the previous version was not.
           //
           // It used to centre inside the band that EXCLUDES the chat launcher
@@ -248,7 +251,7 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
           // END, so capping alone would cut the ACTIVE LABEL and keep the boilerplate. The
           // boilerplate gives way instead: the hamburger already says what the control is, and
           // the sheet's own header repeats "On this page" in full the moment it opens.
-          <div className="fixed inset-x-0 bottom-5 z-50 flex justify-center">
+          <div className="rlt-fade-in fixed inset-x-0 bottom-5 z-50 flex justify-center">
           <button
             type="button"
             data-toc-trigger

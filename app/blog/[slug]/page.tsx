@@ -211,12 +211,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </Link>
               </nav>
 
-              <h1 className="t-h1 rise rise-2 mt-6">
+              {/* data-toc-after: the title block the "On this page" pill waits to see scrolled
+                  past (lib/toc/past-title.ts, round 66). */}
+              <h1 data-toc-after="" className="t-h1 rise rise-2 mt-6">
                 {post.title}
               </h1>
 
               {post.excerpt && (
-                <p className="rise rise-3 mt-5 max-w-2xl text-lg leading-relaxed text-paper/75">
+                <p data-toc-after="" className="rise rise-3 mt-5 max-w-2xl text-lg leading-relaxed text-paper/75">
                   {post.excerpt}
                 </p>
               )}

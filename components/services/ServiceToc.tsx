@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { scrollToId, useScrollSpy } from "@/lib/toc/scroll-spy";
 import { tocRailStyle, useTocSafeEdge } from "@/lib/toc/safe-edge";
+import { usePastTitle } from "@/lib/toc/past-title";
 import type { ServiceTocItem } from "@/lib/services/toc";
 
 /** Hovering table of contents for a service page.
@@ -22,6 +23,8 @@ export function ServiceToc({ items }: { items: ServiceTocItem[] }) {
   // 240 = card chrome (64) + the widest label we allow (11rem). The rail places itself so a
   // card that wide still ends before the measured text edge.
   const railStyle = tocRailStyle(useTocSafeEdge(), 240);
+  // Round 66: the pill waits until the title block (ServiceHero's h1 and lede) is past.
+  const past = usePastTitle();
 
   const jump = useCallback(
     (e: React.MouseEvent, id: string) => {
@@ -142,7 +145,7 @@ export function ServiceToc({ items }: { items: ServiceTocItem[] }) {
           Shown whenever the rail is NOT — which is now a runtime decision, not just a
           breakpoint: a wide viewport with no usable gutter gets the sheet too. */}
       <div className={railStyle ? "min-[1360px]:hidden" : ""}>
-        {!open && (
+        {!open && past && (
           <button
             type="button"
             data-toc-trigger
@@ -155,7 +158,7 @@ export function ServiceToc({ items }: { items: ServiceTocItem[] }) {
             /* Width cap + prefix give-way: components/blog/FlagshipToc.tsx documents both.
              * The old max-w-[86vw] cleared the chat launcher only because the labels here
              * happened to be short; a long heading grew the pill under the bubble. */
-            className="fixed bottom-5 left-1/2 z-50 flex max-w-[calc(100%-10.5rem)] -translate-x-1/2 items-center gap-2.5 rounded-full border border-white/12 bg-ink px-5 py-3 text-sm text-paper shadow-float"
+            className="rlt-fade-in fixed bottom-5 left-1/2 z-50 flex max-w-[calc(100%-10.5rem)] -translate-x-1/2 items-center gap-2.5 rounded-full border border-white/12 bg-ink px-5 py-3 text-sm text-paper shadow-float"
           >
             <svg
               aria-hidden
