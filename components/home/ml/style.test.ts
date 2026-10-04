@@ -290,6 +290,7 @@ describe("the round 66 look studies (a study, not the live look)", () => {
       g1: ["w2", ["wood", "park"], ["wood"]],
       g2: ["w2", ["wood", "park"], ["wood"]],
       g3: ["w2", ["wood", "park"], ["wood"]],
+      g2p: ["g2", ["park"], []],
       l1: ["w2", ["relief"], ["relief"]],
       l2: ["w2", ["town", "relief", "buildings"], ["town", "relief"]],
     };

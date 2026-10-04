@@ -160,6 +160,11 @@ export type Look = {
   /** The hillshade: the moonlit faces' alpha and the relief's exaggeration. */
   highlight: number;
   relief: number;
+  /** The extra park study (g2p): the plate's park layer reads the city parks where the tiles keep them
+   * (landcover grass/park, OSM leisure=park). Measured on the running build: no park-layer feature in
+   * the Queens, Manhattan, Brooklyn, Dutchess or Highlands views carries class "park", so today's plate
+   * park layer draws nothing and g1 to g3 can only green the wood. */
+  cityParks?: boolean;
 };
 const LOOK0: Look = {
   wood: NIGHT.wood,
@@ -187,6 +192,7 @@ export const PALETTES: Record<string, Look> = {
   g1: { ...LOOK0, ...W2, wood: "#0f1a14", park: "#0f1a14" },
   g2: { ...LOOK0, ...W2, wood: "#0c1810", park: "#0c1810" },
   g3: { ...LOOK0, ...W2, wood: "#112019", park: "#112019" },
+  g2p: { ...LOOK0, ...W2, wood: "#0c1810", park: "#0c1810", cityParks: true },
   l0: { ...LOOK0, ...W2 },
   l1: { ...LOOK0, ...W2, ...L1 },
   l2: { ...LOOK0, ...W2, ...L1, town: "#222a3a", plateTown: "#242d3e", plateBuilding: "#232a35", plateBuildingTop: "#2f3745" },
@@ -273,7 +279,9 @@ function plateLayers(hillshade: boolean, buildings: boolean, dz: number, tint: P
     tinted(pick("wood"), tint?.green),
     // Parks as dark as the wood: Central Park, Prospect Park and Flushing Meadows are the shapes a
     // borough is known by, a dark field inside the lit grid.
-    { id: "park", type: "fill", source: "omt", "source-layer": "park", filter: ["==", ["get", "class"], "park"], paint: { "fill-color": tint?.green ?? look.park, "fill-antialias": false } },
+    look.cityParks
+      ? { id: "park", type: "fill", source: "omt", "source-layer": "landcover", filter: ["all", ["==", ["get", "class"], "grass"], ["==", ["get", "subclass"], "park"]], paint: { "fill-color": look.park, "fill-antialias": false } }
+      : { id: "park", type: "fill", source: "omt", "source-layer": "park", filter: ["==", ["get", "class"], "park"], paint: { "fill-color": tint?.green ?? look.park, "fill-antialias": false } },
     {
       id: "town",
       type: "fill",
