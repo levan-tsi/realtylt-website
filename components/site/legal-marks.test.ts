@@ -117,4 +117,11 @@ describe("footer legal marks", () => {
     expect(footer).toContain("Equal Housing Opportunity.");
     expect(mark).toContain("aria-hidden");
   });
+
+  it("sets the copyright line whole where the row has room, and never leaves one word alone", () => {
+    // Round 66: after the font swap the line measured 606px at 14px against max-w-xl's 576, and
+    // "operated." stood alone at 1280 and up (measured on the build at 1280, 1440 and 1920).
+    expect(footer).toContain('<p className="t-small [text-wrap:balance] sm:max-w-2xl sm:text-right xl:shrink-0">');
+    expect(footer).toContain('<p className="t-small [text-wrap:balance]">');
+  });
 });

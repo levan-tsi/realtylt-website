@@ -157,15 +157,19 @@ export function Footer() {
                 filter chips are a different thing and are left alone.)
                 ROUND 38: and now t-small rather than text-sm, so the same prose reaches the 16px
                 mobile floor. It reads at 14px from md exactly as it did before. */}
-            <p className="t-small">
+            <p className="t-small [text-wrap:balance]">
               Equal Housing Opportunity. Member of the National Association of REALTORS&reg;.
             </p>
           </div>
           {/* max-w-xl, not max-w-md: at 1440 a 448px cap broke this 560px sentence one word
               from the end, leaving "operated." alone on its own right-aligned line with ~300px
               of empty row beside it. The wider cap lets it set on one line where there is room
-              and still wraps to two balanced lines when there is not. */}
-          <p className="t-small sm:max-w-xl sm:text-right">
+              and still wraps to two balanced lines when there is not.
+              Round 66: the font swap (round 65) made the sentence 606px at 14px, past max-w-xl's
+              576, and "operated." stood alone again at 1280 and up (and "REALTORS®." beside it).
+              So max-w-2xl, no shrinking from xl (where the row has the room), and balanced
+              lines on both sides wherever they must wrap. */}
+          <p className="t-small [text-wrap:balance] sm:max-w-2xl sm:text-right xl:shrink-0">
             &copy; {new Date().getFullYear()} {SITE.legalName}. {SITE.disclaimer}
           </p>
         </div>
