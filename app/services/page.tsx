@@ -118,7 +118,7 @@ export default function ServicesIndexPage() {
               <span aria-hidden className="px-2 text-paper/30">
                 /
               </span>
-              <span className="text-paper/80">AI Services</span>
+              <span className="text-paper/80">AI services</span>
             </nav>
 
             <p className="mt-5 text-xs font-bold uppercase tracking-[0.22em] text-paper/60">

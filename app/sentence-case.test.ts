@@ -57,7 +57,22 @@ describe("sentence case, site-wide", () => {
     gone["app/top-areas/page.tsx"].push("Talk It Through With Us");
     gone["app/buying/page.tsx"].push(">Save a Search<", ">Start Searching<");
     gone["app/reviews/page.tsx"].push("What Our <strong>");
+    // Round 66 (builder 3), the two-word ones round 65's scan could not see (it flagged two or more
+    // capitalised words after the first; scripts/_scratch-r66/final/case-scan.mjs flags one).
+    gone["app/top-areas/page.tsx"].push("Top <strong>Areas</strong>");
+    gone["app/financing/page.tsx"].push("Get <strong>Pre-Approval</strong>", "Application &amp; <strong>Processing</strong>");
+    Object.assign(gone, {
+      "app/sitemap/page.tsx": ["Site <strong>Map</strong>"],
+      "app/search/page.tsx": ["Search Listings:"],
+      "components/services/ServiceHero.tsx": ["AI Services\n"],
+      "app/services/page.tsx": ['<span className="text-paper/80">AI Services</span>'],
+      "components/listing/ListingSubNav.tsx": ['label: "Market Insights"', "Make an </span>Offer"],
+    });
+    gone["components/leads/ListingLeadCTAs.tsx"].push("Request a Tour\n");
     for (const [file, strings] of Object.entries(gone)) for (const s of strings) expect(read(file), `${file}: ${s}`).not.toContain(s);
+    // The site map prints the page names as the header and footer do (the directory keeps its own).
+    expect(read("app/sitemap/page.tsx")).toContain('plain={section.id === "pages"}');
+    expect(read("components/listing/ListingSubNav.tsx")).toContain(">Make an offer<");
     expect(read("app/buying/page.tsx")).toContain(">The home buying process<");
     expect(read("app/reviews/page.tsx")).toContain("Read all reviews on Google");
   });

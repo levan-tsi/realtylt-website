@@ -204,7 +204,7 @@ function InlineTourCard({
     <div>
       <div className="flex" aria-label="Contact options">
         <button type="button" aria-pressed={tab === "tour"} onClick={() => setTab("tour")} className={tabCls(tab === "tour")}>
-          Request a Tour
+          Request a tour
         </button>
         <button type="button" aria-pressed={tab === "info"} onClick={() => setTab("info")} className={tabCls(tab === "info")}>
           Request info

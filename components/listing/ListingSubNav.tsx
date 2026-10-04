@@ -22,7 +22,7 @@ const ANCHORS = [
   { id: "overview", label: "Overview" },
   { id: "schools", label: "Schools" },
   { id: "payment", label: "Payment" },
-  { id: "market-insights", label: "Market Insights" },
+  { id: "market-insights", label: "Market insights" },
 ] as const;
 
 export function ListingSubNav({
@@ -136,7 +136,9 @@ export function ListingSubNav({
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
             </svg>
-            <span className="hidden sm:inline">Make an </span>Offer
+            {/* Sentence case at both lengths: "Offer" alone on a phone, "Make an offer" above. */}
+            <span className="sm:hidden">Offer</span>
+            <span className="hidden sm:inline">Make an offer</span>
           </button>
           <ShareButton title={shareTitle} />
           <FavoriteButton id={favoriteId} tone="onLight" showLabel className="border border-ink/15" />

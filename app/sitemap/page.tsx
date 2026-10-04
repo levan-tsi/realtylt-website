@@ -14,13 +14,16 @@ export const revalidate = 3600;
 
 /** One row. Internal links go through <Link>; `external` covers the /ai rewrite (no RSC
  * payload to prefetch), the NY DOS notice, and /sitemap.xml — the router owns none of them. */
-function Row({ link }: { link: DirectoryLink }) {
+function Row({ link, plain = false }: { link: DirectoryLink; plain?: boolean }) {
   // Padding lives on the anchor, not the li: a label-only row's link was 19px tall,
   // under the 24px tap-target floor (the probe caught all 31 noteless rows).
   const className = "block py-3 text-ink transition-colors hover:text-river";
   const body = (
     <>
-      {link.label}
+      {/* Round 66: the page names in sentence case, as the header and the footer print them
+          ("Home value", "Who we are"); the directory keeps its stored names for sitemap.xml
+          and llms.txt. Names (the areas, the services, the legal documents) are left alone. */}
+      {plain ? sentenceCase(link.label) : link.label}
       {link.note && <span className="mt-0.5 block t-small text-stone">{link.note}</span>}
     </>
   );
@@ -53,7 +56,7 @@ export default async function SiteMapPage() {
           <header className="lg:sticky lg:top-10 lg:self-start">
             <p className="font-mono text-xs uppercase tracking-[0.24em] text-river">Index</p>
             <h1 className="mt-3 t-h1 text-ink">
-              Site <strong>Map</strong>
+              Site <strong>map</strong>
             </h1>
             <p className="mt-4 text-stone">
               Every public page on this site, in one place. If you cannot find something here,
@@ -118,7 +121,7 @@ export default async function SiteMapPage() {
                         }
                       >
                         {group.links.map((l) => (
-                          <Row key={l.href} link={l} />
+                          <Row key={l.href} link={l} plain={section.id === "pages"} />
                         ))}
                       </ul>
                     </div>

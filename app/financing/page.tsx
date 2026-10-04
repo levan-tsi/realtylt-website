@@ -95,7 +95,7 @@ export default function FinancingPage() {
         <div className="relative mx-auto grid max-w-[1250px] items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <h2 id="preapproval-heading" className="t-h2">
-              Get <strong>Pre-Approval</strong>
+              Get <strong>pre-approval</strong>
             </h2>
             <p className="mt-5 max-w-lg leading-relaxed text-paper/75">
               Before you start looking for a home to buy, it&rsquo;s a good idea to meet with your
@@ -219,7 +219,7 @@ export default function FinancingPage() {
         <div className="mx-auto grid max-w-[1250px] items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <h2 id="apply-heading" className="t-h2 text-ink">
-              Application &amp; <strong>Processing</strong>
+              Application &amp; <strong>processing</strong>
             </h2>
             <p className="t-lead mt-2 text-ink-soft">
               What happens when a loan goes &ldquo;live&rdquo;

@@ -27,7 +27,7 @@ export function ServiceHero({ service }: { service: Service }) {
             /
           </span>
           <Link href="/services" className="inline-block py-1.5 transition-colors hover:text-paper">
-            AI Services
+            AI services
           </Link>
         </nav>
       </div>

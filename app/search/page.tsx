@@ -68,7 +68,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     // that shares the theme (round 54) — see app/globals.css.
     <div className="nocturne rlt-search">
       {/* Live search page has no hero band — filters start right under the nav. */}
-      <h1 className="sr-only">Search Listings: Hudson Valley homes for sale</h1>
+      <h1 className="sr-only">Search listings: Hudson Valley homes for sale</h1>
       {/* THE NO-JS MESSAGE MOVED TO loading.tsx, and it had to. A <noscript> here read "The homes
           below are today's Hudson Valley listings" — but loading.tsx wraps this route in a Suspense
           boundary, so everything this file returns is STREAMED into `<div hidden id="S:0">` and
