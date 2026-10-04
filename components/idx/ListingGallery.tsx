@@ -241,8 +241,10 @@ function Lightbox({
       <div className="flex shrink-0 items-center justify-between gap-3 px-4 pt-2 text-paper sm:px-6">
         <div role="tablist" aria-label="View" className="flex min-w-0 items-center gap-1 max-[389px]:overflow-x-auto max-[389px]:py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {tabBtn("photos", "Photos")}
+          {/* "Street View" is Google's product name and keeps its capitals; the map tab is a
+              plain label in sentence case (round 66). */}
           {tabBtn("street", "Street View")}
-          {tabBtn("map", "Map View")}
+          {tabBtn("map", "Map view")}
         </div>
         <div className="flex shrink-0 items-center gap-3">
           {/* THE PAGE'S ONE PHOTO LIVE REGION. The search cards' pagers gave theirs up in round

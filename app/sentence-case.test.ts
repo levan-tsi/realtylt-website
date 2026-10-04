@@ -69,10 +69,14 @@ describe("sentence case, site-wide", () => {
       "components/listing/ListingSubNav.tsx": ['label: "Market Insights"', "Make an </span>Offer"],
     });
     gone["components/leads/ListingLeadCTAs.tsx"].push("Request a Tour\n");
+    gone["components/idx/ListingGallery.tsx"] = ['tabBtn("map", "Map View")'];
     for (const [file, strings] of Object.entries(gone)) for (const s of strings) expect(read(file), `${file}: ${s}`).not.toContain(s);
     // The site map prints the page names as the header and footer do (the directory keeps its own).
     expect(read("app/sitemap/page.tsx")).toContain('plain={section.id === "pages"}');
     expect(read("components/listing/ListingSubNav.tsx")).toContain(">Make an offer<");
+    // Names keep their capitals: Street View is Google's product, beside the plain "Map view".
+    expect(read("components/idx/ListingGallery.tsx")).toContain('tabBtn("street", "Street View")');
+    expect(read("components/idx/ListingGallery.tsx")).toContain('tabBtn("map", "Map view")');
     expect(read("app/buying/page.tsx")).toContain(">The home buying process<");
     expect(read("app/reviews/page.tsx")).toContain("Read all reviews on Google");
   });
