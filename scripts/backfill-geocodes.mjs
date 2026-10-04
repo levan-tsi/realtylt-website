@@ -29,7 +29,7 @@
  *   node scripts/backfill-geocodes.mjs --dry      # measure, write nothing
  */
 import fs from "node:fs";
-import { addrKey, censusCsvRow, parseCensusBatch, parseSourceAddress, rejectReason, withoutUnit } from "../lib/idx/geocode.mjs";
+import { addrKey, censusCsvRow, parseCensusBatch, parseSourceAddress, rejectReason, retryStreet } from "../lib/idx/geocode.mjs";
 
 const ENV = fs.readFileSync(new URL("../.env.local", import.meta.url), "utf8");
 const env = (n) => {
@@ -173,7 +173,7 @@ async function seed(stats) {
 // ── census pass ──────────────────────────────────────────────────────────────────────────
 async function geocodeBatch(rows, streetOnly = false) {
   const fd = new FormData();
-  const lines = rows.map((r) => censusCsvRow(r, streetOnly ? withoutUnit(r.address) : r.address));
+  const lines = rows.map((r) => censusCsvRow(r, streetOnly ? retryStreet(r.address, r.zip) : r.address));
   fd.append("addressFile", new Blob([lines.join("\n") + "\n"], { type: "text/csv" }), "a.csv");
   fd.append("benchmark", "Public_AR_Current");
   const res = await fetch("https://geocoding.geo.census.gov/geocoder/locations/addressbatch", {
@@ -184,9 +184,10 @@ async function geocodeBatch(rows, streetOnly = false) {
   if (!res.ok) throw new Error("census http " + res.status);
   const { hits, misses } = parseCensusBatch(await res.text(), rows);
 
-  // SECOND PASS on the building rather than the unit, once only.
+  // SECOND PASS on the building rather than the unit (and a Queens number's dropped hyphen
+  // restored, see retryStreet), once only.
   if (!streetOnly && misses.length) {
-    const retryable = misses.filter((r) => withoutUnit(r.address) && withoutUnit(r.address) !== r.address);
+    const retryable = misses.filter((r) => retryStreet(r.address, r.zip) && retryStreet(r.address, r.zip) !== r.address);
     if (retryable.length) {
       const second = await geocodeBatch(retryable, true);
       const placed = new Set(second.hits.map((h) => h.id));

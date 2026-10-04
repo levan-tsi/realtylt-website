@@ -23,6 +23,7 @@ export interface GeocodeHit {
 
 export declare function addrKey(address: string | undefined, zip: string | undefined): string;
 export declare function withoutUnit(address: string | undefined): string;
+export declare function retryStreet(address: string | undefined, zip: string | undefined): string;
 export declare function censusCsvRow(row: GeocodeRow, street?: string): string;
 export declare function parseCensusBatch(
   text: string,

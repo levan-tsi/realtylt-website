@@ -7,6 +7,7 @@ import {
   parseCensusBatch,
   parseSourceAddress,
   rejectReason,
+  retryStreet,
   withoutUnit,
 } from "./geocode";
 
@@ -45,6 +46,43 @@ describe("withoutUnit", () => {
 
   it("leaves a plain street line alone, so the retry pass can tell there is nothing to retry", () => {
     expect(withoutUnit("7 Ferris Lane")).toBe("7 Ferris Lane");
+  });
+
+  it("drops a unit list written with slashes (measured: Census places the building once it goes)", () => {
+    expect(withoutUnit("81 Hill Street #1F/1R/2F/2R")).toBe("81 Hill Street");
+    expect(withoutUnit("99-60 63rd Road #3A/A")).toBe("99-60 63rd Road");
+  });
+});
+
+describe("retryStreet", () => {
+  // Queens numbers a house "cross street - house" (37-20 Prince Street). The feed often drops
+  // the hyphen, and Census answers No_Match for "3720 Prince Street"; asked with the hyphen
+  // back, 33 of 38 such live rows matched Exact (2026-10-04).
+  it.each([
+    ["3720 Prince Street #1F", "11354", "37-20 Prince Street"],
+    ["14814 97th Avenue", "11435", "148-14 97th Avenue"],
+    ["5142 35th Street", "11101", "51-42 35th Street"],
+    ["1678 Gates Avenue", "11385", "16-78 Gates Avenue"],
+  ])("puts the dropped hyphen back in a Queens zip: %s", (address, zip, expected) => {
+    expect(retryStreet(address, zip)).toBe(expected);
+  });
+
+  it("never re-hyphenates outside Queens, where a four-digit number is just a number", () => {
+    expect(retryStreet("2286 Route 9W", "12477")).toBe("2286 Route 9W");
+    // Gates Avenue runs through Brooklyn too, numbered the ordinary way.
+    expect(retryStreet("1678 Gates Avenue", "11221")).toBe("1678 Gates Avenue");
+    expect(retryStreet("1678 Gates Avenue", "")).toBe("1678 Gates Avenue");
+  });
+
+  it("leaves numbers that are not the dropped-hyphen shape alone", () => {
+    expect(retryStreet("71-32 Little Neck Parkway #148B", "11426")).toBe("71-32 Little Neck Parkway");
+    expect(retryStreet("188 Beach 115th Street", "11694")).toBe("188 Beach 115th Street");
+    expect(retryStreet("Walnut Street", "11354")).toBe("Walnut Street");
+  });
+
+  it("is withoutUnit when there is no hyphen to restore, so the retry filter still works", () => {
+    expect(retryStreet("8 Knightsbridge #C", "10583")).toBe("8 Knightsbridge");
+    expect(retryStreet("7 Ferris Lane", "12601")).toBe("7 Ferris Lane");
   });
 });
 
