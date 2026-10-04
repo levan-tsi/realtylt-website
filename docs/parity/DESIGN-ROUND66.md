@@ -170,4 +170,54 @@ boxed CTAs, the search strip, the credit, the chat launcher, Schibsted Grotesk, 
 
 ## 6. Decisions taken by the orchestrator
 
-(filled as the round runs)
+### 6a. The look (2026-10-04, from builder 1's studies on the real page; sheets and crops under `scripts/_scratch-r66/look/sheets/`, the numbers in `scripts/_scratch-r66/look/tables.md` and `measure.json`)
+
+Builder 1 restored the renderer-only `?pal=` option (e37bc0d, inert without its parameter: the four
+pinned style fingerprints hold, 32 of 32 in `style.test.ts`), proved the pipeline reproduces today's
+plates (the w0 control decodes to the shipped plates within 0.00 to 0.80 levels), and rendered every
+study as hero, Queens, Dutchess and the Highlands' second stop at both aspects, composed on the real
+page at `/?film=0` with the page's own lights and names (84 composites, one server state), with the
+round-57l contrast kit run on each. Three findings bind:
+
+1. **The plate style's park layer drew nothing.** Its filter was `class == "park"`, and no feature in the
+   Queens, Manhattan, Brooklyn, Dutchess or Highlands views carries that class (0 rendered features in all
+   five), so Central Park, Flushing Meadows, Forest Park and Prospect Park were dark only because they are
+   not "town" land. A park colour alone reaches only the forests (landcover wood: 1.8 % of the Queens
+   laptop plate, 5.3 % on the phone). The borough parks need the layer to read landcover `grass`/`park`
+   (OSM leisure=park): builder 1's extra `g2p`. The live style (the hero, and the films are recorded from
+   it) has no park layer either; both styles get the same fill so a film agrees with the plate it lands on.
+2. **The Dutchess camera holds almost no wood** (1.1 % laptop, 1.8 % phone); the state land is in the
+   Highlands' frame (53 % / 60 % of the plate). So the parks study was judged on the Highlands (forest
+   against Beacon) and on Flushing Meadows, at 1:1.
+3. **w1 cannot be told from w2** (0.007 in OKLab; the other steps 0.018 to 0.020). A step he is meant to
+   see must be at least about 0.02 OKLab from its neighbour; the extra `w1b` (`#061838`, today darkened
+   14 % with its hue kept) is the honest half step.
+
+The picks, each against his words:
+
+- **Water: w2** `#061534` (stream `#0f2a55`): "a little bit darker blue". The only named step darker
+  enough to see (0.023 from today) while plainly blue (OKLCH chroma 0.065, hue 262; water-to-land
+  luminance 0.57 against 0.74 today); the phone's lower third calms; no text moves (the hero words stay
+  at 12.6 to 14.0 on the phone, 15.0 on the laptop). w3 (`#05122c`) goes on his sheet as the louder
+  step; w1 is dropped (indistinguishable); w1b is kept in the record as the gentle step he could ask for.
+- **Parks: g2p**: woods `#0c1810` and the borough parks from landcover grass/park at the same value:
+  "a very dark green that would blend in there". g2 keeps the forest a step under the land (1.06 to 1.10
+  against the land within 24 px; today 1.09 to 1.13) with a quiet hue, so it still reads as his "greyish,
+  blurred area"; the 1:1 crop of Flushing Meadows reads as a park, not a patch. g1 and g3 flatten the
+  forest to the land and read green rather than blending (g3 adds 4.7 grey levels to the Highlands
+  plate). Grey (g0) goes on his sheet beside it; his "if not" is one re-render away and the record says
+  so plainly.
+- **Land: l1** (hillshade highlight 0.50, exaggeration 0.9, both styles): "more polish on the grey
+  areas". The hills read (the land's 90th-over-10th luminance spread: Dutchess 2.57 to 4.24, the
+  Highlands 3.62 to 5.42, the hero 2.01 to 2.52) and the Queens road-over-land contrast holds (2.33 /
+  2.80). l2 (the built-up fills a step up) is rejected: the roads lose contrast (2.25 / 2.72), its lift
+  barely shows, and it pushes a phone text further under the floor. l1's one cost: at the Dutchess stop
+  at 390 the paragraph "Selling gets real comps..." reads 4.02 (4.59 today; floor 4.5), so it gets its
+  own ink step before the bake, re-measured.
+- An instrument note: at 1440 the "AI" and "Connect" header pills read 1.13 in every study and in the
+  control; each outlined pill's own border falls inside the measured box. Not a map effect.
+
+Then ONE re-render of every plate and film with the three picks baked (the `?pal=` option removed, the
+fingerprints re-pinned on purpose), run by the orchestrator as a background process so the box stays
+free for the next builder.
+
