@@ -214,7 +214,7 @@ function Lightbox({
         type="button"
         onClick={() => setTab(t)}
         aria-pressed={tab === t}
-        className={`min-h-11 border-b-2 px-3 text-sm font-bold tracking-wide transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper ${
+        className={`min-h-11 shrink-0 whitespace-nowrap border-b-2 px-2 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper sm:px-3 sm:tracking-wide ${
           tab === t ? "border-paper text-paper" : "border-transparent text-paper/60 hover:text-paper"
         }`}
       >
@@ -231,21 +231,27 @@ function Lightbox({
       onKeyDown={onKeyDown}
       className="daylight rlt-fade-in fixed inset-0 z-[1000000] flex flex-col bg-ink/95"
     >
-      {/* Top bar: tabs (left) + counter/close (right). Fixed height, no shift. */}
+      {/* Top bar: tabs (left) + counter/close (right). Fixed height, no shift.
+          Round 66: at phone widths the three tabs, the counter and the close no longer fit the
+          row's 358px (390) and the row folded: "Street View", "Map View" and the counter each
+          on two lines, and the 44px close squeezed to a 41x44 (390) or 31x44 (320) oval. Nothing wraps
+          now and the close keeps its circle: the tabs take 8px sides and plain tracking on a
+          phone (the row fits from 390 up), and below 390 the tab row scrolls sideways instead
+          of folding (py-1 there, so a focus ring is not clipped by the scroll box). */}
       <div className="flex shrink-0 items-center justify-between gap-3 px-4 pt-2 text-paper sm:px-6">
-        <div role="tablist" aria-label="View" className="flex items-center gap-1">
+        <div role="tablist" aria-label="View" className="flex min-w-0 items-center gap-1 max-[389px]:overflow-x-auto max-[389px]:py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {tabBtn("photos", "Photos")}
           {tabBtn("street", "Street View")}
           {tabBtn("map", "Map View")}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-3">
           {/* THE PAGE'S ONE PHOTO LIVE REGION. The search cards' pagers gave theirs up in round
               38 so this one means something: when it speaks, it is about the gallery the visitor
               is looking at. The visible mark stays "3 / 44" because that is what a counter looks
               like; the announcement is a sentence, because "3 slash 44" is not one. */}
           {tab === "photos" && (
             <>
-              <span aria-hidden className="font-mono text-sm tabular-nums text-paper/80">
+              <span aria-hidden className="whitespace-nowrap font-mono text-sm tabular-nums text-paper/80">
                 {index + 1} / {count}
               </span>
               <span className="sr-only" aria-live="polite">
