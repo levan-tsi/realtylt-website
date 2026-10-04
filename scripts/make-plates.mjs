@@ -211,7 +211,18 @@ async function shoot() {
         await plain.page.waitForTimeout(1800);
         // Round 64: the terrain under the centre can arrive after the first idle (the hero once read
         // 0 m here, 88.8 m on a second run): read until two readings a second apart agree.
-        const readE = () => plain.page.evaluate(() => { const m = window.__ml.ctl.map; return (m.transform ?? m._camera?.transform ?? {}).elevation ?? 0; });
+        // Round 66: the controller can be absent for a moment after the first idle (the ground re-mounts on
+        // hydration; under load the re-mount lands after the 1.8 s wait and the first full run of the
+        // round died here on its first plate with "Cannot read properties of null (reading 'transform')"):
+        // wait for a map up to 10 s instead of reading through a null.
+        const readE = async () => {
+          for (let i = 0; i < 20; i++) {
+            const e = await plain.page.evaluate(() => { const m = window.__ml?.ctl?.map; return m ? ((m.transform ?? m._camera?.transform ?? {}).elevation ?? 0) : null; });
+            if (e !== null) return e;
+            await plain.page.waitForTimeout(500);
+          }
+          throw new Error(shot + "/" + aspect + ": the plain pass has no map 10 s after its first idle");
+        };
         let e = await readE();
         for (let i = 0; i < 8; i++) {
           await plain.page.waitForTimeout(1000);
