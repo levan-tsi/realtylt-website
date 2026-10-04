@@ -285,6 +285,7 @@ describe("the round 66 look studies (a study, not the live look)", () => {
   it("each study moves only the layers it names", () => {
     const want: Record<string, [string, string[], string[]]> = {
       w1: ["w0", ["water", "stream"], ["water", "stream"]],
+      w1b: ["w0", ["water", "stream"], ["water", "stream"]],
       w2: ["w0", ["water", "stream"], ["water", "stream"]],
       w3: ["w0", ["water", "stream"], ["water", "stream"]],
       g1: ["w2", ["wood", "park"], ["wood"]],

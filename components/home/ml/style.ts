@@ -186,6 +186,9 @@ const L1 = { highlight: 0.5, relief: 0.9 };
 export const PALETTES: Record<string, Look> = {
   w0: LOOK0,
   w1: { ...LOOK0, water: "#061734", stream: "#0f2c55" },
+  // The extra water step: w1 sits 0.007 from w2 in OKLab (the other steps 0.018 to 0.020) and a touch less
+  // blue; w1b is the halfway step w1 was meant to be, w0 darkened 14 % in linear light, hue and chroma kept.
+  w1b: { ...LOOK0, water: "#061838", stream: "#102e58" },
   w2: { ...LOOK0, ...W2 },
   w3: { ...LOOK0, water: "#05122c", stream: "#0b2549" },
   g0: { ...LOOK0, ...W2 },
