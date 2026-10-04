@@ -147,7 +147,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "the-singularity-self-improving-ai-system",
     cluster: "building",
-    title: "The Answer Was Wrong in March. It Was Still Wrong in October.",
+    title: "The answer was wrong in March. It was still wrong in October.",
     seoTitle: "A Self Improving AI System: Shared Memory, Tested Code",
     date: "2026-08-27",
     updated: "2026-09-18",
@@ -172,7 +172,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "custom-automation-real-estate-bespoke-build",
     cluster: "building",
-    title: "It Ran Every Morning for Two Years. Then a Field Came Back With a New Word in It.",
+    title: "It ran every morning for two years. Then a field came back with a new word in it.",
     seoTitle: "Custom Automation for Real Estate: When a Bespoke Build Fits",
     date: "2026-08-26",
     updated: "2026-09-18",
@@ -196,7 +196,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-audit-small-business-what-not-to-automate",
     cluster: "building",
-    title: "You Had Eleven Ideas. The Hour Crossed Four of Them Off.",
+    title: "You had eleven ideas. The hour crossed four of them off.",
     seoTitle: "AI Audit for a Small Business: What Not to Automate",
     date: "2026-08-26",
     updated: "2026-09-18",
@@ -217,7 +217,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-clone-real-estate-agent-video-avatar",
     cluster: "visibility",
-    title: "Fourteen Videos Went Out in Your Face. You Have Watched None of Them.",
+    title: "Fourteen videos went out in your face. You have watched none of them.",
     seoTitle: "AI Clone of a Real Estate Agent: Video Avatars and the Law",
     date: "2026-08-26",
     updated: "2026-09-18",
@@ -238,7 +238,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "invoicing-and-payments-real-estate-brokerage",
     cluster: "back-office",
-    title: "The Referral Closed in July. Nobody Here Raised an Invoice.",
+    title: "The referral closed in July. Nobody here raised an invoice.",
     seoTitle: "Invoicing and Payments in a Real Estate Brokerage, and RESPA",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -259,7 +259,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-scheduling-real-estate-showing-confirmations",
     cluster: "appointments",
-    title: "You Said It Was Confirmed. One of the Three People Had Not Replied.",
+    title: "You said it was confirmed. One of the three people had not replied.",
     seoTitle: "AI Scheduling in Real Estate: When Confirmations Reset",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -280,7 +280,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "data-enrichment-real-estate-stale-contact-records",
     cluster: "records",
-    title: "The Empty Fields Got Filled. So Did the Ones That Were Already Right.",
+    title: "The empty fields got filled. So did the ones that were already right.",
     seoTitle: "Real Estate Data Enrichment: Fixing Stale Contact Records",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -301,7 +301,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "document-processing-real-estate-contract-deadlines",
     cluster: "back-office",
-    title: "It Read the Date Correctly. The Date Was Not the Deadline.",
+    title: "It read the date correctly. The date was not the deadline.",
     seoTitle: "AI Document Processing for Real Estate Contract Deadlines",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -322,7 +322,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "marketing-automation-real-estate-email-deliverability",
     cluster: "records",
-    title: "You Sent It to Fourteen Hundred People. Five Pressed One Button.",
+    title: "You sent it to fourteen hundred people. Five pressed one button.",
     seoTitle: "Real Estate Marketing Automation and Email Deliverability",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -343,7 +343,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "skip-tracing-real-estate-legal-owner-phone-numbers",
     cluster: "records",
-    title: "You Have Her Number. She Never Gave It to You.",
+    title: "You have her number. She never gave it to you.",
     seoTitle: "Skip Tracing in Real Estate: What the Law Says, What to Ask",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -367,7 +367,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-agent-workforce-real-estate-assistants",
     cluster: "building",
-    title: "Four Assistants Ran Overnight. Nobody Read What They Did.",
+    title: "Four assistants ran overnight. Nobody read what they did.",
     seoTitle: "An AI Agent Workforce in Real Estate: What Supervision Costs",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -391,7 +391,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "crm-sync-real-estate-duplicate-contact-records",
     cluster: "records",
-    title: "She Is In Your CRM Twice. Only One of Them Knows She Sold.",
+    title: "She is in your CRM twice. Only one of them knows she sold.",
     seoTitle: "CRM Sync for Real Estate: Fixing Duplicate Contact Records",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -413,7 +413,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "geo-landing-pages-real-estate-doorway-pages",
     cluster: "visibility",
-    title: "Nine Town Pages. The Only Thing That Changed Was the Town.",
+    title: "Nine town pages. The only thing that changed was the town.",
     seoTitle: "GEO Landing Pages for Real Estate vs Doorway Pages",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -434,7 +434,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "local-seo-real-estate-map-pack-google-business-profile",
     cluster: "visibility",
-    title: "Three Businesses Show Up. Yours Is Not One of Them.",
+    title: "Three businesses show up. Yours is not one of them.",
     seoTitle: "Local SEO for Real Estate: Map Pack and Business Profile",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -455,7 +455,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-appointment-booking-no-shows-real-estate",
     cluster: "appointments",
-    title: "You Booked the Showing for Nine Days Out. Nobody Came.",
+    title: "You booked the showing for nine days out. Nobody came.",
     seoTitle: "AI Appointment Booking and No-Shows in Real Estate",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -477,7 +477,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "automated-google-review-requests-real-estate",
     cluster: "visibility",
-    title: "Twelve Five-Star Reviews. The Newest One Is From 2023.",
+    title: "Twelve five-star reviews. The newest one is from 2023.",
     seoTitle: "Automated Google Review Requests for Real Estate: The Rules",
     date: "2026-08-25",
     updated: "2026-09-18",
@@ -506,7 +506,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-lead-qualification-real-estate-scoring",
     cluster: "answering",
-    title: "All Three Leads Look the Same. Two Are Worth Your Morning.",
+    title: "All three leads look the same. Two are worth your morning.",
     seoTitle: "AI Lead Qualification and Scoring in Real Estate",
     date: "2026-07-31",
     /** Shipped 07-31 with NO `updated`, deliberately, because a post written and shipped inside
@@ -537,7 +537,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "database-reactivation-old-real-estate-leads",
     cluster: "records",
-    title: "They Said Not Right Now. That Was Three Years Ago.",
+    title: "They said not right now. That was three years ago.",
     seoTitle: "Database Reactivation: Old Real Estate Leads and the Rules",
     /** Researched and drafted 07-30, finished and shipped 07-31. Both dates are real: this
      * session began on the 30th and the piece was rewritten and verified on the 31st. */
@@ -567,7 +567,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-voice-agent-missed-calls-real-estate",
     cluster: "answering",
-    title: "Nobody Leaves a Voicemail Anymore. They Call the Next Agent.",
+    title: "Nobody leaves a voicemail anymore. They call the next agent.",
     seoTitle: "AI Voice Agent for Missed Calls in Real Estate",
     date: "2026-07-30",
     /** A real revision, not a freshness fiction: the all-party-consent paragraph asserted a
@@ -600,7 +600,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "workflow-automation-real-estate-business",
     cluster: "building",
-    title: "The Busywork Tax: What Workflow Automation Actually Removes",
+    title: "The busywork tax: what workflow automation actually removes",
     seoTitle: "Workflow Automation for a Real Estate Business, Explained",
     date: "2026-07-13",
     /** A REAL revision, not a freshness fiction. Shipped 07-13 as a plain 1,200-word article; on
@@ -636,7 +636,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-chat-assistant-real-estate-website",
     cluster: "answering",
-    title: "Your Website Answered That Buyer at 11:40pm. Did You?",
+    title: "Your website answered that buyer at 11:40pm. Did you?",
     seoTitle: "AI Chat Assistant for a Real Estate Website: How to Test One",
     date: "2026-07-12",
     /** 08-02: the largest revision this post has had. It had been resting on an unsourced "78%"
@@ -669,7 +669,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "top-5-renovations-increase-home-value-ny",
     cluster: "owning",
-    title: "The Top 5 Renovations That Actually Increase Your Homes Value in New York",
+    title: "The top 5 renovations that actually increase your homes value in New York",
     date: "2025-10-24",
     excerpt:
       "You watch the home improvement shows, you see the stunning transformations, but which projects actually pay you back at the closing table in New York?",
@@ -680,7 +680,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "high-roi-home-improvements-under-1000",
     cluster: "owning",
-    title: "9 High-ROI Home Improvements You Can Tackle for Under $1,000",
+    title: "9 high-ROI home improvements you can tackle for under $1,000",
     seoTitle: "9 High-ROI Home Improvements Under $1,000 in New York",
     /** Homeownership #2, reposted 2026-09-24. Slug = the CRM drip link (day 36) and the draft's;
      * the drip doc's alternate redirects here. */
@@ -699,7 +699,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "seasonal-home-maintenance-checklist-hudson-valley",
     cluster: "owning",
-    title: "Your Essential Seasonal Home Maintenance Checklist for Hudson Valley Homes",
+    title: "Your essential seasonal home maintenance checklist for Hudson Valley homes",
     seoTitle: "Seasonal Home Maintenance Checklist for Hudson Valley Homes",
     /** Homeownership #1, reposted 2026-09-24. Slug = the CRM drip link (day 134) and the draft's;
      * the drip doc's alternate redirects here. */
@@ -718,7 +718,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "hiring-property-management-company-hudson-valley",
     cluster: "investing",
-    title: "The Pros and Cons of Hiring a Property Management Company in the Hudson Valley",
+    title: "The pros and cons of hiring a property management company in the Hudson Valley",
     seoTitle: "Hiring a Property Management Company in the Hudson Valley",
     /** Investing #10, reposted 2026-09-24. Slug = the CRM drip link (day 410) and the draft's;
      * the drip doc's alternate redirects here. */
@@ -737,7 +737,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "short-term-vs-long-term-rentals-hudson-valley",
     cluster: "investing",
-    title: "Short-Term vs. Long-Term Rentals in the Hudson Valley: What's More Profitable?",
+    title: "Short-term vs. long-term rentals in the Hudson Valley: what's more profitable?",
     seoTitle: "Short-Term vs Long-Term Rentals in the Hudson Valley",
     /** Investing #9, reposted 2026-09-24. Slug = the CRM drip link (day 370) and the draft's. */
     date: "2026-06-24",
@@ -754,7 +754,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "how-to-find-screen-tenants-ny",
     cluster: "investing",
-    title: "Managing Your First Rental: A Guide to Finding and Screening Tenants in New York",
+    title: "Managing your first rental: a guide to finding and screening tenants in New York",
     seoTitle: "How to Find and Screen Tenants in New York: A 2026 Guide",
     /** Investing #8, reposted 2026-09-24. Slug = the CRM drip link (day 330). */
     date: "2026-04-22",
@@ -771,7 +771,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "1031-exchange-rules-new-york",
     cluster: "investing",
-    title: "A Guide to the 1031 Exchange in New York",
+    title: "A guide to the 1031 exchange in New York",
     seoTitle: "1031 Exchange Rules in New York: A 2026 Investor Guide",
     /** Investing #7, reposted 2026-09-24. Slug = the CRM drip link (day 316) and the draft's;
      * the drip doc's alternate redirects here. The H1 drops the draft's "(2025 Rules)". */
@@ -790,7 +790,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "best-places-to-invest-hudson-valley",
     cluster: "investing",
-    title: "Which Hudson Valley Towns Offer the Best Opportunities for Real Estate Investors?",
+    title: "Which Hudson Valley towns offer the best opportunities for real estate investors?",
     seoTitle: "Best Places to Invest in Real Estate in the Hudson Valley",
     /** Investing #6, reposted 2026-09-24. Slug = the CRM drip link (day 302) and the draft's;
      * the drip doc's alternate redirects here. The H1 drops the draft's "A 2025 Analyst Report". */
@@ -809,7 +809,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "brrrr-method-hudson-valley",
     cluster: "investing",
-    title: "BRRRR Method 101: How to Build Your Real Estate Portfolio Faster in NY",
+    title: "BRRRR method 101: how to build your real estate portfolio faster in NY",
     seoTitle: "BRRRR Method in the Hudson Valley, NY: 2026 Guide",
     /** Investing #5, reposted 2026-09-24. Slug = the CRM drip link (day 288) and the draft's;
      * the drip doc's alternate redirects here. */
@@ -828,7 +828,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "multi-family-vs-single-family-investing-ny",
     cluster: "investing",
-    title: "The Pros and Cons of Investing in Multi-Family vs. Single-Family Homes",
+    title: "The pros and cons of investing in multi-family vs. single-family homes",
     seoTitle: "Multi-Family vs Single-Family Investing in NY: Pros and Cons",
     /** Investing #4, reposted 2026-09-24. Slug = the CRM drip link (day 274) and the draft's;
      * the drip doc's alternate redirects here. */
@@ -847,7 +847,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "calculate-roi-cap-rate-investment-property-ny",
     cluster: "investing",
-    title: "How to Calculate ROI & Cap Rate on Investment Property",
+    title: "How to calculate ROI & cap rate on investment property",
     seoTitle: "How to Calculate ROI and Cap Rate on NY Investment Property",
     /** Investing #3, reposted 2026-09-24. Slug = the CRM drip link (day 260) and the draft's;
      * the drip doc's alternate redirects here. */
@@ -866,7 +866,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "house-hacking-hudson-valley-ny",
     cluster: "investing",
-    title: "'House Hacking' 101: How to Live for Free in the Hudson Valley",
+    title: "'House hacking' 101: how to live for free in the Hudson Valley",
     seoTitle: "House Hacking in the Hudson Valley, NY: A 2026 Guide",
     /** Investing #2, reposted 2026-09-24. Slug = the CRM drip link (day 246); the draft's own
      * Westchester slug and the drip doc's alternate redirect here. */
@@ -885,7 +885,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "how-to-buy-your-first-rental-property-in-the-hudson-valley",
     cluster: "investing",
-    title: "How to Buy Your First Rental Property in the Hudson Valley (A Step-by-Step Guide)",
+    title: "How to buy your first rental property in the Hudson Valley (a step-by-step guide)",
     seoTitle: "How to Buy Your First Rental Property in the Hudson Valley",
     /** Investing #1, reposted 2026-09-24. Slug = the CRM drip link (day 232) and the draft's;
      * the drip doc's alternate redirects here. */
@@ -904,7 +904,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "fsbo-vs-agent-new-york-guide",
     cluster: "selling",
-    title: "For Sale By Owner (FSBO) vs. Using an Agent: The Pros and Cons in New York",
+    title: "For sale by owner (FSBO) vs. using an agent: the pros and cons in New York",
     seoTitle: "FSBO vs Agent in New York: The Pros and Cons in 2026",
     /** Seller Education #9, reposted 2026-09-24. Slug = the CRM drip link (day 120) and the
      * draft's; the drip doc's alternate redirects here. */
@@ -923,7 +923,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "common-home-seller-mistakes-hudson-valley",
     cluster: "selling",
-    title: "Common Mistakes Hudson Valley Home Sellers Make (And How to Avoid Them)",
+    title: "Common mistakes Hudson Valley home sellers make (and how to avoid them)",
     seoTitle: "Common Home Seller Mistakes in the Hudson Valley, NY",
     /** Seller Education #8, reposted 2026-09-24. Slug = the CRM drip link (day 106) and the
      * draft's; the drip doc's alternate redirects here. */
@@ -942,7 +942,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "seller-guide-prepare-home-inspection",
     cluster: "selling",
-    title: "Preparing for the Home Inspection: A Seller's Guide to a Smooth Process",
+    title: "Preparing for the home inspection: a seller's guide to a smooth process",
     seoTitle: "Seller's Guide to Prepare for a Home Inspection in NY",
     /** Seller Education #7, reposted 2026-09-24. Slug = the CRM drip link (day 190) and the
      * draft's; the drip doc's alternate redirects here. */
@@ -961,7 +961,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "seller-disclosure-requirements-new-york",
     cluster: "selling",
-    title: "Seller Disclosures in New York: What You Are Legally Required to Reveal",
+    title: "Seller disclosures in New York: what you are legally required to reveal",
     seoTitle: "Seller Disclosure Requirements in New York: 2026 Guide",
     /** Seller Education #10, reposted 2026-09-24. Slug = the CRM drip link (day 218) and the
      * draft's; the drip doc's alternate redirects here. */
@@ -980,7 +980,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "timeline-selling-a-house-ny",
     cluster: "selling",
-    title: "From Listing to Closing: A Step-by-Step Timeline for Selling Your Home",
+    title: "From listing to closing: a step-by-step timeline for selling your home",
     seoTitle: "Timeline for Selling a House in NY, from Listing to Closing",
     /** Seller Education #6, reposted 2026-09-24. Slug = the CRM drip link (day 92) and the
      * draft's; the old site's title slug redirects here. */
@@ -999,7 +999,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "final-walk-through-checklist",
     cluster: "buying",
-    title: "The Final Walk-Through: Your Last Chance Checklist Before Closing",
+    title: "The final walk-through: your last chance checklist before closing",
     seoTitle: "Final Walk-Through Checklist Before Closing in New York",
     /** Buyer Education #10, reposted 2026-09-24. Slug = the drip doc's link; the draft's longer
      * slug redirects here. */
@@ -1018,7 +1018,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "home-inspection-checklist-hudson-valley-ny",
     cluster: "buying",
-    title: "The Ultimate Home Inspection Checklist: 9 Critical Things You Can't Overlook",
+    title: "The ultimate home inspection checklist: 9 critical things you can't overlook",
     seoTitle: "Home Inspection Checklist for Hudson Valley, NY Buyers",
     /** Buyer Education #5, reposted 2026-09-24 at the draft's own slug. */
     date: "2026-02-19",
@@ -1036,7 +1036,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "buyer-closing-costs-new-york",
     cluster: "buying",
-    title: "What Are Buyer's Closing Costs in New York? A Complete, No-Surprise Breakdown",
+    title: "What are buyer's closing costs in New York? A complete, no-surprise breakdown",
     seoTitle: "Buyer Closing Costs in New York: A 2026 Breakdown",
     /** Buyer Education #4, reposted 2026-09-24 at the draft's own slug. */
     date: "2025-12-03",
@@ -1053,7 +1053,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "mortgage-pre-approval-requirements-ny",
     cluster: "buying",
-    title: "Getting Pre-Approved for a Mortgage: What Lenders Are Looking For",
+    title: "Getting pre-approved for a mortgage: what lenders are looking for",
     seoTitle: "Mortgage Pre-Approval Requirements in NY: A 2026 Guide",
     /** Buyer Education #3, reposted 2026-09-24 at the draft's own slug. The draft's "in 2025-26"
      * was dropped from the H1: the page says 2026 where a figure is dated. */
@@ -1071,7 +1071,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "down-payment-hudson-valley-ny",
     cluster: "buying",
-    title: "How Much Do You Really Need for a Down Payment in the Hudson Valley, NY?",
+    title: "How much do you really need for a down payment in the Hudson Valley, NY?",
     seoTitle: "Down Payment in the Hudson Valley, NY: What You Need in 2026",
     /** Buyer Education #2, reposted 2026-09-24 at the draft's own slug. */
     date: "2025-11-06",
@@ -1088,7 +1088,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "winning-offer-competitive-market-ny-hudson-valley",
     cluster: "buying",
-    title: "How to Make a Winning Offer in the NY Hudson Valley's Competitive Market",
+    title: "How to make a winning offer in the NY Hudson Valley's competitive market",
     seoTitle: "How to Make a Winning Offer in a Competitive NY Market",
     /** Buyer Education #6, reposted 2026-09-24. Slug = the CRM drip link (day 650) and the
      * draft's; the old site's title-derived slug and the drip doc's alternate redirect here. */
@@ -1110,7 +1110,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "why-you-need-real-estate-attorney-ny",
     cluster: "buying",
-    title: "Why You Need a Real Estate Attorney in New York (And What They Do)",
+    title: "Why you need a real estate attorney in New York (and what they do)",
     seoTitle: "Why You Need a Real Estate Attorney in NY, and What They Do",
     /** Buyer Education #9, reposted 2026-09-24. Slug = the CRM drip link (day 530) and the draft's. */
     date: "2025-10-02",
@@ -1127,7 +1127,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "how-much-house-can-i-afford-ny-guide",
     cluster: "buying",
-    title: "\"How Much House Can I Afford?\" A Simple Guide to Calculating Your Real Budget",
+    title: "\"How much house can I afford?\" A simple guide to calculating your real budget",
     seoTitle: "How Much House Can I Afford in NY? A 2026 Budget Guide",
     /** Buyer Education #8, reposted 2026-09-24. Slug = the CRM drip link (day 490) and the draft's. */
     date: "2026-01-29",
@@ -1145,7 +1145,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "fha-va-conventional-mortgage-loans-ny",
     cluster: "buying",
-    title: "Understanding Different Mortgages: FHA, VA, and Conventional Loans Explained",
+    title: "Understanding different mortgages: FHA, VA, and conventional loans explained",
     seoTitle: "FHA vs VA vs Conventional Loans in NY: A 2026 Guide",
     /** Buyer Education #7, reposted 2026-09-24. Slug = the CRM drip link and the draft's own. */
     date: "2025-11-20",
@@ -1163,7 +1163,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "first-time-home-buyer-ny-10-step-checklist",
     cluster: "buying",
-    title: "First-Time Home Buyer in NY? Here's Your 10-Step Checklist from Start to Finish",
+    title: "First-time home buyer in NY? Here's your 10-step checklist from start to finish",
     seoTitle: "First-Time Home Buyer NY Checklist: 10 Steps for 2026",
     /** Reposted from the Drive draft (Buyer Education #1) and re-verified 2026-09-24. The date
      * is the one this stub carried from the old site's post list; see
@@ -1183,7 +1183,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "rent-vs-buy-hudson-valley-ny",
     cluster: "moving",
-    title: "Moving to the Hudson Valley: Rental vs. Buying, and What Makes the Most Sense",
+    title: "Moving to the Hudson Valley: rental vs. buying, and what makes the most sense",
     seoTitle: "Rent vs. Buy in the Hudson Valley, NY: How to Decide",
     /** Moving #5 (moving folder done), reposted 2026-09-24. Slug = the CRM drip link and the draft's; the
      * stub's slug redirects here. Dated 2025-11-26 (the stub's 2025-09-13 went to the relocating post). */
@@ -1202,7 +1202,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "relocating-to-hudson-valley-ny-guide",
     cluster: "moving",
-    title: "Relocating to the Hudson Valley: A Newcomer's Guide to Small-Town Charm and Big-City Access",
+    title: "Relocating to the Hudson Valley: a newcomer's guide to small-town charm and big-city access",
     seoTitle: "Relocating to the Hudson Valley: A Newcomer's Guide",
     /** Moving #4, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug redirects
      * here. The stub's date (2025-09-13) carries over. */
@@ -1221,7 +1221,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "how-to-hire-local-movers-ny",
     cluster: "moving",
-    title: "How to Hire the Best Local Movers: 7 Questions You Must Ask Before Signing",
+    title: "How to hire the best local movers: 7 questions you must ask before signing",
     seoTitle: "How to Hire Local Movers in NY: 7 Questions to Ask",
     /** Moving, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug redirects
      * here. Dated 2025-10-22. */
@@ -1240,7 +1240,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "packing-tips-hacks-for-moving",
     cluster: "moving",
-    title: "Packing 101: Pro Tips and Hacks for a Faster, More Organized Move",
+    title: "Packing 101: pro tips and hacks for a faster, more organized move",
     seoTitle: "Packing Tips for Moving: 10 Hacks for a Faster Move",
     /** Moving #3, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug redirects
      * here. Dated 2026-05-13, ahead of the summer moving season. */
@@ -1259,7 +1259,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ultimate-8-week-moving-checklist",
     cluster: "moving",
-    title: "The Ultimate Moving Checklist: Your 8-Week Guide to a Stress-Free Move",
+    title: "The ultimate moving checklist: your 8-week guide to a stress-free move",
     seoTitle: "The Ultimate 8-Week Moving Checklist: A Stress-Free Plan",
     /** Moving #1, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug redirects
      * here. Dated 2025-09-19 (the stub's 2025-09-12 now belongs to the basement post). */
@@ -1278,7 +1278,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "lower-energy-bills-new-york-homeowners",
     cluster: "owning",
-    title: "Lower Your Energy Bills: 9 Efficiency Tips for New York Homeowners",
+    title: "Lower your energy bills: 9 efficiency tips for New York homeowners",
     seoTitle: "Lower Energy Bills in New York: 9 Tips for Homeowners",
     /** Homeownership #5, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug
      * redirects here. Dated 2025-10-08 (the stub's 2025-09-12 now belongs to the basement post). */
@@ -1297,7 +1297,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "new-homeowner-toolkit-essentials",
     cluster: "owning",
-    title: "The Ultimate New Homeowner's Toolkit: 9 Essentials Every Owner Needs",
+    title: "The ultimate new homeowner's toolkit: 9 essentials every owner needs",
     seoTitle: "The New Homeowner Toolkit: 9 Essentials Every Owner Needs",
     /** Homeownership #4, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug
      * redirects here. Dated 2025-09-17 (the stub's 2025-09-12 now belongs to the basement post). */
@@ -1316,7 +1316,7 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "cost-vs-value-finishing-basement-hudson-valley",
     cluster: "owning",
-    title: "Thinking of Finishing Your Basement? What to Know About Cost and Value",
+    title: "Thinking of finishing your basement? What to know about cost and value",
     seoTitle: "Finishing a Basement in the Hudson Valley: Cost and Value",
     /** Homeownership #3, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the
      * stub's slug and date (2025-09-12) carry over, and the stub slug redirects here. */
