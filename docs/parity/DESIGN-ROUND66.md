@@ -368,3 +368,45 @@ sees to the horizon); /financing's pre-approval text sits over a busy photo on t
 probe measures it). Builder 3 also found the worktree's `node_modules` damaged (section 6e) and repaired
 it with `npm install`, the lockfile untouched.
 
+### 6e. Phase 2, the orchestrator's gate, and one mistake of the orchestrator's (2026-10-04 afternoon)
+
+**Shipped (builder 3, 94296d5 to 8632776, orchestrator-verified):** the night logo is his own file with
+the navy lifted to `#3d74b8`, the R mark and the Y's stroke untouched (checked pixel by pixel: the day
+file is exactly two colours, `#0e2d52` x 1,004,803 and `#27a7df` x 252,938, antialiased by alpha alone,
+so the recolour is exact; the new file holds the same counts in the same positions, 31 KB; the test
+`components/site/logo-night.test.ts` holds both files to those counts); served in the header over the
+hero and on /selling at 1440, 390 and 320, the footer, the phone menu, and print (on white 4.79:1; the
+structured-data logo and the share card keep the day file). The "Where we work" paragraph reads "Every
+light is a home for sale there right now. Where homes crowd, one light stands for several." (three lines
+at 1440, inside the lights claim so it hides with it; the phone hides the paragraph; the word-contrast
+kit at the 11 county stops: 0 of 45 texts under the floor); a test fails on the old sentence. The "On this
+page" pill shows only once the reader is past the title block (`lib/toc/past-title.ts`; the first
+attempt with an IntersectionObserver missed a jump that carried the standfirst from below the viewport
+to above it at 320x568, so it reads the scroll instead), absent with JavaScript off; verified at 320, 390
+and 1440 on a flagship post and a service page; seven tests. "Map View" reads "Map view"; "Street View"
+keeps Google's name, pinned by the case test.
+
+**The orchestrator's gate on 8632776:** tsc clean; vitest 161 files, 2,222 of 2,222, exit 0 (the floor
+was 2,213); the case scan clean; the crawler ALL PASS; JS off dark on 24 pages at both widths; every
+page's first screen at 1440, 390 and 320 and the 17 stops on both surfaces looked at by the orchestrator
+on builder 3's final sheets (`scripts/_scratch-r66/final/`), the header sheets at every size, the Where
+we work stop. Then the night logo's file took a new name, `/logo-realtylt-navy.png`: the local image
+optimizer had served the old cyan wordmark under the old name until a restart, and browsers and Vercel's
+optimizer key on the URL; Header and Footer are the only references; the pixel test follows the file.
+
+**The orchestrator's mistake, recorded so it cannot repeat:** to measure the test baseline at round 65's
+close, a temporary worktree held a junction to this checkout's `node_modules`; a `cmd //c rmdir` through
+git-bash failed silently on the mangled path, and `git worktree remove --force` then deleted THROUGH the
+junction into the real `node_modules` (`@img`, `@jridgewell`, `@next/env`, `.bin` and more) until it
+died with "Invalid argument". Builder 3 found sharp, vitest and the rebuild failing and repaired it with
+`npm install` (23 added, 17 changed; `package.json` and the lockfile untouched). The rule, now in memory:
+a junction comes off first with PowerShell's `(Get-Item $p -Force).Delete()`, verified gone, before any
+recursive removal. The baseline measured before the damage stands: 2,192 at 42d024f.
+
+**Open after this round (the owner's calls or a later round):** the parks' green against the grey (his
+"if not, grey" is one re-render); the Google geocoding pass (needs `GOOGLE_MAPS_API_KEY` on the box;
+about $4; 430 numbered homes could be placed); the two geocoder rule changes of 6b; a listing page with
+JavaScript off shows controls that do nothing; the /connect booking widget is a white third-party card;
+the phone's Highlands horizon lamps behind "Featured listings"; /financing's phone text over a busy
+photo; realtylt.com/ai still sets Bricolage; the `<title>` tags keep Title Case by round 63's rule.
+
