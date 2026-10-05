@@ -51,7 +51,7 @@ against a forest green near 145).
    round 66's runner (`scripts/_scratch-r66/rr-*.log` show what a good run prints; the script was
    `scratchpad/rr66.sh`, re-create it from DESIGN-ROUND66 §6c; ~85 min; both manifests must come back
    unchanged), then calibration, walks, contrast, hover, taps.
-2. **The Google geocoding pass** (once `GOOGLE_MAPS_API_KEY` is in `.env.local`; section 5):
+2. **The Google geocoding pass: DONE 2026-10-04 late evening** (320 placed of 811; the lights' scope at 97.7 % placed; record §6g). The key is in the worktree's `.env.local` (gitignored). To repeat later for new misses:
    `node scripts/backfill-geocodes.mjs --google --retry --dry`, read the counts, then without `--dry`.
    About 811 rows: 430 with a house number can be placed; 360 with none cannot by any geocoder; 12 are
    zip typos (item 3). Afterwards re-query the headline numbers and the per-county table (DESIGN-ROUND66

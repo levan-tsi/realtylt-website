@@ -447,3 +447,16 @@ reads a touch teal (the measured OKLCH hue of the woods on the plate is 171 to 1
 green near 145), so one cheap study, three fills side by side at the same darkness (as shipped, a step
 greener, grey), rendered on the real page without a re-render, then his pick, then the one re-render.
 
+### 6g. The Google pass, run (2026-10-04, late evening)
+
+He put the Maps Platform API key into the worktree's `.env.local` himself (Notepad; the line verified by
+name and shape only). `node scripts/backfill-geocodes.mjs --google --retry`: 811 asked, 320 placed
+(ROOFTOP 290, RANGE_INTERPOLATED 30), 491 re-stamped unplaceable, 16 refused by the 15 km gate (the
+zip-typo class of 6b). Headline after: active 27,212, `geocoded` true 26,721, unplaced 491 (847 this
+morning). In the lights' scope (Active, for sale, $10k and up): 15,265 of 15,619 placed, 97.7 % (96.4 %
+after the Census retry, about 96.1 % before the round): Manhattan 100 %, Brooklyn 99.8 %, the Bronx
+99.7 %, Queens 99.6 %, Rockland 99.0 %, Westchester 98.4 %, Staten Island 97.2 %, Putnam 96.3 %, Orange
+93.8 %, Dutchess 92.0 %, Ulster 92.0 %. What remains is almost entirely the valley's land lots with no
+house number (no geocoder places them at building grade) and the 16 zip typos (6b's second rule). The
+lights are drawn live from the database, so the home map shows the new homes without a re-render; the
+hero's count never changes (it counts every home, placed or not).
