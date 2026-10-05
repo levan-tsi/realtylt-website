@@ -186,5 +186,32 @@ contrast, hover, taps. If he picks 1, the option is removed and nothing is rende
   transparent, the box's 95th and 99th percentile luminance): at 390 the headline 7.69, the paragraph
   7.62 at its 85 % ink, the button 18.7; at 1440 7.69 / 9.03 / 18.7; floors 3 and 4.5. The flat scrim is
   doing its job; nothing changes.
-- **(4) A listing page with JavaScript off:** with the second Opus builder (the call in §2).
-- **(5), (6):** after (4), one at a time (each needs the one server).
+- **(4) A listing page with JavaScript off: built by the second Opus builder (28a3f78), verified
+  here.** The tour and offer controls, the photo viewer's triggers, the sub-nav's offer, Share and Save
+  (the last two inside their shared components, so every card hides them the same way) carry
+  `data-js-only`; one `<noscript>` block in the lead card reads "To see this home or talk about an
+  offer, call or text us, or book a time that suits you." with the main line as a tel: button and
+  "Book a time" to /connect (the main line, not the CRM line: the owner's 09-24 order keeps that one
+  on /connect alone, and the card's own line below already names the main one). Visible buttons with
+  scripting off: 21 to 12 at 390, 32 to 13 at 1440; with scripting on the full-page screenshots before
+  and after are pixel-identical at both sizes; /search and /saved render their cards only with
+  scripting (unchanged); /top-areas/dutchess, which renders six cards without it, lost six dead hearts
+  and each card is 14 px shorter with no gap (the orchestrator looked at the side-by-side). The
+  source-scan test `components/listing/nojs.test.ts` holds the set (18 assertions, 15 red first).
+  Full suite 2,262, tsc clean. Two things the builder found outside its remit, done by the orchestrator
+  (the lead path is not a builder's): **the lead form on every surface** posted JSON from onSubmit with
+  no method or action, so a no-script submit was a GET reload with the visitor's name, email and phone
+  in the address bar and no lead; it now steps aside with a noscript line offering the number and the
+  email (the route keeps JSON only: a form-encoded post is a cross-site simple request, and the
+  content-type check is the guard; making the form post without scripting means accepting form bodies
+  behind an origin check, a security decision left open below). **A listing's photos** sat at opacity
+  0 under their skeletons without scripting (MlsImage reveals in onLoad); `[data-mls-img]` is lifted to
+  opacity 1 under `@media (scripting: none)`, held tiles stay hidden so nothing bursts the media host.
+  And the card photo arrows step aside. Seven more assertions in the same test; 154 of 154 in the
+  touched suites. Still doing nothing without scripting, left as is: the mortgage calculator's four
+  buttons (its figure is server-rendered in the header), the header's top-areas caret at 1440, the
+  closed photo grid's 33 tiles (`role="button"` could wait for hydration).
+- **(6) /connect's booking sheet in a mount** (f98e547), the design of §2; its look on the rebuilt
+  server is checked at the round's close (headless Chrome does not paint Google's page, so the check
+  serves a white page in its place).
+- **(5) The phone's Highlands horizon:** with the third Opus builder (the call in §2).
