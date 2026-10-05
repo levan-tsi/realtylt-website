@@ -76,8 +76,12 @@ export function BookingFrame({ src, title, className }: { src: string; title: st
     };
   }, []);
 
+  // Round 67: Google's booking page has no dark theme (the embed takes no theme parameter), so on
+  // the night page it is a white sheet. The mount makes that deliberate: a raised ground a step above
+  // the page, a hairline of the site's own line, the large-panel radius outside the sheet's own, so
+  // the sheet reads as a document placed on the page rather than a hole cut in it.
   return (
-    <div className={focused ? "outline-2 outline-offset-2 outline-river" : undefined}>
+    <div className={`rounded-3xl border border-line bg-mist p-2${focused ? " outline-2 outline-offset-2 outline-river" : ""}`}>
       <iframe ref={ref} src={src} title={title} className={className} loading="lazy" />
     </div>
   );
