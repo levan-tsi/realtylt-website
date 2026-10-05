@@ -1,8 +1,11 @@
 # realtylt-website — orientation for any Claude session or agent
 
-RealtyLT marketing website (Next.js, TypeScript). Branch `main`; a push auto-deploys the
-PRIVATE, noindex production at realtylt-website.vercel.app. Windows box; in git-bash run
-`export NODE_OPTIONS='--use-system-ca'` before any node/npm (AVG MITM).
+RealtyLT marketing website (Next.js, TypeScript). Branch `main`; **a push to `main` is a PUBLIC
+deploy of realtylt.com** (live and indexable since September 2026; the old "private noindex
+preview" wording is stale). Look changes go to a preview branch first (`git push origin
+HEAD:refs/heads/<name>-preview`, served behind the owner's Vercel sign-in) and reach `main` on
+his word. Windows box; in git-bash run `export NODE_OPTIONS='--use-system-ca'` before any
+node/npm (AVG MITM).
 
 ## Where things are
 - `POLISH_CHECKPOINT.md` — round state; the TOP block is always the current brief. Read first.
@@ -48,6 +51,7 @@ PRIVATE, noindex production at realtylt-website.vercel.app. Windows box; in git-
   new local port needs adding to the key (Google rejects `localhost:*`). The website has NO
   server-side Google call. The CRM's server key is separate (`GOOGLE_MAPS_API_KEY`, see the CRM).
   Never paste a key into a doc, commit or chat; `.env.local` holds it locally (gitignored).
-- LAUNCH IS GATED: the site is noindex on purpose. The launch switches
-  (NEXT_PUBLIC_SITE_URL, apex DNS, PRELAUNCH=1) are the OWNER'S, in that order. Never
-  remove noindex.
+- THE SITE IS LIVE: realtylt.com, www and the vercel.app hosts alias the production deploy;
+  no noindex, no PRELAUNCH gate. Before any push to `main`: tsc, vitest in the foreground, the
+  crawler against the :3102 production build, the frames looked at; after it, verify on
+  https://realtylt.com through a browser (plain fetches get Vercel's 429 challenge).

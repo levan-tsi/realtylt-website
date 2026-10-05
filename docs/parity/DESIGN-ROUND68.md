@@ -165,3 +165,31 @@ mock tiles plain, `/buying` 0 placeholder captions.
 4. The eight design moves in §1, his calls.
 5. The `<title>` tags' case, the CMA enumeration and raw MediaURL items, the preview-branch and
    scratch cleanup once the round is live (handoff R68 §4.5 to 4.8).
+
+## 5. The green, rendered for his look (added at the close)
+
+Baking round 67's recommended `#0b1907` into `NIGHT.wood` trips two laws of the night style in
+`style.test.ts`: "carry no warmth: every colour is as blue as it is red (the listings' lights are the
+only warm thing)" and the plate's "adds no hue" (blue 7 against red 11). The study had been
+renderer-only, so it never met them. The nearest lawful hex is `#0a190a`: OKLCH L 0.195 (the same
+darkness), chroma 0.036 against 0.040, hue 144 against 139; 0.005 from tile 2 in OKLab (under the
+study's own invisible band of 0.006 to 0.008) and 0.013 from today's `#0c1810`. Tile 3's `#071a06`
+breaks the same law (blue 6, red 7); its lawful neighbour is `#071a07`.
+
+Branch `r68-green2` (`f81c5df`) bakes `#0a190a`, re-pins the six style fingerprints on purpose, drops
+the `h3` study option, and `46e1f11` carries the ONE re-render (`scripts/_scratch-r68/rr.sh`, 68
+minutes: 34 plates 25.8 MB, 96 clips 100 MB, both manifests unchanged, the grade's worst first/last
+frame 0.64 levels against round 66's 0.60). On the rebuilt build: calibration 0.00 px at the hero,
+Queens, Dutchess County and Putnam on both surfaces, the region 0.10 / 0.06; the walks 16 films / 0
+fades on both. Against today's plates the pictures differ by a mean of 1.4 to 3.4 levels (p99 9 to
+11; the Highlands 56 % of pixels over 2 levels, Dutchess 20 %): the quiet step round 67 described,
+seen in the 1:1 pairs `scripts/_scratch-r68/green/pair-queens-1x.png` and `pair-dutchess-1x.png`
+(Flushing Meadows and the Highlands woods a touch greener, nothing lighter). Pushed as
+`r68-green2-preview`.
+
+Two instrument notes. A calibration run while another job used the CPU read 40 to 147 px mean and
+"common 85 of 470"; alone it read 0.00: never run the calibration beside anything. The phone walk on
+the fresh green films read 4 to 6 frames over 34 ms at the Westchester stops where today's films
+read 0 to 2 in the same probe (the maxima, 84 to 118 ms, are single frames at a flight's start on
+both builds): possibly the file cache on files never read before; to be settled on the merged head
+before any push.
