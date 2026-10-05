@@ -78,7 +78,24 @@ export function ListingSubNav({
       { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
     );
     els.forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
+    // Back over the photos, the first anchor is current. The observer cannot say so: once the
+    // last section has left the band (over the footer, say) a jump to the top changes no
+    // intersection, so no callback fires and the last section stayed marked (round 68:
+    // "Payment" underlined at the top of the page). One passive scroll listener settles it.
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        if (els[0].getBoundingClientRect().top > window.innerHeight * 0.5) setActive(els[0].id);
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      obs.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasSchools]);
 
