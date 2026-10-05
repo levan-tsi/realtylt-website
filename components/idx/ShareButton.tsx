@@ -28,9 +28,12 @@ export function ShareButton({ title }: { title: string }) {
     }
   }
 
+  // The share sheet and the clipboard are both scripting: without it the button steps aside
+  // (globals.css data-js-only), wherever it is used.
   return (
     <button
       type="button"
+      data-js-only=""
       onClick={share}
       className={`inline-flex min-h-6 items-center gap-1.5 rounded-xl border border-ink/15 bg-paper px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-ink ${PRESS} hover:border-ink/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
       aria-live="polite"

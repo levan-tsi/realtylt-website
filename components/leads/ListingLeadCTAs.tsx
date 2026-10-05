@@ -133,7 +133,9 @@ export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: 
           </div>
         </div>
       )}
-      <div className="grid grid-cols-2 gap-2.5 lg:hidden">
+      {/* Both pairs open a sheet that posts with fetch, so without scripting they step aside
+          (globals.css data-js-only) and the <noscript> below is the path that works. */}
+      <div data-js-only="" className="grid grid-cols-2 gap-2.5 lg:hidden">
         <button
           type="button"
           onClick={() => openTour()}
@@ -151,7 +153,7 @@ export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: 
       </div>
 
       {/* Desktop: live's inline Request-a-Tour card (tabs + date strip + In Person Tour). */}
-      <div className="hidden lg:block">
+      <div data-js-only="" className="hidden lg:block">
         <InlineTourCard onOpenTour={openTour} onRequestInfo={requestInfo} />
         <button
           type="button"
@@ -161,6 +163,28 @@ export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: 
           Make an offer
         </button>
       </div>
+
+      {/* One block at every width. The number is the main line, as on every page but /connect
+          (lib/site.ts), and the card's own line below already names it. */}
+      <noscript>
+        <p className="t-small leading-relaxed text-stone">
+          To see this home or talk about an offer, call or text us, or book a time that suits you.
+        </p>
+        <div className="mt-3 grid gap-2.5">
+          <a
+            href={SITE.phoneHref}
+            className="rounded-xl bg-ink px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          >
+            Call or text {SITE.phone}
+          </a>
+          <a
+            href="/connect"
+            className="rounded-xl border border-ink px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          >
+            Book a time
+          </a>
+        </div>
+      </noscript>
 
       {modal === "tour" && (
         <TourModal listing={props.listing} initialDate={seedDate} onClose={() => setModal(null)} />

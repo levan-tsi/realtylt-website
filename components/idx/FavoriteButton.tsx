@@ -30,9 +30,12 @@ export function FavoriteButton({
   // gets no pop either — taking something away should not celebrate.
   const [pop, setPop] = useState(false);
 
+  // A save lives in the account or the device record, both reached by scripting: without it the
+  // heart steps aside (globals.css data-js-only) on every card, photo and bar that carries it.
   return (
     <button
       type="button"
+      data-js-only=""
       aria-pressed={fav}
       aria-label={fav ? "Remove from saved homes" : "Save this home"}
       title={fav ? "Remove from saved homes" : "Save this home"}

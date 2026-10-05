@@ -100,9 +100,11 @@ export function ListingSubNav({
     }`;
 
   return (
+    // Below md the bar holds only the actions, and without scripting they step aside, so the
+    // bar goes with them rather than sticking to the top as an empty strip.
     <nav
       aria-label="On this page"
-      className="sticky top-0 z-40 border-b border-ink/10 bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/80"
+      className="sticky top-0 z-40 border-b border-ink/10 bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/80 noscript:max-md:hidden"
     >
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 lg:px-8">
         <ul className="hidden min-w-0 flex-1 items-center gap-0.5 overflow-x-auto py-2 md:flex">
@@ -127,7 +129,9 @@ export function ListingSubNav({
           ))}
         </ul>
 
-        <div className="ml-auto flex shrink-0 items-center gap-2 py-2">
+        {/* Offer (a window event), Share and Save all need scripting, so the group steps aside
+            whole without it (globals.css data-js-only) and leaves no empty box at the end. */}
+        <div data-js-only="" className="ml-auto flex shrink-0 items-center gap-2 py-2">
           <button
             type="button"
             onClick={() => window.dispatchEvent(new CustomEvent("listing:make-offer"))}

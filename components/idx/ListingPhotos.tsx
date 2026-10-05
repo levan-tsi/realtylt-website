@@ -243,10 +243,14 @@ export function ListingPhotos({
             </span>
           )}
 
-          {/* Whole-tile trigger: mouse + keyboard open the lightbox at the hero (delegated). */}
+          {/* Whole-tile trigger: mouse + keyboard open the lightbox at the hero (delegated).
+              The lightbox is a client feature, so every trigger in this band steps aside without
+              scripting (globals.css data-js-only); the <details> grid below is that reader's
+              gallery. */}
           {heroReady && (
             <button
               type="button"
+              data-js-only=""
               data-lightbox-index={hero}
               aria-label={`Open the photo viewer for ${addressShort}`}
               // The one control here with no body of its own: it IS the picture, so an inside
@@ -264,12 +268,12 @@ export function ListingPhotos({
               there is nothing to page to. */}
           {heroReady && count > 1 && (
             <>
-              <button type="button" onClick={() => go(-1)} onKeyDown={arrowKeys} aria-label="Previous photo" className={`${arrowBtn} left-4`}>
+              <button type="button" data-js-only="" onClick={() => go(-1)} onKeyDown={arrowKeys} aria-label="Previous photo" className={`${arrowBtn} left-4`}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="m15 6-6 6 6 6" />
                 </svg>
               </button>
-              <button type="button" onClick={() => go(1)} onKeyDown={arrowKeys} aria-label="Next photo" className={`${arrowBtn} right-4`}>
+              <button type="button" data-js-only="" onClick={() => go(1)} onKeyDown={arrowKeys} aria-label="Next photo" className={`${arrowBtn} right-4`}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="m9 6 6 6-6 6" />
                 </svg>
@@ -280,7 +284,7 @@ export function ListingPhotos({
           {/* Bottom-left view modes; bottom-right the single "show all photos" control. */}
           {heroReady && (
             <>
-              <div className="absolute bottom-3 left-3 z-[7] flex items-center gap-1.5">
+              <div data-js-only="" className="absolute bottom-3 left-3 z-[7] flex items-center gap-1.5">
                 <button type="button" data-lightbox-index={hero} data-lightbox-tab="photos" aria-label="Open the photo viewer" title="Photos" className={overlayBtn}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2L8 5h8l1.5 2h2A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5Z" />
@@ -306,6 +310,7 @@ export function ListingPhotos({
               </div>
               <button
                 type="button"
+                data-js-only=""
                 data-lightbox-index={hero}
                 className={`absolute bottom-3 right-3 z-[7] inline-flex h-9 items-center gap-2 rounded-xl bg-ink/70 px-3.5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur ${PRESS} hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper`}
               >
@@ -345,6 +350,7 @@ export function ListingPhotos({
                 {tile(src, `${addressShort}, photo ${available.indexOf(src) + 1}`, "30vw")}
                 <button
                   type="button"
+                  data-js-only=""
                   data-lightbox-index={available.indexOf(src)}
                   aria-label={`View photo ${available.indexOf(src) + 1} full screen`}
                   className="absolute inset-0 z-[5] cursor-zoom-in transition-colors duration-150 focus-visible:bg-ink/55 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-paper motion-reduce:transition-none"
