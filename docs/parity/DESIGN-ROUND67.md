@@ -211,7 +211,11 @@ contrast, hover, taps. If he picks 1, the option is removed and nothing is rende
   touched suites. Still doing nothing without scripting, left as is: the mortgage calculator's four
   buttons (its figure is server-rendered in the header), the header's top-areas caret at 1440, the
   closed photo grid's 33 tiles (`role="button"` could wait for hydration).
-- **(6) /connect's booking sheet in a mount** (f98e547), the design of §2; its look on the rebuilt
-  server is checked at the round's close (headless Chrome does not paint Google's page, so the check
-  serves a white page in its place).
+- **(6) /connect's booking sheet in a mount** (f98e547), the design of §2, verified on the rebuilt
+  server: the wrapper measures `rgb(27, 29, 33)` (the night's raise), a `rgb(42, 43, 47)` hairline,
+  24 px radius, 8 px padding, the sheet inside at 16 px, 340 px wide at 390 and 744 at 1440 (the
+  column's width less the mount). Headless Chrome does not paint Google's page, so the look was
+  checked with a white page served in its place (`scripts/_scratch-r67/connect/after-*-corner.png`):
+  the white sheet sits in a dark mount with a drawn edge and nested corners, a document on the page
+  rather than a hole in it. The real embed is the owner's look on the preview.
 - **(5) The phone's Highlands horizon:** with the third Opus builder (the call in §2).
