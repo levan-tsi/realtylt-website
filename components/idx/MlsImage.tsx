@@ -39,6 +39,7 @@ export function MlsImage({
   onLoaded,
   onUnavailable,
   noPhotoCaption = true,
+  blankWhenUnavailable = false,
 }: {
   src: string;
   alt: string;
@@ -66,6 +67,10 @@ export function MlsImage({
   /** Portrait overlay tiles print their own price/address over the photo bottom — exactly where
    * the placeholder's baked caption sits — so they ask for the wordless cut of the artwork. */
   noPhotoCaption?: boolean;
+  /** Render nothing once every candidate has failed, for a tile too small for any placeholder
+   * (the mock thumbnails on /buying and /selling, 48 to 160 px). A boolean, so a server page
+   * can ask for it: a callback cannot cross into this client component. */
+  blankWhenUnavailable?: boolean;
   /** Called once every candidate has failed. When provided, this renders nothing instead of
    * the branded placeholder — the parent owns the surviving set and removes the tile. */
   onUnavailable?: () => void;
@@ -105,7 +110,7 @@ export function MlsImage({
     return release;
   }, [bustedSrc, needsSlot, failed, priority, paused]);
 
-  if (failed) return onUnavailable ? null : <NoPhoto caption={noPhotoCaption} />;
+  if (failed) return onUnavailable || blankWhenUnavailable ? null : <NoPhoto caption={noPhotoCaption} />;
 
   return (
     <>
