@@ -182,3 +182,36 @@ describe("a card's photo arrows step aside without scripting", () => {
     expect(openTagBefore(src, `aria-label="${label}"`, "button")).toMatch(JS_ONLY);
   });
 });
+
+/** Round 68: the three controls round 67 left doing nothing without scripting. */
+describe("the closed photo grid's tiles are buttons only once hydrated", () => {
+  const src = code(PHOTOS);
+  const tile = openTagBefore(src, "aria-label={hydrated ? `View photo ${i + 2} of ${count} full screen`", "div");
+  it("gates the role, the tab stop and the label on hydration (the grid stays the plain photo list)", () => {
+    expect(tile).toMatch(/role=\{hydrated \? "button" : undefined\}/);
+    expect(tile).toMatch(/tabIndex=\{hydrated \? 0 : undefined\}/);
+    expect(tile).not.toMatch(/data-js-only/);
+  });
+});
+
+describe("the header's top-areas caret steps aside (its flyout only opens by state)", () => {
+  it("marks the desktop caret, not the Top areas link beside it", () => {
+    const src = code("components/site/Header.tsx");
+    expect(openTagBefore(src, 'aria-controls="top-areas-flyout"', "button")).toMatch(JS_ONLY);
+    expect(openTagBefore(src, 'aria-controls="top-areas-flyout"', "Link")).not.toMatch(JS_ONLY);
+  });
+});
+
+describe("the mortgage calculator's buttons step aside; the example and the fields stay", () => {
+  const src = code("components/financing/MortgageCalculator.tsx");
+  it("marks Reset and the representative-rate rows (as one block with their heading)", () => {
+    expect(openTagBefore(src, "onClick={() => setValues(seeded)}", "button")).toMatch(JS_ONLY);
+    expect(openTagBefore(src, "Representative rates</p>", "div")).toMatch(JS_ONLY);
+  });
+  it("says what the reader is looking at, with the number, in the site's voice", () => {
+    const block = src.slice(src.indexOf("<noscript>"), src.indexOf("</noscript>"));
+    expect(block).toContain("href={SITE.phoneHref}");
+    expect(block).toContain("{SITE.phone}");
+    expect(block).not.toMatch(/—|→/);
+  });
+});

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PRESS } from "@/components/ui/Button";
+import { SITE } from "@/lib/site";
 import {
   calcMortgage,
   donutArcs,
@@ -141,8 +142,21 @@ export function MortgageCalculator({
             </div>
           ))}
         </div>
+        {/* Round 68: without scripting the fields are inert and the figure stays at the example, so
+            the Reset button and the rate rows step aside (the site's [data-js-only] rule) and one
+            line says what the reader is looking at. */}
+        <noscript>
+          <p className="t-small mt-6 text-paper/70">
+            The figures stay at this example until scripting is on. For your own numbers, call{" "}
+            <a href={SITE.phoneHref} className="underline underline-offset-4 hover:text-paper">
+              {SITE.phone}
+            </a>
+            .
+          </p>
+        </noscript>
         <button
           type="button"
+          data-js-only=""
           onClick={() => setValues(seeded)}
           // The site's own press, not a new one. `find-animation-opportunities` cleared this
           // page of every candidate except two pressable controls that answered nothing — this
@@ -272,7 +286,7 @@ export function MortgageCalculator({
 
         {/* Representative rates strip — clicking a term seeds the calculator's term + rate.
             Honest: derived from the editable rate above, not a live "today's rate" feed. */}
-        <div className="mt-6 border-t border-line-strong pt-5">
+        <div data-js-only="" className="mt-6 border-t border-line-strong pt-5">
           <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone">Representative rates</p>
           <ul className="mt-2 divide-y divide-line">
             {REP_RATE_TERMS.map((term) => {

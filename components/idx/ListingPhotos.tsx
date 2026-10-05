@@ -381,14 +381,17 @@ export function ListingPhotos({
             <span className="hidden group-open:inline">Hide photos</span>
           </summary>
           <div className="grid grid-cols-2 gap-1.5 pt-1.5 md:grid-cols-3">
+            {/* A tile is a button only once the gallery's delegated click can answer it (round 68):
+                without scripting the grid is the plain photo list, and a role="button" that opens
+                nothing is a dead control to a screen reader. */}
             {available.slice(1).map((p, i) => (
               <div
                 key={p}
                 data-lightbox-index={i + 1}
-                role="button"
-                tabIndex={0}
-                aria-label={`View photo ${i + 2} of ${count} full screen`}
-                className="photo-zoom relative aspect-[3/2] cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper md:rounded-xl"
+                role={hydrated ? "button" : undefined}
+                tabIndex={hydrated ? 0 : undefined}
+                aria-label={hydrated ? `View photo ${i + 2} of ${count} full screen` : undefined}
+                className={`photo-zoom relative aspect-[3/2] overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper md:rounded-xl ${hydrated ? "cursor-zoom-in" : ""}`}
               >
                 {tile(p, `${addressShort}, photo ${i + 2}`, "(max-width: 768px) 50vw, 33vw", { throttle: hydrated, paused: hydrated && !gridOpen })}
               </div>

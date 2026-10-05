@@ -281,6 +281,7 @@ export function Header() {
                         <button
                           ref={flyoutTrigger}
                           type="button"
+                          data-js-only=""
                           aria-expanded={flyout}
                           aria-controls="top-areas-flyout"
                           aria-label={`${flyout ? "Hide" : "Show"} all top areas`}
