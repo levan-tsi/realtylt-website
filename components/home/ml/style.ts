@@ -129,7 +129,7 @@ export const COARSE = { maxzoom: 6, below: 11.5, fullFrom: 10 } as const;
 /** `plate`: the plate style (the renderer's `?plate=` path only). `deep`: the plate is rendered at
  * twice the css size (one zoom deeper, the same ground): its zoom stops move up one and its widths
  * double, so the picture's lines are what the plain render would draw. */
-export type PlateOpt = { deep?: boolean; tint?: keyof typeof PLATE_TINTS | null; live?: boolean };
+export type PlateOpt = { deep?: boolean; tint?: keyof typeof PLATE_TINTS | null; live?: boolean; pal?: string | null };
 // Round 64, `live`: the LIVE style (tiledLayers) instead of the plate style, one zoom deeper when
 // `deep` (the territory and region plates, renderer only: `?plate=...&deep=1&pstyle=live`). The live
 // style at the territory's zoom 9 to 10 drapes its hairlines on the terrain from a texture too coarse
@@ -148,6 +148,22 @@ export const PLATE_TINTS: Record<"a" | "b", PlateTint> = {
   b: { green: "#0d1610", water: "#051030" },
 };
 
+/** Round 67, A STUDY FOR THE OWNER, NOT THE LIVE LOOK (his 2026-10-04 evening: "let's keep green",
+ * then polish it). The one tone the study moves is the woods' and the city parks' fill, held at the
+ * shipped darkness (OKLCH L 0.195) with the hue turned off teal toward a forest green: h1 the hue alone
+ * at the shipped chroma, h2 to h4 the same hue with a little more colour each (the plate's blend with
+ * the moonlit relief reads 15 to 20 hue degrees bluer than the fill). The plate renderer's `?pal=<id>`
+ * only (plate and live-deep alike); removed when the chosen value is baked. Without `pal`, or with an
+ * id this does not know, the style is the shipped document (style.test.ts pins it). */
+export const PALETTES: Record<string, { green: string }> = {
+  h0: { green: NIGHT.wood },
+  h1: { green: "#10170c" },
+  h2: { green: "#0d1809" },
+  h3: { green: "#0b1907" },
+  h4: { green: "#071a06" },
+};
+const greenOf = (pal: string | null | undefined): string => (pal && Object.prototype.hasOwnProperty.call(PALETTES, pal) ? PALETTES[pal].green : NIGHT.wood);
+
 /** The deep render's terrain level: the one the plain render would draw at one zoom less. A 512 px
  * terrarium tile is asked for at floor(zoom) - 1 (measured: the camera's centre elevation at the
  * Dutchess and Putnam plates matched the plain render's to the millimetre with this level, and
@@ -160,7 +176,8 @@ export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggera
   const buildings = o.buildings ?? true;
   const hillshade = o.hillshade ?? true;
   const dz = o.plate && o.plate.deep ? 1 : 0;
-  const base = o.plate && o.plate.live ? tiledLayers(hillshade, buildings, dz) : o.plate ? plateLayers(hillshade, buildings, o.plate.deep ? 1 : 0, o.plate.tint ? PLATE_TINTS[o.plate.tint] ?? null : null) : tiledLayers(hillshade, buildings);
+  const green = greenOf(o.plate ? o.plate.pal : null);
+  const base = o.plate && o.plate.live ? tiledLayers(hillshade, buildings, dz, green) : o.plate ? plateLayers(hillshade, buildings, o.plate.deep ? 1 : 0, o.plate.tint ? PLATE_TINTS[o.plate.tint] ?? null : null, green) : tiledLayers(hillshade, buildings);
   const layers: StyleSpecification["layers"] = o.coarse ? withCoarse(base, o.coarse) : base;
   return {
     version: 8,
@@ -203,10 +220,10 @@ function withCoarse(layers: StyleSpecification["layers"], c: { below: number }):
 
 /** The plate style's layers (PLATE_ROADS, PLATE). `dz`: the deep render's zoom shift (0 or 1): every
  * zoom stop moves up by it and every width doubles with it, so a line keeps its size in the picture. */
-function plateLayers(hillshade: boolean, buildings: boolean, dz: number, tint: PlateTint | null = null): StyleSpecification["layers"] {
+function plateLayers(hillshade: boolean, buildings: boolean, dz: number, tint: PlateTint | null = null, green: string = NIGHT.wood): StyleSpecification["layers"] {
   const k = 2 ** dz;
   const width = (w8: number, w16: number) => ["interpolate", ["exponential", 1.5], ["zoom"], 8 + dz, w8 * k, 16 + dz, w16 * k] as unknown as number;
-  const live = tiledLayers(hillshade, false);
+  const live = tiledLayers(hillshade, false, 0, green);
   const pick = (id: string) => live.find((l) => l.id === id)!;
   const notTunnel = ["!=", ["get", "brunnel"], "tunnel"];
   const line = (id: string, filter: unknown[], alpha: number, w8: number, w16: number) => ({
@@ -265,17 +282,17 @@ function plateLayers(hillshade: boolean, buildings: boolean, dz: number, tint: P
   ];
 }
 
-function tiledLayers(hillshade: boolean, buildings: boolean, dz = 0): StyleSpecification["layers"] {
+function tiledLayers(hillshade: boolean, buildings: boolean, dz = 0, green: string = NIGHT.wood): StyleSpecification["layers"] {
   const k = 2 ** dz;
   return [
     { id: "land", type: "background", paint: { "background-color": NIGHT.land } },
-    { id: "wood", type: "fill", source: "omt", "source-layer": "landcover", filter: ["==", ["get", "class"], "wood"], paint: { "fill-color": NIGHT.wood, "fill-antialias": false } },
+    { id: "wood", type: "fill", source: "omt", "source-layer": "landcover", filter: ["==", ["get", "class"], "wood"], paint: { "fill-color": green, "fill-antialias": false } },
     // Round 66: the city parks, the shapes a borough is known by, in the woods' green. They live in
     // landcover class grass, subclass park (OSM leisure=park). The plate style's park layer before this
     // read the OpenMapTiles park layer with class == "park", which no feature carries (they are
     // nature_reserve, State Park, conservation, ...): it drew nothing in the Queens, Manhattan, Brooklyn,
     // Dutchess and Highlands views, and those parks showed only as bare land between the town fills.
-    { id: "park", type: "fill", source: "omt", "source-layer": "landcover", filter: ["all", ["==", ["get", "class"], "grass"], ["==", ["get", "subclass"], "park"]], paint: { "fill-color": NIGHT.park, "fill-antialias": false } },
+    { id: "park", type: "fill", source: "omt", "source-layer": "landcover", filter: ["all", ["==", ["get", "class"], "grass"], ["==", ["get", "subclass"], "park"]], paint: { "fill-color": green, "fill-antialias": false } },
     {
       id: "town",
       type: "fill",

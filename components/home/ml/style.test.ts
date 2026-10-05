@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, PLATE, PLATE_ROADS_MINZOOM, PLATE_TINTS, deepDemMaxzoom, nightStyle } from "./style";
+import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, PALETTES, PLATE, PLATE_ROADS_MINZOOM, PLATE_TINTS, deepDemMaxzoom, nightStyle } from "./style";
 
 /** The colours a style value names (hex or rgba), as [r, g, b]. */
 function rgbOf(v: string): [number, number, number] | null {
@@ -291,5 +291,40 @@ describe("the live style one zoom deeper (the territory plates)", () => {
     }
     expect(layer(deep, "buildings").minzoom).toBe(BUILDINGS_MINZOOM + 1);
     for (const id of ["land", "wood", "town", "relief", "water"]) expect(JSON.stringify(layer(deep, id))).toBe(JSON.stringify(layer(live, id)));
+  });
+});
+
+/** Round 67: the park green study is a study for the owner, behind the plate option only (`?pal=`). */
+describe("the round 67 park green study (a study, not the live look)", () => {
+  const sha = (x: unknown) => createHash("sha256").update(JSON.stringify(x)).digest("hex").slice(0, 16);
+  const changed = (a: ReturnType<typeof nightStyle>, b: ReturnType<typeof nightStyle>) => a.layers.filter((l, i) => JSON.stringify(l) !== JSON.stringify(b.layers[i])).map((l) => l.id);
+  const kinds = [{}, { deep: true }, { live: true, deep: true }];
+  /** OKLab lightness of an sRGB hex (Björn Ottosson's matrices), the darkness the study holds. */
+  const oklabL = (hex: string) => {
+    const lin = (v: number) => (v / 255 <= 0.04045 ? v / 255 / 12.92 : ((v / 255 + 0.055) / 1.055) ** 2.4);
+    const [R, G, B] = rgbOf(hex)!.map(lin);
+    const l = Math.cbrt(0.4122214708 * R + 0.5363325363 * G + 0.0514459929 * B);
+    const m = Math.cbrt(0.2119034982 * R + 0.6806995451 * G + 0.1073969566 * B);
+    const s = Math.cbrt(0.0883024619 * R + 0.2817188376 * G + 0.6299787005 * B);
+    return 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s;
+  };
+  it("leaves every plate style as pinned without a palette, with one it does not know, or with the shipped one", () => {
+    for (const pal of [null, undefined, "", "x", "constructor", "__proto__", "h0"]) {
+      expect(sha(nightStyle({ plate: { pal } }))).toBe("74450fc64c0b2366");
+      expect(sha(nightStyle({ plate: { deep: true, pal } }))).toBe("307232e49fef51c8");
+      expect(sha(nightStyle({ plate: { live: true, deep: true, pal } }))).toBe("ade392fa050fc088");
+    }
+    expect(sha(nightStyle())).toBe("3bb8129ece5caa3c");
+    expect(PALETTES.h0.green).toBe(NIGHT.wood);
+  });
+  it("each study moves only the woods and the city parks, in every plate style", () => {
+    for (const pal of Object.keys(PALETTES).filter((p) => p !== "h0")) for (const k of kinds) expect(changed(nightStyle({ plate: { ...k, pal } }), nightStyle({ plate: { ...k, pal: "h0" } })), pal).toEqual(["wood", "park"]);
+  });
+  it("holds the shipped darkness (OKLab L within 0.0015) and stays a night (every channel under 0x20)", () => {
+    const L0 = oklabL(NIGHT.wood);
+    for (const [id, P] of Object.entries(PALETTES)) {
+      expect(Math.abs(oklabL(P.green) - L0), id).toBeLessThan(0.0015);
+      for (const v of rgbOf(P.green)!) expect(v, id).toBeLessThan(0x20);
+    }
   });
 });
