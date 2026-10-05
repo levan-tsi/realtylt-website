@@ -25,6 +25,13 @@ const hit = (id: string, lat: number, lng: number, precision = "Exact"): Geocode
 const GOOD = { lat: 41.6885, lng: -73.9171 };
 /** ~60km north — the "same street name in another county" failure this gate exists for. */
 const FAR = { lat: 42.25, lng: -73.9 };
+/** Feed zip 12545 where the building is in 12546 (round 66): 22 km from the feed zip's centroid,
+ * 0.2 km from the matched zip's, same city. */
+const TYPO = (id: string): GeocodeHit => ({
+  ...hit(id, 41.9465, -73.5251),
+  askedAddress: `${id} Ferris Lane, Millerton, NY, 12545`,
+  matchedAddress: `${id} FERRIS LN, MILLERTON, NY, 12546`,
+});
 
 function deps(over: Partial<GeocodeDeps> = {}): GeocodeDeps & { applied: { hits: readonly GeocodeHit[]; misses: ReadonlyArray<{ id: string; addrKey: string }> }[] } {
   const applied: { hits: readonly GeocodeHit[]; misses: ReadonlyArray<{ id: string; addrKey: string }> }[] = [];
@@ -113,6 +120,14 @@ describe("geocodePending", () => {
     });
     expect((await geocodePending(d, 10)).placed).toBe(0);
   });
+
+  it("measures a mistyped feed zip against the matched zip, from its own centroid table", async () => {
+    const d = deps({
+      listPending: async () => [{ ...row("A", "12545"), city: "Millerton" }],
+      geocode: async () => ({ hits: [TYPO("A")], misses: [] }),
+    });
+    expect(await geocodePending(d, 10)).toEqual({ considered: 1, placed: 1, unplaced: 0, rejected: 0 });
+  });
 });
 
 function soldDeps(over: Partial<SoldGeocodeDeps> = {}): SoldGeocodeDeps & { written: SoldGeocodeRecord[] } {
@@ -167,5 +182,13 @@ describe("geocodeSoldPending", () => {
       considered: 0, placed: 0, unplaced: 0, rejected: 0,
     });
     expect(listPending).not.toHaveBeenCalled();
+  });
+
+  it("measures a mistyped feed zip against the matched zip, from its own centroid table", async () => {
+    const d = soldDeps({
+      listPending: async () => [{ ...row("KEY1", "12545"), city: "Millerton" }],
+      geocode: async () => ({ hits: [TYPO("KEY1")], misses: [] }),
+    });
+    expect(await geocodeSoldPending(d, 10)).toEqual({ considered: 1, placed: 1, unplaced: 0, rejected: 0 });
   });
 });

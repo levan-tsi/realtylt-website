@@ -210,7 +210,8 @@ const GOOGLE_OK = new Set(["ROOFTOP", "RANGE_INTERPOLATED"]);
 const GOOGLE_CONCURRENCY = 5;
 
 async function googleOne(row, key) {
-  const q = encodeURIComponent(`${row.address}, ${row.city ?? ""}, ${row.state ?? "NY"} ${row.queryZip ?? row.zip}`.trim());
+  const asked = `${row.address}, ${row.city ?? ""}, ${row.state ?? "NY"} ${row.queryZip ?? row.zip}`.trim();
+  const q = encodeURIComponent(asked);
   const j = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${q}&key=${key}`, {
     signal: AbortSignal.timeout(20_000),
   })
@@ -222,7 +223,7 @@ async function googleOne(row, key) {
   if (!loc || !GOOGLE_OK.has(type)) return null;
   return {
     id: row.id, lat: loc.lat, lng: loc.lng, source: "google", precision: type,
-    matchedAddress: best.formatted_address ?? null, addrKey: addrKey(row.address, row.zip),
+    matchedAddress: best.formatted_address ?? null, askedAddress: asked, addrKey: addrKey(row.address, row.zip),
   };
 }
 
@@ -244,7 +245,7 @@ async function google(stats) {
     }
     const ok = [];
     for (const h of found) {
-      const why = rejectReason(h, centroidOf(zipOf.get(h.id)));
+      const why = rejectReason(h, centroidOf(zipOf.get(h.id)), centroidOf);
       if (why) {
         const k = why.replace(/[\d.]+km/, "Nkm");
         stats.rejected.set(k, (stats.rejected.get(k) ?? 0) + 1);
@@ -270,7 +271,7 @@ async function census(stats) {
       const { hits, misses } = await geocodeBatch(slice);
       const ok = [];
       for (const h of hits) {
-        const why = rejectReason(h, centroidOf(zipOf.get(h.id)));
+        const why = rejectReason(h, centroidOf(zipOf.get(h.id)), centroidOf);
         if (why) {
           const k = why.replace(/[\d.]+km/, "Nkm");
           stats.rejected.set(k, (stats.rejected.get(k) ?? 0) + 1);

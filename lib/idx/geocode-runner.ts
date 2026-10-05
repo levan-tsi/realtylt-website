@@ -55,7 +55,7 @@ export async function geocodePending(deps: GeocodeDeps, limit: number): Promise<
   let rejected = 0;
   for (const h of hits) {
     const row = pending.find((r) => r.id === h.id);
-    if (rejectReason(h, centroidOf(row?.zip))) {
+    if (rejectReason(h, centroidOf(row?.zip), centroidOf)) {
       rejected++;
       continue;
     }
@@ -111,7 +111,7 @@ export async function geocodeSoldPending(deps: SoldGeocodeDeps, limit: number): 
   for (const h of hits) {
     const row = byId.get(h.id);
     if (!row) continue; // a hit for a row we did not ask about — ignore
-    if (rejectReason(h, centroidOf(row.zip))) {
+    if (rejectReason(h, centroidOf(row.zip), centroidOf)) {
       rejected++;
       continue;
     }

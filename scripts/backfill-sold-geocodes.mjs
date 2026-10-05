@@ -155,7 +155,7 @@ for (let i = 0; i < pending.length; i += CENSUS_BATCH) {
     const { hits, misses } = await geocodeBatch(slice);
     const ok = [];
     for (const h of hits) {
-      const why = rejectReason(h, centroidOf(zipOf.get(h.id)));
+      const why = rejectReason(h, centroidOf(zipOf.get(h.id)), centroidOf);
       if (why) {
         const k = why.replace(/[\d.]+km/, "Nkm");
         stats.rejected.set(k, (stats.rejected.get(k) ?? 0) + 1);

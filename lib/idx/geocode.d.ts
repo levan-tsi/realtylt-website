@@ -18,6 +18,8 @@ export interface GeocodeHit {
   source: string;
   precision: string | null;
   matchedAddress: string | null;
+  /** The address as the geocoder was SENT it (Census echoes it; a Google ask records its query). */
+  askedAddress?: string | null;
   addrKey: string;
 }
 
@@ -35,6 +37,7 @@ export declare function parseSourceAddress(
 export declare function haversineMeters(aLat: number, aLng: number, bLat: number, bLng: number): number;
 export declare const MAX_ZIP_KM: number;
 export declare function rejectReason(
-  hit: Pick<GeocodeHit, "lat" | "lng" | "precision">,
+  hit: Pick<GeocodeHit, "lat" | "lng" | "precision"> & Partial<Pick<GeocodeHit, "matchedAddress" | "askedAddress">>,
   centroid: readonly number[] | null | undefined,
+  centroidOf?: (zip: string) => readonly number[] | null | undefined,
 ): string | null;
