@@ -286,7 +286,7 @@ export default async function HomePage() {
             {/* forCard (round 61): the cards' listings without the fields no card reads (the
                 descriptions, schools and the rest were ~110 KB of the page's payload). */}
             <DriftRail listings={featured.map(forCard)} ariaLabel="Featured listings" />
-            <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
+            <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6 night:text-moon/55" />
             <div className="mt-10 text-center">
               <Button href="/search" variant="outline">See more listings</Button>
             </div>
@@ -320,7 +320,7 @@ export default async function HomePage() {
             <div className="mt-10">
               <RailPager listings={fresh.map(forCard)} ariaLabel="New listings" />
             </div>
-            <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
+            <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6 night:text-moon/55" />
           </div>
         </section>
 
