@@ -206,7 +206,7 @@ describe("the live style, byte for byte", () => {
       sha(nightStyle()),
       sha(nightStyle({ terrain: false, hillshade: false, coarse: { below: COARSE.below, maxzoom: COARSE.maxzoom } })),
       sha(nightStyle({ buildings: false })),
-    ]).toEqual(["3bb8129ece5caa3c", "3abc93649eb278fd", "f2577a34c031ef2f"]); // re-pinned on purpose: round 66's picks (water w2, parks g2p, relief l1)
+    ]).toEqual(["8b0ab57229cb4976", "adc8f64d20f9201a", "00cb35d888d64a1b"]); // re-pinned on purpose: round 68, the green #0a190a baked (round 66 before it: w2, g2p, l1)
     expect(sha(nightStyle({ plate: false }))).toBe(sha(nightStyle()));
   });
   // Re-pinned on purpose, round 66 (docs/parity/DESIGN-ROUND66.md): the three picks of the owner's look
@@ -214,9 +214,9 @@ describe("the live style, byte for byte", () => {
   // the woods and the city parks one very dark green (g2p: #0c1810, the parks read from landcover
   // grass/park in both styles), the hills lit to read (l1: the hillshade at 0.50 / 0.9).
   it("bakes round 66's picks (w2, g2p, l1) into the plate styles", () => {
-    expect(sha(nightStyle({ plate: {} }))).toBe("74450fc64c0b2366");
-    expect(sha(nightStyle({ plate: { deep: true } }))).toBe("307232e49fef51c8");
-    expect(sha(nightStyle({ plate: { live: true, deep: true } }))).toBe("ade392fa050fc088");
+    expect(sha(nightStyle({ plate: {} }))).toBe("3124d6aa7f4c3608");
+    expect(sha(nightStyle({ plate: { deep: true } }))).toBe("1bf91bd394222eec");
+    expect(sha(nightStyle({ plate: { live: true, deep: true } }))).toBe("17014ccafb55b384");
   });
 });
 
@@ -251,7 +251,7 @@ describe("the plate tints (a comparison, not the live look)", () => {
   it("leaves the live style and the plate style without a tint as they were", () => {
     expect(sha(nightStyle({ plate: { tint: null } }))).toBe(sha(nightStyle({ plate: {} })));
     expect(sha(nightStyle({ plate: { deep: true, tint: null } }))).toBe(sha(nightStyle({ plate: { deep: true } })));
-    expect(sha(nightStyle())).toBe("3bb8129ece5caa3c"); // re-pinned on purpose: round 66's picks (w2, g2p, l1)
+    expect(sha(nightStyle())).toBe("8b0ab57229cb4976"); // re-pinned on purpose: round 66's picks (w2, g2p, l1)
   });
   it("changes only the wood, the parks and the water", () => {
     for (const k of ["a", "b"] as const) {
@@ -275,7 +275,7 @@ describe("the live style one zoom deeper (the territory plates)", () => {
   const sha = (x: unknown) => createHash("sha256").update(JSON.stringify(x)).digest("hex").slice(0, 16);
   const layer = (s: ReturnType<typeof nightStyle>, id: string) => s.layers.find((l) => l.id === id) as { minzoom?: number; paint: Record<string, unknown> };
   it("leaves the page's style as it was, and is the live style itself when not deep", () => {
-    expect(sha(nightStyle())).toBe("3bb8129ece5caa3c"); // re-pinned on purpose: round 66's picks (w2, g2p, l1)
+    expect(sha(nightStyle())).toBe("8b0ab57229cb4976"); // re-pinned on purpose: round 66's picks (w2, g2p, l1)
     expect(sha(nightStyle({ plate: { live: true } }).layers)).toBe(sha(nightStyle().layers));
   });
   it("moves every zoom stop up one and doubles every width, so the picture's lines are the live ones", () => {
@@ -310,11 +310,11 @@ describe("the round 67 park green study (a study, not the live look)", () => {
   };
   it("leaves every plate style as pinned without a palette, with one it does not know, or with the shipped one", () => {
     for (const pal of [null, undefined, "", "x", "constructor", "__proto__", "h0"]) {
-      expect(sha(nightStyle({ plate: { pal } }))).toBe("74450fc64c0b2366");
-      expect(sha(nightStyle({ plate: { deep: true, pal } }))).toBe("307232e49fef51c8");
-      expect(sha(nightStyle({ plate: { live: true, deep: true, pal } }))).toBe("ade392fa050fc088");
+      expect(sha(nightStyle({ plate: { pal } }))).toBe("3124d6aa7f4c3608");
+      expect(sha(nightStyle({ plate: { deep: true, pal } }))).toBe("1bf91bd394222eec");
+      expect(sha(nightStyle({ plate: { live: true, deep: true, pal } }))).toBe("17014ccafb55b384");
     }
-    expect(sha(nightStyle())).toBe("3bb8129ece5caa3c");
+    expect(sha(nightStyle())).toBe("8b0ab57229cb4976");
     expect(PALETTES.h0.green).toBe(NIGHT.wood);
   });
   it("each study moves only the woods and the city parks, in every plate style", () => {

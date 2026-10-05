@@ -40,9 +40,9 @@ export const NIGHT = {
   land: "#151922",
   /** Built-up land (landuse residential, commercial): a shade up, so a town reads as a place. */
   town: "#1d2330",
-  wood: "#0c1810",
+  wood: "#0a190a",
   /** The city parks (landcover grass/park: Central Park, Prospect Park, Flushing Meadows): the woods' green. */
-  park: "#0c1810",
+  park: "#0a190a",
   water: "#061534",
   /** Rivers and streams drawn as lines, a touch above the water so a river reads at any zoom. */
   stream: "#0f2a55",
@@ -159,7 +159,6 @@ export const PALETTES: Record<string, { green: string }> = {
   h0: { green: NIGHT.wood },
   h1: { green: "#10170c" },
   h2: { green: "#0d1809" },
-  h3: { green: "#0b1907" },
   h4: { green: "#071a06" },
 };
 const greenOf = (pal: string | null | undefined): string => (pal && Object.prototype.hasOwnProperty.call(PALETTES, pal) ? PALETTES[pal].green : NIGHT.wood);
