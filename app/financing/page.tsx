@@ -99,7 +99,7 @@ export default function FinancingPage() {
             </h2>
             <p className="mt-5 max-w-lg leading-relaxed text-paper/75">
               Before you start looking for a home to buy, it&rsquo;s a good idea to meet with your
-              Loan Officer to get pre-approved for a loan amount. At this stage, the lender gathers
+              loan officer to get pre-approved for a loan amount. At this stage, the lender gathers
               information about income, assets and debts of the borrower (you) to determine how
               much house you may be able to afford. This includes a credit report, W-2 forms, pay
               stubs, Federal Tax Returns and recent bank statements.
@@ -259,9 +259,12 @@ export default function FinancingPage() {
             <p className="mt-4 max-w-2xl leading-relaxed text-paper/75">
               Don&rsquo;t be surprised if you&rsquo;re asked for additional documentation or
               clarification throughout the process. Once your loan is approved, don&rsquo;t forget
-              to set up homeowners insurance. Your documents will be sent to the title company,
+              to set up homeowners insurance. Your documents will be sent to the title company,{" "}
               {/* "Congratulations, happy homeowner!" is gone (round 36): the keys ARE the
-                  moment, and an exclamation mark on top of them is the old vendor's voice. */}
+                  moment, and an exclamation mark on top of them is the old vendor's voice.
+                  The explicit space before this comment is load-bearing: JSX drops the line
+                  break on either side of an expression, and the sentence rendered as
+                  "company,where" (round 68). */}
               where you&rsquo;ll sign for the new home and pay any remaining costs. Then, the loan
               is recorded and you get the keys.
             </p>

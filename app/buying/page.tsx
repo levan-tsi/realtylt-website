@@ -77,7 +77,7 @@ export default async function BuyingPage() {
               says the two halves of the job in the order they happen, which is also what the
               subhead and the two CTAs are about. */}
           <h1 id="buying-hero" className="t-h1 mx-auto max-w-3xl text-paper">
-            We find the home. <strong>We negotiate the price.</strong>
+            We find the home. <strong>We&nbsp;negotiate the price.</strong>
           </h1>
           {/* The shouted line that used to sit here ("GET A FREE CONSULTATION WITH OUR BUYER
               SPECIALISTS") is gone. A 49-character sentence set in bold uppercase at 0.12em is
@@ -340,7 +340,7 @@ function Thumb({ listing }: { listing: Listing }) {
       <div className="relative aspect-[4/3]">
         {src ? (
           isLiveMlsPhoto(src) ? (
-            <MlsImage src={src} alt="" sizes="160px" />
+            <MlsImage src={src} alt="" sizes="160px" blankWhenUnavailable />
           ) : (
             <Image src={src} alt="" fill sizes="160px" className="object-cover" />
           )
@@ -389,7 +389,7 @@ function AlertsMock({ listings }: { listings: Listing[] }) {
                 <MockCard hairline={false} className="relative h-10 w-12 shrink-0">
                   {l.photos[0] ? (
                     isLiveMlsPhoto(l.photos[0]) ? (
-                      <MlsImage src={l.photos[0]} alt="" sizes="48px" />
+                      <MlsImage src={l.photos[0]} alt="" sizes="48px" blankWhenUnavailable />
                     ) : (
                       <Image src={l.photos[0]} alt="" fill sizes="48px" className="object-cover" />
                     )

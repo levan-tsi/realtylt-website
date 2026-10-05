@@ -398,7 +398,7 @@ export default async function SellingPage() {
                   </svg>
                 </span>
                 <span className="absolute bottom-3 left-3 rounded-lg bg-ink/70 px-2.5 py-1 text-xs font-medium text-paper">
-                  3D Walkthrough
+                  3D walkthrough
                 </span>
               </div>
             </Laptop>
@@ -567,12 +567,13 @@ function PathCard({
   );
 }
 
-/** One small photo cell — MLS photo (self-healing) or fixture image. */
+/** One small photo cell — MLS photo (self-healing) or fixture image. A tile that loses its photo
+ * stays plain (round 68): the branded placeholder's card-size caption overflowed a 120 px tile. */
 function CollageImg({ listing, sizes }: { listing: Listing; sizes: string }) {
   const src = listing.photos[0];
   if (!src) return null;
   return isLiveMlsPhoto(src) ? (
-    <MlsImage src={src} alt="" sizes={sizes} />
+    <MlsImage src={src} alt="" sizes={sizes} blankWhenUnavailable />
   ) : (
     <Image src={src} alt="" fill sizes={sizes} className="object-cover" />
   );
