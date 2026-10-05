@@ -218,4 +218,22 @@ contrast, hover, taps. If he picks 1, the option is removed and nothing is rende
   checked with a white page served in its place (`scripts/_scratch-r67/connect/after-*-corner.png`):
   the white sheet sits in a dark mount with a drawn edge and nested corners, a document on the page
   rather than a hole in it. The real embed is the owner's look on the preview.
-- **(5) The phone's Highlands horizon:** with the third Opus builder (the call in §2).
+- **(5) The phone's Highlands horizon: built by the third Opus builder (1e8c0be), verified here.**
+  `MlShot.horizon` (a share of the window's height) on `highlands.tall` only, 0.16, a linear ramp:
+  `horizonRamp(y, band)` multiplies every stamp's alpha (unlit, lit, featured), a light under 0.2 of
+  the ramp leaves the hit test, positions never change; the slot's layer reads its shot's band in the
+  current aspect, the film layer blends the source and destination bands by the frame shown so a
+  landing has no pop (measured: the band ends on the landed plate's 135.04 px exactly, and is null
+  everywhere on the laptop). Why 0.16: every text at the two Highlands stops already met its p95
+  floor, so the depth was settled on p99 (single lamps behind "Featured listings", 36 px, floor 3):
+  2.16 to 7.90 at the stop, and 30 px before it 1.90 to 3.04, the smallest band that clears both
+  (0.15 gives 2.80). The orchestrator looked at the 1:1 pairs (`scripts/_scratch-r67/horizon/pair-*`):
+  the far row dims into the horizon like distant lights, no edge where the band ends. Calibration
+  `--phone` 0.00 px at the hero, Queens, Dutchess County and the Highlands (133 of 133); taps 30 of 30
+  at the hero and Queens, 25 of 25 at the Highlands' second stop; the laptop at both stops changed in
+  the MLS line's timestamp alone (the lights 0 pixels). Tests: seven in `light-layer.test.ts`, one in
+  `shots.test.ts` (only `highlands.tall` carries a band); full suite 2,277, tsc clean. Left as found:
+  "See more listings" at the second stop keeps a p99 of 1.24 (mid-distance lamps under the button; a
+  0.3 band would dim the top third of the frame: not taken), and the MLS line 50 to 80 px above the
+  second stop reads 4.26 to 4.45 at p95 on the plate's horizon haze (pre-existing, no band moves it):
+  the line's grey is lifted one step below and re-measured.
