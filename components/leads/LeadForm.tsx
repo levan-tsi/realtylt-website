@@ -235,7 +235,25 @@ export function LeadForm({
   const nameCols = stack ? "" : "sm:grid-cols-2";
 
   return (
-    <form onSubmit={onSubmit} noValidate={false} className="grid gap-4">
+    <>
+      {/* Round 67: the form posts JSON from onSubmit, so without scripting a submit was a GET reload
+          that put the visitor's name, email and phone in the address bar and delivered nothing. The
+          lead route takes JSON only on purpose (a form-encoded post is a cross-site simple request),
+          so the form steps aside (globals.css data-js-only) and the plain path stands in its place. */}
+      <noscript>
+        <p className={`text-sm leading-relaxed ${dark ? "text-paper/70" : "text-stone"}`}>
+          This form needs JavaScript, which is off in your browser. Call or text{" "}
+          <a href={SITE.phoneHref} className={`font-bold underline-offset-4 hover:underline ${dark ? "text-paper" : "text-ink"}`}>
+            {SITE.phone}
+          </a>{" "}
+          or email{" "}
+          <a href={`mailto:${SITE.email}`} className={`font-bold underline-offset-4 hover:underline ${dark ? "text-paper" : "text-ink"}`}>
+            {SITE.email}
+          </a>
+          , and we answer the same day.
+        </p>
+      </noscript>
+    <form data-js-only="" onSubmit={onSubmit} noValidate={false} className="grid gap-4">
       {/* Honeypot — hidden from humans, bots fill it and get dropped server-side.
           Non-semantic name on purpose: browser autofill recognizes "website" fields. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
@@ -337,5 +355,6 @@ export function LeadForm({
         <p className={`text-xs tracking-wide ${dark ? "text-paper/60" : "text-stone"}`}>{footnote}</p>
       )}
     </form>
+    </>
   );
 }

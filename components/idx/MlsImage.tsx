@@ -126,6 +126,9 @@ export function MlsImage({
           sizes={sizes}
           priority={priority}
           unoptimized
+          // Round 67: without scripting onLoad never runs and the photo stayed at opacity 0 under its
+          // skeleton (grey frames on a listing); globals.css shows [data-mls-img] when scripting is off.
+          data-mls-img=""
           className={`${className} transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"}`}
           onLoad={() => {
             releaseRef.current();

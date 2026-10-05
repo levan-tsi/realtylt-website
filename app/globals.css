@@ -985,6 +985,13 @@ body.rlt-quiz-open .rlt-panel {
   [data-js-only] {
     display: none !important;
   }
+  /* Round 67: a listing photo reveals itself in onLoad (components/idx/MlsImage.tsx), so with
+     scripting off every admitted photo sat at opacity 0 under its skeleton: grey frames, no home.
+     The image is in the DOM with its real source; show it. Held (throttled) tiles stay hidden on
+     purpose: without scripting nothing paces the media host. */
+  [data-mls-img] {
+    opacity: 1 !important;
+  }
 }
 /* The home hero's words start below the header, and without JavaScript the night header carries
    one more row below xl (its folded link list, components/site/Header.tsx), so they start that

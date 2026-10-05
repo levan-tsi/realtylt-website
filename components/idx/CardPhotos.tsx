@@ -57,6 +57,7 @@ export function CardPhotos({
           <button
             type="button"
             aria-label="Previous photo"
+            data-js-only=""
             className={`${arrowCls} left-2`}
             onClick={(e) => {
               e.preventDefault();
@@ -71,6 +72,7 @@ export function CardPhotos({
           <button
             type="button"
             aria-label="Next photo"
+            data-js-only=""
             className={`${arrowCls} right-2`}
             onClick={(e) => {
               e.preventDefault();

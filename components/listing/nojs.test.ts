@@ -149,3 +149,36 @@ describe("Share and Save step aside wherever they appear", () => {
     expect(openTagBefore(src, 'type="button"', "button")).toMatch(JS_ONLY);
   });
 });
+
+/** Round 67, the orchestrator's follow-ups to the builder's pass: the lead form (every surface), the
+ * listing photos, and the card arrows. */
+describe("the lead form steps aside without scripting, and a plain path stands in its place", () => {
+  const src = code("components/leads/LeadForm.tsx");
+  it("marks the form (a no-script submit was a GET that put the visitor's details in the URL)", () => {
+    expect(openTagBefore(src, "onSubmit={onSubmit}", "form")).toMatch(JS_ONLY);
+  });
+  const block = src.slice(src.indexOf("<noscript>"), src.indexOf("</noscript>"));
+  it("offers the phone and the email, in the site's voice", () => {
+    expect(block).toMatch(/href=\{SITE\.phoneHref\}/);
+    expect(block).toMatch(/mailto:\$\{SITE\.email\}/);
+    expect(block).not.toMatch(/—|→/);
+  });
+});
+
+describe("a listing photo shows without scripting", () => {
+  it("MlsImage marks its image, which only reveals itself in onLoad", () => {
+    expect(openTagBefore(code("components/idx/MlsImage.tsx"), "key={bustedSrc}", "Image")).toMatch(/\sdata-mls-img=""/);
+  });
+  it("globals.css lifts it to opacity 1 when scripting is off", () => {
+    const css = read("app/globals.css");
+    const block = css.slice(css.indexOf("@media (scripting: none) {"), css.indexOf("@media (scripting: none) and"));
+    expect(block).toMatch(/\[data-mls-img\]\s*\{\s*opacity:\s*1\s*!important;?\s*\}/);
+  });
+});
+
+describe("a card's photo arrows step aside without scripting", () => {
+  const src = code("components/idx/CardPhotos.tsx");
+  it.each(["Previous photo", "Next photo"])("%s", (label) => {
+    expect(openTagBefore(src, `aria-label="${label}"`, "button")).toMatch(JS_ONLY);
+  });
+});
