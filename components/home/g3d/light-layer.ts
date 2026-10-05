@@ -29,6 +29,21 @@ export interface LayerProjector {
 
 type Rect = { x: number; y: number; w: number; h: number };
 
+/** THE HORIZON BAND (round 67, docs/parity/DESIGN-ROUND67.md §2 (5)): where a camera sees to the
+ * horizon behind the words (the phone's Highlands), the far lamps crowd into one bright row under
+ * the heading. A light's strength is multiplied by this ramp at its screen y: 0 at the window's top
+ * edge, rising linearly to 1 at the band's bottom (`band`, css px; null or 0 for none), so the far
+ * lights dim into the horizon as distant lights do. Linear, because the lights are separate points:
+ * at 1:1 on the phone no edge shows where the band ends (an ease-in was not needed). Positions never
+ * change. */
+export function horizonRamp(y: number, band: number | null): number {
+  if (!band || band <= 0) return 1;
+  return Math.min(1, Math.max(0, y / band));
+}
+/** A light dimmed under this share of its strength is not in the hit test: a tap does not route to a
+ * light the eye cannot see. */
+export const HORIZON_HIT_MIN = 0.2;
+
 /** ONE LIGHT, BAKED at its own device-pixel size (glyph.ts glyphAdd, the cover's own sum), core and
  * halo together, so a frame is one unscaled drawImage per light added with "lighter". Measured: the
  * first build drew two sprites a light scaled down from 64 px with "high" smoothing, 1.09 ms a
@@ -129,6 +144,8 @@ export class LightLayer {
   cost = { frames: 0, totalMs: 0, maxMs: 0, samples: [] as number[] };
   /** Draw no light here (Google's logo corner, policy: never covered). */
   avoid: Rect | null = null;
+  /** The horizon band's bottom for this frame, css px, or null for none (horizonRamp). */
+  horizonOf?: () => number | null;
   /** The neighbourhood glow's strength (glyph.ts GLOW_ALPHA unless the page's `?glow=` says). */
   glowStrength: number | undefined = undefined;
   /** The halo's radius as a scale of glyph.ts's (1 unless the page's `?halo=` says; round 58). */
@@ -320,13 +337,15 @@ export class LightLayer {
     const bases = stepped.map((gl, l) => this.bakeOf(gl, 0, l));
     const litHomes = new Map<number, number>();
     for (const [key, v] of this.litK) if (key.startsWith("h:")) litHomes.set(Number(key.slice(2)), v);
+    const band = this.horizonOf?.() ?? null;
     let k = 0;
     for (const [i, fd] of this.fades) {
       if (!at(this.ecef, i, p)) continue;
       if (p.x < -reach || p.y < -reach || p.x > this.w + reach || p.y > this.h + reach) continue;
       // Nothing in Google's logo corner: not drawn, and so not hoverable either.
       if (av && blocked(p.x, p.y, r0)) continue;
-      if (fd.to === 1 && fd.a > 0.5) {
+      const hz = horizonRamp(p.y, band);
+      if (fd.to === 1 && fd.a > 0.5 && hz >= HORIZON_HIT_MIN) {
         this.xy[2 * k] = p.x;
         this.xy[2 * k + 1] = p.y;
         this.xyIndex[k] = i;
@@ -335,8 +354,8 @@ export class LightLayer {
       const lk = litHomes.size ? litHomes.get(i) ?? 0 : 0;
       if (lk > 0) {
         const gl = litGlyph(stepped[this.level[i]] ?? g, this.litEase(`h:${i}`, lk));
-        this.stamp(ctx, p.x, p.y, this.bakeOf(gl, lk), easeFade(fd.a));
-      } else this.stamp(ctx, p.x, p.y, bases[this.level[i]] ?? bases[2], fd.a === 1 ? 1 : easeFade(fd.a));
+        this.stamp(ctx, p.x, p.y, this.bakeOf(gl, lk), easeFade(fd.a) * hz);
+      } else this.stamp(ctx, p.x, p.y, bases[this.level[i]] ?? bases[2], (fd.a === 1 ? 1 : easeFade(fd.a)) * hz);
     }
     this.xyCount = k;
     const fg = featuredGlyph(g);
@@ -346,7 +365,7 @@ export class LightLayer {
       const lk = this.litK.get(`f:${this.featIds[j]}`) ?? 0;
       const gl = lk > 0 ? litGlyph(fg, this.litEase(`f:${this.featIds[j]}`, lk)) : fg;
       if (blocked(p.x, p.y, reachOf(gl))) continue;
-      this.stamp(ctx, p.x, p.y, this.bakeOf(gl, lk), 1);
+      this.stamp(ctx, p.x, p.y, this.bakeOf(gl, lk), horizonRamp(p.y, band));
     }
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";

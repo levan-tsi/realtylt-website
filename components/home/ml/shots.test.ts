@@ -16,6 +16,16 @@ describe("the shot table", () => {
   it("has every shot the page flies to", () => {
     for (const n of LADDER) expect(ML_SHOTS[n], n).toBeDefined();
   });
+  // Round 67 (docs/parity/DESIGN-ROUND67.md §2 (5)): the phone's Highlands camera sees to the horizon,
+  // and its far lamps fade in a top band (0.16 of the window, settled by the phone contrast kit). Only
+  // that shot carries one, so a band is never added to another shot or to the laptop by accident.
+  it("gives a horizon band to the phone's Highlands only", () => {
+    for (const [n, t] of Object.entries(ML_SHOTS))
+      for (const a of ["wide", "tall"] as const) {
+        if (n === "highlands" && a === "tall") expect(t[a].horizon).toBe(0.16);
+        else expect(t[a].horizon, `${n} ${a}`).toBeUndefined();
+      }
+  });
   // Round 65: MAX_PITCH 68 for the laptop's first screen (W10); the other shots stay 55 to 65.
   it("tilts every shot 55 to 68 degrees", () => {
     for (const [n, t] of Object.entries(ML_SHOTS))

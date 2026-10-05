@@ -29,6 +29,7 @@ import type { CameraFrame } from "../g3d/camera";
 import type { FeaturedHome, Homes } from "../g3d/controller";
 import { FLY_IN_MS } from "../g3d/interaction";
 import { mercX, mercY } from "../ml/geo";
+import { ML_SHOTS } from "../ml/shots";
 import type { MlStats } from "../ml/controller";
 import type { GroundEngine } from "../ml/engine";
 import { aspectFor, coverFit, filmDataSrc, filmFormat, filmLadder, filmOf, filmSrc, filmWidthFor, framePlate, plateProjector, plateRange, plateSrc, plateSrcSet, type CoverFit, type FilmClip, type FilmFormat, type FilmFrame, type FilmManifest, type Plate, type PlateAspect, type PlateFormat, type PlateManifest, type Projector } from "./plate-frame";
@@ -176,7 +177,7 @@ export class PlateController implements GroundEngine {
   }
 
   /** A light canvas projected by a picture's own camera (a plate's, or the film's frame on screen). */
-  private lightsFor(canvas: HTMLCanvasElement, s: { plate: Plate | null; fit: CoverFit; at: Projector | null }): LightLayer {
+  private lightsFor(canvas: HTMLCanvasElement, s: { plate: Plate | null; fit: CoverFit; at: Projector | null; shot?: ShotName | null }): LightLayer {
     const layer = new LightLayer(
       canvas,
       () => this.cameraOfSlot(s),
@@ -204,6 +205,21 @@ export class PlateController implements GroundEngine {
     layer.haloScale = this.opts.halo;
     layer.haloStrength = this.opts.ha;
     layer.coreRgb = this.opts.core;
+    // Round 67, the horizon band (../ml/shots.ts `horizon`, a share of the box's height): a plate's
+    // slot (it carries its shot) takes its shot's band in this aspect. The film layer takes the band
+    // of the frame on screen: the source shot's fading out and the destination's coming in with the
+    // film's progress (0 at its first frame, plate A; 1 at its last, plate B), so neither end pops.
+    const band = (shot: ShotName | null | undefined) => (shot && ML_SHOTS[shot][this.aspect()].horizon) || 0;
+    layer.horizonOf = () => {
+      let k: number;
+      if ("shot" in s) k = band(s.shot);
+      else {
+        const m = this.motion.motion, run = this.playing;
+        const t = run ? run.reached / run.entry.clip.n : 0;
+        k = m ? band(m.from) * (1 - t) + band(m.to) * t : 0;
+      }
+      return k > 0 ? k * this.box().height : null;
+    };
     return layer;
   }
 

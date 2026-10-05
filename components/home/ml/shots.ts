@@ -22,6 +22,10 @@ export interface MlShot {
   range: number;
   pitch: number;
   bearing: number;
+  /** Round 67: the share of the window's height, from the top, over which our lights fade in (0 at
+   * the top edge to full at the band's bottom; ../g3d/light-layer.ts horizonRamp). Only where the
+   * camera sees to the horizon behind the words. */
+  horizon?: number;
 }
 
 const s = (lat: number, lng: number, range: number, pitch: number, bearing: number): MlShot => ({ lat, lng, range, pitch, bearing });
@@ -54,7 +58,12 @@ export const ML_SHOTS: Record<ShotName, { wide: MlShot; tall: MlShot }> = {
   // size; Staten Island and the Rockaway shore crop (his word: Staten Island may go). Phone unchanged.
   hero: { wide: s(40.8866, -74.3111, 110_800, 60, 345), tall: s(40.93, -73.9, 140_000, 55, 340) },
   dutchess: { wide: s(41.7211, -73.958, 11_000, 60, 5), tall: s(41.7102, -73.9449, 11_000, 60, 5) },
-  highlands: { wide: s(41.426, -73.9668, 12_000, 60, 190), tall: s(41.426, -73.9668, 12_000, 60, 190) },
+  // Round 67 (docs/parity/DESIGN-ROUND67.md §2 (5)): on the phone this camera sees to the horizon, and
+  // a dense row of far lamps sat behind "Featured listings" (p99 2.1, floor 3) and the MLS line. Its
+  // lights fade over the window's top 0.16: the smallest band that holds the heading at its floor at
+  // its stop (p99 7.9) and 30 px before it (3.04; 0.15 gave 2.80), measured with the phone contrast
+  // kit (scripts/_scratch-r67/horizon/). The laptop, which does not see the horizon, has none.
+  highlands: { wide: s(41.426, -73.9668, 12_000, 60, 190), tall: { ...s(41.426, -73.9668, 12_000, 60, 190), horizon: 0.16 } },
   westchester: { wide: s(41.0702, -73.8934, 11_000, 60, 265), tall: s(41.0702, -73.8934, 11_000, 60, 265) },
   ulster: { wide: s(41.8992, -73.9912, 9_000, 60, 270), tall: s(41.9187, -73.9837, 9_000, 60, 270) },
   "dutchess-county": { wide: s(41.7206, -73.9322, 9_000, 60, 80), tall: s(41.7004, -73.935, 9_000, 60, 80) },
