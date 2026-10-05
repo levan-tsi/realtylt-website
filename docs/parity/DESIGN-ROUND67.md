@@ -125,4 +125,64 @@ The `r65-preview-a/b/c` branches on origin are his to release (the handoff names
 
 ## 3. Results
 
-(Filled as the round runs.)
+### 3a. The green's hue, measured and looked at (2026-10-04 evening)
+
+Forty plates shot (five studies, four shots, both aspects; 0 errors), the control re-encoded against the
+shipped plates at a mean 0.00 to 1.22 levels apart (queens-tall the 1.22: the tiles moved a little since
+round 66's render; nothing a study can see), the forty composites each served their own plate, the numbers
+in `scripts/_scratch-r67/hue/measure.json`, the sheets in `hue/sheets/`, his tiles in `owner/`.
+
+**On the plate, the shipped green is bluer than its fill.** The fill is hue 154; the green's mean on the
+plate reads hue 166 at Queens, 175 to 179 at the hero and Dutchess, and 201 to 205 at the Highlands (the
+forest, 52 to 58 % of that plate), at chroma 0.016 to 0.021. The Highlands are the bluest because the
+moonlit relief owns the colour there: the hillshade's blue highlight over steep woods. That is his round 66
+pick (l1) and is not touched; it means no fill makes the Highlands a true forest green, only less teal.
+
+**The step, measured as OKLab distance from the shipped green on the plate** (round 66 read 0.007 as
+no step and 0.018 to 0.020 as one):
+
+| study | distance, hero / Dutchess / Queens / Highlands | hue on the plate (Queens / Highlands) | chroma on the plate | by eye at 1:1 |
+|---|---|---|---|---|
+| h1, the hue alone | 0.006 / 0.008 / 0.007 / 0.006 | 146 / 183 to 189 | 0.011 to 0.018 (drops) | cannot be told from today |
+| h2, a touch more colour | 0.010 / 0.012 / 0.012 / 0.009 | 145 / 169 to 173 | 0.016 to 0.027 | a hint |
+| h3, the first visible step | 0.015 / 0.017 / 0.017 / 0.013 | 144 / 163 to 167 | 0.020 to 0.033 | the forest and Flushing Meadows read green, quietly |
+| h4, plainly a step | 0.019 / 0.023 / 0.021 / 0.017 | 147 / 164 to 166 | 0.025 to 0.040 | plainly green |
+
+What does not move, by design: the blend against the land within 24 px (1.003 to 1.114 across every study,
+within 0.005 of today's at each plate), the land's mean lightness, the plate's grey mean (within 0.15 of
+255). The darkness is held; only the colour of the green changes.
+
+**The finding.** The pure hue polish (h1) is the arithmetic's prediction come true: at the shipped chroma
+the move is under the visible step everywhere and the chroma on the plate even drops (a bluer land under
+a less blue fill cancels). It would be an 85-minute re-render he could not see. The first version he can
+see is h3, and at 1:1 it is the right one: the Highlands forest and Flushing Meadows read as green ground
+rather than slate, the lamps are still the only bright thing, the water keeps its place as the one strong
+colour (its chroma 0.065 against the green's 0.03), and nothing gets lighter. h4 is the same move a step
+louder: plainly green, still dark, still blending by the numbers; it reads as "a green map" more than "a
+night map with woods".
+
+**Recommendation: h3 (`#0b1907`).** His three tiles are `scripts/_scratch-r67/owner/green-close.jpg` (the
+real pixels: the Highlands forest and Flushing Meadows, phone and laptop), `green-phone.jpg` and
+`green-laptop.jpg` (the Highlands and Queens stops as he sees them), labelled 1 Today, 2 Recommended, 3
+More green. The decision page for him is linked from the checkpoint. On his pick: bake the value into
+`NIGHT.wood` and `NIGHT.park`, remove `PALETTES` and the `pal` plumbing, re-pin the four fingerprints on
+purpose, ONE re-render with round 66's five steps (both manifests unchanged), then calibration, walks,
+contrast, hover, taps. If he picks 1, the option is removed and nothing is rendered.
+
+### 3b. The other items
+
+- **(3) The geocoder rules: built by the Opus builder, verified here** (commit 1bf6777). The diff read in
+  full: rule A compares a reduced "directional|name" of the street SENT (Census echoes its input in the
+  batch line's second field, kept as `askedAddress`; the Google ask stores its own query) against the
+  matched street, Non_Exact hits only; rule B runs only after the 15 km test has failed and only turns a
+  refusal into an acceptance. The two test files re-run by the orchestrator: 65 of 65 (geocode 34 to 50,
+  runner 13 to 15); the builder's full suite 2,243, tsc clean, re-run at the round's gate. Limits the
+  builder named and the orchestrator accepts: rule A can refuse a Non_Exact answer whose asked street
+  carries a trailing word `withoutUnit` does not strip ("Rear", "Upper") or a route spelling outside its
+  list; nothing already stamped is re-judged (the 16 refused rows need an owner-approved `--retry`).
+- **(7) /financing's phone hero: measured, closes.** The words against the real photo pixels (the ink made
+  transparent, the box's 95th and 99th percentile luminance): at 390 the headline 7.69, the paragraph
+  7.62 at its 85 % ink, the button 18.7; at 1440 7.69 / 9.03 / 18.7; floors 3 and 4.5. The flat scrim is
+  doing its job; nothing changes.
+- **(4) A listing page with JavaScript off:** with the second Opus builder (the call in §2).
+- **(5), (6):** after (4), one at a time (each needs the one server).
