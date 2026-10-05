@@ -1302,7 +1302,7 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
             it). Phones: never the line, the (i) alone from the start (the guideline: "mobile devices may
             have attribution after one interaction ... an icon or link that opens a pop-up"). */}
         {credit === "line" ? (
-          <p className="m-0 hidden max-w-[280px] md:block [&_a]:underline-offset-2 hover:[&_a]:underline">
+          <p className="m-0 hidden max-w-[280px] md:block [&_a]:underline-offset-2 hover:[&_a]:underline [&_a:focus-visible]:underline [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-2 [&_a:focus-visible]:outline-white">
             <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">
               © OpenStreetMap contributors
             </a>{" "}
@@ -1328,7 +1328,9 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
           >
             i
           </summary>
-          <p className="m-0 mt-1 max-w-[280px] [&_a]:underline-offset-2 hover:[&_a]:underline">
+          {/* The credit's links paint a ring on keyboard focus (round 68: the focus-paint gate found
+              the first of them changed no pixel when a keyboard reached it). */}
+          <p className="m-0 mt-1 max-w-[280px] [&_a]:underline-offset-2 hover:[&_a]:underline [&_a:focus-visible]:underline [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-2 [&_a:focus-visible]:outline-white">
             <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">
               © OpenStreetMap contributors
             </a>{" "}
