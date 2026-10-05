@@ -164,7 +164,9 @@ night map with woods".
 **Recommendation: h3 (`#0b1907`).** His three tiles are `scripts/_scratch-r67/owner/green-close.jpg` (the
 real pixels: the Highlands forest and Flushing Meadows, phone and laptop), `green-phone.jpg` and
 `green-laptop.jpg` (the Highlands and Queens stops as he sees them), labelled 1 Today, 2 Recommended, 3
-More green. The decision page for him is linked from the checkpoint. On his pick: bake the value into
+More green. His decision page: https://claude.ai/artifact/6BzWKcRVtjtPvfVAVWtb1b (the three sheets, the
+recommendation, what happens on his pick; the page's source is the session scratchpad's
+`round67-green-pick.html`, built by `build-decision.mjs` from the owner sheets). On his pick: bake the value into
 `NIGHT.wood` and `NIGHT.park`, remove `PALETTES` and the `pal` plumbing, re-pin the four fingerprints on
 purpose, ONE re-render with round 66's five steps (both manifests unchanged), then calibration, walks,
 contrast, hover, taps. If he picks 1, the option is removed and nothing is rendered.
