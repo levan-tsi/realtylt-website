@@ -236,4 +236,15 @@ contrast, hover, taps. If he picks 1, the option is removed and nothing is rende
   "See more listings" at the second stop keeps a p99 of 1.24 (mid-distance lamps under the button; a
   0.3 band would dim the top third of the frame: not taken), and the MLS line 50 to 80 px above the
   second stop reads 4.26 to 4.45 at p95 on the plate's horizon haze (pre-existing, no band moves it):
-  the line's grey is lifted one step below and re-measured.
+  fixed next.
+- **The home page's MLS line, a step lighter on the night map.** The orchestrator's own probe
+  (`scripts/_scratch-r67/mls/between.mjs`: the ink made transparent, the line's box read at p95 and
+  p99) confirmed the builder's reading: at the night's haze the line measured 4.84 at the first stop,
+  4.27 and 4.41 at 80 and 50 px above the second, 5.82 at it. The first attempt was wrong and is
+  recorded: passing the component's `dark` variant read 1.16 to 1.47, because under the night root
+  `--color-paper` IS the night (globals.css re-points it) and `text-paper/50` is near-black ink at half
+  strength; reverted within the hour. The fix: the home's two lines keep the shared component and lift
+  themselves alone, night-only (`night:text-moon/55` through the component's className): 6.94 / 6.15 /
+  6.36 / 8.33 at the four readings, the kit's "Information provided by One Key" 12.06 at the Highlands
+  stop; the One Key mark's on-dark cut, as before; every other page's line keeps the haze on its solid
+  night ground (6.8:1 there). Looked at: muted legal print, legible, not louder than the lamps.
