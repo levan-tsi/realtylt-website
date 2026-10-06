@@ -1,6 +1,9 @@
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, PALETTES, PLATE, PLATE_ROADS_MINZOOM, PLATE_TINTS, deepDemMaxzoom, nightStyle } from "./style";
+import { ATTRIBUTION, BUILDINGS_MINZOOM, COARSE, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, PALETTES, PARK_LIKE, PLATE, PLATE_ROADS_MINZOOM, PLATE_TINTS, deepDemMaxzoom, nightStyle } from "./style";
+
+/** Round 68: the layers drawn in the woods' green (the woods, the city parks and every park-like class). */
+const GREEN_IDS = ["wood", "park", "park-landuse", "park-reserve"];
 
 /** The colours a style value names (hex or rgba), as [r, g, b]. */
 function rgbOf(v: string): [number, number, number] | null {
@@ -206,17 +209,19 @@ describe("the live style, byte for byte", () => {
       sha(nightStyle()),
       sha(nightStyle({ terrain: false, hillshade: false, coarse: { below: COARSE.below, maxzoom: COARSE.maxzoom } })),
       sha(nightStyle({ buildings: false })),
-    ]).toEqual(["3bb8129ece5caa3c", "3abc93649eb278fd", "f2577a34c031ef2f"]); // re-pinned on purpose: round 66's picks (water w2, parks g2p, relief l1)
+    ]).toEqual(["1f50b6a8c726af1b", "ff448899e9cf4064", "d67d5bed9045340e"]); // re-pinned on purpose: round 66's picks (water w2, parks g2p, relief l1); round 68: the park-like classes
     expect(sha(nightStyle({ plate: false }))).toBe(sha(nightStyle()));
   });
   // Re-pinned on purpose, round 66 (docs/parity/DESIGN-ROUND66.md): the three picks of the owner's look
   // studies baked into NIGHT and the shared layers: the water a step darker (w2: #061534, stream #0f2a55),
   // the woods and the city parks one very dark green (g2p: #0c1810, the parks read from landcover
   // grass/park in both styles), the hills lit to read (l1: the hillshade at 0.50 / 0.9).
-  it("bakes round 66's picks (w2, g2p, l1) into the plate styles", () => {
-    expect(sha(nightStyle({ plate: {} }))).toBe("74450fc64c0b2366");
-    expect(sha(nightStyle({ plate: { deep: true } }))).toBe("307232e49fef51c8");
-    expect(sha(nightStyle({ plate: { live: true, deep: true } }))).toBe("ade392fa050fc088");
+  // Re-pinned on purpose, round 68: the park-like classes (style.ts PARK_LIKE: the park layer's wider
+  // grass subclasses and the two new layers park-landuse and park-reserve, same green, both styles).
+  it("bakes round 66's picks (w2, g2p, l1) and round 68's park-like classes into the plate styles", () => {
+    expect(sha(nightStyle({ plate: {} }))).toBe("b591eb31715a159b");
+    expect(sha(nightStyle({ plate: { deep: true } }))).toBe("ccaea3b18b57ecd9");
+    expect(sha(nightStyle({ plate: { live: true, deep: true } }))).toBe("910a944cb581f71b");
   });
 });
 
@@ -229,7 +234,9 @@ describe("the city parks (round 66)", () => {
   it("read landcover grass/park in the woods' green, the same layer live and on every plate", () => {
     const live = layer(nightStyle(), "park");
     expect(live["source-layer"]).toBe("landcover");
-    expect(JSON.stringify(live.filter)).toBe(JSON.stringify(["all", ["==", ["get", "class"], "grass"], ["==", ["get", "subclass"], "park"]]));
+    // Round 68, widened on purpose: grass/park and the other park-like grass subclasses (PARK_LIKE.grass).
+    expect(JSON.stringify(live.filter)).toBe(JSON.stringify(["all", ["==", ["get", "class"], "grass"], ["match", ["get", "subclass"], [...PARK_LIKE.grass], true, false]]));
+    expect(PARK_LIKE.grass).toContain("park");
     expect(live.paint["fill-color"]).toBe(NIGHT.park);
     expect(NIGHT.park).toBe(NIGHT.wood);
     for (const plate of [{}, { deep: true }, { live: true, deep: true }]) expect(JSON.stringify(layer(nightStyle({ plate }), "park"))).toBe(JSON.stringify(live));
@@ -244,6 +251,47 @@ describe("the city parks (round 66)", () => {
   });
 });
 
+/** Round 68 (his 2026-10-05: "not all the parks are green as they should; some parks are gray or just dark
+ * when you get close"): every park-like class the tiles carry at the close cameras, in the woods' green.
+ * The classes were read from the tiles (scripts/_scratch-r68/parks/census.md); a schema change that
+ * renames one must fail here, not paint nothing for seven rounds as round 66's park filter did. */
+describe("the park-like classes (round 68)", () => {
+  type Fill = { id: string; type: string; "source-layer": string; filter: unknown; paint: Record<string, unknown>; minzoom?: number };
+  const layer = (s: ReturnType<typeof nightStyle>, id: string) => s.layers.find((l) => l.id === id) as unknown as Fill;
+  it("name exactly the classes the census chose", () => {
+    expect([...PARK_LIKE.grass]).toEqual(["park", "garden", "golf_course", "recreation_ground", "village_green", "allotments"]);
+    expect([...PARK_LIKE.landuse]).toEqual(["cemetery", "pitch", "playground", "zoo", "recreation_ground"]);
+    expect([...PARK_LIKE.reserve]).toEqual(["State Park", "County Park", "Park", "national_park", "National Recreation Area", "National Monument", "State Historic Site", "nature_reserve", "Natural Area", "park preserve", "conservation", "forest_reserve", "wilderness_preserve", "Multiple Use Area", "shore_reserve", "wildlife_refuge"]);
+  });
+  it("never name built land, open country, or a boundary that encloses towns", () => {
+    for (const c of ["grass", "meadow", "grassland", "scrub", "heath"]) expect(PARK_LIKE.grass, c).not.toContain(c);
+    for (const c of ["residential", "commercial", "industrial", "retail", "railway", "neighbourhood", "school", "university", "college", "hospital", "stadium", "military", "quarry"]) expect(PARK_LIKE.landuse, c).not.toContain(c);
+    for (const c of ["conservation_district", "watershed_reserve", "Conservation Easement", "game_land", "hunting", "historic_district", "historic", "protected_area"]) expect(PARK_LIKE.reserve, c).not.toContain(c);
+  });
+  it("read their source layers with those classes, in the woods' green, the same layers live and on every plate", () => {
+    const live = nightStyle();
+    const lu = layer(live, "park-landuse"), pr = layer(live, "park-reserve");
+    expect([lu.type, lu["source-layer"], JSON.stringify(lu.filter)]).toEqual(["fill", "landuse", JSON.stringify(["match", ["get", "class"], [...PARK_LIKE.landuse], true, false])]);
+    expect([pr.type, pr["source-layer"], JSON.stringify(pr.filter)]).toEqual(["fill", "park", JSON.stringify(["match", ["get", "class"], [...PARK_LIKE.reserve], true, false])]);
+    for (const id of GREEN_IDS) {
+      const l = layer(live, id);
+      expect(l.paint, id).toEqual({ "fill-color": NIGHT.park, "fill-antialias": false });
+      expect(l.minzoom, id).toBeUndefined(); // drawn at every zoom: a flight never sees a class fade in
+      for (const plate of [{}, { deep: true }, { live: true, deep: true }]) expect(JSON.stringify(layer(nightStyle({ plate }), id)), id).toBe(JSON.stringify(l));
+    }
+  });
+  it("sit with the woods and the city parks: over the land, under the town fill and the relief", () => {
+    for (const s of [nightStyle(), nightStyle({ plate: {} }), nightStyle({ plate: { live: true, deep: true } })]) {
+      const ids = s.layers.map((l) => l.id);
+      expect(ids.slice(1, 5)).toEqual(GREEN_IDS);
+      for (const id of GREEN_IDS) {
+        expect(ids.indexOf(id), id).toBeLessThan(ids.indexOf("town"));
+        expect(ids.indexOf(id), id).toBeLessThan(ids.indexOf("relief"));
+      }
+    }
+  });
+});
+
 /** Round 61: the parks-and-water tints are a comparison for the owner, behind the plate option only. */
 describe("the plate tints (a comparison, not the live look)", () => {
   const sha = (x: unknown) => createHash("sha256").update(JSON.stringify(x)).digest("hex").slice(0, 16);
@@ -251,16 +299,16 @@ describe("the plate tints (a comparison, not the live look)", () => {
   it("leaves the live style and the plate style without a tint as they were", () => {
     expect(sha(nightStyle({ plate: { tint: null } }))).toBe(sha(nightStyle({ plate: {} })));
     expect(sha(nightStyle({ plate: { deep: true, tint: null } }))).toBe(sha(nightStyle({ plate: { deep: true } })));
-    expect(sha(nightStyle())).toBe("3bb8129ece5caa3c"); // re-pinned on purpose: round 66's picks (w2, g2p, l1)
+    expect(sha(nightStyle())).toBe("1f50b6a8c726af1b"); // re-pinned on purpose: round 66's picks (w2, g2p, l1); round 68: the park-like classes
   });
   it("changes only the wood, the parks and the water", () => {
     for (const k of ["a", "b"] as const) {
       const plain = nightStyle({ plate: {} });
       const t = nightStyle({ plate: { tint: k } });
-      expect(fill(t, "wood")).toBe(PLATE_TINTS[k].green);
-      expect(fill(t, "park")).toBe(PLATE_TINTS[k].green);
+      // Round 68: the park-like layers are parks too, so the tint's green reaches them (GREEN_IDS).
+      for (const id of GREEN_IDS) expect(fill(t, id), id).toBe(PLATE_TINTS[k].green);
       expect(fill(t, "water")).toBe(PLATE_TINTS[k].water);
-      const other = (s: ReturnType<typeof nightStyle>) => JSON.stringify(s.layers.filter((l) => !["wood", "park", "water"].includes(l.id)));
+      const other = (s: ReturnType<typeof nightStyle>) => JSON.stringify(s.layers.filter((l) => ![...GREEN_IDS, "water"].includes(l.id)));
       expect(other(t)).toBe(other(plain));
     }
   });
@@ -275,7 +323,7 @@ describe("the live style one zoom deeper (the territory plates)", () => {
   const sha = (x: unknown) => createHash("sha256").update(JSON.stringify(x)).digest("hex").slice(0, 16);
   const layer = (s: ReturnType<typeof nightStyle>, id: string) => s.layers.find((l) => l.id === id) as { minzoom?: number; paint: Record<string, unknown> };
   it("leaves the page's style as it was, and is the live style itself when not deep", () => {
-    expect(sha(nightStyle())).toBe("3bb8129ece5caa3c"); // re-pinned on purpose: round 66's picks (w2, g2p, l1)
+    expect(sha(nightStyle())).toBe("1f50b6a8c726af1b"); // re-pinned on purpose: round 66's picks (w2, g2p, l1); round 68: the park-like classes
     expect(sha(nightStyle({ plate: { live: true } }).layers)).toBe(sha(nightStyle().layers));
   });
   it("moves every zoom stop up one and doubles every width, so the picture's lines are the live ones", () => {
@@ -309,16 +357,18 @@ describe("the round 67 park green study (a study, not the live look)", () => {
     return 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s;
   };
   it("leaves every plate style as pinned without a palette, with one it does not know, or with the shipped one", () => {
+    // re-pinned on purpose, round 68: the park-like classes
     for (const pal of [null, undefined, "", "x", "constructor", "__proto__", "h0"]) {
-      expect(sha(nightStyle({ plate: { pal } }))).toBe("74450fc64c0b2366");
-      expect(sha(nightStyle({ plate: { deep: true, pal } }))).toBe("307232e49fef51c8");
-      expect(sha(nightStyle({ plate: { live: true, deep: true, pal } }))).toBe("ade392fa050fc088");
+      expect(sha(nightStyle({ plate: { pal } }))).toBe("b591eb31715a159b");
+      expect(sha(nightStyle({ plate: { deep: true, pal } }))).toBe("ccaea3b18b57ecd9");
+      expect(sha(nightStyle({ plate: { live: true, deep: true, pal } }))).toBe("910a944cb581f71b");
     }
-    expect(sha(nightStyle())).toBe("3bb8129ece5caa3c");
+    expect(sha(nightStyle())).toBe("1f50b6a8c726af1b");
     expect(PALETTES.h0.green).toBe(NIGHT.wood);
   });
-  it("each study moves only the woods and the city parks, in every plate style", () => {
-    for (const pal of Object.keys(PALETTES).filter((p) => p !== "h0")) for (const k of kinds) expect(changed(nightStyle({ plate: { ...k, pal } }), nightStyle({ plate: { ...k, pal: "h0" } })), pal).toEqual(["wood", "park"]);
+  it("each study moves only the woods, the city parks and the park-like classes, in every plate style", () => {
+    // Round 68, widened on purpose: the park-like layers are drawn in the same green, so a study moves them too.
+    for (const pal of Object.keys(PALETTES).filter((p) => p !== "h0")) for (const k of kinds) expect(changed(nightStyle({ plate: { ...k, pal } }), nightStyle({ plate: { ...k, pal: "h0" } })), pal).toEqual(GREEN_IDS);
   });
   it("holds the shipped darkness (OKLab L within 0.0015) and stays a night (every channel under 0x20)", () => {
     const L0 = oklabL(NIGHT.wood);

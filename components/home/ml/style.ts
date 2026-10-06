@@ -56,6 +56,52 @@ export const NIGHT = {
   fog: "#0e1118",
 } as const;
 
+/** THE PARK-LIKE CLASSES (round 68; his 2026-10-05: "not all the parks are green as they should; some
+ * parks are gray or just dark when you get close; make similar green on all of them"). Read from the
+ * tiles, not from the schema's documentation: a census at the fifteen close cameras
+ * (scripts/_scratch-r68/parks/census.md, querySourceFeatures and a 72 x 45 screen sample through every
+ * landcover, landuse and park feature) found the city parks green and every other park-like class bare
+ * land: the cemeteries (484 samples, 481 bare; Queens alone 143), the golf courses (434, 337 bare), the
+ * state parks' unwooded ground (Rockefeller State Park Preserve 120 of 120 bare at the Westchester stop,
+ * Hudson Highlands 64 of 519), the nature reserves (453, 326 bare), the state forests (130, 100 bare).
+ * Each class is drawn in the woods' green; what is left out, and why, is in the census's table and below. */
+export const PARK_LIKE = {
+  /** landcover class `grass`, these subclasses (the tiles' names: parks, gardens, golf courses,
+   * recreation grounds, village greens, allotments). Left out: grass (lawns and verges), meadow,
+   * grassland, scrub, heath (open country, not a park). */
+  grass: ["park", "garden", "golf_course", "recreation_ground", "village_green", "allotments"],
+  /** landuse classes: the open green ground a visitor calls a park. Left out: the built classes
+   * (residential, commercial, industrial, retail, railway: the town fill), the campuses (school,
+   * university, college, hospital), stadium (half its samples on a building), track, theme_park,
+   * military, quarry. */
+  landuse: ["cemetery", "pitch", "playground", "zoo", "recreation_ground"],
+  /** the park layer (protected areas; its class is the boundary's protection title as the tiles carry
+   * it): the public parks, preserves and state forests. Left out: conservation_district (the Catskill
+   * Park, a line around whole towns), watershed_reserve (the reservoirs' land: the Ashokan, Boyd Corners
+   * and West Branch units), Conservation
+   * Easement (private land), game_land and hunting (hunting ground), historic_district and historic
+   * (neighbourhoods: 15 and 33 % of their samples on a building), protected_area (it mixes preserves
+   * with Kingston's Stockade District, a downtown). */
+  reserve: [
+    "State Park",
+    "County Park",
+    "Park",
+    "national_park",
+    "National Recreation Area",
+    "National Monument",
+    "State Historic Site",
+    "nature_reserve",
+    "Natural Area",
+    "park preserve",
+    "conservation",
+    "forest_reserve",
+    "wilderness_preserve",
+    "Multiple Use Area",
+    "shore_reserve",
+    "wildlife_refuge",
+  ],
+} as const;
+
 /** The terrain's height, 1 = true. Chosen by frames (the record's round 12): the valley is low
  * relief (the Highlands and the Shawangunks a few hundred metres, the Catskills a thousand), and
  * at the territory's 145 km true heights barely read. */
@@ -242,8 +288,11 @@ function plateLayers(hillshade: boolean, buildings: boolean, dz: number, tint: P
   return [
     pick("land"),
     tinted(pick("wood"), tint?.green),
-    // The city parks: the live layer itself, so a plate and the film that lands on it agree.
+    // The city parks and every park-like class: the live layers themselves, so a plate and the film
+    // that lands on it agree.
     tinted(pick("park"), tint?.green),
+    tinted(pick("park-landuse"), tint?.green),
+    tinted(pick("park-reserve"), tint?.green),
     {
       id: "town",
       type: "fill",
@@ -292,7 +341,11 @@ function tiledLayers(hillshade: boolean, buildings: boolean, dz = 0, green: stri
     // read the OpenMapTiles park layer with class == "park", which no feature carries (they are
     // nature_reserve, State Park, conservation, ...): it drew nothing in the Queens, Manhattan, Brooklyn,
     // Dutchess and Highlands views, and those parks showed only as bare land between the town fills.
-    { id: "park", type: "fill", source: "omt", "source-layer": "landcover", filter: ["all", ["==", ["get", "class"], "grass"], ["==", ["get", "subclass"], "park"]], paint: { "fill-color": green, "fill-antialias": false } },
+    // Round 68: every park-like class (PARK_LIKE), the same green, under the town fill and the relief
+    // like the woods (the census found 8 of 1,785 city-park samples under a town fill, 3 of 120 pitches).
+    { id: "park", type: "fill", source: "omt", "source-layer": "landcover", filter: ["all", ["==", ["get", "class"], "grass"], ["match", ["get", "subclass"], [...PARK_LIKE.grass], true, false]], paint: { "fill-color": green, "fill-antialias": false } },
+    { id: "park-landuse", type: "fill", source: "omt", "source-layer": "landuse", filter: ["match", ["get", "class"], [...PARK_LIKE.landuse], true, false], paint: { "fill-color": green, "fill-antialias": false } },
+    { id: "park-reserve", type: "fill", source: "omt", "source-layer": "park", filter: ["match", ["get", "class"], [...PARK_LIKE.reserve], true, false], paint: { "fill-color": green, "fill-antialias": false } },
     {
       id: "town",
       type: "fill",
