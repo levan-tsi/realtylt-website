@@ -267,3 +267,24 @@ never read before, the same as this morning's lesson):
 
 Then: `origin/main` confirmed at `e2507d9`, the pictures in ONE commit, the docs, and the push of the
 branch head to `main` (a public deploy of realtylt.com); the live verification in §8.
+
+## 8. Live (2026-10-05, 23:19 ET push; verified 23:50 ET in a real browser)
+
+`origin/main` carried one commit the branch already had by content (`e2507d9`, the geocoded-null fix,
+the branch's `a61994b`); merged (`48e8cb4`, no code change, tsc clean, vitest 2,286) and pushed to
+`main`. Vercel production `dpl_EyYYMFPuDzdYKSW8msuP7W7JSQac` on `48e8cb4`. `scripts/_scratch-r68-live.mjs`
+against https://realtylt.com, 26 of 28 checks pass and the two "fails" are the instrument (it looked for
+a literal `/logo-realtylt-navy.png` request; the logo is served through Next's optimizer as
+`/_next/image?url=%2Flogo-realtylt-navy.png`, decoded 384 x 79, confirmed by hand):
+
+- a regenerated home page (RSC `["","index"]`, age 273 s) with the header and footer;
+- 1440 and 390: status 200, indexable (no robots header), the plates ground, the plate revealed and
+  the lights drawn (475 / 258), the lights fetched once, the hero plate requested (2880 avif / 1170
+  avif), the first stop reached after a scroll with a film fetched (`hero--dutchess-wide-1440.webm` /
+  `hero--dutchess-tall-1170.mp4`), CSP silent, no page errors;
+- **the served Queens plate is byte-equal to the parks render** (sha256 `ccd8f4594af8...` live and
+  local), a film served (200, 464 KB);
+- /search 200 with 150 card links, a listing page with its lead card, /connect with the booking mount.
+
+`r68-preview` re-pointed to the same head; `r68-green2` is behind main (its fingerprints would need
+re-taking on the head if the quieter green is ever wanted).
