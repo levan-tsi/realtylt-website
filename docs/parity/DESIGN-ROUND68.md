@@ -193,3 +193,77 @@ the fresh green films read 4 to 6 frames over 34 ms at the Westchester stops whe
 read 0 to 2 in the same probe (the maxima, 84 to 118 ms, are single frames at a flight's start on
 both builds): possibly the file cache on files never read before; to be settled on the merged head
 before any push.
+
+## 6. His evening orders (2026-10-05): every park green, then deploy; and the MLS email
+
+**His words:** "I saw today's green, but the park green didn't open ... not all the parks are green as
+they should; some parks are gray or just dark when you get close; make similar green on all of them, and
+then deploy." And: "check our MLS API, I got an email that it is stale."
+
+**The preview that did not open** was my link: the predicted alias
+`realtylt-website-git-r68-green2-preview-...` is 64 characters in its first DNS label, one over the cap,
+so Vercel had shortened it to `realtylt-website-git-r68-green2-b4810c-levans-projects-a543d940.vercel.app`.
+The deploy was READY the whole time. Lesson in memory (preview branch names of 17 characters or fewer
+for this project, and read the alias from the deployment before handing out a link).
+
+**The parks (one Opus builder, verified here; commit `2210bf6`; the builder's report at
+`scripts/_scratch-r68/parks/REPORT.md`, the census at `census.md`).** The census found the cause: the
+map painted only landcover grass/park (the four city parks) and the woods; cemeteries (481 of 484 screen
+samples bare, Queens 143 of 143), golf courses (337 of 434), recreation grounds, pitches, the State
+Parks (Rockefeller State Park Preserve 120 of 120 at the Westchester stop), nature reserves and state
+forests were bare land, the "gray or just dark" he saw. Now every park-like class draws in the same
+green token on the live style and every plate style: the `park` filter covers six grass subclasses
+(park, garden, golf_course, recreation_ground, village_green, allotments), `park-landuse` adds cemetery,
+pitch, playground, zoo and recreation_ground, `park-reserve` adds the State Park, County Park, national
+park, nature reserve, forest reserve, conservation, wilderness and shore reserve classes. Left out, each
+measured: lawns and open country (grass/grass, meadow, scrub, heath), campuses (school, university,
+hospital: 10 to 39 % of samples on a building), the stadium, and the park-layer boundaries that enclose
+towns or reservoirs (the Catskill Park's conservation_district, watershed_reserve, protected_area with
+Kingston's downtown, historic districts, easements and hunting land): filling those would have changed
+10.2 % of the Ulster frame against 3.2 % for the chosen list. Order unchanged (under the town fill and
+the relief; only 8 of 1,785 city-park samples lie under a town fill). Proven on the rebuilt build: 4.0 to
+7.1 % of pixels change at the five close cameras, 0 chosen-class samples remain bare, roads, water and
+buildings unchanged; the pairs looked at here (`pair-queens.png`: the cemeteries beside Flushing Meadows
+go green; `pair-westchester.png`: Rockefeller and the Sleepy Hollow course; `pair-dutchess.png`: the
+Poughkeepsie cemetery and the west-bank preserves). Two things stay as they are, named for him: the hero
+changes by 5.4 % (Delaware State Forest, the Water Gap, Jamaica Bay) because one rule everywhere avoids
+a mid-flight fade; and the pale ridges (Hook Mountain, Breakneck) are the moonlit relief over a green
+that is already there, a relief decision, not a missing fill. Tests: style.test.ts 37 of 37 (four new),
+the six fingerprints re-pinned on purpose, full suite 2,286, tsc clean.
+
+**The MLS email** was our own health watch (pg_cron at 23 past the hour -> `/api/cron/health-watch`),
+not MLS Grid. The hourly sync's watermark stuck at 16:06Z: the 17:07, 18:07, 19:07 and 20:07Z runs each
+ended `502 The operation was aborted due to timeout`, the 19:07 run also logging Supabase Storage `429
+too_many_connections`. The 21:07Z run caught up on its own (3 pages, 1,338 rows, 680 upserted, 129
+deactivated) and every run since was on time (22:07 to 01:07Z, 23 to 165 s). Credentials and the feed
+were never the problem; the alert worked as designed. Open improvement: a DB write that times out
+aborts the whole run; one retry with backoff would shorten such a stall. Memory
+`infra-idx-sync-stall-too-many-connections`.
+
+**The deploy** carries today's green (`#0c1810`) with every park in it; `r68-green2` (the quieter
+`#0a190a`) stays a preview he can ask for later. The render and the gates: §7.
+
+## 7. The render and the gates before the deploy (2026-10-05, 21:52 to 23:35 ET)
+
+The one re-render on the parks build (`bash scripts/_scratch-r68/rr.sh`, 75 minutes, logs under
+`scripts/_scratch-r68/`): 34 plates shot deep and encoded (25.7 MB), 32 pairs of flights shot both
+aspects, graded (first and last frames against their plates: worst mean 0.61 levels; round 66's worst
+0.60) and encoded (96 clips, 100 MB); `plates.gen.ts` and `flights.gen.ts` unchanged (line endings only).
+
+Gates on the rebuilt build, the calibration run ALONE (a first laptop run beside nothing else still read
+"common 164 of 470, mean 16 px" on the fresh files; the second read 0.00: the probe's settle on files
+never read before, the same as this morning's lesson):
+
+| gate | result |
+|---|---|
+| calibration laptop (hero, Queens, Dutchess County, Putnam) | 0.00 px mean, p95, max (Dutchess County 0.51 once, 0.00 on two re-runs alone) |
+| calibration phone | 0.00 px at all four |
+| calibration region | 0.10 px laptop, 0.06 phone (as every round since 58) |
+| walks | laptop 16 films / 0 fades, 1 frame over 34 ms; phone 16 / 0, 6 frames over 34 ms (today's baseline 1 and 2 to 4; the maxima are single frames at a flight's start on both builds) |
+| phone contrast kit, seven stops | 0 under the floor at p95; p99 the known single-lamp class only |
+| crawler `qa-crawl.mjs` | ALL PASS (251 links, no overflow at 390, six county pages in-county) |
+| `npx tsc --noEmit` | clean |
+| `npx vitest run` (foreground) | 2,286 of 2,286, exit 0 (floor 2,282) |
+
+Then: `origin/main` confirmed at `e2507d9`, the pictures in ONE commit, the docs, and the push of the
+branch head to `main` (a public deploy of realtylt.com); the live verification in §8.

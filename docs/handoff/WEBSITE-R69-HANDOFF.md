@@ -5,10 +5,16 @@ look change reaches `main` before he has seen it; when he says deploy, deploy (n
 
 ## 0. START HERE
 
+- **DEPLOYED 2026-10-05 night, on his word:** rounds 65 to 68 went to `main` from the branch head (the
+  commit after the parks render; `git log -1 origin/main`), a public deploy of realtylt.com, verified live
+  in a browser (`scripts/_scratch-r68-live.mjs`; the numbers in the checkpoint's top block and memory
+  `website-round68-2026-10-05`). His two evening orders that drove it: every park-like area green on the
+  map (DESIGN-ROUND68 §6; commit `2210bf6` + the re-render), and the MLS "stale" email (our own health
+  watch; a four-hour Supabase saturation that healed itself; §6). `main` and `design/futuristic-r53` are
+  the same code now; keep working on the branch and push to `main` on his word as before.
 - **Branch** `design/futuristic-r53` in the worktree `C:\Users\Levan\realtylt-website-r53` (`git -C` on
-  every git call). **Nothing from rounds 65 to 68 is on `main`** (live realtylt.com = `e2507d9`). Check
-  `git -C ... branch --show-current` first: round 68 left the worktree on `design/futuristic-r53` after
-  its preview branch work, and :3102 rebuilt on that head.
+  every git call). Check `git -C ... branch --show-current` first. :3102 is the production build of the
+  deployed head.
 - **His two previews, both behind his Vercel sign-in:**
   - `r68-preview` = round 68's head on today's green:
     https://realtylt-website-git-r68-preview-levans-projects-a543d940.vercel.app
@@ -22,6 +28,13 @@ look change reaches `main` before he has seen it; when he says deploy, deploy (n
 - **Deploy is NOT yet ordered.** When he says deploy, R68 handoff §3 is the procedure, first thing.
 
 ## 1. The green: what each answer now means
+
+**Live is today's green (`#0c1810`) with every park-like class in it** (he saw today's green and asked
+for the parks; the quieter `#0a190a` on `r68-green2` was never opened, my link was one character over
+the DNS cap). `r68-green2` is now BEHIND main (it predates the parks commit and re-pins the same six
+fingerprints); if he ever asks for that tone, bake `#0a190a` on the branch head instead, re-take the
+fingerprints, and re-render (`bash scripts/_scratch-r68/rr.sh`, about 75 minutes). The rest of this
+section is the history of that choice.
 
 Round 67 recommended `#0b1907` (tile 2). Baked into `NIGHT.wood` it breaks two laws of the night style
 (`style.test.ts`: every colour at least as blue as it is red, "the listings' lights are the only warm
@@ -61,6 +74,15 @@ the gate includes calibration both surfaces and the walks on the merged head bef
 
 ## 4. Open after this round
 
+0. **His look at the live parks on a real phone and laptop.** Two things to name if he still sees grey:
+   the pale ridges (Hook Mountain, Breakneck) are the moonlit relief over a green that is already there
+   (a relief decision: the hillshade highlight at 0.50 / 0.9 from round 66); and the hero now shows the
+   far reserves (Delaware State Forest, the Water Gap, Jamaica Bay) in green too, one rule everywhere so
+   no film fades a reserve in mid-flight (a minzoom on `park-reserve` is the lever, with that fade as the
+   cost). The classes left out, each measured, are in `scripts/_scratch-r68/parks/REPORT.md`.
+0b. **The sync's resilience:** a DB write that times out (30 s) or a Storage 429 aborts the whole hourly
+   run; one retry with backoff in `app/api/cron/idx-sync/route.ts` would shorten a stall like
+   2026-10-05's (four hours, self-healed). Small, measured, not urgent.
 1. The eight design moves of DESIGN-ROUND68 §1 (his calls; the first three are small).
 2. The lead form could WORK without scripting behind an origin check (a security decision, his).
 3. `<title>` case, the CMA / MediaURL items, the preview branches (`r65-preview-a/b/c`, `r66-preview`,
