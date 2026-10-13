@@ -1,3 +1,5 @@
+# 2026-10-13 (a CRM session, on his order "change that number to the one Rachel has and can answer now"): THE MAIN NUMBER IS (914) 415-7185, LIVE ON realtylt.com (`c9f263e` on main, Vercel READY, the header, the call button and the footer verified in a browser). `SITE.phone` in `lib/site.ts` and the blog placeholder body changed, nothing else. Why: the CRM's AI business took (914) 506-5884 with it on 2026-10-13 (its own Vapi receptionist answers there now), and the brokerage's Rachel answers on 415-7185. `connectPhone` (875-2424) unchanged. Gates: tsc clean, vitest 163 files / 2,286 of 2,286. The design rounds below are untouched; ROUND 69 is still next.
+
 # ROUND 68 DEPLOYED 2026-10-05 NIGHT, ON HIS WORD: ROUNDS 65 TO 68 ARE LIVE ON realtylt.com WITH EVERY PARK GREEN. Record: `docs/parity/DESIGN-ROUND68.md` §6 to §8. **NEXT = ROUND 69: READ `docs/handoff/WEBSITE-R69-HANDOFF.md` §0 FIRST.**
 
 His evening orders (2026-10-05): "not all the parks are green; some are gray or just dark when you get close; make similar green on all of them, and then deploy", plus "check our MLS API, I got an email that it is stale".
