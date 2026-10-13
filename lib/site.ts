@@ -11,14 +11,17 @@ export const SITE = {
     region: "NY",
     postalCode: "12540",
   },
-  // THE MAIN NUMBER (owner's order 2026-09-24): Rachel's line, (914) 506-5884, everywhere a visitor
-  // sees a number (header, footer, every page and message), so a direct call reaches the AI
-  // assistant, who answers and books. The CRM's own line, (914) 875-2424, forwards to him and stays
-  // ONLY on /connect (`connectPhone` below), where a visitor books a time or calls him. The old
-  // Twilio number (917) 905-7923 stays retired from every visitor-facing surface.
-  phone: "(914) 506-5884",
-  phoneHref: "tel:+19145065884",
-  phoneE164: "+19145065884",
+  // THE MAIN NUMBER (owner's order 2026-09-24): Rachel's line, everywhere a visitor sees a number
+  // (header, footer, every page and message), so a direct call reaches the AI assistant, who
+  // answers and books. SINCE 2026-10-13 that line is (914) 415-7185: the CRM's AI business took
+  // (914) 506-5884 with it (its own receptionist answers there now), and the brokerage's Rachel
+  // answers on 415-7185 (owner's order 2026-10-13: "change that number to the one Rachel has and
+  // can answer now"). The CRM's own line, (914) 875-2424, forwards to him and stays ONLY on
+  // /connect (`connectPhone` below), where a visitor books a time or calls him. The old Twilio
+  // number (917) 905-7923 stays retired from every visitor-facing surface.
+  phone: "(914) 415-7185",
+  phoneHref: "tel:+19144157185",
+  phoneE164: "+19144157185",
   connectPhone: "(914) 875-2424",
   connectPhoneHref: "tel:+19148752424",
   connectPhoneE164: "+19148752424",
