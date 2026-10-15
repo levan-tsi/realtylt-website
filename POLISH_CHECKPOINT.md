@@ -1,5 +1,28 @@
 # ROUND 68 DEPLOYED 2026-10-05 NIGHT, ON HIS WORD: ROUNDS 65 TO 68 ARE LIVE ON realtylt.com WITH EVERY PARK GREEN. Record: `docs/parity/DESIGN-ROUND68.md` §6 to §8. **NEXT = ROUND 69: READ `docs/handoff/WEBSITE-R69-HANDOFF.md` §0 FIRST.**
 
+## == OPS 2026-10-15 (the /aicrm round 9 session, not a design round): THE WATCH V2 ON BRANCH ops-watch-1015 ==
+## WHY: the production Supabase project (shared with the CRM) lost its API layer 14:15 to 19:13 ET on
+## 2026-10-15; the platform watch never fired (its pg_cron trigger and its CRM-door mail both live inside
+## the sick project). Cause and precautions: realtylt-claude-config memory
+## infra-supabase-outage-2026-10-15-root-cause-and-precautions; the CRM record AI-WORKSPACE-2026-10-10.md
+## section 14. The hourly idx_refresh_photos_servable() (job 3, :27) rescans all 833k photo objects every
+## hour (mean 102 s, max 196 s on a 1 GB Micro instance that swaps at rest) and is the standing load.
+## BUILT (commit 9b63577, gated: tsc clean, 112 files / 1496 tests): vercel.json cron */10 for
+## /api/cron/health-watch (the outside trigger; the pg_cron hourly stays), direct Auth + REST probes, a
+## restart through the Supabase Management API when two probes 30 s apart fail (env
+## SUPABASE_MANAGEMENT_TOKEN + SUPABASE_PROJECT_REF, the owner adds them on Vercel), lib/watch/instructions.ts
+## (what happened / what the watch did / what to do under every problem in the mail), send.ts retries the CRM
+## door once. NOT MERGED, NOT PUSHED: the owner says the word; then
+## git -C C:/Users/Levan/realtylt-website merge --ff-only ops-watch-1015 && git push origin main.
+## DRAFTED, NOT APPLIED: supabase/migrations/idx_photos_servable_incremental.sql (job 3 becomes an hourly
+## pass over the listings the sync touched, the full recompute once a day; measured read-only: 1,640
+## candidates, 36,173 objects, 0 mismatches, under a second with the COLLATE "C" range; a LIKE built from
+## the joined row timed out). Rehearse rolled back with predictions, apply on the owner's word.
+## SEAM: npm test makes live REST calls (idx-db office names, media lookups) and drew a 57014 timeout from
+## production during the gate; a test suite that touches the live store is load, count it as such.
+
+
+
 His evening orders (2026-10-05): "not all the parks are green; some are gray or just dark when you get close; make similar green on all of them, and then deploy", plus "check our MLS API, I got an email that it is stale".
 - **The parks (one Opus builder, verified here, `2210bf6`):** the census found the map painted only landcover grass/park and the woods; cemeteries (481 of 484 screen samples bare), golf courses (337 of 434), pitches, recreation grounds, the State Parks (Rockefeller 120 of 120), nature reserves and state forests were bare land. Every park-like class now draws in the same green token on the live style and every plate style (`park` over six grass subclasses, `park-landuse`, `park-reserve`); lawns, campuses, the stadium and the town-enclosing boundaries (the Catskill Park, watershed land, Kingston's Stockade District) stay out, each measured. 4.0 to 7.1 % of pixels change at the close cameras, 0 chosen-class samples bare after, roads, water and buildings unchanged; style.test.ts 37 of 37, fingerprints re-pinned on purpose. The builder's report: `scripts/_scratch-r68/parks/REPORT.md`.
 - **The re-render** (75 min): 34 plates 25.7 MB, 96 clips 100 MB, manifests unchanged, grade worst 0.61 levels. **Gates:** calibration 0.00 px both surfaces (region 0.10 / 0.06; run ALONE, a first run on fresh files reads garbage); walks 16 films / 0 fades both; phone contrast 0 under the floor at p95; crawler ALL PASS; tsc clean; vitest 2,286 of 2,286 exit 0.
