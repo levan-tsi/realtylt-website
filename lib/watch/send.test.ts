@@ -39,13 +39,21 @@ describe("the watch's mail transport (the CRM's ops-alert door)", () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
-  it("no answer within 10 s, then a failure: both are in the result", async () => {
-    fetchMock
-      .mockRejectedValueOnce(new DOMException("The operation was aborted due to timeout", "TimeoutError"))
-      .mockResolvedValueOnce(new Response("boom", { status: 500 }));
+  it("no answer within 25 s is FINAL (maybe-sent), never retried: on 2026-10-16 a retry after a slow door sent the alert twice", async () => {
+    fetchMock.mockRejectedValueOnce(new DOMException("The operation was aborted due to timeout", "TimeoutError"));
+    const result = sendWatchMail("s", "<p>h</p>");
+    await vi.advanceTimersByTimeAsync(30_000);
+    expect(await result).toBe("maybe-sent:no answer within 25 s (the door may still be sending it; not retried, so it cannot go twice)");
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [, init] = fetchMock.mock.calls[0];
+    expect(init.signal).toBeInstanceOf(AbortSignal);
+  });
+
+  it("no connection at all (a network error) is retried once, 5 s later, and a failure both times is in the result", async () => {
+    fetchMock.mockRejectedValueOnce(new TypeError("fetch failed")).mockResolvedValueOnce(new Response("boom", { status: 500 }));
     const result = sendWatchMail("s", "<p>h</p>");
     await vi.advanceTimersByTimeAsync(5_000);
-    expect(await result).toBe("error:first try no answer within 10 s; retry after 5 s 500 boom");
+    expect(await result).toBe("error:first try TypeError: fetch failed; retry after 5 s 500 boom");
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 

@@ -88,6 +88,27 @@ describe("the health watch judge", () => {
     expect(v.problems.join(" ")).toMatch(/took/);
     expect(v.problems.join(" ")).toMatch(/snapshot query returned nothing/);
   });
+
+  it("with the API layer up, ONE missed snapshot is a fact (a slow minute); the second miss in a row is the problem (2026-10-16)", () => {
+    const up = { auth: { ok: true, status: 200, ms: 90 }, rest: { ok: true, status: 200, ms: 80 }, state: "up" as const };
+    const once = healthy();
+    once.snap = null;
+    once.dbApi = up;
+    const v1 = judge(once);
+    expect(v1.problems).toEqual([]);
+    expect(v1.facts.find(([k]) => k === "Listing store")?.[1]).toMatch(/did not answer within 15 s .* alerts if the next check misses too/);
+    const again = healthy();
+    again.snap = null;
+    again.dbApi = up;
+    again.prev = { ...again.prev, snap_missing: true };
+    const v2 = judge(again);
+    expect(v2.problems.join(" ")).toMatch(/snapshot query returned nothing/);
+    expect(v2.facts.find(([k]) => k === "Listing store")?.[1]).toBe("the snapshot query returned nothing");
+    const down = healthy();
+    down.snap = null;
+    down.dbApi = { ...up, auth: { ok: false, status: 522, ms: 20_000 }, rest: { ok: false, status: 522, ms: 20_000 }, state: "down" };
+    expect(judge(down).problems.join(" ")).toMatch(/snapshot query returned nothing/);
+  });
 });
 
 describe("the re-alert throttle", () => {

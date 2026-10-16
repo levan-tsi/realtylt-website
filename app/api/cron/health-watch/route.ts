@@ -189,7 +189,7 @@ async function rpc<T>(cfg: { base: string; key: string }, fn: string): Promise<T
 }
 
 interface WatchState {
-  prev?: { active_total?: number; active_no_photo_older_7d?: number } | null;
+  prev?: { active_total?: number; active_no_photo_older_7d?: number; snap_missing?: boolean } | null;
   lastAlertKey?: string | null;
   lastAlertAt?: number | null;
   lastReport?: unknown;
@@ -289,7 +289,9 @@ export async function GET(req: Request) {
     // A restart the watch requested is ALWAYS mailed, throttle or not: the owner must know it acted.
     const m = composeAlert(verdict.problems, verdict.facts, verdict.critical);
     mail = await sendWatchMail(m.subject, m.html, m.text);
-    if (mail.startsWith("sent")) {
+    // "maybe-sent" (the door did not answer in 25 s) counts as sent for the throttle: the
+    // door was most likely sending, and a re-send 10 minutes later would be the duplicate.
+    if (mail.startsWith("sent") || mail.startsWith("maybe-sent")) {
       state.lastAlertKey = alertKey(verdict.problems);
       state.lastAlertAt = now;
     }
@@ -312,6 +314,7 @@ export async function GET(req: Request) {
   state.prev = {
     active_total: snap?.active_total,
     active_no_photo_older_7d: snap?.active_no_photo_older_7d,
+    snap_missing: snap == null,
   };
   state.lastReport = report;
   // With the API layer down the write cannot land; skipping it keeps its 10 s inside maxDuration.

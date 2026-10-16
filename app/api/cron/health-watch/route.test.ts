@@ -36,6 +36,10 @@ interface Platform {
   restartStatus?: number;
   /** site_watch_state as stored (readable even in an outage, to test the throttle override). */
   state?: unknown;
+  /** The ops-alert door never answers (its 25 s limit fires). */
+  doorTimesOut?: boolean;
+  /** idx_health_snapshot() answers 504 (the query passed its limit) while the API layer is up. */
+  snapMissing?: boolean;
 }
 
 interface Call {
@@ -64,14 +68,17 @@ function stubPlatform(opts: Platform) {
         return new Response("Not Found", { status: 404 });
       }
       if (url === "https://app.realtylt.com/") return new Response("<html>Sign in</html>");
-      if (url === "https://app.realtylt.com/api/site/ops-alert") return json({ ok: true, status: "sent" });
+      if (url === "https://app.realtylt.com/api/site/ops-alert") {
+        if (opts.doorTimesOut) throw new DOMException("The operation was aborted due to timeout", "TimeoutError");
+        return json({ ok: true, status: "sent" });
+      }
       if (url === "https://api.supabase.com/v1/projects/wpfmhmnceflfruhssqqb/restart") return json({}, opts.restartStatus ?? 200);
       if (url === "https://api.supabase.com/v1/projects/wpfmhmnceflfruhssqqb") return json({ ref: "wpfmhmnceflfruhssqqb", status: opts.controlPlane ?? "ACTIVE_HEALTHY" });
       if (url === `${SB}/auth/v1/health`) return ++authRounds <= (opts.apiDownRounds ?? 0) ? gateway522() : json({ name: "GoTrue" });
       if (url === `${SB}/rest/v1/idx_sync_state?select=id&limit=1`) return ++restRounds <= (opts.apiDownRounds ?? 0) ? gateway522() : json([{ id: 1 }]);
       if (url === `${SB}/rest/v1/site_watch_state?id=eq.1&select=state`) return opts.state ? json([{ state: opts.state }]) : outage ? gateway522() : json([]);
       if (url === `${SB}/rest/v1/site_watch_state` && method === "POST") return outage ? gateway522() : new Response(null, { status: 201 });
-      if (url === `${SB}/rest/v1/rpc/idx_health_snapshot`) return outage ? gateway522() : json(SNAP);
+      if (url === `${SB}/rest/v1/rpc/idx_health_snapshot`) return outage ? gateway522() : opts.snapMissing ? new Response("statement timeout", { status: 504 }) : json(SNAP);
       if (url === `${SB}/rest/v1/rpc/site_watch_counts`) return outage ? gateway522() : json(COUNTS);
       unexpected.push(`${method} ${url}`);
       return new Response("unexpected", { status: 599 });
@@ -199,5 +206,29 @@ describe("the health watch route", () => {
     ]);
     expect(calls.some((c) => c.url === "https://app.realtylt.com/")).toBe(false);
     expect(report.mail).toBe("sent");
+  });
+
+  it("the door not answering in 25 s: one post only, 'maybe-sent', and the throttle is armed as if sent (2026-10-16: a retry mailed twice)", async () => {
+    const { calls } = stubPlatform({ crmHealth: 503, doorTimesOut: true });
+    const { report } = await runWatch();
+    expect(calls.filter((c) => c.url === "https://app.realtylt.com/api/site/ops-alert")).toHaveLength(1);
+    expect(report.mail).toMatch(/^maybe-sent:no answer within 25 s/);
+    const stateWrite = calls.find((c) => c.url === `${SB}/rest/v1/site_watch_state` && c.method === "POST");
+    expect(stateWrite?.body).toMatch(/"lastAlertAt":\d+/);
+  });
+
+  it("the snapshot query missing ONCE while the API layer is up: no mail, the miss is remembered; the next miss alerts", async () => {
+    const first = stubPlatform({ crmHealth: "ok", snapMissing: true });
+    const run1 = await runWatch();
+    expect(run1.report.problems).toEqual([]);
+    expect(run1.report.mail).toBe("not-needed");
+    expect(run1.report.facts["Listing store"]).toMatch(/did not answer within 15 s/);
+    const write1 = first.calls.find((c) => c.url === `${SB}/rest/v1/site_watch_state` && c.method === "POST");
+    expect(write1?.body).toContain('"snap_missing":true');
+    const { calls } = stubPlatform({ crmHealth: "ok", snapMissing: true, state: { prev: { active_total: 27_450, snap_missing: true } } });
+    const run2 = await runWatch();
+    expect(run2.report.problems).toEqual(["The health snapshot query returned nothing: idx_health_snapshot() is missing or unreachable."]);
+    expect(run2.report.mail).toBe("sent");
+    expect(sent(calls)).toHaveLength(1);
   });
 });

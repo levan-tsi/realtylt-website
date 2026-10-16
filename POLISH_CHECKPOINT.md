@@ -1,5 +1,22 @@
 # ROUND 68 DEPLOYED 2026-10-05 NIGHT, ON HIS WORD: ROUNDS 65 TO 68 ARE LIVE ON realtylt.com WITH EVERY PARK GREEN. Record: `docs/parity/DESIGN-ROUND68.md` §6 to §8. **NEXT = ROUND 69: READ `docs/handoff/WEBSITE-R69-HANDOFF.md` §0 FIRST.**
 
+## == OPS 2026-10-16 (the /aicrm round 10 session): TWO WATCH FIXES ON BRANCH ops-watch-1016, GATED, NOT PUSHED ==
+## WHY: the owner got the same alert twice at 09:00 ET ("the health snapshot query returned nothing"), 46 s
+## apart, from ONE run (one site_watch_state write at 13:00:44 UTC). Evidence: no rpc/idx_health_snapshot
+## request reached the Supabase edge in 12:58 to 13:04 UTC (the watch's own 15 s limit cut it), the website's
+## media lookups timed out in the same minute, no postgres error, no cron job running (all 0.0 s): a slow
+## database minute on the Micro instance, not a fault. The duplicate: the CRM door took longer than the
+## 10 s limit (runner sign-in + Gmail on a slow database), send.ts retried after 5 s, both posts sent.
+## FIXED (tsc clean, 166 files / 2,320 tests, +4): (1) checks.ts: with the API layer UP, one missed snapshot is a
+## "Listing store" fact, the problem fires only when the NEXT check misses too (state.prev.snap_missing;
+## API layer down or not probed: named at once, as before); (2) send.ts: the door gets 25 s, no answer
+## within it is FINAL ("maybe-sent", never retried), only a connection error or a non-2xx retries; the
+## route arms the throttle on maybe-sent. Instructions text for the family updated. THE PUSH IS HIS LINE
+## (a push to main deploys): `cd /c/Users/Levan/realtylt-website-ops && git push origin ops-watch-1016:main`.
+## STILL HIS: SUPABASE_MANAGEMENT_TOKEN + SUPABASE_PROJECT_REF on the website's Vercel project (the token
+## form was filled in his Chrome by the session: realtylt-watch, never expires, project realtylt-chatbot only,
+## Project Settings read-write + Add-ons read-write; the Generate click is his).
+
 ## == OPS 2026-10-15 (the /aicrm round 9 session, not a design round): THE WATCH V2 ON BRANCH ops-watch-1015 ==
 ## WHY: the production Supabase project (shared with the CRM) lost its API layer 14:15 to 19:13 ET on
 ## 2026-10-15; the platform watch never fired (its pg_cron trigger and its CRM-door mail both live inside

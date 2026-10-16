@@ -93,8 +93,8 @@ export const INSTRUCTIONS: readonly Instruction[] = [
   {
     family: "snapshot-missing",
     match: /^The health snapshot query returned nothing/,
-    what: "The listing-store check idx_health_snapshot() returned nothing: Supabase REST did not answer, or the function is missing.",
-    did: ALERTED,
+    what: "The listing-store check idx_health_snapshot() returned nothing: Supabase REST did not answer within 15 s, or the function is missing.",
+    did: "Saw it miss on two checks in a row (a single slow minute is noted in the digest, not mailed), then sent this alert. It checks every 10 minutes (Vercel cron) and hourly at :23 (Supabase cron job 7), and repeats the same problem at most every 6 hours.",
     todo: "If the Supabase line in this mail is down, fix that first. Otherwise run in the SQL editor: select public.idx_health_snapshot(); and read the error it gives.",
   },
   {

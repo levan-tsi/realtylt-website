@@ -82,8 +82,9 @@ export interface WatchInput {
   site: ProbeResult | null;
   search: ProbeResult | null;
   crm: ProbeResult | null;
-  /** What the previous run stored (site_watch_state.state.prev). */
-  prev: { active_total?: number; active_no_photo_older_7d?: number } | null;
+  /** What the previous run stored (site_watch_state.state.prev). `snap_missing`: the snapshot
+   * query returned nothing on that run too. */
+  prev: { active_total?: number; active_no_photo_older_7d?: number; snap_missing?: boolean } | null;
   /** The Supabase API layer; when the first probe read down, the confirming probe 30 s later. */
   dbApi?: DbApiProbe | null;
   /** What the watch did about a down API layer (absent while it is up). */
@@ -215,9 +216,14 @@ export function judge(input: WatchInput): Judgement {
     bad("app.realtylt.com/api/health answered 503 - the CRM's database layer is down: the login page may load, but nobody can sign in and its crons fail.", true);
   else if (!crm.ok) bad(`app.realtylt.com answered ${crm.status || "nothing"} - the CRM is down.`, true);
 
-  // The listing data.
+  // The listing data. With the API layer UP, one missed snapshot is a slow minute (2026-10-16
+  // 13:00 UTC: the query passed its 15 s limit while the website's own media lookups timed
+  // out too, and the owner got the alert at once); it becomes a problem only when the next
+  // check misses as well (prev.snap_missing). With the API layer down or not probed, the
+  // miss is named right away, as before.
   if (!snap) {
-    bad("The health snapshot query returned nothing: idx_health_snapshot() is missing or unreachable.");
+    if (input.dbApi?.state !== "up" || prev?.snap_missing)
+      bad("The health snapshot query returned nothing: idx_health_snapshot() is missing or unreachable.");
   } else {
     const min = n(snap.minutes_since_sync);
     if (!Number.isFinite(min) || min > THRESHOLDS.syncStaleMinutes)
@@ -271,6 +277,16 @@ export function facts(input: WatchInput): [string, string][] {
     ["Listing search API", probe(search)],
     ["CRM (app.realtylt.com)", crmFact],
     ["Supabase API (Auth + REST)", db ? `${db.state === "up" ? "up" : "DOWN"} (Auth ${legFact(db.auth)}, REST ${legFact(db.rest)})` : "not probed"],
+    ...(snap
+      ? []
+      : ([
+          [
+            "Listing store",
+            db?.state === "up" && !input.prev?.snap_missing
+              ? "the snapshot query did not answer within 15 s (the API layer is up: a slow minute; the watch alerts if the next check misses too)"
+              : "the snapshot query returned nothing",
+          ],
+        ] as [string, string][])),
     ["Last MLS sync", s.minutes_since_sync == null ? "unknown" : `${s.minutes_since_sync} min ago (watermark ${s.watermark ?? "?"})`],
     ["Active listings", `${num(s.active_total)} (${num(s.active_status_active)} active, ${num(s.active_coming_soon)} coming soon, ${num(s.active_pending)} pending)`],
     ["No servable photo", `${num(s.active_no_photo)} total, ${num(s.active_no_photo_older_7d)} older than 7 days`],

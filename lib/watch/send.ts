@@ -13,15 +13,22 @@
  * this deploy, read back from his Gmail). The n8n IDX watcher must be unpublished now that
  * this sends, or Mondays arrive twice.
  *
- * 2026-10-15: when the door answers non-2xx or does not answer within 10 s, the watch tries
- * once more after 5 s, and the result says exactly what came back each time (the report's
- * `mail` field). A 2xx is final - retrying it could send the mail twice. */
+ * 2026-10-15: when the door answers non-2xx or cannot be reached, the watch tries once more
+ * after 5 s, and the result says exactly what came back each time (the report's `mail`
+ * field). A 2xx is final - retrying it could send the mail twice.
+ *
+ * 2026-10-16: the same alert reached the owner TWICE, 46 s apart, from one run. During a slow
+ * database minute the door took 24 s and then 55 s to sign the runner in and send; the 10 s
+ * limit gave up on the first post, the retry fired, and both posts were sent server-side.
+ * Now the door gets 25 s, and NO ANSWER within that is final ("maybe-sent": the door may
+ * still be sending, so it is never retried); only a connection error or a non-2xx retries. */
 
-export type SendResult = "no-transport" | `sent${string}` | `skipped${string}` | `error:${string}`;
+export type SendResult = "no-transport" | `sent${string}` | `maybe-sent${string}` | `skipped${string}` | `error:${string}`;
 
 const RETRY_AFTER_MS = 5_000;
+const DOOR_TIMEOUT_MS = 25_000;
 
-type Attempt = { final: true; result: `sent${string}` | `skipped${string}` } | { final: false; error: string };
+type Attempt = { final: true; result: `sent${string}` | `maybe-sent${string}` | `skipped${string}` } | { final: false; error: string };
 
 async function postToDoor(secret: string, body: string): Promise<Attempt> {
   let res: Response;
@@ -30,11 +37,13 @@ async function postToDoor(secret: string, body: string): Promise<Attempt> {
       method: "POST",
       headers: { "x-rlt-site-secret": secret, "Content-Type": "application/json" },
       body,
-      signal: AbortSignal.timeout(10_000),
+      signal: AbortSignal.timeout(DOOR_TIMEOUT_MS),
     });
   } catch (e) {
     const timedOut = (e as { name?: unknown } | null)?.name === "TimeoutError";
-    return { final: false, error: timedOut ? "no answer within 10 s" : String(e).slice(0, 120) };
+    if (timedOut)
+      return { final: true, result: `maybe-sent:no answer within ${DOOR_TIMEOUT_MS / 1000} s (the door may still be sending it; not retried, so it cannot go twice)` };
+    return { final: false, error: String(e).slice(0, 120) };
   }
   if (!res.ok) return { final: false, error: `${res.status} ${(await res.text().catch(() => "")).slice(0, 120)}`.trim() };
   const out = (await res.json().catch(() => null)) as { ok?: boolean; status?: string; reason?: unknown } | null;
