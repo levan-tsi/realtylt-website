@@ -117,6 +117,13 @@ deactivation can be served from the cache for up to ten more minutes; after that
 from the store's RLS view and the page redirects to the search for its area
 (`goneListingSearch`). Search, the rails and the map read the store live and drop it at once.
 
-## 5. The first production run
+## 5. The first production runs (2026-10-19)
 
-(filled in below after the deploy)
+| Run | What happened |
+|---|---|
+| `?force=1&dry=1` on `c518cec`, 17:53 UTC | One tick, 119 s: the walk saw **44,694** on-market rows in 90 pages (the route's filter also limits to served PropertyTypes, hence fewer than the script's 46,614); 27,507 served; **37** candidates, every one asked by id: 24 off-market (Closed 10, Hold 8, Canceled 4, Expired 1, Withdrawn 1), 12 absent, **1 kept as still on the market**; 18 served rows missing. Nothing written. |
+| `?force=1`, 17:55 UTC | The finish phase from the same walk, 34 s: **36 deactivated**, **18 restored** (with photos), 0 left. Active rows 27,507 to 27,489. `idx_sync_state.reconcile` carries `completedAt` and the summary; `idx_health_snapshot()` returns it; the listing page of a deactivated row (`/listing/KEY1005904`) redirects to the area search. |
+| The one "kept" row | `KEY1050913`, the hidden-but-Active row. The probe projected `SELECT_FIELDS`, which had no `MlgCanView`, so the probe could not see it hidden either. That is how cause 1 in §2 was found. Fixed in `84840c4` (the field added); the re-run after that deploy is the last row of this table. |
+| `?force=1` on `84840c4`, 18:08 UTC | A fresh walk and finish in one tick, 151 s: 44,689 on-market rows; **6** candidates, all off-market by the feed's own answer, now WITH the flag: Closed 2, and four hidden rows (Canceled, Hold, Withdrawn, and the **Active (hidden)** one, `KEY1050913`); **6 deactivated**, 5 restored, 0 kept. Active rows 27,489 to 27,488. The hourly sync on the new code (18:07 UTC) ran clean. |
+
+pg_cron job `idx-daily-reconcile` installed 17:56 UTC (`scripts/schedule-idx-reconcile.mjs`): `5,20,35,50 9 * * *`.
