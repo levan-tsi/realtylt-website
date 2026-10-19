@@ -1,6 +1,11 @@
 /** The watch emails: the same ops shell the n8n watcher used (navy band, white card, the
  * numbers table), built server-side. Constraints inherited from the CRM's email shell:
- * tables + inline styles, ASCII only (entities, never glyphs), nothing fetched. */
+ * tables + inline styles, ASCII only (entities, never glyphs), nothing fetched.
+ *
+ * 2026-10-15: under each problem, three plain lines from lib/watch/instructions.ts - what
+ * happened, what the watch did, what to do - and the same in the plain-text part. */
+
+import { instructionFor, type Instruction } from "./instructions";
 
 const FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 const NAVY = "#12294f";
@@ -14,6 +19,13 @@ const esc = (v: unknown): string =>
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/[^\t\n\r\x20-\x7e]/gu, (c) => `&#${c.codePointAt(0)};`);
+
+const step = (label: string, text: string) =>
+  `<div style="margin-top:6px;font-family:${FONT};font-size:13px;line-height:1.5;color:#6b7688;">` +
+  `<span style="font-weight:700;color:${NAVY};">${esc(label)}:</span> ${esc(text)}</div>`;
+
+const steps = (i: Instruction | null) =>
+  i ? step("What happened", i.what) + step("What the watch did", i.did) + step("What to do", i.todo) : "";
 
 const row = (k: string, v: string) =>
   `<tr><td style="padding:6px 12px 6px 0;font-family:${FONT};font-size:13px;color:#6b7688;white-space:nowrap;">${esc(k)}</td>` +
@@ -34,32 +46,46 @@ function shell(eyebrow: string, headline: string, tone: "good" | "bad", lines: s
           .map(
             (l) =>
               `<tr><td valign="top" style="padding:4px 10px 4px 0;font-family:${FONT};font-size:15px;color:${RED};">&bull;</td>` +
-              `<td style="padding:4px 0;font-family:${FONT};font-size:15px;line-height:1.5;color:#33404f;">${esc(l)}</td></tr>`,
+              `<td style="padding:4px 0 12px;font-family:${FONT};font-size:15px;line-height:1.5;color:#33404f;">${esc(l)}${steps(instructionFor(l))}</td></tr>`,
           )
           .join("")}</table></td></tr>`
       : "",
     `<tr><td style="padding:20px 32px 0;"><div style="font-family:${FONT};font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8a93a3;">The numbers</div>` +
       `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:6px;">${factRows.map(([k, v]) => row(k, v)).join("")}</table></td></tr>`,
     `<tr><td style="padding:24px 32px 30px;"><div style="font-family:${FONT};font-size:12px;line-height:1.6;color:#8a93a3;">` +
-      "Source: the site's own /api/cron/health-watch - the website and CRM probed from outside, the listing store's idx_health_snapshot(), and first-party flood signals. " +
+      "Source: the site's own /api/cron/health-watch - the website, the CRM and Supabase's API layer probed from outside, the listing store's idx_health_snapshot(), and first-party flood signals. " +
       "Vercel edge error logs are not read here (no token in the runtime); check the Vercel dashboard for those.</div></td></tr>",
-    `<tr><td style="background:#f8f9fb;border-top:1px solid #eceef1;padding:18px 32px;font-family:${FONT};font-size:12px;color:#98a1b0;">RealtyLT platform watch &middot; hourly checks, digest Mondays</td></tr>`,
+    `<tr><td style="background:#f8f9fb;border-top:1px solid #eceef1;padding:18px 32px;font-family:${FONT};font-size:12px;color:#98a1b0;">RealtyLT platform watch &middot; checks every 10 minutes, digest Mondays</td></tr>`,
     "</table></td></tr></table></body></html>",
   ].join("\n");
 }
 
-export function composeAlert(problems: string[], factRows: [string, string][], critical: boolean): { subject: string; html: string } {
+/** The plain-text part: the same problems, instructions and numbers, for a client (or a
+ * fallback sender) that shows no HTML. */
+function plain(headline: string, lines: string[], factRows: [string, string][]): string {
+  const blocks = lines.map((l) => {
+    const i = instructionFor(l);
+    return i ? `- ${l}\n  What happened: ${i.what}\n  What the watch did: ${i.did}\n  What to do: ${i.todo}` : `- ${l}`;
+  });
+  return [headline, ...blocks, `The numbers:\n${factRows.map(([k, v]) => `${k}: ${v}`).join("\n")}`].join("\n\n");
+}
+
+export function composeAlert(problems: string[], factRows: [string, string][], critical: boolean): { subject: string; html: string; text: string } {
   const nProblems = problems.length;
+  const headline = `${nProblems} thing${nProblems === 1 ? "" : "s"} need${nProblems === 1 ? "s" : ""} a look`;
   return {
     subject: `${critical ? "URGENT - " : ""}RealtyLT watch: ${nProblems} problem${nProblems === 1 ? "" : "s"} need${nProblems === 1 ? "s" : ""} a look`,
-    html: shell("Platform watch", `${nProblems} thing${nProblems === 1 ? "" : "s"} need${nProblems === 1 ? "s" : ""} a look`, "bad", problems, factRows),
+    html: shell("Platform watch", headline, "bad", problems, factRows),
+    text: plain(headline, problems, factRows),
   };
 }
 
-export function composeDigest(problems: string[], factRows: [string, string][]): { subject: string; html: string } {
+export function composeDigest(problems: string[], factRows: [string, string][]): { subject: string; html: string; text: string } {
   const ok = problems.length === 0;
+  const headline = ok ? "Website, CRM and listing data are healthy" : "The week ends with open problems";
   return {
     subject: ok ? "RealtyLT watch: all clear this week" : `RealtyLT watch: weekly digest, ${problems.length} open problem${problems.length === 1 ? "" : "s"}`,
-    html: shell("Weekly digest", ok ? "Website, CRM and listing data are healthy" : "The week ends with open problems", ok ? "good" : "bad", problems, factRows),
+    html: shell("Weekly digest", headline, ok ? "good" : "bad", problems, factRows),
+    text: plain(headline, problems, factRows),
   };
 }
