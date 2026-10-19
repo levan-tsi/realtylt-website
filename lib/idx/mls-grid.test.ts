@@ -362,6 +362,12 @@ describe("replicateDelta (hourly incremental window)", () => {
     expect(calls[0]).toContain(encodeURIComponent("ModificationTimestamp gt 2026-02-28T00:00:00.000Z"));
     expect(calls[0]).not.toContain(encodeURIComponent("StandardStatus eq"));
     expect(calls[0]).not.toContain(encodeURIComponent("MlgCanView eq"));
+    // ...and both must be ASKED FOR. The mocked feed above returns MlgCanView whether or not it
+    // is selected; the real one returns only selected fields. It was missing from $select until
+    // 2026-10-19 (round 69), so every hidden row the delta saw was upserted as active.
+    const select = (new URL(calls[0]).searchParams.get("$select") ?? "").split(",");
+    expect(select).toContain("MlgCanView");
+    expect(select).toContain("StandardStatus");
   });
 
   it("keeps only the LATEST state for an id seen twice in one window", async () => {

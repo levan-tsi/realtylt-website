@@ -102,6 +102,13 @@ const SELECT_FIELDS = [
   "Heating", "Cooling", "Sewer", "WaterSource", "ParkingFeatures",
   "StandardStatus", "PropertyType", "PropertySubType", "ListAgentFullName",
   "ListOfficeName", "PublicRemarks", "ModificationTimestamp",
+  // MlgCanView is LOAD-BEARING FOR REMOVALS and was MISSING here until 2026-10-19. The hourly
+  // delta is unfiltered so that it can see a row go hidden (MlgCanView=false) and deactivate it,
+  // and mapProperty drops such a row - but a $select without this field never receives it, so
+  // every hidden row that still carried a sale status was UPSERTED AS ACTIVE, and once MLS Grid
+  // purged it from the feed seven days later no delta could ever correct it. Found by the round
+  // 69 reconciliation: 13 of its 14 real misses were this (12 purged, one still hidden).
+  "MlgCanView",
 ];
 
 /** Lowercased county slugs we serve — feed values like "Westchester County" normalize to these. */
