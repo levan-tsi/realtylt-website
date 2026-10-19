@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { mapProperty, MlsGridClient } from "./mls-grid";
+import { isShowable, mapProperty, MlsGridClient, toOnMarketRow } from "./mls-grid";
 import { runInRefreshContext } from "./mls-fetch";
 
 /** Minimal valid onekey2 row (real field shape — no UnparsedAddress on this feed). */
@@ -425,4 +425,29 @@ describe("replicateNewest (priority photo set)", () => {
     // Photos stay as the ORIGINAL signed source URLs — the cron copies them into Blob.
     expect(out[0].photos[0]).toMatch(/^https:\/\/media\.example\.com\//);
   }, 15_000);
+});
+
+describe("isShowable / toOnMarketRow (the reconciliation's gate, round 69)", () => {
+  it("passes a viewable sale-status row in a served county and type - the delta's own upsert gate", () => {
+    expect(isShowable(row)).toBe(true);
+    expect(isShowable({ ...row, StandardStatus: "Pending" })).toBe(true);
+    expect(isShowable({ ...row, StandardStatus: "Coming Soon" })).toBe(true);
+  });
+
+  it("fails everything the delta would deactivate: Closed, Hold, Canceled, hidden, unserved county or type", () => {
+    expect(isShowable({ ...row, StandardStatus: "Closed" })).toBe(false);
+    expect(isShowable({ ...row, StandardStatus: "Hold" })).toBe(false);
+    expect(isShowable({ ...row, StandardStatus: "Canceled" })).toBe(false);
+    expect(isShowable({ ...row, MlgCanView: false })).toBe(false);
+    expect(isShowable({ ...row, CountyOrParish: "Nassau County" })).toBe(false);
+    expect(isShowable({ ...row, PropertyType: "Commercial Lease" })).toBe(false);
+  });
+
+  it("keeps the id, the raw status, the timestamp and whether we would serve the row", () => {
+    expect(toOnMarketRow(row)).toEqual({ id: "KEY123456", status: "Active", served: true, ts: "2026-07-01T12:00:00Z" });
+    expect(toOnMarketRow({ ...row, CountyOrParish: "Suffolk County" })?.served).toBe(false);
+    expect(toOnMarketRow({ ...row, MlgCanView: false })?.served).toBe(false);
+    expect(toOnMarketRow({ ...row, ListingId: undefined, ListingKey: "KEY9" })?.id).toBe("KEY9");
+    expect(toOnMarketRow({ ...row, ListingId: undefined })).toBeNull();
+  });
 });

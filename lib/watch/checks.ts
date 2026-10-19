@@ -41,6 +41,15 @@ export interface HealthSnapshot {
   touched_24h?: number;
   repriced_24h?: number;
   restatused_24h?: number;
+  /** The daily feed reconciliation's state (round 69; idx_sync_state.reconcile). Null or absent
+   * before it has ever run. */
+  reconcile?: {
+    startedAt?: string;
+    completedAt?: string;
+    dryAt?: string;
+    error?: string;
+    summary?: { feedOnMarket?: number; stale?: number; deactivated?: number; keptOnMarket?: number; missing?: number; restored?: number; left?: number } | null;
+  } | null;
 }
 
 export interface WatchCounts {
@@ -109,6 +118,9 @@ export const THRESHOLDS = {
   realertMs: 6 * 3600 * 1000,
   dbApiTimeoutMs: 20_000,
   dbApiRecheckMs: 30_000,
+  /** The feed reconciliation runs daily; two missed days means listings the feed closed without
+   * a timestamp change are staying up (the 2026-10-19 class). */
+  reconcileStaleHours: 48,
 } as const;
 
 export interface Judgement {
@@ -185,7 +197,7 @@ function restartLine(r: RestartOutcome | null): string {
   return ` The watch asked Supabase to restart the project, but the restart call answered ${r.httpStatus || "nothing"}: restart by hand: ${MANUAL_RESTART}.`;
 }
 
-export function judge(input: WatchInput): Judgement {
+export function judge(input: WatchInput, nowMs: number = Date.now()): Judgement {
   const { snap, counts, site, search, crm, prev, dbApi, restart } = input;
   const problems: string[] = [];
   let critical = false;
@@ -242,6 +254,18 @@ export function judge(input: WatchInput): Judgement {
     if (prev && n(prev.active_no_photo_older_7d) > 0 && oldNoPhoto > n(prev.active_no_photo_older_7d) * 2 && oldNoPhoto - n(prev.active_no_photo_older_7d) > 100)
       bad(`Stale zero-photo rows doubled since the last check (${prev.active_no_photo_older_7d} to ${oldNoPhoto}).`);
     if (n(snap.touched_24h) === 0) bad("No listing row was touched in 24 hours: the feed is frozen or the sync is not writing.");
+    // The daily reconciliation (round 69). Never having run is a fact, not a problem - the
+    // feature may be new - but a run that refused to judge, or two days without a completed
+    // run, means closings the hourly sync cannot see are staying up.
+    const rec = snap.reconcile;
+    if (rec?.error) {
+      bad(`The daily feed reconciliation refused to judge: ${rec.error}. Listings the feed has closed without a timestamp change stay up until it runs clean.`);
+    } else if (rec) {
+      const done = Date.parse(rec.completedAt ?? "");
+      const ref = Number.isFinite(done) ? done : Date.parse(rec.startedAt ?? "");
+      if (Number.isFinite(ref) && nowMs - ref > THRESHOLDS.reconcileStaleHours * 3600_000)
+        bad(`The daily feed reconciliation has not completed in over ${THRESHOLDS.reconcileStaleHours} hours (last ${Number.isFinite(done) ? "completed" : "started"} ${new Date(ref).toISOString().slice(0, 16)} UTC). Listings the feed closed without a timestamp change stay up until it runs; the pg_cron job is idx-daily-reconcile.`);
+    }
   }
 
   // The flood / anomaly first cut.
@@ -291,10 +315,25 @@ export function facts(input: WatchInput): [string, string][] {
     ["Active listings", `${num(s.active_total)} (${num(s.active_status_active)} active, ${num(s.active_coming_soon)} coming soon, ${num(s.active_pending)} pending)`],
     ["No servable photo", `${num(s.active_no_photo)} total, ${num(s.active_no_photo_older_7d)} older than 7 days`],
     ["Touched in 24h", `${num(s.touched_24h)} rows; ${num(s.repriced_24h)} re-priced, ${num(s.restatused_24h)} status changes`],
+    ["Feed reconciliation", reconcileFact(s.reconcile)],
     ["Leads", `${num(c.leads_1h)} last hour, ${num(c.leads_24h)} last 24h`],
     ["New accounts", `${num(c.signups_1h)} last hour, ${num(c.signups_24h)} last 24h`],
     ["Chat sessions", `${num(c.chat_1h)} last hour, ${num(c.chat_24h)} last 24h`],
   ];
+}
+
+function reconcileFact(rec: HealthSnapshot["reconcile"]): string {
+  if (!rec) return "not yet run";
+  if (rec.error) return `refused to judge: ${rec.error}`;
+  const when = rec.completedAt
+    ? `completed ${rec.completedAt.slice(0, 16)} UTC`
+    : rec.dryAt
+      ? `dry run ${rec.dryAt.slice(0, 16)} UTC`
+      : `in progress since ${(rec.startedAt ?? "?").slice(0, 16)} UTC`;
+  const sum = rec.summary;
+  if (!sum) return when;
+  const num = (v: unknown) => (v == null ? "?" : Number(v).toLocaleString("en-US"));
+  return `${when}: ${num(sum.feedOnMarket)} on-market in the feed, ${num(sum.deactivated)} deactivated, ${num(sum.restored)} restored, ${num(sum.keptOnMarket)} re-confirmed`;
 }
 
 /** The throttle's key: the problem FAMILIES (lib/watch/instructions.ts), not the full lines.

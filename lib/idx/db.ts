@@ -24,6 +24,7 @@ import { DEFAULT_COUNTY_SLUGS } from "@/lib/site";
 import { MIN_CITY_ACTIVES, pickAreaInsights, type AreaInsights, type InsightRow } from "@/lib/reports/insights";
 import { interleaveByBand, pickPriceSpread } from "./price-spread";
 import type { GeocodeHit, GeocodeRow } from "./geocode";
+import type { OnMarketRow, ReconcileState } from "./reconcile";
 
 interface SyncState {
   watermark: string;
@@ -889,6 +890,62 @@ export async function applyIdxSync(args: IdxSyncApplyArgs): Promise<{ upserted: 
   });
   if (!res.ok) throw new Error(`idx_sync_apply ${res.status}: ${(await res.text()).slice(0, 200)}`);
   return (await res.json()) as { upserted: number; deactivated: number };
+}
+
+/** POST a secret-gated RPC (the write path's shape: anon key on the wire, CRON_SECRET checked
+ * in-database by the SECURITY DEFINER function). */
+async function secretRpc<T>(name: string, body: Record<string, unknown>, timeoutMs = 30_000): Promise<T> {
+  const cfg = restConfig();
+  if (!cfg) throw new Error("Supabase is not configured");
+  const res = await fetch(`${cfg.base}/rpc/${name}`, {
+    method: "POST",
+    headers: { apikey: cfg.key, Authorization: `Bearer ${cfg.key}`, "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(timeoutMs),
+  });
+  if (!res.ok) throw new Error(`${name} ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  return (await res.json()) as T;
+}
+
+/** The daily reconciliation's stored state (round 69; lib/idx/reconcile.ts parses it). */
+export async function getReconcileState(): Promise<unknown> {
+  const { rows } = await rest<{ reconcile: unknown }>("idx_sync_state?id=eq.1&select=reconcile");
+  return rows[0]?.reconcile ?? null;
+}
+
+/** The reconciliation's only write path: seen ids, run state, confirmed deactivations. */
+export async function applyReconcile(args: {
+  secret: string;
+  reset?: boolean;
+  seen?: readonly OnMarketRow[];
+  state?: ReconcileState | null;
+  deactivateIds?: readonly string[];
+}): Promise<{ seenTotal: number; deactivated: number }> {
+  const out = await secretRpc<{ seen_total: number; deactivated: number }>(
+    "idx_reconcile_apply",
+    {
+      _secret: args.secret,
+      _reset: args.reset ?? false,
+      _seen: args.seen ?? [],
+      _state: args.state ?? null,
+      _deactivate_ids: args.deactivateIds ?? [],
+    },
+    60_000,
+  );
+  return { seenTotal: out.seen_total, deactivated: out.deactivated };
+}
+
+/** The two-way diff after a complete walk: rows we serve that the feed did not list (candidates
+ * to confirm by id) and served feed rows we do not hold (candidates to restore). */
+export async function getReconcileCandidates(
+  secret: string,
+): Promise<{ stale: string[]; missing: string[]; seenTotal: number; activeTotal: number }> {
+  const out = await secretRpc<{ stale: string[] | null; missing: string[] | null; seen_total: number; active_total: number }>(
+    "idx_reconcile_candidates",
+    { _secret: secret },
+    60_000,
+  );
+  return { stale: out.stale ?? [], missing: out.missing ?? [], seenTotal: out.seen_total, activeTotal: out.active_total };
 }
 
 /** Active listings still standing on the feed's zip-centroid fallback that nothing has tried to

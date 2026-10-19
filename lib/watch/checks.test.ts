@@ -252,3 +252,45 @@ describe("the CRM probe: its /api/health, else the login page", () => {
     expect(v.facts.find(([k]) => k === "CRM (app.realtylt.com)")?.[1]).toBe("up (200, 700ms) - database: auth 12ms, rest 9ms");
   });
 });
+
+describe("the daily feed reconciliation (round 69)", () => {
+  const T = Date.parse("2026-10-20T12:00:00Z");
+  const fact = (v: ReturnType<typeof judge>) => v.facts.find((f) => f[0] === "Feed reconciliation")?.[1] ?? "";
+
+  it("a run completed within two days is a fact with its numbers, not a problem", () => {
+    const h = healthy();
+    h.snap!.reconcile = {
+      startedAt: "2026-10-20T09:05:00Z",
+      completedAt: "2026-10-20T09:09:00Z",
+      summary: { feedOnMarket: 46_614, stale: 28, deactivated: 14, keptOnMarket: 1, missing: 7, restored: 2, left: 0 },
+    };
+    const v = judge(h, T);
+    expect(v.problems).toEqual([]);
+    expect(fact(v)).toMatch(/completed 2026-10-20T09:09 UTC: 46,614 on-market in the feed, 14 deactivated, 2 restored, 1 re-confirmed/);
+  });
+
+  it("never having run is only a fact (the feature may be new)", () => {
+    const v = judge(healthy(), T);
+    expect(v.problems).toEqual([]);
+    expect(fact(v)).toBe("not yet run");
+  });
+
+  it("two days without a completed run is a problem, named in plain words, not critical", () => {
+    const h = healthy();
+    h.snap!.reconcile = { startedAt: "2026-10-17T09:05:00Z", completedAt: "2026-10-17T09:09:00Z" };
+    const v = judge(h, T);
+    expect(v.critical).toBe(false);
+    expect(v.problems.join(" ")).toMatch(/has not completed in over 48 hours \(last completed 2026-10-17T09:09 UTC\)/);
+    const stuck = healthy();
+    stuck.snap!.reconcile = { startedAt: "2026-10-17T09:05:00Z", nextLink: "https://x" } as never;
+    expect(judge(stuck, T).problems.join(" ")).toMatch(/last started 2026-10-17T09:05 UTC/);
+  });
+
+  it("a run that refused to judge is named with its reason", () => {
+    const h = healthy();
+    h.snap!.reconcile = { startedAt: "2026-10-20T09:05:00Z", error: "the walk saw 900 on-market rows against 27507 we serve; refusing to judge from it" };
+    const v = judge(h, T);
+    expect(v.problems.join(" ")).toMatch(/refused to judge: the walk saw 900/);
+    expect(fact(v)).toMatch(/^refused to judge/);
+  });
+});

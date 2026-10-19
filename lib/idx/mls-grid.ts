@@ -20,6 +20,7 @@ import { SERVED_AREAS, type CountySlug } from "@/lib/site";
 import { FixtureIdxClient } from "./fixture";
 import { FIXTURE_LISTINGS } from "./fixture-data";
 import { mlsGridDataFetch } from "./mls-fetch";
+import type { OnMarketRow } from "./reconcile";
 import ZIP_CENTROIDS from "./zip-centroids.json";
 import type { IdxClient, Listing, ListingStatus, PropertyType, SearchParams, SearchResult } from "./types";
 
@@ -323,6 +324,60 @@ export class MlsGridClient implements IdxClient {
       nextLink = result.nextLink;
     }
     return { upserts: [...upserts.values()], removeIds: [...removeIds], watermark, complete, scanned, pages };
+  }
+
+  /** ONE page of the feed's whole ON-MARKET set, ids only — the daily reconciliation's walk
+   * (round 69, lib/idx/reconcile.ts). Same filter as the baseline (viewable, sale statuses, served
+   * types) so the set is "what the feed would let us show today"; no $expand, a page is ~100 KB.
+   * The caller owns pacing and the resume cursor (the feed's @odata.nextLink survives across
+   * invocations), because one walk is ~94 pages and a Vercel function has 300 s. */
+  async walkOnMarket(nextLink: string | null): Promise<{ rows: OnMarketRow[]; nextLink: string | null }> {
+    const result = nextLink ? await this.fetchNextLink(nextLink) : await this.fetchRows(() => this.buildWalkQuery());
+    const rows: OnMarketRow[] = [];
+    for (const p of result.rows) {
+      const r = toOnMarketRow(p);
+      if (r) rows.push(r);
+    }
+    return { rows, nextLink: result.nextLink };
+  }
+
+  private buildWalkQuery(): string {
+    return [
+      `$filter=${encodeURIComponent(this.buildFilter())}`,
+      "$select=ListingId,ListingKey,StandardStatus,MlgCanView,ModificationTimestamp,PropertyType,CountyOrParish",
+      `$top=${PAGE_SIZE}`,
+    ].join("&");
+  }
+
+  /** What the feed says these ids are TODAY — unfiltered by status and MlgCanView, so a closed,
+   * held, canceled or hidden row answers as itself and a purged one does not answer at all. The
+   * reconciliation deactivates a row only on this answer, never on the walk alone. */
+  async probeByIds(ids: readonly string[]): Promise<ResoProperty[]> {
+    const safe = ids.filter((id) => /^[A-Za-z0-9_-]{1,40}$/.test(id)); // keeps the $filter uninjectable
+    if (!safe.length) return [];
+    const filter = `OriginatingSystemName eq '${this.feedId}' and ListingId in (${safe.map((i) => `'${i}'`).join(",")})`;
+    const { rows } = await this.fetchRows(() =>
+      [`$filter=${encodeURIComponent(filter)}`, `$select=${[...this.select].join(",")}`, `$top=${safe.length}`].join("&"),
+    );
+    return rows;
+  }
+
+  /** Full rows WITH media for ids the reconciliation found on the market but not in our store —
+   * mapped Listings whose photos are the feed's signed URLs, exactly as replicateDelta hands them
+   * to the sync for mirroring. Only rows we may show come back. */
+  async fetchFullByIds(ids: readonly string[]): Promise<Listing[]> {
+    const safe = ids.filter((id) => /^[A-Za-z0-9_-]{1,40}$/.test(id));
+    if (!safe.length) return [];
+    const filter = `OriginatingSystemName eq '${this.feedId}' and MlgCanView eq true and ListingId in (${safe.map((i) => `'${i}'`).join(",")})`;
+    const { rows } = await this.fetchRows(() =>
+      [`$filter=${encodeURIComponent(filter)}`, `$select=${[...this.select].join(",")}`, "$expand=Media", `$top=${safe.length}`].join("&"),
+    );
+    const out: Listing[] = [];
+    for (const p of rows) {
+      const mapped = isShowable(p) ? mapProperty(p) : null;
+      if (mapped) out.push(mapped);
+    }
+    return out;
   }
 
   private buildDeltaQuery(watermark: string): string {
@@ -629,6 +684,27 @@ function coordsOf(p: ResoProperty, id: string): { lat: number; lng: number } {
 /** Feed school fields sometimes hold participant noise instead of a name. */
 function schoolName(v: string | undefined): string | undefined {
   return v && !/contact|call listing|see remarks|unknown/i.test(v) ? v : undefined;
+}
+
+/** A feed row this site may show as on the market — THE SAME GATE the hourly delta applies to
+ * decide upsert vs. deactivate (replicateDelta): the raw StandardStatus is a sale status, and the
+ * row maps (viewable, served county, served type, an id and a price). The reconciliation judges
+ * every candidate with this, so a row is only ever deactivated for a reason the delta would have
+ * deactivated it for, had it seen the change. */
+export function isShowable(p: ResoProperty): boolean {
+  return SALE_STATUS_SET.has(p.StandardStatus ?? "") && mapProperty(p) !== null;
+}
+
+/** The id-only shape the reconciliation walk keeps per feed row (lib/idx/reconcile.ts). */
+export function toOnMarketRow(p: ResoProperty): OnMarketRow | null {
+  const id = p.ListingId ?? p.ListingKey;
+  if (!id) return null;
+  return {
+    id,
+    status: p.StandardStatus ?? "",
+    served: p.MlgCanView !== false && isServedCounty(p.CountyOrParish) && isServedType(p.PropertyType),
+    ts: p.ModificationTimestamp ?? "",
+  };
 }
 
 /** Map a RESO property to our Listing; drop rows we can't display compliantly. */

@@ -147,6 +147,20 @@ export const INSTRUCTIONS: readonly Instruction[] = [
     todo: `In the SQL editor: ${SYNC_RUNS} then ${SYNC_STATE} If the job runs but writes nothing, Vercel Logs filtered to /api/cron/idx-sync show why.`,
   },
   {
+    family: "reconcile-refused",
+    match: /^The daily feed reconciliation refused to judge/,
+    what: "The daily check that compares every listing we serve with the MLS feed's own on-market list saw far fewer feed rows than we serve, so it refused to deactivate anything from that walk. Until it runs clean, a listing the MLS closed without changing its timestamp (the class found 2026-10-19) can stay up.",
+    did: ALERTED,
+    todo: `In the SQL editor: select reconcile from public.idx_sync_state where id = 1; (the error names the counts). Vercel dashboard > realtylt-website > Logs, filtered to /api/cron/idx-reconcile, shows the walk. The job is Supabase cron idx-daily-reconcile (09:05 to 09:50 UTC); a session can run it by hand with ?force=1.`,
+  },
+  {
+    family: "reconcile-stale",
+    match: /^The daily feed reconciliation has not completed/,
+    what: "The daily check that compares every listing we serve with the MLS feed's own on-market list has not finished in two days, so a listing the MLS closed without changing its timestamp (the class found 2026-10-19) can stay up.",
+    did: ALERTED,
+    todo: `In the SQL editor: select jobname, schedule, active from cron.job where jobname = 'idx-daily-reconcile'; and select reconcile from public.idx_sync_state where id = 1; If the job is missing, run node scripts/schedule-idx-reconcile.mjs from a session. Vercel dashboard > realtylt-website > Logs, filtered to /api/cron/idx-reconcile, shows each tick.`,
+  },
+  {
     family: "lead-flood",
     match: /leads arrived in the last hour/,
     what: "More than 15 leads in one hour. Normal is a handful a day, so this is most likely form spam.",

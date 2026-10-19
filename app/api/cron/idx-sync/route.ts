@@ -4,9 +4,10 @@ import { censusCsvRow, parseCensusBatch, retryStreet, type GeocodeRow } from "@/
 import { geocodePending, geocodeSoldPending } from "@/lib/idx/geocode-runner";
 import { runInRefreshContext } from "@/lib/idx/mls-fetch";
 import { MlsGridClient } from "@/lib/idx/mls-grid";
-import { mirrorPhotos, preservedMarker, type MirrorDeps } from "@/lib/idx/photo-mirror";
+import { mirrorDeps } from "@/lib/idx/mirror-deps";
+import { mirrorPhotos, preservedMarker } from "@/lib/idx/photo-mirror";
 import { cleanupOffMarketPhotos, withoutMirrorMarker, type CleanupDeps } from "@/lib/idx/photo-cleanup";
-import { PHOTO_BUCKET, storageWriteConfig, uploadPhoto, type StorageWriteConfig } from "@/lib/idx/storage";
+import { PHOTO_BUCKET, storageWriteConfig, type StorageWriteConfig } from "@/lib/idx/storage";
 
 /** Hourly INCREMENTAL MLS sync into Supabase idx_listings (secret-gated).
  *
@@ -187,28 +188,6 @@ function cleanupDeps(cfg: StorageWriteConfig, restBase: string): CleanupDeps {
       });
       return p.ok;
     },
-  };
-}
-
-/** Real download (media host, token as User-Agent) + upload (Supabase Storage, service role). */
-function mirrorDeps(cfg: StorageWriteConfig): MirrorDeps {
-  return {
-    async download(url) {
-      try {
-        // media.mlsgrid.com has a separate budget from the DATA API and does NOT go through the
-        // mls-fetch guard. MLS Grid requires the OAuth token as User-Agent to download media.
-        const r = await fetch(url, {
-          headers: { "User-Agent": process.env.MLS_API_KEY ?? "" },
-          signal: AbortSignal.timeout(20_000),
-        });
-        if (!r.ok) return { ok: false, status: r.status };
-        const bytes = new Uint8Array(await r.arrayBuffer());
-        return { ok: true, status: 200, bytes, contentType: r.headers.get("content-type") ?? "image/jpeg" };
-      } catch {
-        return { ok: false, status: 0 };
-      }
-    },
-    upload: (path, bytes, ct) => uploadPhoto(cfg, path, bytes, ct),
   };
 }
 

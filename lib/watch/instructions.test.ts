@@ -69,6 +69,8 @@ function everyProblem(): string[] {
   add((i) => (i.snap = { ...i.snap!, minutes_since_sync: 314 }));
   add((i) => (i.snap = { ...i.snap!, minutes_since_sync: null }));
   add((i) => (i.snap = { ...i.snap!, baseline_complete: false }));
+  add((i) => (i.snap = { ...i.snap!, reconcile: { startedAt: "2026-10-20T09:05:00Z", error: "the walk saw 900 on-market rows against 27,507 we serve; refusing to judge from it" } }));
+  add((i) => (i.snap = { ...i.snap!, reconcile: { startedAt: "2026-10-10T09:05:00Z", completedAt: "2026-10-10T09:09:00Z" } }));
   add((i) => {
     i.snap = { ...i.snap!, active_total: 3_000 };
     i.prev = null;
