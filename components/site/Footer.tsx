@@ -215,6 +215,24 @@ export function Footer() {
                 <NightLabel text="Site Map" />
               </Link>
             </li>
+            <li>
+              {/* Google's Preferred Sources opt-in (developers.google.com/search/docs/appearance/
+                  preferred-sources): one click adds realtylt.com as the reader's preferred source
+                  for AI Overviews, AI Mode, Top Stories and Discover. The plain-link form from
+                  Google's own doc, so no third-party script and no CSP entry; the script version
+                  was removed on 2026-09-18 before the domain was live. Preferred sources are
+                  domain-level, so this is a real site URL, never an env-derived host. */}
+              <a
+                href="https://www.google.com/preferences/source?q=realtylt.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper night:hover:text-moon"
+              >
+                {/* Plain text, not NightLabel: that helper lowercases the run and "Google" is a
+                    proper noun. The line is already sentence case. */}
+                Add RealtyLT as a preferred source on Google
+              </a>
+            </li>
           </ul>
         </div>
       </div>
