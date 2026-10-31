@@ -247,8 +247,10 @@ export function LeadForm({
             {SITE.phone}
           </a>{" "}
           or email{" "}
-          <a href={`mailto:${SITE.email}`} className={`font-bold underline-offset-4 hover:underline ${dark ? "text-paper" : "text-ink"}`}>
-            {SITE.email}
+          {/* The general inbox (owner's word, 2026-10-31 evening: the footer, where this form sits on
+              every page, shows only info@; info@ delivers into his own inbox the same day). */}
+          <a href={`mailto:${SITE.infoEmail}`} className={`font-bold underline-offset-4 hover:underline ${dark ? "text-paper" : "text-ink"}`}>
+            {SITE.infoEmail}
           </a>
           , and we answer the same day.
         </p>
