@@ -17,8 +17,14 @@ export function tone(dark: boolean) {
     muted: dark ? "text-paper/65" : "text-stone",
     strong: dark ? "text-paper" : "text-ink",
     rule: dark ? "border-white/12" : "border-line-strong",
-    track: dark ? "#232a33" : "#dde3ea",
-    quiet: dark ? "#6b7785" : "#97a3b1",
+    /* A dark band is scoped `.daylight` by the page, so its colours are fixed. A light band sits
+       inside the site's night scope, where the tokens re-point: its marks use the tokens so they
+       follow the ground they are drawn on. */
+    track: dark ? "#232a33" : "var(--color-line)",
+    quiet: dark ? "#6b7785" : "var(--color-line-strong)",
+    ink: dark ? "#ffffff" : "var(--color-ink)",
+    ground: dark ? "#000000" : "var(--color-mist)",
+    outline: dark ? "rgba(255,255,255,0.7)" : "var(--color-stone)",
     link: dark
       ? "text-paper/85 underline underline-offset-4 transition-colors hover:text-porchlight"
       : "text-river underline underline-offset-4 transition-colors hover:text-porchlight-deep",
@@ -116,7 +122,7 @@ export function Bar({ bar, max, dark }: { bar: BarRow; max: number; dark: boolea
           className="h-full rounded-full"
           style={
             bar.hollow
-              ? { width: `${pct}%`, border: `2px solid ${bar.lit ? ACCENT : t.quiet}` }
+              ? { width: `${pct}%`, border: `2px solid ${bar.lit ? ACCENT : t.outline}` }
               : { width: `${pct}%`, background: bar.lit ? ACCENT : t.quiet }
           }
         />

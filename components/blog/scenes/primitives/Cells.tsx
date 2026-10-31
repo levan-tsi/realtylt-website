@@ -41,12 +41,12 @@ export function Cells({
   const dark = band === "dark";
   const t = tone(dark);
   const markOf = (n: number) => marks.find((m) => m.cells.includes(n));
-  const ink = dark ? "#ffffff" : "#12161c";
+  const ink = t.ink;
   const stripMax = strip ? Math.max(...strip.map((s) => s.value)) : 1;
 
   return (
     <FigureFrame {...{ band, eyebrow, heading, lede, alt, sources, note }}>
-      <div className="grid gap-x-10 gap-y-10 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid max-w-4xl gap-x-12 gap-y-10 md:grid-cols-2">
         {groups.map((g) => (
           <div key={g.label} className={`border-t pt-5 ${t.rule}`}>
             <p className={`text-[15px] font-bold leading-snug ${t.strong}`}>{g.label}</p>
@@ -64,7 +64,7 @@ export function Cells({
                 return (
                   <span
                     key={n}
-                    className="flex aspect-square items-center justify-center rounded-[3px] text-[10px] font-bold leading-none md:text-[9px]"
+                    className="flex aspect-square items-center justify-center rounded-[3px] text-[12px] font-bold leading-none"
                     style={{
                       background: fill ? ACCENT : t.track,
                       boxShadow: ring ? `inset 0 0 0 2px ${ink}` : undefined,
@@ -144,11 +144,12 @@ export function MiniForm({
 
 /** One answer box of a paper form, ticked or empty. */
 export function TickBox({ on, dark }: { on: boolean; dark: boolean }) {
+  const t = tone(dark);
   return (
     <span
       aria-hidden
       className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[5px]"
-      style={{ boxShadow: `inset 0 0 0 2px ${on ? ACCENT : dark ? "rgba(255,255,255,0.4)" : "#9aa7b6"}` }}
+      style={{ boxShadow: `inset 0 0 0 2px ${on ? ACCENT : t.quiet}` }}
     >
       {on && (
         <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none">

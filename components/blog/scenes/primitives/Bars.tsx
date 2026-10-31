@@ -35,7 +35,7 @@ export function Bars({
   const several = panels.length > 1;
   return (
     <FigureFrame {...{ band, eyebrow, heading, lede, alt, sources, note }}>
-      <div className={callout ? "grid gap-12 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-16" : ""}>
+      <div className={callout ? "grid gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16" : ""}>
         <div className={several ? "grid max-w-4xl gap-12 md:grid-cols-2 md:gap-14" : "max-w-3xl"}>
           {panels.map((p, i) => (
             <div key={p.title ?? i} className={several ? `border-t pt-6 ${t.rule}` : ""}>
@@ -52,7 +52,7 @@ export function Bars({
         </div>
         {callout && (
           <div className={`border-t pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0 ${t.rule}`}>
-            <p className={`text-5xl font-light leading-none tracking-[-0.02em] md:text-6xl ${t.strong}`}>
+            <p className={`whitespace-nowrap text-5xl font-light leading-none tracking-[-0.02em] md:text-6xl ${t.strong}`}>
               {callout.figure}
             </p>
             <span aria-hidden className="mt-5 block h-[2px] w-10 rounded-full bg-porchlight" />

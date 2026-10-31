@@ -49,7 +49,7 @@ export function Timeline({
         <span
           aria-hidden
           className="absolute bottom-24 top-0 w-px"
-          style={{ left: "2.75rem", background: dark ? "rgba(255,255,255,0.18)" : "#c3cbd4" }}
+          style={{ left: "2.75rem", background: dark ? "rgba(255,255,255,0.18)" : "var(--color-line-strong)" }}
         />
         {years.map((yr) => (
           <span
@@ -69,7 +69,7 @@ export function Timeline({
                 className="absolute top-[0.35rem] h-3.5 w-3.5 rounded-full"
                 style={{
                   left: "calc(-1.25rem - 7px)",
-                  background: e.pending ? (dark ? "#000" : "#f3f5f8") : ACCENT,
+                  background: e.pending ? t.ground : ACCENT,
                   boxShadow: e.pending ? `inset 0 0 0 2px ${ACCENT}` : undefined,
                 }}
               />

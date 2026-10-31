@@ -32,7 +32,7 @@ export function Tiles({
 }) {
   const dark = band === "dark";
   const t = tone(dark);
-  const ink = dark ? "#ffffff" : "#12161c";
+  const ink = t.ink;
 
   return (
     <FigureFrame {...{ band, eyebrow, heading, lede, alt, sources, note }}>

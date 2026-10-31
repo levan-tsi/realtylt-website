@@ -35,7 +35,7 @@ export function Flow({
 }) {
   const dark = band === "dark";
   const t = tone(dark);
-  const spine = dark ? "rgba(255,255,255,0.2)" : "#c3cbd4";
+  const spine = dark ? "rgba(255,255,255,0.2)" : "var(--color-line-strong)";
   const box = dark ? "border-white/15 bg-white/[0.04]" : "border-line-strong bg-paper";
 
   return (

@@ -33,7 +33,7 @@ export function Steps({
 }) {
   const dark = band === "dark";
   const t = tone(dark);
-  const spine = dark ? "rgba(255,255,255,0.2)" : "#c3cbd4";
+  const spine = dark ? "rgba(255,255,255,0.2)" : "var(--color-line-strong)";
 
   return (
     <FigureFrame {...{ band, eyebrow, heading, lede, alt, sources, note }}>
@@ -41,8 +41,14 @@ export function Steps({
         <ul className="m-0 mb-14 grid max-w-4xl list-none gap-x-10 gap-y-6 p-0 sm:grid-cols-3">
           {facts.map((f) => (
             <li key={f.title} className={`border-t pt-4 ${t.rule}`}>
-              {f.figure && <p className={`text-3xl font-light leading-none ${t.strong}`}>{f.figure}</p>}
-              <p className={`mt-2 text-[15px] leading-snug ${t.muted}`}>{f.title}</p>
+              {f.figure ? (
+                <>
+                  <p className={`text-3xl font-light leading-none ${t.strong}`}>{f.figure}</p>
+                  <p className={`mt-2 text-[15px] leading-snug ${t.muted}`}>{f.title}</p>
+                </>
+              ) : (
+                <p className={`text-xl font-light leading-snug ${t.strong}`}>{f.title}</p>
+              )}
             </li>
           ))}
         </ul>
