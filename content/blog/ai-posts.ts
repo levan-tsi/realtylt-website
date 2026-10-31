@@ -511,302 +511,198 @@ If the middle list is long and the bottom line is empty, you have not found a bu
  * first section. The first two lines also say what we do for the reader. Copy this shape.
  *
  * ROUND 15 (2026-10-31): rebuilt to the old post's depth (4,006 words in August) with the 2026
- * sources, the audit's own questions and a quiz; scenes in content/blog/audit-scenes.ts. */
-export const AI_AUDIT_POST = `How to use AI in my business is the question owners bring us. We answer it by writing down how your work really runs, crossing off the ideas that should stay with a person, and handing back a short list in the order to build it.
+ * sources, the audit's own questions and a quiz; scenes in content/blog/audit-scenes.ts.
+ *
+ * ROUND 16 (the owner, 2026-10-31: "38-minute read ... less is better than more; we shouldn't
+ * fluff it out; straight to the point, examples, understanding"): cut to under 20 minutes
+ * (7,578 words to under 3,900) with every teaching kept and the quiz's ten answers still in the
+ * text; the bold one-line "apply" labels woven into each section's close; a paragraph up front on why the
+ * audit comes before any build. Before/after table: docs/blog-r16/NOTES.md. */
+export const AI_AUDIT_POST = `How to use AI in my business is the question owners bring us. This page shows how we answer it: write down how your work really runs, cross off the ideas that should stay with a person, and put what is left in the order to build it. It is for owners of a small business who think AI could help but do not yet know where to point it. By the end you can test any idea with three questions, put what survives in a safe order, and follow a week-by-week roadmap on your own.
 
-This page is for owners of a small business who think AI could help but do not yet know where to point it. By the end you will be able to tell whether a job is worth automating at all, cut your own list of AI ideas with three questions, put what survives in a safe order, and follow a week-by-week roadmap on your own. Every section ends with the one thing to apply. On the way you get what 2026 government surveys show small firms really do with AI, a free one-page sheet, and a short quiz at the end to check what stuck.
+The audit comes before any building for a plain reason. The three questions cross off the ideas that would have been built wrong, before anyone pays for them, and the hours a job takes are measured before a tool is chosen. A build that skips the audit usually automates the wrong job, or the right job on a rule nobody had settled.
 
-Here is the kind of list we see, as an invented example. An owner writes down eleven things she would hand to AI, and it takes about twenty minutes. Answer the phone at night. Stop typing the same details into two systems. Chase the missing signatures. Reply to website enquiries faster. Get the monthly newsletter out without losing a Sunday to it. Each one is a real irritation that a machine could plausibly handle.
-
-The hour that follows adds nothing to the list. It crosses four things off. Two go because they happen a handful of times a year, so a failure would sit unnoticed until a customer found it. One goes because three people in the office do it three different ways, and each of them thinks theirs is the rule. One goes because a wrong answer would go out in writing to a customer, with the business's name on it.
-
-That hour is what this page is about. Writing the list is easy. Crossing things off it, with a reason you can use again next year, is the work.
+An invented example: an owner lists eleven things she would hand to AI. An hour later four are crossed off: two happen a few times a year, three people do one of them three ways, and one would send a customer a wrong answer in writing.
 
 [[scene:in-short]]
 
 ## What an AI audit for a small business is for
 
-Many offers sold under this name are a meeting with a document attached. Someone asks what your business does, writes the answers down in a tidier order, and returns a list of opportunities. That document mostly repeats what you already know.
-
-An audit worth your time does one more thing. Parts of your list come back shorter than they went in, and each removal has a reason beside it that you can apply again without anyone's help.
-
-Removal matters more than addition in a small business for a plain reason: each idea that gets built becomes a job someone has to own. It runs every day. Someone has to understand it. It can break within a year, when a system it depends on changes. Crossing four ideas off a list of eleven saves four builds, four upkeep jobs and four failures nobody would have noticed, and it does that before any money moves.
-
-Here is what you should be holding at the end of a good audit.
+An audit worth your time hands your list back shorter, with a reason beside each removal that you can apply again on your own. In a small business every idea that gets built becomes a job someone has to own: it runs every day, someone has to understand it, and it breaks when a system it depends on changes. Crossing four ideas off eleven saves four builds and four failures nobody would have noticed, before any money moves. Before you look at any tool, decide that the result you want is a shorter list.
 
 [[scene:deliverable]]
 
-**Apply it:** before you look at any tool, decide that the useful result is a shorter list, not a longer one.
-
 ## Start with one job written down
 
-Before any of the questions on this page are useful, someone has to write down how one real job runs. In the order it happened, including the steps that only exist because a system does not do something it was bought to do.
+The three questions need one real job written down first, in the order it happened, including the steps that exist only because a system does not do what it was bought to do. [The workflow automation article on this site](/blog/workflow-automation-real-estate-business) shows how, with a piece of paper.
 
-That part is free, and it is described step by step in [the workflow automation article on this site](/blog/workflow-automation-real-estate-business), with a piece of paper and no help from anyone. Start there if no job in your business is written down yet.
-
-Everything below starts one step later. You have a list of candidates, and the work now is deciding what to do with it. That is a different problem from making the list. It is also where an outside eye helps most, because the person who wrote the list is the person least able to cross things off it.
-
-An invented example: a two-chair dental office writes down how a new patient gets booked. The front desk answers the call, types the details into the booking program, types them again into the billing program, and sends a reminder by hand the day before. Four steps, and two of them are the same typing.
-
-**Apply it:** pick the job you did most often last week and write its steps down tonight, in the order they really happened.
+An invented example: a two-chair dental office writes down how a new patient gets booked. The front desk takes the call, types the details into the booking program, types them again into the billing program, and sends a reminder by hand. Four steps, two of them the same typing. Write down the job you did most often last week, tonight, the same way.
 
 ## How small businesses use AI in 2026
 
-Fewer firms use AI than the headlines suggest, and the count depends on the question asked. Three 2026 government sources measure it three different ways.
-
-The Census Bureau's Business Trends and Outlook Survey asks businesses every two weeks whether they used AI in any business function. It put AI use at 19.8 percent of US businesses as of May 3, 2026. From December 2025 to May 2026 the share hovered between 17 and 20 percent, and between 20 and 23 percent of businesses expected to use it within six months ([Census Bureau, May 26, 2026](https://www.census.gov/library/stories/2026/05/ai-use-businesses.html)). The Bureau changed the wording in November 2025, from use "in producing goods or services" to use "in any business function", so older figures from the same survey do not compare.
-
-The Federal Reserve's Small Business Credit Survey asked firms with 1 to 499 employees a wider question: whether the business or its employees use AI in some way. Of those firms, 46 percent said yes. The most common uses were writing or marketing, individual productivity, and planning or analysis. A third had no plans to use AI, and more than half of those said it does not apply to their business ([Federal Reserve Banks, March 3, 2026](https://www.clevelandfed.org/collections/press-releases/2026/pr-20260303-fed-survey-small-business-optimism-wanes-as-performance-metrics-hold-steady); 6,525 responses, fielded September 3 to November 14, 2025).
-
-A Census Bureau working paper on the 2026 AI supplement to the same Census survey found that 18 percent of firms used AI in a business function between November 2025 and January 2026, and that 22 percent expected to within six months ([Bonney and others, Census Bureau working paper CES 26-25, April 2026](https://www2.census.gov/library/working-papers/2026/adrm/ces/CES-WP-26-25.pdf)).
-
-Read together, about one firm in five uses AI inside a business function, and close to one in two has someone using an AI tool somewhere. An owner who has not started is in the majority on the first measure.
+Fewer firms use AI than the headlines suggest. The Census Bureau's Business Trends and Outlook Survey put AI use in any business function at 19.8 percent of US businesses as of May 3, 2026 ([Census Bureau, May 26, 2026](https://www.census.gov/library/stories/2026/05/ai-use-businesses.html)). The Federal Reserve's Small Business Credit Survey asked firms with 1 to 499 employees a wider question, whether the business or its employees use AI in some way, and 46 percent said yes, mostly for writing and marketing ([Federal Reserve Banks, March 3, 2026](https://www.clevelandfed.org/collections/press-releases/2026/pr-20260303-fed-survey-small-business-optimism-wanes-as-performance-metrics-hold-steady); 6,525 responses, fielded September 3 to November 14, 2025). So about one firm in five uses AI inside its work, and close to one in two has someone using a tool somewhere.
 
 [[scene:who-uses-ai]]
 
-### Use by firm size
-
-The working paper splits use by firm size, and the gap is wide. Firms with 1 to 4 employees were at 18 percent and expected about 21 percent within six months. Firms with 100 to 249 employees were at 25 percent and expected 34 percent. Firms with 250 or more employees were at 31 percent and expected 40 percent. The larger the firm, the bigger the jump it plans.
+A Census Bureau working paper on the survey's 2026 AI supplement, reference period November 2025 to January 2026, splits use by size ([Bonney and others, Census Bureau working paper CES 26-25, April 2026](https://www2.census.gov/library/working-papers/2026/adrm/ces/CES-WP-26-25.pdf)). Firms with 1 to 4 employees were at 18 percent; firms with 250 or more were at 31 percent and expected 40 within six months.
 
 [[scene:by-firm-size]]
 
-The Census Bureau's May story shows the same pattern in later data. Use grew among firms with at least 20 employees but did not change significantly among firms with fewer than 20, and less than 20 percent of firms with four or fewer employees used AI.
-
-### Use by trade
-
-The trade matters as much as the size. As of May 3, 2026, the Information sector was at 39.7 percent and Finance and Insurance at 33.9 percent, against 19.8 percent for all businesses. Retail Trade was at around 14 percent, with about 17 percent expecting to use AI within six months.
+The trade matters as much: as of May 3, 2026, the Information sector was at 39.7 percent and Retail Trade at around 14 percent.
 
 [[scene:by-sector]]
 
 ### You are almost certainly not behind
 
-The feeling that everyone else has already done this does quiet damage to how these decisions get made. The figures above say otherwise. Four firms in five do not use AI inside a business function, and the smallest firms have barely moved since December.
-
-That has a second meaning, and it is the more useful one. Where only one firm in five uses something inside its work, there is no settled playbook. Not enough small businesses have built anything for anyone to know, in general, what a small business should build first. So the confident answers you hear about where to start are mostly guesses. The right stance toward all of them, this page included, is to ask what they rest on.
-
-The working paper also asked the firms with no plans for AI why. The most common answer, from 65 percent of them, was that AI is not applicable to the business. Lack of knowledge of what AI can do came a distant second at 22 percent, and concerns about privacy or security came third at 20 percent. "Not applicable" is sometimes right. It is also what an owner says before anyone has looked at where the same details get typed twice.
+With four firms in five not using AI inside their work, there is no settled playbook yet, so ask any confident advice, this page included, what it rests on. Of the firms with no plans, 65 percent said AI is not applicable to the business.
 
 [[scene:why-not]]
 
-An invented example: a landscaping company with four people says AI does not apply to it. Then it counts how often one customer's address gets typed into the quote, the schedule and the invoice: three times, for every job.
+A four-person landscaping company might say that before it counts one customer's address typed three times per job, into the quote, the schedule and the invoice (an invented example). Count that in your own business first.
 
-**Apply it:** before deciding AI does not apply to you, count how many times one customer's details get typed in a normal week.
+### What it does to the team
 
-## Where small firms use AI, and what it does to the team
-
-Among firms using AI in a business function, the working paper found the most common were sales and marketing (52 percent of users), strategy and business development (45 percent), IT (41 percent) and research and development (40 percent). The use stays narrow: 57 percent of users had AI in three or fewer functions, and 24 percent had it in only one.
+Among AI-using firms the working paper found sales and marketing the most common use (52 percent of users), and 85 percent of firms whose workers use generative AI used it for writing and editing.
 
 [[scene:where-it-goes]]
 
-Inside the day's work, the leading use was writing. Among firms whose workers use generative AI for their tasks, 85 percent used it for writing and editing and 50 percent for information search.
-
-The same paper asked what AI did to the work. 44 percent of AI-using firms said it added to tasks their workers already do. About 10 percent said it did a task an employee used to do, and about 11 percent said it brought in a new task. Of the firms that saw any change to tasks, 66 percent saw only the first kind: AI helping with work a person still does.
-
-Headcount barely moved. About 5 percent of AI-using firms reported any change in headcount, and it split almost evenly: 2.3 percent up and 2.0 percent down. Far more common, at 16 percent, was replacing existing software or equipment with tools that use AI.
+What it did to the work: 44 percent said it added to tasks their workers already do. Headcount barely moved, with 2.3 percent of AI-using firms reporting an increase and 2.0 percent a decrease.
 
 [[scene:the-person-stays]]
 
-That is how we build. The person stays, and the aim is to take the repeated typing, copying and checking around them off their desk.
-
-An invented example: a neighbourhood bakery takes wholesale orders by email. A system reads each order and drafts the confirmation with the pickup time, and the person at the counter reads it and sends it. The writing moved; the person who knows the regulars stayed.
-
-**Apply it:** look for the writing and the copying around a person's job, not for a job to hand over whole.
+That is how we build: the person stays, and the system takes the repeated typing, copying and checking off their desk. An invented example: a bakery's system drafts each wholesale order confirmation, and the person at the counter, who knows the regulars, reads it and sends it.
 
 [[scene:plate-counter]]
 
 ## The three questions: is it worth automating at all?
 
-Before how to automate something comes whether it is worth automating at all. Most people selling AI start from what can be built. We start from what should not be, because the most useful thing we can tell an owner is which ideas to cross off.
-
-Every list of AI ideas is long, because each item on it is a real irritation. These three questions take items off the list. Each one takes off a different kind, and the third takes off the most.
+These three questions each take a different kind of idea off a list. Run each idea past them in order, and stop at the first no.
 
 ### One: it happens often enough that a failure gets noticed within a week
 
-This question is about noticing more than saving. Everything anyone builds has a day when it stops working, usually because something it depends on changed and nobody sent a letter. A job that runs several times a week reports its own failure within days, because someone is waiting for the result. An invented example: a job that runs four times a year breaks in March and is found in June by an annoyed customer. The saving on the quarterly job may look larger, and it is still the worse candidate. Weekly or more is a yes. Quarterly is almost always a no.
+A job that runs several times a week reports its own failure, because someone is waiting for the result. A job that runs four times a year can break in March and be found in June by an annoyed customer. Weekly or more is a yes; quarterly is almost always a no.
 
 ### Two: the rule can be written down for a new hire
 
-This question often turns into a management decision, and it is the most useful thing an outsider can force. An invented example: three people in an office describe the same decision three ways. Nobody is doing it wrong. The rule was never decided, and each person filled the gap sensibly. Software built over the top of that does not settle it. It freezes whichever version its builder happened to hear, and then nobody notices the difference any more. Ask the three people separately, never in a meeting. Different answers are the finding.
+An invented example: three people in an office describe the same decision three ways. Nobody is wrong; the rule was never decided, and software built over the top freezes whichever version its builder heard. Ask the three separately, never in a meeting. Different answers mean deciding the rule comes before any build.
 
 ### Three: a wrong answer lands where a person sees it first
 
-This is the question people skip, because it feels like expecting the worst in a conversation that is going well. An invented example: a wrong figure in a sheet someone checks on Friday costs an hour. A wrong answer sent to a customer in writing, with the business's name on it, costs the customer and then the business. This question removes the most ideas, and better software does not change its answer, because where a mistake lands is a fact about the business, not about the model.
+A wrong figure in a sheet someone checks on Friday costs an hour. A wrong answer sent to a customer in writing costs the customer and then the business. This question removes the most ideas, and better software does not change its answer, because where a mistake lands is a fact about the business.
 
 [[scene:three-gates]]
 
-Try it with your own numbers in the counter below. An invented example to start from: 12 ideas. If 65 percent of them happen often enough, 70 percent of those have a rule you can write down, and 60 percent of those land somewhere a person sees first, about 3 are left. The number is meant to come out small. Most of a list is answered by a question, and answering a question costs nothing.
+Try your own numbers. From 12 ideas (an invented example), if 65 percent happen often enough, 70 percent of those have a writable rule and 60 percent of those land where a person sees them first, about 3 are left. It is meant to come out small.
 
 [[scene:shortlist-calculator]]
 
-The federal AI Risk Management Framework makes the same point in drier words. The National Institute of Standards and Technology publishes it, it is voluntary, and it was written for organisations far larger than a small business. It is still worth ten minutes, because it was written by people with nothing to sell. Its management function opens by asking whether a system's "development or deployment should proceed". It lists the responses to a risk as "mitigating, transferring, avoiding, or accepting". Avoiding is on that list, so deciding not to build something is a legitimate result of an assessment.
-
-It is honest about its own limits too: it says it "does not prescribe risk tolerance". Version 1.0 dates from January 2023, and NIST's page still showed it as the current version when we read it on October 31, 2026, with a revision under way as part of the White House AI Action Plan ([NIST AI 100-1](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf); [NIST, AI RMF page](https://www.nist.gov/itl/ai-risk-management-framework)).
-
-**Apply it:** run each idea on your list past the three questions, in order, and stop at the first no.
+The federal AI Risk Management Framework from the National Institute of Standards and Technology agrees: it lists the responses to a risk as "mitigating, transferring, avoiding, or accepting", so not building is a legitimate result, and it "does not prescribe risk tolerance". Version 1.0, from January 2023, was still current on October 31, 2026 ([NIST AI 100-1](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf); [NIST, AI RMF page](https://www.nist.gov/itl/ai-risk-management-framework)).
 
 ## What should not be automated
 
-Generic lists of things not to automate are rarely useful, because they warn about jobs nobody was going to hand over anyway. Three kinds of work stay with a person in every assessment we run:
-
-- any statement of fact a customer relies on, such as a price, a policy, an insurance detail or an appointment rule, unless the system reads it from the record that governs it and says so when there is no record;
-- the judgment calls made a few times a year, such as whether to take on a client, change a price or let a customer go;
-- anything whose failure is silent, such as a reminder that stops sending without an error anyone sees.
-
-There is a fourth test, and it costs nothing to apply before the others: anything you would be embarrassed to tell a customer was done by a machine.
+Three kinds of work stay with a person in every assessment we run: any fact a customer relies on, such as a price or a policy, unless the system reads it from the record that governs it; the judgment calls made a few times a year, such as taking on a client; and anything whose failure is silent, such as a reminder that stops sending without an error. A fourth test costs nothing: anything you would be embarrassed to say a machine did.
 
 [[scene:do-not]]
 
-### The facts a customer relies on
-
-The first kind gets built most often, so it deserves a closer look. A model asked about a price or a policy will produce an answer. The risk is not an answer that is obviously invented. It is a wrong answer that arrives in the right format and at roughly the right size, so nobody checks it.
-
-The right build for that kind of question exists, and it is smaller than the one people ask for. It fetches the value from the record that governs it. Where there is no record, it says so out loud instead of filling the gap. A system may report what a source says, and it may say it does not know. It may not make the answer up.
+The first kind gets built most often. A model asked about a price will answer, and the risk is a wrong answer in the right format that nobody checks. The right build is smaller: it fetches the value from the record that governs it and says so when there is no record. It may report what a source says or say it does not know. It may not make the answer up.
 
 ### In a property business, specifically
 
-We started in real estate, so here is the version for that trade. Square footage, a tax figure, a school district, a boundary, whether a permit exists: these read like data and behave like liability, because a buyer may rely on any one of them. The build worth doing reads each value from the record that governs it, such as the listing record or the public tax roll, and says plainly when the record is silent. Whether to take a listing, whether to advise a price cut, and whether a buyer is serious stay with the agent. Those calls carry high stakes, and no rule for them can be written down without misdescribing how the decision is really made.
-
-**Apply it:** mark every idea on your list that states a fact to a customer, and ask where that fact is read from.
+We started in real estate. Square footage, a tax figure or a permit reads like data and behaves like liability, because a buyer may rely on it. The build worth doing reads each value from the listing record or the public tax roll and says when the record is silent. Whether to take a listing or advise a price cut stays with the agent. Mark every idea on your list that states a fact to a customer, and ask where that fact is read from.
 
 ## Who should stay on the job
 
-We build AI to add to what your people do, not to take them out of the work. The 2026 Census paper says the same about how firms really use it: helping a person was the common effect, and cutting staff was rare. Our own rule is simpler. A person stays on anything a customer sees.
+We build AI to add to what your people do, and a person stays on anything a customer sees. The system drafts the reply, fills in the details and finds the past job that looks like this one; a person reads it and approves it. The step that sends cannot run without that approval, and that is built into the system rather than written in its instructions: it either has no way to send, or it checks an approval it cannot give itself.
 
-In practice the system does the preparing and a person does the deciding. It drafts the reply, fills in the details, finds the past job that looks like this one, and lines it all up for review. A person reads it and approves it. The step that sends cannot run without that approval, and that is built into the system rather than written as a polite request in its instructions: the system either has no way to send, or it checks an approval it cannot give itself.
-
-We check every job against four questions before deciding who runs it. Does the result bind the business, such as a price, a contract, a payment or a promised date? Does it reach a customer, or anyone outside the office? Does it feed another system people act on, such as the schedule or the books? Could it damage trust if it is wrong? One yes means a person approves every result. Two or more mean a person approves every result, and the binding part, such as setting a price or signing, stays with that person alone.
+Four checks decide who runs a job. Does the result bind the business, such as a price or a promised date? Does it reach a customer? Does it feed another system people act on, such as the books? Could it damage trust if wrong? One yes means a person approves every result; with two or more, the binding part stays with that person alone.
 
 [[scene:stay-on-job]]
 
-One exception keeps this from becoming a bottleneck. A fixed message whose exact words you approved once, with only the name, date and time filled in and nothing written by a model, can go out on its own. An appointment reminder is the usual example. Anything a model writes is approved every time.
-
-What this gives your people is time back from the work they repeat, so they can spend it on the parts of the job that need them: the customer on the phone, the judgment call, the repair. The person is still the one your customers deal with.
-
-An invented example from a plumbing office: the quote follow-up email. It reaches a customer, and a wrong price would damage trust, so two checks say yes. The system finds the open quotes due a follow-up, pulls the job details and drafts the note. The office manager reads it, fixes it if needed, and sends it. The price itself is never written by the system.
-
-**Apply it:** for each idea that survived, write down the name of the person who approves its results.
+The one exception is a fixed message whose exact words you approved once, with only the name, date and time filled in, such as an appointment reminder. Anything a model writes is approved every time. An invented example: a plumbing office's system drafts each quote follow-up, the office manager reads and sends it, and the price is never written by the system. For every idea that survives, name the person who approves it.
 
 [[scene:plate-garage]]
 
 ## Why ranking by the average outcome gets it wrong
 
-Once the list is short and honest, the natural next move is to estimate what each survivor is worth, sort by that, and start at the top. We sort differently, by how contained the worst case is.
+With a short list, the natural move is to estimate what each idea is worth and start at the top. We sort by how contained the worst case is. Most jobs come in close to plan; a few go badly wrong, and an average blends both into a number that describes neither.
 
-The reason is the shape of what goes wrong. Most automation jobs come in close to what was expected: a little late, a little over, sometimes under. A few go badly wrong, and they go wrong for different reasons than the ordinary ones, such as a rule nobody had settled or a system that changed underneath. An average blends both groups into one number that describes neither. The number you would write beside each idea is its typical outcome. What you are exposed to is its worst day.
+An invented example: idea A saves three hours a week, and when it fails someone redoes the work for an afternoon. Idea B saves nine, and when it fails wrong confirmations reach customers for a week. On the average B wins; on the worst day A goes first, because a first build that fails quietly teaches a business to distrust the whole idea. Write each idea's worst day beside it, and sort by that.
 
-An invented example makes the point. Idea A saves about three hours a week, and when it fails, someone redoes the work by hand for an afternoon. Idea B saves about nine hours a week, and when it fails, wrong confirmations go to customers for a week before anyone notices. On the average, B wins. On the worst day, A goes first, and B waits until its failure can be made visible and cheap.
+### The failure rate nobody can give you
 
-This is more than caution. A first build that fails quietly teaches a business to distrust the whole idea, and the list stalls. A first build whose failure is small and visible teaches the business how these systems behave, and the next one goes better.
+We found no 2026 public survey of how often a small business's automation fails. The most quoted project failure figure comes from a report sold by a private research firm whose data has never been opened to inspection. Two researchers at Vrije Universiteit Amsterdam applied its definitions to real project records and found they "result in meaningless figures" ([Eveleens and Verhoef, IEEE Software, 2010](https://www.cs.vu.nl/~x/chaos/chaos.pdf)): a project counted as late or over budget, never early or under. A number whose method nobody can check stays off this page. When anyone quotes you a failure rate or a saving, ask how it was measured.
 
-**Apply it:** next to each survivor, write its worst day in one sentence, and sort by that.
+### What the order gets sorted by
 
-## The failure rate nobody can give you
+First, containment: what happens when it is wrong, and who finds out. Second, whether the rule is settled, because software will not make a management decision. Third, and only third, the size of the saving, because the biggest saving is often the job with the most judgment in it.
 
-At about this point someone asks what share of AI projects fail. We found no 2026 public survey that measures how often a small business's automation fails. The figures that circulate come from surveys of large companies, about stalled pilots and abandoned programmes, which answer a different question.
-
-The most quoted project failure figure of the last few decades has a known problem, and the problem is worth understanding because it repeats. It comes from a report sold every year by a private research firm, and its underlying data has never been opened to outside inspection. Two researchers at Vrije Universiteit Amsterdam applied that report's own definitions to their own records of real projects. They concluded that the definitions have "four major problems: they're misleading, one-sided, pervert the estimation practice, and result in meaningless figures" ([Eveleens and Verhoef, IEEE Software, 2010](https://www.cs.vu.nl/~x/chaos/chaos.pdf)). The definitions only counted a project as late or over budget, never as early or under, so a team could look successful just by padding every estimate. One organisation that steered by them did exactly that, and its forecasts got worse while its score got better.
-
-So we hold an honest position instead of reaching for a number anyway. Nobody can tell you what share of small-business automation fails. A number whose method nobody can check stays off this page. What can be said is about the shape: most jobs come in close to their estimate, a few go badly wrong, and no average describes both. That is why the order matters more than the forecast.
-
-**Apply it:** when anyone quotes you a failure rate or a saving, ask how it was measured and on whose businesses.
-
-## What the order gets sorted by
-
-With the failure rate refused and the average set aside, there is still a list, and it still needs an order. These are the criteria, in the order we apply them.
-
-First, containment: what happens when this one is wrong, and who finds out. Everything that passed the third question is already inside a boundary. Inside it, the jobs whose failure is visible and cheap go ahead of the ones whose failure is quiet and awkward.
-
-Second, whether the rule is settled. Not whether it is simple, but whether it is decided. A settled complicated rule is a better candidate than an unsettled simple one. An unsettled rule is a management decision, and software will not settle it; it comes back later looking like a technical failure.
-
-Third, and only third, the size of the saving. Most versions of this exercise start here. It belongs at the end, because it produces the most confident wrong answers. The biggest saving on a list is very often the job with the most judgment in it, which is exactly why a person is still doing it.
-
-In the written report each job also gets two scores from 1 to 5: what a good result is worth (impact) and what a wrong result costs (risk). Every score carries its reason. A job worth less than two hours a week is usually left alone, whatever its risk, unless another build covers it for free.
+Our report also scores each job from 1 to 5 for impact and for risk, each with its reason, and leaves alone a job worth under two hours a week.
 
 [[scene:audit-path]]
 
-An invented example: a Friday list of open quotes for the owner. Only the owner reads it and it changes nothing, so a wrong line costs a minute against the tracker: risk 2. It saves about two hours of Friday digging: impact 3. That puts it near the top, with the owner checking the list for four Fridays before it runs on its own.
-
-**Apply it:** give each survivor a score from 1 to 5 for impact and for risk, with a reason beside each number.
-
-## Why this is different from an automation agency
-
-A lot of people are starting to sell AI automations, and most of them start from the tool: here is what it can do, where can we plug it in. We start from the person who does the work and the hours they get back. The system takes the typing, the copying and the checking; it never takes that person's place, and a person stays on anything a customer sees. We also tell owners, in writing, what not to build, which is the part that costs a seller of automations a sale. That is the difference, and you can hold us to it.
-
-**Apply it:** ask anyone who offers to automate your business which of your ideas they would not build, and why.
+An invented example: a Friday list of open quotes for the owner. Only the owner reads it, so a wrong line costs a minute: risk 2. It saves two hours of digging: impact 3. It goes near the top, checked by the owner for four Fridays before it runs alone.
 
 ## What the audit is and how it runs
 
-If you ask us to run the audit, this is exactly what happens. Nothing in it is secret: this page is the whole method, and you can run it without us. The reasons to call us are the hours it takes and the judgment that comes from having watched these jobs break.
+This page is the whole method, and you can run it without us. If you ask us to run it, we bring the hours it takes and the judgment of people who have watched these jobs break.
 
-**Before the call.** We send a short note the day before. Nothing needs preparing, but two things help. Bring the person who does the admin work: you know how the business should run, and they know how it does. And have rough numbers in reach for the last three months: how many enquiries came in, how many became jobs, and the average job size. A ballpark is fine. We also ask for the few documents listed under the questions below.
+### Why this is different from an automation agency
 
-**The call.** About 75 minutes with you, and with the person who does the admin if they can join. We ask about the last real week rather than the usual way, because "walk me through last Tuesday" finds the real jobs and "how do you handle quotes" finds the job as you wish it ran. We do not pitch anything on the call, name tools or promise savings. We are there to understand how the work moves.
+Most people selling automations start from the tool. We start from the person who does the work and the hours they get back, keep a person on anything a customer sees, and tell you in writing what not to build. Ask anyone who offers to automate your business which of your ideas they would not build.
 
-**The people who do the work.** About 20 minutes with each person who does a repeated job. They tell us where they wait on someone, and what they do that nobody asked them to, because otherwise it goes wrong.
+### The steps, in order
 
-**The notes.** Within two business days we send our notes back and ask you to correct them, with one question attached: is anything missing? The corrected version is what we work from.
+**Before the call.** Bring the person who does the admin: you know how the business should run, and they know how it does.
 
-**The scoring.** Every job gets its steps written down in order, and each step gets a label: a fixed step a system can do the same way every time, a rule you can state, a step that needs reading or writing, or a step that stays with a person. Then impact and risk, each with its reason, and one of three verdicts: let a system run it, keep a person on it, or leave it alone.
+**The call.** About 75 minutes on the last real week, because "walk me through last Tuesday" finds the real jobs. We pitch nothing, name no tools and promise no savings.
 
-**The report and the readout.** About three business days after the last interview you get the written report, and we go through it together in about 30 minutes, so you can correct anything we got wrong before you decide anything.
+**The people who do the work.** About 20 minutes with each person who repeats a job.
 
-**The two routes.** If something on the list is worth building, there are two ways to do it. We build it, run it for you, fix it when it breaks, and report every month. Or we build it with your own person, an hour a week, and hand it over when they can run it without us. Either way you own it: it runs in your accounts, with your logins, and its instructions are written in plain words someone else could pick up. If nothing on the list is worth building yet, the report says so, and you keep it.
+**The notes.** Within two business days, sent back for you to correct.
+
+**The scoring.** Every step labelled, impact and risk with reasons, and one verdict per job: let a system run it, keep a person on it, or leave it alone.
+
+**The report.** About three business days after the last interview, then a 30-minute readout.
+
+**The route you pick.** We build and run it, or we build it with your own person and hand it over. Either way it runs in your accounts.
 
 [[scene:audit-day]]
 
-An invented example of the week: the call on a Tuesday morning, two 20-minute talks that afternoon with the office manager and the dispatcher, the notes back on Thursday, and the report the following Tuesday.
-
-**Apply it:** even if you never call us, bring the person who does the admin into the room whenever you discuss automating their work.
-
 ## The questions we ask in an audit
 
-These are the questions we ask on the call, chosen so you can answer them alone. Write the answers down in your own words before you talk to anyone. If you stop there, you will see your own business more clearly than most owners ever do. If you come to us, you arrive with half the audit done, and we spend the time on the hard part.
-
-Answer about the last real time something happened, not the usual way.
+Answer these in writing, about the last real time something happened, before you talk to anyone: the answers are the first half of an audit. The first group gives a job value and a weekly count, the walk-through finds the hours, the job list finds the double typing, the numbers price an hour, and the last two set your goals and your limits.
 
 ### The business in five minutes
 
-Why we ask: without a job value and a weekly count, nothing later can be measured.
-
 1. What do you sell, to whom, and where? How many people work here, and who does what?
 2. What is a customer worth to you on average, and do they come back?
-3. How many new enquiries come in during a normal week, and where do they come from?
+3. How many new enquiries come in during a normal week, and from where?
 
 ### Last week, walked through
 
-Why we ask: this is where the hours are, and they only show up when one real job is followed from start to finish.
-
-4. Take last Tuesday, from the first message of the day to the last. What happened, and which of those things happen every week?
-5. Walk one job from the first enquiry to getting paid. Who touches it at each step, how long does each step take, and how many times a week does it happen?
+4. Take last Tuesday, from the first message to the last. What happened, and which of it happens every week?
+5. Walk one job from the first enquiry to getting paid. Who touches it, how long does each step take, and how often a week does it happen?
 6. When an enquiry comes in at 2pm on a Tuesday, what happens? And at 9pm on a Saturday?
 
 ### The job list
 
-Why we ask: these questions find the double typing and the jobs nobody would miss.
-
-7. Which two of your programs do not talk to each other, and how does information get from one to the other today?
+7. Which two of your programs do not talk to each other, and how does information get between them today?
 8. How many times does the same piece of information get typed into something, by anyone?
 9. For each repeated job: if you stopped doing it tomorrow, what would break, and who would notice?
 10. If two of your people hit the same case on the same day, would they handle it the same way?
 
 ### The numbers
 
-Why we ask: an hour back is only worth something if we know what the hour costs.
-
-11. Roughly what does an hour cost you for the person doing the most repetitive job here, counting wage, taxes and benefits?
+11. Roughly what does an hour cost you for the person doing the most repetitive job, counting wage, taxes and benefits?
 12. How many calls do you miss in a week, and what happens to a missed call now?
 
 ### What you want to build
 
-Why we ask: the answers tell us whether you want growth or your evenings back, and the report is written to whichever you said.
-
 13. Which single task do you most resent doing?
 14. If you had 40 hours a week back across the business, what would you do with them?
-15. If this worked, how would you know? Which number would move?
+15. If this worked, which number would move?
 
 ### What you would never hand to a machine
-
-Why we ask: the limits you set here decide where a person stays, before anything is built.
 
 16. Where do you not want a system involved at all?
 17. What has to be true before anything goes to a customer, and who approves that today?
@@ -814,125 +710,89 @@ Why we ask: the limits you set here decide where a person stays, before anything
 
 [[scene:six-groups]]
 
-### What to send before the call
-
-- A week of your calendar or job board, any form a customer fills in, and the spreadsheet or tracker you run the work from. The column names are enough if the data is private.
-- Two or three real messages you have sent customers: a quote, a follow-up, an update.
-- The templates you use: quote or estimate, invoice, checklists.
-- Rough counts you can see without effort: jobs or quotes a month, invoices a month, enquiries a week.
-
-An invented example of a good answer to question 8: "Every new customer is typed in three times: the phone log, the quote and the invoice. About 25 a week." A count, the places, and how often.
-
-**Apply it:** answer the 18 questions in writing this week. The answers are the first half of an audit.
+Before the call, send a week of your calendar, the tracker you run the work from, two real messages you sent customers, and your quote template. A good answer to question 8 sounds like this invented one: "Every new customer is typed in three times: the phone log, the quote and the invoice. About 25 a week."
 
 ## What you get at the end
 
-The time it takes: about 75 minutes on the call, 20 minutes with each person who does a repeated job, and about an hour of your time later to correct the notes and go through the readout. The report arrives about three business days after the last interview.
-
-The report holds:
-
-- a one-page summary first, with the job table, the totals and the top recommendation;
-- a written account of how the work runs today, including the workarounds nobody had written down;
-- a section for every repeated job: its steps, its impact and risk with the reasons, the verdict, the hours it takes now and by whom, and a target for a four-week trial with the quality bar that must hold;
-- the list of what we crossed off and why, which is the part you will reuse next year;
-- the rules we would write down for your office, in your words;
-- the questions we still have, because anything we were not told goes there instead of into a guess.
-
-Hours back are a trial target, never a promise. Every number carries its working and says how it is known: your estimate, timed for a week, or taken from your records.
+It takes about 75 minutes on the call, 20 minutes with each person who repeats a job, and about an hour of your time later to correct the notes and hear the readout. The report holds a one-page summary; how the work runs today, workarounds included; for every repeated job its steps, scores with reasons, verdict, current hours and a four-week trial target; what we crossed off and why; and the questions we still have, instead of guesses. Hours back are a trial target, never a promise, and every number says how it is known.
 
 [[scene:report]]
 
 ### What an audit does not do
 
-It does not decide for you. It removes candidates and explains why, and what the business does with the rest is your decision.
-
-It does not see what nobody will say. Everything below the surface has to be volunteered, and a first conversation is not always when that happens.
-
-It does not produce a saving on its own. Every hour it finds is an hour you then have to choose to spend on something else. Businesses that do not make that choice on purpose find the hour absorbed within a month.
-
-It does not stay true. The list has a shelf life of months, because your systems, your people and your volume all move.
-
-And nobody has to buy it. Everything on this page can be done by the person running the business, in an evening, with a piece of paper. What the audit adds is someone with no attachment to the list doing the crossing off.
-
-An invented example of one line from a report: "Quote follow-up email. Impact 4: about 12 open quotes a week, and follow-ups are often missed. Risk 4: it reaches a customer, and a wrong price damages trust. Verdict: keep a person on it."
-
-**Apply it:** whatever report you get from anyone, check that every number says how it is known.
+It does not decide for you or see what nobody will say. It does not save an hour on its own: a found hour has to be spent on purpose, or it is absorbed within a month. And it goes stale within months, because your business moves.
 
 ## How to run one yourself in one evening
 
-1. Write every idea down without judging it, in the order it comes to mind, including the ones you suspect are silly. Editing while writing is how the interesting but wrong idea survives and the boring right one never gets written.
-2. Ask the rule question to three people, separately and out loud. Not in a meeting, where everyone hears each other agree.
-3. Next to each line, before writing any benefit, write where a wrong answer would land and who would find out. The order matters: once a benefit has been said aloud, the landing question stops being asked seriously.
-4. Cross off every line where the answer is a customer, and every line where the answer is nobody.
-5. Put the list away for two weeks, then read it again. Some of what looked urgent will have solved itself, moved, or turned out to be a sign of something else.
-
-What is left is usually a short list, and that is the shortlist worth a conversation.
+1. Write every idea down without judging it. Editing while writing is how the interesting wrong idea survives.
+2. Ask the rule question to three people, separately.
+3. Before writing any benefit, write where a wrong answer would land and who would find out. Once a benefit is said aloud, that question stops being asked seriously.
+4. Cross off every line where the answer is a customer, or nobody.
+5. Put the list away for two weeks, then read it again.
 
 [[scene:one-evening]]
-
-Free file: the three-question sheet, one page with the three columns ready, as a [printable PDF](/downloads/three-question-sheet.pdf).
 
 [[scene:sheet]]
 
 ## Your roadmap, week by week
 
-This is the order to apply everything above on your own. Nothing in it needs us, and nothing in it costs money until something has passed every test.
+Nothing here needs us, and nothing costs money until an idea has passed every test.
 
-1. **Week one.** Write down one real job as it ran. Answer the questions above in writing. List every idea, then run the one-evening test.
-2. **Weeks two and three.** Let the list sit. For every idea that failed the rule question, decide the rule with the people who do the work, and write it down. Check whether a program you already pay for does any job on the list; if one does, switch that on instead of building anything.
-3. **Week four.** Read the list again. Pick the one idea with the smallest worst day, and name the person who approves its results.
-4. **Weeks five to eight.** Run it as a four-week trial: a person approves every result, and you count the hours the job takes before and after. If it reaches a customer, the person stays on it for good. If it does not, and the four weeks needed no corrections, it can run on its own after that.
-5. **Every few months.** Read the list again, because your business moves.
-
-An invented example: a cleaning company starts on October 1. By the end of week one it has eleven ideas and seven left. In week four it picks the Friday list of the next day's jobs for the crews. By week eight it knows that list saves about two hours a week, measured rather than promised.
+1. **Week one.** Write down one job, answer the questions and run the one-evening test.
+2. **Weeks two and three.** Let the list sit, decide the unsettled rules with the people who do the work, and check whether a program you already pay for does any job on it.
+3. **Week four.** Pick the idea with the smallest worst day and name its approver.
+4. **Weeks five to eight.** Run a four-week trial with a person approving every result, and count the hours before and after. If it reaches a customer, the person stays on it for good; if not, and four weeks needed no corrections, it can run alone.
+5. **Every few months.** Read the list again.
 
 [[scene:roadmap]]
 
-## Who this fits
+An invented example: a cleaning company keeps seven of eleven ideas and in week four picks the Friday list of the next day's jobs for the crews. By week eight it knows the list saves about two hours a week, measured rather than promised.
 
-It fits owners whose team repeats the same work every week: a front desk that books and confirms, an office that types the same details into two systems, a team that answers the same five questions by email (invented examples of the kind of work, not clients). It fits less well where no job repeats yet, or where the rules change every week. Those owners get more from writing the process down first, and the sheet helps with that too.
+### Who this fits
+
+Owners whose team repeats the same work every week, such as a front desk that books and confirms (an invented example of the kind of work). Where no job repeats yet, writing the process down comes first.
 
 ## Common questions about using AI in a small business
 
 ### How do I use AI in my business?
 
-Start by writing down how one real job runs, then list everything you would hand to AI, then cross ideas off with three questions: does it happen often enough that a failure is noticed within a week, can its rule be written down for a new hire, and would a wrong answer reach a person before a customer. Build the survivor whose worst day is smallest, and keep a person on anything a customer sees.
+Write one job down, list your ideas, cross them off with the three questions, and build the survivor with the smallest worst day.
 
 ### How can AI help a small business?
 
-Mostly by taking repeated typing, copying and checking off people's desks. In the 2026 Census paper, the most common use among firms using AI was sales and marketing, the leading task was writing and editing, and the most common effect was AI adding to work a person still does.
+Mostly by taking repeated typing, copying and checking off people's desks; see what it does to the team, above.
 
 ### What is an AI audit for a small business?
 
-It is a structured look at how the business runs, done to decide which repeated jobs AI should take first and which should stay with a person. Some call it an AI readiness assessment. It ends with a written account of the work, a shortlist in order with the reason for each position, the list of ideas crossed off, and a plan for the first build.
+A structured look at how the business runs, to decide which repeated jobs AI takes first and which stay with a person; some call it an AI readiness assessment.
 
 ### What can I automate in my business first?
 
-The job that passes all three questions and has the most contained failure, which is usually something plain: a confirmation, a reminder, a copy from one system to another. Sales and marketing is where most AI-using firms use it, by the Census Bureau's 2026 figures, but the right first job is the one that passes the test in your business.
+Usually something plain that passes all three questions and fails where you can see it: a confirmation, a reminder, a copy from one system to another.
 
 ### How do you decide what not to automate?
 
-Three tests, applied in order. It happens too rarely for anyone to notice it breaking. The rule behind it is not settled, which usually shows up as three people describing it three ways. Or a wrong answer would reach a customer before a person saw it. Any one of those is enough on its own, and the third removes the most.
+With the three questions above; any one no is enough.
 
 ### Can I do an AI audit myself?
 
-Yes, and you should do the first half yourself anyway. Writing down how a job runs and answering the questions on this page costs nothing, and nobody knows the business better than you. What is harder alone is the crossing off, because every idea on your list is there for a reason you agree with.
+Yes, and you should do the first half yourself: writing a job down and answering the questions costs nothing. The crossing off is harder alone, because every idea on your list is there for a reason you agree with.
 
 ### How long does an AI audit take?
 
-About 75 minutes with the owner, about 20 minutes with each person who does a repeated job, and a written report about three business days after the last interview, followed by a readout of about 30 minutes.
+See how the audit runs, above: about 75 minutes with you, and the report about three business days after the last interview.
 
 ### Do I need to know anything about AI first?
 
-No. The questions that decide this are about the business: how often a job happens, whether its rule is settled, and where a wrong answer lands. Choosing the tools is our job.
+No. The three questions are about the business. Choosing the tools is our job.
 
 ### Does using AI mean fewer staff?
 
-Rarely, according to the 2026 Census paper: about 2 percent of AI-using firms reported a decrease in headcount and about 2.3 percent an increase, and the most common effect was AI adding to the tasks workers already do. We build the same way: the person stays.
+Rarely; see what it does to the team, above.
 
 ### How is an AI audit different from workflow automation?
 
-Workflow automation is the building. An audit is the deciding, and it comes first. The workflow article on this site covers mapping one job and finding the steps worth connecting; this page is about what to do when you already have more ideas than time.
+Workflow automation is the building. An audit is the deciding, and it comes first.
 
 [[scene:quiz]]
 

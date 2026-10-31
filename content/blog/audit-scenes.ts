@@ -120,7 +120,6 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
     "by-firm-size": {
       kind: "bars",
       band: "dark",
-      label: "By firm size",
       eyebrow: "Use of AI by firm size, now and in six months",
       heading: "The bigger the firm, the bigger the jump it plans",
       lede: "One survey and one reference period, November 2025 to January 2026.",
@@ -195,7 +194,6 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
     "where-it-goes": {
       kind: "bars",
       band: "light",
-      label: "Where the use goes",
       eyebrow: "Among firms using AI",
       heading: "Sales and marketing first",
       alt: "Among firms using AI in a business function, 52 percent use it in sales and marketing, 45 percent in strategy and business development, 41 percent in IT and 40 percent in research and development, and 57 percent use it in three or fewer functions.",
@@ -650,15 +648,11 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
   headingLabels: {
     "what-an-ai-audit-for-a-small-business-is-for": "What an audit is for",
     "start-with-one-job-written-down": "One job written down",
-    "how-small-businesses-use-ai-in-2026": "AI in small firms",
-    "where-small-firms-use-ai-and-what-it-does-to-the-team": "What it does to the team",
-    "the-three-questions-is-it-worth-automating-at-all": "Worth automating?",
+    "how-small-businesses-use-ai-in-2026": "Who uses AI",
+    "the-three-questions-is-it-worth-automating-at-all": "The three questions",
     "what-should-not-be-automated": "What not to automate",
     "who-should-stay-on-the-job": "Who stays on the job",
     "why-ranking-by-the-average-outcome-gets-it-wrong": "Rank by worst day",
-    "the-failure-rate-nobody-can-give-you": "No failure rate",
-    "what-the-order-gets-sorted-by": "The order",
-    "why-this-is-different-from-an-automation-agency": "Why this is different",
     "what-the-audit-is-and-how-it-runs": "How the audit runs",
     "the-questions-we-ask-in-an-audit": "The questions we ask",
     "what-you-get-at-the-end": "What you get",
