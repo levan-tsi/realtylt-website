@@ -1,4 +1,4 @@
-/** Scene copy for "How to use AI in my business" (slug ai-audit-small-business-what-not-to-automate).
+/** Scene copy for "How to use AI in my business" (slug ai-assessment-small-business-what-not-to-automate).
  *
  * ROUND 15, 2026-10-31: REBUILT ON THE OWNER'S VERDICT. Round 14 shrank the post to 1,779 words and
  * eight scenes; he preferred the older, bigger version ("our old blogs are bigger, better and more
@@ -58,7 +58,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       band: "light",
       eyebrow: "What you hold at the end",
       heading: "Shorter than the list you brought",
-      alt: "Four things an owner should hold at the end of a good audit: a written account of the work, an order with reasons, the list of what will not be built, and a plan for the first build.",
+      alt: "Four things an owner should hold at the end of a good assessment: a written account of the work, an order with reasons, the list of what will not be built, and a plan for the first build.",
       columns: 2,
       tiles: [
         {
@@ -433,23 +433,22 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
     "audit-day": {
       kind: "steps",
       band: "dark",
-      label: "How the audit runs",
+      label: "How the assessment runs",
       eyebrow: "If you ask us to run it",
       heading: "What happens, in order",
-      alt: "The audit in order: a short note before the call, about 75 minutes with the owner, about 20 minutes with each person who does a repeated job, notes back within two business days, the scoring, the report and a 30 minute readout, then the route the owner picks.",
+      alt: "The assessment in order: written answers before the call, one hour with the owner or the owner and the manager, notes back within two business days, the scoring, the written plan and a short call to walk through it, then the route the owner picks.",
       facts: [
-        { figure: "75 minutes", title: "on the call with you" },
-        { figure: "20 minutes", title: "with everyone who repeats a job" },
+        { figure: "One hour", title: "on the call with you, or you and your manager" },
         { figure: "Two business days", title: "for our notes to come back to you" },
+        { figure: "One plan", title: "written for you, yours to build from" },
       ],
       steps: [
-        { title: "Before the call", body: "Bring the person who does the admin, and rough numbers for three months." },
+        { title: "Before the call", body: "Your written answers, the four things to send, and your manager if they run the admin." },
         { title: "The call", body: "The last real week, walked through. Nothing pitched." },
-        { title: "The people who do the work", body: "Where they wait, and what they do so it does not go wrong." },
         { title: "The notes", body: "Sent back to you to correct, with one question: is anything missing?" },
         { title: "The scoring", body: "Every step labelled, impact and risk with reasons, one verdict per job." },
-        { title: "The report and the readout", body: "About three business days after the last interview, then about 30 minutes together." },
-        { title: "The route you pick", body: "We build and run it, or we build it with your person and hand it over. You own it." },
+        { title: "The plan", body: "What to build and in what order, how long each piece takes, the precautions, and which system does which job." },
+        { title: "The route you pick", body: "We build it and run it, with the assessment included, or you build it from the plan. You own it." },
       ],
       sources: [METHOD],
     },
@@ -459,7 +458,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       band: "light",
       eyebrow: "The questions we ask",
       heading: "Six groups, answered alone before any call",
-      alt: "The audit questions in six groups: the business in five minutes, last week walked through, the job list, the numbers, what you want to build, and what you would never hand to a machine.",
+      alt: "The assessment questions in six groups: the business in five minutes, last week walked through, the job list, the numbers, what you want to build, and what you would never hand to a machine.",
       columns: 3,
       tiles: [
         { title: "The business in five minutes", body: "Questions 1 to 3: what you sell, what a customer is worth, how many enquiries." },
@@ -478,7 +477,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       label: "What you get",
       eyebrow: "Every job gets one verdict",
       heading: "Three verdicts, each with its reason",
-      alt: "The three verdicts in the report: let a system run it, keep a person on it, or leave it alone, each written with its reason.",
+      alt: "The three verdicts in the plan: let a system run it, keep a person on it, or leave it alone, each written with its reason.",
       columns: 3,
       tiles: [
         { title: "Let a system run it", body: "Fixed steps a system does the same way every time, with nothing reaching a customer." },
@@ -548,7 +547,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       eyebrow: "Ten questions",
       title: "What did you learn? Check it in two minutes",
       brand: "ai",
-      passLine: "You have the method. If you want a second pair of eyes on your own list, we can run the audit with you.",
+      passLine: "You have the method. If you want a second pair of eyes on your own list, we can run the assessment with you.",
       failLine: "Under half this time. Skim the three questions again, then have another go.",
       questions: [
         {
@@ -620,7 +619,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
           why: "From the section on who stays on the job: the approval is built into the system, never just written in its instructions.",
         },
         {
-          q: "What happens on the audit call?",
+          q: "What happens on the assessment call?",
           choices: [
             "We demonstrate tools and quote a price",
             "We walk through your last real week and pitch nothing",
@@ -628,7 +627,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
             "We review your website",
           ],
           answer: 1,
-          why: "From the section on how the audit runs: about 75 minutes on the last real week, with no pitch, no tools named and no savings promised.",
+          why: "From the section on how the assessment runs: one hour on the last real week, with no pitch, no tools named and no savings promised.",
         },
         {
           q: "Why does this page give no failure rate for AI projects?",
@@ -646,15 +645,15 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
   },
 
   headingLabels: {
-    "what-an-ai-audit-for-a-small-business-is-for": "What an audit is for",
+    "what-an-ai-assessment-for-a-small-business-is-for": "What an assessment is for",
     "start-with-one-job-written-down": "One job written down",
     "how-small-businesses-use-ai-in-2026": "Who uses AI",
     "the-three-questions-is-it-worth-automating-at-all": "The three questions",
     "what-should-not-be-automated": "What not to automate",
     "who-should-stay-on-the-job": "Who stays on the job",
     "why-ranking-by-the-average-outcome-gets-it-wrong": "Rank by worst day",
-    "what-the-audit-is-and-how-it-runs": "How the audit runs",
-    "the-questions-we-ask-in-an-audit": "The questions we ask",
+    "what-the-assessment-is-and-how-it-runs": "How the assessment runs",
+    "the-questions-we-ask-in-an-assessment": "The questions we ask",
     "what-you-get-at-the-end": "What you get",
     "how-to-run-one-yourself-in-one-evening": "Run it yourself",
     "your-roadmap-week-by-week": "Your roadmap",
