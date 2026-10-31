@@ -1,15 +1,21 @@
 import type { ReactNode } from "react";
 import type { ComponentId, FlagshipContent } from "@/lib/blog/flagship";
+import { Bars } from "./primitives/Bars";
 import { Calculator } from "./primitives/Calculator";
+import { Cells } from "./primitives/Cells";
 import { Conversation } from "./primitives/Conversation";
 import { Diagram } from "./primitives/Diagram";
 import { Film } from "./primitives/Film";
+import { Flow } from "./primitives/Flow";
 import { Grid } from "./primitives/Grid";
 import { Offer } from "./primitives/Offer";
 import { Plate } from "./primitives/Plate";
 import { Statement } from "./primitives/Statement";
 import { StatBars } from "./primitives/StatBars";
+import { Steps } from "./primitives/Steps";
 import { Summary } from "./primitives/Summary";
+import { Tiles } from "./primitives/Tiles";
+import { Timeline } from "./primitives/Timeline";
 import { ResponseCurve } from "./ResponseCurve";
 import { ResponseGap } from "./ResponseGap";
 import { SystemDiagram } from "./SystemDiagram";
@@ -77,6 +83,18 @@ export function renderScene(key: string, content?: FlagshipContent): ReactNode {
     case "film":
       // A film scene without a film is a content error, not a render error.
       return content.film ? <Film {...scene} film={content.film} /> : null;
+    case "bars":
+      return <Bars {...scene} />;
+    case "cells":
+      return <Cells {...scene} />;
+    case "timeline":
+      return <Timeline {...scene} />;
+    case "flow":
+      return <Flow {...scene} />;
+    case "tiles":
+      return <Tiles {...scene} />;
+    case "steps":
+      return <Steps {...scene} />;
     case "component": {
       const Component = COMPONENTS[scene.id];
       return Component ? <Component /> : null;

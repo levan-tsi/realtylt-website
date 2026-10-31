@@ -160,6 +160,103 @@ export interface SceneAction {
   variant: "light" | "outline-light";
 }
 
+/** ── The figure kinds added in round 14 (2026-10-30), for the data points a post's review chain
+ * hands over: shares on separate tracks, a form drawn as its questions, a dated change, a
+ * question flow, a card of facts and a numbered path.
+ *
+ * WHY NOT StatBars AND Diagram. Both draw their words inside one SVG viewBox, so a phone scales
+ * the type with the drawing: StatBars' 15px labels render at about 8px at 390, and Diagram keeps
+ * a 46rem minimum width and scrolls sideways inside the page. These kinds keep every word in
+ * HTML, where it wraps and stays at reading size, and draw only the marks.
+ *
+ * Every one of them carries `alt` (one plain sentence, the figure's accessible name) and
+ * `sources` (the source line as the post's data points give it). A figure without a source is
+ * an illustration, and the two must never be confused. */
+export interface SceneSource {
+  text: string;
+  href?: string;
+}
+
+interface FigureBase {
+  eyebrow: string;
+  heading: string;
+  lede?: string;
+  alt: string;
+  sources: SceneSource[];
+  /** What the figure does NOT say, when there is something it could be stretched to say. */
+  note?: string;
+}
+
+/** One bar on a 0 to max track. `hollow` draws an outline instead of a fill: an upper bound
+ * ("under 20 percent") or an expectation, never a measured share. */
+export interface BarRow {
+  label: string;
+  value: number;
+  display: string;
+  lit?: boolean;
+  hollow?: boolean;
+  /** A short qualifier under the label, such as the date the count is as of. */
+  tag?: string;
+}
+
+export interface BarPanel {
+  title?: string;
+  bars: BarRow[];
+}
+
+/** One group of a form drawn as cells, numbered `from` to `to`. */
+export interface CellGroup {
+  label: string;
+  range: string;
+  from: number;
+  to: number;
+}
+
+/** Cells picked out of the form: `fill` lights them, `ring` outlines them. `numbered` prints
+ * the question number inside each picked cell, which is only done for numbers the post states. */
+export interface CellMark {
+  cells: number[];
+  label: string;
+  tone: "fill" | "ring";
+  numbered?: boolean;
+}
+
+export interface TimelineEvent {
+  /** ISO date, for true-date spacing only; never printed. */
+  date: string;
+  display: string;
+  title: string;
+  detail?: string;
+  /** Not law, or not yet: drawn hollow. */
+  pending?: boolean;
+}
+
+export interface FlowGate {
+  ask: string;
+  /** The answer that continues down the path, and the one that leaves it. */
+  pass: string;
+  exit: string;
+  outcome: string;
+  detail?: string;
+}
+
+export interface Tile {
+  figure?: string;
+  title: string;
+  body?: string;
+}
+
+export interface PathStep {
+  title: string;
+  body?: string;
+  /** Things tied to this step, such as a document and its question number. */
+  chips?: { label: string; value: string }[];
+  /** A line the post marks as an invented example, printed with that label. */
+  example?: string;
+  /** A miniature of a numbered form with these cells lit. */
+  mini?: { total: number; breaks: number[]; lit: number[] };
+}
+
 export type Scene =
   /** n items, each a lead and a body, on a 2 or 3 column grid under an eyebrow and a heading.
    * Two columns get the larger type and more air; three get the compact treatment, because a
@@ -314,7 +411,55 @@ export type Scene =
       action: { label: string; href: string };
       ariaLabel: string;
     })
-  | (SceneBase & { kind: "component"; id: ComponentId });
+  | (SceneBase & { kind: "component"; id: ComponentId })
+  /** Shares of a whole on HTML-labelled tracks, in one or more panels. Panels are for counts
+   * that must not share a reading: different surveys, different reference periods, or counts a
+   * firm can appear in twice. `callout` is one figure held beside the bars. */
+  | (SceneBase &
+      FigureBase & {
+        kind: "bars";
+        panels: BarPanel[];
+        max?: number;
+        callout?: { figure: string; text: string };
+      })
+  /** A numbered form drawn as one cell per question, grouped, with some cells picked out, and
+   * an optional strip of bars under it for how the count changed. */
+  | (SceneBase &
+      FigureBase & {
+        kind: "cells";
+        groups: CellGroup[];
+        marks: CellMark[];
+        strip?: BarRow[];
+      })
+  /** Dated events on a vertical axis spaced by the real calendar. */
+  | (SceneBase & FigureBase & { kind: "timeline"; events: TimelineEvent[] })
+  /** Questions in order, each with the answer that leaves the path and where it goes. */
+  | (SceneBase &
+      FigureBase & {
+        kind: "flow";
+        gates: FlowGate[];
+        end: { title: string; detail?: string };
+        /** One name for every exit, when they all land in the same place ("Not building"). */
+        tray?: string;
+        /** A run of the flow the post marks as an invented example. */
+        example?: string;
+      })
+  /** A card of facts. `specimen` draws one line of a form with its answer boxes above them. */
+  | (SceneBase &
+      FigureBase & {
+        kind: "tiles";
+        columns: 2 | 3;
+        tiles: Tile[];
+        specimen?: { line: string; options: string[]; ticked: number; tag: string };
+      })
+  /** A numbered path of steps, with an optional row of facts above it and a closing line. */
+  | (SceneBase &
+      FigureBase & {
+        kind: "steps";
+        facts?: Tile[];
+        steps: PathStep[];
+        close?: string;
+      });
 
 /** The cold open's own variables. The flagship hero is one held moment, and the moment is
  * the only part that changes between topics: a clock at 11:40pm for the chat piece, a phone
