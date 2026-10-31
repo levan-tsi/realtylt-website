@@ -1,0 +1,6 @@
+seller-disclosure-requirements-new-york @390: 129 steps (0 with the rail shown, the rest the pill), lowest 16.41:1, 0 under 4.5:1
+seller-disclosure-requirements-new-york @1440: 100 steps (0 with the rail shown, the rest the pill), lowest 16.41:1, 0 under 4.5:1
+seller-disclosure-requirements-new-york @1680: 100 steps (100 with the rail shown, the rest the pill), lowest 6.55:1, 0 under 4.5:1
+ai-audit-small-business-what-not-to-automate @390: 245 steps (0 with the rail shown, the rest the pill), lowest 16.41:1, 0 under 4.5:1
+ai-audit-small-business-what-not-to-automate @1440: 204 steps (0 with the rail shown, the rest the pill), lowest 16.41:1, 0 under 4.5:1
+ai-audit-small-business-what-not-to-automate @1680: 204 steps (204 with the rail shown, the rest the pill), lowest 6.55:1, 0 under 4.5:1
