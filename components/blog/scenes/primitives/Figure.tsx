@@ -104,8 +104,8 @@ export function Bar({ bar, max, dark }: { bar: BarRow; max: number; dark: boolea
   const pct = Math.max(1.2, Math.min(100, (bar.value / max) * 100));
   return (
     <div>
-      <div className="flex items-end justify-between gap-5">
-        <p className={`text-[15px] leading-snug md:text-base ${t.strong}`}>
+      <div className="flex min-w-0 items-end justify-between gap-5">
+        <p className={`min-w-0 text-[15px] leading-snug md:text-base ${t.strong}`}>
           {bar.label}
           {bar.tag && <span className={`mt-1 block text-[13px] ${t.muted}`}>{bar.tag}</span>}
         </p>

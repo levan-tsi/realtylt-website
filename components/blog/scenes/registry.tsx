@@ -10,6 +10,7 @@ import { Flow } from "./primitives/Flow";
 import { Grid } from "./primitives/Grid";
 import { Offer } from "./primitives/Offer";
 import { Plate } from "./primitives/Plate";
+import { Quiz } from "./primitives/Quiz";
 import { Statement } from "./primitives/Statement";
 import { StatBars } from "./primitives/StatBars";
 import { Steps } from "./primitives/Steps";
@@ -95,6 +96,8 @@ export function renderScene(key: string, content?: FlagshipContent): ReactNode {
       return <Tiles {...scene} />;
     case "steps":
       return <Steps {...scene} />;
+    case "quiz":
+      return <Quiz {...scene} />;
     case "component": {
       const Component = COMPONENTS[scene.id];
       return Component ? <Component /> : null;
@@ -106,5 +109,7 @@ export function renderScene(key: string, content?: FlagshipContent): ReactNode {
  * post controls its own band rhythm. An unknown key renders nothing, so "light" is the
  * harmless default. */
 export function sceneBand(key: string, content?: FlagshipContent): "dark" | "light" {
-  return content?.scenes[key]?.band ?? "light";
+  const band = content?.scenes[key]?.band ?? "light";
+  // The quiz names its dark field "night" (its data shape was fixed for two lanes at once).
+  return band === "night" ? "dark" : band;
 }

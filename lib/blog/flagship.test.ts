@@ -10,7 +10,6 @@ import { LOCAL_SEO_FLAGSHIP } from "@/content/blog/local-seo-scenes";
 import { GEO_PAGES_FLAGSHIP } from "@/content/blog/geo-pages-scenes";
 import { CRM_SYNC_FLAGSHIP } from "@/content/blog/crm-sync-scenes";
 import { AGENT_WORKFORCE_FLAGSHIP } from "@/content/blog/agent-workforce-scenes";
-import { SKIP_TRACING_FLAGSHIP } from "@/content/blog/skip-tracing-scenes";
 import { MARKETING_AUTOMATION_FLAGSHIP } from "@/content/blog/marketing-automation-scenes";
 import { DOCUMENT_PROCESSING_FLAGSHIP } from "@/content/blog/document-scenes";
 import { DATA_ENRICHMENT_FLAGSHIP } from "@/content/blog/enrichment-scenes";
@@ -42,7 +41,6 @@ import {
   MARKETING_AUTOMATION_POST,
   REVIEW_AUTOMATION_POST,
   SINGULARITY_POST,
-  SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "@/content/blog/ai-posts";
 import { flagshipToc, type FlagshipContent } from "./flagship";
@@ -310,7 +308,6 @@ const TOPICS: [string, string, FlagshipContent][] = [
   ["geo landing pages", GEO_LANDING_PAGES_POST, GEO_PAGES_FLAGSHIP],
   ["crm sync", CRM_SYNC_POST, CRM_SYNC_FLAGSHIP],
   ["ai agent workforce", AI_AGENT_WORKFORCE_POST, AGENT_WORKFORCE_FLAGSHIP],
-  ["skip tracing", SKIP_TRACING_POST, SKIP_TRACING_FLAGSHIP],
   ["marketing automation", MARKETING_AUTOMATION_POST, MARKETING_AUTOMATION_FLAGSHIP],
   ["document processing", DOCUMENT_PROCESSING_POST, DOCUMENT_PROCESSING_FLAGSHIP],
   ["data enrichment", DATA_ENRICHMENT_POST, DATA_ENRICHMENT_FLAGSHIP],
@@ -346,7 +343,27 @@ describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) =
 
   it("gives every scene a band, so the floating rail can always flip its contrast", () => {
     for (const [key, scene] of Object.entries(content.scenes)) {
-      expect(["dark", "light"], `scene ${key}`).toContain(scene.band);
+      // The quiz names its dark field "night" (its shape was fixed for two lanes at once);
+      // sceneBand reads it as dark, so the rail still flips.
+      const bands = scene.kind === "quiz" ? ["night", "light"] : ["dark", "light"];
+      expect(bands, `scene ${key}`).toContain(scene.band);
+    }
+  });
+
+  /** Round 15: a quiz teaches, so every question needs four real choices, one right answer in
+   * range, and a line of why. A quiz with a blank why scolds instead of teaching. */
+  it("gives every quiz four distinct choices, a right answer and a why line per question", () => {
+    for (const [key, scene] of Object.entries(content.scenes)) {
+      if (scene.kind !== "quiz") continue;
+      expect(scene.questions.length, `scene ${key} questions`).toBeGreaterThanOrEqual(8);
+      for (const q of scene.questions) {
+        expect(new Set(q.choices).size, `${key}: ${q.q}`).toBe(4);
+        expect([0, 1, 2, 3]).toContain(q.answer);
+        expect(q.why.trim().length, `${key}: ${q.q} why`).toBeGreaterThan(20);
+        expect(`${q.q} ${q.choices.join(" ")} ${q.why}`).not.toMatch(/[–—]/);
+      }
+      expect(scene.passLine.trim().length).toBeGreaterThan(10);
+      expect(scene.failLine.trim().length).toBeGreaterThan(10);
     }
   });
 

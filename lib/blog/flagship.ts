@@ -459,7 +459,33 @@ export type Scene =
         facts?: Tile[];
         steps: PathStep[];
         close?: string;
-      });
+      })
+  /** A short quiz on what the post taught, one question at a time, with the result at the end.
+   * The band is "night" or "light" rather than SceneBase's pair because the seller lane's data
+   * file was written to this exact shape; `sceneBand` reads "night" as a dark field. The label
+   * is optional like every scene's. See components/blog/scenes/primitives/Quiz.tsx. */
+  | (Omit<SceneBase, "band"> & {
+      kind: "quiz";
+      band: "night" | "light";
+      ariaLabel: string;
+      eyebrow: string;
+      title: string;
+      /** Which brand's result states to draw: the brain and the galaxy for "ai", the porch
+       * light for "realtylt". The two brands never share a motif. */
+      brand: "ai" | "realtylt";
+      questions: QuizQuestion[];
+      passLine: string;
+      failLine: string;
+    });
+
+/** One quiz question: four choices, the index of the right one, and one line of teaching shown
+ * whichever choice the reader taps. */
+export interface QuizQuestion {
+  q: string;
+  choices: [string, string, string, string];
+  answer: 0 | 1 | 2 | 3;
+  why: string;
+}
 
 /** The cold open's own variables. The flagship hero is one held moment, and the moment is
  * the only part that changes between topics: a clock at 11:40pm for the chat piece, a phone

@@ -25,7 +25,6 @@ import {
   MARKETING_AUTOMATION_POST,
   REVIEW_AUTOMATION_POST,
   SINGULARITY_POST,
-  SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
 import {
@@ -69,7 +68,6 @@ import { INVOICING_FLAGSHIP } from "./invoicing-scenes";
 import { DATA_ENRICHMENT_FLAGSHIP } from "./enrichment-scenes";
 import { DOCUMENT_PROCESSING_FLAGSHIP } from "./document-scenes";
 import { MARKETING_AUTOMATION_FLAGSHIP } from "./marketing-automation-scenes";
-import { SKIP_TRACING_FLAGSHIP } from "./skip-tracing-scenes";
 import { AGENT_WORKFORCE_FLAGSHIP } from "./agent-workforce-scenes";
 import { CRM_SYNC_FLAGSHIP } from "./crm-sync-scenes";
 import { REVIEW_FLAGSHIP } from "./review-scenes";
@@ -200,15 +198,17 @@ export const POSTS: BlogPost[] = ([
     title: "How to use AI in my business: what to automate first and what to leave alone",
     seoTitle: "How to use AI in my business: what not to automate",
     date: "2026-08-26",
-    updated: "2026-10-30",
-    /** ROUND 14 (2026-10-30): the refreshed post from the agents' review chain, approved on his
-     * desk, with its scenes rebuilt from the piece's data points (content/blog/audit-scenes.ts).
-     * Title and search title moved to the owners' phrase "how to use ai in my business". */
+    updated: "2026-10-31",
+    /** ROUND 14 (2026-10-30): the refreshed post from the agents' review chain, with its scenes
+     * rebuilt from the piece's data points. Title and search title moved to the owners' phrase
+     * "how to use ai in my business". ROUND 15 (2026-10-31): rebuilt to the old post's depth on
+     * the owner's verdict, with the 2026 sources, the audit's own questions, a quiz and relatable
+     * photographs (a front desk on the phone for the cover, in place of an antique switch box). */
     excerpt:
-      "Most owners can list ten jobs they would hand to AI. The useful work is crossing off the ones that should stay with a person. What 2026 government surveys show small firms really do with AI, the three questions we use to cut a list, and a one-page sheet to run the test yourself.",
+      "How to use AI in your business, from what 2026 government surveys show small firms really do with it to the three questions that cross ideas off your list. The questions we ask in an audit, so you can answer them yourself; how the audit runs and what you get; a week-by-week roadmap you can follow alone; a one-page sheet; and a ten-question quiz to check what stuck.",
     seoDescription:
-      "An AI audit for a small business in plain steps: 2026 Census data on how small firms use AI, three questions that cross ideas off, and a one-page sheet.",
-    cover: "/images/editorial/switch-box.jpg",
+      "How to use AI in my business: an AI audit for a small business in plain steps, 2026 Census data, three questions to cut your list, and what to automate first.",
+    cover: "/images/editorial/front-desk-phone.jpg",
     body: [],
     placeholder: false,
     markdown: AI_AUDIT_POST,
@@ -339,30 +339,6 @@ export const POSTS: BlogPost[] = ([
     placeholder: false,
     markdown: MARKETING_AUTOMATION_POST,
     flagship: MARKETING_AUTOMATION_FLAGSHIP,
-  },
-  {
-    slug: "skip-tracing-real-estate-legal-owner-phone-numbers",
-    cluster: "records",
-    title: "You have her number. She never gave it to you.",
-    seoTitle: "Skip Tracing in Real Estate: What the Law Says, What to Ask",
-    date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` was ABSENT until 2026-09-18, on purpose: rounds 46 and 47 read this post in full
-     * and changed nothing, and a date equal to the published date is a gate being fed, not a
-     * freshness signal ("set it when the article takes its first real revision, never to satisfy
-     * a gate"). The final round's readability pass IS that first revision: the body and the scene
-     * copy were rewritten sentence by sentence (grade 9.2 to 5.9, every link, number and quote
-     * held by scripts/rewrite-invariants.mjs), on a later day than it was published. The absent
-     * film (C3) is still a true red on this slug. */
-    excerpt:
-      "She picked up, she was polite, and she asked the one question nobody in this trade can answer: where did you get this number? Two federal statutes ask it too, and they ask it of you rather than of the tool. What skip tracing really is. What the law permits. And the four questions to put to a provider in writing.",
-    seoDescription:
-      "What skip tracing does in real estate, what the Driver's Privacy Protection Act and the Fair Credit Reporting Act say about it, and what to ask a provider.",
-    cover: "/images/editorial/mailboxes-receding.jpg",
-    body: [],
-    placeholder: false,
-    markdown: SKIP_TRACING_POST,
-    flagship: SKIP_TRACING_FLAGSHIP,
   },
   {
     slug: "ai-agent-workforce-real-estate-assistants",

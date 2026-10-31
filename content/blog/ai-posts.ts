@@ -503,125 +503,455 @@ If the middle list is long and the bottom line is empty, you have not found a bu
 
 [[scene:funnel]]`;
 
-export const AI_AUDIT_POST = `How to use AI in my business is the question owners bring us, and we answer it by writing down how one job really runs and crossing off the ideas that should stay with a person. Below are the three questions we use for the crossing off, what 2026 government surveys show small firms do with AI, and a one-page sheet to run the test yourself.
+/** THE OPENER RULE (the owner, 2026-10-31, for this post and every post after it): "the first
+ * few sentences should describe what we're going to talk about, and what they're going to learn
+ * here, and then jump into the story, so it's not confusing what to expect." So a post opens,
+ * under the H1 and before any scene, with two to four plain sentences: what the post is about,
+ * what the reader will be able to do after it, and who it is for. Only then the story or the
+ * first section. The first two lines also say what we do for the reader. Copy this shape.
+ *
+ * ROUND 15 (2026-10-31): rebuilt to the old post's depth (4,006 words in August) with the 2026
+ * sources, the audit's own questions and a quiz; scenes in content/blog/audit-scenes.ts. */
+export const AI_AUDIT_POST = `How to use AI in my business is the question owners bring us. We answer it by writing down how your work really runs, crossing off the ideas that should stay with a person, and handing back a short list in the order to build it.
+
+This page is for owners of a small business who think AI could help but do not yet know where to point it. By the end you will be able to tell whether a job is worth automating at all, cut your own list of AI ideas with three questions, put what survives in a safe order, and follow a week-by-week roadmap on your own. Every section ends with the one thing to apply. On the way you get what 2026 government surveys show small firms really do with AI, a free one-page sheet, and a short quiz at the end to check what stuck.
+
+Here is the kind of list we see, as an invented example. An owner writes down eleven things she would hand to AI, and it takes about twenty minutes. Answer the phone at night. Stop typing the same details into two systems. Chase the missing signatures. Reply to website enquiries faster. Get the monthly newsletter out without losing a Sunday to it. Each one is a real irritation that a machine could plausibly handle.
+
+The hour that follows adds nothing to the list. It crosses four things off. Two go because they happen a handful of times a year, so a failure would sit unnoticed until a customer found it. One goes because three people in the office do it three different ways, and each of them thinks theirs is the rule. One goes because a wrong answer would go out in writing to a customer, with the business's name on it.
+
+That hour is what this page is about. Writing the list is easy. Crossing things off it, with a reason you can use again next year, is the work.
 
 [[scene:in-short]]
 
-## What small firms do with AI in 2026
+## What an AI audit for a small business is for
 
-Fewer firms use AI than the headlines suggest, and the count depends on the question asked. The Census Bureau's Business Trends and Outlook Survey put AI use at 19.8 percent of US businesses as of May 3, 2026, after it hovered between 17 and 20 percent from December 2025; between 20 and 23 percent of businesses expected to use it within six months. Firms with 250 or more employees were at 37 percent, and firms with four or fewer employees were under 20 percent ([Census Bureau, May 26, 2026](https://www.census.gov/library/stories/2026/05/ai-use-businesses.html)).
+Many offers sold under this name are a meeting with a document attached. Someone asks what your business does, writes the answers down in a tidier order, and returns a list of opportunities. That document mostly repeats what you already know.
 
-[[scene:by-firm-size]]
+An audit worth your time does one more thing. Parts of your list come back shorter than they went in, and each removal has a reason beside it that you can apply again without anyone's help.
 
-The Federal Reserve's Small Business Credit Survey asked firms with 1 to 499 employees a wider question, whether the business or its employees use AI in some way, and 46 percent said yes. A third had no plans to use it, and more than half of those said AI does not apply to their business ([Federal Reserve Banks, March 3, 2026](https://www.clevelandfed.org/collections/press-releases/2026/pr-20260303-fed-survey-small-business-optimism-wanes-as-performance-metrics-hold-steady); 6,525 responses, fielded September 3 to November 14, 2025).
+Removal matters more than addition in a small business for a plain reason: each idea that gets built becomes a job someone has to own. It runs every day. Someone has to understand it. It can break within a year, when a system it depends on changes. Crossing four ideas off a list of eleven saves four builds, four upkeep jobs and four failures nobody would have noticed, and it does that before any money moves.
+
+Here is what you should be holding at the end of a good audit.
+
+[[scene:deliverable]]
+
+**Apply it:** before you look at any tool, decide that the useful result is a shorter list, not a longer one.
+
+## Start with one job written down
+
+Before any of the questions on this page are useful, someone has to write down how one real job runs. In the order it happened, including the steps that only exist because a system does not do something it was bought to do.
+
+That part is free, and it is described step by step in [the workflow automation article on this site](/blog/workflow-automation-real-estate-business), with a piece of paper and no help from anyone. Start there if no job in your business is written down yet.
+
+Everything below starts one step later. You have a list of candidates, and the work now is deciding what to do with it. That is a different problem from making the list. It is also where an outside eye helps most, because the person who wrote the list is the person least able to cross things off it.
+
+An invented example: a two-chair dental office writes down how a new patient gets booked. The front desk answers the call, types the details into the booking program, types them again into the billing program, and sends a reminder by hand the day before. Four steps, and two of them are the same typing.
+
+**Apply it:** pick the job you did most often last week and write its steps down tonight, in the order they really happened.
+
+## How small businesses use AI in 2026
+
+Fewer firms use AI than the headlines suggest, and the count depends on the question asked. Three 2026 government sources measure it three different ways.
+
+The Census Bureau's Business Trends and Outlook Survey asks businesses every two weeks whether they used AI in any business function. It put AI use at 19.8 percent of US businesses as of May 3, 2026. From December 2025 to May 2026 the share hovered between 17 and 20 percent, and between 20 and 23 percent of businesses expected to use it within six months ([Census Bureau, May 26, 2026](https://www.census.gov/library/stories/2026/05/ai-use-businesses.html)). The Bureau changed the wording in November 2025, from use "in producing goods or services" to use "in any business function", so older figures from the same survey do not compare.
+
+The Federal Reserve's Small Business Credit Survey asked firms with 1 to 499 employees a wider question: whether the business or its employees use AI in some way. Of those firms, 46 percent said yes. The most common uses were writing or marketing, individual productivity, and planning or analysis. A third had no plans to use AI, and more than half of those said it does not apply to their business ([Federal Reserve Banks, March 3, 2026](https://www.clevelandfed.org/collections/press-releases/2026/pr-20260303-fed-survey-small-business-optimism-wanes-as-performance-metrics-hold-steady); 6,525 responses, fielded September 3 to November 14, 2025).
+
+A Census Bureau working paper on the 2026 AI supplement to the same Census survey found that 18 percent of firms used AI in a business function between November 2025 and January 2026, and that 22 percent expected to within six months ([Bonney and others, Census Bureau working paper CES 26-25, April 2026](https://www2.census.gov/library/working-papers/2026/adrm/ces/CES-WP-26-25.pdf)).
 
 Read together, about one firm in five uses AI inside a business function, and close to one in two has someone using an AI tool somewhere. An owner who has not started is in the majority on the first measure.
 
 [[scene:who-uses-ai]]
 
-## Where the use goes, and what it does to the team
+### Use by firm size
 
-A Census Bureau working paper on the 2026 AI supplement found that 18 percent of firms used AI in a business function between November 2025 and January 2026, and that 57 percent of those users had it in three or fewer functions. The most common were sales and marketing (52 percent of users), strategy and business development (45 percent) and IT (41 percent). For the smallest firms, with 1 to 4 employees, current use was 18 percent and expected use within six months about 21 percent ([Bonney and others, Census Bureau working paper CES 26-25, April 2026](https://www2.census.gov/library/working-papers/2026/adrm/ces/CES-WP-26-25.pdf)).
+The working paper splits use by firm size, and the gap is wide. Firms with 1 to 4 employees were at 18 percent and expected about 21 percent within six months. Firms with 100 to 249 employees were at 25 percent and expected 34 percent. Firms with 250 or more employees were at 31 percent and expected 40 percent. The larger the firm, the bigger the jump it plans.
+
+[[scene:by-firm-size]]
+
+The Census Bureau's May story shows the same pattern in later data. Use grew among firms with at least 20 employees but did not change significantly among firms with fewer than 20, and less than 20 percent of firms with four or fewer employees used AI.
+
+### Use by trade
+
+The trade matters as much as the size. As of May 3, 2026, the Information sector was at 39.7 percent and Finance and Insurance at 33.9 percent, against 19.8 percent for all businesses. Retail Trade was at around 14 percent, with about 17 percent expecting to use AI within six months.
+
+[[scene:by-sector]]
+
+### You are almost certainly not behind
+
+The feeling that everyone else has already done this does quiet damage to how these decisions get made. The figures above say otherwise. Four firms in five do not use AI inside a business function, and the smallest firms have barely moved since December.
+
+That has a second meaning, and it is the more useful one. Where only one firm in five uses something inside its work, there is no settled playbook. Not enough small businesses have built anything for anyone to know, in general, what a small business should build first. So the confident answers you hear about where to start are mostly guesses. The right stance toward all of them, this page included, is to ask what they rest on.
+
+The working paper also asked the firms with no plans for AI why. The most common answer, from 65 percent of them, was that AI is not applicable to the business. Lack of knowledge of what AI can do came a distant second at 22 percent, and concerns about privacy or security came third at 20 percent. "Not applicable" is sometimes right. It is also what an owner says before anyone has looked at where the same details get typed twice.
+
+[[scene:why-not]]
+
+An invented example: a landscaping company with four people says AI does not apply to it. Then it counts how often one customer's address gets typed into the quote, the schedule and the invoice: three times, for every job.
+
+**Apply it:** before deciding AI does not apply to you, count how many times one customer's details get typed in a normal week.
+
+## Where small firms use AI, and what it does to the team
+
+Among firms using AI in a business function, the working paper found the most common were sales and marketing (52 percent of users), strategy and business development (45 percent), IT (41 percent) and research and development (40 percent). The use stays narrow: 57 percent of users had AI in three or fewer functions, and 24 percent had it in only one.
 
 [[scene:where-it-goes]]
 
-The same Census paper asked what AI did to the work. According to it, 44 percent of AI-using firms said it added to tasks their workers already do, and two thirds of the firms that saw any change to tasks saw only that kind of change. About 5 percent reported any change in headcount, split almost evenly: 2.3 percent up and 2.0 percent down. That is how we build: the person stays, and the aim is to take the repeated work around them off their desk.
+Inside the day's work, the leading use was writing. Among firms whose workers use generative AI for their tasks, 85 percent used it for writing and editing and 50 percent for information search.
+
+The same paper asked what AI did to the work. 44 percent of AI-using firms said it added to tasks their workers already do. About 10 percent said it did a task an employee used to do, and about 11 percent said it brought in a new task. Of the firms that saw any change to tasks, 66 percent saw only the first kind: AI helping with work a person still does.
+
+Headcount barely moved. About 5 percent of AI-using firms reported any change in headcount, and it split almost evenly: 2.3 percent up and 2.0 percent down. Far more common, at 16 percent, was replacing existing software or equipment with tools that use AI.
 
 [[scene:the-person-stays]]
 
-## The three questions that cross ideas off
+That is how we build. The person stays, and the aim is to take the repeated typing, copying and checking around them off their desk.
 
-Every list of AI ideas is long, because each item on it is a real irritation. These three questions take items off the list, and each one takes off a different kind.
+An invented example: a neighbourhood bakery takes wholesale orders by email. A system reads each order and drafts the confirmation with the pickup time, and the person at the counter reads it and sends it. The writing moved; the person who knows the regulars stayed.
+
+**Apply it:** look for the writing and the copying around a person's job, not for a job to hand over whole.
+
+[[scene:plate-counter]]
+
+## The three questions: is it worth automating at all?
+
+Before how to automate something comes whether it is worth automating at all. Most people selling AI start from what can be built. We start from what should not be, because the most useful thing we can tell an owner is which ideas to cross off.
+
+Every list of AI ideas is long, because each item on it is a real irritation. These three questions take items off the list. Each one takes off a different kind, and the third takes off the most.
 
 ### One: it happens often enough that a failure gets noticed within a week
 
-A job that runs every day and whose result someone waits for reports its own failure. An invented example: a job that runs four times a year breaks in March and is found in June by an annoyed customer. Frequency decides whether a break gets found, so weekly or more is a yes and quarterly is almost always a no, whatever the time saving looks like on paper.
+This question is about noticing more than saving. Everything anyone builds has a day when it stops working, usually because something it depends on changed and nobody sent a letter. A job that runs several times a week reports its own failure within days, because someone is waiting for the result. An invented example: a job that runs four times a year breaks in March and is found in June by an annoyed customer. The saving on the quarterly job may look larger, and it is still the worse candidate. Weekly or more is a yes. Quarterly is almost always a no.
 
 ### Two: the rule can be written down for a new hire
 
-An invented example: three people in an office describe the same decision three ways, so the first job is to decide the rule. Software built over the top of that freezes whichever version its builder happened to hear. Ask the three people separately, never in a meeting; different answers are the finding.
+This question often turns into a management decision, and it is the most useful thing an outsider can force. An invented example: three people in an office describe the same decision three ways. Nobody is doing it wrong. The rule was never decided, and each person filled the gap sensibly. Software built over the top of that does not settle it. It freezes whichever version its builder happened to hear, and then nobody notices the difference any more. Ask the three people separately, never in a meeting. Different answers are the finding.
 
 ### Three: a wrong answer lands where a person sees it first
 
-An invented example: a wrong figure in a sheet someone checks on Friday costs an hour. A wrong answer sent to a customer in writing, with the business's name on it, costs the customer and then the business. This is the question to expect the most crossings from, and better software does not change its answer, because where a mistake lands is a fact about the business.
+This is the question people skip, because it feels like expecting the worst in a conversation that is going well. An invented example: a wrong figure in a sheet someone checks on Friday costs an hour. A wrong answer sent to a customer in writing, with the business's name on it, costs the customer and then the business. This question removes the most ideas, and better software does not change its answer, because where a mistake lands is a fact about the business, not about the model.
 
 [[scene:three-gates]]
 
-## What we leave with a person
+Try it with your own numbers in the counter below. An invented example to start from: 12 ideas. If 65 percent of them happen often enough, 70 percent of those have a rule you can write down, and 60 percent of those land somewhere a person sees first, about 3 are left. The number is meant to come out small. Most of a list is answered by a question, and answering a question costs nothing.
 
-Three kinds of work stay with a person in every assessment we run:
+[[scene:shortlist-calculator]]
+
+The federal AI Risk Management Framework makes the same point in drier words. The National Institute of Standards and Technology publishes it, it is voluntary, and it was written for organisations far larger than a small business. It is still worth ten minutes, because it was written by people with nothing to sell. Its management function opens by asking whether a system's "development or deployment should proceed". It lists the responses to a risk as "mitigating, transferring, avoiding, or accepting". Avoiding is on that list, so deciding not to build something is a legitimate result of an assessment.
+
+It is honest about its own limits too: it says it "does not prescribe risk tolerance". Version 1.0 dates from January 2023, and NIST's page still showed it as the current version when we read it on October 31, 2026, with a revision under way as part of the White House AI Action Plan ([NIST AI 100-1](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf); [NIST, AI RMF page](https://www.nist.gov/itl/ai-risk-management-framework)).
+
+**Apply it:** run each idea on your list past the three questions, in order, and stop at the first no.
+
+## What should not be automated
+
+Generic lists of things not to automate are rarely useful, because they warn about jobs nobody was going to hand over anyway. Three kinds of work stay with a person in every assessment we run:
 
 - any statement of fact a customer relies on, such as a price, a policy, an insurance detail or an appointment rule, unless the system reads it from the record that governs it and says so when there is no record;
-- the judgment calls made a few times a year, such as whether to take on a client or change a price;
+- the judgment calls made a few times a year, such as whether to take on a client, change a price or let a customer go;
 - anything whose failure is silent, such as a reminder that stops sending without an error anyone sees.
 
-The person keeps those jobs, and AI takes the typing, copying and checking around them.
+There is a fourth test, and it costs nothing to apply before the others: anything you would be embarrassed to tell a customer was done by a machine.
 
-## Rank what survives by its worst day
+[[scene:do-not]]
 
-Once the list is short, the natural move is to rank it by the time each item saves. We rank by how contained the worst case is. A job whose failure means someone redoes it by hand for an afternoon goes ahead of a bigger saving whose failure nobody can describe.
+### The facts a customer relies on
 
-The federal AI Risk Management Framework makes the same allowance in drier words. Version 1.0 dates from January 2023 and was still the current version on NIST's page when we checked it on October 29, 2026, with a revision under way. It lists the responses to a risk as "mitigating, transferring, avoiding, or accepting" and says it "does not prescribe risk tolerance" ([NIST AI 100-1](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf); [NIST, AI RMF page](https://www.nist.gov/itl/ai-risk-management-framework)). Avoiding is one of the four, so deciding not to build something is a legitimate result of an assessment.
+The first kind gets built most often, so it deserves a closer look. A model asked about a price or a policy will produce an answer. The risk is not an answer that is obviously invented. It is a wrong answer that arrives in the right format and at roughly the right size, so nobody checks it.
 
-## Why this page gives no failure rate for AI projects
+The right build for that kind of question exists, and it is smaller than the one people ask for. It fetches the value from the record that governs it. Where there is no record, it says so out loud instead of filling the gap. A system may report what a source says, and it may say it does not know. It may not make the answer up.
 
-Owners often ask what share of AI projects fail. We found no 2026 public survey that measures how often a small business's automation fails; the figures that circulate come from large-company surveys of stalled pilots and abandoned programmes, which answer a different question. A number whose method nobody can check stays off this page.
+### In a property business, specifically
 
-## Run the test yourself in one evening, and read it again in two weeks
+We started in real estate, so here is the version for that trade. Square footage, a tax figure, a school district, a boundary, whether a permit exists: these read like data and behave like liability, because a buyer may rely on any one of them. The build worth doing reads each value from the record that governs it, such as the listing record or the public tax roll, and says plainly when the record is silent. Whether to take a listing, whether to advise a price cut, and whether a buyer is serious stay with the agent. Those calls carry high stakes, and no rule for them can be written down without misdescribing how the decision is really made.
 
-1. Write every idea down without judging it, in the order it comes to mind.
-2. Ask the rule question to three people, separately.
-3. Next to each line, before writing any benefit, write where a wrong answer would land and who would find out.
+**Apply it:** mark every idea on your list that states a fact to a customer, and ask where that fact is read from.
+
+## Who should stay on the job
+
+We build AI to add to what your people do, not to take them out of the work. The 2026 Census paper says the same about how firms really use it: helping a person was the common effect, and cutting staff was rare. Our own rule is simpler. A person stays on anything a customer sees.
+
+In practice the system does the preparing and a person does the deciding. It drafts the reply, fills in the details, finds the past job that looks like this one, and lines it all up for review. A person reads it and approves it. The step that sends cannot run without that approval, and that is built into the system rather than written as a polite request in its instructions: the system either has no way to send, or it checks an approval it cannot give itself.
+
+We check every job against four questions before deciding who runs it. Does the result bind the business, such as a price, a contract, a payment or a promised date? Does it reach a customer, or anyone outside the office? Does it feed another system people act on, such as the schedule or the books? Could it damage trust if it is wrong? One yes means a person approves every result. Two or more mean a person approves every result, and the binding part, such as setting a price or signing, stays with that person alone.
+
+[[scene:stay-on-job]]
+
+One exception keeps this from becoming a bottleneck. A fixed message whose exact words you approved once, with only the name, date and time filled in and nothing written by a model, can go out on its own. An appointment reminder is the usual example. Anything a model writes is approved every time.
+
+What this gives your people is time back from the work they repeat, so they can spend it on the parts of the job that need them: the customer on the phone, the judgment call, the repair. The person is still the one your customers deal with.
+
+An invented example from a plumbing office: the quote follow-up email. It reaches a customer, and a wrong price would damage trust, so two checks say yes. The system finds the open quotes due a follow-up, pulls the job details and drafts the note. The office manager reads it, fixes it if needed, and sends it. The price itself is never written by the system.
+
+**Apply it:** for each idea that survived, write down the name of the person who approves its results.
+
+[[scene:plate-garage]]
+
+## Why ranking by the average outcome gets it wrong
+
+Once the list is short and honest, the natural next move is to estimate what each survivor is worth, sort by that, and start at the top. We sort differently, by how contained the worst case is.
+
+The reason is the shape of what goes wrong. Most automation jobs come in close to what was expected: a little late, a little over, sometimes under. A few go badly wrong, and they go wrong for different reasons than the ordinary ones, such as a rule nobody had settled or a system that changed underneath. An average blends both groups into one number that describes neither. The number you would write beside each idea is its typical outcome. What you are exposed to is its worst day.
+
+An invented example makes the point. Idea A saves about three hours a week, and when it fails, someone redoes the work by hand for an afternoon. Idea B saves about nine hours a week, and when it fails, wrong confirmations go to customers for a week before anyone notices. On the average, B wins. On the worst day, A goes first, and B waits until its failure can be made visible and cheap.
+
+This is more than caution. A first build that fails quietly teaches a business to distrust the whole idea, and the list stalls. A first build whose failure is small and visible teaches the business how these systems behave, and the next one goes better.
+
+**Apply it:** next to each survivor, write its worst day in one sentence, and sort by that.
+
+## The failure rate nobody can give you
+
+At about this point someone asks what share of AI projects fail. We found no 2026 public survey that measures how often a small business's automation fails. The figures that circulate come from surveys of large companies, about stalled pilots and abandoned programmes, which answer a different question.
+
+The most quoted project failure figure of the last few decades has a known problem, and the problem is worth understanding because it repeats. It comes from a report sold every year by a private research firm, and its underlying data has never been opened to outside inspection. Two researchers at Vrije Universiteit Amsterdam applied that report's own definitions to their own records of real projects. They concluded that the definitions have "four major problems: they're misleading, one-sided, pervert the estimation practice, and result in meaningless figures" ([Eveleens and Verhoef, IEEE Software, 2010](https://www.cs.vu.nl/~x/chaos/chaos.pdf)). The definitions only counted a project as late or over budget, never as early or under, so a team could look successful just by padding every estimate. One organisation that steered by them did exactly that, and its forecasts got worse while its score got better.
+
+So we hold an honest position instead of reaching for a number anyway. Nobody can tell you what share of small-business automation fails. A number whose method nobody can check stays off this page. What can be said is about the shape: most jobs come in close to their estimate, a few go badly wrong, and no average describes both. That is why the order matters more than the forecast.
+
+**Apply it:** when anyone quotes you a failure rate or a saving, ask how it was measured and on whose businesses.
+
+## What the order gets sorted by
+
+With the failure rate refused and the average set aside, there is still a list, and it still needs an order. These are the criteria, in the order we apply them.
+
+First, containment: what happens when this one is wrong, and who finds out. Everything that passed the third question is already inside a boundary. Inside it, the jobs whose failure is visible and cheap go ahead of the ones whose failure is quiet and awkward.
+
+Second, whether the rule is settled. Not whether it is simple, but whether it is decided. A settled complicated rule is a better candidate than an unsettled simple one. An unsettled rule is a management decision, and software will not settle it; it comes back later looking like a technical failure.
+
+Third, and only third, the size of the saving. Most versions of this exercise start here. It belongs at the end, because it produces the most confident wrong answers. The biggest saving on a list is very often the job with the most judgment in it, which is exactly why a person is still doing it.
+
+In the written report each job also gets two scores from 1 to 5: what a good result is worth (impact) and what a wrong result costs (risk). Every score carries its reason. A job worth less than two hours a week is usually left alone, whatever its risk, unless another build covers it for free.
+
+[[scene:audit-path]]
+
+An invented example: a Friday list of open quotes for the owner. Only the owner reads it and it changes nothing, so a wrong line costs a minute against the tracker: risk 2. It saves about two hours of Friday digging: impact 3. That puts it near the top, with the owner checking the list for four Fridays before it runs on its own.
+
+**Apply it:** give each survivor a score from 1 to 5 for impact and for risk, with a reason beside each number.
+
+## Why this is different from an automation agency
+
+A lot of people are starting to sell AI automations, and most of them start from the tool: here is what it can do, where can we plug it in. We start from the person who does the work and the hours they get back. The system takes the typing, the copying and the checking; it never takes that person's place, and a person stays on anything a customer sees. We also tell owners, in writing, what not to build, which is the part that costs a seller of automations a sale. That is the difference, and you can hold us to it.
+
+**Apply it:** ask anyone who offers to automate your business which of your ideas they would not build, and why.
+
+## What the audit is and how it runs
+
+If you ask us to run the audit, this is exactly what happens. Nothing in it is secret: this page is the whole method, and you can run it without us. The reasons to call us are the hours it takes and the judgment that comes from having watched these jobs break.
+
+**Before the call.** We send a short note the day before. Nothing needs preparing, but two things help. Bring the person who does the admin work: you know how the business should run, and they know how it does. And have rough numbers in reach for the last three months: how many enquiries came in, how many became jobs, and the average job size. A ballpark is fine. We also ask for the few documents listed under the questions below.
+
+**The call.** About 75 minutes with you, and with the person who does the admin if they can join. We ask about the last real week rather than the usual way, because "walk me through last Tuesday" finds the real jobs and "how do you handle quotes" finds the job as you wish it ran. We do not pitch anything on the call, name tools or promise savings. We are there to understand how the work moves.
+
+**The people who do the work.** About 20 minutes with each person who does a repeated job. They tell us where they wait on someone, and what they do that nobody asked them to, because otherwise it goes wrong.
+
+**The notes.** Within two business days we send our notes back and ask you to correct them, with one question attached: is anything missing? The corrected version is what we work from.
+
+**The scoring.** Every job gets its steps written down in order, and each step gets a label: a fixed step a system can do the same way every time, a rule you can state, a step that needs reading or writing, or a step that stays with a person. Then impact and risk, each with its reason, and one of three verdicts: let a system run it, keep a person on it, or leave it alone.
+
+**The report and the readout.** About three business days after the last interview you get the written report, and we go through it together in about 30 minutes, so you can correct anything we got wrong before you decide anything.
+
+**The two routes.** If something on the list is worth building, there are two ways to do it. We build it, run it for you, fix it when it breaks, and report every month. Or we build it with your own person, an hour a week, and hand it over when they can run it without us. Either way you own it: it runs in your accounts, with your logins, and its instructions are written in plain words someone else could pick up. If nothing on the list is worth building yet, the report says so, and you keep it.
+
+[[scene:audit-day]]
+
+An invented example of the week: the call on a Tuesday morning, two 20-minute talks that afternoon with the office manager and the dispatcher, the notes back on Thursday, and the report the following Tuesday.
+
+**Apply it:** even if you never call us, bring the person who does the admin into the room whenever you discuss automating their work.
+
+## The questions we ask in an audit
+
+These are the questions we ask on the call, chosen so you can answer them alone. Write the answers down in your own words before you talk to anyone. If you stop there, you will see your own business more clearly than most owners ever do. If you come to us, you arrive with half the audit done, and we spend the time on the hard part.
+
+Answer about the last real time something happened, not the usual way.
+
+### The business in five minutes
+
+Why we ask: without a job value and a weekly count, nothing later can be measured.
+
+1. What do you sell, to whom, and where? How many people work here, and who does what?
+2. What is a customer worth to you on average, and do they come back?
+3. How many new enquiries come in during a normal week, and where do they come from?
+
+### Last week, walked through
+
+Why we ask: this is where the hours are, and they only show up when one real job is followed from start to finish.
+
+4. Take last Tuesday, from the first message of the day to the last. What happened, and which of those things happen every week?
+5. Walk one job from the first enquiry to getting paid. Who touches it at each step, how long does each step take, and how many times a week does it happen?
+6. When an enquiry comes in at 2pm on a Tuesday, what happens? And at 9pm on a Saturday?
+
+### The job list
+
+Why we ask: these questions find the double typing and the jobs nobody would miss.
+
+7. Which two of your programs do not talk to each other, and how does information get from one to the other today?
+8. How many times does the same piece of information get typed into something, by anyone?
+9. For each repeated job: if you stopped doing it tomorrow, what would break, and who would notice?
+10. If two of your people hit the same case on the same day, would they handle it the same way?
+
+### The numbers
+
+Why we ask: an hour back is only worth something if we know what the hour costs.
+
+11. Roughly what does an hour cost you for the person doing the most repetitive job here, counting wage, taxes and benefits?
+12. How many calls do you miss in a week, and what happens to a missed call now?
+
+### What you want to build
+
+Why we ask: the answers tell us whether you want growth or your evenings back, and the report is written to whichever you said.
+
+13. Which single task do you most resent doing?
+14. If you had 40 hours a week back across the business, what would you do with them?
+15. If this worked, how would you know? Which number would move?
+
+### What you would never hand to a machine
+
+Why we ask: the limits you set here decide where a person stays, before anything is built.
+
+16. Where do you not want a system involved at all?
+17. What has to be true before anything goes to a customer, and who approves that today?
+18. What is sensitive here, such as customer details, prices or staff information?
+
+[[scene:six-groups]]
+
+### What to send before the call
+
+- A week of your calendar or job board, any form a customer fills in, and the spreadsheet or tracker you run the work from. The column names are enough if the data is private.
+- Two or three real messages you have sent customers: a quote, a follow-up, an update.
+- The templates you use: quote or estimate, invoice, checklists.
+- Rough counts you can see without effort: jobs or quotes a month, invoices a month, enquiries a week.
+
+An invented example of a good answer to question 8: "Every new customer is typed in three times: the phone log, the quote and the invoice. About 25 a week." A count, the places, and how often.
+
+**Apply it:** answer the 18 questions in writing this week. The answers are the first half of an audit.
+
+## What you get at the end
+
+The time it takes: about 75 minutes on the call, 20 minutes with each person who does a repeated job, and about an hour of your time later to correct the notes and go through the readout. The report arrives about three business days after the last interview.
+
+The report holds:
+
+- a one-page summary first, with the job table, the totals and the top recommendation;
+- a written account of how the work runs today, including the workarounds nobody had written down;
+- a section for every repeated job: its steps, its impact and risk with the reasons, the verdict, the hours it takes now and by whom, and a target for a four-week trial with the quality bar that must hold;
+- the list of what we crossed off and why, which is the part you will reuse next year;
+- the rules we would write down for your office, in your words;
+- the questions we still have, because anything we were not told goes there instead of into a guess.
+
+Hours back are a trial target, never a promise. Every number carries its working and says how it is known: your estimate, timed for a week, or taken from your records.
+
+[[scene:report]]
+
+### What an audit does not do
+
+It does not decide for you. It removes candidates and explains why, and what the business does with the rest is your decision.
+
+It does not see what nobody will say. Everything below the surface has to be volunteered, and a first conversation is not always when that happens.
+
+It does not produce a saving on its own. Every hour it finds is an hour you then have to choose to spend on something else. Businesses that do not make that choice on purpose find the hour absorbed within a month.
+
+It does not stay true. The list has a shelf life of months, because your systems, your people and your volume all move.
+
+And nobody has to buy it. Everything on this page can be done by the person running the business, in an evening, with a piece of paper. What the audit adds is someone with no attachment to the list doing the crossing off.
+
+An invented example of one line from a report: "Quote follow-up email. Impact 4: about 12 open quotes a week, and follow-ups are often missed. Risk 4: it reaches a customer, and a wrong price damages trust. Verdict: keep a person on it."
+
+**Apply it:** whatever report you get from anyone, check that every number says how it is known.
+
+## How to run one yourself in one evening
+
+1. Write every idea down without judging it, in the order it comes to mind, including the ones you suspect are silly. Editing while writing is how the interesting but wrong idea survives and the boring right one never gets written.
+2. Ask the rule question to three people, separately and out loud. Not in a meeting, where everyone hears each other agree.
+3. Next to each line, before writing any benefit, write where a wrong answer would land and who would find out. The order matters: once a benefit has been said aloud, the landing question stops being asked seriously.
 4. Cross off every line where the answer is a customer, and every line where the answer is nobody.
-5. Put the list away for two weeks, then read it again.
-
-An invented example: eleven ideas, four crossed off at the three questions, seven left to rank.
+5. Put the list away for two weeks, then read it again. Some of what looked urgent will have solved itself, moved, or turned out to be a sign of something else.
 
 What is left is usually a short list, and that is the shortlist worth a conversation.
 
 [[scene:one-evening]]
 
-Free file: the three-question sheet, one page with the three columns ready, as a [printable PDF](/downloads/three-question-sheet.pdf), linked here at publication.
+Free file: the three-question sheet, one page with the three columns ready, as a [printable PDF](/downloads/three-question-sheet.pdf).
 
 [[scene:sheet]]
 
+## Your roadmap, week by week
+
+This is the order to apply everything above on your own. Nothing in it needs us, and nothing in it costs money until something has passed every test.
+
+1. **Week one.** Write down one real job as it ran. Answer the questions above in writing. List every idea, then run the one-evening test.
+2. **Weeks two and three.** Let the list sit. For every idea that failed the rule question, decide the rule with the people who do the work, and write it down. Check whether a program you already pay for does any job on the list; if one does, switch that on instead of building anything.
+3. **Week four.** Read the list again. Pick the one idea with the smallest worst day, and name the person who approves its results.
+4. **Weeks five to eight.** Run it as a four-week trial: a person approves every result, and you count the hours the job takes before and after. If it reaches a customer, the person stays on it for good. If it does not, and the four weeks needed no corrections, it can run on its own after that.
+5. **Every few months.** Read the list again, because your business moves.
+
+An invented example: a cleaning company starts on October 1. By the end of week one it has eleven ideas and seven left. In week four it picks the Friday list of the next day's jobs for the crews. By week eight it knows that list saves about two hours a week, measured rather than promised.
+
+[[scene:roadmap]]
+
 ## Who this fits
 
-It fits owners whose team repeats the same work every week: a front desk that books and confirms, an office that types the same details into two systems, a team that answers the same five questions by email (invented examples of the kind of work, not clients). It fits less well where no job repeats yet, or where the rules change every week; those owners get more from writing the process down first, and the sheet helps with that too.
+It fits owners whose team repeats the same work every week: a front desk that books and confirms, an office that types the same details into two systems, a team that answers the same five questions by email (invented examples of the kind of work, not clients). It fits less well where no job repeats yet, or where the rules change every week. Those owners get more from writing the process down first, and the sheet helps with that too.
 
-## Common questions
+## Common questions about using AI in a small business
+
+### How do I use AI in my business?
+
+Start by writing down how one real job runs, then list everything you would hand to AI, then cross ideas off with three questions: does it happen often enough that a failure is noticed within a week, can its rule be written down for a new hire, and would a wrong answer reach a person before a customer. Build the survivor whose worst day is smallest, and keep a person on anything a customer sees.
+
+### How can AI help a small business?
+
+Mostly by taking repeated typing, copying and checking off people's desks. In the 2026 Census paper, the most common use among firms using AI was sales and marketing, the leading task was writing and editing, and the most common effect was AI adding to work a person still does.
 
 ### What is an AI audit for a small business?
 
-It is a short, structured look at how the business runs, done to decide which repeated jobs AI should take first and which should stay with a person. It ends with a written account of the work, a shortlist in order with the reason for each position, the list of ideas crossed off, and, when one idea survives all three questions, that first automation chosen and written up.
+It is a structured look at how the business runs, done to decide which repeated jobs AI should take first and which should stay with a person. Some call it an AI readiness assessment. It ends with a written account of the work, a shortlist in order with the reason for each position, the list of ideas crossed off, and a plan for the first build.
+
+### What can I automate in my business first?
+
+The job that passes all three questions and has the most contained failure, which is usually something plain: a confirmation, a reminder, a copy from one system to another. Sales and marketing is where most AI-using firms use it, by the Census Bureau's 2026 figures, but the right first job is the one that passes the test in your business.
+
+### How do you decide what not to automate?
+
+Three tests, applied in order. It happens too rarely for anyone to notice it breaking. The rule behind it is not settled, which usually shows up as three people describing it three ways. Or a wrong answer would reach a customer before a person saw it. Any one of those is enough on its own, and the third removes the most.
+
+### Can I do an AI audit myself?
+
+Yes, and you should do the first half yourself anyway. Writing down how a job runs and answering the questions on this page costs nothing, and nobody knows the business better than you. What is harder alone is the crossing off, because every idea on your list is there for a reason you agree with.
+
+### How long does an AI audit take?
+
+About 75 minutes with the owner, about 20 minutes with each person who does a repeated job, and a written report about three business days after the last interview, followed by a readout of about 30 minutes.
 
 ### Do I need to know anything about AI first?
 
-No. The three questions are about the business: how often a job happens, whether its rule is settled, and where a wrong answer lands.
-
-### What should a small business automate first?
-
-The job that passes all three questions and has the most contained failure, which is usually something plain: a confirmation, a reminder, a copy from one system to another. Sales and marketing is where most AI-using firms use it, by the Census Bureau's 2026 figures, but the right first job is the one that passes the test in a given business.
+No. The questions that decide this are about the business: how often a job happens, whether its rule is settled, and where a wrong answer lands. Choosing the tools is our job.
 
 ### Does using AI mean fewer staff?
 
-Rarely, according to the 2026 Census paper: about 2 percent of AI-using firms reported a decrease in headcount and about 2.3 percent an increase, and the most common effect was AI adding to the tasks workers already do.
+Rarely, according to the 2026 Census paper: about 2 percent of AI-using firms reported a decrease in headcount and about 2.3 percent an increase, and the most common effect was AI adding to the tasks workers already do. We build the same way: the person stays.
+
+### How is an AI audit different from workflow automation?
+
+Workflow automation is the building. An audit is the deciding, and it comes first. The workflow article on this site covers mapping one job and finding the steps worth connecting; this page is about what to do when you already have more ideas than time.
+
+[[scene:quiz]]
 
 ## Next step
 
-When the list is written, we go through it with you and send back, in writing, which items we would build first and which we would cross off. [Book a Consultation](/connect): (914) 875-2424, levan@realtylt.com.
+When your list is written, we go through it with you and send back, in writing, which items we would build first and which we would cross off. [Book a Consultation](/connect): (914) 875-2424, levan@realtylt.com.
 
 By Levan Tsiklauri.
 
 ## Sources
 
-- U.S. Census Bureau, Adam Grundy, Cory Breaux and Dhanapati Khatiwoda, "Large Firms With at Least 20 Employees Biggest AI Users", May 26, 2026. Business Trends and Outlook Survey, data from December 14, 2025 to May 3, 2026. Read October 29, 2026.
-- Kathryn Bonney, Cory Breaux, Emin Dinlersoz, Lucia Foster, John Haltiwanger and Aditya Pande, "The Microstructure of AI Diffusion: Evidence from Firms, Business Functions, and Worker Tasks", U.S. Census Bureau, Center for Economic Studies working paper CES 26-25, April 2026. The 2026 AI supplement to the Business Trends and Outlook Survey, reference period November 2025 to January 2026. Read October 29, 2026.
-- Federal Reserve Banks, Small Business Credit Survey, 2026 Report on Employer Firms, press release of March 3, 2026. Fielded September 3 to November 14, 2025; 6,525 responses from firms with 1 to 499 employees. Read October 29, 2026.
-- National Institute of Standards and Technology, Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1, January 2023; NIST's framework page, read October 29, 2026 (version 1.0 current, a revision in progress).
+- U.S. Census Bureau, Adam Grundy, Cory Breaux and Dhanapati Khatiwoda, "Large Firms With at Least 20 Employees Biggest AI Users", America Counts story, May 26, 2026. Business Trends and Outlook Survey, data from December 14, 2025 to May 3, 2026. Read October 31, 2026.
+- Kathryn Bonney, Cory Breaux, Emin Dinlersoz, Lucia Foster, John Haltiwanger and Aditya Pande, "The Microstructure of AI Diffusion: Evidence from Firms, Business Functions, and Worker Tasks", U.S. Census Bureau, Center for Economic Studies working paper CES 26-25, April 2026. The 2026 AI supplement to the Business Trends and Outlook Survey, reference period November 2025 to January 2026; all shares firm-weighted. Read October 31, 2026.
+- Federal Reserve Banks, Small Business Credit Survey, 2026 Report on Employer Firms, press release of the Federal Reserve Bank of Cleveland, March 3, 2026. Fielded September 3 to November 14, 2025; 6,525 responses from firms with 1 to 499 employees. Read October 31, 2026.
+- National Institute of Standards and Technology, Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1, January 2023, sections 1.2.2 and MANAGE 1.1 and 1.3; NIST's framework page, read October 31, 2026 (version 1.0 current, a revision in progress).
+- J. Laurenz Eveleens and Chris Verhoef, "The Rise and Fall of the Chaos Report Figures", IEEE Software, January/February 2010. Cited for how a failure rate was defined, not for any rate. Read October 31, 2026.
 - A search for a 2026 public survey measuring how often small-business automation fails returned none on October 29, 2026.
 
-Sources checked October 29, 2026.
+Sources checked October 31, 2026.
 
 Written with an AI assistant and checked by Levan.`;
 
@@ -1337,7 +1667,7 @@ That report has a second finding, about what the same nine companies sell. It is
 
 One set of underlying records, three shopfronts. The identity check, the marketing list and the people search page are built out of the same material. What separates them is the purpose the buyer had.
 
-American law works the same way round. This is where this article stops and hands you to a different one. Two federal statutes decide what may be done with contact information about a person. They turn on where it came from and on what you intend it for, rather than on which fields are in the file. And the liability lands on the buyer rather than on the seller. All of that is worked through at length in [the article on skip tracing](/blog/skip-tracing-real-estate-legal-owner-phone-numbers), including the questions to put to any provider in writing. None of it is repeated here.
+American law works the same way round. Two federal statutes decide what may be done with contact information about a person. They turn on where it came from and on what you intend it for, rather than on which fields are in the file. And the liability lands on the buyer rather than on the seller. This article does not go further into them. Before buying any appended contact details, ask the provider in writing which permitted purpose your account sits under, and whether anything it supplies comes from a consumer reporting agency.
 
 What belongs in this article is the narrower half. The same data, relabelled at the point of sale. And a label that is a fact about the transaction rather than about the record.
 
@@ -1479,7 +1809,7 @@ It is a pass over contact records you already hold. It sends what you know to an
 
 ### How is enrichment different from skip tracing?
 
-One begins at an address and works towards a stranger. The other begins at someone already sitting in your database and completes what you hold about them. The suppliers overlap, and the technology is the same. What separates them is whether there was ever a relationship. That is the half carrying the legal weight. It is set out in the [skip tracing article](/blog/skip-tracing-real-estate-legal-owner-phone-numbers) rather than here.
+One begins at an address and works towards a stranger. The other begins at someone already sitting in your database and completes what you hold about them. The suppliers overlap, and the technology is the same. What separates them is whether there was ever a relationship. That is the half carrying the legal weight. That half is a question for the provider and for your own counsel, not for this article.
 
 ### Will enrichment overwrite the data I already have?
 
@@ -1998,248 +2328,6 @@ Whatever your sending domain currently publishes about itself. Not the copy, not
 The uncomfortable idea in this article is that the most effective thing available to you is to send less.
 
 That runs against how this category is sold. A platform priced per contact has no reason to suggest a smaller list. A dashboard built on sends and opens will always reward more of both. But the mechanism is not in dispute. It is published by the people who run it. Whether you can reach the people who want to hear from you depends on how the people who did not want to hear from you reacted. There is no other input you control.
-
-[[scene:funnel]]`;
-
-export const SKIP_TRACING_POST = `The list arrived on a Monday and it was a good one. Three hundred and twelve properties in a single town. Every one of them owned by someone who does not live there. And for a little over half of them, a mobile phone number sat in the next column along.
-
-You worked down it the way anyone would. No answer. No answer. A voicemail. A man who was perfectly pleasant and said no. Then a woman picked up on the fourth ring. She listened to the first two sentences. And she asked a question in the middle of a plain reply.
-
-"Can I ask where you got this number?"
-
-You did not know. Not in the sense of not remembering. In the sense that there was nobody in the chain you could have asked. It came off the list. The list came out of a tool. The tool got it from somewhere. You said something about public records, which was probably half true. She thanked you and hung up. The call had been over for some time before the phone went down.
-
-That question is the subject of this article. Not because it is awkward, although it is. It is because two federal statutes ask the same question. And they ask it of you rather than of the tool.
-
-[[scene:in-short]]
-
-[[scene:where-from]]
-
-## What skip tracing is, and why it is a chain rather than a lookup
-
-Skip tracing is old and it has a plain meaning. It is the work of finding someone who cannot be reached at the address you have for them. The name comes from debt collection. The person had skipped, and the tracer's job was to find where they had gone. In real estate it does something narrower and less dramatic. You have a property. You want to speak to whoever owns it. The public record gives you a name and a mailing address that may be years out of date. It almost never gives you a telephone number.
-
-The modern version is sold as a lookup. You put an address in. A name, a phone number and an email address come out. The whole thing takes under a second, which makes it feel like reading a list. It is not a list. Underneath, it is a chain of joins between files. Each of those files was built for its own reasons. A deed office. A credit bureau's identity records. A telephone carrier's assignments. An aggregator that bought some of them and licensed the rest.
-
-Two things follow from that shape. Both matter more than the accuracy question everyone asks first.
-
-The first is that the answer is a guess with a confidence attached, and you cannot see the confidence. Every join in that chain is a decision about whether two records describe the same person. Those decisions are made by a system that has never met either of them. We have written about the arithmetic of that decision at length in [the article on two way CRM sync](/blog/crm-sync-real-estate-duplicate-contact-records). It is the same problem. The part worth carrying over here is short. A system tuned to return an answer for as many rows as possible is tuned to merge harder. Merging harder means more of the answers are the wrong person.
-
-The second is about permission. Every link in that chain is a place where someone, at some point, had to have a reason to release the information. The law that governs that is not the law everyone in this trade talks about. It is not about the call at all. It is about the acquisition, which is how the information was obtained in the first place.
-
-## The record is not stale because anybody was careless
-
-Before the law, here is the reason the trade exists. It is worth being exact about what is actually broken.
-
-The county knows who owns the house because someone recorded a deed. That record lasts, and it is nobody's job to keep it current beyond ownership. It tells you who holds title. If the owner moved out of state years ago, the roll may still carry the mailing address they gave at closing. Nothing about that is a failure. It is a record of a transaction, not a record of a person.
-
-Meanwhile the person moved.
-
-[[scene:movers]]
-
-The chart is the finding, and it is the first bar rather than the total. Most people who change address do not go far. They stay in the same county. That produces the hardest version of this problem. The record is wrong. The person is still local. And there are other people in the same county with the same surname. Think about what that does to a matching system. The candidate and the target now agree on surname, on county and on a good deal else. That is a great deal of agreement. None of it is evidence that they are the same person.
-
-There is a second thing in that chart, and it is in the note under it. A move breaks an address. It does not automatically break a phone number. The reason is worth stating carefully, because the usual explanation is wrong.
-
-People say numbers survive a move because numbers are portable. That is not what portability means. Here is the regulatory definition at [47 CFR 52.21(m)](https://www.law.cornell.edu/cfr/text/47/52.21). Number portability is "the ability of users of telecommunications services to retain, at the same location, existing telecommunications numbers without impairment of quality, reliability, or convenience when switching from one telecommunications carrier to another". At the same location. Portability is about changing carrier, not about changing address.
-
-The real reason is simpler. It is a fact about mobile service rather than about the rules. A mobile number was never attached to a building, so moving out of one does not disturb it. So the mailing address on the tax roll and the phone number in the enrichment file go wrong for completely different reasons. They also go wrong at completely different rates. A provider quoting you one accuracy figure covering both is quoting a number that does not describe anything.
-
-[[scene:plate]]
-
-## Where the number came from decides what you may do with it
-
-Here is the turn that reorders the whole subject. It is why the legality question everyone asks has the wrong shape.
-
-The question usually gets put as "is skip tracing legal". The answer that comes back is usually "yes, it uses public records". That was the answer on our own service page until this article was researched. Both halves of the exchange are doing something unhelpful. Skip tracing is not one act, so it does not have one legality. It is an acquisition followed by a use. American law treats those as separate questions, with separate rules and separate people liable.
-
-The acquisition is governed by rules about where the underlying information came from, and what purpose it was released under. The use is governed by rules about consent and about calling. Almost everything written for real estate agents about this is about the second half. Almost nothing is about the first. That is a shame. The first half is where the liquidated damages are, and it is the half a tool cannot handle for you.
-
-Two federal statutes govern the acquisition side. Neither of them is mentioned on a single competitor page we could find.
-
-## The statute nobody selling this will name
-
-The [Driver's Privacy Protection Act](https://www.law.cornell.edu/uscode/text/18/2721), 18 U.S.C. 2721 to 2725, exists because state motor vehicle departments were selling their files. It applies to personal information that came out of a motor vehicle record. The definition of personal information at [18 U.S.C. 2725(3)](https://www.law.cornell.edu/uscode/text/18/2725) is deliberately wide. It "means information that identifies an individual, including an individual's photograph, social security number, driver identification number, name, address (but not the 5-digit zip code), telephone number, and medical or disability information".
-
-Name. Address. Telephone number. Those are the three fields a skip trace returns.
-
-The shape of the statute is the part worth knowing. It is the opposite of how most people assume privacy law works. It does not list forbidden uses. It lists the permitted ones, fourteen of them. Everything not on the list is not permitted. [Section 2722(a)](https://www.law.cornell.edu/uscode/text/18/2722) then makes the consequence explicit. "It shall be unlawful for any person knowingly to obtain or disclose personal information, from a motor vehicle record, for any use not permitted under section 2721(b) of this title."
-
-Read the list and three of the fourteen look, at a glance, as though they might cover a prospecting call. None of them does.
-
-[[scene:three-exceptions]]
-
-The teeth are in [section 2724](https://www.law.cornell.edu/uscode/text/18/2724). This is the one figure in this article that is fixed by Congress rather than estimated by anyone. Take a person who knowingly obtains, discloses or uses that information for a purpose the chapter does not permit. That person "shall be liable to the individual to whom the information pertains, who may bring a civil action in a United States district court". The court may award "actual damages, but not less than liquidated damages in the amount of $2,500". It may add punitive damages on proof of willful or reckless disregard, plus attorneys' fees.
-
-Note what that sentence does and does not say. It is a private right of action, brought by the individual. It is not a regulator's fine. The floor is per person, not per call. And a court "may" award it, which is not the same as "will". So this is an exposure rather than an invoice. Those distinctions matter. They are why the figure at the top of this page is written as a floor for one person, rather than as a total for a list.
-
-None of this means a traced number came out of a motor vehicle record. We have no way of knowing what share of them did. The honest position is that nobody outside the compilers does. What it means is this. If any link in the chain behind your list touched one, the duty attaches to whoever obtained it. The length of the chain is not a defence. Which brings us to the clause the trade points at.
-
-## What a licence actually buys, and it is not a new permission
-
-Anyone who has asked a data provider about this was told, quite correctly, that licensed private investigators have access under the DPPA. That is true. [Section 2721(b)(8)](https://www.law.cornell.edu/uscode/text/18/2721) permits disclosure "For use by any licensed private investigative agency or licensed security service for any purpose permitted under this subsection."
-
-Read the last seven words again.
-
-[[scene:pull-quote]]
-
-The clause is a loop. It says that a licensed agency may use the information for a purpose that the same subsection already permits. It does not add a fifteenth purpose called investigation. So the licence answers the question of who may act. The question of what for is still open. It has to be closed by finding a purpose somewhere else on the same list of fourteen.
-
-That is not a technicality and it is not a gotcha. It is the whole design. A licence is a way of holding someone to account. It means there is a regulator, a record and something to lose. It was never intended to be a key. Reading it as one turns an answer about who may act into an answer about what for. Those are the two halves the statute deliberately keeps apart.
-
-There is a practical consequence and it is a good one. Take any authorised recipient who resells or rediscloses this information. [Section 2721(c)](https://www.law.cornell.edu/uscode/text/18/2721) requires that they "must keep for a period of 5 years records identifying each person or entity that receives information and the permitted purpose for which the information will be used and must make such records available to the motor vehicle department upon request."
-
-Somebody wrote down a purpose. It exists. You are entitled to ask your provider what purpose your account was established under. A provider who cannot answer that in a business day is telling you something useful about themselves.
-
-[[scene:plate-two]]
-
-## The second statute turns on your purpose, not on the data
-
-The [Fair Credit Reporting Act](https://www.law.cornell.edu/uscode/text/15/1681b) is the other one. It works in a way that surprises almost everyone, including people who have dealt with it before.
-
-Most people assume the FCRA covers credit reports, meaning documents with credit scores in them. They assume a name and a phone number is obviously not one of those. That is not how the definition is built. Under [15 U.S.C. 1681a(d)(1)](https://www.law.cornell.edu/uscode/text/15/1681a) a consumer report is any communication by a consumer reporting agency of information "bearing on a consumer's credit worthiness, credit standing, credit capacity, character, general reputation, personal characteristics, or mode of living which is used or expected to be used or collected in whole or in part for the purpose of serving as a factor in establishing the consumer's eligibility for" credit, insurance, employment, or any other purpose authorised by section 1681b.
-
-The operative words are "which is used or expected to be used". The purpose confers the status, not the fields. The same file can be a plain commercial record in one transaction and a consumer report in the next. What moves it across the line is what the person receiving it intends to do with it.
-
-That has one consequence for real estate worth stating plainly. It is the boundary that decides whether this whole subject is simple or hard for you.
-
-Say you build a list of owners in order to introduce yourself and ask whether they are thinking of selling. On its face, that is not an eligibility determination. Nobody is being approved or declined for anything. But the moment a list is filtered or ranked by something that bears on a person's financial standing, and that filtering decides who gets an offer and who does not, things change. At that moment the purpose has changed shape, and the question is no longer rhetorical. Equity position, lien status, distress signals and the phrase "financially motivated seller" all live very close to that line.
-
-[15 U.S.C. 1681b(f)](https://www.law.cornell.edu/uscode/text/15/1681b) is the prohibition and it is short. "A person shall not use or obtain a consumer report for any purpose unless (1) the consumer report is obtained for a purpose for which the consumer report is authorized to be furnished under this section; and (2) the purpose is certified in accordance with section 1681e of this title by a prospective user of the report through a general or specific certification."
-
-Look at the permissible purposes at [1681b(a)(3)](https://www.law.cornell.edu/uscode/text/15/1681b). The one a business would reach for is (F)(i). It is a legitimate business need for the information "in connection with a business transaction that is initiated by the consumer". That phrase is the whole answer. It is the reason cold prospecting does not fit. A person who has never heard of you has not initiated anything.
-
-We are not your lawyers, and this article cannot be legal advice for your business. What it can do is give you the two questions to put in writing to any provider. Both have short answers that a serious company will give you. Which permitted purpose is our account established under? And does anything you supply us derive from a consumer reporting agency?
-
-## Two hundred and fifty four million standing refusals
-
-Now the use side, briefly, because most of it belongs to a different article on this site.
-
-Say you are working an old database of people who once contacted you. The rules about consent windows, autodialers and revocation are the subject of [the piece on database reactivation](/blog/database-reactivation-old-real-estate-leads). It carries the regulations and the dates in them, and they will not be repeated here. That article is about permission that may have gone stale. This one is about the situation where there was never any permission at all. And there is one thing about that situation which the other article does not cover.
-
-The National Do Not Call Registry is a list of numbers. Their owners have said, in advance and in writing, that they do not want telemarketing calls. The [Federal Trade Commission's Data Book for 2024](https://www.ftc.gov/system/files/ftc_gov/pdf/DNC-Data-Book-2024.pdf) states its size directly. "As of September 30, 2024, there were 254 million active registrations."
-
-That is not a count of people, and the Commission says why in the same document. Active registrations are those a consumer has placed and not deleted. The FTC removes numbers that have been disconnected and reassigned. And "numbers that have been disconnected but not reassigned remain on the registry". One person can register several numbers. So treat it as an order of magnitude rather than a headcount. The order of magnitude is the point.
-
-A traced number is a number you have never spoken to. You have no idea whether it is on that list until you check. Checking is a mechanical step. It costs almost nothing, and it is skipped constantly.
-
-[[scene:complaints]]
-
-The chart is deliberately not the one everyone draws. The talk about unwanted calls is almost all talk about robots. The second bar is three quarters of a million complaints in one year about a human being dialling. That is what a prospecting list is. It is not a robocall problem. It is not somebody else's problem. And the people making those complaints were, in every case, doing exactly what the registry told them to do.
-
-[[scene:plate-three]]
-
-## The number itself does not stay still
-
-There is one more thing about a traced number that nobody selling you one will bring up. It is not about the law.
-
-Telephone numbers get recycled. A person cancels a line. The number goes back into a pool. After a waiting period the carrier assigns it to someone new. The Federal Communications Commission built a national database to deal with the consequences of this. The [order that created it](https://docs.fcc.gov/public/attachments/FCC-18-177A1.pdf) explains the mechanism in a sentence. "Once a consumer disconnects a number, he or she might not update all parties who have called in the past. When the old number is eventually reassigned, callers may inadvertently reach the new consumer who now has the reassigned number."
-
-The same order carries a scale figure. The honest way to quote it is with the Commission's own footnote attached. The text says "Approximately 35 million numbers are disconnected and made available for reassignment to new consumers each year". The footnote says where that came from and then, remarkably, undercuts it. The figure is an average of the North American Numbering Plan Administrator's utilisation reports for 2013 to 2016. And "while a number of parties have cited this figure, we note that at least one party has questioned whether the figure accurately reflects the volume of number reassignments. In the Reassigned Numbers NOI we sought comment on whether this number accurately reflects the volume of number reassignments, but received no other credible estimate."
-
-That is a regulator publishing a number, saying someone has challenged it, and saying nobody offered anything better. It is a more useful thing to know than the number itself. It is also why this article puts it in a paragraph rather than in a chart. A figure the publishing body has flagged as contested is not a measurement. Drawing a bar for it would turn a caveat into a fact.
-
-What you can take from it is the direction. Numbers move between people, at a scale nobody disputes is large. And the enrichment file that told you this number belongs to that owner was built at a moment that has already passed. So a stranger answering and telling you it is the wrong person is not the vendor failing. It is the arrangement behaving exactly as everyone involved has described it.
-
-[[scene:trace-path]]
-
-## What a trace is actually made of
-
-The diagram above is the honest version of the pipeline. The two hops that decide whether any of this is safe are the fourth and the fifth. Everything else is engineering.
-
-Our own service page described this in four steps until this article was written. All four are on the left of that diagram. Pull the properties. Resolve the owner. Append a number. Clean the file. Those steps are real, they work, and they are not where anything goes wrong. What was missing was any account of where the appended number came from, and under what purpose it was released. That is exactly the pair of facts the two statutes above turn on. It has a fifth step now. That is what this article changed about the way we describe our own work.
-
-Put them in the build and they cost you almost nothing. A source field on every enriched row. A purpose recorded once, at the account level, in writing, from the provider. A suppression list that is checked before the file is handed to anything that dials. A suppression list is simply the list of people who have said no. None of that is difficult and none of it is expensive. It is only ever skipped because nobody asked for it at the start. Fitting it later onto a database whose rows arrived from four places over six years is a genuinely miserable job.
-
-[[scene:trace-calculator]]
-
-## What it costs and how long it takes
-
-No figure is quoted here, and the reason is specific to this service. The dominant cost is a per record charge paid to someone else. So most of what you would spend never passes through us at all.
-
-Three things are being paid for. Enrichment is priced per record by whichever provider you use, and it is the only part that scales with volume. The pipeline pulls the properties and runs them through. It validates what comes back and drops the duplicates. It writes the result where it needs to go, and it enforces the suppression check. And then there is the item almost nobody budgets for, which is the fields and the habit around them. A source and a date on every row. A purpose on file. A suppression list you own. And a person responsible for all three.
-
-Two things drive the enrichment bill, and neither is ours to negotiate. One is how many properties you run. The other is whether you are charged for attempts or for successes. That varies by provider. It is a question with a one word answer. Ask it before signing rather than discover it on an invoice. If it is attempts, a low resolve rate in your area spends money without producing anything. The second slider in the calculator is yours to fill in rather than ours to assert. And the most valuable half hour before you sign anything is this. Ask a provider to run two hundred addresses from your own farm and report what came back.
-
-On time, the build is not the long pole. Pulling, enriching and cleaning is a well understood piece of work. What takes the time is the part that is a talk rather than a configuration. Deciding what your suppression rules are. Agreeing where the source and purpose fields live. And getting a written answer out of the provider about the two questions in the section above. Businesses that already have a clean CRM move quickly. Businesses whose contact records arrived from four places over six years find that this project turns into a data cleanup. That is a real cost, and it is better discovered before the work starts than after.
-
-The one honest way to size any of it is the audit further down this page. It takes twenty minutes and it costs nothing. It will tell you which of those two situations you are in.
-
-## What it does not do, and should not pretend to
-
-It does not give you a match rate in advance. Rates vary by area. They vary by how much public record sits behind a property, and by how long ago the owner acquired it. Figures do circulate, and we went and followed them rather than asserting that they cannot be sourced. What is out there is bands rather than measurements, usually 70 to 90 percent. The pages carrying them are companies that sell skip tracing, or pages ranking those companies. In one case it is a skip-tracing company publishing a ranking of its own category with itself in it. One of them credits a trade association study by name and links to no report. None of them states a sample.
-
-There is a second number under those bands, and it is the one worth carrying away. A vendor put it on its own page. A phone hit rate and a connect rate are different quantities, and the second is much lower than the first. A match rate tells you how often a number came back. It does not tell you how often the number reached the person. Those two get quoted interchangeably. Your own provider can measure both for your own area in an afternoon. That measurement is worth more than any band.
-
-It does not tell you the number is current. Enrichment reports the best answer in the file at the moment it is asked. Whether that number still reaches that person is a separate fact that nobody in the chain has checked. That is the reassignment problem above. Better software does not fix it.
-
-It does not resolve a legal question about your own use. The two statutes in this article attach to the person who obtains and uses the information. A provider's terms of service allocate risk between you and them. They do not answer the question a court would ask, which is what purpose you had.
-
-It does not confer permission to call. That is a separate body of rules with its own dates and its own private right of action. Honouring a do not call registration is a step in your process rather than a property of the data. It stays your obligation regardless of what the list cost.
-
-It does not produce a reason for anybody to sell. Everything in this article is about reaching a person. A traced number carries no information whatsoever about whether that household is thinking of moving. Whatever signal there was came from the public record you started with. If the pipeline does not carry it forward alongside the number, it has been thrown away. That is worth checking on your own output rather than assuming either way.
-
-[[scene:wasted]]
-
-[[scene:offer]]
-
-## How to audit your own list in twenty minutes
-
-Nothing here needs a tool, a consultant or a new subscription. Do it on the list you already have.
-
-1. **Pick one row at random.** Not the first one, not one you remember. Scroll and stop. This matters, because a list is only as defensible as its worst row. And the worst row is never at the top.
-
-2. **Ask where that number came from.** Not "from public records". Which file, supplied by whom, under which account. If the answer takes longer than a business day to arrive, you have learned the important thing already.
-
-3. **Ask what purpose the account was established under.** Providers who resell information covered by the DPPA are required to keep exactly this, for five years. It is a normal question with a normal answer, and asking it is not an accusation.
-
-4. **Ask whether anything they supply derives from a consumer reporting agency.** This is a yes or no question, and it changes what you are allowed to do with the file. A vendor who does not understand the question is answering it.
-
-5. **Look for the source and date fields in your own CRM.** Open a contact that came off a purchased or traced list. Then open one that came off your own website form. If the record does not tell you which is which, your consent position for the whole database is currently unknowable. That is a bigger problem than any list.
-
-6. **Find your suppression list and find out who owns it.** Not the CRM's built in unsubscribe flag. The list of people who have said no to your business, in any channel, held somewhere that survives changing software. If nobody owns it, nobody is maintaining it.
-
-7. **Ring one number yourself and listen for the question.** The one at the top of this article. Try to answer it in a sentence you would be comfortable having read back to you. If you cannot, that is the actual finding. It is worth more than the rest of the audit put together.
-
-## Common questions, answered honestly
-
-### What is skip tracing in real estate, in plain terms?
-
-It is the work of turning a property into a person you can contact. Public records tell you who owns a house and where they get their post. They almost never tell you a phone number. Skip tracing is the set of joins between other files. Those joins produce a current telephone number and email address for that owner. In prospecting it is what turns a map into a list you can work.
-
-### Is skip tracing legal?
-
-The honest answer is that it is not one thing, so it does not have one answer. Looking up a deed or a tax roll is plainly fine. Those records are public because a legislature said so. The part that carries rules is the appended contact information. Two statutes govern it. The Driver's Privacy Protection Act permits release of motor vehicle record information only for listed purposes. The Fair Credit Reporting Act turns on what you use the information for, rather than on what it contains. Both attach to the person obtaining and using the data. Neither is answered by a provider's terms of service. And this article is not legal advice for your business.
-
-### Can I call a number I got from skip tracing?
-
-Getting a number and being allowed to ring it are separate questions with separate rules. Checking the national do not call registry before you dial is a mechanical step, and it is not optional. The consent rules for calls and texts are covered in detail in [our article on database reactivation](/blog/database-reactivation-old-real-estate-leads). That includes what an established business relationship is worth and how long it lasts. The short version for this article is that a traced number is the case with the least protection available to you. There is no prior relationship of any kind to rely on.
-
-### How accurate is automated skip tracing?
-
-Figures circulate, and we followed them. What comes back is a band, roughly 70 to 90 percent. Those bands are published by companies that sell the service, or by pages ranking those companies. None of the ones we opened states a sample. So there is no independent measurement to quote, and we are not going to invent one. What is measurable is your own resolve rate in your own area. A provider can produce it by running a sample from your farm. Two things are worth understanding about accuracy here. A wrong number and a missing number are different failures, and the second is much cheaper than the first. And a matching system decides between merging and leaving alone by where a threshold sits. Moving that threshold to return an answer for more rows must return the wrong person for more of them. So a headline match rate that sounds impressive may describe a file with more wrong people in it rather than fewer.
-
-### How is this different from buying a lead list?
-
-A purchased list was assembled on some date nobody tells you, and sold to everyone who paid for it. So the households on it can be worked by several people who have no idea about each other. A trace runs on demand for the area you are working now. The difference that matters here is not freshness though. Building the list yourself makes you the person who obtained the information. So every question in this article becomes yours to answer, and yours to be able to answer.
-
-### What is the difference between skip tracing and data enrichment?
-
-Skip tracing starts from a property and works towards a person who has never contacted you. Data enrichment starts from a person who is already in your database, usually because they contacted you. It fills in what you do not know about them. They use overlapping technology, and they sit in completely different places legally. One of them has a prior relationship behind it. The other has nothing at all.
-
-### Does a licensed provider make this safe?
-
-It makes it accountable, which is not the same thing, and it is still worth having. A licence means there is a regulator, a record and something to lose. What it does not do is create a permitted purpose that the statute does not list. The clause that grants investigators access grants it only for purposes already permitted elsewhere in the same subsection. Ask the licensing question and then ask the purpose question, in that order. Do not let the first answer stand in for the second.
-
-### What should I ask a provider before I sign anything?
-
-Four questions, all short, all answerable. Which permitted purpose is our account established under. Does anything you supply derive from a consumer reporting agency. What is the measured resolve rate on two hundred addresses from our own area. And what happens on your side when somebody asks not to be contacted again. A company that answers all four in writing in a business day is a different proposition from one that sends a brochure.
-
-## What to do about it
-
-Everything in this article comes back to one sentence. You should be able to say it without hesitating, to a stranger, on a Tuesday morning. It should hold for any row on any list in your business.
-
-It is not a legal formula and nobody is asking for one. It runs something like this. This came from a provider we have a written agreement with, under a purpose they have on file. And we checked it against the do not call registry before I rang you. Every part of that can be arranged. None of it is expensive. And all of it has to be arranged before the first call rather than after the first complaint.
 
 [[scene:funnel]]`;
 

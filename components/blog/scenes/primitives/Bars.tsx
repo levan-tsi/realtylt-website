@@ -36,9 +36,13 @@ export function Bars({
   return (
     <FigureFrame {...{ band, eyebrow, heading, lede, alt, sources, note }}>
       <div className={callout ? "grid gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16" : ""}>
-        <div className={several ? "grid max-w-4xl gap-12 md:grid-cols-2 md:gap-14" : "max-w-3xl"}>
+        {/* ROUND 15: panels STACK at every width. Side by side they were two readings sharing one
+            row, and at laptop widths (1024 to 1440) the pair was reported pushing past the page with a
+            sideways scrollbar. One column keeps each panel its own reading and its words at full
+            size; min-w-0 lets a long label wrap instead of widening its grid track. */}
+        <div className={several ? "grid min-w-0 max-w-3xl gap-12" : "min-w-0 max-w-3xl"}>
           {panels.map((p, i) => (
-            <div key={p.title ?? i} className={several ? `border-t pt-6 ${t.rule}` : ""}>
+            <div key={p.title ?? i} className={several ? `min-w-0 border-t pt-6 ${t.rule}` : "min-w-0"}>
               {p.title && (
                 <p className={`mb-7 text-sm font-bold leading-snug ${t.strong}`}>{p.title}</p>
               )}
