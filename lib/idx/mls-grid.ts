@@ -16,6 +16,7 @@
  *   `modificationTimestamp` + `listOfficeName` carried on every mapped listing.
  */
 
+import { AGENT_CONTACT_FIELDS, agentContactOf, type AgentContactRow } from "./agent-contacts";
 import { SERVED_AREAS, type CountySlug } from "@/lib/site";
 import { FixtureIdxClient } from "./fixture";
 import { FIXTURE_LISTINGS } from "./fixture-data";
@@ -70,6 +71,15 @@ interface ResoProperty {
   StandardStatus?: string;
   ListAgentFullName?: string;
   ListOfficeName?: string;
+  // Internal contact capture (agent-contacts.ts); never mapped into a Listing.
+  ListAgentMlsId?: string;
+  ListAgentEmail?: string;
+  ListAgentDirectPhone?: string;
+  ListAgentPreferredPhone?: string;
+  ListAgentMobilePhone?: string;
+  ListAgentOfficePhone?: string;
+  ListOfficeMlsId?: string;
+  ListOfficePhone?: string;
   PublicRemarks?: string;
   Latitude?: number;
   Longitude?: number;
@@ -102,6 +112,8 @@ const SELECT_FIELDS = [
   "Heating", "Cooling", "Sewer", "WaterSource", "ParkingFeatures",
   "StandardStatus", "PropertyType", "PropertySubType", "ListAgentFullName",
   "ListOfficeName", "PublicRemarks", "ModificationTimestamp",
+  // Internal agent-contact capture (round 14); self-heals away if the feed rejects a name.
+  ...AGENT_CONTACT_FIELDS.filter((f) => f !== "ListAgentFullName" && f !== "ListOfficeName"),
   // MlgCanView is LOAD-BEARING FOR REMOVALS and was MISSING here until 2026-10-19. The hourly
   // delta is unfiltered so that it can see a row go hidden (MlgCanView=false) and deactivate it,
   // and mapProperty drops such a row - but a $select without this field never receives it, so
@@ -280,6 +292,7 @@ export class MlsGridClient implements IdxClient {
    * `gt <watermark>`. */
   async replicateDelta(opts: { watermark: string; maxPages: number; deadline: number }): Promise<{
     upserts: Listing[];
+    contacts: AgentContactRow[];
     removeIds: string[];
     watermark: string;
     complete: boolean;
@@ -287,6 +300,7 @@ export class MlsGridClient implements IdxClient {
     pages: number;
   }> {
     const upserts = new Map<string, Listing>();
+    const contacts = new Map<string, AgentContactRow>();
     const removeIds = new Set<string>();
     let watermark = opts.watermark;
     let scanned = 0;
@@ -318,10 +332,12 @@ export class MlsGridClient implements IdxClient {
         // unexpected status to "Active", so the raw-status gate — not the mapped label — decides.
         if (mapped && SALE_STATUS_SET.has(p.StandardStatus ?? "")) {
           upserts.set(id, mapped); // photos stay as source MediaURLs for the store
+          contacts.set(id, agentContactOf(p, id));
           removeIds.delete(id);
         } else {
           removeIds.add(id);
           upserts.delete(id);
+          contacts.delete(id);
         }
       }
       if (!result.nextLink) {
@@ -330,7 +346,7 @@ export class MlsGridClient implements IdxClient {
       }
       nextLink = result.nextLink;
     }
-    return { upserts: [...upserts.values()], removeIds: [...removeIds], watermark, complete, scanned, pages };
+    return { upserts: [...upserts.values()], contacts: [...contacts.values()], removeIds: [...removeIds], watermark, complete, scanned, pages };
   }
 
   /** ONE page of the feed's whole ON-MARKET set, ids only — the daily reconciliation's walk

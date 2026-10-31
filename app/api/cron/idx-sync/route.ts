@@ -3,6 +3,7 @@ import { applyGeocodes, applyIdxSync, applySoldGeocodes, getMirrorState, getSync
 import { censusCsvRow, parseCensusBatch, retryStreet, type GeocodeRow } from "@/lib/idx/geocode";
 import { geocodePending, geocodeSoldPending } from "@/lib/idx/geocode-runner";
 import { runInRefreshContext } from "@/lib/idx/mls-fetch";
+import { writeAgentContacts } from "@/lib/idx/agent-contacts";
 import { MlsGridClient } from "@/lib/idx/mls-grid";
 import { mirrorDeps } from "@/lib/idx/mirror-deps";
 import { mirrorPhotos, preservedMarker } from "@/lib/idx/photo-mirror";
@@ -289,6 +290,17 @@ export async function GET(req: Request) {
       const out = await applyIdxSync({ secret, upserts: delta.upserts.slice(i, i + UPSERT_BATCH) });
       upserted += out.upserted;
     }
+    // Internal agent contacts (never public): best effort, never fails the listing upsert.
+    const contactsBase = `${process.env.SUPABASE_URL?.trim().replace(/\/+$/, "")}/rest/v1`;
+    let agentContacts = { written: 0, failed: 0 };
+    if (cfg && delta.contacts.length) {
+      try {
+        agentContacts = await writeAgentContacts(contactsBase, cfg.key, delta.contacts);
+      } catch (e) {
+        console.error("[idx-sync] agent contacts failed (data sync unaffected):", e);
+      }
+      console.log(`[idx-sync] agent contacts written ${agentContacts.written} failed ${agentContacts.failed}`);
+    }
     for (let i = 0; i < delta.removeIds.length; i += REMOVE_BATCH) {
       const out = await applyIdxSync({ secret, deactivateIds: delta.removeIds.slice(i, i + REMOVE_BATCH) });
       deactivated += out.deactivated;
@@ -372,6 +384,7 @@ export async function GET(req: Request) {
       scanned: delta.scanned,
       pages: delta.pages,
       upserted,
+      agentContacts,
       removalsSeen: delta.removeIds.length, // ids never stored no-op at the DB
       deactivated,
       mirroredPhotos,
