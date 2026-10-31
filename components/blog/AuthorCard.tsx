@@ -19,7 +19,7 @@ import Link from "next/link";
  *    "Keep reading", lib/blog/related.ts isConsumer) carries his standing as a Realtor® and
  *    licensed real estate salesperson with his brokerage. Never "broker": he is not one
  *    (AuthorCard.test.ts holds it);
- *  - an AI post carries the audits;
+ *  - an AI post carries the assessments;
  *  - the chat assistant's own paragraph survives only on the post it describes.
  * Every card ends on the same contact row: his direct number (914) 875-2424, the number on
  * everything a client sees, his email, and the consultation booking on /connect. */
@@ -41,11 +41,11 @@ export function authorCardCopy({ slug, consumer }: { slug: string; consumer: boo
     };
   }
   return {
-    standing: "Runs RealtyLT and the AI audits for small businesses",
+    standing: "Runs RealtyLT and the AI assessments for small businesses",
     body:
       slug === CHAT_ASSISTANT_SLUG
         ? "I built the assistant described in this post. It answers on our own site every night, connected to the live MLS feed, and everything here comes from watching what it gets right and what it gets wrong."
-        : "I run the audits myself: I sit with the people who do the work and find the hours a system can give back to them. The work makes a team faster; it never replaces the people on it.",
+        : "I run the assessments myself: I sit with the owner, find the hours a system can give back to the team, and write the plan. The work makes a team faster; it never replaces the people on it.",
   };
 }
 

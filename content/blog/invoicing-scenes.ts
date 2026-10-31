@@ -566,7 +566,7 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/invoicing-and-payments", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because the work divides in two, and only you know the split. The plain invoicing half is short and standard. The half that goes and asks other people's offices whether something has happened is built around who those offices are and how they answer. The AI audit is an hour, done with you. For this topic it starts with the list of things you charge for rather than with any software.",
+        "There is no price here because the work divides in two, and only you know the split. The plain invoicing half is short and standard. The half that goes and asks other people's offices whether something has happened is built around who those offices are and how they answer. The AI assessment is an hour, done with you. For this topic it starts with the list of things you charge for rather than with any software.",
     },
   },
 

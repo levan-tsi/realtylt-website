@@ -354,7 +354,7 @@ function Result({
         : "The house stays dark: try again";
   const link =
     brand === "ai"
-      ? { label: "Talk to us about running the audit", href: "/connect" }
+      ? { label: "Talk to us about an AI assessment", href: "/connect" }
       : { label: "Talk to Levan", href: "/connect" };
   return (
     <div className="mt-10 grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]" data-quiz-result={pass ? "pass" : "fail"}>

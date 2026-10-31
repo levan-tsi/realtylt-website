@@ -494,7 +494,7 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/local-seo", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because the cost tracks two things that are yours rather than ours. How much of the profile and the surrounding record is wrong today. And how many places you want to be genuinely present in, rather than merely listed. The AI audit is an hour, done with you. It ends with the profile finished and the report screen open, rather than with a document.",
+        "There is no price here because the cost tracks two things that are yours rather than ours. How much of the profile and the surrounding record is wrong today. And how many places you want to be genuinely present in, rather than merely listed. The AI assessment is an hour, done with you. The plan it leads to starts with finishing the profile and opening the report screen.",
     },
   },
 

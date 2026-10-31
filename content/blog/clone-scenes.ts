@@ -442,7 +442,7 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/ai-clone", variant: "outline-light" },
       ],
       footnote:
-        "There is no price on this page, and the reason is unusually specific to this topic. The recording session and the model are the small, predictable part. The work that decides whether the thing is any good is the script boundary and the review step. Those are yours to set, and they take a conversation rather than a quote. The AI audit is an hour, done with you. For this topic it starts with the two lists above rather than with a camera.",
+        "There is no price on this page, and the reason is unusually specific to this topic. The recording session and the model are the small, predictable part. The work that decides whether the thing is any good is the script boundary and the review step. Those are yours to set, and they take a conversation rather than a quote. The AI assessment is an hour, done with you. For this topic it starts with the two lists above rather than with a camera.",
     },
   },
 

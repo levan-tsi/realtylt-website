@@ -470,7 +470,7 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/ai-agent-workforce", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here, because three separate things drive it and only one of them is software. The first is the hour or two of writing each brief properly. The second is the work of giving an assistant safe access to the systems its job needs. The third is a running cost that tracks how much it has to read rather than how much it writes. The AI audit is an hour, done with you, and it ends with one job written down properly rather than with a document.",
+        "There is no price here, because three separate things drive it and only one of them is software. The first is the hour or two of writing each brief properly. The second is the work of giving an assistant safe access to the systems its job needs. The third is a running cost that tracks how much it has to read rather than how much it writes. The AI assessment is an hour, done with you, and the plan it leads to starts with one job written down properly.",
     },
   },
 

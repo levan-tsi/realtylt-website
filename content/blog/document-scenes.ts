@@ -518,7 +518,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/document-processing", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here, because three things move it and none of them is the reading. The first is how many document TYPES you want handled, because each type is its own set of expectations. The second is whether your originals are files or photographs of paper. The third is whether there is somewhere for the output to go when it arrives. The AI audit is an hour, done with you. For this topic it starts by opening one real file rather than a sample one.",
+        "There is no price here, because three things move it and none of them is the reading. The first is how many document TYPES you want handled, because each type is its own set of expectations. The second is whether your originals are files or photographs of paper. The third is whether there is somewhere for the output to go when it arrives. The AI assessment is an hour, done with you. For this topic it starts by opening one real file rather than a sample one.",
     },
   },
 

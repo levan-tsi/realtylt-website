@@ -454,7 +454,7 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/custom-automation", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here, because the honest range on this topic is truly wide. Connecting two systems that both have a decent way in is days. Something that has to read documents, or reach an office that is not yours, is a different order of work. What does not vary is that the build is quoted and the ownership is not. The second one is the part worth talking about first. The AI audit is an hour, done with you, and it exists partly to establish that a custom build is not the answer.",
+        "There is no price here, because the honest range on this topic is truly wide. Connecting two systems that both have a decent way in is days. Something that has to read documents, or reach an office that is not yours, is a different order of work. What does not vary is that the build is quoted and the ownership is not. The second one is the part worth talking about first. The AI assessment is an hour, done with you, and it exists partly to establish that a custom build is not the answer.",
     },
   },
 

@@ -474,7 +474,7 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/review-automation", variant: "outline-light" },
       ],
       footnote:
-        "There is no price on this page, because the cost is mostly not the software. It is the messaging that carries the ask, which is billed by the message. And it is the fifteen minutes a week that somebody has to spend replying. The AI audit is an hour, done with you. It ends with the ask switched on for one real trigger rather than with a document.",
+        "There is no price on this page, because the cost is mostly not the software. It is the messaging that carries the ask, which is billed by the message. And it is the fifteen minutes a week that somebody has to spend replying. The AI assessment is an hour, done with you. The plan it leads to starts with the ask switched on for one real trigger.",
     },
   },
 
