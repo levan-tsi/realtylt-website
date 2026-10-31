@@ -138,65 +138,91 @@ Generally not unless your contract requires it, although a buyer's lender or loc
 
 Checked against these sources on September 24, 2026. Durations described as "in our experience" are typical ranges from our own transactions, not rules.`;
 
-export const SELLER_DISCLOSURE_POST = `When you sell a home in New York, the question is not whether you will disclose its condition, but what you must disclose and how. The rules changed in 2024, and advice from a neighbor who sold five years ago may now be wrong. This guide explains seller disclosure requirements in New York in plain terms: the Property Condition Disclosure Statement, what it asks, the federal lead paint rule, what you do not have to volunteer, and how to prepare.
+export const SELLER_DISCLOSURE_POST = `I help New York sellers complete the property condition disclosure statement before they list. Here is what the NY form asks in 2026, who is exempt, what changed in 2025, and how to answer each question from what you actually know.
 
-## The Property Condition Disclosure Statement is now mandatory
+## The form is required on most sales
 
-New York's Property Condition Disclosure Act requires the seller of most one- to four-family homes to deliver a Property Condition Disclosure Statement (PCDS) to the buyer or the buyer's agent before the buyer signs a binding contract.
+New York's Property Condition Disclosure Act requires the seller of a one- to four-family home to deliver the completed statement to the buyer or the buyer's agent before the buyer signs a binding contract of sale ([Real Property Law 462](https://www.nysenate.gov/legislation/laws/RPP/462)). Since March 20, 2024 the form cannot be replaced by a credit: the option of giving the buyer a $500 credit at closing instead of the form was repealed, and seven flood questions were added, taking the form from 49 to 56 questions ([New York State Bar Association, February 28, 2024](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)).
 
-### The $500 credit is gone
+### The current form is the February 2025 revision
 
-For two decades sellers could skip the form by giving the buyer a $500 credit at closing, and many did on their attorneys' advice. An amendment effective March 20, 2024 removed that option. It also added seven questions about flooding, taking the form from 49 to 56 questions ([New York State Bar Association](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)). The current form is published by the Department of State ([DOS-1614](https://dos.ny.gov/system/files/documents/2024/03/dos-1614-f-property-condition-disclosure-statement_01.2024.pdf)).
+The Department of State's current form is DOS-1614-f (Rev. 02/25), required since July 1, 2025 ([Department of State, the form in effect from July 1, 2025](https://dos.ny.gov/property-condition-disclosure-statement-eff-7125)). The change is a paragraph under question 36, the sewage question, that points buyers to the Department of Health's information on septic system operation and maintenance; the amendment was signed on September 27, 2024 ([New York State Association of REALTORS legal update, as published by HGAR, 2025](https://hgar.com/nysar-legal-update-amended-pcds-must-be-used-beginning-july-1-2025)). A copy printed before July 2025 is out of date, so check the revision line at the foot of each page before anyone signs it.
 
-### Who is exempt
+### A bill pending in 2026
 
-The act covers one- to four-family homes; by definition it does not apply to condominium units or co-op apartments ([Real Property Law 461](https://www.nysenate.gov/legislation/laws/RPP/461)). The law also lists transfers that need no statement, including ([Real Property Law 463](https://www.nysenate.gov/legislation/laws/RPP/463)):
+A Senate bill introduced on May 15, 2026 would add a question 27-a, asking whether any testing or cleanup has been done when the property is within, or in the same zip code as, a federal Superfund site or a brownfield site ([Senate bill S10426](https://www.nysenate.gov/legislation/bills/2025/S10426)). It was referred to the Senate Judiciary Committee the same day and was still there when we checked on October 29, 2026. It is not law, and the current form does not ask it.
 
-- transfers under a court order, and sales after foreclosure or by a sheriff;
+[[scene:form-timeline]]
+
+## What the 56 questions cover
+
+The form groups its questions in four sections, counted from the form text in [Real Property Law 462(2)](https://www.nysenate.gov/legislation/laws/RPP/462):
+
+- General information, questions 1 to 9: how long the seller has owned and lived in the house, the age of the structures, leases and easements, shared walls or driveways, utility surcharges and certificates of occupancy.
+- Environmental, questions 10 to 27: eight flood questions (flood zones, the federal flood insurance requirement, federal disaster assistance, current flood insurance, elevation certificates and flood claims), then wetlands, agricultural districts, landfills, fuel tanks, asbestos, lead plumbing, radon, spills and testing for mold.
+- Structural, questions 28 to 33: rot and water damage, fire and smoke damage, pests, the roof's type and age, and defects in footings, beams and columns.
+- Mechanical systems and services, questions 34 to 56: water source and testing, sewage and septic, electric service, drainage and flood damage, the defect checklist from plumbing to the hot water heater, and the school district.
+
+[[scene:form-anatomy]]
+
+## Answer from what you actually know
+
+Each answer is Yes, No, Unkn (unknown) or NA (not applicable), and the form's instructions say to answer from the seller's actual knowledge and to complete the form yourself ([DOS-1614-f, Rev. 02/25](https://dos.ny.gov/property-condition-disclosure-statement-eff-7125)). The law defines knowledge as the seller's actual knowledge ([Real Property Law 461](https://www.nysenate.gov/legislation/laws/RPP/461)), and the form states that it is not a warranty and not a substitute for inspections. Unkn is a fair answer when you do not know; a guess that proves wrong is not. The form also encourages buyers to get their own inspections and check public records; our [home inspection checklist](/blog/home-inspection-checklist-hudson-valley-ny) shows what an inspector will look at.
+
+[[scene:four-answers]]
+
+### What happens if an answer is false
+
+A seller is liable only for a willful failure to meet the act's requirements, and for that failure owes the buyer's actual damages, on top of any other remedy the law gives the buyer ([Real Property Law 465](https://www.nysenate.gov/legislation/laws/RPP/465)). A signed form is also evidence: if it says "no known water problems" and the seller knew otherwise, a misrepresentation claim is easier to prove.
+
+## Who is exempt
+
+The act covers one- to four-family homes. By its definition it does not cover condominium units, co-op apartments, property in a homeowners' association that the seller does not own in fee simple, or land where a home is still to be built ([Real Property Law 461](https://www.nysenate.gov/legislation/laws/RPP/461)). Section 463 lists 14 kinds of transfer that need no statement, among them ([Real Property Law 463](https://www.nysenate.gov/legislation/laws/RPP/463)):
+
+- transfers under a court order, after a foreclosure sale or by a sheriff, and deeds in lieu of foreclosure;
 - transfers by a fiduciary administering an estate, guardianship, conservatorship or trust;
-- transfers between co-owners, to a spouse or direct blood relative, or between spouses under a divorce decree;
-- transfers to or from a government entity;
-- newly built homes that have never been occupied.
+- transfers between co-owners, to a spouse or lineal descendants, and between spouses under a divorce decree;
+- transfers to or from a government entity, and transfers under a partition action;
+- newly built homes that have never been lived in.
 
-Your attorney will confirm whether your sale is covered.
+Your attorney confirms whether your sale is covered.
 
-## What the form asks, and the "actual knowledge" standard
+[[scene:who-files]]
 
-The PCDS asks about:
+## Selling as is does not cover a known hidden defect
 
-- **general information:** how long you have owned the house, shared driveways or walls, certificates of occupancy;
-- **environmental matters:** flood zones, flood insurance and flood claims, radon testing, fuel storage tanks, asbestos, lead plumbing;
-- **structure:** rot, water damage, the roof's age, known defects in the foundation, floors and walls;
-- **mechanical systems and services:** water source, sewer or septic, plumbing, electrical and heating defects.
+In general an as-is clause means the home is sold without a warranty as to its condition, so the seller will not make or pay for repairs. It does not protect a seller who conceals a known, significant, hidden defect: in [Simone v Homecheck Real Estate Services](https://www.nycourts.gov/REPORTER/3dseries/2007/2007_06224.htm) (Appellate Division, Second Department, 2007) the house was sold as is and the buyer's fraud claim still went forward, because a false answer on the disclosure statement can be proof of active concealment. An invented example: the fieldstone basement floods every spring, the seller paints over the water lines in a dry autumn and answers No on question 39, the flood damage question. That is concealment, and an as-is clause will not help when the basement floods the next April. Talk to your attorney about how to describe any known problem accurately.
 
-You answer from your actual knowledge. The law does not require you to investigate, inspect or search public records to complete it, and the form states it is not a warranty. "Unknown" is a legitimate answer when you do not know; a guess that turns out wrong is not. Encourage buyers to rely on their own inspections, which the form itself recommends; see our [home inspection checklist](/blog/home-inspection-checklist-hudson-valley-ny) for what they will look at.
+## Two other disclosures
 
-### What happens if a seller answers falsely?
+### Lead paint in homes built before 1978
 
-The statute makes a seller liable for actual damages for a willful failure to give truthful answers based on actual knowledge, and it preserves the buyer's other legal remedies ([NYSBA](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)). A signed form is also evidence: if it says "no known water problems" and you knew otherwise, it is easier for a buyer to prove you misrepresented the house.
+Federal rules require sellers of most pre-1978 homes to give the buyer the pamphlet "Protect Your Family From Lead in Your Home", disclose known lead-based paint and hazards, hand over any reports, include the Lead Warning Statement in the contract, and give the buyer 10 days to arrange a lead inspection or risk assessment, a period the parties can change in writing or the buyer can waive. Sellers keep signed copies of the disclosures for three years after the sale ([EPA, page updated May 27, 2026](https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards)).
 
-## Selling "as is" does not cover hidden problems you know about
+[[scene:lead-paint]]
 
-An "as is" clause generally means you will not make or pay for repairs. It does not protect a seller who actively conceals a known, significant, hidden defect. A classic Hudson Valley example: you know the fieldstone basement floods every spring, you paint over the water lines in the dry autumn, list the house and answer "no" on the form. That is concealment, and "as is" will not help when the basement floods the next April. Talk to your attorney about how to describe any known problem accurately.
+### Deaths, crimes and illness on the property
 
-## Other disclosures to know
+New York law says it is not a material defect that a property was, or is suspected to have been, the site of a homicide, suicide or other death, or of a felony, or that an owner or occupant had HIV or another disease highly unlikely to spread through occupancy. A buyer may ask about these in writing, and the seller may choose whether to respond ([Real Property Law 443-a](https://www.nysenate.gov/legislation/laws/RPP/443-A)). Decide with your attorney before listing how to handle the question, and never answer it untruthfully.
 
-### Federal lead paint disclosure for homes built before 1978
+## The disclosure plan
 
-Under federal law, sellers of most pre-1978 homes must disclose known lead-based paint and lead hazards, provide any reports they have, give buyers the EPA pamphlet "Protect Your Family From Lead in Your Home", include the lead warning statement in the contract, and give buyers a 10-day opportunity to arrange a lead inspection or risk assessment, which the parties can change in writing ([EPA](https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards)).
+1. Talk to your attorney before you list. See [why you need a real estate attorney in New York](/blog/why-you-need-real-estate-attorney-ny).
+2. Walk your own house and list every known issue, past repair and improvement. An invented example: the roof leak two winters ago, the carpenter ant treatment, the sump pump that runs every spring.
+3. Gather the paper the form asks about, and the permits for any work done: certificates of occupancy (question 9), flood insurance and elevation certificates (questions 15 and 16), radon, water and mold test reports (questions 24, 35 and 27), septic age and pump-out dates (question 36), warranties, repair invoices and your own purchase inspection report.
+4. Fill in the current Rev. 02/25 form yourself, as its instructions say, review it with your attorney, and deliver it before the buyer signs the contract.
 
-### Stigmatized property: deaths and crimes
+[[scene:disclosure-plan]]
 
-New York law says it is not a material defect that a property was, or is suspected to have been, the site of a homicide, suicide or other death, or of a felony, or that an owner or occupant had HIV or another disease highly unlikely to be spread by living in a home. A buyer may submit a written inquiry about such matters, and the seller may choose whether or not to respond ([Real Property Law 443-a](https://www.nysenate.gov/legislation/laws/RPP/443-A)). Decide with your attorney before listing how you will handle such a question. Whatever you choose, do not answer untruthfully.
+Free file: the disclosure prep sheet, one page that maps each document to the question number that asks for it. [Download the prep sheet (PDF)](/downloads/seller-disclosure-prep-sheet-ny.pdf).
 
-## Your disclosure plan
+[[scene:prep-sheet]]
 
-1. **Talk to your attorney before you list.** Disclosure is legal work; your attorney advises on the form and your exposure. See [why you need a real estate attorney in New York](/blog/why-you-need-real-estate-attorney-ny).
-2. **Do an honest walk-through of your own house.** List every known issue, past repair and improvement: the roof leak two winters ago, the carpenter ant treatment, the sump pump that runs every spring.
-3. **Gather documents:** permits and certificates of occupancy, warranties, repair invoices, septic pump-out records, your own purchase inspection report.
-4. **Complete the PCDS with your attorney,** using your list and records, and deliver it before the buyer signs the contract.
+Disclosure fits the wider selling sequence in our [timeline for selling a house in New York](/blog/timeline-selling-a-house-ny).
 
-Disclosure fits into the wider selling sequence in our [timeline for selling a house in New York](/blog/timeline-selling-a-house-ny). For help preparing a sale, see our [selling page](/selling) or [talk with us](/connect).
+## Who this fits
+
+This applies to sellers of one- to four-family homes in New York, from a single house to a four-unit building. Sellers of a condominium unit or a co-op apartment are outside the act, and their attorney advises on what their contract of sale requires.
 
 This guide is general information, not legal advice. I am a licensed real estate salesperson, not an attorney; consult a New York real estate attorney about your own obligations.
 
@@ -204,32 +230,43 @@ This guide is general information, not legal advice. I am a licensed real estate
 
 ### Is the property condition disclosure statement required in New York?
 
-For most one- to four-family homes, yes. Since March 20, 2024 the seller must deliver the completed statement before the buyer signs the contract; the $500 credit alternative no longer exists.
+For most one- to four-family homes, yes. The seller delivers the completed statement before the buyer signs the contract, and the $500 credit alternative was repealed on March 20, 2024.
 
-### What is the $500 credit for property disclosure in NY?
+### Which version of the form should a seller use?
 
-It was the option, from 2002 until March 20, 2024, to give the buyer a $500 credit at closing instead of completing the disclosure statement. It has been repealed.
+DOS-1614-f, Rev. 02/25, required since July 1, 2025. It adds a septic information paragraph under question 36.
 
 ### Do I have to disclose a death in a house in New York?
 
 No. A death, homicide, suicide or felony on the property is not a material defect under Real Property Law 443-a. A buyer may ask in writing, and the seller may choose whether to respond.
 
-### Is New York a "buyer beware" state?
-
-Less than it was. Sellers must now complete the disclosure statement from actual knowledge and can be liable for willfully false answers, and "as is" does not protect active concealment. Buyers should still inspect.
-
 ### Do condo and co-op sellers have to fill out the PCDS?
 
-No. The act's definition of residential property excludes condominium units and cooperative apartments.
+No. The act's definition of residential real property excludes condominium units, cooperative apartments and homeowners' association property the seller does not own in fee simple.
+
+### Is New York a buyer beware state?
+
+Less than it was. Sellers must now complete the statement from actual knowledge and are liable for a willful failure to meet the law's requirements ([Real Property Law 465](https://www.nysenate.gov/legislation/laws/RPP/465)), and an as-is clause does not protect active concealment ([Simone v Homecheck, 2007](https://www.nycourts.gov/REPORTER/3dseries/2007/2007_06224.htm)). Buyers should still inspect.
+
+## Next step
+
+If you are getting ready to sell, call me at (914) 875-2424, or [book a consultation on realtylt.com](/connect), and I will go through the current form with you before you list.
+
+Levan Tsiklauri, licensed New York real estate salesperson, Poughkeepsie.
 
 ## Sources
 
-- New York State Bar Association, [Property Condition Disclosure Act amendments](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)
-- NYS Department of State, [Property Condition Disclosure Statement, DOS-1614](https://dos.ny.gov/system/files/documents/2024/03/dos-1614-f-property-condition-disclosure-statement_01.2024.pdf)
-- New York Real Property Law [461](https://www.nysenate.gov/legislation/laws/RPP/461), [463](https://www.nysenate.gov/legislation/laws/RPP/463) and [443-a](https://www.nysenate.gov/legislation/laws/RPP/443-A)
-- U.S. Environmental Protection Agency, [real estate disclosures about lead](https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards)
+- New York Real Property Law, Article 14: [section 461](https://www.nysenate.gov/legislation/laws/RPP/461) (definitions), [462](https://www.nysenate.gov/legislation/laws/RPP/462) (the form), [463](https://www.nysenate.gov/legislation/laws/RPP/463) (exemptions) and [465](https://www.nysenate.gov/legislation/laws/RPP/465) (remedies; last revised March 29, 2024); and [section 443-a](https://www.nysenate.gov/legislation/laws/RPP/443-A) (stigmatized property). Read October 29, 2026.
+- Appellate Division, Second Department, [Simone v Homecheck Real Estate Services, Inc., 42 AD3d 518 (2007)](https://www.nycourts.gov/REPORTER/3dseries/2007/2007_06224.htm), 2007 NY Slip Op 06224 (a false answer on the disclosure statement may be proof of active concealment; the as-is clause barred only the contract claim). Read October 30, 2026.
+- NYS Department of State, [Property Condition Disclosure Statement, DOS-1614-f (Rev. 02/25)](https://dos.ny.gov/property-condition-disclosure-statement-eff-7125), required from July 1, 2025. Read October 29, 2026.
+- New York State Association of REALTORS, legal update "Amended PCDS must be used beginning July 1, 2025", as published by [HGAR](https://hgar.com/nysar-legal-update-amended-pcds-must-be-used-beginning-july-1-2025), 2025. Read October 29, 2026.
+- New York State Bar Association, Karl Holtzschue, ["Property Condition Disclosure Act Amended"](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/), February 28, 2024. Read October 29, 2026.
+- New York State Senate, [bill S10426](https://www.nysenate.gov/legislation/bills/2025/S10426), introduced May 15, 2026, in the Judiciary Committee. Read October 29, 2026.
+- U.S. Environmental Protection Agency, [real estate disclosures about potential lead hazards](https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards), updated May 27, 2026. Read October 29, 2026.
 
-Checked against these sources on September 24, 2026.`;
+Sources checked October 29, 2026.
+
+Written with an AI assistant and checked by Levan.`;
 
 export const SELLER_INSPECTION_PREP_POST = `For many sellers, the days between an accepted offer and the buyer's home inspection are the most stressful of the sale. The report can reopen a deal you thought was settled. Preparation changes that. This seller's guide to preparing for the home inspection covers what inspectors look for, the easy fixes that keep a report short, the paperwork Hudson Valley buyers will ask for, and how to handle the requests that follow.
 

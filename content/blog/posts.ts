@@ -61,6 +61,7 @@ import {
 } from "./seller-posts";
 import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, MOVERS_POST, PACKING_POST, RELOCATING_POST, RENT_VS_BUY_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
+import { SELLER_DISCLOSURE_FLAGSHIP } from "./seller-disclosure-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
 import { SCHEDULING_FLAGSHIP } from "./scheduling-scenes";
@@ -196,18 +197,17 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-audit-small-business-what-not-to-automate",
     cluster: "building",
-    title: "You had eleven ideas. The hour crossed four of them off.",
-    seoTitle: "AI Audit for a Small Business: What Not to Automate",
+    title: "How to use AI in my business: what to automate first and what to leave alone",
+    seoTitle: "How to use AI in my business: what not to automate",
     date: "2026-08-26",
-    updated: "2026-09-18",
-    /** `updated` SET IN ROUND 47. Published 2026-08-26, revised 2026-08-27 when the relevance
-     * pass cut a clause from the Vrije Universiteit paragraph; see
-     * docs/parity/ROUND45-RELEVANCE-PASS.md. First real revision, which is the condition this
-     * field documents. C3 stays red, no film, so the slug ships at 18/19. */
+    updated: "2026-10-30",
+    /** ROUND 14 (2026-10-30): the refreshed post from the agents' review chain, approved on his
+     * desk, with its scenes rebuilt from the piece's data points (content/blog/audit-scenes.ts).
+     * Title and search title moved to the owners' phrase "how to use ai in my business". */
     excerpt:
-      "Anyone can write the list of things they would automate. The part worth paying for is knowing which ones to remove, and being able to say why. The three questions that do the cutting. What a survey of 850,000 firms found about how far behind you really are. And why the most quoted project failure figure in the industry cannot be used.",
+      "Most owners can list ten jobs they would hand to AI. The useful work is crossing off the ones that should stay with a person. What 2026 government surveys show small firms really do with AI, the three questions we use to cut a list, and a one-page sheet to run the test yourself.",
     seoDescription:
-      "What an AI audit produces, the three questions that decide what not to automate, and why the industry's most quoted project failure rate cannot be used.",
+      "An AI audit for a small business in plain steps: 2026 Census data on how small firms use AI, three questions that cross ideas off, and a one-page sheet.",
     cover: "/images/editorial/switch-box.jpg",
     body: [],
     placeholder: false,
@@ -961,20 +961,23 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "seller-disclosure-requirements-new-york",
     cluster: "selling",
-    title: "Seller disclosures in New York: what you are legally required to reveal",
-    seoTitle: "Seller Disclosure Requirements in New York: 2026 Guide",
+    title: "Seller disclosure in New York: the property condition disclosure statement in 2026",
+    seoTitle: "NY property condition disclosure statement 2026 seller guide",
     /** Seller Education #10, reposted 2026-09-24. Slug = the CRM drip link (day 218) and the
-     * draft's; the drip doc's alternate redirects here. */
+     * draft's; the drip doc's alternate redirects here. ROUND 14 (2026-10-30): the refreshed post
+     * from the agents' review chain, approved on his desk, built as a flagship with its data points
+     * as scenes (content/blog/seller-disclosure-scenes.ts). */
     date: "2025-12-17",
-    updated: "2026-09-24",
+    updated: "2026-10-30",
     excerpt:
-      "The Property Condition Disclosure Statement is mandatory since March 2024. What it asks, who is exempt, the lead paint rule, what you need not volunteer, and how to prepare.",
+      "Nearly every seller of a one- to four-family home in New York now completes the property condition disclosure statement. What the current form asks, its 56 questions by section, who is exempt, the 2025 septic change, the bill pending in 2026, the federal lead paint rule, and how to answer from what a seller actually knows.",
     seoDescription:
-      "Seller disclosure requirements in New York: the mandatory PCDS since 2024, flood questions, exemptions, lead paint rules, stigmatized property and liability.",
+      "The NY property condition disclosure statement in 2026: the current form, its 56 questions by section, who is exempt, the lead paint rule and seller liability.",
     cover: "/images/editorial/signature-ink.jpg",
     body: [],
     placeholder: false,
     markdown: SELLER_DISCLOSURE_POST,
+    flagship: SELLER_DISCLOSURE_FLAGSHIP,
     aliases: ["seller-disclosures-in-new-york"],
   },
   {
