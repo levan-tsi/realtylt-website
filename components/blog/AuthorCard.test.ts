@@ -12,7 +12,7 @@ const text = (html: string) => html.replace(/<[^>]+>/g, " ").replace(/&amp;/g, "
 const CASES = [
   ["seller-disclosure-requirements-new-york", true],
   ["home-inspection-checklist-hudson-valley-ny", true],
-  ["ai-audit-small-business-what-not-to-automate", false],
+  ["ai-assessment-small-business-what-not-to-automate", false],
   [CHAT_ASSISTANT_SLUG, false],
 ] as const;
 
@@ -38,9 +38,9 @@ describe("AuthorCard", () => {
     );
   });
 
-  it("gives an AI post the audits line, and no real estate licence line", () => {
-    const t = text(render("ai-audit-small-business-what-not-to-automate", false));
-    expect(t).toContain("Runs RealtyLT and the AI audits for small businesses");
+  it("gives an AI post the assessments line, and no real estate licence line", () => {
+    const t = text(render("ai-assessment-small-business-what-not-to-automate", false));
+    expect(t).toContain("Runs RealtyLT and the AI assessments for small businesses");
     expect(t).not.toContain("salesperson");
   });
 

@@ -605,7 +605,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/ai-scheduling", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because two things move it and neither is the calendar connection: how many parties a typical appointment of yours needs, and whether the people on the other side can be reached the same way every time or whether half of them are a phone call. The AI audit is an hour, done with you, and for this topic it starts by walking one real showing backwards from the confirmation to the first message.",
+        "There is no price here because two things move it and neither is the calendar connection: how many parties a typical appointment of yours needs, and whether the people on the other side can be reached the same way every time or whether half of them are a phone call. The AI assessment is an hour, done with you, and for this topic it starts by walking one real showing backwards from the confirmation to the first message.",
     },
   },
 

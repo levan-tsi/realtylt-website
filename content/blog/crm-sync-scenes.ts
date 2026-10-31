@@ -446,7 +446,7 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/crm-sync", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here, because the cost tracks four things nobody can guess from an article. How many systems there are to join. Whether each of them has an interface a program can use. How many fields need mapping by hand. And whether the records already in there have to be reconciled first. The AI audit is an hour, done with you, and it ends with a list of your fields rather than with a document.",
+        "There is no price here, because the cost tracks four things nobody can guess from an article. How many systems there are to join. Whether each of them has an interface a program can use. How many fields need mapping by hand. And whether the records already in there have to be reconciled first. The AI assessment is an hour, done with you, and the plan it leads to starts with a list of your fields.",
     },
   },
 

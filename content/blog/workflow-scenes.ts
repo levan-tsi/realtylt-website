@@ -464,7 +464,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/workflow-automation", variant: "outline-light" },
       ],
       footnote:
-        "There is no price on this page because there is no honest one. What a chain costs depends on two things. One is how many systems it has to touch. The other is how much of it needs a judgment rather than a field copy. The AI audit is the hour described above, done with you, and it ends with the first chain built rather than with a document.",
+        "There is no price on this page because there is no honest one. What a chain costs depends on two things. One is how many systems it has to touch. The other is how much of it needs a judgment rather than a field copy. The AI assessment is the hour described above, done with you, and the plan it leads to starts with the first chain.",
     },
   },
 

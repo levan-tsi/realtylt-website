@@ -506,7 +506,7 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/data-enrichment", variant: "outline-light" },
       ],
       footnote:
-        "There is no figure here, because the largest part of the bill is paid to someone else, per record. It moves with how many records you send, and with whether you are charged for attempts or for successes. What we would build around it is the smaller and duller half. Deciding which records are worth running at all. Writing the source and the date onto every row. And making sure a value that lands on a field which already had one goes somewhere a person can see. The AI audit is an hour, done with you, and for this topic it starts by looking at what your existing rows already say about themselves.",
+        "There is no figure here, because the largest part of the bill is paid to someone else, per record. It moves with how many records you send, and with whether you are charged for attempts or for successes. What we would build around it is the smaller and duller half. Deciding which records are worth running at all. Writing the source and the date onto every row. And making sure a value that lands on a field which already had one goes somewhere a person can see. The AI assessment is an hour, done with you, and for this topic it starts by looking at what your existing rows already say about themselves.",
     },
   },
 

@@ -448,7 +448,7 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/geo-landing-pages", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because the cost tracks the one thing that is yours rather than ours. How many areas you can genuinely fill. And how much of the material for them has to be gathered from you, rather than written. The AI audit is an hour, done with you. It ends with an honest list of areas rather than with a document.",
+        "There is no price here because the cost tracks the one thing that is yours rather than ours. How many areas you can genuinely fill. And how much of the material for them has to be gathered from you, rather than written. The AI assessment is an hour, done with you. The plan it leads to starts with an honest list of areas.",
     },
   },
 

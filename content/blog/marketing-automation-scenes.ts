@@ -442,7 +442,7 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/marketing-automation", variant: "outline-light" },
       ],
       footnote:
-        "There is no price on this page, because the cost tracks four things nobody can guess from an article. How many channels you want joined. Whether your sending domain and its authentication already exist or have to be set up. How much of your contact data can be trusted enough to segment on. And whether anybody in the business will own the audience rules afterwards. The AI audit is an hour, done with you, and it starts by reading what your domain currently publishes about itself.",
+        "There is no price on this page, because the cost tracks four things nobody can guess from an article. How many channels you want joined. Whether your sending domain and its authentication already exist or have to be set up. How much of your contact data can be trusted enough to segment on. And whether anybody in the business will own the audience rules afterwards. The AI assessment is an hour, done with you, and it starts by reading what your domain currently publishes about itself.",
     },
   },
 

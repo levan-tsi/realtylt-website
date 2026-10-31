@@ -453,7 +453,7 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/ai-appointment-booking", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here, because the cost tracks two things that are yours rather than ours. The first is how many calendars and systems have to agree with each other. The second is whether the reminders go by text, which is billed per message. The AI audit is an hour, done with you, and it ends with the first booking path live on one channel rather than with a document.",
+        "There is no price here, because the cost tracks two things that are yours rather than ours. The first is how many calendars and systems have to agree with each other. The second is whether the reminders go by text, which is billed per message. The AI assessment is an hour, done with you, and the plan it leads to starts with the first booking path on one channel.",
     },
   },
 
