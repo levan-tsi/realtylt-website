@@ -50,7 +50,6 @@ export const POSTS = [
   "geo-landing-pages-real-estate-doorway-pages",
   "crm-sync-real-estate-duplicate-contact-records",
   "ai-agent-workforce-real-estate-assistants",
-  "skip-tracing-real-estate-legal-owner-phone-numbers",
   "marketing-automation-real-estate-email-deliverability",
   "document-processing-real-estate-contract-deadlines",
   "data-enrichment-real-estate-stale-contact-records",

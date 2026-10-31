@@ -96,8 +96,8 @@ export const skipTracingLeadGeneration: Service = {
     },
     {
       title: "Record where every number came from",
-      // ROUND E: NEW STEP, and it is the one the flagship argues is the whole job. See
-      // /blog/skip-tracing-real-estate-legal-owner-phone-numbers: two federal statutes turn on
+      // ROUND E: NEW STEP, and it is the one the (removed, 2026-10-31) flagship argued is the whole job:
+      // two federal statutes turn on
       // where the information came from and what purpose it was released under, and both
       // attach to the person who obtained it rather than to the tool.
       body: "Every enriched row carries two extra fields. One is the source it came from. The other is the date it was appended. The permitted purpose your enrichment account operates under is agreed in writing once, at the start. This is the part nobody sells. It is also the part someone will eventually ask you about. Resellers of this kind of data are required to keep the purpose on file for five years. So the answer exists, and it is a fair question to ask before you sign.",
@@ -164,8 +164,8 @@ export const skipTracingLeadGeneration: Service = {
       // ROUND E: this used to read "Skip tracing from public records and licensed data
       // providers is legal and standard practice", which is a flat legal conclusion with
       // nothing under it, and the research behind the flagship does not support it as stated.
-      // Two federal statutes govern the acquisition and both were read in the primary. See
-      // /blog/skip-tracing-real-estate-legal-owner-phone-numbers.
+      // Two federal statutes govern the acquisition and both were read in the primary (the
+      // research sat in a blog post that was removed on 2026-10-31 at the owner's word; see git).
       a: "It is not one act, so it does not have one answer. Reading a deed or a tax roll is plainly fine, because those records are public by law. The appended contact details are the part that carries rules. Two federal statutes govern where that information may come from and what it may be used for. The Driver's Privacy Protection Act covers anything derived from a state motor vehicle record. It permits release only for a listed set of purposes. The Fair Credit Reporting Act turns on the purpose you use the information for. It does not turn on what the information contains. Both attach to the person obtaining and using the data, which is you rather than the tool. This is not legal advice for your business. Two questions are worth putting to any provider in writing. Which permitted purpose is your account established under? And does anything they supply derive from a consumer reporting agency?",
     },
     {
@@ -189,12 +189,12 @@ export const skipTracingLeadGeneration: Service = {
     },
   ],
 
-  /** ROUND E: its own flagship first. The marketing-automation post is second because it is the
+  /** ROUND E: its own flagship first; that post was removed on 2026-10-31 at the owner's word
+   * ("skip tracing should not be a blog"), so the list starts with what was second. The marketing-automation post is second because it is the
    * other half of the same question, which is what you are allowed to do with a list once you
    * have one. The chat post came off: it was here because the page had no flagship of its own
    * and it has nothing to say about prospecting lists. */
   relatedPosts: [
-    "skip-tracing-real-estate-legal-owner-phone-numbers",
     "marketing-automation-real-estate-email-deliverability",
     "workflow-automation-real-estate-business",
   ],

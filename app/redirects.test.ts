@@ -75,3 +75,17 @@ describe("legacy redirects — what the live site publishes must not 404 after l
     expect(rs.some((r) => matches(r, "/sitemap/NY"))).toBe(true);
   });
 });
+
+describe("removed blog posts", () => {
+  /** 2026-10-31: the skip tracing post was removed at the owner's word. Its address must not 404
+   * and must not keep ranking, so it is a PERMANENT redirect to the blog, and no post may come
+   * back at that slug while the redirect stands (redirects run before the page). */
+  it("the skip tracing post's address redirects permanently to /blog", async () => {
+    const { POSTS } = await import("@/content/blog/posts");
+    const slug = "skip-tracing-real-estate-legal-owner-phone-numbers";
+    const hit = (await rules()).find((r) => matches(r, `/blog/${slug}`));
+    expect(hit?.destination).toBe("/blog");
+    expect(hit?.permanent).toBe(true);
+    expect(POSTS.some((p) => p.slug === slug || p.aliases?.includes(slug))).toBe(false);
+  });
+});

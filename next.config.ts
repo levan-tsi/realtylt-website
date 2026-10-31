@@ -179,6 +179,10 @@ const nextConfig: NextConfig = {
       // and `*` also matches the bare /sitemap — which is now our own HTML site map page
       // (app/sitemap/page.tsx, round 41). /sitemap.xml stays the generated crawler file.
       { source: "/sitemap/:path+", destination: "/top-areas", permanent: true },
+      // A blog post removed on purpose (2026-10-31, the owner: "skip tracing should not be a
+      // blog"). Permanent, so search engines drop the address; the page's own unknown-slug
+      // fallback would only send a temporary redirect to /blog.
+      { source: "/blog/skip-tracing-real-estate-legal-owner-phone-numbers", destination: "/blog", permanent: true },
     ];
   },
   async rewrites() {

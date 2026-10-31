@@ -159,7 +159,6 @@ export const marketingAutomation: Service = {
    * because it is genuinely the adjacent read for how the plumbing is built. */
   relatedPosts: [
     "marketing-automation-real-estate-email-deliverability",
-    "skip-tracing-real-estate-legal-owner-phone-numbers",
     "workflow-automation-real-estate-business",
   ],
 };

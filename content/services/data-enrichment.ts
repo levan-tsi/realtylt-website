@@ -166,6 +166,5 @@ export const dataEnrichment: Service = {
   relatedPosts: [
     "data-enrichment-real-estate-stale-contact-records",
     "document-processing-real-estate-contract-deadlines",
-    "skip-tracing-real-estate-legal-owner-phone-numbers",
   ],
 };
