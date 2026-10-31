@@ -523,19 +523,65 @@ export interface FlagshipTocRow {
   scene?: boolean;
 }
 
+/** Articles carry nothing in a rail label, so "The roadmap" and "Roadmap" are one destination.
+ * Every other word counts: "What a booking is" and "The booking" are different rows. */
+const RAIL_STOPWORDS = new Set(["a", "an", "the"]);
+
+/** A label's words for comparing rail rows: lowercase, figure numbering ("Figure 3", "Fig. 2")
+ * and punctuation stripped, articles dropped. */
+export function railWords(label: string): string[] {
+  return label
+    .toLowerCase()
+    .replace(/\bfig(?:ure)?\.?\s*\d+[a-z]?\b/g, " ")
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter((w) => w && !RAIL_STOPWORDS.has(w));
+}
+
 /** The rail, derived from the document's own outline.
  *
- * Every top-level heading becomes a row; a scene becomes one only if it declares a label.
+ * Every top-level heading becomes a row; a scene becomes one only if it declares a label, and
+ * then only if it is its own destination. Round 16 (the owner, 2026-10-31: the list "is full on
+ * the whole screen" and "shows things twice"): the AI audit post had 20 headings and 22 scenes,
+ * 11 of them labelled, four with their own section's words, and the rail ran to 32 rows. So:
+ *   - a scene row never appears when a heading row carries the same words (lowercase, punctuation
+ *     and figure numbering stripped, articles dropped), anywhere on the page;
+ *   - nor when every word of its label is already in the label of the section it sits in, so
+ *     "Not to automate" under "What not to automate" goes; "The booking" under "What it does"
+ *     stays, because the section heading does not say it;
+ *   - no two rows carry the same words.
+ * Which scenes are destinations at all stays the post's call: a scene with no label gets no row.
+ * Measured on 2026-10-31, twelve of the twenty-one flagship posts carried at least one repeated
+ * row, so this is a template fix, not one post's.
  * Nothing here is typed by hand, so a renamed heading or a re-ordered scene cannot leave a
  * row pointing at an element that is not on the page. */
 export function flagshipToc(outline: OutlineEntry[], content?: FlagshipContent): FlagshipTocRow[] {
+  const labelOf = (entry: { id: string; text: string }) => content?.headingLabels?.[entry.id] ?? entry.text;
+  const keyOf = (words: string[]) => [...words].sort().join(" ");
+  const headingKeys = new Set(
+    outline.flatMap((entry) => (entry.kind === "heading" && entry.level <= 2 ? [keyOf(railWords(labelOf(entry)))] : [])),
+  );
   const rows: FlagshipTocRow[] = [];
+  const seen = new Set<string>();
+  let section = new Set<string>();
   for (const entry of outline) {
     if (entry.kind === "scene") {
       const scene = content?.scenes[entry.key];
-      if (scene?.label) rows.push({ id: `scene-${entry.key}`, label: scene.label, scene: true });
+      if (!scene?.label) continue;
+      const words = railWords(scene.label);
+      const key = keyOf(words);
+      if (headingKeys.has(key) || seen.has(key)) continue;
+      if (words.length && words.every((w) => section.has(w))) continue;
+      seen.add(key);
+      rows.push({ id: `scene-${entry.key}`, label: scene.label, scene: true });
     } else if (entry.level <= 2) {
-      rows.push({ id: entry.id, label: content?.headingLabels?.[entry.id] ?? entry.text });
+      const label = labelOf(entry);
+      const words = railWords(label);
+      section = new Set(words);
+      const key = keyOf(words);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      rows.push({ id: entry.id, label });
     }
   }
   return rows;

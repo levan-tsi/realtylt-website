@@ -43,7 +43,7 @@ import {
   SINGULARITY_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "@/content/blog/ai-posts";
-import { flagshipToc, type FlagshipContent } from "./flagship";
+import { flagshipToc, railWords, type FlagshipContent } from "./flagship";
 import { parseOutline } from "./markdown";
 import { parseHeadings } from "./toc";
 
@@ -162,10 +162,8 @@ describe("flagshipToc", () => {
       { id: "scene-ranking-factors", label: "The three", scene: true },
       { id: "the-input-you-cannot-do-anything-about", label: "Distance" },
       { id: "why-the-top-of-a-very-short-list-is-worth-more-than-it-should-be", label: "The top slot" },
-      { id: "scene-trust-bias", label: "The top slot", scene: true },
       { id: "what-prominence-is-made-of-and-what-it-is-not", label: "Prominence" },
       { id: "the-profile-rules-that-decide-whether-you-can-have-one-at-all", label: "The rules" },
-      { id: "scene-profile-rules", label: "The rules", scene: true },
       { id: "what-local-seo-actually-does-week-to-week", label: "What it does" },
       { id: "scene-the-work", label: "The work", scene: true },
       { id: "scene-local-calculator", label: "Your numbers", scene: true },
@@ -185,12 +183,10 @@ describe("flagshipToc", () => {
     expect(flagshipToc(geoOutline, GEO_PAGES_FLAGSHIP)).toEqual([
       { id: "why-a-page-and-not-a-profile", label: "Why a page" },
       { id: "what-googles-spam-policy-actually-names", label: "The policy" },
-      { id: "scene-two-names", label: "The policy", scene: true },
       { id: "the-example-that-is-about-the-thing-we-sell", label: "About us" },
       { id: "what-separates-a-real-area-page-from-a-doorway", label: "The line" },
       { id: "scene-the-test", label: "The questions", scene: true },
       { id: "repetition-is-measurable-and-somebody-measured-it", label: "Sameness" },
-      { id: "scene-redundancy", label: "Sameness", scene: true },
       { id: "what-actually-goes-on-a-page-that-is-about-somewhere", label: "What goes on it" },
       { id: "scene-page-path", label: "The page", scene: true },
       { id: "scene-geo-calculator", label: "Your numbers", scene: true },
@@ -241,13 +237,10 @@ describe("flagshipToc", () => {
     expect(flagshipToc(agentOutline, AGENT_WORKFORCE_FLAGSHIP)).toEqual([
       { id: "scene-tenth-morning", label: "The tenth morning", scene: true },
       { id: "what-an-agent-workforce-actually-is-and-what-it-is-not", label: "What it is" },
-      { id: "scene-not-a-chatbot", label: "What it is", scene: true },
       { id: "right-once-and-right-every-time-are-different-products", label: "Right every time" },
       { id: "what-happens-when-you-run-the-same-job-twenty-times", label: "Running it again" },
       { id: "where-these-systems-actually-go-wrong-and-it-is-mostly-not-the-model", label: "Where it fails" },
-      { id: "scene-where-fail", label: "Where it fails", scene: true },
       { id: "the-brief-is-the-product", label: "The brief" },
-      { id: "scene-rules-removed", label: "The brief", scene: true },
       { id: "why-the-second-assistant-costs-more-than-the-first", label: "The second one" },
       { id: "scene-agent-path", label: "One assistant", scene: true },
       { id: "where-the-money-actually-goes-when-you-run-several", label: "Where money goes" },
@@ -484,5 +477,68 @@ describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) =
       );
       expect(echoes, `scene ${key} repeats a body sentence`).toEqual([]);
     }
+  });
+});
+
+/** Round 16 (the owner, 2026-10-31): the AI audit post's floating list "is full on the whole
+ * screen" and "shows things twice" (two "Who stays on the job", two "How the audit runs", two
+ * "What you get"). It had 32 rows: every H2 plus every labelled scene, several labelled with
+ * their own section's words. flagshipToc now gives one entry per section. */
+describe("flagshipToc: one entry per section, no row twice", () => {
+  const key = (label: string) => [...railWords(label)].sort().join(" ");
+
+  it("strips articles, punctuation and figure numbering, and keeps every other word", () => {
+    expect(railWords("Figure 3: The three questions!")).toEqual(["three", "questions"]);
+    expect(railWords("What a booking is")).toEqual(["what", "booking", "is"]);
+    expect(railWords("Not to automate")).toEqual(["not", "to", "automate"]);
+  });
+
+  it("drops a scene that repeats a heading anywhere, or its own section's words, and keeps the rest", () => {
+    const content = {
+      scenes: {
+        same: { kind: "plate", band: "light", label: "How it runs" },
+        inside: { kind: "plate", band: "light", label: "Not to automate" },
+        own: { kind: "plate", band: "light", label: "The booking" },
+        tool: { kind: "calculator", band: "light", label: "Your numbers" },
+      },
+      headingLabels: { b: "What not to automate" },
+    } as unknown as FlagshipContent;
+    const rows = flagshipToc(
+      [
+        { kind: "heading", id: "a", level: 2, text: "How it runs" },
+        { kind: "scene", key: "same" },
+        { kind: "heading", id: "b", level: 2, text: "What should not be automated" },
+        { kind: "scene", key: "inside" },
+        { kind: "heading", id: "c", level: 2, text: "What it does" },
+        { kind: "scene", key: "own" },
+        { kind: "scene", key: "tool" },
+        { kind: "heading", id: "d", level: 2, text: "What a booking is" },
+        { kind: "heading", id: "e", level: 2, text: "How it runs" },
+      ],
+      content,
+    );
+    expect(rows.map((r) => r.label)).toEqual(["How it runs", "What not to automate", "What it does", "The booking", "Your numbers", "What a booking is"]);
+  });
+
+  it("gives the real AI audit post a short rail with no repeated words", () => {
+    const o = parseOutline(AI_AUDIT_POST);
+    const rows = flagshipToc(o, AUDIT_FLAGSHIP);
+    const keys = rows.map((r) => key(r.label));
+    expect(new Set(keys).size).toBe(keys.length);
+    const headings = o.filter((e) => e.kind === "heading" && e.level <= 2) as { id: string; text: string }[];
+    const headingKeys = new Set(headings.map((h) => key(AUDIT_FLAGSHIP.headingLabels?.[h.id] ?? h.text)));
+    // A scene is its own destination only when its label says something no heading says.
+    const destinations = o.filter(
+      (e) => e.kind === "scene" && AUDIT_FLAGSHIP.scenes[e.key]?.label && !headingKeys.has(key(AUDIT_FLAGSHIP.scenes[e.key].label!)),
+    );
+    expect(rows.length).toBeLessThanOrEqual(headings.length + destinations.length);
+    expect(rows.length).toBeLessThanOrEqual(18);
+    for (const label of ["Who stays on the job", "How the audit runs", "What you get", "Your roadmap"])
+      expect(rows.filter((r) => key(r.label) === key(label)), label).toHaveLength(1);
+  });
+
+  it.each(TOPICS)("never repeats a row's words on the %s rail", (_name, body, content) => {
+    const keys = flagshipToc(parseOutline(body), content).map((r) => key(r.label));
+    expect(keys.filter((k, i) => keys.indexOf(k) !== i)).toEqual([]);
   });
 });
