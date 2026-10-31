@@ -160,7 +160,9 @@ describe("the lead form steps aside without scripting, and a plain path stands i
   const block = src.slice(src.indexOf("<noscript>"), src.indexOf("</noscript>"));
   it("offers the phone and the email, in the site's voice", () => {
     expect(block).toMatch(/href=\{SITE\.phoneHref\}/);
-    expect(block).toMatch(/mailto:\$\{SITE\.email\}/);
+    // The general inbox: the form sits in the footer of every page, and the owner's word of
+    // 2026-10-31 is that the footer shows only info@.
+    expect(block).toMatch(/mailto:\$\{SITE\.infoEmail\}/);
     expect(block).not.toMatch(/—|→/);
   });
 });
