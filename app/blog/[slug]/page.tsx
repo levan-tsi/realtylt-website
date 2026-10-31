@@ -356,7 +356,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* ── Related */}
         {related.length > 0 && (
-          <section className="sec-sm bg-mist" aria-labelledby="related-heading">
+          // Tagged for the flagship rail (round 16), which reads the band under it to pick its tone.
+          <section data-band="light" className="sec-sm bg-mist" aria-labelledby="related-heading">
             <div className="mx-auto max-w-6xl px-4 lg:px-8">
               <h2
                 id="related-heading"

@@ -30,7 +30,11 @@ export interface FlagshipTocItem {
  */
 
 /** Which band sits under the rail right now. Starts dark: the flagship opens on the cold
- * open, and guessing light there would flash a white rail on first paint. */
+ * open, and guessing light there would flash a white rail on first paint.
+ *
+ * Round 16: when no tagged band contains the viewport's middle (the related posts, the footer,
+ * or a gap between bands), the rail keeps the tone of the nearest tagged band ABOVE that point
+ * instead of guessing "light". */
 function useBandTone(): "dark" | "light" {
   const [tone, setTone] = useState<"dark" | "light">("dark");
 
@@ -40,14 +44,22 @@ function useBandTone(): "dark" | "light" {
       raf = 0;
       // The rail is vertically centred, so ask which band owns the viewport's middle.
       const y = window.innerHeight / 2;
-      let next: "dark" | "light" = "light";
+      let next: "dark" | "light" | null = null;
+      let above: "dark" | "light" = "dark";
+      let aboveBottom = -Infinity;
       for (const el of Array.from(document.querySelectorAll<HTMLElement>("[data-band]"))) {
         const r = el.getBoundingClientRect();
+        const band = el.dataset.band === "dark" ? "dark" : "light";
         if (r.top <= y && r.bottom >= y) {
-          next = el.dataset.band === "dark" ? "dark" : "light";
+          next = band;
           break;
         }
+        if (r.bottom < y && r.bottom > aboveBottom) {
+          aboveBottom = r.bottom;
+          above = band;
+        }
       }
+      if (next === null) next = above;
       setTone(next);
     };
     const schedule = () => {
@@ -181,7 +193,13 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
                   // `focus-visible:outline-*`. An inline outline-color is the one thing that
                   // wins, and it only overrides the colour, so the width and offset still come
                   // from the site-wide rule.
-                  style={dark ? { outlineColor: "var(--color-paper)" } : undefined}
+                  // Round 16: the moon, never the paper. The whole site sits in the .nocturne
+                  // scope (app/layout.tsx), which re-points --color-paper to the NIGHT, so the
+                  // dark palette's "white" text was printing #131417 on a black card: measured
+                  // 1.06:1 at 1680 over every dark band (docs/blog-r16/NOTES.md). The moon is
+                  // never re-pointed. The light palette is the page's own tokens and reads in
+                  // both scopes.
+                  style={dark ? { outlineColor: "var(--color-moon)" } : undefined}
                   className="flex items-center rounded-lg outline-offset-4"
                 >
                   {/* 24px hit cell keeps the resting target accessible; the tick lives inside. */}
@@ -207,10 +225,10 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
                     className={`max-w-0 overflow-hidden text-ellipsis whitespace-nowrap pl-2 text-[13px] leading-none opacity-0 transition-all duration-200 group-hover:max-w-[min(12rem,var(--toc-label-max))] group-hover:opacity-100 group-focus-within:max-w-[min(12rem,var(--toc-label-max))] group-focus-within:opacity-100 ${
                       active
                         ? dark
-                          ? "font-bold text-paper"
+                          ? "font-bold text-moon"
                           : "font-bold text-ink"
                         : dark
-                          ? "text-paper/65"
+                          ? "text-moon/70"
                           : "text-stone"
                     }`}
                   >
