@@ -56,7 +56,7 @@ export const POSTS = [
   "ai-scheduling-real-estate-showing-confirmations",
   "invoicing-and-payments-real-estate-brokerage",
   "ai-clone-real-estate-agent-video-avatar",
-  "ai-audit-small-business-what-not-to-automate",
+  "ai-assessment-small-business-what-not-to-automate",
   "custom-automation-real-estate-bespoke-build",
   "the-singularity-self-improving-ai-system",
 ];

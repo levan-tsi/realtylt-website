@@ -193,7 +193,7 @@ export const POSTS: BlogPost[] = ([
     flagship: CUSTOM_FLAGSHIP,
   },
   {
-    slug: "ai-audit-small-business-what-not-to-automate",
+    slug: "ai-assessment-small-business-what-not-to-automate",
     cluster: "building",
     title: "How to use AI in my business: what to automate first and what to leave alone",
     seoTitle: "How to use AI in my business: what not to automate",
@@ -203,11 +203,14 @@ export const POSTS: BlogPost[] = ([
      * rebuilt from the piece's data points. Title and search title moved to the owners' phrase
      * "how to use ai in my business". ROUND 15 (2026-10-31): rebuilt to the old post's depth on
      * the owner's verdict, with the 2026 sources, the audit's own questions, a quiz and relatable
-     * photographs (a front desk on the phone for the cover, in place of an antique switch box). */
+     * photographs (a front desk on the phone for the cover, in place of an antique switch box).
+     * ROUND 17 (2026-10-31 evening): the offer is named the AI assessment ("AI readiness
+     * assessment" where the phrase matters, "AI audit" kept once as the synonym); the slug moved
+     * from ai-audit-... with a permanent redirect in next.config.ts; the one-hour flow. */
     excerpt:
-      "How to use AI in your business, from what 2026 government surveys show small firms really do with it to the three questions that cross ideas off your list. The questions we ask in an audit, so you can answer them yourself; how the audit runs and what you get; a week-by-week roadmap you can follow alone; a one-page sheet; and a ten-question quiz to check what stuck.",
+      "How to use AI in your business, from what 2026 government surveys show small firms really do with it to the three questions that cross ideas off your list. The questions we ask in an assessment, so you can answer them yourself; how the assessment runs and what you get; a week-by-week roadmap you can follow alone; a one-page sheet; and a ten-question quiz to check what stuck.",
     seoDescription:
-      "How to use AI in my business: an AI audit for a small business in plain steps, 2026 Census data, three questions to cut your list, and what to automate first.",
+      "How to use AI in my business: an AI assessment for a small business in plain steps, 2026 Census data, three questions to cut your list, and what to automate first.",
     cover: "/images/editorial/front-desk-phone.jpg",
     body: [],
     placeholder: false,

@@ -54,7 +54,7 @@ describe("relatedArticles", () => {
     // and specifically the one that was measured
     const packing = relatedArticles(bySlug("packing-tips-hacks-for-moving"), ALL);
     expect(packing.map((a) => a.slug)).not.toContain("custom-automation-real-estate-bespoke-build");
-    expect(packing.map((a) => a.slug)).not.toContain("ai-audit-small-business-what-not-to-automate");
+    expect(packing.map((a) => a.slug)).not.toContain("ai-assessment-small-business-what-not-to-automate");
     expect(packing.map((a) => a.slug)).not.toContain("ai-clone-real-estate-agent-video-avatar");
   });
 

@@ -110,7 +110,7 @@ export const customAutomation: Service = {
     },
     {
       q: "How do you decide what to build first?",
-      a: "By how contained the worst case is, then by whether the rule is actually settled, and only then by the size of the saving. That order is deliberate. On a sample of 1,471 technology projects worth 241 billion dollars, 17 percent landed in a fat right hand tail. A thin-tailed distribution would have put under one percent there. So an expected payback describes the middle of the range rather than what you are exposed to. If you have not mapped any of this yet, the AI audit is the place to start.",
+      a: "By how contained the worst case is, then by whether the rule is actually settled, and only then by the size of the saving. That order is deliberate. On a sample of 1,471 technology projects worth 241 billion dollars, 17 percent landed in a fat right hand tail. A thin-tailed distribution would have put under one percent there. So an expected payback describes the middle of the range rather than what you are exposed to. If you have not mapped any of this yet, the AI assessment is the place to start.",
     },
     {
       q: "What happens when the software it connects to changes?",
@@ -125,6 +125,6 @@ export const customAutomation: Service = {
   relatedPosts: [
     "custom-automation-real-estate-bespoke-build",
     "workflow-automation-real-estate-business",
-    "ai-audit-small-business-what-not-to-automate",
+    "ai-assessment-small-business-what-not-to-automate",
   ],
 };

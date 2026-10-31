@@ -132,7 +132,7 @@ export async function toneDrive(browser, base, slug, width) {
 if (process.argv[1] && process.argv[1].endsWith("tone-drive.mjs")) {
   const { chromium } = await import("playwright");
   const base = process.argv[2] ?? "http://127.0.0.1:3108";
-  const slugs = process.argv[3] ? [process.argv[3]] : ["ai-audit-small-business-what-not-to-automate", "seller-disclosure-requirements-new-york"];
+  const slugs = process.argv[3] ? [process.argv[3]] : ["ai-assessment-small-business-what-not-to-automate", "seller-disclosure-requirements-new-york"];
   const widths = process.argv[4] ? [+process.argv[4]] : [390, 1440, 1680];
   const browser = await chromium.launch();
   for (const slug of slugs)

@@ -137,8 +137,8 @@ export default function ServicesIndexPage() {
             </p>
 
             <div className="mt-9 flex flex-wrap items-center gap-6">
-              <Button href="/services/ai-audit" variant="light" size="lg">
-                Start with an audit
+              <Button href="/services/ai-readiness-assessment" variant="light" size="lg">
+                Start with an assessment
               </Button>
               {/* /ai is a rewrite to the separate journey project — plain anchor. */}
               <a
@@ -264,13 +264,14 @@ export default function ServicesIndexPage() {
               Not sure which one you <strong>need first?</strong>
             </h2>
             <p className="mx-auto mt-5 max-w-xl leading-relaxed text-paper/75">
-              That is the normal place to be. The audit exists for exactly this. We map how your
-              business really runs. We cut the ideas that should not be built, and put the rest in
-              order with the reason for each spot beside it. Then we build the first one.
+              That is the normal place to be. The AI assessment exists for exactly this. In one hour
+              with you, we map how your business really runs. We cut the ideas that should not be
+              built, and put the rest in order with the reason for each spot beside it. Then we
+              write the plan.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button href="/services/ai-audit" variant="light" size="lg">
-                Read about the audit
+              <Button href="/services/ai-readiness-assessment" variant="light" size="lg">
+                Read about the assessment
               </Button>
               <Button href="/connect" variant="outline-light" size="lg">
                 Just talk to us
