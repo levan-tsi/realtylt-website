@@ -2,7 +2,7 @@
 import { chromium } from "playwright";
 const base = process.argv[2] ?? "http://127.0.0.1:3108";
 const b = await chromium.launch();
-for (const slug of ["ai-audit-small-business-what-not-to-automate", "seller-disclosure-requirements-new-york"]) {
+for (const slug of ["ai-assessment-small-business-what-not-to-automate", "seller-disclosure-requirements-new-york"]) {
   const p = await (await b.newContext()).newPage();
   await p.route("**/api/media/**", (r) => r.abort());
   const bad = [];

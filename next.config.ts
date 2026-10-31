@@ -183,6 +183,15 @@ const nextConfig: NextConfig = {
       // blog"). Permanent, so search engines drop the address; the page's own unknown-slug
       // fallback would only send a temporary redirect to /blog.
       { source: "/blog/skip-tracing-real-estate-legal-owner-phone-numbers", destination: "/blog", permanent: true },
+      // The offer renamed from "AI audit" to "AI assessment" (2026-10-31 evening, round 17):
+      // the post and the service page moved to new slugs. Permanent, so the old addresses pass
+      // their ranking on and no link anyone saved breaks.
+      {
+        source: "/blog/ai-audit-small-business-what-not-to-automate",
+        destination: "/blog/ai-assessment-small-business-what-not-to-automate",
+        permanent: true,
+      },
+      { source: "/services/ai-audit", destination: "/services/ai-readiness-assessment", permanent: true },
     ];
   },
   async rewrites() {

@@ -51,9 +51,22 @@ describe("legacy redirects — what the live site publishes must not 404 after l
   });
 
   it("every destination is a route that exists (a rename would break the redirect silently)", async () => {
+    const { POSTS } = await import("@/content/blog/posts");
+    const { SERVICES } = await import("@/content/services");
     for (const r of await rules()) {
       const dest = r.destination.replace(/\/:[a-zA-Z]+\*$/, "");
       if (dest === "/") continue;
+      // The two dynamic routes: a destination there must be a real post or service slug.
+      const post = dest.match(/^\/blog\/([^/]+)$/);
+      if (post) {
+        expect(POSTS.some((p) => p.slug === post[1]), `${r.destination} is not a post`).toBe(true);
+        continue;
+      }
+      const service = dest.match(/^\/services\/([^/]+)$/);
+      if (service) {
+        expect(SERVICES.some((s) => s.slug === service[1]), `${r.destination} is not a service`).toBe(true);
+        continue;
+      }
       const dir = path.join(process.cwd(), "app", dest);
       expect(fs.existsSync(path.join(dir, "page.tsx")), `${r.destination} has no page.tsx`).toBe(true);
     }
@@ -87,5 +100,23 @@ describe("removed blog posts", () => {
     expect(hit?.destination).toBe("/blog");
     expect(hit?.permanent).toBe(true);
     expect(POSTS.some((p) => p.slug === slug || p.aliases?.includes(slug))).toBe(false);
+  });
+});
+
+describe("renamed slugs (round 17, 2026-10-31: the AI audit became the AI assessment)", () => {
+  const MOVES: [string, string][] = [
+    ["/blog/ai-audit-small-business-what-not-to-automate", "/blog/ai-assessment-small-business-what-not-to-automate"],
+    ["/services/ai-audit", "/services/ai-readiness-assessment"],
+  ];
+  it.each(MOVES)("%s redirects permanently to %s", async (from, to) => {
+    const hit = (await rules()).find((r) => matches(r, from));
+    expect(hit?.destination).toBe(to);
+    expect(hit?.permanent).toBe(true);
+  });
+  it("no post or service is still published at an old slug", async () => {
+    const { POSTS } = await import("@/content/blog/posts");
+    const { SERVICES } = await import("@/content/services");
+    expect(POSTS.some((p) => p.slug === "ai-audit-small-business-what-not-to-automate")).toBe(false);
+    expect(SERVICES.some((s) => s.slug === "ai-audit")).toBe(false);
   });
 });

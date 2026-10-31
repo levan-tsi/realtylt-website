@@ -2,28 +2,28 @@ import type { Service } from "./types";
 
 /** COPY key `consult` on realtylt.com/ai. Deep link: /ai#consult */
 export const aiAudit: Service = {
-  slug: "ai-audit",
+  slug: "ai-readiness-assessment",
   aiKey: "consult",
-  name: "AI Audit",
+  name: "AI Assessment",
   tier: "core",
 
-  eyebrow: "AI Audit · Start here",
-  title: "See exactly where AI pays off first",
-  lede: "We map how your business really runs. We cut the ideas that should not be built. Then we hand you what is left, in order, with the reason for each spot written beside it. After that, we build the first win. It is the low-risk way to start when you know AI can help but not where to point it.",
-  specs: ["full workflow review", "an order, with reasons", "clear build plan", "a quick first win"],
-  why: "Knowing AI could help is one problem. Knowing where to point it is a different one, and only the second gets anything built. An audit is a full check of how you work. It turns an open question into a short list, with the reason for each spot beside it. It also gives you a shorter list: the things you have decided not to build.",
+  eyebrow: "AI Assessment · Start here",
+  title: "An AI readiness assessment: see where AI pays off first",
+  lede: "In one hour with you, or you and your manager, we map how your business really runs. Then we write the plan: what to build and in what order, how long each piece takes, the precautions, and which system does which job. It is the low-risk way to start when you know AI can help but not where to point it.",
+  specs: ["one hour with the owner", "an order, with reasons", "a written plan", "what stays with a person"],
+  why: "Knowing AI could help is one problem. Knowing where to point it is a different one, and only the second gets anything built. An assessment turns an open question into a short list, with the reason for each spot beside it. It also gives you a second list: the things you have decided not to build. Some firms call this an AI audit.",
   keywords: [
-    "ai consulting for small business",
-    "ai automation audit",
-    "where to use ai in my business",
     "ai readiness assessment",
+    "ai assessment for small business",
+    "ai consulting for small business",
+    "where to use ai in my business",
     "ai opportunity assessment",
   ],
 
   seo: {
-    title: "AI Audit: Find Where AI Pays Off in Your Business First",
+    title: "AI Readiness Assessment: Find Where AI Pays Off First",
     description:
-      "AI consulting for a small business: a mapped review of how you run, an ordered shortlist with the reasoning, the list of what not to build, and a first win.",
+      "An AI readiness assessment for a small business: one hour with the owner, then a written plan of what to build first, in what order, and what to leave alone.",
   },
 
   /** Somebody else's measurement, and the one that resets an owner's sense of being behind.
@@ -62,14 +62,14 @@ export const aiAudit: Service = {
   },
 
   whatItIs: [
-    "It is a mapped review of how your business actually runs. We walk one real job end to end. We write down every step, every tool and every hour that goes into it. Most owners have never seen that written out, and it is always longer than they think.",
-    "What you get back is shorter than what you brought. Candidates get removed for stated reasons. What survives comes back in an order, with the reason for each position beside it. The list of what was removed comes back too, because those reasons are the part you will use again next year. Then we build the first one, so the audit ends in a working thing rather than a document.",
+    "It is a one-hour call with the owner, or the owner and the manager, about how your business actually runs. We walk one real job end to end. We write down every step, every tool and every hour that goes into it. Most owners have never seen that written out, and it is always longer than they think.",
+    "Then we write the plan, and it is shorter than what you brought. Candidates get removed for stated reasons. What survives comes back in an order: what we would build, how, how long each piece takes, what precautions to take, and which system does which job. The list of what was removed comes back too, because those reasons are the part you will use again next year. If you ask us to build it and run it, the assessment is included in that work. If you build it yourself, the plan is your map.",
   ],
 
   howItWorks: [
     {
       title: "We follow the work, not the org chart",
-      body: "One real job, traced from the first touch to the last. Every manual step. Every tool it passes through. And every place the same information gets typed twice.",
+      body: "One hour with you on the last real week. One real job, traced from the first touch to the last. Every manual step. Every tool it passes through. And every place the same information gets typed twice.",
     },
     {
       title: "We cut the list before we order it",
@@ -80,15 +80,15 @@ export const aiAudit: Service = {
       body: "How contained the worst case is comes first. Whether the rule is actually settled comes second. The size of the saving comes third. Every position has its reason beside it, so the order survives someone asking why the third one is not the first.",
     },
     {
-      title: "We build the first win",
-      body: "The audit ends with something running, not with a deck. Shipping one automation is what turns AI from a topic into a habit.",
+      title: "We hand you the plan",
+      body: "What to build and in what order, how long each piece takes, the precautions, and which system does which job. We can build it and run it, with the assessment included, or you can build from it yourself.",
     },
   ],
 
   useCases: [
     {
       title: "You know AI would help, but not where",
-      body: "The most common place to be stuck. An audit turns an open-ended topic into a numbered list. That is the difference between thinking about AI and using it.",
+      body: "The most common place to be stuck. An assessment turns an open-ended topic into a numbered list. That is the difference between thinking about AI and using it.",
     },
     {
       title: "You want the list to get shorter, not longer",
@@ -106,13 +106,13 @@ export const aiAudit: Service = {
     "It does not produce a saving on paper. Every hour on the list is an hour you still have to choose to spend on something else.",
     "It does not put a price on each candidate. What a build costs depends entirely on which one. A number attached to a candidate before anybody has looked at the systems is a guess with a decimal point in it.",
     "It does not stay true. The list has a shelf life measured in months, because your systems, your people and your volume all move.",
-    "It is not a strategy document. It ends with one automation built and running. Anything past that first build is a separate decision.",
+    "It does not build anything on its own. It ends with a written plan, and building it, by us or by you, is a separate decision.",
   ],
 
   faqs: [
     {
-      q: "What is an AI audit?",
-      a: "It is a review of how your business actually operates. It is done to find where AI or automation is worth building and, just as importantly, where it is not. You get back a written account of the work, a shortlist in an order with the reason for each position attached, the list of candidates that were removed and why, and one automation built and running.",
+      q: "What is an AI readiness assessment?",
+      a: "It is a one-hour review, with the owner, of how your business actually operates. It is done to find where AI or automation is worth building and, just as importantly, where it is not. You get back a written plan: a shortlist in an order with the reason for each position attached, what we would build and how, how long each piece takes, the precautions, and the list of candidates that were removed and why.",
     },
     {
       q: "Where should a small business start with AI?",
@@ -124,16 +124,16 @@ export const aiAudit: Service = {
     },
     {
       q: "What do I actually get at the end?",
-      a: "A written map of how the work runs today, including the parts nobody had written down. A shortlist in an order, with the reason for each position beside it. The list of candidates that were removed and why, which is the part you will use again next year. A plan for building the top of that list. And one automation actually built and running, so it ends in something real rather than a document.",
+      a: "A written plan. It maps how the work runs today, including the parts nobody had written down, and puts the shortlist in an order with the reason for each position beside it. It says what we would build, how, how long each piece takes, what precautions to take and which system does which job. It lists the candidates that were removed and why, which is the part you will use again next year. If you ask us to build it and run it, the assessment is included in that work; if not, the plan is yours to build from.",
     },
     {
       q: "Do I need to know anything about AI beforehand?",
-      a: "No. The audit is about your business, not about the technology. You describe how the work happens, and choosing the tools is our job.",
+      a: "No. The assessment is about your business, not about the technology. You describe how the work happens, and choosing the tools is our job.",
     },
   ],
 
   relatedPosts: [
-    "ai-audit-small-business-what-not-to-automate",
+    "ai-assessment-small-business-what-not-to-automate",
     "workflow-automation-real-estate-business",
     "custom-automation-real-estate-bespoke-build",
   ],

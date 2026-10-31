@@ -20,7 +20,7 @@ const out = process.argv[3] ?? "docs/blog-r16/shots";
 fs.mkdirSync(out, { recursive: true });
 const SLUGS = [
   ["seller", "seller-disclosure-requirements-new-york"],
-  ["ai", "ai-audit-small-business-what-not-to-automate"],
+  ["ai", "ai-assessment-small-business-what-not-to-automate"],
 ];
 const WIDTHS = [320, 390, 768, 1024, 1280, 1440];
 const QUIZ = '[aria-label="Quiz: what did you learn"]';
@@ -153,7 +153,7 @@ async function runQuiz(page, pick, tag, shots) {
   await page.route("**/api/media/**", (r) => r.abort());
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
-  await page.goto(`${base}/blog/ai-audit-small-business-what-not-to-automate`, { waitUntil: "networkidle" });
+  await page.goto(`${base}/blog/ai-assessment-small-business-what-not-to-automate`, { waitUntil: "networkidle" });
   await page.locator(QUIZ).scrollIntoViewIfNeeded();
   await page.evaluate(() => {
     for (const el of document.querySelectorAll("body *"))
@@ -186,7 +186,7 @@ async function runQuiz(page, pick, tag, shots) {
     const c2 = await browser.newContext(opts);
     const p2 = await c2.newPage();
     await p2.route("**/api/media/**", (r) => r.abort());
-    await p2.goto(`${base}/blog/ai-audit-small-business-what-not-to-automate`, { waitUntil: "networkidle" });
+    await p2.goto(`${base}/blog/ai-assessment-small-business-what-not-to-automate`, { waitUntil: "networkidle" });
     await p2.locator(QUIZ).scrollIntoViewIfNeeded();
     await p2.evaluate(() => {
       for (const el of document.querySelectorAll("body *"))
@@ -206,7 +206,7 @@ async function runQuiz(page, pick, tag, shots) {
 {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
   const page = await ctx.newPage();
-  await page.goto(`${base}/blog/ai-audit-small-business-what-not-to-automate`, { waitUntil: "load" });
+  await page.goto(`${base}/blog/ai-assessment-small-business-what-not-to-automate`, { waitUntil: "load" });
   const nojs = await page.evaluate((sel) => {
     const q = document.querySelector(sel);
     return {
@@ -227,6 +227,13 @@ async function runQuiz(page, pick, tag, shots) {
   const ctx = await browser.newContext();
   const r = await ctx.request.get(`${base}/blog/skip-tracing-real-estate-legal-owner-phone-numbers`, { maxRedirects: 0 });
   report.push({ removed: "skip tracing", status: r.status(), location: r.headers()["location"] });
+  // Round 17: the two renamed addresses, and the new service page.
+  for (const old of ["/blog/ai-audit-small-business-what-not-to-automate", "/services/ai-audit"]) {
+    const m = await ctx.request.get(`${base}${old}`, { maxRedirects: 0 });
+    report.push({ moved: old, status: m.status(), location: m.headers()["location"] });
+  }
+  const svc = await ctx.request.get(`${base}/services/ai-readiness-assessment`);
+  report.push({ service: "/services/ai-readiness-assessment", status: svc.status() });
   for (const f of ["/downloads/seller-disclosure-prep-sheet-ny.pdf", "/downloads/three-question-sheet.pdf"]) {
     const res = await ctx.request.get(`${base}${f}`);
     report.push({ file: f, status: res.status(), type: res.headers()["content-type"], bytes: (await res.body()).length });
@@ -267,6 +274,13 @@ for (const [short, slug] of SLUGS) {
       footerPhone: footer.includes("(914) 415-7185"),
       applyIt: (text.match(/Apply it/gi) ?? []).length,
       broker: (text.match(/broker/gi) ?? []).length,
+      // Round 17 (2026-10-31 evening): the AI assessment wording and the footer's one email.
+      auditLines: text.split(/\n+/).filter((l) => /audit/i.test(l)),
+      seventyFive: (text.match(/\b75\b/g) ?? []).length,
+      twentyMinutes: (text.match(/20[ -]minute/gi) ?? []).length,
+      footerLevan: (footer.match(/levan@/gi) ?? []).length,
+      authorCardLevan: ((document.querySelector('aside[aria-label^="About "]')?.innerText ?? "").match(/levan@realtylt\.com/gi) ?? []).length,
+      headerEmails: [...(document.querySelector("header")?.querySelectorAll('a[href^="mailto:"]') ?? [])].map((a) => a.getAttribute("href")),
     };
   });
   // The open rail (focus inside it opens the card) over a dark band and over a light band.

@@ -126,7 +126,7 @@ export const workflowAutomation: Service = {
 
   relatedPosts: [
     "workflow-automation-real-estate-business",
-    "ai-audit-small-business-what-not-to-automate",
+    "ai-assessment-small-business-what-not-to-automate",
     "custom-automation-real-estate-bespoke-build",
   ],
 };
