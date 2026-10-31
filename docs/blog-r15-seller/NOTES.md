@@ -51,3 +51,12 @@ Probe: `node docs/blog-r15-seller/probe.mjs http://127.0.0.1:3109 <outdir>` agai
   scene past the edge, smallest scene text 11 px (the eyebrows, as in round 14), contents sheet 11 links.
 - Files: `/downloads/seller-disclosure-prep-sheet-ny.pdf` 200 application/pdf 289,774 bytes;
   `/downloads/three-question-sheet.pdf` 200 application/pdf 48,138 bytes.
+
+## Follow-up (2026-10-31 ~12:20 ET): the opening sentences
+
+The owner's rule for every post: the first sentences say what the post covers and what the reader learns, then the
+story. Three sentences now open `SELLER_DISCLOSURE_POST`, above the existing first paragraph (kept); a one-line
+comment above the constant names the rule. `seller-390-top.jpg` shows the top of the page at 390 (the new paragraph
+is the first prose under the cold open; scrollWidth 390; console: the 2 Vercel Analytics lines only).
+Gate: `npx tsc --noEmit` exit 0 "TypeScript: No errors found"; `npx vitest run` exit 0, Test Files 169 passed (169),
+Tests 2405 passed (2405); `npm run build` exit 0, static pages 130/130.

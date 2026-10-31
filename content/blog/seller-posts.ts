@@ -138,7 +138,10 @@ Generally not unless your contract requires it, although a buyer's lender or loc
 
 Checked against these sources on September 24, 2026. Durations described as "in our experience" are typical ranges from our own transactions, not rules.`;
 
-export const SELLER_DISCLOSURE_POST = `I help New York sellers complete the property condition disclosure statement before they list. Here is what the NY form asks in 2026, who is exempt, what changed in 2025, and how to answer each question from what you actually know.
+// The owner's rule for every post (2026-10-31): open with two to four plain sentences on what it covers, what the reader leaves with and who it is for, then the story.
+export const SELLER_DISCLOSURE_POST = `This guide is for anyone selling a one- to four-family home in New York. It covers the state's property condition disclosure form: which sales need it, what changed in 2025, how to fill it in and what to gather before you do. You leave with a link to the state's form itself and a free two-page prep sheet that gets your paper ready for it.
+
+I help New York sellers complete the property condition disclosure statement before they list. Here is what the NY form asks in 2026, who is exempt, what changed in 2025, and how to answer each question from what you actually know.
 
 ## The form is required on most sales
 
