@@ -14,7 +14,7 @@ import { renderScene, sceneBand } from "@/components/blog/scenes/registry";
 import { aliasTarget, fmtDate, getArticle, getArticles, missingPostTarget, type Article } from "@/lib/blog";
 import { flagshipToc } from "@/lib/blog/flagship";
 import { hasScenes, parseOutline, renderFlagshipBands } from "@/lib/blog/markdown";
-import { relatedArticles } from "@/lib/blog/related";
+import { isConsumer, relatedArticles } from "@/lib/blog/related";
 import { articleStructuredData, articleUrl } from "@/lib/blog/structured-data";
 import { extractToc, readingTime } from "@/lib/blog/toc";
 import { SITE } from "@/lib/site";
@@ -139,6 +139,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       />
     </div>
   );
+
+  // Who wrote it and how to reach him, on every post (round 15, the owner's word): the card's
+  // standing line and paragraph follow the post's cluster, the same consumer/business split the
+  // "Keep reading" block uses. components/blog/AuthorCard.tsx carries the copy.
+  const authorCard = <AuthorCard author={post.author} slug={post.slug} consumer={isConsumer(post)} />;
 
   // The prompt is audience-specific, because the two audiences are not the same person. A
   // consumer post is passed to somebody who is moving; a flagship is 3,300 words aimed at the
@@ -276,7 +281,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             )}
             <div data-band="light" className="mx-auto max-w-6xl px-4 pb-20 lg:px-8">
               <div className="mx-auto max-w-[44rem]">
-                <AuthorCard author={post.author} />
+                {authorCard}
                 {endCap}
               </div>
             </div>
@@ -293,6 +298,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   the ToC nav follows in source but is placed LEFT via col-start. */}
               <div className="mt-10 min-w-0 lg:col-start-2 lg:row-start-2 lg:mt-0">
                 {post.body.kind === "markdown" && <ArticleBody markdown={post.body.markdown} />}
+                {authorCard}
                 {endCap}
               </div>
               {/* One wrapper = one grid cell; ArticleToc renders its own desktop rail (sticky)
@@ -336,6 +342,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     </section>
                   </div>
                 )}
+                {authorCard}
                 {endCap}
               </div>
             </>

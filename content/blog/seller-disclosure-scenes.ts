@@ -243,13 +243,14 @@ export const SELLER_DISCLOSURE_FLAGSHIP: FlagshipContent = {
       ],
     },
 
-    /** The free file's line. */
+    /** The free file's line. Round 15: the sheet is two pages and sits beside the state's form,
+     * which the body links ("the real form") in the paragraph just above this scene. */
     "prep-sheet": {
       kind: "offer",
       band: "light",
       eyebrow: "The free file",
-      text: "The disclosure prep sheet: one page that ties each document to the question number that asks for it, with a box to tick for each.",
-      reassure: "A free printable PDF, one page. Nothing to sign up for.",
+      text: "The disclosure prep sheet, now two pages. First your documents, each tied to the question that asks for it, with a box to tick. Then ten answers to slow down on, and where you find each one.",
+      reassure: "A free printable PDF, two pages, with the state's form linked on both. Nothing to sign up for.",
       action: { label: "Download the prep sheet", href: "/downloads/seller-disclosure-prep-sheet-ny.pdf" },
       ariaLabel: "Download the free disclosure prep sheet",
     },

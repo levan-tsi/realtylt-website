@@ -138,7 +138,10 @@ Generally not unless your contract requires it, although a buyer's lender or loc
 
 Checked against these sources on September 24, 2026. Durations described as "in our experience" are typical ranges from our own transactions, not rules.`;
 
-export const SELLER_DISCLOSURE_POST = `I help New York sellers complete the property condition disclosure statement before they list. Here is what the NY form asks in 2026, who is exempt, what changed in 2025, and how to answer each question from what you actually know.
+// The owner's rule for every post (2026-10-31): open with two to four plain sentences on what it covers, what the reader leaves with and who it is for, then the story.
+export const SELLER_DISCLOSURE_POST = `This guide is for anyone selling a one- to four-family home in New York. It covers the state's property condition disclosure form: which sales need it, what changed in 2025, how to fill it in and what to gather before you do. You leave with a link to the state's form itself and a free two-page prep sheet that gets your paper ready for it.
+
+I help New York sellers complete the property condition disclosure statement before they list. Here is what the NY form asks in 2026, who is exempt, what changed in 2025, and how to answer each question from what you actually know.
 
 ## The form is required on most sales
 
@@ -146,7 +149,7 @@ New York's Property Condition Disclosure Act requires the seller of a one- to fo
 
 ### The current form is the February 2025 revision
 
-The Department of State's current form is DOS-1614-f (Rev. 02/25), required since July 1, 2025 ([Department of State, the form in effect from July 1, 2025](https://dos.ny.gov/property-condition-disclosure-statement-eff-7125)). The change is a paragraph under question 36, the sewage question, that points buyers to the Department of Health's information on septic system operation and maintenance; the amendment was signed on September 27, 2024 ([New York State Association of REALTORS legal update, as published by HGAR, 2025](https://hgar.com/nysar-legal-update-amended-pcds-must-be-used-beginning-july-1-2025)). A copy printed before July 2025 is out of date, so check the revision line at the foot of each page before anyone signs it.
+The Department of State's current form is DOS-1614-f (Rev. 02/25), required since July 1, 2025 ([Department of State, the form in effect from July 1, 2025](https://dos.ny.gov/property-condition-disclosure-statement-eff-7125)). You can [download the real form from the Department of State (PDF, seven pages)](https://dos.ny.gov/system/files/documents/2025/05/dos-1614-f-property-condition-disclosure-statement_04.2025-eff.-07.2025.pdf) and keep it open beside this guide. The change is a paragraph under question 36, the sewage question, that points buyers to the Department of Health's information on septic system operation and maintenance; the amendment was signed on September 27, 2024 ([New York State Association of REALTORS legal update, as published by HGAR, 2025](https://hgar.com/nysar-legal-update-amended-pcds-must-be-used-beginning-july-1-2025)). A copy printed before July 2025 is out of date, so check the revision line at the foot of each page before anyone signs it.
 
 ### A bill pending in 2026
 
@@ -214,7 +217,7 @@ New York law says it is not a material defect that a property was, or is suspect
 
 [[scene:disclosure-plan]]
 
-Free file: the disclosure prep sheet, one page that maps each document to the question number that asks for it. [Download the prep sheet (PDF)](/downloads/seller-disclosure-prep-sheet-ny.pdf).
+Free file: the disclosure prep sheet, two pages to keep beside [the real form, DOS-1614-f (Rev. 02/25)](https://dos.ny.gov/system/files/documents/2025/05/dos-1614-f-property-condition-disclosure-statement_04.2025-eff.-07.2025.pdf). Page 1 maps each document to the question number that asks for it; page 2 takes ten questions that need a date, a paper or an honest Unkn, and says where each answer comes from. Fill in the state's form itself; the sheet only gets the paper ready. [Download the prep sheet (PDF)](/downloads/seller-disclosure-prep-sheet-ny.pdf).
 
 [[scene:prep-sheet]]
 
