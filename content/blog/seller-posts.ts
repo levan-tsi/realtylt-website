@@ -141,7 +141,7 @@ Checked against these sources on September 24, 2026. Durations described as "in 
 // The owner's rule for every post (2026-10-31): open with two to four plain sentences on what it covers, what the reader leaves with and who it is for, then the story.
 export const SELLER_DISCLOSURE_POST = `This guide is for anyone selling a one- to four-family home in New York. It covers the state's property condition disclosure form: which sales need it, what changed in 2025, how to fill it in and what to gather before you do. You leave with a link to the state's form itself and a free two-page prep sheet that gets your paper ready for it.
 
-I help New York sellers complete the property condition disclosure statement before they list. Here is what the NY form asks in 2026, who is exempt, what changed in 2025, and how to answer each question from what you actually know.
+I help New York sellers complete the property condition disclosure statement before they list.
 
 ## The form is required on most sales
 
@@ -250,6 +250,8 @@ No. The act's definition of residential real property excludes condominium units
 ### Is New York a buyer beware state?
 
 Less than it was. Sellers must now complete the statement from actual knowledge and are liable for a willful failure to meet the law's requirements ([Real Property Law 465](https://www.nysenate.gov/legislation/laws/RPP/465)), and an as-is clause does not protect active concealment ([Simone v Homecheck, 2007](https://www.nycourts.gov/REPORTER/3dseries/2007/2007_06224.htm)). Buyers should still inspect.
+
+[[scene:quiz]]
 
 ## Next step
 

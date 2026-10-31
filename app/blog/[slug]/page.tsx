@@ -143,7 +143,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   // Who wrote it and how to reach him, on every post (round 15, the owner's word): the card's
   // standing line and paragraph follow the post's cluster, the same consumer/business split the
   // "Keep reading" block uses. components/blog/AuthorCard.tsx carries the copy.
-  const authorCard = <AuthorCard author={post.author} slug={post.slug} consumer={isConsumer(post)} />;
+  // A post with no cluster (the database posts published from the CRM, market check-ins) is
+  // real estate, so it gets the RealtyLT card (round 15, the orchestrator's fix at the merge).
+  const authorCard = (
+    <AuthorCard author={post.author} slug={post.slug} consumer={isConsumer(post) || post.cluster === undefined} />
+  );
 
   // The prompt is audience-specific, because the two audiences are not the same person. A
   // consumer post is passed to somebody who is moving; a flagship is 3,300 words aimed at the

@@ -59,7 +59,7 @@ export const SELLER_DISCLOSURE_QUIZ: SellerQuizQuestion[] = [
     choices: [
       "At the closing table",
       "Within 10 days after the contract is signed",
-      "Before the buyer signs a binding contract of sale",
+      "Before the buyer signs the contract of sale, not after it",
       "Before the first showing",
     ],
     answer: 2,

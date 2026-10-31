@@ -12,6 +12,7 @@
  *  - no em dashes, sentence case, no claim the post does not make. */
 
 import type { FlagshipContent } from "@/lib/blog/flagship";
+import { SELLER_DISCLOSURE_QUIZ } from "./seller-disclosure-quiz";
 
 const NYSBA = "https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/";
 const DOS_FORM = "https://dos.ny.gov/property-condition-disclosure-statement-eff-7125";
@@ -241,6 +242,22 @@ export const SELLER_DISCLOSURE_FLAGSHIP: FlagshipContent = {
         { text: "question numbers from DOS-1614-f (Rev. 02/25), Department of State", href: DOS_FORM },
         READ,
       ],
+    },
+
+    /** Round 15 (2026-10-31): the ten-question check at the end of the reading, his ask ("a little
+     * quiz at the end"). The questions live in seller-disclosure-quiz.ts (tested against the post);
+     * the RealtyLT result states are the dark house and the porch light, never the AI brand's brain. */
+    quiz: {
+      kind: "quiz",
+      band: "night",
+      label: "Quiz",
+      ariaLabel: "Quiz: what did you learn",
+      eyebrow: "Ten questions",
+      title: "What did you learn? Check it in two minutes",
+      brand: "realtylt",
+      passLine: "You know the form. If a question here touches your own sale, call or write and I will go through it with you.",
+      failLine: "Under half this time. Reread the 56 questions and the four answers, then have another go.",
+      questions: SELLER_DISCLOSURE_QUIZ,
     },
 
     /** The free file's line. Round 15: the sheet is two pages and sits beside the state's form,
