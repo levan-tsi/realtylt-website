@@ -78,6 +78,17 @@ export function Footer() {
                 {SITE.phone}
               </a>
             </p>
+            {/* The general inbox, as the header prints it (owner's word 2026-10-31: the footer shows
+                info@ and the main line; his own number and email are on /connect and the author
+                card). levan@ stays below it: four short lines still read cleanly at 390. */}
+            <p>
+              <a
+                href={`mailto:${SITE.infoEmail}`}
+                className="inline-flex min-h-[24px] items-center transition-colors hover:text-ink"
+              >
+                {SITE.infoEmail}
+              </a>
+            </p>
             <p>
               <a
                 href={`mailto:${SITE.email}`}
