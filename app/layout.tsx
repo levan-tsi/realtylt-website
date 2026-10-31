@@ -78,7 +78,9 @@ const AGENT_JSON_LD = {
   alternateName: SITE.name,
   url: SITE.url,
   telephone: SITE.phoneE164,
-  email: SITE.email,
+  // The general inbox, as the header and footer print it (owner's word 2026-10-31: his own email lives on
+  // /connect and the author card only).
+  email: SITE.infoEmail,
   // The actual logo mark, not the 1200x630 share card — Google's logo guidance wants the
   // brand image itself here; og-realtylt.png stays the social preview.
   logo: `${SITE.url}/logo-realtylt.png`,

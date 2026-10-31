@@ -26,7 +26,7 @@ export async function GET() {
     `> Real estate for the New York Hudson Valley (Westchester, Rockland, Putnam, Orange, Dutchess, and Ulster counties) and all five New York City boroughs: live MLS home search with map and saved-search alerts, buyer and seller representation, home valuations, and financing guidance. ${SITE.name} also builds and runs AI services for real estate professionals: chat assistants, voice agents, lead qualification, and workflow automation.`,
     "",
     `Agent: Levan Tsiklauri, licensed New York real estate agent with United Real Estate.`,
-    `Office: ${SITE.address.street}, ${SITE.address.locality}, ${SITE.address.region} ${SITE.address.postalCode}. Phone: ${SITE.phone}. Email: ${SITE.email}.`,
+    `Office: ${SITE.address.street}, ${SITE.address.locality}, ${SITE.address.region} ${SITE.address.postalCode}. Phone: ${SITE.phone}. Email: ${SITE.infoEmail}.`,
     `Fair housing: ${SITE.name} follows the NY Fair Housing Notice (${SITE.fairHousingPdf}) and displays the Equal Housing Opportunity mark. ${SITE.disclaimer}`,
     `Listing data: IDX listings come from the MLS via MLS Grid; per the license, listing content may not be scraped or republished. Everything else on the site may be read and cited.`,
     "",

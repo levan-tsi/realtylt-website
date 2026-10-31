@@ -58,7 +58,7 @@ export function serviceJsonLd(service: Service) {
       legalName: SITE.legalName,
       url: SITE.url,
       telephone: SITE.phoneE164,
-      email: SITE.email,
+      email: SITE.infoEmail,
       address: {
         "@type": "PostalAddress",
         streetAddress: SITE.address.street,
