@@ -517,18 +517,24 @@ If the middle list is long and the bottom line is empty, you have not found a bu
  * fluff it out; straight to the point, examples, understanding"): cut to under 20 minutes
  * (7,578 words to under 3,900) with every teaching kept and the quiz's ten answers still in the
  * text; the bold one-line "apply" labels woven into each section's close; a paragraph up front on why the
- * audit comes before any build. Before/after table: docs/blog-r16/NOTES.md. */
-export const AI_AUDIT_POST = `How to use AI in my business is the question owners bring us. This page shows how we answer it: write down how your work really runs, cross off the ideas that should stay with a person, and put what is left in the order to build it. It is for owners of a small business who think AI could help but do not yet know where to point it. By the end you can test any idea with three questions, put what survives in a safe order, and follow a week-by-week roadmap on your own.
+ * audit comes before any build. Before/after table: docs/blog-r16/NOTES.md.
+ *
+ * ROUND 17 (the owner, 2026-10-31 evening): the offer is the one-hour AI assessment with the owner,
+ * or the owner and the manager; no separate talks with each person until a build is asked for; the
+ * written plan after the call; the two routes (we build and run it with the assessment included, or
+ * they build from the plan); why build-and-manage beats training someone. "Audit" became
+ * "assessment" (one synonym clause kept in the FAQ). Notes: docs/blog-r17/NOTES.md. */
+export const AI_AUDIT_POST = `How to use AI in my business is the question owners bring us. This page shows how we answer it in an AI readiness assessment: write down how your work really runs, cross off the ideas that should stay with a person, and put what is left in the order to build it. It is for owners of a small business who think AI could help but do not yet know where to point it. By the end you can test any idea with three questions, put what survives in a safe order, and follow a week-by-week roadmap on your own.
 
-The audit comes before any building for a plain reason. The three questions cross off the ideas that would have been built wrong, before anyone pays for them, and the hours a job takes are measured before a tool is chosen. A build that skips the audit usually automates the wrong job, or the right job on a rule nobody had settled.
+The assessment comes before any building for a plain reason. The three questions cross off the ideas that would have been built wrong, before anyone pays for them, and the hours a job takes are measured before a tool is chosen. A build that skips the assessment usually automates the wrong job, or the right job on a rule nobody had settled.
 
 An invented example: an owner lists eleven things she would hand to AI. An hour later four are crossed off: two happen a few times a year, three people do one of them three ways, and one would send a customer a wrong answer in writing.
 
 [[scene:in-short]]
 
-## What an AI audit for a small business is for
+## What an AI assessment for a small business is for
 
-An audit worth your time hands your list back shorter, with a reason beside each removal that you can apply again on your own. In a small business every idea that gets built becomes a job someone has to own: it runs every day, someone has to understand it, and it breaks when a system it depends on changes. Crossing four ideas off eleven saves four builds and four failures nobody would have noticed, before any money moves. Before you look at any tool, decide that the result you want is a shorter list.
+An assessment worth your time hands your list back shorter, with a reason beside each removal that you can apply again on your own. In a small business every idea that gets built becomes a job someone has to own. Crossing four ideas off eleven saves four builds and four failures nobody would have noticed, before any money moves. Before you look at any tool, decide that the result you want is a shorter list.
 
 [[scene:deliverable]]
 
@@ -540,7 +546,7 @@ An invented example: a two-chair dental office writes down how a new patient get
 
 ## How small businesses use AI in 2026
 
-Fewer firms use AI than the headlines suggest. The Census Bureau's Business Trends and Outlook Survey put AI use in any business function at 19.8 percent of US businesses as of May 3, 2026 ([Census Bureau, May 26, 2026](https://www.census.gov/library/stories/2026/05/ai-use-businesses.html)). The Federal Reserve's Small Business Credit Survey asked firms with 1 to 499 employees a wider question, whether the business or its employees use AI in some way, and 46 percent said yes, mostly for writing and marketing ([Federal Reserve Banks, March 3, 2026](https://www.clevelandfed.org/collections/press-releases/2026/pr-20260303-fed-survey-small-business-optimism-wanes-as-performance-metrics-hold-steady); 6,525 responses, fielded September 3 to November 14, 2025). So about one firm in five uses AI inside its work, and close to one in two has someone using a tool somewhere.
+Fewer firms use AI than the headlines suggest. The Census Bureau's Business Trends and Outlook Survey put AI use in any business function at 19.8 percent of US businesses as of May 3, 2026 ([Census Bureau, May 26, 2026](https://www.census.gov/library/stories/2026/05/ai-use-businesses.html)). The Federal Reserve's Small Business Credit Survey asked firms with 1 to 499 employees a wider question, whether the business or its employees use AI in some way, and 46 percent said yes, mostly for writing and marketing ([Federal Reserve Banks, March 3, 2026](https://www.clevelandfed.org/collections/press-releases/2026/pr-20260303-fed-survey-small-business-optimism-wanes-as-performance-metrics-hold-steady); 6,525 responses, fielded September 3 to November 14, 2025).
 
 [[scene:who-uses-ai]]
 
@@ -604,7 +610,7 @@ Three kinds of work stay with a person in every assessment we run: any fact a cu
 
 [[scene:do-not]]
 
-The first kind gets built most often. A model asked about a price will answer, and the risk is a wrong answer in the right format that nobody checks. The right build is smaller: it fetches the value from the record that governs it and says so when there is no record. It may report what a source says or say it does not know. It may not make the answer up.
+The first kind gets built most often. A model asked about a price will answer, and the risk is a wrong answer in the right format that nobody checks. The right build is smaller: it fetches the value from the record that governs it and says so when there is no record. It may report what a source says or say it does not know.
 
 ### In a property business, specifically
 
@@ -636,41 +642,39 @@ We found no 2026 public survey of how often a small business's automation fails.
 
 First, containment: what happens when it is wrong, and who finds out. Second, whether the rule is settled, because software will not make a management decision. Third, and only third, the size of the saving, because the biggest saving is often the job with the most judgment in it.
 
-Our report also scores each job from 1 to 5 for impact and for risk, each with its reason, and leaves alone a job worth under two hours a week.
+Our plan also scores each job from 1 to 5 for impact and for risk, each with its reason, and leaves alone a job worth under two hours a week.
 
 [[scene:audit-path]]
 
 An invented example: a Friday list of open quotes for the owner. Only the owner reads it, so a wrong line costs a minute: risk 2. It saves two hours of digging: impact 3. It goes near the top, checked by the owner for four Fridays before it runs alone.
 
-## What the audit is and how it runs
+## What the assessment is and how it runs
 
-This page is the whole method, and you can run it without us. If you ask us to run it, we bring the hours it takes and the judgment of people who have watched these jobs break.
+This page is the whole method, and you can run it without us. If you ask us to run it, the assessment is a one-hour call with you, or with you and your manager, and a written plan after it.
 
 ### Why this is different from an automation agency
 
-Most people selling automations start from the tool. We start from the person who does the work and the hours they get back, keep a person on anything a customer sees, and tell you in writing what not to build. Ask anyone who offers to automate your business which of your ideas they would not build.
+Most people selling automations start from the tool. We start from the person who does the work and the hours they get back, keep a person on anything a customer sees, and tell you in writing what not to build.
 
 ### The steps, in order
 
-**Before the call.** Bring the person who does the admin: you know how the business should run, and they know how it does.
+**Before the call.** Your written answers to the questions below, and the four things listed after them. Bring your manager if someone else runs the admin: you know how the business should run, and they know how it does.
 
-**The call.** About 75 minutes on the last real week, because "walk me through last Tuesday" finds the real jobs. We pitch nothing, name no tools and promise no savings.
-
-**The people who do the work.** About 20 minutes with each person who repeats a job.
+**The call.** One hour on the last real week, because "walk me through last Tuesday" finds the real jobs. We pitch nothing, name no tools and promise no savings.
 
 **The notes.** Within two business days, sent back for you to correct.
 
 **The scoring.** Every step labelled, impact and risk with reasons, and one verdict per job: let a system run it, keep a person on it, or leave it alone.
 
-**The report.** About three business days after the last interview, then a 30-minute readout.
+**The plan.** Built from the scoring, about three business days after the call, then a short call to walk you through it.
 
-**The route you pick.** We build and run it, or we build it with your own person and hand it over. Either way it runs in your accounts.
+**The route you pick.** We build and run it, or you build from the plan. Either way it runs in your accounts.
 
 [[scene:audit-day]]
 
-## The questions we ask in an audit
+## The questions we ask in an assessment
 
-Answer these in writing, about the last real time something happened, before you talk to anyone: the answers are the first half of an audit. The first group gives a job value and a weekly count, the walk-through finds the hours, the job list finds the double typing, the numbers price an hour, and the last two set your goals and your limits.
+Answer these in writing, about the last real time something happened, before you talk to anyone: the answers are the first half of an assessment.
 
 ### The business in five minutes
 
@@ -714,19 +718,25 @@ Before the call, send a week of your calendar, the tracker you run the work from
 
 ## What you get at the end
 
-It takes about 75 minutes on the call, 20 minutes with each person who repeats a job, and about an hour of your time later to correct the notes and hear the readout. The report holds a one-page summary; how the work runs today, workarounds included; for every repeated job its steps, scores with reasons, verdict, current hours and a four-week trial target; what we crossed off and why; and the questions we still have, instead of guesses. Hours back are a trial target, never a promise, and every number says how it is known.
+Your time is the hour on the call and about another hour later for the notes and the walk-through. The plan, written from what you told us, says what we would build and in what order, how, how long each piece takes, and which system does which job. It names the precautions: what stays with a person, what is checked before anything reaches a customer, and how a failure shows. For every repeated job it gives the scores with reasons, the verdict, current hours and a four-week trial target, plus what we crossed off and why, and our open questions instead of guesses. Hours back are a trial target, never a promise, and every number says how it is known.
 
 [[scene:report]]
 
-### What an audit does not do
+### Two routes from the plan
 
-It does not decide for you or see what nobody will say. It does not save an hour on its own: a found hour has to be spent on purpose, or it is absorbed within a month. And it goes stale within months, because your business moves.
+If you ask us to build it and run it, the assessment is included in that work, and only then do we talk with each person who does the jobs being built. If you build it yourself, the plan is your map, and this page's method is open to you.
+
+Systems break: a program changes, a rule moves, and a job that ran for months stops without an error. A system needs proper evaluation and regular check-ins after it goes live. We have already made the mistakes a first-time builder makes, and the fixes are in the way we build. That is why a monthly retainer for us to build and manage it is safer and more efficient than finding or training someone to learn those mistakes on your business.
+
+### What an assessment does not do
+
+It does not decide for you or see what nobody will say, and it goes stale within months, because your business moves. A found hour has to be spent on purpose, or it is absorbed within a month.
 
 ## How to run one yourself in one evening
 
-1. Write every idea down without judging it. Editing while writing is how the interesting wrong idea survives.
+1. Write every idea down without judging it.
 2. Ask the rule question to three people, separately.
-3. Before writing any benefit, write where a wrong answer would land and who would find out. Once a benefit is said aloud, that question stops being asked seriously.
+3. Before writing any benefit, write where a wrong answer would land and who would find out.
 4. Cross off every line where the answer is a customer, or nobody.
 5. Put the list away for two weeks, then read it again.
 
@@ -736,7 +746,7 @@ It does not decide for you or see what nobody will say. It does not save an hour
 
 ## Your roadmap, week by week
 
-Nothing here needs us, and nothing costs money until an idea has passed every test.
+Nothing here needs us, and nothing costs money until an idea has passed every test. Where no job repeats yet, writing the process down comes first.
 
 1. **Week one.** Write down one job, answer the questions and run the one-evening test.
 2. **Weeks two and three.** Let the list sit, decide the unsettled rules with the people who do the work, and check whether a program you already pay for does any job on it.
@@ -748,10 +758,6 @@ Nothing here needs us, and nothing costs money until an idea has passed every te
 
 An invented example: a cleaning company keeps seven of eleven ideas and in week four picks the Friday list of the next day's jobs for the crews. By week eight it knows the list saves about two hours a week, measured rather than promised.
 
-### Who this fits
-
-Owners whose team repeats the same work every week, such as a front desk that books and confirms (an invented example of the kind of work). Where no job repeats yet, writing the process down comes first.
-
 ## Common questions about using AI in a small business
 
 ### How do I use AI in my business?
@@ -762,9 +768,9 @@ Write one job down, list your ideas, cross them off with the three questions, an
 
 Mostly by taking repeated typing, copying and checking off people's desks; see what it does to the team, above.
 
-### What is an AI audit for a small business?
+### What is an AI assessment for a small business?
 
-A structured look at how the business runs, to decide which repeated jobs AI takes first and which stay with a person; some call it an AI readiness assessment.
+A structured look at how the business runs, to decide which repeated jobs AI takes first and which stay with a person; some firms call this an AI audit.
 
 ### What can I automate in my business first?
 
@@ -774,13 +780,13 @@ Usually something plain that passes all three questions and fails where you can 
 
 With the three questions above; any one no is enough.
 
-### Can I do an AI audit myself?
+### Can I do an AI assessment myself?
 
-Yes, and you should do the first half yourself: writing a job down and answering the questions costs nothing. The crossing off is harder alone, because every idea on your list is there for a reason you agree with.
+Yes: writing a job down and answering the questions costs nothing. The crossing off is harder alone, because every idea on your list is there for a reason you agree with.
 
-### How long does an AI audit take?
+### How long does an AI assessment take?
 
-See how the audit runs, above: about 75 minutes with you, and the report about three business days after the last interview.
+One hour on the call with you, and the plan about three business days later; see how the assessment runs, above.
 
 ### Do I need to know anything about AI first?
 
@@ -790,15 +796,15 @@ No. The three questions are about the business. Choosing the tools is our job.
 
 Rarely; see what it does to the team, above.
 
-### How is an AI audit different from workflow automation?
+### How is an AI assessment different from workflow automation?
 
-Workflow automation is the building. An audit is the deciding, and it comes first.
+Workflow automation is the building. An assessment is the deciding, and it comes first.
 
 [[scene:quiz]]
 
 ## Next step
 
-When your list is written, we go through it with you and send back, in writing, which items we would build first and which we would cross off. [Book a Consultation](/connect): (914) 875-2424, levan@realtylt.com.
+The offer is the one-hour assessment: we go through your list with you, then send back a written plan of what we would build first, how, and what we would cross off. [Book a Consultation](/connect): (914) 875-2424, levan@realtylt.com.
 
 By Levan Tsiklauri.
 
@@ -1701,7 +1707,7 @@ Nothing in this article argues against enrichment. Two thirds of a database with
 
 What it argues is that the assertion should arrive wearing a label. Where it came from. When. What it landed on. Those three facts turn an appended value from something you have to trust into something you can weigh. They cost one afternoon of build time to capture. They cannot be recovered once a pass has run without them.
 
-This sits beside everything else we build, on [the RealtyLT AI page](/ai#enrich); what actually gets appended and checked is on the [data enrichment page](/services/data-enrichment). If you would rather someone looked at what your existing records already say about themselves before anything is bought, that is the [AI audit](/services/ai-audit).
+This sits beside everything else we build, on [the RealtyLT AI page](/ai#enrich); what actually gets appended and checked is on the [data enrichment page](/services/data-enrichment). If you would rather someone looked at what your existing records already say about themselves before anything is bought, that is the [AI assessment](/services/ai-readiness-assessment).
 
 A fuller database is easy. A database that can tell you where it got something is the one worth having.
 
@@ -1941,7 +1947,7 @@ Somewhere in your business there is a set of counting rules. Which day a period 
 
 Writing them down is free, and it takes an afternoon. It is worth doing whether or not you ever buy any of this.
 
-Where this sits among everything else we build is on [the RealtyLT AI page](/ai#docs). The fields it pulls and the places it writes them are on the [document processing page](/services/document-processing). You may instead want somebody to go through one real file with you, and mark up which values are printed, which are handwritten and which are derived. That is the [AI audit](/services/ai-audit).
+Where this sits among everything else we build is on [the RealtyLT AI page](/ai#docs). The fields it pulls and the places it writes them are on the [document processing page](/services/document-processing). You may instead want somebody to go through one real file with you, and mark up which values are printed, which are handwritten and which are derived. That is the [AI assessment](/services/ai-readiness-assessment).
 
 The paperwork is not going to get cleaner. The rules about what its dates mean are the part you can fix this week.
 
@@ -2401,7 +2407,7 @@ Go and read yesterday's output. Not the summary of it. The actual pieces, all of
 
 Then write one brief for one job, properly, before anybody sells you anything. The research says most of what an assistant can do for you comes out of that document. The document is the part nobody else can write. And you can write it today for nothing.
 
-The assistants are listed on [the RealtyLT AI page](/ai#agents). What each one is pointed at is set out on the [AI agent workforce page](/services/ai-agent-workforce). Working out which of your recurring jobs can truly be handed over is what the [AI audit](/services/ai-audit) does. We take one real job, write the brief with you, and build that one first.
+The assistants are listed on [the RealtyLT AI page](/ai#agents). What each one is pointed at is set out on the [AI agent workforce page](/services/ai-agent-workforce). Working out which of your recurring jobs can truly be handed over is what the [AI assessment](/services/ai-readiness-assessment) does. We take one real job with you, and the plan says which one to build first.
 
 Each of those jobs is written up on its own. There is [answering the website at midnight](/blog/ai-chat-assistant-real-estate-website), [picking up the phone at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate), and [the wiring between the tools that makes any of it possible](/blog/workflow-automation-real-estate-business).
 
@@ -2621,7 +2627,7 @@ Search your own name in your own CRM. That is the whole assignment. It costs not
 
 If more than one of you comes back, you already know what the automated message going out on Tuesday is addressed to. And you know something else, which is that it was never a discipline problem, because nobody typed anything wrong. Two systems were separately right about the same person, and nothing in the building had the job of noticing.
 
-The pieces are drawn on [the RealtyLT AI page](/ai#crmsync); what writes back to what is set out on the [two-way CRM sync page](/services/crm-sync). Should you prefer someone to go through your fields alongside you and say honestly which parts of this are a week and which are an afternoon, the [AI audit](/services/ai-audit) is exactly that hour.
+The pieces are drawn on [the RealtyLT AI page](/ai#crmsync); what writes back to what is set out on the [two-way CRM sync page](/services/crm-sync). Should you prefer someone to go through your fields alongside you and say honestly which parts of this are a week and which are an afternoon, the [AI assessment](/services/ai-readiness-assessment) is exactly that hour.
 
 The other half of this story is the systems doing the writing: [what happens when the phone rings and nobody picks up](/blog/ai-voice-agent-missed-calls-real-estate), [what a website conversation at midnight produces](/blog/ai-chat-assistant-real-estate-website), and [the busywork the wiring between them removes](/blog/workflow-automation-real-estate-business).
 
@@ -4164,7 +4170,7 @@ Often more, not less. A one-person business has no one to absorb the busywork, s
 
 Go and get the highlighter. One deal, from the first inquiry to the closing table. Every step written down in the order it really happens. And a mark against anything where a person types in something another system already knows. Nobody has to approve it, and it costs an hour. At the end of it you are holding the only document that makes any of the rest of this decidable. Until that page exists, every quote you are given is a guess about a business the person quoting has not seen.
 
-You can see the wiring on [the RealtyLT AI page](/ai#workflow). What gets connected to what is on the [workflow automation page](/services/workflow-automation). If you would rather somebody sat through that hour with you, that is exactly what the [AI audit](/services/ai-audit) is: we follow one real job, rank what each fix is worth, and build the first one.
+You can see the wiring on [the RealtyLT AI page](/ai#workflow). What gets connected to what is on the [workflow automation page](/services/workflow-automation). If you would rather somebody sat through that hour with you, that is exactly what the [AI assessment](/services/ai-readiness-assessment) is: we follow one real job, put the fixes in order, and write the plan.
 
 Three of the hops are written out at length on their own: [the 11:40pm website conversation](/blog/ai-chat-assistant-real-estate-website), [the 9:42 Sunday phone call](/blog/ai-voice-agent-missed-calls-real-estate), and [scoring the lead once it arrives](/blog/ai-lead-qualification-real-estate-scoring).
 

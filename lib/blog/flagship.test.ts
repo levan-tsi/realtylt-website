@@ -533,7 +533,7 @@ describe("flagshipToc: one entry per section, no row twice", () => {
     );
     expect(rows.length).toBeLessThanOrEqual(headings.length + destinations.length);
     expect(rows.length).toBeLessThanOrEqual(18);
-    for (const label of ["Who stays on the job", "How the audit runs", "What you get", "Your roadmap"])
+    for (const label of ["Who stays on the job", "How the assessment runs", "What you get", "Your roadmap"])
       expect(rows.filter((r) => key(r.label) === key(label)), label).toHaveLength(1);
   });
 
