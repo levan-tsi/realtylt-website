@@ -1,0 +1,80 @@
+ai-audit-small-business-what-not-to-automate @390: 331 steps (0 with the rail shown, the rest the pill), lowest 16.41:1, 0 under 4.5:1
+ai-audit-small-business-what-not-to-automate @1440: 263 steps (0 with the rail shown, the rest the pill), lowest 16.41:1, 0 under 4.5:1
+ai-audit-small-business-what-not-to-automate @1680: 263 steps (263 with the rail shown, the rest the pill), lowest 1.06:1, 50 under 4.5:1
+  y=0 open 1.06:1, at rest 1.05:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(20,28,34); band rule: dark:daylight cold-open relative is; under: header[band=dark].daylight.cold-open.relative
+  y=200 open 1.06:1, at rest 1.04:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(20,27,33); band rule: dark:daylight cold-open relative is; under: header[band=dark].daylight.cold-open.relative
+  y=400 open 1.07:1, at rest 1.02:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(20,23,27); band rule: dark:daylight cold-open relative is; under: header[band=dark].daylight.cold-open.relative
+  y=600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:daylight cold-open relative is; under: header[band=dark].daylight.cold-open.relative
+  y=7400 open 1.08:1, at rest 1.02:1; label rgba(21,23,26,0.655) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-by-firm-size; under: section.bg-ink.py-20.text-paper
+  y=7600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-by-firm-size; under: section.bg-ink.py-20.text-paper
+  y=7800 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-by-firm-size; under: section.bg-ink.py-20.text-paper
+  y=8000 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-by-firm-size; under: section.bg-ink.py-20.text-paper
+  y=8200 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-by-firm-size; under: section.bg-ink.py-20.text-paper
+  y=8400 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-by-firm-size; under: section.bg-ink.py-20.text-paper
+  y=10800 open 1.08:1, at rest 1.02:1; label rgba(21,23,26,0.655) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-why-not; under: section.bg-ink.py-20.text-paper
+  y=11000 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-why-not; under: section.bg-ink.py-20.text-paper
+  y=11200 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-why-not; under: section.bg-ink.py-20.text-paper
+  y=13600 open 1.08:1, at rest 1.02:1; label rgba(21,23,26,0.655) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-the-person-stays; under: section.bg-ink.py-20.text-paper
+  y=13800 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-the-person-stays; under: section.bg-ink.py-20.text-paper
+  y=14000 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-the-person-stays; under: section.bg-ink.py-20.text-paper
+  y=14200 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-the-person-stays; under: section.bg-ink.py-20.text-paper
+  y=14400 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-the-person-stays; under: section.bg-ink.py-20.text-paper
+  y=14600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-the-person-stays; under: section.bg-ink.py-20.text-paper
+  y=17800 open 1.08:1, at rest 1.01:1; label rgba(20,22,25,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-three-gates; under: section.bg-ink.py-20.text-paper
+  y=18000 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-three-gates; under: section.bg-ink.py-20.text-paper
+  y=18200 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-three-gates; under: section.bg-ink.py-20.text-paper
+  y=18400 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-three-gates; under: section.bg-ink.py-20.text-paper
+  y=18600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-three-gates; under: section.bg-ink.py-20.text-paper
+  y=24200 open 1.08:1, at rest 1.02:1; label rgba(21,23,26,0.655) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-stay-on-job; under: section.bg-ink.py-20.text-paper
+  y=24400 open 1.07:1, at rest 1.01:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(20,21,24); band rule: dark:scene-stay-on-job; under: section.bg-ink.py-20.text-paper
+  y=24600 open 1.07:1, at rest 1.01:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(20,21,24); band rule: dark:scene-stay-on-job; under: section.bg-ink.py-20.text-paper
+  y=24800 open 1.07:1, at rest 1.01:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(20,21,24); band rule: dark:scene-stay-on-job; under: section.bg-ink.py-20.text-paper
+  y=25800 open 1.08:1, at rest 1.01:1; label rgba(21,23,26,0.655) card rgba(0,0,0,0.851) over rgb(20,21,24); band rule: dark:scene-plate-garage; under: section.bg-ink.py-20.text-paper
+  y=26000 open 1.07:1, at rest 1.01:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(20,21,24); band rule: dark:scene-plate-garage; under: section.bg-ink.py-20.text-paper
+  y=26200 open 1.07:1, at rest 1.01:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(20,21,24); band rule: dark:scene-plate-garage; under: section.bg-ink.py-20.text-paper
+  y=33000 open 1.08:1, at rest 1.01:1; label rgba(20,22,25,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-audit-day; under: section.bg-ink.py-20.text-paper
+  y=33200 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-audit-day; under: section.bg-ink.py-20.text-paper
+  y=33400 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-audit-day; under: section.bg-ink.py-20.text-paper
+  y=33600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-audit-day; under: section.bg-ink.py-20.text-paper
+  y=33800 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-audit-day; under: section.bg-ink.py-20.text-paper
+  y=34000 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-audit-day; under: section.bg-ink.py-20.text-paper
+  y=39800 open 1.08:1, at rest 1.01:1; label rgba(20,22,25,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-report; under: section.bg-ink.py-20.text-paper
+  y=40000 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-report; under: section.bg-ink.py-20.text-paper
+  y=44400 open 1.07:1, at rest 1.01:1; label rgba(20,21,24,0.655) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-roadmap; under: section.bg-ink.py-20.text-paper
+  y=44600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-roadmap; under: section.bg-ink.py-20.text-paper
+  y=44800 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-roadmap; under: section.bg-ink.py-20.text-paper
+  y=45000 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-roadmap; under: section.bg-ink.py-20.text-paper
+  y=45200 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-roadmap; under: section.bg-ink.py-20.text-paper
+  y=45400 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-roadmap; under: section.bg-ink.py-20.text-paper
+  y=48400 open 1.07:1, at rest 1.01:1; label rgba(20,21,24,0.655) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-quiz; under: section.bg-ink.py-20.text-paper
+  y=48600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-quiz; under: section.bg-ink.py-20.text-paper
+  y=48800 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-quiz; under: section.bg-ink.py-20.text-paper
+  y=49000 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-quiz; under: section.bg-ink.py-20.text-paper
+  y=49200 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-quiz; under: section.bg-ink.py-20.text-paper
+seller-disclosure-requirements-new-york @390: 129 steps (0 with the rail shown, the rest the pill), lowest 16.41:1, 0 under 4.5:1
+seller-disclosure-requirements-new-york @1440: 100 steps (0 with the rail shown, the rest the pill), lowest 16.41:1, 0 under 4.5:1
+seller-disclosure-requirements-new-york @1680: 100 steps (100 with the rail shown, the rest the pill), lowest 1.06:1, 24 under 4.5:1
+  y=0 open 1.06:1, at rest 1.05:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(20,28,34); band rule: dark:daylight cold-open relative is; under: header[band=dark].daylight.cold-open.relative
+  y=200 open 1.06:1, at rest 1.04:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(20,27,33); band rule: dark:daylight cold-open relative is; under: header[band=dark].daylight.cold-open.relative
+  y=400 open 1.07:1, at rest 1.02:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(20,23,27); band rule: dark:daylight cold-open relative is; under: header[band=dark].daylight.cold-open.relative
+  y=600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:daylight cold-open relative is; under: header[band=dark].daylight.cold-open.relative
+  y=2400 open 1.08:1, at rest 1.01:1; label rgba(20,22,25,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-form-timeline; under: section.bg-ink.py-20.text-paper
+  y=2600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-form-timeline; under: section.bg-ink.py-20.text-paper
+  y=2800 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-form-timeline; under: section.bg-ink.py-20.text-paper
+  y=3000 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-form-timeline; under: section.bg-ink.py-20.text-paper
+  y=3200 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-form-timeline; under: section.bg-ink.py-20.text-paper
+  y=3400 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-form-timeline; under: section.bg-ink.py-20.text-paper
+  y=3600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-form-timeline; under: section.bg-ink.py-20.text-paper
+  y=6200 open 1.08:1, at rest 1.02:1; label rgba(21,23,26,0.655) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-four-answers; under: section.bg-ink.py-20.text-paper
+  y=6400 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-four-answers; under: section.bg-ink.py-20.text-paper
+  y=6600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-four-answers; under: section.bg-ink.py-20.text-paper
+  y=6800 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-four-answers; under: section.bg-ink.py-20.text-paper
+  y=7000 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-four-answers; under: section.bg-ink.py-20.text-paper
+  y=10400 open 1.08:1, at rest 1.02:1; label rgba(21,23,26,0.655) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-lead-paint; under: section.bg-ink.py-20.text-paper
+  y=10600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-lead-paint; under: section.bg-ink.py-20.text-paper
+  y=10800 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-lead-paint; under: section.bg-ink.py-20.text-paper
+  y=11000 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-lead-paint; under: section.bg-ink.py-20.text-paper
+  y=16000 open 1.08:1, at rest 1.02:1; label rgba(21,23,26,0.655) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-quiz; under: section.bg-ink.py-20.text-paper
+  y=16200 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-quiz; under: section.bg-ink.py-20.text-paper
+  y=16400 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-quiz; under: section.bg-ink.py-20.text-paper
+  y=16600 open 1.07:1, at rest 1:1; label rgba(18,20,23,0.651) card rgba(0,0,0,0.851) over rgb(19,20,23); band rule: dark:scene-quiz; under: section.bg-ink.py-20.text-paper
