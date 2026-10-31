@@ -18,6 +18,8 @@ import { SCHEDULING_FLAGSHIP } from "@/content/blog/scheduling-scenes";
 import { INVOICING_FLAGSHIP } from "@/content/blog/invoicing-scenes";
 import { CLONE_FLAGSHIP } from "@/content/blog/clone-scenes";
 import { AUDIT_FLAGSHIP } from "@/content/blog/audit-scenes";
+import { SELLER_DISCLOSURE_FLAGSHIP } from "@/content/blog/seller-disclosure-scenes";
+import { SELLER_DISCLOSURE_POST } from "@/content/blog/seller-posts";
 import { CUSTOM_FLAGSHIP } from "@/content/blog/custom-scenes";
 import { SINGULARITY_FLAGSHIP } from "@/content/blog/singularity-scenes";
 import {
@@ -320,6 +322,9 @@ const TOPICS: [string, string, FlagshipContent][] = [
   // Topic 21, 2026-08-27. The first flagship whose scenes are ALL primitives: no `component`
   // escape hatch anywhere in its payload, which is what the template was generalised for.
   ["the singularity", SINGULARITY_POST, SINGULARITY_FLAGSHIP],
+  // Round 14, 2026-10-30. The first consumer post built as a flagship, and the first topic whose
+  // figures use the round-14 kinds (bars, cells, timeline, flow, tiles, steps).
+  ["seller disclosure", SELLER_DISCLOSURE_POST, SELLER_DISCLOSURE_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {
@@ -358,6 +363,19 @@ describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) =
       expect(scene.sourceHref, `scene ${key}`).toMatch(/^https:\/\//);
       expect(scene.note.trim().length, `scene ${key} caveat`).toBeGreaterThan(20);
       expect(scene.bars.length, `scene ${key} bars`).toBeGreaterThan(1);
+    }
+  });
+
+  /** The round-14 figure kinds carry their citation as a list rather than one field. A figure
+   * with an empty source list passes the compiler and reads as an illustration of nothing. */
+  it("gives every round-14 figure a source line and a one-sentence alt", () => {
+    const FIGURES = ["bars", "cells", "timeline", "flow", "tiles", "steps"];
+    for (const [key, scene] of Object.entries(content.scenes)) {
+      if (!FIGURES.includes(scene.kind) || !("sources" in scene)) continue;
+      expect(scene.sources.length, `scene ${key} sources`).toBeGreaterThan(0);
+      for (const s of scene.sources) if (s.href) expect(s.href, `scene ${key}`).toMatch(/^https:\/\//);
+      expect(scene.alt.trim().split(/(?<=[a-z0-9)][.!?])\s+(?=[A-Z])/).length, `scene ${key} alt is one sentence`).toBe(1);
+      expect(scene.alt, `scene ${key} alt`).not.toMatch(/—/);
     }
   });
 

@@ -503,215 +503,127 @@ If the middle list is long and the bottom line is empty, you have not found a bu
 
 [[scene:funnel]]`;
 
-export const AI_AUDIT_POST = `The list had eleven things on it. It took about twenty minutes to write. That should have been the first clue that writing it was not the hard part.
-
-Answer the phone at night. Stop retyping the same details into two systems. Chase the signatures. Reply to the portal enquiries faster. Get the market note out without a Sunday evening disappearing into it. Every one of them a real irritation. Every one of them something a machine could plausibly do. And every one of them written down by someone who runs the business and knows what actually happens in it.
-
-The hour that followed did not add anything to the list. It crossed four things off it.
-
-Two went because they happen a handful of times a year. A job that runs four times a year fails without anyone noticing until a client notices. One went because the rule behind it turned out not to exist. Three people in the office did it three different ways. All three thought theirs was the policy. And one went because a wrong answer would have gone out in writing, to a buyer, with someone's name on the bottom of it.
-
-That hour was the product. The list was free.
+export const AI_AUDIT_POST = `How to use AI in my business is the question owners bring us, and we answer it by writing down how one job really runs and crossing off the ideas that should stay with a person. Below are the three questions we use for the crossing off, what 2026 government surveys show small firms do with AI, and a one-page sheet to run the test yourself.
 
 [[scene:in-short]]
 
-## What an audit is actually for, and it is not the list
+## What small firms do with AI in 2026
 
-There is a version of this service, sold everywhere, that is a discovery meeting with a document attached. Someone asks what your business does. They write the answers down in a tidier order than you gave them. They return a deck of opportunities. It is not dishonest. It is just that you already had that information. What you did not have was permission to remove things from it.
+Fewer firms use AI than the headlines suggest, and the count depends on the question asked. The Census Bureau's Business Trends and Outlook Survey put AI use at 19.8 percent of US businesses as of May 3, 2026, after it hovered between 17 and 20 percent from December 2025; between 20 and 23 percent of businesses expected to use it within six months. Firms with 250 or more employees were at 37 percent, and firms with four or fewer employees were under 20 percent ([Census Bureau, May 26, 2026](https://www.census.gov/library/stories/2026/05/ai-use-businesses.html)).
 
-An audit worth money has one property. Parts of the list come back shorter than they went in. And each removal has a reason beside it that you can apply again next year without anyone's help.
+[[scene:by-firm-size]]
 
-[[scene:deliverable]]
+The Federal Reserve's Small Business Credit Survey asked firms with 1 to 499 employees a wider question, whether the business or its employees use AI in some way, and 46 percent said yes. A third had no plans to use it, and more than half of those said AI does not apply to their business ([Federal Reserve Banks, March 3, 2026](https://www.clevelandfed.org/collections/press-releases/2026/pr-20260303-fed-survey-small-business-optimism-wanes-as-performance-metrics-hold-steady); 6,525 responses, fielded September 3 to November 14, 2025).
 
-Why removal is worth more than addition is a thing about small businesses. It is easy to say. It is hard to believe until it has happened to you. Nobody is short of ideas about what to automate. Everyone is short of whatever stops a plausible idea. And a plausible idea that gets built becomes a permanent duty. It runs. Someone has to understand it. It breaks quietly in a year, when a system it depends on changes underneath it.
+Read together, about one firm in five uses AI inside a business function, and close to one in two has someone using an AI tool somewhere. An owner who has not started is in the majority on the first measure.
 
-Crossing four things off a list of eleven does not save you eleven builds. It saves you four builds, four maintenance duties and four quiet failures. And it does it before any money has moved.
+[[scene:who-uses-ai]]
 
-## The part that is already free, and is not repeated here
+## Where the use goes, and what it does to the team
 
-Before the questions in this article are any use, someone has to write down how one real job actually runs. In the order it happened. Including the steps that only exist because a system does not do something it was bought to do.
+A Census Bureau working paper on the 2026 AI supplement found that 18 percent of firms used AI in a business function between November 2025 and January 2026, and that 57 percent of those users had it in three or fewer functions. The most common were sales and marketing (52 percent of users), strategy and business development (45 percent) and IT (41 percent). For the smallest firms, with 1 to 4 employees, current use was 18 percent and expected use within six months about 21 percent ([Bonney and others, Census Bureau working paper CES 26-25, April 2026](https://www2.census.gov/library/working-papers/2026/adrm/ces/CES-WP-26-25.pdf)).
 
-That work is described in detail in [the workflow automation article on this site](/blog/workflow-automation-real-estate-business). It walks through doing it with a piece of paper and no help from anyone. There is no point in this page saying it again in different words. Go and read that if you have not mapped anything yet, then come back.
+[[scene:where-it-goes]]
 
-What follows starts one step later. You have a list of candidates. Everything below is about what to do with a list. That is a different problem from producing one. It is where an outside eye is truly worth something, because the person who wrote the list is the person least able to remove things from it.
+The same Census paper asked what AI did to the work. According to it, 44 percent of AI-using firms said it added to tasks their workers already do, and two thirds of the firms that saw any change to tasks saw only that kind of change. About 5 percent reported any change in headcount, split almost evenly: 2.3 percent up and 2.0 percent down. That is how we build: the person stays, and the aim is to take the repeated work around them off their desk.
 
-## You are almost certainly not behind
+[[scene:the-person-stays]]
 
-Something has to be said before any of the ranking makes sense. The feeling that everyone else has already done this is doing a lot of quiet damage to how these decisions get made.
+## The three questions that cross ideas off
 
-The Census Bureau ran a technology module on the 2018 Annual Business Survey. It published the results with a team of economists from the Bureau, from Stanford and from Toronto. It is worth knowing how that instrument differs from the surveys these numbers usually come from. The sample was over 850,000 firms across every private non-farm sector. Answering is required by law rather than optional. And about two thirds of the firms in it had fewer than ten employees. The Bureau also publishes [the technology module's own tables](https://www.census.gov/data/tables/2018/econ/abs/2018-abs-digital-technology-module.html). The paper notes that those tables are uncorrected for sample weights and should therefore be read as a lower bound. The authors are explicit about why that matters. Privately funded technology surveys, they write, suffer from low response rates and significant selection bias, which limits how far their findings generalise.
+Every list of AI ideas is long, because each item on it is a real irritation. These three questions take items off the list, and each one takes off a different kind.
 
-[[scene:adoption]]
+### One: it happens often enough that a failure gets noticed within a week
 
-[[scene:plate]]
+A job that runs every day and whose result someone waits for reports its own failure. An invented example: a job that runs four times a year breaks in March and is found in June by an annoyed customer. Frequency decides whether a break gets found, so weekly or more is a yes and quarterly is almost always a no, whatever the time saving looks like on paper.
 
-Two readings of that chart. The second one is the useful one.
+### Two: the rule can be written down for a new hire
 
-The first is the obvious comfort. If you have not built anything yet, you are not the last one. Nearly everyone has their information in a computer. One firm in ten was using anything on that list of nine technologies. The distance between those two is enormous. And it was measured on a sample large enough that it is not an artefact of who chose to answer.
+An invented example: three people in an office describe the same decision three ways, so the first job is to decide the rule. Software built over the top of that freezes whichever version its builder happened to hear. Ask the three people separately, never in a meeting; different answers are the finding.
 
-The second reading is the one that changes behaviour. A field where one firm in ten has adopted anything is a field with no settled playbook. There is no agreement about what a small business should build first, because not enough small businesses have built anything for an agreement to exist. Which means the confident answers you are being given about what to do first are not summaries of what worked. They are guesses, sold with conviction. The right stance toward all of them, including the ones on this page, is to ask what they rest on.
+### Three: a wrong answer lands where a person sees it first
 
-Treat all of it as a fact about how new this still is rather than as a description of the market this week, for the reason the chart's own note gives.
+An invented example: a wrong figure in a sheet someone checks on Friday costs an hour. A wrong answer sent to a customer in writing, with the business's name on it, costs the customer and then the business. This is the question to expect the most crossings from, and better software does not change its answer, because where a mistake lands is a fact about the business.
 
-## The three questions that do the cutting
+[[scene:three-gates]]
 
-Here is the whole method. It is kept small on purpose, so you can remember it without a document.
+## What we leave with a person
 
-[[scene:subtractions]]
+Three kinds of work stay with a person in every assessment we run:
 
-Take them one at a time. Each removes a different kind of candidate, and the third removes the most.
+- any statement of fact a customer relies on, such as a price, a policy, an insurance detail or an appointment rule, unless the system reads it from the record that governs it and says so when there is no record;
+- the judgment calls made a few times a year, such as whether to take on a client or change a price;
+- anything whose failure is silent, such as a reminder that stops sending without an error anyone sees.
 
-The frequency question is not really about the saving. It is about detection. Everything anyone builds has a day when it stops working. Usually something it depends on changed, and nobody sent a letter. A job that runs several times a week announces its own failure inside a few days, because someone is waiting for the output. A job that runs quarterly fails in March and is found in June by a person who is annoyed. The saving on the quarterly one may be larger. It is still the worse candidate.
+The person keeps those jobs, and AI takes the typing, copying and checking around them.
 
-The rule question quietly turns into a management problem. It is the most useful thing an outsider can force. Asking three people how something gets decided, separately, and getting three answers is not a sign that anyone is doing it wrong. It is a sign that a decision was never made. Everyone filled the gap sensibly. Building software over the top of that does not settle it. It freezes whichever version the person writing the specification happened to hear. Then it removes everyone's ability to notice.
+## Rank what survives by its worst day
 
-The consequence question gets skipped. It gets skipped because it feels like expecting the worst, in a conversation that is going well. It is also the only one whose answer does not improve as the software improves. Where a wrong answer lands is a fact about your business, not about a model.
+Once the list is short, the natural move is to rank it by the time each item saves. We rank by how contained the worst case is. A job whose failure means someone redoes it by hand for an afternoon goes ahead of a bigger saving whose failure nobody can describe.
 
-The framework the American standards body publishes for managing risk in AI systems makes the same point in a much drier voice. It is worth quoting for what it puts on the list of options.
+The federal AI Risk Management Framework makes the same allowance in drier words. Version 1.0 dates from January 2023 and was still the current version on NIST's page when we checked it on October 29, 2026, with a revision under way. It lists the responses to a risk as "mitigating, transferring, avoiding, or accepting" and says it "does not prescribe risk tolerance" ([NIST AI 100-1](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf); [NIST, AI RMF page](https://www.nist.gov/itl/ai-risk-management-framework)). Avoiding is one of the four, so deciding not to build something is a legitimate result of an assessment.
 
-[[scene:pull-quote]]
+## Why this page gives no failure rate for AI projects
 
-[The AI Risk Management Framework](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf) is published by the National Institute of Standards and Technology. It is voluntary. It is aimed at organisations far larger than a brokerage. It is still worth ten minutes. That is because it was written by people with nothing to sell. What it keeps saying is what vendors never say. Its management function opens by requiring a determination as to whether the system achieves its intended purposes and stated objectives and whether its development or deployment should proceed. Its list of risk responses runs: mitigating, transferring, avoiding, or accepting. Avoiding is on the list.
+Owners often ask what share of AI projects fail. We found no 2026 public survey that measures how often a small business's automation fails; the figures that circulate come from large-company surveys of stalled pilots and abandoned programmes, which answer a different question. A number whose method nobody can check stays off this page.
 
-It is also honest about its own limits in a way worth copying. It says plainly that while it can be used to prioritise risk, it does not prescribe risk tolerance. It says that the level of risk which is acceptable is highly contextual and specific to the application. There is no universal answer to how careful to be. There is only your business, and what happens in it when something is wrong.
+## Run the test yourself in one evening, and read it again in two weeks
 
-## What should not be automated in a property business
+1. Write every idea down without judging it, in the order it comes to mind.
+2. Ask the rule question to three people, separately.
+3. Next to each line, before writing any benefit, write where a wrong answer would land and who would find out.
+4. Cross off every line where the answer is a customer, and every line where the answer is nobody.
+5. Put the list away for two weeks, then read it again.
 
-Generic versions of this advice exist. They are worthless. The categories they warn about are ones nobody was going to automate anyway. This is the specific version for this trade.
+An invented example: eleven ideas, four crossed off at the three questions, seven left to rank.
 
-[[scene:do-not]]
+What is left is usually a short list, and that is the shortlist worth a conversation.
 
-The first of those three deserves an extra sentence, because it gets built most often. A model asked about a property will produce an answer about the property. It will produce a plausible square footage, a plausible tax figure, a plausible school assignment. The failure is not that it invents things in an obvious way. It is that the answer arrives in the right format and at roughly the right size. That is exactly the shape of thing nobody checks.
+[[scene:one-evening]]
 
-The correct build for that class of question exists. It is smaller than the one people ask for. It fetches the value from the record that governs it. Where there is no record it says so, out loud, rather than filling the gap. Anything with a document or a data component on this site rests on that same principle. A system may report what a source says, and it may say it does not know. It may not produce the answer itself.
+Free file: the three-question sheet, one page with the three columns ready, as a [printable PDF](/downloads/three-question-sheet.pdf), linked here at publication.
 
-There is a fourth thing to leave alone. It is not on the list above, because it is not really a candidate. And it should be said anyway. Anything you would be embarrassed to tell a client was automated. That is not a legal test. It is not a technical one. It is a good instinct. It is available for free. It costs nothing to apply before any of the other three.
+[[scene:sheet]]
 
-## Why ranking by the average outcome gets it wrong
+## Who this fits
 
-Suppose the list is now short and honest. The natural next move is to estimate what each survivor is worth, put them in order of that, and start at the top. That instinct is wrong, and not as a matter of taste.
+It fits owners whose team repeats the same work every week: a front desk that books and confirms, an office that types the same details into two systems, a team that answers the same five questions by email (invented examples of the kind of work, not clients). It fits less well where no job repeats yet, or where the rules change every week; those owners get more from writing the process down first, and the sheet helps with that too.
 
-Two researchers at Oxford assembled what they describe as the largest academic dataset of its kind. It holds 1,471 information technology projects, worth 241 billion dollars. They were drawn from private-sector records, from published national audit reports in the United States and the United Kingdom, and from federal budget filings. Then the researchers looked at how the cost overruns were actually spread out, rather than at the average of them.
+## Common questions
 
-[[scene:outcomes]]
+### What is an AI audit for a small business?
 
-The middle of that distribution is boring, which is the point. Ordinary projects come in a few percent over. Sometimes they come in under. If that were the whole story, an average would be a perfectly good planning tool. What the authors find instead is a right hand tail far too heavy for that. Seventeen percent of the sample sits out there, against under one percent for a distribution where an average would be safe to reason with.
+It is a short, structured look at how the business runs, done to decide which repeated jobs AI should take first and which should stay with a person. It ends with a written account of the work, a shortlist in order with the reason for each position, the list of ideas crossed off, and, when one idea survives all three questions, that first automation chosen and written up.
 
-What that means for a business with five candidates on a shortlist is short. The number you would write beside each one is its typical outcome. Typical is not what you are exposed to. You are exposed to the tail. The tail is not a bigger version of the middle. It is a different thing that happens for different reasons.
+### Do I need to know anything about AI first?
 
-Which changes the sorting rule. Sort by how contained the worst case is rather than by how good the expected case is. Take a candidate with a modest payback, whose failure means someone redoes it by hand for a fortnight. It beats a candidate with triple the payback and a failure nobody can describe. That is not caution for its own sake. It is what the shape of the data says.
-
-Do not carry those percentages home, and the chart's own note says so. The median project in that sample was planned at three point three million dollars. That is not a category anything a small business commissions belongs to. It is the shape that transfers.
-
-## The failure rate nobody can give you
-
-At about this point someone asks what proportion of these projects fail. There is an answer in wide circulation. It should not be used. The reason is specific rather than a general grumble about statistics.
-
-The figure comes from a report published every year by a private research firm. It is sold rather than published. The specific complaint the academic literature makes about it is that its underlying data has never been opened to independent inspection. Two researchers at Vrije Universiteit Amsterdam did the next best thing. They took the report's own published definitions of a successful and a challenged project. They applied those definitions to their own data of [5,457 forecasts across 1,211 real projects](https://www.cs.vu.nl/~x/chaos/chaos.pdf). Then they looked at what came out.
-
-Their conclusion, in their own words, is that the definitions have four major problems: they are misleading, one-sided, they pervert the estimation practice, and they result in meaningless figures. The mechanism is not subtle. Those definitions score a project purely on how far it deviated from its original estimate. So coming in under budget counts against you the same way as going over. A well run organisation whose forecasts were independently checked and were truly accurate still scored a 35 percent success rate under them. Worse, an organisation the researchers examined had adopted those definitions inside the business. That trained its own managers to inflate every budget request. It made the forecasts far less accurate, while making the success rate look better.
-
-So here is the honest position. This article will hold it rather than reach for a number anyway. Nobody can tell you what share of automation projects fail. The most widely quoted attempt measures something else. The alternatives are marketing. That is the same answer this site has had to give about data broker figures and about response rates for cold outreach. It comes from the same reasoning. A figure whose method nobody can inspect is not a cautious figure or an optimistic one. It is not a figure.
-
-What can be said is what the Oxford work does support. That is about the shape rather than the rate. Most of these come in near their estimate. A minority go badly wrong. No average describes both.
-
-## What the order actually gets sorted by
-
-With the failure rate refused and the average demoted, there is still a list. It still needs an order. Here is what it gets sorted by, in the order the criteria get applied.
-
-First, containment. What happens when this one is wrong, and who finds out. Everything that survived the third question is already inside a boundary. Inside that boundary, you want the ones whose failure is visible and cheap ahead of the ones whose failure is invisible and awkward.
-
-Second, whether the rule is settled. Not whether it is simple. Whether it is decided. A settled complicated rule is a better candidate than an unsettled simple one. The unsettled one is a management job wearing a technical costume. It will come back later as a technical failure.
-
-Third, and only third, the size of the thing. Every other version of this exercise starts here. It belongs at the end, because it is the test that produces the most confident wrong answers. The largest saving on a list is very often the item with the most judgment in it. That is exactly why a person is still doing it.
-
-[[scene:audit-path]]
-
-[[scene:shortlist-calculator]]
-
-## How to run one yourself, without us
-
-Four things. None of them require anyone to be paid.
-
-Write the list without editing. Every candidate you can name, in the order they occur to you, including the ones you know are silly. Editing while writing is how the interesting-but-wrong candidate survives. It sounds better than the boring one. And you never wrote the boring one down.
-
-Ask the rule question out loud, to three people, separately. Not in a meeting. The answers coming out different is the finding. It will not happen in a room where everyone can hear each other agree.
-
-Put the consequence question against every line, in writing, before you let yourself think about the benefits. In that order specifically, because the reverse does not work. Once a benefit has been said aloud, the consequence question stops being asked seriously.
-
-Then put the list away for a fortnight and read it again. Half of what looked urgent will have solved itself, moved, or turned out to be a sign of something else. And you will have found that out for nothing.
-
-[[scene:offer]]
-
-[[scene:plate-two]]
-
-## What it costs, and how long it takes
-
-The audit itself is short. It is priced on purpose so that a no costs you almost nothing. It is an hour, done with you rather than at you. The written version comes back afterwards. It is an hour rather than a week because the questions above are quick, and the answers are already in your head. The costly part of a long engagement is someone learning your business. You already know your business.
-
-What actually varies is what happens next. It varies by a factor nobody can quote in advance, because it depends on which candidate survived. Connecting two systems that both have a decent way in is days. Something that has to read documents, or has to deal with an office that is not yours, is a different order of work. The honest answer to how much is that it is a different conversation with its own scope.
-
-The cost that appears in neither half is the one this article keeps returning to. Anything built is a thing someone now owns. Budget for it being looked at rather than only for it being made. And where nobody would notice it stopping, that is a reason to think again about the candidate rather than a reason to add a monitoring line to the quote.
-
-## What an audit does not do
-
-It does not decide for you. It removes candidates and explains why. What the business does about the survivors is a decision with your name on it.
-
-It does not see what nobody will say. Everything below the surface of the account has to be volunteered. An hour with a stranger is not always when that happens.
-
-It does not produce a saving. Every hour identified is an hour you then have to choose to spend on something else. Businesses that do not make that choice on purpose find the hour absorbed within a month.
-
-It does not stay true. The list has a shelf life measured in months, because your systems, your staff and your volume all move.
-
-And nobody has to buy it. Everything in this article can be done by the person running the business, in an evening, with a piece of paper. What buying it gets you is someone with no attachment to the list doing the crossing off.
-
-[[scene:wasted]]
-
-## Common questions, answered honestly
-
-### What is an AI audit, in plain terms?
-
-It is a short, structured look at how your business actually runs. It is done to work out which repeated parts of it are worth automating and, just as importantly, which are not. You get back a written account of the work, a shortlist in an order you can defend, the list of things you have decided not to build, and one small automation actually running. The last two are what set it apart from a sales meeting.
-
-### Can I not just do this myself?
-
-Yes, and you should do the first half yourself anyway. Writing down how one job really runs, and listing everything you would automate, costs nothing. Nobody can do it better than the person running the business. What is truly harder alone is the crossing off. Everything on that list is there for a reason you agree with. The value of an outside pair of eyes is that they have no attachment to any of it.
-
-### How is this different from workflow automation?
-
-Workflow automation is the building. An audit is the deciding, and it happens first. The workflow article on this site covers mapping a single job and finding the steps worth connecting. That is where most people should start. This one is about what to do when you already have more candidates than budget. That is a different problem with a different method: subtraction rather than ranking.
-
-### What do I actually get at the end?
-
-Four things. A written account of how the work runs today, including the parts nobody had written down. A shortlist in an order, with the reason for each position beside it. The list of candidates that were removed and why, which is the part you will reuse. And one automation built and running, so the exercise ends in something real.
-
-### Do I need to know anything about AI beforehand?
-
-No, and knowing a great deal about it is a mild disadvantage. The questions that decide this are about your business. How often something happens. Whether the rule behind it is settled. And where a wrong answer would end up. Someone who has read widely about what the technology can do tends to sort by capability. Capability is the least important of the three.
+No. The three questions are about the business: how often a job happens, whether its rule is settled, and where a wrong answer lands.
 
 ### What should a small business automate first?
 
-Whatever survives the three questions and has the most contained failure, which is usually something unglamorous. This article will not name a specific first thing, because the survey evidence says a settled answer does not exist yet. One firm in ten had adopted anything at all in the largest measurement available. That is not enough for anyone to have learned what works in general. Anyone giving you a confident universal answer is guessing.
+The job that passes all three questions and has the most contained failure, which is usually something plain: a confirmation, a reminder, a copy from one system to another. Sales and marketing is where most AI-using firms use it, by the Census Bureau's 2026 figures, but the right first job is the one that passes the test in a given business.
 
-### How do you decide what not to automate?
+### Does using AI mean fewer staff?
 
-Three tests, applied in order. It happens too rarely for anyone to notice it breaking. The rule behind it is not actually settled, which usually shows up as three people describing it three ways. Or a wrong answer would reach a client before a person saw it. Any one of those is enough on its own. The third removes the most.
+Rarely, according to the 2026 Census paper: about 2 percent of AI-using firms reported a decrease in headcount and about 2.3 percent an increase, and the most common effect was AI adding to the tasks workers already do.
 
-### Is an hour really enough?
+## Next step
 
-For the deciding, usually yes, because the information is already in your head and the questions are short. It is not enough to design anything. Designing is not what the hour is for. If an hour turns into a proposal for a six month programme, the hour was a sales call.
+When the list is written, we go through it with you and send back, in writing, which items we would build first and which we would cross off. [Book a Consultation](/connect): (914) 875-2424, levan@realtylt.com.
 
-## What to do about it
+By Levan Tsiklauri.
 
-Do the cheap half tonight.
+## Sources
 
-One sheet of paper, everything you would automate if the budget were not a question, written without stopping to judge any of it. Then one line against each: if this were wrong, who finds out, and when.
+- U.S. Census Bureau, Adam Grundy, Cory Breaux and Dhanapati Khatiwoda, "Large Firms With at Least 20 Employees Biggest AI Users", May 26, 2026. Business Trends and Outlook Survey, data from December 14, 2025 to May 3, 2026. Read October 29, 2026.
+- Kathryn Bonney, Cory Breaux, Emin Dinlersoz, Lucia Foster, John Haltiwanger and Aditya Pande, "The Microstructure of AI Diffusion: Evidence from Firms, Business Functions, and Worker Tasks", U.S. Census Bureau, Center for Economic Studies working paper CES 26-25, April 2026. The 2026 AI supplement to the Business Trends and Outlook Survey, reference period November 2025 to January 2026. Read October 29, 2026.
+- Federal Reserve Banks, Small Business Credit Survey, 2026 Report on Employer Firms, press release of March 3, 2026. Fielded September 3 to November 14, 2025; 6,525 responses from firms with 1 to 499 employees. Read October 29, 2026.
+- National Institute of Standards and Technology, Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1, January 2023; NIST's framework page, read October 29, 2026 (version 1.0 current, a revision in progress).
+- A search for a 2026 public survey measuring how often small-business automation fails returned none on October 29, 2026.
 
-Cross off every line where the honest answer is a client. Cross off every line where the honest answer is nobody.
+Sources checked October 29, 2026.
 
-What is left is usually two or three things. It is now a shortlist rather than a wish. That is the entire exercise. It cost you an evening. The only thing anyone else can add to it is the willingness to cross off one more.
-
-[[scene:funnel]]`;
+Written with an AI assistant and checked by Levan.`;
 
 export const AI_CLONE_POST = `On Tuesday afternoon fourteen short videos went out. One went to each person who had asked about the new listing on the ridge. Every one opened with that person's name. Every one was in your face and your voice. In each one you stand in a room you have been in, saying things you would say.
 

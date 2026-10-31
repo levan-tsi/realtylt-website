@@ -1,246 +1,37 @@
-/** Scene copy for the AI audit flagship post (topic 19).
+/** Scene copy for "How to use AI in my business" (slug ai-audit-small-business-what-not-to-automate).
  *
- * WHY THIS FILE: scene components are presentation, so the words they carry stay in the content
- * layer. Nineteenth topic on the flagship template and the EIGHTEENTH IN A ROW that adds no
- * component of its own: every scene below resolves to a primitive that already existed.
+ * ROUND 14, 2026-10-30: REBUILT FROM THE REFRESHED POST. The refresh (company/pieces/ai/
+ * ai-audit-small-business-what-not-to-automate/post.md, approved after the review chain) cut the
+ * 2018 Census module, the 2013 Oxford study and every scene built on them, and replaced them with
+ * three 2026 sources. The earlier fourteen scenes are in git history; none of their copy survives
+ * here, because a scene may only print what the approved post says.
  *
- * NO FILM SCENE, same as topics 6 to 18. Videos are owner-held, so there is no `reel` key and
- * score-flagship reports C3 red for this slug on purpose. Never faked, never re-baselined.
+ * Each scene below draws one data point from the piece's visuals/data-points.md: dp1 who uses AI,
+ * dp2 where the use goes, dp3 use by firm size, dp4 what it did to the work, dp5 the three
+ * questions with dp7's invented example run on them, dp6 the five steps. The three questions are
+ * the post's infographic; the five summary lines are the data points' "one infographic of the
+ * whole post"; the free file is the offer.
  *
- * THE TRAP, and the whole file is organised around not falling into it. An article about an audit
- * written by the people who sell the audit becomes a sales page with a methodology section
- * attached. The way out is not modesty, it is subject matter: this piece is about the half of an
- * audit that produces no work for us, which is the part that tells you not to build something.
- *
- * THE SEAM AGAINST `workflow-automation`, which shipped in an earlier round and is the nearest
- * sibling in the whole cohort. That post owns the DIY hour: follow one job, note where information
- * is retyped, note what only happens if somebody remembers, and order the result. All of that is
- * mapping, it is free, it is already on this site, and THIS POST DOES NOT REPEAT ANY OF IT. It
- * links to it and starts after it. The unit here is not a step inside one job, it is a CANDIDATE
- * for a build, held against the whole business, and the question is not what the manual version
- * costs. It is whether this one should exist at all.
- *
- * SOURCE OF TRUTH for what the service does is content/services/ai-audit.ts, rewritten in the
- * same round.
- *
- * House rules apply: no em dashes, no arrow glyphs, no claims not already made on the site. */
+ * THE RULES: every number, date and source name printed here appears word for word in the post;
+ * no body sentence is repeated (flagship.test.ts walks every string); no em dashes; sentence
+ * case; no claim the post does not make. Shares are drawn on full tracks, and counts from
+ * different questions or reference periods never share one reading. */
 
-import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
+import type { FlagshipContent } from "@/lib/blog/flagship";
 
-/** SCENE copy — "In short".
- *
- * Three lines, each checkable by somebody else in the primary document. What the deliverable
- * actually is, the number that resets everybody's sense of being behind, and the shape of the risk
- * that makes ranking by an average the wrong move. */
-export const IN_SHORT: string[] = [
-  "The output of an audit is a decision, and most of the value in it is subtraction. A list of twelve things you could automate is not worth paying for. You can write that yourself in an afternoon. Knowing which four of the twelve to cross out, and being able to say why, is the part that takes someone who has watched these break.",
-  "You are almost certainly not behind. The Census Bureau put a technology module on the 2018 Annual Business Survey. It sampled over 850,000 firms, and answering is required by law. It found that 90.2 percent of the firms that collect any information at all held some of it digitally. It found that only 10.3 percent used even one of the nine advanced business technologies on the list. Machine learning specifically was 2.9 percent.",
-  "Rank by the average outcome and you will rank wrong, because the outcomes are not spread out like that. In a study of 1,471 information technology projects worth 241 billion dollars, the ordinary ones overran by 3.6 percent on average. And 17 percent of them landed in a fat right hand tail, where a thin-tailed distribution would have put 0.7 percent.",
-];
+const CENSUS_STORY = "https://www.census.gov/library/stories/2026/05/ai-use-businesses.html";
+const CES = "https://www2.census.gov/library/working-papers/2026/adrm/ces/CES-WP-26-25.pdf";
+const FED =
+  "https://www.clevelandfed.org/collections/press-releases/2026/pr-20260303-fed-survey-small-business-optimism-wanes-as-performance-metrics-hold-steady";
+const NIST = "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf";
+const READ = { text: "read October 29, 2026" };
+const CES_SOURCE = { text: "Bonney and others, working paper CES 26-25, Census Bureau, April 2026", href: CES };
 
-/** SCENE copy — what an audit actually hands over.
- *
- * Four cards on a two column grid. This scene REPLACES the enumeration that would otherwise have
- * been four paragraphs of prose. The fourth card is the one this whole article exists for. */
-export const DELIVERABLE: GridItem[] = [
-  {
-    lead: "A written description of how the work runs now",
-    body: "Not an org chart and not a process diagram made in advance. A plain account of what actually happens. That includes the workaround someone invented a few years ago, which the office now depends on and nobody has written down. This is the part that surprises owners. It is worth having even if nothing else follows from it.",
-  },
-  {
-    lead: "An order, with the reasoning attached",
-    body: "Not a ranking by how impressive each item sounds. Not a ranking by how much it annoys you. The order has to survive someone asking why the third one is not the first. So the reason for each position has to be written down beside it, rather than held in the head of whoever made the list.",
-  },
-  {
-    lead: "One thing built and running",
-    body: "A document that ends in a proposal is a proposal. The useful version ends with something small working in your business. That is the only way anyone finds out whether the assumptions in the document were true. And a first automation that exists changes how the rest of the list gets read.",
-  },
-  {
-    lead: "The list of what you are not going to do",
-    body: "The half nobody writes down, and the half that pays for the exercise. Every candidate that gets crossed off saves you the build. It saves you the maintenance, and the quiet failure afterwards. The reasons for crossing things off are more reusable than the reasons for keeping them, because you will apply them again to next year's list.",
-  },
-];
-
-/** SCENE copy — what firms had actually adopted. Cited data graphic ONE.
- *
- * Zolas, Kroff, Brynjolfsson, McElheran, Beede, Buffington, Goldschlag, Foster and Dinlersoz,
- * "Advanced Technologies Adoption and Use by U.S. Firms: Evidence from the Annual Business
- * Survey", NBER Working Paper 28290, December 2020. Read in the NBER PDF with pdftotext.
- *
- * The instrument, quoted: "The 2018 ABS is a large, nationally representative sample of over
- * 850,000 firms covering all private, nonfarm sectors of the economy." And on why that matters:
- * "Response to the ABS is required by law, reducing selection bias, though certainly not
- * eliminating it. In contrast, many privately funded surveys typically used in empirical work on
- * technology adoption suffer from low response rates and significant selection bias." The response
- * rate for the portion used was 68.7 percent, and about 67 percent of the firms sampled had fewer
- * than 10 employees.
- *
- * The two drawn figures, quoted: "According to our LBD tabulation weights, 90.2% (75.6%
- * non-imputed) of firms that collect at least one type of information stored at least one type of
- * information in digital format." And: "Based on our LBD tabulation weights, only 10.3% (8.5%
- * non-imputed) of firms adopt at least one of the listed advanced business technologies."
- *
- * MACHINE LEARNING IS IN THE NOTE AND NOT ON THE CHART. Its use rate is 2.9 percent, which against
- * a 100 axis is a hairline that reads as an artefact rather than as a finding. Same call round G
- * made on a $25,000 bar, and the same fix: the number is stated in writing instead.
- *
- * AXIS MAXIMUM 100 because these are shares of a whole.
- *
- * WHY THE SECOND BAR IS LIT: the gap between the two is the entire argument for doing an audit at
- * all, and the small bar is the one that describes what is left to do. */
-export const ADOPTION = {
-  eyebrow: "The evidence",
-  caption: "What US firms had actually adopted, on a survey of over 850,000 of them",
-  bars: [
-    { label: "Of firms that collect information, held some of it digitally", value: 90.2, display: "90.2%" },
-    { label: "Used at least one advanced business technology", value: 10.3, display: "10.3%" },
-  ],
-  max: 100,
-  lit: 1,
-  basis:
-    "Share of firms, weighted to the national population of businesses. It comes from the technology module of the 2018 Annual Business Survey, run by the Census Bureau with the National Center for Science and Engineering Statistics. The first bar counts firms that collect at least one type of information and hold at least one of those types digitally. The second counts firms reporting any use of at least one of nine listed advanced business technologies. Those nine include robotics, machine learning, machine vision, natural language processing, voice recognition, augmented reality, radio frequency identification, touchscreens and automated guided vehicles.",
-  sourceText:
-    "Zolas and others, Advanced Technologies Adoption and Use by U.S. Firms: Evidence from the Annual Business Survey, National Bureau of Economic Research, 2020.",
-  sourceHref: "https://www.nber.org/system/files/working_papers/w28290/w28290.pdf",
-  note: "Three things this cannot be stretched to say, and one it says firmly. It cannot say anything about 2026. The reference year is 2017. Both the technology and the words people use for it have moved a great deal since. It cannot be read as nobody using AI, because a firm buying a service that happens to run on it is not a firm adopting a technology on this list. And a third bar was not drawn. Machine learning specifically came in at 2.9 percent use and 0.7 percent testing. Against this axis that renders as a hairline rather than as a bar, so it is here in writing instead. What it does say firmly is the shape. Two thirds of the sampled firms had fewer than ten employees. Answering was required by law rather than voluntary. And the distance between the two bars was enormous. The paper's authors also note that the Census public use tables do not correct for sample weights the way they do, so figures taken from those tables read lower still.",
-};
-
-/** SCENE copy — the three subtractions.
- *
- * THIS IS THE ARTICLE'S METHOD and it is deliberately not the workflow post's. That one is about
- * mapping one job and putting the steps in an order. These three are applied afterwards, to
- * candidates rather than to steps, and every one of them is a way of removing something from a
- * list rather than a way of scoring it. */
-export const SUBTRACTIONS: GridItem[] = [
-  {
-    lead: "Does it happen often enough to be worth owning?",
-    body: "Not often enough to save time. Often enough that someone would notice within a week if it stopped. That is because the frequency of a job is what decides whether its failure ever gets found. Read this one as a question about detection rather than about payback.",
-  },
-  {
-    lead: "Could you write the rule down for a new hire?",
-    body: "If the answer needs a paragraph beginning with it depends, the honest first task is not a build. It is a decision that nobody has made. Software will make that decision for you by accident. It will make it the same way every time, in whichever direction the person writing the prompt happened to lean that morning.",
-  },
-  {
-    lead: "Where does a wrong answer end up?",
-    body: "In a spreadsheet someone checks on Friday, or in front of a client, in writing, with your name on it. This is the question that removes the most candidates. It is the one people skip. It is the only one whose answer does not improve with better software.",
-  },
-];
-
-/** SCENE copy — how project outcomes are actually distributed. Cited data graphic TWO.
- *
- * Alexander Budzier and Bent Flyvbjerg, "Double Whammy: How ICT Projects are Fooled by Randomness
- * and Screwed by Political Intent", Said Business School Working Paper, University of Oxford, 2013,
- * read in the arXiv PDF (arXiv:1304.4590) with pdftotext.
- *
- * The sample, quoted: "in total our sample comprises 1,471 projects, which represents a total value
- * of USD 241 billion (in 2010 USD), it is the largest academic dataset to date." It is assembled
- * from three sources the paper describes separately: 142 projects gathered from private-sector
- * organisations (20 of about 200 approached, a 10 percent response rate), 149 from published GAO
- * and UK National Audit Office reports, and 1,180 multi-year projects from US federal E300 filings.
- *
- * The three drawn regimes are the paper's own decomposition and they sum to 100. Quoted: "The
- * probability of falling prey to budget cuts is relatively low but affects 6% of all projects."
- * "The managed performance regime shows that normal projects have an average cost overrun of
- * +3.6%, with a standard deviation of 14.8%. This regime has the highest probability of occurring
- * a project stays within normal bounds of (-30%, +48%) with a 77% likelihood." And: "The
- * probability of becoming a Black Swan is estimated at 17% a very high risk compared to thin-tailed
- * distributions where outliers are happening with no more than 0.7% probability on both ends of
- * the tail."
- *
- * THE SIZE CAVEAT IS NOT OPTIONAL AND IT IS IN THE NOTE. The median project in this sample was
- * planned at 3.3 million dollars. Nothing a brokerage commissions is that. What transfers is the
- * SHAPE of the distribution rather than the percentages, and the note says so rather than letting
- * a reader take 17 percent home as their own risk.
- *
- * AXIS MAXIMUM 100 because these are shares of a whole and they sum to it.
- *
- * WHY THE THIRD BAR IS LIT: the whole point of the chart is that the small bar is the one that
- * decides how you should rank a list. */
-export const OUTCOMES = {
-  eyebrow: "The evidence",
-  caption: "Where 1,471 technology projects actually landed against their budgets",
-  bars: [
-    { label: "Cut back under budget pressure", value: 6, display: "6%" },
-    { label: "Ordinary, within minus 30 and plus 48 percent", value: 77, display: "77%" },
-    { label: "In the fat right hand tail", value: 17, display: "17%" },
-  ],
-  max: 100,
-  lit: 2,
-  basis:
-    "Share of projects falling into each of the three regimes the authors fit to their cost overrun distribution. The sample is 1,471 information technology projects worth 241 billion dollars, assembled from private sector records, published national audit reports and United States federal budget filings. The middle regime is an ordinary bell curve with an average overrun of 3.6 percent. The authors give 0.7 percent as the share a thin-tailed distribution would put in the outer tails, against the 17 percent they measure.",
-  sourceText:
-    "Budzier and Flyvbjerg, Double Whammy: How ICT Projects are Fooled by Randomness and Screwed by Political Intent, Said Business School, University of Oxford, 2013.",
-  sourceHref: "https://arxiv.org/abs/1304.4590",
-  note: "Do not take 17 percent home as your own number. The median project in this sample was planned at 3.3 million dollars and the average at 122 million. Nothing a small business commissions is remotely that size. What transfers is the shape rather than the percentages, and the shape is the useful part. The middle of this distribution is unremarkable, and the tail is where the damage lives. So an average tells you almost nothing about what you are risking. That is a specific argument against a specific habit, which is ranking a list of candidates by expected payback and working down it. The authors also set out why the industry's most quoted failure figures were contested in the academic literature. The grounds were that the sampling was skewed towards failure, the data collection was opaque and the categorisation was methodologically biased. A separate piece of research that tested exactly that is described further down this page.",
-};
-
-/** SCENE copy — the six steps of an audit, drawn as the order they have to happen in.
- *
- * THE FIRST CAPTION HAS TO BE THE SHORTEST. Captions are centred under their node and the first
- * node sits at the very start of the scroll container, so anything wider than the node spacing is
- * clipped by the container edge at 390px. "One job, as it ran" is 18. */
-export const AUDIT_PATH: { label: string; connects: string; at?: string }[] = [
-  { label: "The account", connects: "One job, as it ran" },
-  { label: "The candidates", connects: "Everything nameable" },
-  { label: "The cuts", connects: "Three questions" },
-  { label: "The order", connects: "Reasons written down" },
-  { label: "The first build", connects: "Small, and running" },
-  { label: "The re-read", connects: "The list, six weeks on" },
-];
-
-/** SCENE copy — what an audit should tell you not to automate.
- *
- * Deliberately concrete and deliberately about this trade rather than about businesses in general,
- * because a generic version of this list is worthless and everybody has read it. */
-export const DO_NOT: GridItem[] = [
-  {
-    lead: "Anything that states a fact about a property",
-    body: "Square footage, a tax figure, a school district, a boundary, whether a permit exists. These read like data and behave like liability. The correct build is one that fetches the value from the record that governs it, or says it does not know. That is a different and much smaller project than the one people ask for.",
-  },
-  {
-    lead: "The judgment call you make four times a year",
-    body: "Whether to take a listing, whether to advise a price cut, whether this buyer is real. It is rare. It is high stakes. And its rule cannot be written down without lying about how the decision is actually made. Rare and important is the exact opposite of the profile worth building for.",
-  },
-  {
-    lead: "Anything whose failure is silent",
-    body: "A job that quietly stops running, a message that quietly stops sending, a field that quietly stops updating. If nothing in the business goes visibly wrong when it fails, then nobody will notice for months. And then the thing you automated has become a thing you believe is happening.",
-  },
-];
-
-/** SCENE copy — three ways an audit produces nothing.
- *
- * Deliberately not the limits section restated: limits are what the service cannot do, and these
- * are what an audit that was done properly still fails to deliver. Also deliberately not the
- * workflow post's failure modes, which are about a chain breaking after it is built. */
-export const WASTED: GridItem[] = [
-  {
-    lead: "It described the official version",
-    body: "Everyone answered honestly, and everyone described the process as it is supposed to work. The real one has three steps in it that exist because a system does not do something it was bought to do. Nobody mentions those. After two years they stop feeling like steps and start feeling like the job.",
-  },
-  {
-    lead: "It ended in a document",
-    body: "A ranked list with nothing built is a piece of homework. Homework has a half life of about a fortnight in a working business. The value of shipping the first item is not the item. It is that the rest of the list gets read differently by people who have now seen one of these actually arrive.",
-  },
-  {
-    lead: "Nobody re-read it",
-    body: "The order was right in March. By September two of the candidates have gone away. A new system has arrived. Something that was ruled out because nobody could write the rule down now has a rule, because someone was forced to decide it. A list that is never re-read is a snapshot being used as a plan.",
-  },
-];
-
-/** ─────────────────────────────────────────────────────────────────────────────────────────
- * THE TOPIC'S FLAGSHIP CONTENT.
- *
- * Fourteen scenes, zero components, no film. */
 export const AUDIT_FLAGSHIP: FlagshipContent = {
-  /** The cohort's held moments have been 11:40pm, 9:42pm, 2023, 15%, 25 minutes, 12 reviews, 9
-   * days, 3 results, 1 word, 2 records, 10 mornings, $2,500, 0.3 percent, 3 business days, 20
-   * sources, 1 of three, 0 invoices and 14 videos. This one is a COUNT OF THINGS REMOVED from a
-   * list, which is the only held moment in the set that measures work not done. */
+  /** Held moment: the count of the post's own method, the three questions. Not a statistic. */
   hero: {
-    moment: "4",
-    suffix: "crossed off",
-    /** NOT either plate. The plates are an instrument panel and a bank of isolator switches; this
-     * is counters resting on rods, which is texture behind type rather than a subject. */
+    moment: "3",
+    suffix: "questions",
     photo: "/images/editorial/abacus.jpg",
     signature: "porchlight",
   },
@@ -250,239 +41,225 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       band: "light",
       ariaLabel: "In short",
       eyebrow: "In short",
-      claims: IN_SHORT,
+      claims: [
+        "About one firm in five uses AI inside a business function; close to one in two has someone using a tool.",
+        "The use goes to sales and marketing first, and most users run it in three or fewer functions.",
+        "It adds to the work people already do: about 2 percent of AI-using firms cut staff and about 2.3 percent hired.",
+        "Three questions cross ideas off: often enough to be noticed, a rule a new hire can follow, a wrong answer a person sees first.",
+        "What stays with a person, and the order the rest is built in: the most contained worst day first.",
+      ],
     },
-    deliverable: {
-      kind: "grid",
+
+    /** dp3: two panels, two reference periods, never one axis unlabelled. */
+    "by-firm-size": {
+      kind: "bars",
       band: "dark",
-      eyebrow: "Four things it hands over",
-      heading: "The fourth one is why it is worth paying for.",
-      columns: 2,
-      glow: true,
-      items: DELIVERABLE,
-      label: "What it produces",
-    },
-    adoption: {
-      kind: "statbars",
-      band: "dark",
-      label: "You are not behind",
-      ...ADOPTION,
-    },
-    plate: {
-      kind: "plate",
-      band: "light",
-      src: "/images/editorial/dial-panel.jpg",
-      // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS and which contains the 21:9
-      // crop a laptop ships. Measured in round F: the Plate primitive renders 2.33 at 1440 and
-      // 1.78 at 390, so the phone sees a taller slice.
-      //
-      // ROUND I re-read this against the picture and two things were wrong. The four Cyrillic
-      // labels are stencilled on the BLACK BEZELS of the three gauges, not on the yellow panel:
-      // MASLO OTKACHKA above the centre glass and VAKUUM below it, and the same treatment on the
-      // two bezels cut by the frame. And the pointer count was four; there are FIVE, because the
-      // right gauge carries a red index pointer as well as a black needle, exactly as the centre
-      // one does. Only lettering legible at the shipped crop is named.
-      alt: "Three round pressure gauges set into a worn yellow instrument panel, the large central one carrying a long black needle resting at the low end of its scale and a short red index pointer below it, its black bezel stencilled in Cyrillic above the glass and again beneath it, a gauge at each side cut off by the frame with Cyrillic stencilled on their bezels in the same way, the left one showing a scale running from ten to sixteen and the right one carrying a black needle and a red pointer of its own",
-      caption:
-        "Three gauges, five pointers between them. Not one of them tells anybody what to do. A reading is a fact about the machine. Turning it into an action needs someone who knows what this machine is for, what it did last week, and what happens downstream if it is shut off. Every dashboard sold on the strength of its numbers is selling the easy half.",
-      credit: "Photograph by Thomas Quine, CC BY 2.0.",
-      ariaLabel: "Three pressure gauges on a yellow instrument panel",
-    },
-    subtractions: {
-      kind: "grid",
-      band: "dark",
-      eyebrow: "The three questions",
-      heading: "Every one of them removes candidates rather than scoring them.",
-      columns: 3,
-      items: SUBTRACTIONS,
-    },
-    "pull-quote": {
-      kind: "statement",
-      band: "dark",
-      field: "river",
-      tone: "quote",
-      /** Verbatim from the NIST AI Risk Management Framework, AI 100-1, section 1.2.1. Quoted
-       * rather than paraphrased because the phrase people reach for is "manage the risk", and the
-       * framework's own sentence contains an option that is not managing it. */
-      text: "In cases where an AI system presents unacceptable negative risk levels, such as where significant negative impacts are imminent, severe harms are actually occurring, or catastrophic risks are present, development and deployment should cease in a safe manner until risks can be sufficiently managed.",
-    },
-    outcomes: {
-      kind: "statbars",
-      /** DARK rather than light, measured rather than chosen: with this chart on a light field the
-       * prose either side of it ran as one pale band of 18 to 21 percent of the article, against a
-       * shipped cohort range of 14 to 17. Flipping it breaks the run and costs nothing else. */
-      band: "dark",
-      label: "How they land",
-      ...OUTCOMES,
-    },
-    "do-not": {
-      kind: "grid",
-      band: "dark",
-      eyebrow: "Three things to leave alone",
-      heading: "Every audit should hand you a list like this.",
-      columns: 3,
-      items: DO_NOT,
-    },
-    "audit-path": {
-      kind: "diagram",
-      band: "dark",
-      label: "The path",
-      eyebrow: "The system",
-      heading: "Six steps, and the third one is the product.",
-      lede: "Drawn as the order it has to happen in rather than as a menu. A great deal of what gets sold under this name is the first two boxes, which are the ones you could do without help. The third is where the money is. It is the only step whose output is shorter than its input. Note that the last box is a date rather than a task, and that it is the one everybody skips.",
-      steps: AUDIT_PATH,
-      altPrefix:
-        "The path from a written account of one job as it actually ran, through naming every candidate, cutting the list with three questions, ordering what survives with the reasons attached, building the first one small, and re-reading the list six weeks later",
-    },
-    "shortlist-calculator": {
-      kind: "calculator",
-      band: "light",
-      label: "Your numbers",
-      eyebrow: "In your numbers",
-      heading: "How many of your candidates would still be standing at the end?",
-      ariaLabel: "How many automation candidates survive the three questions",
-      inputs: [
+      eyebrow: "Use of AI by firm size",
+      heading: "The largest firms use it most",
+      lede: "Two surveys with different reference periods: read each panel on its own.",
+      alt: "Two panels from two surveys with different reference periods: firms with 250 or more employees used AI at 37 percent and firms with four or fewer under 20 percent, and firms with 1 to 4 employees were at 18 percent with about 21 percent expected within six months.",
+      panels: [
         {
-          kind: "range",
-          id: "candidates",
-          label: "Things you could name right now that you would automate",
-          hint: "Write them on paper first, without stopping to judge any of them. The writing is more useful than the number it produces. The number is only here to be reduced.",
-          min: 3,
-          max: 40,
-          step: 1,
-          initial: 12,
-          format: "count",
-          width: "w-[4rem]",
+          title: "Business Trends and Outlook Survey, as of May 3, 2026",
+          bars: [
+            { label: "250 or more employees", value: 37, display: "37 percent", lit: true },
+            {
+              label: "Four or fewer employees",
+              value: 20,
+              display: "under 20 percent",
+              hollow: true,
+              tag: "An upper bound, drawn as an outline",
+            },
+          ],
         },
         {
-          kind: "range",
-          id: "often",
-          label: "Share that happen often enough that a failure would be noticed within a week",
-          hint: "Weekly or more is comfortably yes. Quarterly is almost always no, whatever the time saving looks like on paper.",
-          min: 10,
-          max: 100,
-          step: 5,
-          initial: 65,
-          format: "percent",
-          width: "w-[4.5rem]",
-        },
-        {
-          kind: "range",
-          id: "writable",
-          label: "Share whose rule you could write down for a new hire",
-          hint: "The test is whether someone competent could follow the written version without asking you. If the honest answer needs the phrase it depends, count it out.",
-          min: 10,
-          max: 100,
-          step: 5,
-          initial: 70,
-          format: "percent",
-          width: "w-[4.5rem]",
-        },
-        {
-          kind: "range",
-          id: "safe",
-          label: "Share where a wrong answer would not reach a client before a person saw it",
-          hint: "Not whether it would be wrong. Where it would land if it were. This is the question that removes the most candidates.",
-          min: 10,
-          max: 100,
-          step: 5,
-          initial: 60,
-          format: "percent",
-          width: "w-[4.5rem]",
+          title: "Census working paper, November 2025 to January 2026",
+          bars: [
+            { label: "1 to 4 employees, using AI now", value: 18, display: "18 percent", lit: true },
+            {
+              label: "1 to 4 employees, within six months",
+              value: 21,
+              display: "about 21 percent",
+              hollow: true,
+              tag: "An expectation, drawn as an outline",
+            },
+          ],
         },
       ],
-      chain: [
-        { label: "Candidates you can name", by: { from: "input", id: "candidates" }, format: "count", unit: "candidates" },
-        { label: "Happening often enough", by: { from: "input", id: "often" }, format: "count", unit: "candidates" },
-        {
-          label: "Whose rule you could write down",
-          by: { from: "input", id: "writable" },
-          format: "count",
-          /** SHORT ON PURPOSE. A chain unit renders inside a shrink-0 cell and cannot wrap; round
-           * E shipped 66px and 32px of horizontal overflow from exactly this. The explanation
-           * belongs in the row label on the left, which does wrap. */
-          unit: "candidates",
-        },
-        { label: "Where a wrong answer lands somewhere safe", by: { from: "input", id: "safe" }, format: "count", unit: "left" },
-      ],
-      headline: 3,
-      resultLabel: "Candidates still standing at the end",
-      note: "The number is meant to come out small, and the honest reading of that is not that automation rarely works. It is that most of a list is answered by a question rather than by a quote. Answering it costs nothing. Shares produce fractions. Two thirds of a candidate is not a thing. So read anything with a decimal in it as a rough count. Move the last slider first. It usually moves the answer more than the other two shares together. It is the one an eager conversation skips. Four things this refuses to put a number on, on purpose. There is no failure rate for automation projects. The most quoted one in the industry has been rebuilt by researchers with their own data, and shown to measure deviation from an estimate rather than whether anything succeeded. There is no payback period, because it depends entirely on which candidate. There is no figure for hours saved by an audit, because an audit saves no hours. And there is nothing here about what a build costs, because these sums are about whether a build should happen at all.",
-      action: { label: "See how it is built", href: "/services/ai-audit" },
-      secondary: { label: "Talk it through with us", href: "/connect" },
+      sources: [{ text: "Census Bureau, May 26, 2026", href: CENSUS_STORY }, CES_SOURCE, READ],
+      note: "Solid bars are measured shares. Outlines are a bound or an expectation, not a measurement.",
     },
-    offer: {
+
+    /** dp1: three bars, each labelled with what its survey counted. */
+    "who-uses-ai": {
+      kind: "bars",
+      band: "light",
+      eyebrow: "Different questions, different counts",
+      heading: "One firm in five, or close to one in two",
+      alt: "Three bars from three surveys: 19.8 percent of US businesses used AI as of May 3, 2026, 18 percent used it in a business function between November 2025 and January 2026, and 46 percent of firms with 1 to 499 employees had the business or its employees using AI in some way.",
+      panels: [
+        {
+          bars: [
+            {
+              label: "Use AI, all US businesses",
+              tag: "Business Trends and Outlook Survey, as of May 3, 2026",
+              value: 19.8,
+              display: "19.8 percent",
+              lit: true,
+            },
+            {
+              label: "Used AI in a business function",
+              tag: "Census working paper, November 2025 to January 2026",
+              value: 18,
+              display: "18 percent",
+            },
+            {
+              label: "Business or employees use AI in some way",
+              tag: "Small Business Credit Survey, 1 to 499 employees, released March 3, 2026",
+              value: 46,
+              display: "46 percent",
+            },
+          ],
+        },
+      ],
+      sources: [
+        { text: "Census Bureau, May 26, 2026", href: CENSUS_STORY },
+        CES_SOURCE,
+        {
+          text: "Federal Reserve Banks, March 3, 2026, 6,525 responses, fielded September 3 to November 14, 2025",
+          href: FED,
+        },
+        READ,
+      ],
+      note: "Three surveys asked three different questions, so the bars are not one series and do not add up.",
+    },
+
+    /** dp2: three bars and one callout for the 57 percent. */
+    "where-it-goes": {
+      kind: "bars",
+      band: "dark",
+      eyebrow: "Among firms using AI",
+      heading: "Sales and marketing first",
+      alt: "Among firms using AI, 52 percent use it in sales and marketing, 45 percent in strategy and business development and 41 percent in IT, and 57 percent use it in three or fewer functions.",
+      panels: [
+        {
+          bars: [
+            { label: "Sales and marketing", value: 52, display: "52 percent", lit: true },
+            { label: "Strategy and business development", value: 45, display: "45 percent" },
+            { label: "IT", value: 41, display: "41 percent" },
+          ],
+        },
+      ],
+      callout: { figure: "57 percent", text: "of the users had AI in three or fewer functions." },
+      sources: [CES_SOURCE, READ],
+      note: "Shares of the firms using AI, not of all firms. One firm can use it in several functions, so the bars do not add up.",
+    },
+
+    /** dp4: separate tracks, never one grid, because one firm can give both answers. */
+    "the-person-stays": {
+      kind: "bars",
+      band: "light",
+      eyebrow: "What AI did to the work",
+      heading: "The person stays",
+      lede: "Each bar is its own share of the firms using AI. One firm can be in more than one count.",
+      alt: "Four separate bars for firms using AI: 44 percent said it added to tasks their workers already do, about 5 percent reported any change in headcount, 2.3 percent up and 2.0 percent down.",
+      panels: [
+        {
+          title: "Tasks",
+          bars: [
+            { label: "Said AI added to tasks their workers already do", value: 44, display: "44 percent", lit: true },
+          ],
+        },
+        {
+          title: "Headcount",
+          bars: [
+            { label: "Any change in headcount", value: 5, display: "about 5 percent" },
+            { label: "Headcount up", value: 2.3, display: "2.3 percent" },
+            { label: "Headcount down", value: 2.0, display: "2.0 percent" },
+          ],
+        },
+      ],
+      sources: [CES_SOURCE, READ],
+    },
+
+    /** dp5, the infographic of the post: three gates in order, every no into one tray, and
+     * dp7's invented example run on them in words. */
+    "three-gates": {
+      kind: "flow",
+      band: "dark",
+      eyebrow: "The three questions, in order",
+      heading: "Any one no is enough to cross an idea off",
+      alt: "A track runs past three gates, how often a job happens, whether its rule can be written down for a new hire, and where a wrong answer lands, and a no at any gate sends the idea into a tray marked not building with its reason, while what survives is ranked by its worst day.",
+      tray: "Not building",
+      gates: [
+        {
+          ask: "Does it happen often enough that a failure gets noticed within a week?",
+          pass: "Yes",
+          exit: "No",
+          outcome: "Too rare for a break to be found",
+          detail: "Weekly or more is a yes; quarterly is almost always a no.",
+        },
+        {
+          ask: "Can the rule be written down for a new hire?",
+          pass: "Yes",
+          exit: "No",
+          outcome: "No settled rule yet",
+          detail: "Deciding the rule comes first. Ask three people, separately.",
+        },
+        {
+          ask: "Does a wrong answer land where a person sees it first?",
+          pass: "Yes",
+          exit: "No",
+          outcome: "It would land on a customer",
+          detail: "Better software does not change this answer.",
+        },
+      ],
+      end: {
+        title: "Rank what survives by its worst day",
+        detail: "The most contained failure goes first.",
+      },
+      example: "Eleven ideas in, four crossed off at the three questions, seven left to rank.",
+      sources: [{ text: "our method" }, { text: "NIST AI 100-1, January 2023, checked current October 29, 2026", href: NIST }],
+      note: "Avoiding a risk is one of the four responses the framework lists, which makes not building a legitimate result.",
+    },
+
+    /** dp6: the five steps as one card. */
+    "one-evening": {
+      kind: "steps",
+      band: "light",
+      eyebrow: "One evening, then two weeks",
+      heading: "Run the test yourself",
+      alt: "A checklist of five steps for one evening, from writing every idea down to reading the list again in two weeks, ending with the line that what is left is usually short.",
+      steps: [
+        { title: "Write every idea down, without judging it" },
+        { title: "Ask three people the rule question, separately" },
+        { title: "Note where a wrong answer would land, and who would find out", body: "Before writing any benefit." },
+        { title: "Cross off what lands on a customer, and what lands on nobody" },
+        { title: "Read the list again in two weeks" },
+      ],
+      close: "What is left is usually short.",
+      sources: [{ text: "our method" }],
+    },
+
+    /** The free file's line. */
+    sheet: {
       kind: "offer",
       band: "light",
-      eyebrow: "The honest read",
-      text: "Send us your list. Not a description of your business. The actual list of things you would automate if someone handed you the budget tomorrow. We will send back which ones we would cross off and why, in writing, before anybody talks about money.",
-      reassure:
-        "It is a short reply from a person, and it costs nothing. The reply is truly often that two of them are worth doing and the rest are not. That answer is the product working, not us being difficult.",
-      action: { label: "Send us your list", href: "/connect" },
-      ariaLabel: "Send us your list of things you would automate",
-    },
-    "plate-two": {
-      kind: "plate",
-      band: "dark",
-      src: "/images/editorial/switch-box.jpg",
-      // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop adds the thick
-      // black cables leaving the bottom of each box and more of the green steel frame at the right.
-      // Only legible markings are named.
-      //
-      // ROUND I re-read this and THREE of its specifics were wrong, which is the worst plate in
-      // the cohort. The levers are RED, the same paint as the boxes, not black. ZIP-0 is not a
-      // marking on this photograph at all: the middle box's small separate enclosure ABOVE it is
-      // stencilled ZSP-2, and what sits above the lever is a row of marks and the word ZAP. And
-      // the rating reads R100/15A on both the left and the middle box, not R400/15A. Verified at
-      // both crops and at a lanczos zoom on the lettering.
-      alt: "Three red industrial isolator boxes bolted in a row to a grey wall of horizontal concrete courses, each with a red lever handle on its face and the levers at three different angles so no two are set the same way, the left and middle boxes hand lettered ZAP. above the lever, the middle one lettered FREZA and R100/15A below it with a small separate red enclosure bolted above it stencilled ZSP-2 and another bolted below it lettered 500 V., a smaller enclosure under each of the other two boxes as well, and thick black cables running out of the bottoms of all of them past a green painted steel frame",
-      caption:
-        "Three switches, and the useful thing about them is that no two are in the same position. Someone decided, for each one, whether the thing behind it should be running today. That decision took a second. It is the entire job. Everything expensive in this subject comes from switching something on and never afterwards asking whether it should still be on.",
-      credit: "Photograph by Vladimir Mokry, CC0 1.0.",
-      ariaLabel: "Three red industrial isolator switches on a concrete wall",
-    },
-    wasted: {
-      kind: "grid",
-      /** DARK for the same measured reason as topics 6 to 18: on light, the cost section, the
-       * limits section and the how-to run as one long pale band. Flipping this one breaks it. */
-      band: "dark",
-      eyebrow: "Three ways a careful audit produces nothing",
-      heading: "None of them are the analysis being wrong.",
-      columns: 3,
-      items: WASTED,
-    },
-    funnel: {
-      kind: "statement",
-      band: "dark",
-      field: "ink",
-      tone: "close",
-      glow: true,
-      ariaLabel: "What to do next",
-      text: "Write the list tonight, on paper, without editing it. Then go down it once with a single question against every line: if this went wrong, who would find out, and how. Cross off anything where the honest answer is a client. Cross off anything where the honest answer is nobody. What is left is short. It is the only part of the list worth a conversation with anybody.",
-      actions: [
-        { label: "See it on the AI page", href: "/ai#consult", variant: "light" },
-        { label: "How it is built", href: "/services/ai-audit", variant: "outline-light" },
-      ],
-      footnote:
-        "The audit is an hour, done with you, and it is priced on purpose so that the answer being no costs you almost nothing. What it is not is a discovery call with a proposal attached. The output is written. It names the things we would not build. It is yours whether or not you go on to build anything with us.",
+      eyebrow: "The free file",
+      text: "The three-question sheet: one page with the three columns ready and the five steps under them.",
+      reassure: "A free printable PDF, one page. Nothing to sign up for.",
+      action: { label: "Download the sheet", href: "/downloads/three-question-sheet.pdf" },
+      ariaLabel: "Download the free three-question sheet",
     },
   },
 
-  /** Short rail labels for the prose headings. Ids and ORDER are derived from the document, so a
-   * renamed heading degrades to its full text rather than leaving a dead row. */
   headingLabels: {
-    "what-an-audit-is-actually-for-and-it-is-not-the-list": "What it is for",
-    "the-part-that-is-already-free-and-is-not-repeated-here": "The free half",
-    "you-are-almost-certainly-not-behind": "Not behind",
-    "the-three-questions-that-do-the-cutting": "The three cuts",
-    "what-should-not-be-automated-in-a-property-business": "Leave alone",
-    "why-ranking-by-the-average-outcome-gets-it-wrong": "Ranking wrong",
-    "the-failure-rate-nobody-can-give-you": "The missing rate",
-    "what-the-order-actually-gets-sorted-by": "The order",
-    "how-to-run-one-yourself-without-us": "Do it yourself",
-    "what-it-costs-and-how-long-it-takes": "Cost and time",
-    "what-an-audit-does-not-do": "What it will not do",
-    "common-questions-answered-honestly": "Common questions",
-    "what-to-do-about-it": "What to do",
+    "what-small-firms-do-with-ai-in-2026": "AI in small firms",
+    "where-the-use-goes-and-what-it-does-to-the-team": "Where the use goes",
+    "the-three-questions-that-cross-ideas-off": "The three questions",
+    "what-we-leave-with-a-person": "Left with a person",
+    "rank-what-survives-by-its-worst-day": "Rank by worst day",
+    "why-this-page-gives-no-failure-rate-for-ai-projects": "No failure rate",
+    "run-the-test-yourself-in-one-evening-and-read-it-again-in-two-weeks": "Run it yourself",
   },
 };
