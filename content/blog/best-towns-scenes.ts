@@ -76,7 +76,7 @@ export const BEST_TOWNS_FLAGSHIP: FlagshipContent = {
       heading: "How to read a HUD Fair Market Rent",
       alt: "How to use a HUD Fair Market Rent: a two-bedroom figure with utilities included, set near the 40th percentile, fiscal 2027 in force from October 1, 2026, read for your county, set beside the seller's rent and checked against comparable listings above and below it.",
       facts: [
-        { figure: "2 bedrooms", title: "The figure most investors use" },
+        { figure: "2 bedrooms", title: "The unit size this guide reads" },
         { figure: "40th", title: "Percentile of standard units, near where HUD sets it" },
         { figure: "FY2027", title: "In force from October 1, 2026" },
       ],
@@ -86,7 +86,7 @@ export const BEST_TOWNS_FLAGSHIP: FlagshipContent = {
         {
           title: "Check the street on both sides of it",
           body: "Comparable listings above and below the benchmark.",
-          example: "An invented example: a renovated unit near the station asks well above it. Ask why before you believe it.",
+          example: "A renovated unit near the station asks well above it. Ask why before you believe it.",
         },
       ],
       close: "A benchmark, not a floor and not a ceiling.",
@@ -207,24 +207,22 @@ export const BEST_TOWNS_FLAGSHIP: FlagshipContent = {
     },
 
     /** Kingston's rule as dated events: adopted, upheld, surveyed again, and what we could not
-     * find. True-date spacing; the open question is drawn hollow. */
+     * find. A numbered path, not the true-date timeline: with a two-month pair beside a
+     * three-year one, the timeline's calendar spacing printed year marks beside the wrong events
+     * at 390 (looked at 2026-11-01). */
     "kingston-timeline": {
-      kind: "timeline",
+      kind: "steps",
       band: "light",
       eyebrow: "Kingston's rule, in order",
       heading: "Adopted, upheld, surveyed again",
-      lede: "Spaced by the real calendar. The hollow dot is the day we looked for a city decision on the 2025 survey and found none.",
-      alt: "A timeline of Kingston's rent rule: adopted in 2022 after a 1.57% vacancy survey, upheld by the Court of Appeals on June 18, 2025, surveyed again with a report published in August 2025 finding 7.04%, and no published city decision on that survey found when checked on November 1, 2026.",
-      events: [
-        { date: "2022-07-01", display: "2022", title: "Kingston adopts the act", detail: "After a vacancy survey found 1.57%." },
-        { date: "2025-06-18", display: "June 18, 2025", title: "The Court of Appeals upholds the declaration", detail: "2025 NY Slip Op 03691." },
-        { date: "2025-08-13", display: "August 2025", title: "The 2025 survey is published", detail: "7.04% in sampled covered buildings; 3.73% in those over 22 units." },
+      alt: "Kingston's rent rule in order: adopted in 2022 after a 1.57% vacancy survey, upheld by the Court of Appeals on June 18, 2025, surveyed again with a report published in August 2025 finding 7.04%, and no published city decision on that survey found when checked on November 1, 2026.",
+      steps: [
+        { title: "2022: Kingston adopts the act", body: "After a vacancy survey found 1.57%." },
+        { title: "June 18, 2025: the Court of Appeals upholds the declaration", body: "2025 NY Slip Op 03691." },
+        { title: "August 2025: the city surveys again", body: "7.04% in sampled covered buildings, above the 5% line; 3.73% in those over 22 units." },
         {
-          date: "2026-11-01",
-          display: "November 1, 2026",
-          title: "No published city decision found",
-          detail: "Ask HCR and your attorney about a specific building.",
-          pending: true,
+          title: "November 1, 2026: no published city decision on that survey found",
+          body: "Ask HCR and your attorney about a specific building.",
         },
       ],
       sources: [
@@ -303,10 +301,10 @@ export const BEST_TOWNS_FLAGSHIP: FlagshipContent = {
       heading: "Four weeks from a strategy to a decision",
       alt: "A four-week plan: week 1 goals and markets, week 2 the HUD benchmark and the street, week 3 real buildings through the ROI guide, week 4 the local rules and a written decision to buy, keep looking or wait.",
       steps: [
-        { title: "Week 1: goals and markets", chips: [{ label: "One page", value: "Strategy and numbers" }, { label: "Towns", value: "One primary, one backup" }] },
-        { title: "Week 2: the benchmark and the street", chips: [{ label: "HUD USER", value: "Your county's figure" }, { label: "Listings", value: "Above and below it" }] },
-        { title: "Week 3: buildings", chips: [{ label: "The ROI guide", value: "Block and building" }] },
-        { title: "Week 4: rules and a decision", chips: [{ label: "Check", value: "Stabilization, registration, short-term limits" }, { label: "Write", value: "Buy, keep looking or wait" }] },
+        { title: "Week 1: goals and markets", body: "Your strategy and goals in numbers on one page; one primary town and one backup." },
+        { title: "Week 2: the benchmark and the street", body: "Your county's figure on HUD USER, and the listings above and below it." },
+        { title: "Week 3: buildings", body: "Real buildings through the ROI guide, block by block; drop the ones that miss." },
+        { title: "Week 4: rules and a decision", body: "Stabilization, registration and short-term limits checked; buy, keep looking or wait, in writing." },
       ],
       close: "Start week 1 tonight.",
       sources: [{ text: "the post's own plan" }],
