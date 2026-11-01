@@ -2,23 +2,32 @@
  * & Common Questions") and re-verified on 2026-09-24. Same house rules as real-estate-posts.ts;
  * the pipeline is docs/blog-repost/PIPELINE.md. */
 
-export const SELLING_TIMELINE_POST = `Selling a home in the Hudson Valley can feel like a maze: many steps, firm deadlines, and a few procedures that exist only in New York. This guide lays out the timeline for selling a house in New York, phase by phase, from the first conversation with an agent to the day you hand over the keys, so you know what happens next and roughly how long each stage takes.
+/** ROUND 21, 2026-11-01. The refresh from the agents' content chain (company/pieces/realtylt/
+ * timeline-selling-a-house-ny/post.md), built as a flagship with its scenes in
+ * content/blog/timeline-scenes.ts and its quiz in timeline-quiz.ts. The disclosure facts and the
+ * form's address are the seller disclosure post's (checked in the owner's browser 2026-10-31); the
+ * contract-stage facts are the bar association's own words. docs/blog-r21/NOTES.md has the rest. */
+export const SELLING_TIMELINE_POST = `This guide is for owners selling a one- to four-family home in New York, from Poughkeepsie to the five boroughs. It covers how long it takes to sell a house here, phase by phase, from the first conversation with an agent to the day you hand over the keys. You leave able to sketch your own selling calendar, see which step is most likely to slow it down, and start the slow steps first.
 
-## The home selling timeline at a glance
+In our experience the plain answer is several months from listing to closing. Before the listing, preparation usually takes a few weeks. After it, the house is on the market for days to months, the contract stage commonly takes one to two weeks, and a financed sale commonly closes one to three months after the contract is signed. Those ranges come from our own transactions, not from a rule, and every sale moves at its own pace. Selling in New York also involves a few procedures that exist only here, and the phases below explain what drives each one.
 
-1. **Preparation:** pricing, repairs, cleaning and marketing, usually a few weeks.
+## How long it takes to sell a house: the timeline at a glance
+
+1. **Preparation, before the listing:** pricing, repairs, cleaning, the disclosure form and marketing, usually a few weeks.
 2. **On the market:** showings and offers, anywhere from days to months depending on price, condition and town.
-3. **The contract stage:** the attorneys negotiate the contract of sale; in our experience this commonly takes one to two weeks.
-4. **Contract to closing:** inspection, appraisal, the buyer's loan and title work; for a financed sale this commonly takes one to three months.
+3. **The contract stage:** the attorneys negotiate the contract of sale. In our experience this commonly takes one to two weeks.
+4. **Contract to closing:** inspection, appraisal, the buyer's loan and title work. For a financed sale this commonly takes one to three months.
 5. **Closing week:** the buyer's final walk-through and the closing itself.
 
-Every sale moves at its own pace. The phases below explain what drives each one.
+An invented example: an owner who wants to be in a new home by late summer counts back through the five phases. She sees that her real start date is set by when the house is ready for photos, and the closing date follows from that. Put your own target closing date at the bottom of a page with the five phases above it, and that page is your calendar for the rest of this guide.
+
+[[scene:glance]]
 
 ## Phase 1: Preparation
 
 ### Pricing strategy
 
-Start with a comparative market analysis: recent sales of truly similar homes nearby, adjusted for condition, size, updates and location. Overpricing is the most common reason a house sits, and a listing that sits often sells for less than a correctly priced one would have. Our [home value page](/home-value) is the place to start.
+Start with a comparative market analysis: recent sales of truly similar homes nearby, adjusted for condition, size, updates and location. Price from what those sales support rather than from the number you hope for; a price the sales do not support is the slowest way to find the right one. Our [home value page](/home-value) explains how a valuation is built.
 
 ### Getting the house ready
 
@@ -26,27 +35,33 @@ Start with a comparative market analysis: recent sales of truly similar homes ne
 - **Fix the small things:** dripping faucets, dead bulbs, sticky doors, scuffed paint.
 - **Clean thoroughly,** inside and out.
 
-Consider a pre-listing inspection if the house is older; it lets you fix or price in problems before a buyer finds them. Our [seller's guide to preparing for the home inspection](/blog/seller-guide-prepare-home-inspection) covers it.
+If the house is older, consider a pre-listing inspection. It lets you fix problems, or price them in, before a buyer finds them. Our [seller's guide to preparing for the home inspection](/blog/seller-guide-prepare-home-inspection) covers it.
 
 ### Disclosure and marketing
 
-New York sellers of most one- to four-family homes must give the buyer a Property Condition Disclosure Statement before the buyer signs a contract. Since March 20, 2024, sellers can no longer skip it by giving a $500 credit, and the form now includes questions about flood risk and flood history ([New York State Bar Association](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/); [the current form, DOS-1614](https://dos.ny.gov/system/files/documents/2024/03/dos-1614-f-property-condition-disclosure-statement_01.2024.pdf)). Prepare it early with your attorney; our guide to [seller disclosures in New York](/blog/seller-disclosure-requirements-new-york) explains it.
+New York's Property Condition Disclosure Act requires the seller of a one- to four-family home to deliver the completed disclosure statement to the buyer or the buyer's agent before the buyer signs a binding contract of sale ([Real Property Law 462](https://www.nysenate.gov/legislation/laws/RPP/462)). Since March 20, 2024 a seller can no longer give the buyer a $500 credit at closing instead of the form, and seven flood questions were added, taking it from 49 to 56 questions ([New York State Bar Association, February 28, 2024](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)).
 
-Meanwhile your agent prepares the marketing: professional photography, a floor plan, video or a 3D tour where it helps, and a listing description that tells the house's story accurately.
+The current form is DOS-1614-f (Rev. 02/25), required since July 1, 2025 ([Department of State, the form in effect from July 1, 2025](https://dos.ny.gov/property-condition-disclosure-statement-eff-7125)). You can [download the real form from the Department of State (PDF, seven pages)](https://dos.ny.gov/system/files/documents/2025/05/dos-1614-f-property-condition-disclosure-statement_04.2025-eff.-07.2025.pdf); a copy printed before July 2025 is out of date. Prepare it early with your attorney. Our guide to [seller disclosure in New York](/blog/seller-disclosure-requirements-new-york) walks through all 56 questions and has a free prep sheet that sits beside the state's form.
+
+While you prepare the house, your agent prepares the marketing: professional photography, a floor plan, video or a 3D tour where it helps, and a listing description that tells the house's story accurately.
+
+An invented example: the owner of an older colonial books a pre-listing inspection before anything else and learns the attic needs better venting. He has it fixed before the photos are taken, and when the buyer's inspector comes later there is one less finding to negotiate. Pulling three recent nearby sales that truly match your house and asking your attorney for the form are the two first moves that cost nothing and keep the calendar honest.
+
+[[scene:week-one]]
 
 ## Phase 2: On the market
 
 ### The listing goes live
 
-The listing is entered in the local multiple listing service (OneKey MLS in most of the Hudson Valley and New York City), which shares it with cooperating brokers and the major home search sites. See how we sell homes on our [selling page](/selling).
+The listing goes into the local multiple listing service. In much of the Hudson Valley and New York City that is OneKey MLS, which at its 2020 launch served Manhattan, Westchester, Putnam, Rockland, Sullivan, Orange, Nassau, Suffolk, Queens, Brooklyn and the Bronx ([Hudson Gateway Association of Realtors, March 25, 2020](https://www.hgar.com/new-york-metros-first-regional-multiple-listing-service-goes-live-for-realtors)). The service shares the listing with the agents who belong to it and with home search sites. See how we sell homes on our [selling page](/selling).
 
 ### Showings and open houses
 
-Keep the house show-ready and showing hours as open as you can stand. Most showings happen with you out of the house.
+Keep the house show-ready, and keep showing hours as open as you can stand. Plan to be out during showings; buyers look more freely without the owner in the room.
 
 ### Offers
 
-An offer is a package, not just a price. Compare:
+An offer is a package of terms, and price is one of them. Compare:
 
 - price;
 - the strength of the buyer's financing and pre-approval;
@@ -54,89 +69,157 @@ An offer is a package, not just a price. Compare:
 - contingencies (mortgage, inspection, appraisal);
 - the requested closing date and any rent-back.
 
-When you accept one, the agents prepare a deal sheet summarizing the terms and send it to both attorneys.
+When you accept an offer, the agents prepare a deal sheet that summarizes the terms and send it to both attorneys.
+
+An invented example: two offers arrive on the same weekend. The higher one comes with a thin pre-approval and a small deposit; the lower one comes from a fully pre-approved buyer with a larger deposit and a closing date that matches the seller's move. Side by side, the lower offer is the one more likely to reach the closing table on time. Deciding before the first showing which two terms besides price matter most to you lets you compare offers on the day they arrive instead of under pressure.
+
+[[scene:offers]]
 
 ## Phase 3: The New York contract stage
 
-This is where New York differs from most states. An accepted offer is not a binding contract. Downstate, the seller's attorney drafts the contract of sale; upstate, an agent often prepares it subject to the attorneys' approval ([NYSBA](https://nysba.org/legalease-buying-and-selling-real-estate/)). The attorneys negotiate the details: what happens with inspection findings, the mortgage contingency, the deposit, what stays with the house.
+This is where New York differs from most states: an accepted offer is not yet a contract. Upstate, a real estate agent usually prepares the contract of sale; downstate, usually the seller's attorney ([New York State Bar Association, LegalEase](https://nysba.org/legalease-buying-and-selling-real-estate/)). The attorneys negotiate the details: what happens with inspection findings, the mortgage contingency, the deposit, and what stays with the house.
 
-Until both parties sign, either side can still walk away. There is no statutory "attorney review" period in New York, so speed depends on the attorneys; choose one who responds quickly (see [why you need a real estate attorney in New York](/blog/why-you-need-real-estate-attorney-ny)).
+Until the contract is signed, either side can usually still walk away, so be careful with paper before then. The bar association warns that a binder or other early paper "may constitute a binding contract", which is why nothing should be signed before your attorney has read it. Once you sign, it says, "your rights and obligations are determined." The buyer pays a deposit at signing; the amount is negotiated, and in our transactions it is commonly held in escrow by the seller's attorney until closing.
 
-The contract becomes binding when both sides have signed and the buyer's deposit is held in escrow, usually by the seller's attorney. The deposit amount is negotiated.
+How long this stage takes depends on the attorneys, so choose one who responds quickly; see [why you need a real estate attorney in New York](/blog/why-you-need-real-estate-attorney-ny).
+
+An invented example: a seller's attorney is away for a week, and the draft contract sits unanswered. Nothing is signed, so the buyer keeps touring other houses. The deal survives, but the seller spends that week unsure whether it will. Choosing your attorney before you list, and asking how quickly they usually return a draft contract of sale, is the cheapest way to keep this stage short.
+
+[[scene:contract-path]]
 
 ## Phase 4: From contract to closing
 
+The steps below often overlap, and their order depends on the contract and the loan.
+
 ### The buyer's inspection
 
-Depending on how the contract is written, the buyer inspects before or shortly after signing. Afterwards the buyer may ask for repairs or a credit. You are generally not obliged to agree to every request unless your contract says so, though a lender's requirements (FHA and VA have minimum property standards) and local code can force some repairs. Most negotiation centers on safety, structure and major systems, not cosmetics.
+The bar association tells buyers to engage professional inspectors "before or after signing a contract", and a New York home inspector must give a written report within five business days of the inspection ([New York State Bar Association, LegalEase](https://nysba.org/legalease-buying-and-selling-real-estate/)). When the inspection comes after signing, the contract's terms decide what the buyer can do about the findings; when it comes before, the buyer brings the findings to the negotiation. Either way the buyer may ask for repairs or a credit, and you are generally not obliged to agree to every request unless your contract says so. A lender's requirements and local code can still force some repairs: for an FHA-insured loan, for example, HUD has the appraiser report the repairs needed to protect the occupants' health and safety, the property's security as collateral, and its structural integrity ([HUD, Repair Conditions](https://archives.hud.gov/offices/hsg/sfh/ref/sfhp1-22.cfm)). In our experience the requests worth your time are about safety, structure and major systems.
 
 ### The appraisal
 
-If the buyer has a mortgage, the lender orders an appraisal. If it comes in below the contract price, the lender lends against the lower value. The usual outcomes:
+If the buyer has a mortgage, the lender orders an appraisal. For a purchase, Fannie Mae's guide sets the property value for the loan at the lower of the sales price and the current appraised value ([Fannie Mae Selling Guide, B2-1.2-01, June 1, 2022](https://selling-guide.fanniemae.com/sel/b2-1.2-01/loan-value-ltv-ratios)), so an appraisal below the price usually means the loan is sized to the lower number. The usual outcomes:
 
 - the buyer covers the gap in cash;
 - you lower the price;
 - you split the difference;
-- the buyer asks the lender for a reconsideration of value, pointing out factual errors or better comparable sales; federal regulators issued guidance on these requests in 2024 ([CFPB](https://www.consumerfinance.gov/archive/blog/mortgage-borrowers-can-challenge-inaccurate-appraisals-through-the-reconsideration-of-value-process/));
+- the buyer asks the lender for a reconsideration of value, pointing out factual errors, missing information or better comparable sales ([Consumer Financial Protection Bureau, October 6, 2022](https://www.consumerfinance.gov/archive/blog/mortgage-borrowers-can-challenge-inaccurate-appraisals-through-the-reconsideration-of-value-process/));
 - the buyer cancels, if the contract's financing terms allow it.
 
 ### Underwriting and the loan commitment
 
-The lender verifies the buyer's income, assets and credit and the property's appraisal and title, then issues a commitment and eventually a clear to close. A well-qualified, fully pre-approved buyer is your best protection against delays here.
+The lender verifies the buyer's income, assets and credit, along with the property's appraisal and title. It then issues a commitment and, eventually, a clear to close. This is the step where the strength of the buyer's financing, which you weighed when you compared offers, pays off.
 
 ### Title
 
-The buyer's title company searches public records for liens, judgments or old mortgages. Your attorney clears anything that turns up, such as a paid-off mortgage never formally discharged, so you can deliver clean title.
+After the contract is signed, the buyer's side checks that you can convey title; downstate and in other areas upstate, the buyer's attorney may have a title insurance company or agent search the land title records ([New York State Bar Association, LegalEase](https://nysba.org/legalease-buying-and-selling-real-estate/)). Your attorney clears anything that turns up so you can deliver clean title. A common example is a paid-off mortgage that was never formally discharged.
+
+An invented example: the appraisal on a ranch house comes in under the contract price. The buyer's agent finds a closer comparable sale that the appraiser missed, and the buyer asks the lender for a reconsideration of value. The seller waits for the lender's reply before discussing any price change. Finding your old mortgage papers and any proof of a past payoff before you sign means your attorney can clear title without waiting on you.
+
+[[scene:after-contract]]
 
 ## Phase 5: Closing week
 
 ### The buyer's final walk-through
 
-Shortly before closing the buyer checks that the house is in the condition the contract requires, repairs are done, included items are there, and the house is empty and broom clean. Have receipts and warranties for repair work ready. Our [final walk-through checklist](/blog/final-walk-through-checklist) is what the buyer will use.
+Shortly before closing, the buyer checks that the house is in the condition the contract requires. Repairs should be done, included items should be there, and the house should be empty and broom clean. Have receipts and warranties for any repair work ready. Our [final walk-through checklist](/blog/final-walk-through-checklist) is what the buyer will use.
 
 ### Closing day
 
-Closings are commonly held at an attorney's or title company's office. You sign the deed and the transfer tax forms, your existing mortgage is paid off from the proceeds, costs are settled, and you receive the balance. You hand over the keys, and the sale is complete.
+In our transactions closings are commonly held at an attorney's or title company's office. You sign the deed and the state's real estate transfer tax return, Form TP-584, which goes to the county's recording officer with the deed ([Department of Taxation and Finance, instructions TP-584-I (8/25)](https://tax.ny.gov/pdf/current_forms/property/tp584i.pdf)); a sale in New York City uses Form TP-584-NYC. Your existing mortgage is paid off from the proceeds, costs are settled, and you receive the balance. You hand over the keys, and the sale is complete.
+
+An invented example: a seller leaves the repair invoices and the new water heater's warranty in a folder on the counter. The buyer can see each agreed repair was done, and the walk-through ends quickly. Booking the movers so the house is empty before the walk-through, and keeping every repair receipt in one folder from the day you list, makes this the shortest week of the sale.
+
+[[scene:closing-folder]]
 
 ## Your home selling blueprint
 
 1. **Strategy and preparation:** agent, attorney, price, repairs, disclosure form.
 2. **Launch and negotiation:** marketing, showings, an accepted offer.
-3. **The contract:** attorneys negotiate; both sides sign; the deposit goes into escrow.
+3. **The contract:** the attorneys negotiate, both sides sign, and the buyer pays the deposit.
 4. **The buyer's due diligence:** inspection, appraisal, loan, title.
 5. **Closing:** walk-through, signatures, keys.
 
-Thinking about selling? Start with a [home valuation](/home-value) and a plan built around your dates, or [talk with us](/connect).
+An invented example: an owner tapes this list inside a kitchen cabinet, writes a name beside each stage and crosses each stage off as it ends. When the attorney calls about the contract, she already knows which stage she is in and what comes next.
+
+[[scene:blueprint]]
+
+## What to do first
+
+What to do first is the early work that cannot be rushed later. Here is the order we suggest before a listing goes live, week by week; the weeks set the order, and your house sets the pace.
+
+- **First week:** talk with an agent and an attorney, get a comparative market analysis, and ask your attorney for the disclosure form.
+- **Second week:** book a pre-listing inspection if the house is older, start decluttering, and list the small fixes.
+- **Third week:** finish repairs and cleaning, fill out the disclosure form with your attorney, and schedule the photography.
+- **Fourth week:** photos, floor plan and listing description. Decide which two offer terms matter most besides price, and set your showing hours.
+- **After the listing goes live:** follow phases 2 to 5 above, keeping receipts and mortgage papers within reach.
+
+A house that needs more work takes longer than this; a house that is already clean and repaired may move faster.
+
+An invented example: a couple planning a move starts with the first week's list on a Saturday morning. By evening they have an attorney's name, a short list of comparable sales and a blank disclosure form on the table. The first week's three tasks start pricing and paperwork, the two pieces every later step waits on.
+
+[[scene:first-month]]
+
+## Who this guide fits
+
+This guide fits owners selling a one- to four-family house in New York, especially to a buyer who is financing the purchase, because every step in phase 4 applies to that sale. It also fits sellers who need to set a moving date and want to work back from it.
+
+It fits less well in three cases:
+
+- **An all-cash buyer.** With no lender there is no lender-ordered appraisal and no loan approval, so contract to closing can be shorter. A cash buyer may still order an appraisal or an inspection on their own; ask your attorney what timing to expect.
+- **A co-op or condominium unit.** The disclosure act does not cover them, and the building's own approval steps are not covered here. Ask the attorney for that building's process.
+- **A house outside New York.** The contract stage described here is specific to New York. Look for a guide written for that state.
+
+An invented example: a seller with a cash offer reads phase 4 and crosses off the loan lines, then asks the buyer's agent whether the buyer wants an appraisal anyway. Her calendar shortens, and she asks her attorney to confirm the new dates.
+
+[[scene:fit]]
 
 ## Frequently asked questions
 
 ### How long does it take to sell a house in New York?
 
-It depends on the market and the house. After you accept an offer, the contract stage commonly takes one to two weeks and a financed sale commonly closes one to three months after the contract is signed, so plan for several months from listing to closing.
+In our experience, several months from listing to closing. After you accept an offer, the contract stage commonly takes one to two weeks, and a financed sale commonly closes one to three months after the contract is signed; the time on the market depends on the house and the town.
 
 ### How long does attorney review take in NY?
 
-New York has no fixed attorney review period. The attorneys negotiate the contract of sale after the offer is accepted, and the deal is binding only when both sides sign; in practice this often takes one to two weeks.
+There is no single number: the contract stage lasts until both sides sign the contract of sale, and in our experience that often takes one to two weeks. Signing anything earlier, even a binder, can bind you, so let your attorney read it first.
 
 ### Do I have to give buyers a property condition disclosure in New York?
 
-For most one- to four-family homes, yes. Since March 20, 2024 the $500 credit alternative is gone, and the form includes flood questions.
+For most one- to four-family homes, yes, before the buyer signs the contract, on the Department of State's form DOS-1614-f (Rev. 02/25). The $500 credit alternative was repealed on March 20, 2024, and the form now has 56 questions, eight of them about flooding.
 
 ### What happens if the appraisal is low?
 
-The buyer covers the gap, you reduce the price, you meet in the middle, or the buyer requests a reconsideration of value. If none works, the buyer may be able to cancel under the contract's financing terms.
+The loan is usually sized to the lower value, so the buyer covers the gap, you reduce the price, you meet in the middle, or the buyer requests a reconsideration of value. If none of these works, the buyer may be able to cancel under the contract's financing terms.
 
 ### Do I have to make the repairs a buyer asks for?
 
-Generally not unless your contract requires it, although a buyer's lender or local code may require some. Repair requests are usually a negotiation.
+Generally not, unless your contract says so. A buyer's lender or local code may still require some repairs, and repair requests are usually a negotiation.
+
+[[scene:quiz]]
+
+## Next step
+
+If you are planning a sale, call or text (914) 415-7185, write to info@realtylt.com, or book a consultation, and we will build the calendar around your dates.
+
+[[scene:talk]]
+
+This guide is general information, not legal advice; your attorney advises on your own contract.
 
 ## Sources
 
-- New York State Bar Association, [Property Condition Disclosure Act amendments](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/) and [buying and selling real estate](https://nysba.org/legalease-buying-and-selling-real-estate/)
-- Consumer Financial Protection Bureau, [reconsideration of value](https://www.consumerfinance.gov/archive/blog/mortgage-borrowers-can-challenge-inaccurate-appraisals-through-the-reconsideration-of-value-process/)
-- NYS Department of State, [Property Condition Disclosure Statement, DOS-1614](https://dos.ny.gov/system/files/documents/2024/03/dos-1614-f-property-condition-disclosure-statement_01.2024.pdf)
+- New York Real Property Law, [section 462](https://www.nysenate.gov/legislation/laws/RPP/462) (the disclosure statement, delivered before the buyer signs). Read November 1, 2026.
+- New York State Bar Association, Karl Holtzschue, ["Property Condition Disclosure Act Amended"](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/), February 28, 2024 (the $500 credit repealed and the flood questions added on March 20, 2024). Read October 29, 2026, as in our disclosure guide.
+- NYS Department of State, [Property Condition Disclosure Statement, DOS-1614-f (Rev. 02/25)](https://dos.ny.gov/property-condition-disclosure-statement-eff-7125), required from July 1, 2025; [the form itself (PDF)](https://dos.ny.gov/system/files/documents/2025/05/dos-1614-f-property-condition-disclosure-statement_04.2025-eff.-07.2025.pdf). Checked October 31, 2026 in a browser (the site refuses scripts).
+- New York State Bar Association, ["LegalEase: Buying and selling real estate"](https://nysba.org/legalease-buying-and-selling-real-estate/), undated page (who prepares the contract, the binder warning, the inspection timing, the title search). Read November 1, 2026.
+- Hudson Gateway Association of Realtors, ["New York Metro's first regional multiple listing service goes live"](https://www.hgar.com/new-york-metros-first-regional-multiple-listing-service-goes-live-for-realtors), March 25, 2020 (OneKey MLS's counties). Read November 1, 2026.
+- U.S. Department of Housing and Urban Development, Homeownership Center reference guide, ["Repair Conditions"](https://archives.hud.gov/offices/hsg/sfh/ref/sfhp1-22.cfm), archived page. Read November 1, 2026.
+- Fannie Mae Selling Guide, [B2-1.2-01, Loan-to-Value (LTV) Ratios](https://selling-guide.fanniemae.com/sel/b2-1.2-01/loan-value-ltv-ratios), June 1, 2022. Read November 1, 2026.
+- Consumer Financial Protection Bureau, ["Mortgage borrowers can challenge inaccurate appraisals through the reconsideration of value process"](https://www.consumerfinance.gov/archive/blog/mortgage-borrowers-can-challenge-inaccurate-appraisals-through-the-reconsideration-of-value-process/), October 6, 2022. Read November 1, 2026.
+- NYS Department of Taxation and Finance, [instructions for Form TP-584, TP-584-I (8/25)](https://tax.ny.gov/pdf/current_forms/property/tp584i.pdf). Read November 1, 2026.
 
-Checked against these sources on September 24, 2026. Durations described as "in our experience" are typical ranges from our own transactions, not rules.`;
+Sources checked November 1, 2026, except where a line gives another date. Durations described as "in our experience" are typical ranges from our own transactions, not rules.
+
+Written with an AI assistant and checked by Levan.`;
 
 // The owner's rule for every post (2026-10-31): open with two to four plain sentences on what it covers, what the reader leaves with and who it is for, then the story.
 export const SELLER_DISCLOSURE_POST = `This guide is for anyone selling a one- to four-family home in New York. It covers the state's property condition disclosure form: which sales need it, what changed in 2025, how to fill it in and what to gather before you do. You leave with a link to the state's form itself and a free two-page prep sheet that gets your paper ready for it.

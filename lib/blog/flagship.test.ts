@@ -18,7 +18,8 @@ import { INVOICING_FLAGSHIP } from "@/content/blog/invoicing-scenes";
 import { CLONE_FLAGSHIP } from "@/content/blog/clone-scenes";
 import { AUDIT_FLAGSHIP } from "@/content/blog/audit-scenes";
 import { SELLER_DISCLOSURE_FLAGSHIP } from "@/content/blog/seller-disclosure-scenes";
-import { SELLER_DISCLOSURE_POST } from "@/content/blog/seller-posts";
+import { SELLER_DISCLOSURE_POST, SELLING_TIMELINE_POST } from "@/content/blog/seller-posts";
+import { TIMELINE_FLAGSHIP } from "@/content/blog/timeline-scenes";
 import { BEST_TOWNS_FLAGSHIP } from "@/content/blog/best-towns-scenes";
 import { BEST_TOWNS_POST } from "@/content/blog/investing-posts";
 import { CUSTOM_FLAGSHIP } from "@/content/blog/custom-scenes";
@@ -319,6 +320,7 @@ const TOPICS: [string, string, FlagshipContent][] = [
   ["seller disclosure", SELLER_DISCLOSURE_POST, SELLER_DISCLOSURE_FLAGSHIP],
   // Round 21, 2026-11-01. The investing refresh from the agents' content chain.
   ["best towns", BEST_TOWNS_POST, BEST_TOWNS_FLAGSHIP],
+  ["selling timeline", SELLING_TIMELINE_POST, TIMELINE_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {

@@ -62,6 +62,7 @@ import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, MOVERS_POST, PACKING_POST,
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { SELLER_DISCLOSURE_FLAGSHIP } from "./seller-disclosure-scenes";
 import { BEST_TOWNS_FLAGSHIP } from "./best-towns-scenes";
+import { TIMELINE_FLAGSHIP } from "./timeline-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
 import { SCHEDULING_FLAGSHIP } from "./scheduling-scenes";
@@ -966,20 +967,23 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "timeline-selling-a-house-ny",
     cluster: "selling",
-    title: "From listing to closing: a step-by-step timeline for selling your home",
-    seoTitle: "Timeline for Selling a House in NY, from Listing to Closing",
+    title: "How long it takes to sell a house in New York, phase by phase",
+    seoTitle: "How Long It Takes to Sell a House in NY: The Full Timeline",
     /** Seller Education #6, reposted 2026-09-24. Slug = the CRM drip link (day 92) and the
-     * draft's; the old site's title slug redirects here. */
+     * draft's; the old site's title slug redirects here. ROUND 21 (2026-11-01): the refresh from
+     * the agents' content chain, built as a flagship with its scenes (content/blog/timeline-scenes.ts)
+     * and its quiz; same address. */
     date: "2026-03-05",
-    updated: "2026-09-24",
+    updated: "2026-11-01",
     excerpt:
-      "Every phase of a New York home sale, from pricing and the disclosure form to the attorneys' contract, the buyer's inspection and appraisal, and closing day.",
+      "Every phase of a New York home sale with typical ranges from our own sales: pricing and the current disclosure form, the attorneys' contract stage, the buyer's inspection, appraisal and loan, closing day, and a four-week plan to start.",
     seoDescription:
-      "The timeline for selling a house in New York: preparation, listing, the attorney contract stage, inspection, appraisal and closing, with 2026 disclosure rules.",
+      "How long it takes to sell a house in New York: each phase from pricing to closing day, typical ranges from our own sales, and a week-by-week plan to start.",
     cover: "/images/lifestyle/selling.jpg",
     body: [],
     placeholder: false,
     markdown: SELLING_TIMELINE_POST,
+    flagship: TIMELINE_FLAGSHIP,
     aliases: ["from-listing-to-closing-a-step-by-step-timeline-for-selling-your-home", "listing-to-closing-timeline-selling-home"],
   },
   {
