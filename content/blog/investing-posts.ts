@@ -584,46 +584,104 @@ From recent sales of comparable, fully renovated homes nearby, adjusted for size
 
 Checked against these sources on September 24, 2026. Example figures are assumptions; payments are computed with the standard amortization formula.`;
 
-export const BEST_TOWNS_POST = `"Where is the best place to invest in the Hudson Valley?" has no single answer, because the region is not one market. The better question is which town fits your strategy. This guide to the best places to invest in real estate in the Hudson Valley matches four strategies to five markets, using public 2026 rent data and the local factors that actually move returns, including rules that surprise newcomers.
+/** ROUND 21, 2026-11-01. The refresh from the agents' content chain (company/pieces/realtylt/
+ * best-places-to-invest-hudson-valley/post.md), built as a flagship with its scenes in
+ * content/blog/best-towns-scenes.ts and its quiz in best-towns-quiz.ts. The owner's opener rule:
+ * the first sentences say what the post covers, what the reader leaves with and who it is for.
+ * HUD's FY2027 county figures stay as italic editor's notes: huduser.gov refused a script on
+ * 2026-11-01, and a figure nobody read is never typed in. docs/blog-r21/NOTES.md has the rest. */
+export const BEST_TOWNS_POST = `This guide is for first-time and small investors comparing Hudson Valley real estate: a buyer of a first rental, a small landlord adding a unit or two, or an owner who plans to live in one unit of a small multi-family and rent the others. It matches four investing strategies to five towns, Poughkeepsie, Beacon, White Plains, Kingston and Newburgh, with the public facts behind each match and the rent rule that surprises newcomers in Kingston. You leave with a way to check a seller's rent against HUD's official benchmark, a calculator for what a rent leaves you in a year, and a four-week plan you can start this week.
+
+The Hudson Valley is not one market. It runs from Westchester's county seat to Kingston's waterfront, and each town rewards a different goal, so the useful question is which town fits the return you want.
 
 ## First choose a strategy
 
-- **Cash flow:** steady monthly income after every expense. Works best where purchase prices are moderate relative to rents and tenant demand is deep and not seasonal.
-- **Appreciation:** long-term growth in value, often with thin or negative cash flow early. Works best where demand is strong and housing supply is limited.
-- **Stability:** high-quality assets in established markets with high-income renters; lower yields, lower risk.
-- **Growth and revitalization:** places with visible public and private investment, where both rents and values may rise, with more uncertainty.
+Each town below suits one strategy better than the others, so the strategy comes first.
 
-## A public benchmark for rents
+- **Cash flow:** steady monthly income after every expense. It needs purchase prices that are moderate against rents, and tenant demand that is deep and not seasonal.
+- **Appreciation:** growth in value over years, often with thin or negative cash flow early. It needs strong demand and limited housing supply.
+- **Stability:** predictable income from a well-kept building with long-term tenants, usually at a lower yield. It is judged on vacancy, expenses, condition and financing, and on the yield last.
+- **Growth and revitalization:** places with visible public and private investment, where rents and values may both rise, with more uncertainty.
 
-HUD's fiscal 2026 Fair Market Rents give a consistent, official reference for two-bedroom rents (including utilities, set near the 40th percentile of the market):
+An invented example: a nurse with savings for one small rental cares more about a check every month than about a large gain years from now. That points her to cash flow, and she can skip the appreciation markets on her first pass. The strategy you are willing to give up matters as much as the one you choose, so name both before you open a listing.
 
-- **Dutchess and Orange counties** (Kiryas Joel-Poughkeepsie-Newburgh metro): $1,979 ([HUD USER](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3602799999))
-- **Ulster County** (Kingston metro): $1,818 ([HUD USER](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3611199999))
-- **Westchester, Putnam and Rockland:** $2,910 ([HUD USER](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3611999999))
+[[scene:strategies]]
 
-Actual rents for a renovated unit near a train station can be well above these. Use them as a floor-to-middle reference, then check current comparable listings.
+## Who this guide fits
+
+This guide fits first-time investors, small landlords adding a unit or two, and buyers of one- to five-unit buildings who want to compare Hudson Valley towns side by side. It also fits a buyer who plans to live in one unit of a small multi-family and rent the others.
+
+It fits other readers less well. A buyer looking for a home with no rental plan gets more from our [town pages](/top-areas), which describe daily life, schools and commutes. A buyer looking at a large older apartment building in Kingston should read the rent stabilization section below and get legal advice before making an offer. A buyer who has never managed a renovation is better served by a building that can be rented close to as is than by a major rehab.
+
+An invented example: a couple moving up from the city wants a house with a yard and a short walk to the train. Rent benchmarks and cap rates will not help them choose; the town pages and a [home search](/search) will.
+
+[[scene:fit]]
+
+## A public benchmark for Hudson Valley real estate rents
+
+HUD's Fair Market Rents are the official, public reference for rents in each metro area: a two-bedroom figure that includes utilities, set near the 40th percentile of the market's standard units. HUD's fiscal 2027 figures took effect on October 1, 2026 ([HUD USER, Fair Market Rents](https://www.huduser.gov/portal/datasets/fmr.html)). The towns in this guide sit in three HUD areas:
+
+- **Dutchess and Orange counties** (Poughkeepsie, Beacon and Newburgh): *Editor: HUD USER refused our script on November 1, 2026. Read the FY2027 two-bedroom Fair Market Rent and HUD's own area name for Dutchess County at https://www.huduser.gov/portal/datasets/fmr.html and put them here with the date read.*
+- **Ulster County** (Kingston): *Editor: read the FY2027 two-bedroom Fair Market Rent and HUD's area name for Ulster County at https://www.huduser.gov/portal/datasets/fmr.html and put them here with the date read.*
+- **Westchester, Putnam and Rockland** (White Plains): *Editor: read the FY2027 two-bedroom Fair Market Rent and HUD's area name for Westchester County at https://www.huduser.gov/portal/datasets/fmr.html and put them here with the date read.*
+
+A Fair Market Rent is a benchmark, not a floor or a ceiling for any one unit. A renovated unit near a station may rent above it and a dated one below it, so pull the current comparable listings on the same street and see where they sit on both sides of the figure. HUD publishes new figures every year, so check the fiscal year printed on HUD's page before you rely on a number.
+
+An invented example: a seller says a renovated two-bedroom near the station rents well above the county figure. The renovation and the commute are possible reasons to check, not proof that the rent holds; the listings on that street show whether it does. Write the county figure next to the rent the seller claims, and the gap becomes the first question for the seller.
+
+[[scene:fmr]]
 
 ## Cash flow: Poughkeepsie
 
-Poughkeepsie's tenant demand rests on institutions: Vassar College and Marist College, MidHudson Regional Hospital (part of the Westchester Medical Center Health Network), and a Metro-North station that makes it a lower-cost option for commuters. Purchase prices are moderate for the region relative to rents, which is what makes cash flow possible. The city was also named the Mid-Hudson winner of $10 million in the eighth round of New York's Downtown Revitalization Initiative ([NYS Homes and Community Renewal](https://hcr.ny.gov/news/governor-hochul-announces-mid-hudson-winners-downtown-revitalization-initiative-and-ny-forward)), which can support downtown improvements.
+Poughkeepsie has the anchors a cash-flow investor looks for under tenant demand: two colleges, a regional hospital and a train to the city. Vassar College lists 2,514 students on its campus in Poughkeepsie ([Vassar College](https://www.vassar.edu/about)), and Marist, now Marist University, lists a total student population of 6,382 at its main campus there ([Marist University](https://www.marist.edu/about)). MidHudson Regional Hospital is a member of the Westchester Medical Center Health Network ([WMCHealth](https://www.wmchealth.org/locations/midhudson-regional-hospital)). The state's own announcement describes commuters who "converge on the Poughkeepsie Metro North Station daily."
 
-Watch for: older housing stock with deferred maintenance, block-by-block differences, and property taxes; underwrite each building on its real numbers.
+That announcement named Poughkeepsie the Mid-Hudson winner of $10 million in the eighth round of New York's Downtown Revitalization Initiative ([Governor's office, March 11, 2025](https://www.governor.ny.gov/news/governor-hochul-announces-mid-hudson-winners-downtown-revitalization-initiative-and-ny-forward)). On May 14, 2026 the state named the 10 downtown projects the award pays for, totaling $9.7 million ([Governor's office, May 14, 2026](https://governor.ny.gov/news/governor-hochul-announces-25-transformational-projects-mid-hudson-part-downtown-revitalization)).
+
+Demand is the town's half of cash flow; the price is the building's half. Whether a purchase price is moderate against the rent is a test for each building, not a fact about the whole city. Watch for older housing stock with deferred maintenance, differences from one block to the next, and property taxes, and underwrite each building on its actual tax bill and rent roll after walking the block at two different times of day.
+
+[[scene:poughkeepsie]]
 
 ## Appreciation: Beacon
 
-Beacon's draw is well known: Dia:Beacon, a walkable Main Street, Metro-North service to Grand Central and a compact supply of housing. That combination has pushed prices high relative to rents, so buyers are mostly betting on appreciation and should expect modest or negative early cash flow. Compare prices and rents on the specific street before assuming the trend will continue.
+Beacon's pull is easy to see from the train. Dia Beacon, the museum for Dia's collection of art from the 1960s to the present, sits in a former factory an 8 to 10 minute walk from Beacon station, and the MTA puts the ride from Grand Central at about 80 minutes ([MTA Away, Dia Beacon package, 2024 to 2025](https://away.mta.info/deals/dia-beacon-2024-2025/)).
+
+Where buyers pay for a location like that, prices can run ahead of rents. When they do, the buyer is betting on appreciation and should expect modest or negative cash flow at first. Whether that is true of a given house is a street-level test, not a town-wide fact: compare the price with the rent the same street supports before you assume a trend will continue.
+
+An invented example: two buyers look at similar houses a few blocks apart, one close to Main Street and the station, the other farther out. The asking prices are close, the rents they can expect differ, and only a street-level comparison shows which house carries itself. Buy for appreciation only if you can carry thin early cash flow from your own income.
+
+[[scene:beacon]]
 
 ## Stability: White Plains
 
-White Plains is Westchester's county seat and a commercial and legal center with federal and state courts, which supports a deep pool of professional renters. Prices and entry costs are high, and returns are more about stability and tenant quality than yield. In Westchester, the two-bedroom Fair Market Rent is $2,910, among the highest in the region.
+Westchester's county government is based in White Plains, at 148 Martine Avenue ([Westchester County](https://www.westchestercountyny.gov/)), and the federal court for the Southern District of New York sits there too, at the Hon. Charles L. Brieant Jr. Federal Building and Courthouse, 300 Quarropas Street ([U.S. District Court, Southern District of New York](https://www.nysd.uscourts.gov/)). The state named White Plains the Mid-Hudson winner of $10 million in the seventh round of the Downtown Revitalization Initiative, and its announcement calls the downtown home to "the busiest Metro North train station in the lower Hudson Valley" ([Governor's office, February 8, 2024](https://www.governor.ny.gov/news/governor-hochul-announces-mid-hudson-region-winners-seventh-round-downtown-revitalization)).
+
+Government offices, courts and a busy station are reasons to look at White Plains for stability, not a promise about any building in it. A stability investor judges a property on its vacancy history, how long tenants stay, its condition and its financing, and on yield last.
+
+An invented example: a retiree wants a rental that needs little attention and attracts long-term tenants. A smaller yield on a well-kept building can suit that goal better than a higher yield on a building that needs a new roof and turns over every year.
+
+[[scene:white-plains]]
 
 ## Growth with rules to know: Kingston
 
-Kingston's Stockade District and Rondout waterfront, and its arts and restaurant scene, have drawn new residents and investment. Know the local rules before you buy: in 2022 Kingston adopted the state's Emergency Tenant Protection Act, which applies rent stabilization to buildings with six or more units built before 1974, after a city vacancy survey found a rate of 1.57% ([City of Kingston](https://kingston-ny.gov/filestorage/8399/8469/48370/ETPA_Implementation_Fact_Sheet_Kingston_New_York.pdf)). Rent stabilization is administered by New York State Homes and Community Renewal ([HCR](https://hcr.ny.gov/rent-stabilization-and-emergency-tenant-protection-act)). It does not affect one- to five-unit buildings, but it matters a great deal for larger older buildings.
+Kingston, Ulster County's city on the Hudson, is where a newcomer most needs to know the rent rules before buying. In 2022 Kingston adopted the state's Emergency Tenant Protection Act after a city vacancy survey found a rate of 1.57% ([City of Kingston, ETPA fact sheet, 2022](https://kingston-ny.gov/filestorage/8399/8469/48370/ETPA_Implementation_Fact_Sheet_Kingston_New_York.pdf)). The act applies rent stabilization to buildings with six or more units built before 1974, and New York State Homes and Community Renewal administers it ([HCR](https://hcr.ny.gov/rent-stabilization-and-emergency-tenant-protection-act)). Property owners challenged the city's emergency declaration, and on June 18, 2025 the Court of Appeals, the state's highest court, upheld it (Matter of Hudson Valley Property Owners Association v City of Kingston, 2025 NY Slip Op 03691, [New York State Law Reporting Bureau](https://nycourts.gov/reporter/3dseries/2025/2025_03691.htm)).
+
+The city surveyed again in 2025. Its report, published in August 2025, found a net vacancy rate of 7.04% in the sampled buildings the act covers, above the act's 5% line for an emergency, with one exception: buildings of more than 22 units, at 3.73% ([City of Kingston, 2025 Rental Vacancy Survey](https://www.kingston-ny.gov/filestorage/8399/8469/48370/City_of_Kingston_2025_Rental_Vacancy_Survey.pdf)). The report leaves the next step to the city. We found no published city decision on it when we checked on November 1, 2026, so treat the rule as in force for a covered building until HCR or your attorney says otherwise.
+
+[[scene:kingston-vacancy]]
+
+Six units and 1974 are the first screen, not the last word. The 2025 report notes buildings that looked covered and were later found exempt by the state's housing agency, and the ETPA test is only one of the rental laws that can apply: a duplex outside the act still answers to the other state and local rules for landlords. Before an offer in Kingston, count the units, confirm the year the building was built, and ask HCR and your attorney about that building's status.
+
+[[scene:kingston-timeline]]
 
 ## High risk, high potential: Newburgh
 
-Newburgh has one of the region's great collections of historic architecture and a Hudson River waterfront, and it has seen significant nonprofit and public investment in housing and downtown revival. It also has a longer history of disinvestment than its neighbors. It suits experienced, well-capitalized investors who can manage major renovations, work with the city's building department and hold for the long term, not first-time buyers.
+Newburgh sits on the Hudson, and its East End Historic District, roughly bounded by Robinson Avenue, LeRoy Place, Water Street, Bay View Terrace and Monument and Renwick Streets, is on the National Register of Historic Places ([National Park Service, record published September 12, 1985](https://npgallery.nps.gov/AssetDetail/NRIS/85002426)). A large stock of old buildings is the opportunity and the risk at once. The purchase price can be the smallest number in the deal once the renovation, the permits and the months with no rent are counted.
+
+That makes Newburgh a market for investors with renovation experience, money in reserve and time to hold, who can work with the city's building department. A first-time buyer without that experience or that reserve is usually better served by a building that can be rented close to as is, in another market.
+
+An invented example: an investor finds a historic row house at a low asking price. The renovation estimate, the permit timeline and the months with no rent turn out to cost more than the purchase. An experienced investor prices those first; a newcomer often finds them after closing.
+
+[[scene:newburgh]]
 
 ## Your investment plan
 
@@ -632,39 +690,71 @@ Newburgh has one of the region's great collections of historic architecture and 
 3. **Analyze at the block and building level.** The town sets the context; the block and the building decide the return. Learn the metrics in [how to calculate ROI and cap rate](/blog/calculate-roi-cap-rate-investment-property-ny) and compare property types in [multi-family vs single-family investing](/blog/multi-family-vs-single-family-investing-ny).
 4. **Acquire carefully:** local rules (rent stabilization, rental registration, short-term rental limits), inspection, a real rent roll, and your own numbers.
 
-Browse towns on our [top areas pages](/top-areas) and listings on our [home search](/search), or [talk with us](/connect) about matching a market to your goals.
+The calculator below does the one sum every plan rests on: the monthly rent, times the share of it left after every monthly cost, times twelve. The share is yours to work out from the building's real bills, mortgage included; the ROI guide shows how. Divide the year's figure by the cash you put in and you have the cash-on-cash return to hold against your goal.
 
-This article is general information, not financial advice.
+An invented example: a buyer sets a minimum monthly cash flow, picks Poughkeepsie as her primary market and Kingston as the backup, then runs each building she likes through the same sum. Any building that misses her minimum comes off the list, however good the town looks.
+
+[[scene:numbers]]
+
+## What to do first
+
+Here is the order to apply this guide, one week at a time.
+
+- **Week 1: goals and markets.** Write your strategy and your goals in numbers on one page. Pick one primary and one backup town from the sections above.
+- **Week 2: the benchmark and the street.** Look up the current two-bedroom Fair Market Rent for each county on HUD USER. Pull current comparable listings on the streets you like and note where they sit against the benchmark, above or below.
+- **Week 3: buildings.** Analyze a few real buildings at the block and building level with the ROI and cap rate guide, and drop any that miss your numbers.
+- **Week 4: rules and a decision.** For the buildings left, check rent stabilization, rental registration and short-term rental limits, plan the inspection and ask for a real rent roll. Then write down your decision: buy, keep looking, or wait.
+
+An invented example: an investor who skips week 1 spends a month touring buildings in four towns and cannot compare them. An investor who starts with written goals tours fewer buildings and can say no quickly.
+
+[[scene:first-month]]
 
 ## Frequently asked questions
 
 ### Is the Hudson Valley a good place to invest in real estate?
 
-It can be, if the market matches the strategy. Proximity to New York City, rail access and a diverse set of towns support demand, but returns vary sharply by town, block and building, and high prices and taxes make careful underwriting essential.
+It can be, when the town matches the strategy. The region's rail lines to New York City and its range of towns support demand, but returns vary sharply by town, block and building, so careful underwriting of each building comes first.
 
 ### Is Poughkeepsie a good place to invest?
 
-For cash-flow investors it is one of the more promising Hudson Valley markets, thanks to colleges, a major hospital, rail access and moderate prices relative to rents, plus a 2025 Downtown Revitalization Initiative award. Each building still has to work on its own numbers.
+For cash-flow investors it is one of the markets worth a close look: two colleges, a regional hospital, a Metro-North station and a $10 million Downtown Revitalization Initiative award in 2025. Whether the price is moderate against the rent is still a test for each building.
 
 ### Are rental properties profitable in Westchester County?
 
-They can be, but mainly as stable, lower-yield holdings. High prices and taxes mean cash flow is harder to achieve, even with a two-bedroom Fair Market Rent of $2,910 in 2026.
+They can be, mainly as stable holdings judged on vacancy, tenant tenure, condition and financing rather than on yield. Check the building's own numbers against the current Fair Market Rent and the comparable listings before you count on cash flow.
 
 ### Does rent stabilization apply in Kingston?
 
-For buildings with six or more units built before 1974, yes, since Kingston adopted the Emergency Tenant Protection Act in 2022. Smaller buildings are not covered.
+Kingston adopted the Emergency Tenant Protection Act in 2022, and the Court of Appeals upheld the city's emergency declaration in 2025. It reaches buildings with six or more units built before 1974, subject to exemptions, and the city's 2025 survey found vacancy above the act's line except in buildings over 22 units. Ask HCR and an attorney about a specific building.
 
-### What are HUD Fair Market Rents?
+### What are HUD fair market rents?
 
-HUD's annual estimates of typical rents, including utilities, set near the 40th percentile for standard units in each metro area. They are a useful public benchmark but not a ceiling on what a renovated unit can rent for.
+HUD's annual estimates of typical rents, including utilities, set near the 40th percentile for standard units in each metro area. They are a public benchmark: a renovated unit can rent for more and a dated one for less.
+
+[[scene:quiz]]
+
+## Next step
+
+If you are weighing a town or a building, call or text (914) 415-7185, write to info@realtylt.com, or [book a consultation](/connect), and we will go through your numbers with you. Browse towns on our [top areas pages](/top-areas) and listings on our [home search](/search).
+
+This article is general information, not financial or legal advice.
 
 ## Sources
 
-- HUD USER, FY2026 Fair Market Rents: [Dutchess and Orange](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3602799999), [Ulster](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3611199999), [Westchester](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3611999999)
-- NYS Homes and Community Renewal, [Mid-Hudson Downtown Revitalization Initiative winners](https://hcr.ny.gov/news/governor-hochul-announces-mid-hudson-winners-downtown-revitalization-initiative-and-ny-forward) and [rent stabilization and the Emergency Tenant Protection Act](https://hcr.ny.gov/rent-stabilization-and-emergency-tenant-protection-act)
-- City of Kingston, [ETPA implementation fact sheet](https://kingston-ny.gov/filestorage/8399/8469/48370/ETPA_Implementation_Fact_Sheet_Kingston_New_York.pdf)
+- HUD USER, [Fair Market Rents](https://www.huduser.gov/portal/datasets/fmr.html), fiscal 2027 figures in force from October 1, 2026. The county figures are waiting on the editor's lookup: HUD USER refused our script on November 1, 2026.
+- Office of the Governor of New York, [Mid-Hudson winners of the Downtown Revitalization Initiative and NY Forward](https://www.governor.ny.gov/news/governor-hochul-announces-mid-hudson-winners-downtown-revitalization-initiative-and-ny-forward), March 11, 2025 (Poughkeepsie, eighth round); [25 projects in the Mid-Hudson](https://governor.ny.gov/news/governor-hochul-announces-25-transformational-projects-mid-hudson-part-downtown-revitalization), May 14, 2026 (Poughkeepsie's 10 projects, $9.7 million); [Mid-Hudson winners of the seventh round](https://www.governor.ny.gov/news/governor-hochul-announces-mid-hudson-region-winners-seventh-round-downtown-revitalization), February 8, 2024 (White Plains). Read November 1, 2026.
+- [Vassar College, about](https://www.vassar.edu/about) (2,514 students) and [Marist University, about](https://www.marist.edu/about) (6,382 students). Read November 1, 2026.
+- Westchester Medical Center Health Network, [MidHudson Regional Hospital](https://www.wmchealth.org/locations/midhudson-regional-hospital). Read November 1, 2026.
+- MTA, [Dia Beacon package, May 1, 2024 to April 30, 2025](https://away.mta.info/deals/dia-beacon-2024-2025/) (the 80-minute ride and the walk from Beacon station; the package itself has expired). Read November 1, 2026.
+- [Westchester County government](https://www.westchestercountyny.gov/) (148 Martine Avenue, White Plains) and the [U.S. District Court for the Southern District of New York](https://www.nysd.uscourts.gov/) (300 Quarropas Street, White Plains). Read November 1, 2026.
+- City of Kingston, [ETPA implementation fact sheet](https://kingston-ny.gov/filestorage/8399/8469/48370/ETPA_Implementation_Fact_Sheet_Kingston_New_York.pdf), 2022 (checked September 24, 2026), and [2025 Rental Vacancy Survey](https://www.kingston-ny.gov/filestorage/8399/8469/48370/City_of_Kingston_2025_Rental_Vacancy_Survey.pdf), published August 2025 (read November 1, 2026).
+- New York Court of Appeals, [Matter of Hudson Valley Property Owners Association v City of Kingston](https://nycourts.gov/reporter/3dseries/2025/2025_03691.htm), 2025 NY Slip Op 03691, June 18, 2025, as cited in the city's 2025 survey. Read November 1, 2026.
+- NYS Homes and Community Renewal, [rent stabilization and the Emergency Tenant Protection Act](https://hcr.ny.gov/rent-stabilization-and-emergency-tenant-protection-act). Checked September 24, 2026.
+- National Park Service, [East End Historic District, Newburgh](https://npgallery.nps.gov/AssetDetail/NRIS/85002426), National Register record published September 12, 1985. Read November 1, 2026.
 
-Checked against these sources on September 24, 2026.`;
+Sources checked November 1, 2026, except where a line gives another date.
+
+Written with an AI assistant and checked by Levan.`;
 
 export const EXCHANGE_1031_POST = `Selling an investment property that has grown in value can mean a large tax bill. Federal long-term capital gains are taxed at up to 20%, gain from past depreciation at up to 25%, higher earners may owe the 3.8% net investment income tax ([IRS Topic 409](https://www.irs.gov/taxtopics/tc409); [IRS Topic 559](https://www.irs.gov/taxtopics/tc559)), and New York taxes capital gains as ordinary income at its graduated rates ([NYS Department of Taxation and Finance](https://www.tax.ny.gov/pit/file/tax-tables/)). A 1031 exchange lets an investor defer those taxes by reinvesting in another investment property. This guide to the 1031 exchange in New York explains the rules, the deadlines and the traps, with a Hudson Valley example.
 

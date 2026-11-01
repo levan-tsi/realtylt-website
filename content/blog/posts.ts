@@ -61,6 +61,7 @@ import {
 import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, MOVERS_POST, PACKING_POST, RELOCATING_POST, RENT_VS_BUY_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { SELLER_DISCLOSURE_FLAGSHIP } from "./seller-disclosure-scenes";
+import { BEST_TOWNS_FLAGSHIP } from "./best-towns-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
 import { SCHEDULING_FLAGSHIP } from "./scheduling-scenes";
@@ -769,20 +770,23 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "best-places-to-invest-hudson-valley",
     cluster: "investing",
-    title: "Which Hudson Valley towns offer the best opportunities for real estate investors?",
-    seoTitle: "Best Places to Invest in Real Estate in the Hudson Valley",
+    title: "Hudson Valley real estate investing: five towns matched to four strategies",
+    seoTitle: "Hudson Valley Real Estate: Best Places to Invest by Strategy",
     /** Investing #6, reposted 2026-09-24. Slug = the CRM drip link (day 302) and the draft's;
-     * the drip doc's alternate redirects here. The H1 drops the draft's "A 2025 Analyst Report". */
+     * the drip doc's alternate redirects here. The H1 drops the draft's "A 2025 Analyst Report".
+     * ROUND 21 (2026-11-01): the refresh from the agents' content chain, built as a flagship with
+     * its scenes (content/blog/best-towns-scenes.ts) and its quiz; same address. */
     date: "2026-05-06",
-    updated: "2026-09-24",
+    updated: "2026-11-01",
     excerpt:
-      "Match the town to the strategy: Poughkeepsie for cash flow, Beacon for appreciation, White Plains for stability, Kingston and Newburgh for growth, with 2026 HUD rent benchmarks and local rules.",
+      "Match the town to the strategy: Poughkeepsie for cash flow, Beacon for appreciation, White Plains for stability, Kingston and Newburgh for growth, with HUD's rent benchmark, Kingston's rent rule after the 2025 survey and a four-week plan.",
     seoDescription:
-      "The best places to invest in real estate in the Hudson Valley by strategy: Poughkeepsie, Beacon, White Plains, Kingston and Newburgh, with 2026 rent data.",
+      "Hudson Valley real estate by strategy: Poughkeepsie, Beacon, White Plains, Kingston and Newburgh, with HUD rent benchmarks, Kingston rent rules and a plan.",
     cover: "/images/counties/rockland.jpg",
     body: [],
     placeholder: false,
     markdown: BEST_TOWNS_POST,
+    flagship: BEST_TOWNS_FLAGSHIP,
     aliases: ["hudson-valley-towns-best-for-real-estate-investors"],
   },
   {

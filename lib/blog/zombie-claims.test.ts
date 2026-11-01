@@ -57,7 +57,8 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string; legit?: RegExp }[] 
   // a primary document first; none has one.
   {
     name: "the unsourced 73% who read reviews before booking",
-    pattern: /(seventy[ -]three percent|\b73\s?(%|percent))/i,
+    // (?<![\d.]): a decimal such as Kingston's 3.73% vacancy (round 21, best towns) is not this claim.
+    pattern: /(seventy[ -]three percent|(?<![\d.])\b73\s?(%|percent))/i,
     why: "no primary survey states it. BrightLocal's Local Consumer Review Survey 2026 (panel of 1,002 US adults) reports 97% who read reviews for local businesses, 41% who always do, and 74% who look for reviews from the last three months. 73 is not in it",
   },
   {
