@@ -256,3 +256,34 @@ copyright line under them); the C1 to C6 path; the porch light pass and the dark
   no-ops; nothing changed, but they were careless.
 - The first build's log went through a CLI output proxy that condensed it ("2 routes"); the gate
   line above comes from the second build, run through node directly.
+
+## Follow-up (2026-11-01, 21:52 to 22:10 ET, the coordinator's three items)
+
+This section supersedes open questions 1 to 3 above and the `ranked` bars scene described under
+the renovations page.
+
+1. **The phone.** The renovations "Next step" line no longer types a number: it reads `SITE.phone`
+   from `lib/site.ts` ((914) 415-7185, Rachel's line since 2026-10-13), as the two round-21 pages
+   show. `post.md` carries the resolved number. (914) 875-2424 stays only where the site puts it:
+   the author card.
+2. **The licence, the safe route.** The `ranked` bars scene and its three constants are gone. The
+   four projects are now a numbered prose list in "The 2025 figures for New York" (each in words
+   and figures, region and city: 336.6% and 323.4%, 219.8% and 195.2%, 200.7% and 192.8%, 107.2%
+   and 103.1%) with "Source: Remodeling 2025 Cost vs. Value Report (www.costvsvalue.com)". No scene
+   prints a report figure (the scenes file's rule says so). The "Data points for a visual" block in
+   `post.md` now opens with "NO CHART, NO TABLE": no bar chart, table or graphic of the report's
+   figures; a slide may state one figure in words with the citation and the copyright line; dp2 and
+   dp4 changed to match. The renovations page has 7 scenes now (was 8).
+3. **The date stays 2025-10-23:** `lib/blog/repost-seo.test.ts` ("carries an honest date pair")
+   requires a reposted consumer article's date on or before 2026-09-24, so 2026-11-01 fails it.
+   The cover stays the kitchen photo (open).
+
+Gates on fd789c6 (the push adds only this note): `npx tsc --noEmit` exit 0 ("No errors found");
+`npx vitest run` exit 0, PASS (2553) FAIL (0); `next build` in a fresh detached scratch worktree
+exit 0, "Compiled successfully", 129/129; the probe on the three pages at 320, 390 and 1440: 200,
+no sideways scroll, nothing past the edge, opener first, quiz 1 of 10 then fail and 10 of 10 pass,
+JavaScript off 10 and 10, one author card, footer info@ and (914) 415-7185, "broker" 0, vendor
+names 0, "in our experience" 0, em dash 0, robots absent, rail tone lowest 6.55:1; the renovations
+page "14 min read", 16 rail rows, 7 scenes, (914) 875-2424 once on the rendered page (the author
+card); the built HTML has the prose list and no `scene-ranked`. `brand_check.py` on the renovations
+`post.md`: PASS, exit 0 (WARN F10 x1, F5 x48).
