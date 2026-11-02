@@ -8,8 +8,9 @@
  *
  * THE RULES THIS FILE IS HELD TO (the same as seller-disclosure-scenes.ts):
  *  - every number, date and source name printed here appears in the post;
- *  - durations are the post's "in our experience" ranges and are labelled that way wherever they
- *    are printed, never as a rule;
+ *  - no duration is printed as typical: the owner's rule of 2026-11-01 (no "in our experience"
+ *    number; a duration only with a named public source); the scenes print what sets each phase's
+ *    pace and the two time limits the post sources (round 22);
  *  - scene copy is labels and short lines, never a body sentence repeated (flagship.test.ts walks
  *    every string for an eight-word echo); no em dashes, sentence case. */
 
@@ -23,7 +24,8 @@ const RPL_462 = "https://www.nysenate.gov/legislation/laws/RPP/462";
 const FANNIE = "https://selling-guide.fanniemae.com/sel/b2-1.2-01/loan-value-ltv-ratios";
 const CFPB = "https://www.consumerfinance.gov/archive/blog/mortgage-borrowers-can-challenge-inaccurate-appraisals-through-the-reconsideration-of-value-process/";
 const TP584 = "https://tax.ny.gov/pdf/current_forms/property/tp584i.pdf";
-const OURS = { text: "durations: typical ranges from our own transactions, not rules" };
+const FORM = "https://forms.justia.com/new-york/statewide/real-estate/title/residential-contract-of-sale-2000-long-form-42326.html";
+const LEGALEASE_INSPECT = { text: "New York State Bar Association, LegalEase", href: "https://nysba.org/legalease-buying-and-selling-real-estate/" };
 const READ = { text: "read November 1, 2026" };
 
 export const TIMELINE_FLAGSHIP: FlagshipContent = {
@@ -34,27 +36,27 @@ export const TIMELINE_FLAGSHIP: FlagshipContent = {
     signature: "porchlight",
   },
   scenes: {
-    /** The five phases as one numbered path, each with its typical range and the people who own
-     * it. Before and after the listing are split, as the second reader asked. */
+    /** The five phases as one numbered path, each with what sets its pace. Round 22: the typical
+     * ranges are gone (the owner's rule), the two sourced time limits stand above the path. */
     glance: {
       kind: "steps",
       band: "dark",
       eyebrow: "The whole sale on one line",
-      heading: "Five phases, and roughly how long each one runs",
-      lede: "Typical ranges from our own sales. Your house and your town set the real pace.",
-      alt: "The five phases of a New York home sale with typical ranges from our own transactions: preparation before the listing a few weeks, on the market days to months, the contract stage one to two weeks, contract to closing one to three months for a financed sale, then closing week.",
+      heading: "Five phases, and what sets the pace of each",
+      lede: "Your deal sets the dates. The law fixes only a few of them.",
+      alt: "The five phases of a New York home sale and what sets the pace of each: preparation, set by the house; on the market, set by price, condition and town; the contract stage, set by the attorneys; contract to closing, set by the dates written into the contract; then closing week; two fixed limits: the inspector's written report within five business days, and the disclosure statement before the buyer signs.",
       facts: [
-        { figure: "A few weeks", title: "Before the listing" },
-        { figure: "Several months", title: "From listing to closing, in our experience" },
+        { figure: "5", title: "Business days for the inspector's written report" },
+        { figure: "Before", title: "The buyer signs: when the disclosure statement is due" },
       ],
       steps: [
-        { title: "Preparation", body: "Before the listing.", chips: [{ label: "Typical", value: "A few weeks" }] },
-        { title: "On the market", chips: [{ label: "Typical", value: "Days to months" }] },
-        { title: "The contract stage", chips: [{ label: "Typical", value: "1 to 2 weeks" }] },
-        { title: "Contract to closing", body: "For a financed sale.", chips: [{ label: "Typical", value: "1 to 3 months" }] },
+        { title: "Preparation", body: "Before the listing.", chips: [{ label: "Pace", value: "The house" }] },
+        { title: "On the market", chips: [{ label: "Pace", value: "Price and town" }] },
+        { title: "The contract stage", chips: [{ label: "Pace", value: "The attorneys" }] },
+        { title: "Contract to closing", body: "The loan, the appraisal, the title.", chips: [{ label: "Pace", value: "The contract" }] },
         { title: "Closing week", body: "The walk-through, then the closing." },
       ],
-      sources: [OURS],
+      sources: [{ text: "Real Property Law 462", href: RPL_462 }, LEGALEASE_INSPECT, { text: "Standard residential contract, 11-2000", href: FORM }, READ],
     },
 
     /** The first moves in phase 1, and the state's form beside them. */
@@ -101,16 +103,16 @@ export const TIMELINE_FLAGSHIP: FlagshipContent = {
       eyebrow: "Phase 3: the New York contract stage",
       heading: "From an accepted offer to a signed contract",
       alt: "The New York contract stage in five steps: an accepted offer, the deal sheet to both attorneys, the contract drafted by an agent upstate or the seller's attorney downstate, the attorneys negotiating, and both sides signing, when rights and obligations are fixed and the buyer pays the deposit.",
-      facts: [{ figure: "1 to 2 weeks", title: "Typical, in our experience" }],
+      facts: [{ figure: "Escrow", title: "The deposit, held by the seller's attorney until closing" }],
       steps: [
         { title: "An offer is accepted", body: "Not yet a contract." },
         { title: "The deal sheet goes to both attorneys" },
         { title: "The contract is drafted", body: "Upstate, usually by an agent; downstate, usually by the seller's attorney." },
         { title: "The attorneys negotiate", body: "Inspection findings, the mortgage contingency, the deposit, what stays." },
-        { title: "Both sides sign", body: "Rights and obligations are fixed; the buyer pays the deposit." },
+        { title: "Both sides sign", body: "Rights and obligations are fixed; the deposit goes into escrow." },
       ],
       close: "Sign nothing earlier, a binder included, before your attorney reads it.",
-      sources: [{ text: "New York State Bar Association, LegalEase", href: NYSBA_LEGALEASE }, OURS, READ],
+      sources: [{ text: "New York State Bar Association, LegalEase", href: NYSBA_LEGALEASE }, { text: "Standard residential contract, 11-2000, paragraph 6", href: FORM }, READ],
     },
 
     /** Phase 4 as questions rather than a fixed sequence: the order varies with the contract. */

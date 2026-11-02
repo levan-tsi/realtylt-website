@@ -9,15 +9,17 @@
  * contract-stage facts are the bar association's own words. docs/blog-r21/NOTES.md has the rest. */
 export const SELLING_TIMELINE_POST = `This guide is for owners selling a one- to four-family home in New York, from Poughkeepsie to the five boroughs. It covers how long it takes to sell a house here, phase by phase, from the first conversation with an agent to the day you hand over the keys. You leave able to sketch your own selling calendar, see which step is most likely to slow it down, and start the slow steps first.
 
-In our experience the plain answer is several months from listing to closing. Before the listing, preparation usually takes a few weeks. After it, the house is on the market for days to months, the contract stage commonly takes one to two weeks, and a financed sale commonly closes one to three months after the contract is signed. Those ranges come from our own transactions, not from a rule, and every sale moves at its own pace. Selling in New York also involves a few procedures that exist only here, and the phases below explain what drives each one.
+The plain answer is that it depends on the deal: the buyer's financing, the inspection, the title work and the closing date the two sides agree. The standard New York residential contract of sale, prepared jointly by the bar association's real property section and three other legal bodies, leaves both the deadline for the buyer's loan commitment and the closing date as blanks to be filled in for each sale ([Residential Contract of Sale, 11-2000 edition, long form, as published by Justia Forms](https://forms.justia.com/new-york/statewide/real-estate/title/residential-contract-of-sale-2000-long-form-42326.html)). So any single number for "how long" is a guess about someone else's deal. What this guide gives you instead is the order of the phases, the few time limits the law and the contract do fix, and what sets the pace of each phase. Selling in New York also involves a few procedures that exist only here, and the phases below explain them.
 
 ## How long it takes to sell a house: the timeline at a glance
 
-1. **Preparation, before the listing:** pricing, repairs, cleaning, the disclosure form and marketing, usually a few weeks.
-2. **On the market:** showings and offers, anywhere from days to months depending on price, condition and town.
-3. **The contract stage:** the attorneys negotiate the contract of sale. In our experience this commonly takes one to two weeks.
-4. **Contract to closing:** inspection, appraisal, the buyer's loan and title work. For a financed sale this commonly takes one to three months.
+1. **Preparation, before the listing:** pricing, repairs, cleaning, the disclosure form and marketing. Its length is set by how much work the house needs and how soon the form and the photos are ready.
+2. **On the market:** showings and offers. How long depends on the price, the condition and the town.
+3. **The contract stage:** the attorneys negotiate the contract of sale, and it lasts until both sides sign. The buyer's deposit is paid at signing.
+4. **Contract to closing:** inspection, appraisal, the buyer's loan and title work, against the loan commitment date and the closing date written into the contract.
 5. **Closing week:** the buyer's final walk-through and the closing itself.
+
+Two time limits are fixed whatever the deal. The completed disclosure statement must reach the buyer before the buyer signs a binding contract ([Real Property Law 462](https://www.nysenate.gov/legislation/laws/RPP/462)), and a New York home inspector must deliver a written report within five business days of the inspection ([New York State Bar Association, LegalEase](https://nysba.org/legalease-buying-and-selling-real-estate/)). Everything else is negotiated, which is why it varies from one sale to the next.
 
 An invented example: an owner who wants to be in a new home by late summer counts back through the five phases. She sees that her real start date is set by when the house is ready for photos, and the closing date follows from that. Put your own target closing date at the bottom of a page with the five phases above it, and that page is your calendar for the rest of this guide.
 
@@ -79,7 +81,13 @@ An invented example: two offers arrive on the same weekend. The higher one comes
 
 This is where New York differs from most states: an accepted offer is not yet a contract. Upstate, a real estate agent usually prepares the contract of sale; downstate, usually the seller's attorney ([New York State Bar Association, LegalEase](https://nysba.org/legalease-buying-and-selling-real-estate/)). The attorneys negotiate the details: what happens with inspection findings, the mortgage contingency, the deposit, and what stays with the house.
 
-Until the contract is signed, either side can usually still walk away, so be careful with paper before then. The bar association warns that a binder or other early paper "may constitute a binding contract", which is why nothing should be signed before your attorney has read it. Once you sign, it says, "your rights and obligations are determined." The buyer pays a deposit at signing; the amount is negotiated, and in our transactions it is commonly held in escrow by the seller's attorney until closing.
+Until the contract is signed, either side can usually still walk away, so be careful with paper before then. The bar association warns that a binder or other early paper "may constitute a binding contract", which is why nothing should be signed before your attorney has read it. Once you sign, it says, "your rights and obligations are determined." The buyer pays a deposit at signing, and the amount is negotiated.
+
+### Where the deposit sits until closing
+
+On the standard residential contract of sale, the buyer's deposit (the form calls it the downpayment) is paid by check when the contract is signed, and the seller's attorney, acting as escrowee, holds it in a segregated bank account "until Closing or sooner termination of this contract." At closing the escrowee pays it to the seller as part of the price. If the sale does not close and either side demands the deposit, the escrowee notifies the other side, which has 10 business days to object before the money is paid out; an objection keeps it in escrow until the two sides agree or a court decides ([Residential Contract of Sale, 11-2000 edition, paragraph 6](https://forms.justia.com/new-york/statewide/real-estate/title/residential-contract-of-sale-2000-long-form-42326.html)). Your own contract can change any of this, so read paragraph 6 of yours with your attorney.
+
+How long the deposit stays in escrow has no fixed answer: it runs from the day both sides sign to the closing date the contract sets, and that date depends on the deal. An invented example: a contract signed in early April names a closing date in June, and the buyer's lender needs every week of it. The deposit sits in the seller's attorney's escrow account the whole time, and the seller sees it only at the closing table. A cash sale with clear title might close sooner; a sale waiting on a buyer's own home sale might close later.
 
 How long this stage takes depends on the attorneys, so choose one who responds quickly; see [why you need a real estate attorney in New York](/blog/why-you-need-real-estate-attorney-ny).
 
@@ -93,7 +101,7 @@ The steps below often overlap, and their order depends on the contract and the l
 
 ### The buyer's inspection
 
-The bar association tells buyers to engage professional inspectors "before or after signing a contract", and a New York home inspector must give a written report within five business days of the inspection ([New York State Bar Association, LegalEase](https://nysba.org/legalease-buying-and-selling-real-estate/)). When the inspection comes after signing, the contract's terms decide what the buyer can do about the findings; when it comes before, the buyer brings the findings to the negotiation. Either way the buyer may ask for repairs or a credit, and you are generally not obliged to agree to every request unless your contract says so. A lender's requirements and local code can still force some repairs: for an FHA-insured loan, for example, HUD has the appraiser report the repairs needed to protect the occupants' health and safety, the property's security as collateral, and its structural integrity ([HUD, Repair Conditions](https://archives.hud.gov/offices/hsg/sfh/ref/sfhp1-22.cfm)). In our experience the requests worth your time are about safety, structure and major systems.
+The bar association tells buyers to engage professional inspectors "before or after signing a contract", and a New York home inspector must give a written report within five business days of the inspection ([New York State Bar Association, LegalEase](https://nysba.org/legalease-buying-and-selling-real-estate/)). When the inspection comes after signing, the contract's terms decide what the buyer can do about the findings; when it comes before, the buyer brings the findings to the negotiation. Either way the buyer may ask for repairs or a credit, and you are generally not obliged to agree to every request unless your contract says so. A lender's requirements and local code can still force some repairs: for an FHA-insured loan, for example, HUD has the appraiser report the repairs needed to protect the occupants' health and safety, the property's security as collateral, and its structural integrity ([HUD, Repair Conditions](https://archives.hud.gov/offices/hsg/sfh/ref/sfhp1-22.cfm)). The requests worth your time are usually the ones about safety, structure and major systems.
 
 ### The appraisal
 
@@ -107,7 +115,7 @@ If the buyer has a mortgage, the lender orders an appraisal. For a purchase, Fan
 
 ### Underwriting and the loan commitment
 
-The lender verifies the buyer's income, assets and credit, along with the property's appraisal and title. It then issues a commitment and, eventually, a clear to close. This is the step where the strength of the buyer's financing, which you weighed when you compared offers, pays off.
+The lender verifies the buyer's income, assets and credit, along with the property's appraisal and title. It then issues a commitment and, eventually, a clear to close. On the standard contract form, the buyer's duty to buy depends on a written loan commitment arriving by the "Commitment Date", a number of days after the signed contract reaches the buyer's side that the two sides fill in for each sale; a commitment that still waits on the lender's approval of an appraisal does not count until that approval comes ([Residential Contract of Sale, 11-2000 edition, paragraph 8](https://forms.justia.com/new-york/statewide/real-estate/title/residential-contract-of-sale-2000-long-form-42326.html)). This is the step where the strength of the buyer's financing, which you weighed when you compared offers, pays off.
 
 ### Title
 
@@ -125,7 +133,7 @@ Shortly before closing, the buyer checks that the house is in the condition the 
 
 ### Closing day
 
-In our transactions closings are commonly held at an attorney's or title company's office. You sign the deed and the state's real estate transfer tax return, Form TP-584, which goes to the county's recording officer with the deed ([Department of Taxation and Finance, instructions TP-584-I (8/25)](https://tax.ny.gov/pdf/current_forms/property/tp584i.pdf)); a sale in New York City uses Form TP-584-NYC. Your existing mortgage is paid off from the proceeds, costs are settled, and you receive the balance. You hand over the keys, and the sale is complete.
+The standard contract leaves the place and the date of the closing as blanks the parties fill in ([Residential Contract of Sale, 11-2000 edition, paragraph 15](https://forms.justia.com/new-york/statewide/real-estate/title/residential-contract-of-sale-2000-long-form-42326.html)). You sign the deed and the state's real estate transfer tax return, Form TP-584, which goes to the county's recording officer with the deed ([Department of Taxation and Finance, instructions TP-584-I (8/25)](https://tax.ny.gov/pdf/current_forms/property/tp584i.pdf)); a sale in New York City uses Form TP-584-NYC. Your existing mortgage is paid off from the proceeds, costs are settled, and you receive the balance. You hand over the keys, and the sale is complete.
 
 An invented example: a seller leaves the repair invoices and the new water heater's warranty in a folder on the counter. The buyer can see each agreed repair was done, and the walk-through ends quickly. Booking the movers so the house is empty before the walk-through, and keeping every repair receipt in one folder from the day you list, makes this the shortest week of the sale.
 
@@ -177,11 +185,11 @@ An invented example: a seller with a cash offer reads phase 4 and crosses off th
 
 ### How long does it take to sell a house in New York?
 
-In our experience, several months from listing to closing. After you accept an offer, the contract stage commonly takes one to two weeks, and a financed sale commonly closes one to three months after the contract is signed; the time on the market depends on the house and the town.
+It depends on the deal: the financing, the inspection, the title work and the closing date the two sides write into the contract. The standard contract leaves the loan commitment date and the closing date blank for each sale, and the time on the market depends on the price, the condition and the town.
 
 ### How long does attorney review take in NY?
 
-There is no single number: the contract stage lasts until both sides sign the contract of sale, and in our experience that often takes one to two weeks. Signing anything earlier, even a binder, can bind you, so let your attorney read it first.
+There is no single number: the contract stage lasts until both sides sign the contract of sale, so it moves as fast as the two attorneys and the open points allow. Signing anything earlier, even a binder, can bind you, so let your attorney read it first.
 
 ### Do I have to give buyers a property condition disclosure in New York?
 
@@ -215,9 +223,10 @@ This guide is general information, not legal advice; your attorney advises on yo
 - U.S. Department of Housing and Urban Development, Homeownership Center reference guide, ["Repair Conditions"](https://archives.hud.gov/offices/hsg/sfh/ref/sfhp1-22.cfm), archived page. Read November 1, 2026.
 - Fannie Mae Selling Guide, [B2-1.2-01, Loan-to-Value (LTV) Ratios](https://selling-guide.fanniemae.com/sel/b2-1.2-01/loan-value-ltv-ratios), June 1, 2022. Read November 1, 2026.
 - Consumer Financial Protection Bureau, ["Mortgage borrowers can challenge inaccurate appraisals through the reconsideration of value process"](https://www.consumerfinance.gov/archive/blog/mortgage-borrowers-can-challenge-inaccurate-appraisals-through-the-reconsideration-of-value-process/), October 6, 2022. Read November 1, 2026.
+- Residential Contract of Sale, 11-2000 edition (long form), jointly prepared by the Real Property Section of the New York State Bar Association, the New York State Land Title Association, the Committee on Real Property Law of the Association of the Bar of the City of New York and the Committee on Real Property Law of the New York County Lawyers' Association, [as published by Justia Forms](https://forms.justia.com/new-york/statewide/real-estate/title/residential-contract-of-sale-2000-long-form-42326.html) (paragraph 6, the downpayment in escrow; paragraph 8, the commitment date; paragraph 15, the closing date and place). Read November 1, 2026.
 - NYS Department of Taxation and Finance, [instructions for Form TP-584, TP-584-I (8/25)](https://tax.ny.gov/pdf/current_forms/property/tp584i.pdf). Read November 1, 2026.
 
-Sources checked November 1, 2026, except where a line gives another date. Durations described as "in our experience" are typical ranges from our own transactions, not rules.
+Sources checked November 1, 2026, except where a line gives another date. This guide gives no typical duration for a phase: no public source we could read gives one for New York, and each sale's dates are set in its own contract.
 
 Written with an AI assistant and checked by Levan.`;
 

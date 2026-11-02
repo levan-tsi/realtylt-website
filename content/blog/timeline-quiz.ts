@@ -15,10 +15,15 @@ import type { QuizQuestion } from "@/lib/blog/flagship";
 
 export const TIMELINE_QUIZ: QuizQuestion[] = [
   {
-    q: "In our experience, how long does the New York contract stage commonly take after an offer is accepted?",
-    choices: ["A single day", "One to three months", "One to two weeks", "Over a year"],
+    q: "On the standard New York residential contract of sale, who holds the buyer's deposit until closing?",
+    choices: [
+      "The listing agent",
+      "The buyer's lender",
+      "The seller's attorney, in a segregated escrow account",
+      "The seller, from the day of signing",
+    ],
     answer: 2,
-    why: "The attorneys negotiate until both sides sign, which in our experience commonly takes one to two weeks; see \"Phase 3: The New York contract stage\".",
+    why: "Paragraph 6 of the standard contract has the seller's attorney hold the deposit in escrow until closing, when it is paid to the seller; see \"Where the deposit sits until closing\".",
   },
   {
     q: "When are a New York seller's rights and obligations fixed?",
