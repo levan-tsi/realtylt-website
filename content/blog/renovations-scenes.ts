@@ -162,7 +162,7 @@ export const RENOVATIONS_FLAGSHIP: FlagshipContent = {
           step: 500,
           initial: 10000,
           format: "money",
-          width: "w-[5.5rem]",
+          width: "w-[7.5rem]",
         },
         {
           kind: "range",

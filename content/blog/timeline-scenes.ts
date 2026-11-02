@@ -47,7 +47,7 @@ export const TIMELINE_FLAGSHIP: FlagshipContent = {
       alt: "The five phases of a New York home sale and what sets the pace of each: preparation, set by the house; on the market, set by price, condition and town; the contract stage, set by the attorneys; contract to closing, set by the dates written into the contract; then closing week; two fixed limits: the inspector's written report within five business days, and the disclosure statement before the buyer signs.",
       facts: [
         { figure: "5", title: "Business days for the inspector's written report" },
-        { figure: "Before", title: "The buyer signs: when the disclosure statement is due" },
+        { figure: "Before signing", title: "When the disclosure statement must reach the buyer" },
       ],
       steps: [
         { title: "Preparation", body: "Before the listing.", chips: [{ label: "Pace", value: "The house" }] },
