@@ -22,6 +22,8 @@ import { SELLER_DISCLOSURE_POST, SELLING_TIMELINE_POST } from "@/content/blog/se
 import { TIMELINE_FLAGSHIP } from "@/content/blog/timeline-scenes";
 import { BEST_TOWNS_FLAGSHIP } from "@/content/blog/best-towns-scenes";
 import { BEST_TOWNS_POST } from "@/content/blog/investing-posts";
+import { RENOVATIONS_POST } from "@/content/blog/renovations-post";
+import { RENOVATIONS_FLAGSHIP } from "@/content/blog/renovations-scenes";
 import { CUSTOM_FLAGSHIP } from "@/content/blog/custom-scenes";
 import { SINGULARITY_FLAGSHIP } from "@/content/blog/singularity-scenes";
 import {
@@ -321,6 +323,8 @@ const TOPICS: [string, string, FlagshipContent][] = [
   // Round 21, 2026-11-01. The investing refresh from the agents' content chain.
   ["best towns", BEST_TOWNS_POST, BEST_TOWNS_FLAGSHIP],
   ["selling timeline", SELLING_TIMELINE_POST, TIMELINE_FLAGSHIP],
+  // Round 22, 2026-11-01. The last seeded stub, written as a flagship.
+  ["top 5 renovations", RENOVATIONS_POST, RENOVATIONS_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {

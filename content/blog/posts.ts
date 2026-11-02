@@ -82,6 +82,8 @@ import { REACTIVATION_FILM, REACTIVATION_FLAGSHIP } from "./reactivation-scenes"
 import { QUALIFY_FILM, QUALIFY_FLAGSHIP } from "./qualify-scenes";
 import { WORKFLOW_FILM, WORKFLOW_FLAGSHIP } from "./workflow-scenes";
 import { SINGULARITY_FLAGSHIP } from "./singularity-scenes";
+import { RENOVATIONS_POST } from "./renovations-post";
+import { RENOVATIONS_FLAGSHIP } from "./renovations-scenes";
 
 /** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
 export const fmtDate = (iso: string) =>
@@ -131,11 +133,9 @@ export interface BlogPost {
   aliases?: string[];
 }
 
-const PLACEHOLDER_BODY = (topic: string): string[] => [
-  `[Placeholder draft. The owner's final article replaces this text.]`,
-  `This post will cover ${topic} for Hudson Valley homeowners and buyers, written from local experience across Dutchess, Westchester, Putnam, Rockland, Ulster and Orange counties.`,
-  `In the meantime, if this topic is on your mind, call us at (914) 415-7185 or send a message from any page, and we're happy to talk it through, seven days a week.`,
-];
+/* PLACEHOLDER_BODY was removed in round 22 (2026-11-01) with the last stub it filled
+   (top-5-renovations-increase-home-value-ny). The `placeholder` flag and its noindex guard stay:
+   app/blog/placeholder-noindex.test.ts holds them on a synthetic post. */
 
 /* NOTE ON ORDER: this array is authored NEWEST-FIRST, and lib/blog's merge relies on the
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
@@ -650,13 +650,28 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "top-5-renovations-increase-home-value-ny",
     cluster: "owning",
-    title: "The top 5 renovations that actually increase your homes value in New York",
-    date: "2025-10-24",
+    title: "The top 5 renovations that increase home value in New York",
+    seoTitle: "Top 5 renovations that increase home value in NY",
+    /** The last seeded stub (2025-10-24), written in ROUND 22 (2026-11-01) on the owner's word from
+     * the old 2025 post recovered from his Drive, every figure re-read from the 2025 Cost vs. Value
+     * Report's public pages; built as a flagship with its scenes (content/blog/renovations-scenes.ts)
+     * and its quiz. The licence note that caps it at four of the report's projects is at the top of
+     * content/blog/renovations-post.ts. Same address; no longer a placeholder. */
+    // The stub carried 2025-10-24, the old site list's date, which the first-time buyer checklist
+    // also carries; reposted articles carry one date each (repost-seo.test.ts), and 2025-11-26 (the
+    // Drive copy's date) is taken too, so this one moves a day earlier. An open question in
+    // docs/blog-r22/NOTES.md.
+    date: "2025-10-23",
+    updated: "2026-11-01",
     excerpt:
-      "You watch the home improvement shows, you see the stunning transformations, but which projects actually pay you back at the closing table in New York?",
+      "Which renovations return the most of their cost when you sell in New York: the 2025 regional figures for a garage door, a steel entry door, stone veneer and a minor kitchen, the repairs an appraiser rates first, what rarely pays back, and the lead and permit rules for an older house.",
+    seoDescription:
+      "Renovations that increase home value in New York: 2025 regional cost recouped figures, the repairs to do first, what rarely pays back, older-house rules.",
     cover: "/images/listings/house-16.jpg",
-    body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
-    placeholder: true,
+    body: [],
+    placeholder: false,
+    markdown: RENOVATIONS_POST,
+    flagship: RENOVATIONS_FLAGSHIP,
   },
   {
     slug: "high-roi-home-improvements-under-1000",

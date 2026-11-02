@@ -118,7 +118,9 @@ describe("meta description of the static posts", () => {
   it("carries a seoDescription through to the Article, and falls back to the excerpt", () => {
     const withOverride = POSTS.find((p) => p.seoDescription)!;
     expect(staticToArticle(withOverride).seoDescription).toBe(withOverride.seoDescription);
-    const without = POSTS.find((p) => !p.seoDescription)!;
+    // Every static post carries a seoDescription since round 22 (2026-11-01: the last stub, the only
+    // post without one, was written), so the fallback is proved on a copy with the override removed.
+    const without = POSTS.find((p) => !p.seoDescription) ?? { ...withOverride, seoDescription: undefined };
     expect(staticToArticle(without).seoDescription).toBeUndefined();
     expect(metaDescription(staticToArticle(without))).toBe(without.excerpt);
   });
