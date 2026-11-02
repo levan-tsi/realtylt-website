@@ -783,7 +783,10 @@ export const POSTS: BlogPost[] = ([
       "Match the town to the strategy: Poughkeepsie for cash flow, Beacon for appreciation, White Plains for stability, Kingston and Newburgh for growth, with HUD's rent benchmark, Kingston's rent rule after the 2025 survey and a four-week plan.",
     seoDescription:
       "Hudson Valley real estate by strategy: Poughkeepsie, Beacon, White Plains, Kingston and Newburgh, with HUD rent benchmarks, Kingston rent rules and a plan.",
-    cover: "/images/counties/rockland.jpg",
+    /** ROUND 22 (2026-11-01): the cover was Rockland's Harriman State Park, shared with another post
+     * and none of the five towns; on the owner's word it is now Beacon's Main Street (one of the
+     * five, shops below and apartments above). Licence row in public/images/ATTRIBUTIONS.md. */
+    cover: "/images/editorial/beacon-main-street.jpg",
     body: [],
     placeholder: false,
     markdown: BEST_TOWNS_POST,
@@ -976,9 +979,9 @@ export const POSTS: BlogPost[] = ([
     date: "2026-03-05",
     updated: "2026-11-01",
     excerpt:
-      "Every phase of a New York home sale with typical ranges from our own sales: pricing and the current disclosure form, the attorneys' contract stage, the buyer's inspection, appraisal and loan, closing day, and a four-week plan to start.",
+      "Every phase of a New York home sale and what sets its pace: pricing and the current disclosure form, the attorneys' contract stage and where the deposit sits, the buyer's inspection, appraisal and loan, closing day, and a four-week plan to start.",
     seoDescription:
-      "How long it takes to sell a house in New York: each phase from pricing to closing day, typical ranges from our own sales, and a week-by-week plan to start.",
+      "How long it takes to sell a house in New York: each phase from pricing to closing, what sets its pace, where the deposit sits, and a four-week plan.",
     cover: "/images/lifestyle/selling.jpg",
     body: [],
     placeholder: false,

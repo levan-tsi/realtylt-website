@@ -32,7 +32,8 @@ export const BEST_TOWNS_FLAGSHIP: FlagshipContent = {
   hero: {
     moment: "5",
     suffix: "towns",
-    photo: "/images/counties/rockland.jpg",
+    /** Round 22: Beacon's Main Street, one of the post's own five towns (the owner's word). */
+    photo: "/images/editorial/beacon-main-street.jpg",
     signature: "porchlight",
   },
   scenes: {
@@ -215,14 +216,14 @@ export const BEST_TOWNS_FLAGSHIP: FlagshipContent = {
       band: "light",
       eyebrow: "Kingston's rule, in order",
       heading: "Adopted, upheld, surveyed again",
-      alt: "Kingston's rent rule in order: adopted in 2022 after a 1.57% vacancy survey, upheld by the Court of Appeals on June 18, 2025, surveyed again with a report published in August 2025 finding 7.04%, and no published city decision on that survey found when checked on November 1, 2026.",
+      alt: "Kingston's rent rule in order: adopted in 2022 after a 1.57% vacancy survey, upheld by the Court of Appeals on June 18, 2025, surveyed again with a report published in August 2025 finding 7.04%, and, with no published city decision on that survey found when checked on November 1, 2026, the 2022 rule as the law that stands.",
       steps: [
         { title: "2022: Kingston adopts the act", body: "After a vacancy survey found 1.57%." },
         { title: "June 18, 2025: the Court of Appeals upholds the declaration", body: "2025 NY Slip Op 03691." },
         { title: "August 2025: the city surveys again", body: "7.04% in sampled covered buildings, above the 5% line; 3.73% in those over 22 units." },
         {
-          title: "November 1, 2026: no published city decision on that survey found",
-          body: "Ask HCR and your attorney about a specific building.",
+          title: "November 1, 2026: the 2022 rule stands",
+          body: "No published city decision on the 2025 survey found. Ask HCR and your attorney about a specific building.",
         },
       ],
       sources: [
