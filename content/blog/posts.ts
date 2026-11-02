@@ -659,7 +659,9 @@ export const POSTS: BlogPost[] = ([
      * content/blog/renovations-post.ts. Same address; no longer a placeholder. */
     // The stub carried 2025-10-24, the old site list's date, which the first-time buyer checklist
     // also carries; reposted articles carry one date each (repost-seo.test.ts), and 2025-11-26 (the
-    // Drive copy's date) is taken too, so this one moves a day earlier. An open question in
+    // Drive copy's date) is taken too, so this one moves a day earlier; the day it was written,
+    // 2026-11-01, is refused by the same test (a reposted article's date is on or before
+    // 2026-09-24). An open question in
     // docs/blog-r22/NOTES.md.
     date: "2025-10-23",
     updated: "2026-11-01",

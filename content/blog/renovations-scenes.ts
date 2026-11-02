@@ -9,19 +9,17 @@
  *  - every number, date and source name printed here appears in the post;
  *  - scene copy is labels and short lines, never a body sentence repeated (flagship.test.ts walks
  *    every string for an eight-word echo); no em dashes, sentence case;
- *  - the report's figures appear for the four projects the post quotes and no other, never as a
- *    table that copies the report's own display (its re-use guidelines; renovations-post.ts has the
- *    note), and the calculator carries only the reader's numbers. */
+ *  - no scene prints a figure from the Cost vs. Value Report: its re-use guidelines bar a chart or
+ *    table that simulates the report's display, so the four projects' figures live in the post's
+ *    prose list only (round 22 follow-up, the coordinator's safe route: the bars scene `ranked` was
+ *    removed), and the calculator carries only the reader's numbers. */
 
 import type { FlagshipContent } from "@/lib/blog/flagship";
 import { RENOVATIONS_QUIZ } from "./renovations-quiz";
 
-const CVV_MA = "https://www.jlconline.com/cost-vs-value/2025/middle-atlantic/";
-const CVV_NYC = "https://www.jlconline.com/cost-vs-value/2025/middle-atlantic/new-york-ny/";
 const CVV_METHOD = "https://www.jlconline.com/cost-vs-value/2025/methodology";
 const FANNIE_CONDITION = "https://selling-guide.fanniemae.com/sel/b4-1.3-06/property-condition-and-quality-construction-improvements";
 const EPA_RRP = "https://www.epa.gov/lead/renovation-repair-and-painting-program";
-const COPYRIGHT = { text: "© 2025 Zonda Media, a Delaware Corporation; complete data free at www.costvsvalue.com" };
 const READ = { text: "read November 1, 2026" };
 
 export const RENOVATIONS_FLAGSHIP: FlagshipContent = {
@@ -47,46 +45,6 @@ export const RENOVATIONS_FLAGSHIP: FlagshipContent = {
         { figure: "80%", title: "Cost recouped", body: "Value divided by cost. Above 100% it pays for itself at sale." },
       ],
       sources: [{ text: "Cost vs. Value methodology, 2025", href: CVV_METHOD }],
-    },
-
-    /** The four priced projects, one measure only (cost recouped), in two panels: the region and
-     * New York City. Bars, not the report's own cost and value table. */
-    ranked: {
-      kind: "bars",
-      band: "dark",
-      eyebrow: "Remodeling 2025 Cost vs. Value Report",
-      heading: "Cost recouped at resale, four projects",
-      lede: "Each bar is one defined project's average. Past 100%, the sale returns more than the job cost.",
-      alt: "Cost recouped in the 2025 report: in the Middle Atlantic region a garage door replacement 336.6%, a steel entry door 219.8%, manufactured stone veneer 200.7% and a minor midrange kitchen remodel 107.2%; in New York City 323.4%, 195.2%, 192.8% and 103.1%.",
-      max: 350,
-      panels: [
-        {
-          title: "Middle Atlantic region",
-          bars: [
-            { label: "Garage door replacement", value: 336.6, display: "336.6%", lit: true },
-            { label: "Steel entry door", value: 219.8, display: "219.8%" },
-            { label: "Manufactured stone veneer", value: 200.7, display: "200.7%" },
-            { label: "Minor kitchen remodel, midrange", value: 107.2, display: "107.2%" },
-          ],
-        },
-        {
-          title: "New York City",
-          bars: [
-            { label: "Garage door replacement", value: 323.4, display: "323.4%", lit: true },
-            { label: "Steel entry door", value: 195.2, display: "195.2%" },
-            { label: "Manufactured stone veneer", value: 192.8, display: "192.8%" },
-            { label: "Minor kitchen remodel, midrange", value: 103.1, display: "103.1%" },
-          ],
-        },
-      ],
-      callout: { figure: "100%", text: "Break-even: the sale returns what the job cost" },
-      note: "A regional average for a defined scope, and a survey of opinion that moves year to year: the garage door was 203.6% in the 2024 report. Your scope and your street set your own figure.",
-      sources: [
-        { text: "Remodeling 2025 Cost vs. Value Report (www.costvsvalue.com), Middle Atlantic", href: CVV_MA },
-        { text: "New York, New York", href: CVV_NYC },
-        COPYRIGHT,
-        READ,
-      ],
     },
 
     /** Fannie Mae's condition scale, the fifth renovation's whole case. */

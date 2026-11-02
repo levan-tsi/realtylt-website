@@ -21,6 +21,9 @@
  * old post's deck, vinyl siding, upscale kitchen and pool figures are gone for the same reason;
  * the low-return section rests on the report's own narrative instead. The calculator takes only
  * the reader's numbers. docs/blog-r22/NOTES.md has the rest. */
+import { SITE } from "@/lib/site";
+
+/** The phone in "Next step" is the site constant (SITE.phone, Rachel's line since 2026-10-13), never typed in (round 22 follow-up). */
 export const RENOVATIONS_POST = `This guide is for New York homeowners deciding which renovation to do before a sale, or which one to do now so it still pays when they sell. It covers how a renovation adds value at sale, the five renovations that do the most for a sale price here, the projects that rarely pay back, and what an older Hudson Valley house adds to the plan. You leave with each project's latest regional figures, a way to test your own contractor's quote, and an order to spend in.
 
 The short answer: the projects that return the most are small, mostly outside, and visible from the street. Four of the five below come from the 2025 figures for the Middle Atlantic region, the region that includes New York, according to the Remodeling 2025 Cost vs. Value Report (www.costvsvalue.com; [the Middle Atlantic figures](https://www.jlconline.com/cost-vs-value/2025/middle-atlantic/)). The fifth is the repair work a lender's appraiser rates before anything else, which the report does not price at all.
@@ -41,9 +44,14 @@ The report prices the same defined projects in every market, each with a set siz
 
 The figures also move from year to year, because the value side is a survey of opinion. The garage door replacement led our region in both of the last two reports, but it recouped 203.6% in the 2024 report and 336.6% in the 2025 report, on almost the same cost: $4,383 then, $4,501 now ([2024 Middle Atlantic figures](https://www.jlconline.com/cost-vs-value/2024/middle-atlantic/)). Read the order of the list more than the decimal. A project near the top two years running is a safer bet than one whose percentage happens to be high this year.
 
-Each project below carries the Middle Atlantic figure and the report's own figure for New York City ([2025 New York, New York figures](https://www.jlconline.com/cost-vs-value/2025/middle-atlantic/new-york-ny/)).
+Each project below carries the Middle Atlantic figure and the report's own figure for New York City ([2025 New York, New York figures](https://www.jlconline.com/cost-vs-value/2025/middle-atlantic/new-york-ny/)). In short, the four the report prices returned, at sale:
 
-[[scene:ranked]]
+1. A garage door replacement, more than three times its cost: 336.6% in the Middle Atlantic region and 323.4% in New York City.
+2. A steel entry door replacement, about twice its cost: 219.8% in the region and 195.2% in the city.
+3. Manufactured stone veneer, about twice its cost: 200.7% in the region and 192.8% in the city.
+4. A minor midrange kitchen remodel, a little more than its cost: 107.2% in the region and 103.1% in the city.
+
+Source: Remodeling 2025 Cost vs. Value Report (www.costvsvalue.com).
 
 ## 1. Garage door replacement
 
@@ -148,7 +156,7 @@ Not necessarily. The report's editors say it is less successful at predicting a 
 
 ## Next step
 
-If you are planning work on a house you may sell, call or text (914) 875-2424, write to info@realtylt.com, or [book a consultation](/connect), and we will look at what the sales on your street support before you spend.
+If you are planning work on a house you may sell, call or text ${SITE.phone}, write to info@realtylt.com, or [book a consultation](/connect), and we will look at what the sales on your street support before you spend.
 
 [[scene:talk]]
 
