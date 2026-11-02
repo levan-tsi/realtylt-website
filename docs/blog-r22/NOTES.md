@@ -287,3 +287,5 @@ names 0, "in our experience" 0, em dash 0, robots absent, rail tone lowest 6.55:
 page "14 min read", 16 rail rows, 7 scenes, (914) 875-2424 once on the rendered page (the author
 card); the built HTML has the prose list and no `scene-ranked`. `brand_check.py` on the renovations
 `post.md`: PASS, exit 0 (WARN F10 x1, F5 x48).
+
+Second follow-up (22:10 to 22:25 ET): the renovations page is new content, so it is dated 2026-11-01 (updated the same) and sits in a `WRITTEN_NEW` set in `lib/blog/repost-seo.test.ts` (the SEO shape still checked; a written-new date rule replaces the repost date pair; no redirect or alias involved); this supersedes item 3 above. Gates on 17f229b: tsc exit 0; vitest exit 0, PASS (2555) FAIL (0); build exit 0, 129/129; the probe on all three pages at 320/390/1440 green as before; the served renovations page shows `<time dateTime="2026-11-01">November 1, 2026</time>`, JSON-LD BlogPosting datePublished and dateModified 2026-11-01, article:published_time and modified_time 2026-11-01, no 2025 date anywhere on it.
