@@ -70,7 +70,10 @@ describe("legacy redirects — what the live site publishes must not 404 after l
       const dir = path.join(process.cwd(), "app", dest);
       expect(fs.existsSync(path.join(dir, "page.tsx")), `${r.destination} has no page.tsx`).toBe(true);
     }
-  });
+    // The instrument, not the product: the dynamic import of every post and service is the slow
+    // part, and in a full run beside other work on the PC it crossed vitest's 5,000 ms default
+    // (round 21 once, round 22 twice at about 5,290 ms; 8 of 8 alone). 30 s is the room it needs.
+  }, 30_000);
 
   it("the generated /sitemap.xml is NOT swallowed by the /sitemap redirects", async () => {
     const rs = await rules();
