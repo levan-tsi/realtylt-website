@@ -10,7 +10,15 @@ import { extractFaqs, parseHeadings } from "./toc";
  * links to the site and to sibling posts, and the house voice. scripts/seo-audit.mjs checks the
  * RENDERED page; this checks the source, so a post cannot be committed without it. */
 
-const REPOSTED = POSTS.filter((p) => !p.placeholder && isConsumer({ placeholder: false, cluster: p.cluster }));
+/** Consumer articles WRITTEN NEW on this site rather than reposted from the owner's Drive drafts.
+ * They carry the same SEO shape (the loop below checks them too), but not the repost dating: a
+ * repost keeps its old publication date and is re-verified later, while a new article is dated the
+ * day it was written. Round 22 (2026-11-01): the renovations page replaced the last seeded stub
+ * with new text (nothing of the 2025 draft republished, every figure re-read), so it is dated
+ * 2026-11-01 and leaves the repost set. */
+const WRITTEN_NEW = new Set(["top-5-renovations-increase-home-value-ny"]);
+const CONSUMER = POSTS.filter((p) => !p.placeholder && isConsumer({ placeholder: false, cluster: p.cluster }));
+const REPOSTED = CONSUMER.filter((p) => !WRITTEN_NEW.has(p.slug));
 const SITE_PAGES = ["/buying", "/selling", "/financing", "/search", "/home-value", "/top-areas", "/connect"];
 
 describe("reposted consumer articles", () => {
@@ -18,7 +26,12 @@ describe("reposted consumer articles", () => {
     expect(REPOSTED.length).toBeGreaterThanOrEqual(1);
   });
 
-  for (const p of REPOSTED) {
+  it("names only real, published consumer articles as written new", () => {
+    for (const slug of WRITTEN_NEW) expect(CONSUMER.some((p) => p.slug === slug), slug).toBe(true);
+  });
+
+  // The SEO shape holds for every consumer article, reposted or written new.
+  for (const p of CONSUMER) {
     describe(p.slug, () => {
       const md = p.markdown ?? "";
 
@@ -54,17 +67,31 @@ describe("reposted consumer articles", () => {
         expect(visible).not.toMatch(/905-7923|Role:|Meta Title:|Image Generation Prompt|Alt Text \(/);
       });
 
-      it("carries an honest date pair: published in the past, re-verified on or after it", () => {
-        expect(p.date <= "2026-09-24", p.date).toBe(true);
-        expect(p.updated, "updated").toBeTruthy();
-        expect(p.updated! >= p.date).toBe(true);
-      });
+      if (WRITTEN_NEW.has(p.slug)) {
+        it("carries an honest date: published the day it was written, after the repost wave", () => {
+          expect(p.date > "2026-09-24", p.date).toBe(true);
+          expect(p.updated ?? p.date).toBe(p.date);
+        });
+      } else {
+        it("carries an honest date pair: published in the past, re-verified on or after it", () => {
+          expect(p.date <= "2026-09-24", p.date).toBe(true);
+          expect(p.updated, "updated").toBeTruthy();
+          expect(p.updated! >= p.date).toBe(true);
+        });
+      }
     });
   }
 
   it("no two reposted articles share a title tag, a description or a date", () => {
     for (const key of ["seoTitle", "seoDescription", "date"] as const) {
       const vals = REPOSTED.map((p) => p[key]);
+      expect(new Set(vals).size, key).toBe(vals.length);
+    }
+  });
+
+  it("no consumer article, reposted or new, shares a title tag or a description", () => {
+    for (const key of ["seoTitle", "seoDescription"] as const) {
+      const vals = CONSUMER.map((p) => p[key]);
       expect(new Set(vals).size, key).toBe(vals.length);
     }
   });
