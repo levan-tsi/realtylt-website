@@ -539,7 +539,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       band: "light",
       label: "Calling out",
       eyebrow: "The other direction",
-      heading: "Four ways it calls out.",
+      heading: "Calling out, and the rules it follows.",
       columns: 2,
       items: OUTBOUND,
     },
