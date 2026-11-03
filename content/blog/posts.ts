@@ -579,8 +579,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "workflow-automation-real-estate-business",
     cluster: "building",
-    title: "The busywork tax: what workflow automation actually removes",
-    seoTitle: "Workflow Automation for a Real Estate Business, Explained",
+    title: "Workflow automation for small business: which small jobs to wire first",
+    seoTitle: "Workflow Automation for Small Business: What to Wire First",
     date: "2026-07-13",
     /** A REAL revision, not a freshness fiction. Shipped 07-13 as a plain 1,200-word article; on
      * 08-01 it was rebuilt onto the flagship path with a cited field study, an original data
@@ -595,12 +595,19 @@ export const POSTS: BlogPost[] = ([
      * condition is now on all of them. A "three lies" card also derived an afternoon from forty
      * minutes, and a superlative claimed the study was the clearest anybody has published. Every
      * other figure re-verified in the CHI 2005 paper, on Zapier's two help pages and in n8n's
-     * error-handling docs. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-09-18",
+     * error-handling docs. See docs/parity/ROUND48-RELEVANCE-PASS.md.
+     *
+     * ROUND 24 (2026-11-03), the agents' refresh: written for small businesses of any kind (the AI
+     * line's reader), the opener says what we do and what the reader learns, the jobs are scored
+     * for impact and risk before anything is built (our assessment's method), a person approves
+     * anything a customer reads, four new sections (is it worth automating, who it fits, what to
+     * do first, the quiz), every source re-read on 2026-11-03, no platform name in visitor copy.
+     * 2,793 words to 4,393; 10 H2 to 14; 14 scenes to 20 (B18). See docs/blog-r24/NOTES.md. */
+    updated: "2026-11-03",
     excerpt:
-      "The manual step takes ninety seconds. In the study that timed it, getting back to interrupted work averaged twenty five minutes when it resumed the same day. Here is what workflow automation really removes from a real estate business. How to find your own version of it in an hour. And the failure mode nobody warns you about.",
+      "Workflow automation for small business in plain words: how to list the small jobs your team retypes between programs, score each one for impact and risk, test whether it is worth wiring, and catch the chains that fail quietly. With a four-week plan and a ten-question quiz.",
     seoDescription:
-      "What workflow automation removes from a real estate business, how to find your list in an hour, and the quiet failure platforms document but nobody mentions.",
+      "Workflow automation for small business: find the jobs worth wiring first, score them for impact and risk, and catch the chains that fail quietly.",
     // Was /images/team-bg.jpg, which does not exist and never has: the raw asset 404s and the
     // optimizer therefore 400s, so this post's card on /blog and its own hero were both broken.
     // Accounting Finance (CC0, already in public/images/ATTRIBUTIONS.md) is the paperwork this

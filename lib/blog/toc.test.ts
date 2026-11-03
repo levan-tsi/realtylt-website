@@ -60,9 +60,11 @@ describe("extractToc", () => {
     // first month, and the two things to do in it", when the standard ratcheted to 19 sections
     // and the honest way to close that was to write one. Same shape of assertion as above, so a
     // heading going missing still fails rather than being absorbed by a looser number.
-    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth <= 2)).toHaveLength(10);
+    // 2026-11-03 (round 24 refresh): three new sections (is it worth automating, who it fits,
+    // what to do first) and a Sources section, 14 top-level, the same 6 questions.
+    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth <= 2)).toHaveLength(14);
     expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth === 3)).toHaveLength(6);
-    expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(16);
+    expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(20);
     // ids are unique and non-empty
     for (const post of [AI_CHAT_ASSISTANT_POST, WORKFLOW_AUTOMATION_POST]) {
       const ids = extractToc(post).map((t) => t.id);
