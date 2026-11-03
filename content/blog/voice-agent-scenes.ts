@@ -25,6 +25,21 @@ import type { ConversationEvent, ConversationTurn, FlagshipContent, GridItem } f
  * The cut was DERIVED FROM THE VOICE: the narration was generated and measured first, and the
  * stage was built to its measured line boundaries. Regenerating it is fully scripted, see
  * docs/blog-flagship/FLAGSHIP-HANDOFF.md. */
+/** ROUND 24 REFRESH (2026-11-03), from the agents' refresh draft and its second reader's 33 notes
+ * (realtylt-agents company/agents/seo/drafts/2026-11-02-ai-voice-agent-missed-calls-real-estate*).
+ * In the scenes: no vendor name (the call path named the voice platform); "AI assistant" in every
+ * disclosure; outbound only with the consent and calling-hours checks (FCC 24-17 read 2026-11-03:
+ * an AI voice is an artificial voice under the TCPA, prior express consent absent an emergency or an
+ * exemption; 47 CFR 64.1200(c)(1), 8 a.m. to 9 p.m. at the called party's location); capability
+ * lines made conditional on the connections, the source being our own service page; the
+ * prevalence lines with no source ("most callers", "every third real call", "most people never
+ * read") gone; five scenes added for the new sections (what it never does, who it fits, the
+ * screening questions, the roadmap, the quiz). The film is kept as rendered. */
+import { VOICE_QUIZ } from "./voice-quiz";
+
+/** Our own method, cited as ours. */
+const METHOD = { text: "our method, the RealtyLT AI assessment" };
+
 export const VOICE_FILM = {
   src: "/video/film-942pm.mp4",
   poster: "/video/film-942pm-poster.jpg",
@@ -45,7 +60,7 @@ export const VOICE_FILM = {
  * a summary that claims something the article does not support is how a summary box becomes a
  * liability. */
 export const IN_SHORT: string[] = [
-  "A missed call is not a message waiting for you in the morning. Most callers never leave one, so it arrives as nothing at all: no name, no number worth calling back, no record that anyone wanted you.",
+  "A call that rings out without a message can leave only a number and a time, not the reason anyone rang, and by the time you call back the caller may be talking to someone else.",
   /** ROUND I: "reach a decision maker" was a softening of what the study measured. The
    * operative sentence, read in the primary document and quoted in full in ai-chat-scenes.ts,
    * says firms were nearly seven times as likely "to qualify the lead (which we defined as
@@ -53,7 +68,7 @@ export const IN_SHORT: string[] = [
    * materially easier outcome than having a meaningful conversation with them, and the easier
    * one was attached to the 7x on all three of the short surfaces a skimmer sees. */
   "Speed decides who gets the conversation. Across 1.25 million leads, firms that made contact within the hour were nearly seven times likelier to get a meaningful conversation with a decision maker than firms that waited one more hour.",
-  "An AI voice agent answers every call, qualifies inside a normal conversation, books from your real calendar and writes the outcome to your CRM. It does not close, and it says out loud that it is an assistant.",
+  "An AI voice agent answers the calls you cannot take, asks the questions you approved and, when it is connected to your calendar, books a time. It does not close, and its first sentence says it is an AI assistant.",
 ];
 
 /** SCENE copy — the response audit. The page's cited data graphic.
@@ -93,7 +108,7 @@ export const RESPONSE_AUDIT = {
   sourceText:
     "Harvard Business Review, The Short Life of Online Sales Leads (2011), reporting the audit by James Oldroyd, Kristina McElheran and David Elkington.",
   sourceHref: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads",
-  note: "Cross-industry research from 2011, timing replies to inquiries submitted through a website rather than to phone calls. These percentages are not a real estate benchmark and should not be quoted as one. The shape is the part that carries over.",
+  note: "Cross-industry research from 2011, timing replies to inquiries submitted through a website rather than to phone calls. These percentages are not a real estate benchmark and should not be quoted as one. They are a reason to measure your own response times, not a measurement of them.",
 };
 
 /** SCENE copy — the size of the gap. The page's SECOND cited graphic, and the reason it
@@ -148,7 +163,7 @@ export const TURN_GAP = {
   sourceText:
     "Stivers and ten co-authors, Universals and cultural variation in turn-taking in conversation, PNAS 2009.",
   sourceHref: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2705608/",
-  note: "Read what this does not say. Every conversation in it happened face to face, and not one of them was a phone call. The same paper found responses came earlier when the questioner was looking at the recipient in nine of its ten languages, reaching significance in five, which is exactly what a phone takes away. It measures people answering people, so it has nothing at all to say about what a caller will put up with from a machine. What it does establish is the size of the window. Every one of the ten languages had its commonest gap somewhere between nothing and two tenths of a second. The authors also note that speakers are sensitive to shifts of a hundred milliseconds. An agent that thinks for a full second has left more than twice the gap of the slowest conversational culture in the study. And the caller does not hear that as thinking.",
+  note: "Read what this does not say. Every conversation in it happened face to face, and not one of them was a phone call. The same paper found responses came earlier when the questioner was looking at the recipient in nine of its ten languages, reaching significance in five, which is exactly what a phone takes away. It measures people answering people, so it has nothing at all to say about what a caller will put up with from a machine. What it does establish is the size of the window. Every one of the ten languages had its commonest gap somewhere between nothing and two tenths of a second. The authors also note that speakers are sensitive to shifts of a hundred milliseconds. An agent that takes a full second has left more than twice the gap of the slowest language average in the study.",
 };
 
 /** SCENE copy — the four moves.
@@ -158,12 +173,12 @@ export const TURN_GAP = {
  * words appear exactly once on the page. */
 export const FOUR_MOVES: GridItem[] = [
   {
-    lead: "It answers every call, including the ones at nine on a Sunday.",
-    body: "Inbound calls route to the agent whenever you are unavailable, or always, depending on how you set it up. It greets the caller, answers what it can from your listings, and never sends anyone to voicemail.",
+    lead: "It answers the calls you cannot take, including the ones at nine on a Sunday.",
+    body: "Inbound calls route to the agent whenever you are unavailable, or always, depending on how you set it up. It says it is an AI assistant, answers what it can from your listings, and books a call back for the rest.",
   },
   {
-    lead: "It calls new leads back in seconds, not in the morning.",
-    body: "The moment an inquiry lands from your site, a portal or a campaign, the agent dials. It is calling while the person is still on the page, which is the only window that has ever really been open.",
+    lead: "It can call new inquiries back quickly, when the checks allow.",
+    body: "When an inquiry lands from your site, a portal or a campaign, the agent first checks the consent the person gave and the calling hours where they are. If both pass it calls; if not, the callback goes on a person's list.",
   },
   {
     lead: "It qualifies inside a normal conversation.",
@@ -171,7 +186,7 @@ export const FOUR_MOVES: GridItem[] = [
   },
   {
     lead: "It books, and then it writes it down.",
-    body: "Real availability from your calendar, offered on the call and confirmed on the call. Afterwards the transcript, the qualification and the outcome go into your CRM. So the appointment you walk into is one you already understand.",
+    body: "When it is connected to your calendar, it offers times from your live availability and confirms one on the call. Afterwards the notes and the outcome go into your customer records, so the appointment you walk into is one you already understand.",
   },
 ];
 
@@ -186,19 +201,19 @@ export const FOUR_MOVES: GridItem[] = [
 export const OUTBOUND: GridItem[] = [
   {
     lead: "You can point it at one person and tell it to call.",
-    body: "It does not have to wait for a trigger. Say someone registers, and you want them spoken to before they open the next tab. You tell the agent to dial that contact, and it does, with the same qualifying conversation and the same booking at the end of it.",
+    body: "It does not have to wait for a trigger. Say someone registers and agreed to a call back. You tell the agent to dial that contact, and it does, inside the calling hours, with the same questions and the same booking at the end.",
   },
   {
-    lead: "It calls again, on a schedule, without getting discouraged.",
-    body: "Someone who did not pick up at two in the afternoon was driving, not uninterested. Human follow-up tends to die at the second attempt, because a third one starts to feel like pestering. The agent tries the evening instead, and the evening is often the one that connects.",
+    lead: "It can try again on a schedule you set.",
+    body: "Someone who did not pick up at two in the afternoon may pick up later. You decide how many tries and when, inside the calling hours, and a request to stop ends the calls.",
   },
   {
-    lead: "It can work the list you already gave up on.",
-    body: "Everyone who enquired last year and went quiet is the cheapest inventory you own, and nobody calls it because calling it is miserable. The agent works through it, has real conversations, and hands back the few who are ready to move now.",
+    lead: "It can work a list, but only a consented one.",
+    body: "Past inquiries who agreed to this kind of call can be worked through, with the ones ready to move handed back to you. A name without that consent comes off the list before the agent sees it.",
   },
   {
-    lead: "It can tell a whole list at once, not one at a time.",
-    body: "A price drop, an open house, a listing that matches what forty people told you they were looking for. One caller works that list for a week. The agent works it in parallel, talks to whoever picks up, and books the ones who care.",
+    lead: "A person approves every list first.",
+    body: "A price drop or an open house can go to the people who asked to hear about it. A person approves the list and the script before the first call, and the call step cannot run without that approval.",
   },
 ];
 
@@ -218,7 +233,7 @@ export const CALL_TURNS: ConversationTurn[] = [
   {
     who: "us",
     at: "9:42 pm",
-    text: "It is. I am the assistant for the office, and I record calls so nothing gets lost between now and the morning. What would you like to know about it?",
+    text: "It is. I am the office's AI assistant, and this call is recorded so nothing gets lost between now and the morning. What would you like to know about it?",
   },
   {
     who: "them",
@@ -240,11 +255,11 @@ export const CALL_TURNS: ConversationTurn[] = [
 
 export const CALL_EVENTS: ConversationEvent[] = [
   { at: "9:42 pm", label: "Answered on the second ring", detail: "No hold, no voicemail, no callback form." },
-  { at: "9:42 pm", label: "Said what it was", detail: "An assistant, and the call is recorded. Before anything else." },
+  { at: "9:42 pm", label: "Said what it was", detail: "An AI assistant, and the call is recorded. Before anything else." },
   { at: "9:43 pm", label: "Answered from the record", detail: "Read off the listing rather than recalled." },
   { at: "9:43 pm", label: "Declined to invent an answer", detail: "Flagged for a person instead of guessing at it." },
-  { at: "9:44 pm", label: "Booked from the live calendar", detail: "Only offered a time that was genuinely free." },
-  { at: "9:45 pm", label: "Written to the CRM", detail: "Transcript, qualification and outcome, before dinner ended." },
+  { at: "9:44 pm", label: "Booked from the connected calendar", detail: "Offered a time from the live availability." },
+  { at: "9:45 pm", label: "Written to the records", detail: "The notes and the outcome, before dinner ended." },
 ];
 
 /** SCENE copy — what to ask a vendor.
@@ -258,7 +273,7 @@ export const CALL_EVENTS: ConversationEvent[] = [
 export const VENDOR_QUESTIONS: GridItem[] = [
   {
     lead: "Ask what it says in its first sentence.",
-    body: "If the answer is a person's name rather than the word assistant, stop there. Everything else on this list is downstream of whether the vendor treats disclosure as a feature or as a problem to be managed.",
+    body: "If the answer is a person's name rather than the words AI assistant, stop there. Everything else on this list depends on whether the provider treats disclosure as a feature or as a problem to be managed.",
   },
   {
     lead: "Ask what it does with a question it cannot answer.",
@@ -266,7 +281,7 @@ export const VENDOR_QUESTIONS: GridItem[] = [
   },
   {
     lead: "Ask to hear a call that went sideways.",
-    body: "Anything sounds good reading a script to a cooperative caller. Ask for a recording where somebody interrupted it, changed their mind halfway, or went quiet, because that is roughly every third real call.",
+    body: "Anything sounds good reading a script to a cooperative caller. Ask for a recording where somebody interrupted it, changed their mind halfway, or went quiet.",
   },
 ];
 
@@ -277,13 +292,13 @@ export const VENDOR_QUESTIONS: GridItem[] = [
  * one the service page already claims. */
 export const CALL_PATH: { label: string; connects: string; at?: string }[] = [
   { label: "The call", connects: "Your own number, any hour", at: "9:42 pm" },
-  { label: "The agent", connects: "A voice on Vapi, given limits" },
+  { label: "The agent", connects: "An AI assistant, given limits" },
   // Kept short deliberately: this is the third node, and the third node is the last one visible
   // before the spine scrolls on a 390px phone. A longer caption here cuts mid-phrase and reads as
   // a broken layout rather than as a scroller.
   { label: "Your listings", connects: "What it may state" },
   { label: "Your calendar", connects: "Live availability, not a guess" },
-  { label: "The record", connects: "CRM, with the transcript" },
+  { label: "The record", connects: "Your records, with the notes" },
   { label: "The handoff", connects: "Time booked with a person", at: "9:30 am" },
 ];
 
@@ -294,15 +309,15 @@ export const CALL_PATH: { label: string; connects: string; at?: string }[] = [
 export const FAILURE_MODES: GridItem[] = [
   {
     lead: "It is set up to answer everything.",
-    body: "An agent that never hands off eventually becomes the thing standing between a serious buyer and you. The most important setting is not what it can say. It is the point at which it stops talking and books.",
+    body: "Set the hand-off first: the point at which it stops talking and books.",
   },
   {
-    lead: "Nobody told it what it may not say.",
-    body: "The limits are the configuration. Give an agent no boundary on price, condition or anything legal, and it will fill the silence, fluently. And then you will hear about it from the client rather than from the log.",
+    lead: "No limits were written down.",
+    body: "Write the limits on price, condition and anything legal before the first call.",
   },
   {
-    lead: "The transcripts are never opened.",
-    body: "Every call is a record of the exact questions your market is asking, in their own words, with the objection attached. It is the best sales material you will ever own and most people never read a line of it.",
+    lead: "Nobody reads the calls.",
+    body: "In the trial a named person reads every call; after it reads cleanly, a weekly reading.",
   },
 ];
 
@@ -538,7 +553,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       band: "dark",
       field: "river",
       tone: "quote",
-      text: "Silence on a phone is not a pause. Every second of it is the caller deciding whether anybody is actually there.",
+      text: "On a phone, silence is all the caller hears while the agent works out its answer. Keep it short, and test it yourself.",
     },
     teardown: {
       kind: "conversation",
@@ -580,7 +595,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       kind: "grid",
       band: "light",
       eyebrow: "Three ways it fails",
-      heading: "None of them are the technology.",
+      heading: "Each one is a setup problem.",
       columns: 3,
       items: FAILURE_MODES,
     },
@@ -595,13 +610,102 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "The buyer who rang at 9:42 is not going to try you again on Monday. They are being shown a house on Saturday by whoever picked up. The only question left is whose listing they are standing in.",
+      text: "In the story at the top, the caller at 9:42 did not try again on Monday. Ring your own number this Sunday and hear what they heard.",
       actions: [
         { label: "See it on the AI page", href: "/ai#voice", variant: "light" },
         { label: "How it is built", href: "/services/ai-voice-agents", variant: "outline-light" },
       ],
       footnote:
         "The chat assistant on that page is live and will answer you right now. A voice agent is stood up per office, against your own number and your own calendar, so there is no shared demo line to ring.",
+    },
+
+    /** ROUND 24: the four things it never does, as tiles. */
+    never: {
+      kind: "tiles",
+      band: "dark",
+      label: "What it never does",
+      eyebrow: "The limits, before anything else",
+      heading: "Four things it never does",
+      alt: "Four tiles for what an AI voice agent never does: close a sale, guess at what it cannot verify, pretend to be a person, or take over a relationship that matters.",
+      columns: 2,
+      tiles: [
+        { figure: "1", title: "Close", body: "Tone, pauses and the second voice in the room stay with you." },
+        { figure: "2", title: "Guess", body: "What it cannot check becomes a booked call." },
+        { figure: "3", title: "Pretend", body: "Its first sentence says it is an AI assistant." },
+        { figure: "4", title: "Replace you", body: "Past clients and referrals get a message and your call back." },
+      ],
+      sources: [METHOD, { text: "our AI voice agents page", href: "https://realtylt.com/services/ai-voice-agents" }],
+    },
+
+    /** ROUND 24: who it fits and who it does not, with what the second group does instead. */
+    fits: {
+      kind: "grid",
+      band: "light",
+      label: "Who it fits",
+      eyebrow: "Who this is for",
+      heading: "A good fit, a poor fit, and what to do instead",
+      columns: 2,
+      items: [
+        { lead: "A good fit", body: "Calls that come while you cannot pick up: showings, job sites, a client in the chair, evenings and weekends. First questions that repeat, and a booked time as the next step." },
+        { lead: "A poor fit", body: "An office where a person answers almost every call, or callers who are nearly all past clients and referrals expecting you by name." },
+        { lead: "Instead, for a poor fit", body: "A shared phone rota, a greeting that says when you call back and keeps that promise, or a text back where the caller agreed to texts." },
+        { lead: "Either way", body: "Whatever answers the phone says what it is, and a person owns what happens next." },
+      ],
+    },
+
+    /** ROUND 24: the screening questions and the verdict for answering calls. Our method. */
+    "worth-it": {
+      kind: "flow",
+      band: "dark",
+      label: "The screening questions",
+      eyebrow: "Before anything is set up",
+      heading: "Is answering your missed calls worth automating?",
+      lede: "Each question can send the job to the tray. What survives keeps a person on it, because a caller is a customer.",
+      alt: "A track runs past four gates: whether anything breaks if the job stops, whether the phone or booking tool you already pay for does it, whether the rule can be written for a new hire, and whether the impact scores 3 or more, where a no sends the job to a tray marked leave it alone and what survives is set up with a person approving what the agent may say.",
+      tray: "Leave it alone",
+      gates: [
+        { ask: "Does anything break if the calls go unanswered?", pass: "Yes", exit: "No", outcome: "Stop worrying about it", detail: "If nothing breaks, nothing needs building." },
+        { ask: "Is it missing from the tools you already pay for?", pass: "Missing", exit: "One does it", outcome: "Switch the setting on", detail: "A phone system's own feature comes first." },
+        { ask: "Can the rule be written for a new hire?", pass: "Yes", exit: "No", outcome: "Settle the rule first", detail: "Each stall in the two-minute test is a missing default." },
+        { ask: "Does the impact score 3 or more out of 5?", pass: "Yes", exit: "No", outcome: "Saves too little", detail: "A person keeps answering." },
+      ],
+      end: {
+        title: "Set it up with a person on it",
+        detail: "Risk at least 3: the agent says only what a person approved, and outbound calls wait for an approved list.",
+      },
+      example: "The home stager's assistant stalls at availability, so that default is written first.",
+      sources: [METHOD],
+    },
+
+    /** ROUND 24: the suggested trial schedule. */
+    roadmap: {
+      kind: "steps",
+      band: "light",
+      label: "The roadmap",
+      eyebrow: "A suggested trial schedule",
+      heading: "One job, one direction, a decision written down",
+      alt: "A suggested trial schedule: this week ring your own number, read the missed calls and run the two-minute test; over the next two weeks write and approve the defaults and try evening and weekend calls on one line with a named person reading every call; then write the decision down with its owner.",
+      steps: [
+        { title: "This week", body: "Ring your own number, read the missed calls, run the two-minute test." },
+        { title: "The next two weeks", body: "Approve the defaults and the opening line; one direction on one line, every call read." },
+        { title: "Then", body: "Keep it, change it or leave it alone, with the reason and the owner written down." },
+      ],
+      close: "A schedule to start from, not a deadline: the reading decides when it moves on.",
+      sources: [METHOD],
+    },
+
+    /** The owner's quiz (2026-10-31), tested against the post in voice-quiz.test.ts. AI brand. */
+    quiz: {
+      kind: "quiz",
+      band: "night",
+      label: "Quiz",
+      ariaLabel: "Quiz: what did you learn",
+      eyebrow: "Ten questions",
+      title: "What did you learn? Check it in two minutes",
+      brand: "ai",
+      passLine: "You know what to ask. If you want us to look at your phone line and the jobs around it with you, we can run the assessment together.",
+      failLine: "Under half this time. Skim the legal part and the screening questions again, then have another go.",
+      questions: VOICE_QUIZ,
     },
   },
 
@@ -611,13 +715,17 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
   headingLabels: {
     "what-a-missed-call-actually-costs": "The cost",
     "why-nobody-leaves-the-voicemail": "No voicemail",
-    "what-an-ai-voice-agent-actually-does": "What it does",
+    "what-an-ai-voice-agent-for-real-estate-does": "What it does",
     "the-same-agent-pointed-the-other-way": "Calling out",
     "the-one-thing-that-decides-whether-it-works": "Latency",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
     "the-legal-part-nobody-sells-you": "The legal part",
     "where-it-goes-wrong": "Where it fails",
-    "common-questions-answered-honestly": "Common questions",
+    "who-an-ai-voice-agent-fits-and-who-it-does-not": "Who it fits",
+    "is-it-worth-automating": "Worth automating?",
+    "what-to-do-first": "Your first weeks",
+    "common-questions": "Common questions",
     "what-to-do-about-it": "What to do",
+    sources: "Sources",
   },
 };

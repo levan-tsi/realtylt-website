@@ -70,7 +70,8 @@ describe("legacy redirects — what the live site publishes must not 404 after l
       const dir = path.join(process.cwd(), "app", dest);
       expect(fs.existsSync(path.join(dir, "page.tsx")), `${r.destination} has no page.tsx`).toBe(true);
     }
-  });
+    // The instrument, not the product: the dynamic import of every post and service is the slow part, and beside other work on the PC it crossed vitest's 5,000 ms default (rounds 21, 22 and 24; it passes alone on an idle PC). 30 s is the room it needs.
+  }, 30_000);
 
   it("the generated /sitemap.xml is NOT swallowed by the /sitemap redirects", async () => {
     const rs = await rules();
@@ -100,7 +101,8 @@ describe("removed blog posts", () => {
     expect(hit?.destination).toBe("/blog");
     expect(hit?.permanent).toBe(true);
     expect(POSTS.some((p) => p.slug === slug || p.aliases?.includes(slug))).toBe(false);
-  });
+    // The instrument, not the product: the dynamic import of every post and service is the slow part, and beside other work on the PC it crossed vitest's 5,000 ms default (rounds 21, 22 and 24; it passes alone on an idle PC). 30 s is the room it needs.
+  }, 30_000);
 });
 
 describe("renamed slugs (round 17, 2026-10-31: the AI audit became the AI assessment)", () => {
@@ -118,5 +120,6 @@ describe("renamed slugs (round 17, 2026-10-31: the AI audit became the AI assess
     const { SERVICES } = await import("@/content/services");
     expect(POSTS.some((p) => p.slug === "ai-audit-small-business-what-not-to-automate")).toBe(false);
     expect(SERVICES.some((s) => s.slug === "ai-audit")).toBe(false);
-  });
+    // The instrument, not the product: the dynamic import of every post and service is the slow part, and beside other work on the PC it crossed vitest's 5,000 ms default (rounds 21, 22 and 24; it passes alone on an idle PC). 30 s is the room it needs.
+  }, 30_000);
 });

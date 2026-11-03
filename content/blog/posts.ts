@@ -546,8 +546,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-voice-agent-missed-calls-real-estate",
     cluster: "answering",
-    title: "Nobody leaves a voicemail anymore. They call the next agent.",
-    seoTitle: "AI Voice Agent for Missed Calls in Real Estate",
+    title: "AI voice agent for real estate and small business: answering the calls you miss",
+    seoTitle: "AI Voice Agent for Real Estate and Small Business",
     date: "2026-07-30",
     /** A real revision, not a freshness fiction: the all-party-consent paragraph asserted a
      * count of states that had not been checked against the statutes, and now says only what
@@ -563,12 +563,21 @@ export const POSTS: BlogPost[] = ([
      * form used at the decay-rate heading; and the turn-gap note claimed the gaze finding flatly
      * where PNAS reports it in nine of ten languages and significant in five. Every other figure
      * on this post re-verified against HBR, PNAS, FCC 24-17, NY Penal Law and California.
-     * See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-09-18",
+     * See docs/parity/ROUND48-RELEVANCE-PASS.md.
+     *
+     * ROUND 24 (2026-11-03), the agents' refresh: for real estate offices and small businesses;
+     * the opener says what we do; the vendor name gone; "AI assistant" in every disclosure; the
+     * outbound rules from FCC 24-17 (prior express consent for an artificial voice) and 47 CFR
+     * 64.1200(c)(1) (8 a.m. to 9 p.m.), the consent and hours checks before any AI-voice call;
+     * New York's recording rule from the 250.00 definition without the unconditional sentence;
+     * AB 2905 with its chapter, effective date and scope; the capability lines conditional on
+     * the connections; four new sections and the quiz. 2,587 words to (see NOTES); 10 H2 to 15;
+     * 15 scenes to 20 (B18). See docs/blog-r24/NOTES.md. */
+    updated: "2026-11-03",
     excerpt:
-      "A missed call leaves no name, no message and no record that anyone wanted you. Here is what an AI voice agent really does when the phone rings at 9:42 on a Sunday. The one thing that decides whether it works. And the disclosure rules nobody selling one mentions.",
+      "An AI voice agent for real estate and small business, in plain words: what it does when you cannot pick up, what it must never do, the federal and state rules for AI voices and call recording, a test of whether it is worth it, and a plan for this week.",
     seoDescription:
-      "What an AI voice agent does when a buyer calls at 9:42 on a Sunday, why latency decides if it works, and the AI disclosure and call recording rules that apply.",
+      "An AI voice agent for real estate and small business: what it does, what it must never do, the AI voice and call recording rules, and whether it is worth it.",
     cover: "/images/hero/millerton-night.jpg",
     body: [],
     placeholder: false,
