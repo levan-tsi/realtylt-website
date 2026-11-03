@@ -667,7 +667,10 @@ export const POSTS: BlogPost[] = ([
       "Which renovations return the most of their cost when you sell in New York: the 2025 regional figures for a garage door, a steel entry door, stone veneer and a minor kitchen, the repairs an appraiser rates first, what rarely pays back, and the lead and permit rules for an older house.",
     seoDescription:
       "Renovations that increase home value in New York: 2025 regional cost recouped figures, the repairs to do first, what rarely pays back, older-house rules.",
-    cover: "/images/listings/house-16.jpg",
+    /** Round 23 (2026-11-02, the owner's "fix that renovation cover picture"): a Tarrytown,
+     * Westchester single-family house front, CC BY 4.0 (public/images/ATTRIBUTIONS.md), in place of
+     * the stub's listings photo. */
+    cover: "/images/editorial/tarrytown-italianate-house.jpg",
     body: [],
     placeholder: false,
     markdown: RENOVATIONS_POST,

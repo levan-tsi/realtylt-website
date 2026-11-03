@@ -26,7 +26,8 @@ export const RENOVATIONS_FLAGSHIP: FlagshipContent = {
   hero: {
     moment: "5",
     suffix: "renovations",
-    photo: "/images/listings/house-16.jpg",
+    /** Round 23: a Westchester single-family house front (the owner's word on the cover). */
+    photo: "/images/editorial/tarrytown-italianate-house.jpg",
     signature: "porchlight",
   },
   scenes: {
