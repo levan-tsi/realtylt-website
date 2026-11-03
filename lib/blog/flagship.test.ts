@@ -19,6 +19,8 @@ import { CLONE_FLAGSHIP } from "@/content/blog/clone-scenes";
 import { AUDIT_FLAGSHIP } from "@/content/blog/audit-scenes";
 import { SELLER_DISCLOSURE_FLAGSHIP } from "@/content/blog/seller-disclosure-scenes";
 import { SELLER_DISCLOSURE_POST } from "@/content/blog/seller-posts";
+import { WALKTHROUGH_FLAGSHIP } from "@/content/blog/walkthrough-scenes";
+import { FINAL_WALK_THROUGH_POST } from "@/content/blog/real-estate-posts";
 import { CUSTOM_FLAGSHIP } from "@/content/blog/custom-scenes";
 import { SINGULARITY_FLAGSHIP } from "@/content/blog/singularity-scenes";
 import {
@@ -315,6 +317,9 @@ const TOPICS: [string, string, FlagshipContent][] = [
   // Round 14, 2026-10-30. The first consumer post built as a flagship, and the first topic whose
   // figures use the round-14 kinds (bars, cells, timeline, flow, tiles, steps).
   ["seller disclosure", SELLER_DISCLOSURE_POST, SELLER_DISCLOSURE_FLAGSHIP],
+  // Round 24, 2026-11-03: the final walk-through checklist, the second consumer post built as a
+  // flagship from a refresh.
+  ["final walk-through", FINAL_WALK_THROUGH_POST, WALKTHROUGH_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {

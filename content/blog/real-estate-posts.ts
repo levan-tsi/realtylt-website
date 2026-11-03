@@ -1077,33 +1077,73 @@ Yes, if the house has them. A general inspector is not a well or septic speciali
 
 Checked against these sources on September 24, 2026.`;
 
-export const FINAL_WALK_THROUGH_POST = `The boxes are packed and the closing is on the calendar. Before you sign, there is one last step that too many buyers treat as a formality: the final walk-through. It is your chance to confirm that the house you are about to own is in the condition you agreed to buy, that promised repairs were made, and that everything included in the sale is still there. This final walk-through checklist takes you through it room by room, with what to do if you find a problem.
+export const FINAL_WALK_THROUGH_POST = `RealtyLT helps New York buyers check the home's condition, the agreed repairs and the included items before closing. Use this final walk through checklist to test the house room by room, record any problem, and bring it to your agent and attorney before you sign.
+
+A final walk-through checklist is the short list of tests a buyer runs on the house shortly before closing: the systems, the appliances, the agreed repairs, the included items and the "broom clean" condition. After reading this guide you will know what the visit is for, when to book it, how to test each room, what "broom clean" has been held to mean in a New York court, and what to do, in order, if something is wrong. We wrote it for buyers from Poughkeepsie to the five boroughs.
+
+The boxes are packed and the closing is on the calendar. One last step remains: the final walk-through. It is your chance to confirm that the house is in the condition you agreed to buy, that promised repairs were made, and that everything included in the sale is still there.
 
 ## What the final walk-through is for
 
-The walk-through is not a second inspection and not a chance to renegotiate things that were there all along. It is a verification that the seller delivered what the contract promised. It has three jobs:
+The final walk-through is for checking that the seller delivered what the contract promised. It does not replace the home inspection. If you notice a problem that was missed earlier, photograph it and ask your attorney what your contract allows; the walk-through itself has three jobs:
 
 1. **Confirm the condition.** Nothing new has broken or been damaged since you last saw the house, including during the seller's move-out: gouged floors, holes in walls, a failed water heater.
 2. **Confirm the repairs.** If the seller agreed to fix items after your [home inspection](/blog/home-inspection-checklist-hudson-valley-ny), check the work and ask for receipts and any warranties.
 3. **Confirm the inclusions.** Appliances, light fixtures, window treatments and anything else the contract lists should be present, and not swapped for something lesser.
 
-New York law also protects a buyer against major loss before closing. Under the state's Uniform Vendor and Purchaser Risk Act, if all or a material part of the property is destroyed without the buyer's fault before title or possession passes, the seller cannot enforce the contract and the buyer can recover what was paid, while damage to an immaterial part leads to a reduction in the price, unless the contract says otherwise ([NY General Obligations Law 5-1311](https://www.nysenate.gov/legislation/laws/GOB/5-1311)). Your attorney will know how your contract handles this and lesser damage.
+[[scene:jobs]]
+
+An invented example: a buyer's contract lists the dining-room light fixture as included. At the walk-through, a bare bulb holder hangs where the fixture was. That is an inclusions problem, and it goes on the list with a photo before the buyer leaves.
+
+New York law also protects a buyer against major loss before closing. Under the state's Uniform Vendor and Purchaser Risk Act, unless the contract says otherwise, if all or a material part of the property is destroyed without the buyer's fault, or taken by eminent domain, before title or possession passes, the seller cannot enforce the contract and the buyer can recover what was paid. If an immaterial part is destroyed, the contract still stands and the price is reduced by the amount of the loss ([NY General Obligations Law 5-1311](https://www.nysenate.gov/legislation/laws/GOB/5-1311)). Your attorney will know how your contract handles this and lesser damage.
+
+[[scene:loss]]
+
+The practical step is to write the three jobs at the top of the page you will carry, condition, repairs and inclusions, and check every room against all three.
+
+## Who this checklist fits
+
+This checklist fits a New York buyer who has a signed contract and a closing date, whether the home is a condo or a house. It works best once the seller has moved out and the inclusions and any repair agreement are in writing, because those papers are what you check the house against.
+
+It does not fit three kinds of reader, and each has a better place to start:
+
+- **Buyers who have not signed a contract yet.** Start with our [first-time home buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist) and the [home inspection checklist](/blog/home-inspection-checklist-hudson-valley-ny); the walk-through comes at the end.
+- **Buyers who want to reopen the deal itself.** The walk-through checks the house against the contract. A question about the price or the terms goes to your attorney, whose part in a home purchase the [New York State Bar Association describes](https://nysba.org/legalease-the-attorneys-role-in-home-purchase-transactions/).
+- **Sellers.** A seller can read this to see what the buyer will test, then ask their own attorney what the contract requires at move-out.
+
+An invented example: a buyer notices a worn kitchen counter at the walk-through and remembers it from the first showing. It is not new damage, so it is not a walk-through item, but the buyer photographs it and asks the attorney whether the contract says anything about it, rather than raising it at the door.
+
+[[scene:fits]]
 
 ## When to schedule it and how long it takes
 
-Schedule it as close to closing as practical, usually the day of closing or the day before, after the seller has moved out. Allow 30 minutes for a small condo and an hour or more for a house. The seller normally is not present. Do not let anyone rush you.
+Book it as close to closing as practical, after the seller has moved out, such as the morning of the closing or the day before. Read your contract first: it may say when the buyer can inspect before closing, and your attorney can tell you. An empty house is the point, because furniture and rugs hide exactly the damage you are looking for.
+
+Ask your agent who will be there. The buyer and the buyer's agent can usually walk it alone, and it is easier to be thorough without an audience; if the seller or the seller's agent will attend, you can still take your time.
+
+Allow enough time to run every test on the list without cutting any short. We do not print a typical length, because we found no named source that measures one; a house with more rooms, more appliances and more agreed repairs simply takes longer than a small condo. A short dishwasher cycle alone runs while you test the rest, so book a slot with nothing straight after it.
+
+An invented example: a closing is set for a Thursday afternoon and the seller's movers finish on Wednesday. The buyer books the walk-through for Thursday morning, so the house is empty and there is still time to call the attorneys before the closing table.
+
+[[scene:timing]]
+
+As soon as the closing date is set, ask your agent to book the walk-through for after the move-out, and block the morning on your calendar.
 
 ## The final walk-through checklist
 
+The final walk-through checklist below is grouped by what to test, and a short version to print and carry follows it.
+
+[[scene:groups]]
+
 ### Systems
 
-- **Heating and cooling:** run the heat and the air conditioning, whatever the season, and confirm the thermostat responds.
+- **Heating and cooling:** run the heat, and the air conditioning if the weather allows. Check the equipment's instructions before running air conditioning on a cold day, since they may limit when it should run; if a system cannot be tested that day, note it and ask your attorney how to handle it. Confirm the thermostat responds.
 - **Plumbing:** run hot and cold water at every sink, tub and shower; check pressure and that hot water arrives; look under sinks for new leaks; flush every toilet and make sure it stops running; confirm everything drains.
 - **Electrical:** flip every switch; test outlets with a phone charger or night light; try the doorbell, ceiling fans and the garage door opener.
 
 ### Appliances
 
-Operate every appliance included in the sale, do not just look at it:
+Operate every appliance included in the sale; looking at it is not enough:
 
 - a short dishwasher cycle;
 - the washer and dryer for a few minutes;
@@ -1124,18 +1164,63 @@ Operate every appliance included in the sale, do not just look at it:
 
 ### "Broom clean," garage and exterior
 
-Many New York contracts require the seller to deliver the house vacant and "broom clean": personal belongings, trash and debris removed from the house, garage and yard, and floors swept. It does not mean professionally cleaned. Your contract's own wording controls, so read it.
+Many contracts ask the seller to deliver the house vacant and "broom clean", and your contract's own wording controls, so read it. Where a contract uses the term without defining it, a New York small claims court in Penfield held in 2020 that "broom clean" means free of garbage, refuse, trash and other debris when the house is handed over, and that it does not oblige the seller to have the property professionally cleaned. The same report notes that courts have found a house is not broom clean if the sellers leave their possessions behind.
+
+[[scene:broom]]
 
 - Check the garage, basement, attic and any sheds for leftover belongings.
 - Walk the outside: no removed plantings or fixtures that were supposed to stay, no dumped debris.
 
+### The short list to print and carry
+
+- [ ] Contract, inclusions list and repair agreement in hand
+- [ ] Heat runs and the thermostat responds
+- [ ] Air conditioning runs, if the weather and its instructions allow; if not, noted for the attorney
+- [ ] Hot and cold water at every sink, tub and shower; pressure fine
+- [ ] No new leaks under the sinks
+- [ ] Every toilet flushes and stops running; everything drains
+- [ ] Every switch and outlet works; doorbell, fans, garage door opener
+- [ ] Dishwasher short cycle; washer and dryer a few minutes
+- [ ] Every burner lights; the oven preheats
+- [ ] Refrigerator and freezer cold; disposal and exhaust fans run
+- [ ] Every window and door opens, closes and locks; no cracked glass, no missing screens
+- [ ] No new damage to walls, floors or ceilings; no new stains, leaks or mold
+- [ ] Each agreed repair done; receipts and warranties asked for
+- [ ] Every listed inclusion present and not swapped
+- [ ] House, garage, basement, attic and sheds empty and free of debris
+- [ ] Outside: plantings and fixtures in place, no dumped debris
+- [ ] Photos taken of anything wrong; agent and attorney called
+
+An invented example: a buyer starts the dishwasher's short cycle on arriving, tests the rest of the house, then comes back to check the floor under it before leaving. The cycle runs while the other tests get done.
+
+Printing this page gives you the list above with the rest of the guide; the lines in the short list are the ones to tick at the house, and keeping them with the contract means they are the first thing in your bag on the day.
+
 ## What if you find a problem?
 
-Stay calm. Most walk-through problems are solved without cancelling the closing.
+If you find a problem at the final walk-through, document it, call your agent and attorney before you leave, and let the attorneys work out a fix. Finding one does not on its own decide whether the closing goes ahead; that depends on the problem, the contract and what the parties agree.
 
 1. **Document it.** Photos from several angles; a short video for anything that runs or leaks.
 2. **Call your agent and your attorney before you leave.** Your agent alerts the seller's side; your attorney decides how to protect you.
-3. **Let the attorneys agree on a fix.** Common solutions are a credit to you at closing, or an escrow holdback: part of the seller's proceeds is held by an attorney until the repair is done or paid for. Occasionally a short delay is the right answer. How much is held back, and on what terms, is negotiated between the attorneys.
+3. **Let the attorneys negotiate a fix.** Possible fixes include a credit to you at closing, or an escrow holdback: part of the seller's proceeds is held by an attorney until the repair is done or paid for. Sometimes a short delay is the right answer. Any of these needs the buyer and the seller to agree. Where there is a mortgage, tell the lender too, since a credit or a holdback changes the closing figures and the lender may have to approve it. How much is held back, and on what terms, is negotiated between the attorneys.
+
+[[scene:problem]]
+
+An invented example: at the walk-through, a buyer turns on the kitchen tap and no hot water arrives. The buyer films the tap and photographs the water heater, calls the agent and the attorney from the driveway, and the attorneys agree on a holdback from the seller's proceeds until the heater is fixed, which the buyer's lender approves. The closing goes ahead that afternoon.
+
+Saving your agent's and your attorney's numbers in your phone before you go makes that call take a minute.
+
+## What to do first
+
+What to do first is find the inclusions list and any repair agreement in your contract, because every later step checks the house against them. Here is a suggested planning schedule; it is not a legal timetable, and any date your contract sets comes first:
+
+1. **About two weeks before closing.** Find the inclusions list and the repair agreement. If you do not have a copy, ask your attorney. Through your agent, ask the seller's side for receipts and any warranties for the agreed repairs.
+2. **The week of closing.** Book the walk-through with your agent for after the move-out. Print the short list. Your lender must send the [Closing Disclosure](https://www.consumerfinance.gov/ask-cfpb/what-is-a-closing-disclosure-en-1983/) at least three business days before you close; when it arrives, compare it with your Loan Estimate.
+3. **The day before.** Review the contract's inclusions and exclusions and the repair agreement with your agent, and pack what to bring.
+4. **The day of the walk-through.** Test every line, photograph anything wrong, and call your agent and attorney with a problem list or an all-clear before you leave.
+
+An invented example: a buyer with a closing four weeks out marks four dates on a calendar, one for each step above, and puts the contract in the same folder as the printed list.
+
+[[scene:roadmap]]
 
 ## Your pre-closing plan
 
@@ -1143,7 +1228,11 @@ Stay calm. Most walk-through problems are solved without cancelling the closing.
 - **What to bring:** the contract and repair list, your phone for photos, a charger or night light for outlets, a flashlight, and a notepad.
 - **Afterwards:** tell your agent and attorney right away, whether it is a problem list or an all-clear, so the closing can go ahead.
 
-If you are earlier in the process, our [first-time home buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist) covers every step, and [buyer closing costs in New York](/blog/buyer-closing-costs-new-york) explains what you will pay at the table. See how we work with buyers on our [buying page](/buying), or [talk with us](/connect).
+[[scene:bag]]
+
+An invented example: the night before, a buyer lays out the contract, the printed list, a night light and a flashlight by the front door, and charges the phone to full for photos.
+
+If you are earlier in the process, our [first-time home buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist) covers every step, and [buyer closing costs in New York](/blog/buyer-closing-costs-new-york) explains what you will pay at the table. See how we work with buyers on our [buying page](/buying).
 
 ## Frequently asked questions
 
@@ -1151,26 +1240,37 @@ If you are earlier in the process, our [first-time home buyer checklist](/blog/f
 
 To verify that the house is in the condition the contract requires, that agreed repairs are done, and that included items are still there, before you close.
 
+### When does the final walk-through happen?
+
+Shortly before closing, after the seller has moved out, such as the morning of closing or the day before. Check whether your contract sets the timing.
+
 ### What happens if problems are found during a final walk-through?
 
-Document them and call your agent and attorney before leaving. Most are settled with a credit at closing or an escrow holdback from the seller's proceeds, so the closing can go ahead.
+Document them and call your agent and attorney before leaving. The attorneys may negotiate a credit at closing, an escrow holdback from the seller's proceeds or a short delay; each needs both sides to agree, and the lender may have to approve it where there is a mortgage.
 
 ### How long should a final walk-through take?
 
-About 30 minutes for a small condo, an hour or more for a house. Take as long as you need to test everything.
+As long as it takes to run every test on the list. We do not print a typical time because we found no source that measures one; a larger house with more appliances takes longer, so book a slot with nothing straight after it.
 
 ### Should the seller be there?
 
-Usually not. It is normally the buyer and the buyer's agent, which makes it easier to be thorough.
+Ask your agent. The buyer and the buyer's agent can usually walk it alone, and it is easier to be thorough without an audience.
 
 ### What does "broom clean" mean in New York?
 
-It is a common contract term meaning the seller removes belongings, trash and debris and sweeps the floors; it does not require professional cleaning. Check your contract's exact wording.
+Your contract's wording controls. Where it is not defined, a New York court held in 2020 that it means free of garbage, refuse, trash and debris, and not professionally cleaned; leaving possessions behind is not broom clean.
+
+[[scene:quiz]]
+
+If your closing is coming up and you want someone beside you for this list, [talk with us](/connect) to book a consultation.
 
 ## Sources
 
-- New York State Senate, [General Obligations Law 5-1311, risk of loss](https://www.nysenate.gov/legislation/laws/GOB/5-1311)
-- Consumer Financial Protection Bureau, [Closing Disclosure](https://www.consumerfinance.gov/ask-cfpb/what-is-a-closing-disclosure-en-1983/), which you should compare with your Loan Estimate before closing
-- New York State Bar Association, [the attorney's role in home purchase transactions](https://nysba.org/legalease-the-attorneys-role-in-home-purchase-transactions/)
+- New York State Senate, [General Obligations Law 5-1311, risk of loss](https://www.nysenate.gov/legislation/laws/GOB/5-1311) (the Uniform Vendor and Purchaser Risk Act). The Senate page refused our automated reader on November 3, 2026; the summary above was checked that day against FindLaw's copy of the section, marked current as of January 1, 2026.
+- Witter v. Nitschke, Penfield Town Justice Court (small claims), 2020, on what "broom clean" means when a contract does not define it, as reported in [Court Answers an Existential Question: How Clean is "Broom Clean"?](https://www.sgrlaw.com/newsroom/publications/court-answers-an-existential-question-how-clean-is-broom-clean), Smith, Gambrell and Russell, December 16, 2020. Read November 3, 2026.
+- Consumer Financial Protection Bureau, [What is a Closing Disclosure?](https://www.consumerfinance.gov/ask-cfpb/what-is-a-closing-disclosure-en-1983/), sent at least three business days before closing so you can compare it with your Loan Estimate; last reviewed by the bureau May 2, 2023. Read November 3, 2026.
+- New York State Bar Association, [LegalEase: the attorney's role in home purchase transactions](https://nysba.org/legalease-the-attorneys-role-in-home-purchase-transactions/), on what the attorney reviews, including the closing date and the required condition of the property. Read November 3, 2026.
 
-Checked against these sources on September 24, 2026. This is general information, not legal advice.`;
+Sources checked November 3, 2026. This is general information, not legal advice.
+
+Written with an AI assistant and checked by Levan.`;

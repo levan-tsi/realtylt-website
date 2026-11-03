@@ -80,6 +80,7 @@ import { REACTIVATION_FILM, REACTIVATION_FLAGSHIP } from "./reactivation-scenes"
 import { QUALIFY_FILM, QUALIFY_FLAGSHIP } from "./qualify-scenes";
 import { WORKFLOW_FILM, WORKFLOW_FLAGSHIP } from "./workflow-scenes";
 import { SINGULARITY_FLAGSHIP } from "./singularity-scenes";
+import { WALKTHROUGH_FLAGSHIP } from "./walkthrough-scenes";
 
 /** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
 export const fmtDate = (iso: string) =>
@@ -981,20 +982,30 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "final-walk-through-checklist",
     cluster: "buying",
-    title: "The final walk-through: your last chance checklist before closing",
+    title: "Final walk-through checklist for New York buyers: what to test before closing",
     seoTitle: "Final Walk-Through Checklist Before Closing in New York",
     /** Buyer Education #10, reposted 2026-09-24. Slug = the drip doc's link; the draft's longer
-     * slug redirects here. */
+     * slug redirects here.
+     *
+     * ROUND 24 (2026-11-03), the agents' refresh, built as a flagship: the opener says what we do
+     * and what the reader can do after it; the visit's three jobs, who it fits, the checklist, the
+     * remedies as possible and agreed, a suggested planning schedule, the quiz. The second
+     * reader's notes: no typical duration and no seller-presence rule (no named source found),
+     * "broom clean" on the 2020 Penfield decision as reported, GOL 5-1311 checked against FindLaw's
+     * copy (the Senate page refuses scripts), the air conditioning tested only as its instructions
+     * allow. 1,119 words to 2,821; 7 H2 to 9; 10 H3 to 12; no scenes to 10 (B18). See
+     * docs/blog-r24/NOTES.md. */
     date: "2026-05-21",
-    updated: "2026-09-24",
+    updated: "2026-11-03",
     excerpt:
-      "What to test, room by room, in the last visit before closing, what \"broom clean\" means, and the calm three-step plan if something is wrong.",
+      "What the last visit before closing is for, how to test the house room by room, what \"broom clean\" has been held to mean in New York, and what to do, in order, if something is wrong.",
     seoDescription:
-      "A final walk-through checklist for New York home buyers: systems, appliances, repairs, inclusions, broom clean, and what to do if you find a problem.",
+      "A final walk-through checklist for New York buyers: what to test room by room, what broom clean means, and what to do, in order, if you find a problem.",
     cover: "/images/listings/house-11.jpg",
     body: [],
     placeholder: false,
     markdown: FINAL_WALK_THROUGH_POST,
+    flagship: WALKTHROUGH_FLAGSHIP,
     aliases: ["final-walk-through-checklist-before-closing"],
   },
   {
