@@ -323,8 +323,8 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       band: "dark",
       label: "The chain, wired",
       eyebrow: "The system",
-      heading: "The same job, with nobody in the middle of it.",
-      lede: "Every hop below is a step somebody used to do by hand the following morning. The two timestamps are the point: the first and the last are the same minute.",
+      heading: "The same job, with nobody retyping it.",
+      lede: "Every hop below is a step somebody used to do by hand the following morning. The first and the last land in the same minute, and the drafted reply waits there for a person to approve it.",
       steps: REBUILT_CHAIN,
       altPrefix: "The chain from a form submitted at 11:47pm to a task on somebody's calendar",
     },
@@ -508,7 +508,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
         title: "Write the outcome brief, then the verdict from the risk score",
         detail: "Risk 3 or more, or it reaches a customer: a person approves every result. Low risk and high impact: it runs by itself, with limits and a log.",
       },
-      example: "Invented: the salon's quarterly stock report leaves at the fifth gate.",
+      example: "The salon's quarterly stock report leaves at the fifth gate.",
       sources: [METHOD],
     },
 
@@ -580,7 +580,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
         { title: "Weeks two and three", body: "The two scores, the screening questions, the outcome brief, one chain with a failure report and an approval step." },
         { title: "Week four", body: "Break the test copy, try to send without approval, then write it down: keep, change or switch off, and who owns it." },
       ],
-      close: "Invented example: keep, office manager owns it, next check in January.",
+      close: "In the plumber's office: keep, office manager owns it, next check in January.",
       sources: [METHOD],
     },
 
