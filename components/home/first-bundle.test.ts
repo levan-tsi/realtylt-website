@@ -44,6 +44,14 @@ describe("the home page's first bundle (round 61)", () => {
     expect(css).toMatch(/\[data-shot="hero"\] \.rise \{\s*animation-duration: 0\.45s;\s*\}/);
   });
 
+  it("the rise starts at 1 % opacity, so the headline's first paint counts as its largest paint (round 69)", () => {
+    // Chrome does not count a first paint at opacity 0 toward Largest Contentful Paint, so the headline was recorded
+    // only at the web font's swap repaint: 3.4 to 4.3 s on a throttled phone against 2.0 to 2.3 s from 1 % (an
+    // invisible start: 2 levels of 255 over the night). docs/parity/DESIGN-ROUND69.md §1b.4.
+    const css = read("app/globals.css");
+    expect(css).toMatch(/@keyframes rise-in \{\s*from \{\s*opacity: 0\.01;\s*translate: 0 14px;\s*\}/);
+  });
+
   it("no Suspense boundary round the page's sections: it streamed them into a hidden div (JS off saw nothing below the hero)", () => {
     // Tried in round 61 for an earlier hydration of the ground: the prerender put everything below
     // the hero into `<div hidden id="S:0">` for an inline script to reveal, so with JavaScript off

@@ -1400,10 +1400,14 @@ option:disabled {
 }
 
 /* ── Blog article: on-load hero entrance (Apple-style rise). `both` holds the end state,
-   and the reduced-motion block below collapses the duration so it lands instantly. */
+   and the reduced-motion block below collapses the duration so it lands instantly.
+   Round 69: from 1 % opacity, not 0. Chrome does not count a first paint at opacity 0 toward Largest
+   Contentful Paint, so the home headline was recorded only at the web font's swap repaint (3.4 to 4.3 s
+   on a throttled phone, 2.0 to 2.3 s from 1 %; docs/parity/DESIGN-ROUND69.md §1b.4). 1 % of the ink over
+   the night is 2 levels of 255: the start still looks like nothing. */
 @keyframes rise-in {
   from {
-    opacity: 0;
+    opacity: 0.01;
     translate: 0 14px;
   }
   to {
