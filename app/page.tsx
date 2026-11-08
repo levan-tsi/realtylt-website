@@ -238,8 +238,9 @@ export default async function HomePage() {
               </p>
               {/* What the lights are, said once and small, with the data's source: this is
                   listing data drawn on the land, so it carries the MLS credit the rails below
-                  carry. In the text column, never over the city. */}
-              <p data-quiet className={`mt-10 hidden w-fit max-w-[26rem] text-[13px] leading-snug text-stone lg:block ${halo}`}>
+                  carry. In the text column, never over the city. Round 69: on a laptop window under
+                  760 px tall it steps aside rather than fall into the credit corner (app/globals.css). */}
+              <p data-quiet data-hero-claim className={`mt-10 hidden w-fit max-w-[26rem] text-[13px] leading-snug text-stone lg:block ${halo}`}>
                 {/* The claims follow the runtime (round 57.2, components/home/g3d/claims.ts): the
                     pointing is said only while the live map with its lights stands behind, so JS
                     off or a failed map says nothing untrue. Round 57.5: it comes LAST and is hidden

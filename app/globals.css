@@ -993,6 +993,50 @@ body.rlt-quiz-open .rlt-panel {
     opacity: 1 !important;
   }
 }
+/* Round 69: THE LAPTOP'S FIRST SCREEN ON A SHORT WINDOW. The hero's column is 864 px tall from 1280
+   wide (160 top + 608 of words + 96 bottom), so on every shorter window (a 1440 x 900 or 1280 x 800
+   laptop's browser window, a 1536 x 864 or 1366 x 768 Windows laptop) it ran past the fold and the
+   credit corner (MlGround CLEAR_STYLE: an ellipse of 320 x 88 px at the window's bottom-left where the
+   page's own words are erased on purpose) ate the small lights line (half of it at 1280 x 800) and, at
+   1366 x 657, the search box's first words and both boxed links (docs/parity/DESIGN-ROUND69.md §1b.1,
+   scripts/_scratch-r69/hero-fit.mjs at ten windows). On a short window the column's top padding, its
+   gaps and the headline scale with the window; under 760 px the small line steps aside (the count
+   above it already says every light is a home); under 700 the count takes the phone's short form.
+   From 864 px tall none of this applies and the approved layout is exactly as it was. Placed before
+   the no-script rule below, which must win where the no-script header is a row taller. */
+@media (min-width: 1024px) and (max-height: 863px) {
+  .rlt-hero-pad {
+    padding-top: 136px;
+  }
+  .rlt-hero-pad #home-hero {
+    margin-top: 12px;
+    font-size: min(clamp(3.5rem, 2.3rem + 5vw, 6.25rem), 11.6svh);
+  }
+  .rlt-hero-pad [data-quiet="lead"],
+  .rlt-hero-pad .search-instrument,
+  .rlt-hero-pad [data-hero-claim] {
+    margin-top: 24px;
+  }
+  .rlt-hero-pad .search-instrument + p {
+    margin-top: 16px;
+  }
+}
+@media (min-width: 1024px) and (max-height: 759px) {
+  .rlt-hero-pad [data-hero-claim] {
+    display: none;
+  }
+}
+@media (min-width: 1024px) and (max-height: 699px) {
+  .rlt-hero-pad #home-hero {
+    font-size: min(clamp(3.5rem, 2.3rem + 5vw, 6.25rem), 11svh);
+  }
+  .rlt-hero-pad .t-lead > .max-lg\:hidden {
+    display: none;
+  }
+  .rlt-hero-pad .t-lead > .lg\:hidden {
+    display: inline;
+  }
+}
 /* The home hero's words start below the header, and without JavaScript the night header carries
    one more row below xl (its folded link list, components/site/Header.tsx), so they start that
    much lower. */
