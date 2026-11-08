@@ -47,3 +47,6 @@ docs/_audit/
 scripts/_scratch-*
 .r12tmp/
 public/_ecand/
+
+# Round 69 home-page polish: before/after shots (named in docs/parity/DESIGN-ROUND69.md, kept out of git)
+docs/parity/r69-home-shots/
