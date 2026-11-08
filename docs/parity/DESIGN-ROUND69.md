@@ -118,4 +118,146 @@ The before shots: `docs/parity/r69-home-shots/before/` (390, 768, 1280, 1920; 50
 | 3 | The footer sign-off: "© 2026 Levan Tsiklauri, Licensed Real Estate Salesperson, United Real Estate Hudson Valley Edge. Each office is independently owned and operated." from `lib/site.ts` constants | defect (record) | `site.ts`, `Footer.tsx` |
 | 4 | The entrance starts at 1 % opacity, so the headline's first paint counts | defect (invisible) | one keyframe |
 | 5 | The map credit after the page's content in the DOM | defect (invisible) | `MlGround.tsx`, a block moved |
-| 6 | The two fact-less labels ("Start here", "Reach out"): kept or dropped | taste, his pick | behind `?r69labels=off` for the tiles |
+| 6 | The two fact-less labels ("Start here", "Reach out"): kept or dropped | taste, his pick | the branch drops them; `?r69=labels-on` on the home page draws them (one build, both looks) |
+
+## 2. What changed, each commit with its verification (on the rebuilt :3102)
+
+Every change was written test first (the test run red, then green). The after shots: `docs/parity/r69-home-shots/after/`
+(390, 768, 1280, 1920), `after-short/` (1366 x 657, 1536 x 730, 1280 x 800, 1440 x 789), `labels-on/`; the before
+shots are named in §1.
+
+- **`2a08254` the laptop's first screen on a short window** (`app/globals.css`, three height queries, laptops only;
+  `app/page.tsx` marks the small line `data-hero-claim`; `components/home/laptop-first-screen.test.ts`). Under 864 px
+  tall: top padding 136 px, the gaps 24 / 24 / 16 / 24, the headline `min(width size, 11.6svh)`; under 760 the small
+  line steps aside; under 700 the count takes its phone form and the headline 11svh. `hero-fit.mjs` after
+  (`scripts/_scratch-r69/hero-fit-after.txt`): the line in the corner 0.00 and the links in it 0.00 at all ten windows;
+  1440 x 900, 1680 x 940 and 1920 x 969 identical to before (eyebrow top 196 / 236 / 265 px, headline 100 px). Headline
+  at 1280 x 800 92.8 px, 1440 x 789 91.5, 1536 x 730 84.7, 1366 x 657 72.3, 1024 x 768 88 (its width size). No script:
+  the no-script padding still wins where that header is a row taller (1024 x 768: header 167, eyebrow 180). Looked at:
+  `after-short/` against `fit-before/`.
+- **`d32ba1e` the intake's first answers** (`components/home/HomeIntake.tsx`, `components/home/intake-a11y.test.ts`):
+  the served HTML's three anchors carry no role and no `aria-pressed`; after hydration `role=button pressed=false` x3;
+  Space on "Selling" opens "How soon do you want to sell?" with focus on it; Back shows Selling pressed=true
+  (`verify-moves.mjs`). axe after: 0 violations at 390, 768, 1280 and 1920 (`axe-after.txt`).
+- **`844375b` + `301c9cf` the footer's sign-off** (`lib/site.ts` `licensee`, `licenseType`, `brokerage`;
+  `components/site/Footer.tsx`; `components/site/signoff.test.ts`): "© 2026 Levan Tsiklauri, Licensed Real Estate
+  Salesperson, United Real Estate Hudson Valley Edge. Each office is independently owned and operated." on every page.
+  `SITE.legalName` (the default title, the structured data, the privacy and DMCA pages) is unchanged: a question (§4).
+  `301c9cf`: balanced wrapping split the brokerage's name at 1280 ("United Real Estate / Hudson Valley Edge", looked at);
+  each name is kept whole from `sm`, so the line breaks after "Salesperson," (2 lines at 1280, 4 at 390, 0 overflow at
+  320).
+- **`c83fa0d` the entrance from 1 % opacity** (`app/globals.css` `@keyframes rise-in`, `components/home/first-bundle.test.ts`):
+  `lcp.mjs` after, phone profile, four runs: the headline recorded at 1,952 / 2,404 / 2,132 / 3,004 ms, each before the
+  font landed (2,909 to 3,145 ms) and at the fallback paint's size (35,723); before, four runs, 3,416 / 3,468 / 4,144 /
+  4,256 ms, each after the font (`lcp-after.txt`). The blog's entrance shares the keyframe: the same invisible change.
+- **`0c536dd` the map credit after the content** (`components/home/ml/MlGround.tsx`, the block moved;
+  `components/home/ml/credit-order.test.ts`): `taborder.mjs` after: header (stops 0 to 29), then the search (30), the
+  two links, the scroll cue, the intake; no stop on the page itself. The served HTML: the credit after the search and
+  before the footer. The line and the (i) draw where they did (`after/home-1280-00.jpg`, looked at).
+- **`cdfd4a0` the look switch and the labels** (`components/home/look-switch.ts` + test, `app/page.tsx`,
+  `components/site/Footer.tsx` `data-r69-label`, `app/globals.css` outside every `@layer`): default, "Start here" and
+  "Reach out" `display: none`, the address 36 px under the logo; `?r69=labels-on`, both drawn, the address 73 px under
+  the logo as live (`verify-moves.mjs`). The first build had the rules inside `@layer components`, where the address's
+  own `mt-4` utility won (16 px measured): moved out, and the test now fails if they go back in (planted: the rule moved
+  back inside reports `@layer components`).
+
+## 3. The gates (on the :3102 build of the branch's code, rebuilt 15:47:20 to 15:48:58)
+
+The code built is the committed code: after the last commit, `git diff HEAD --stat -- app components lib
+next.config.ts package.json` printed nothing.
+
+Each gate's printed line, the clock read before and after it, the exit code echoed by the shell (never a grep of
+the summary standing in for it).
+
+- **tsc** (15:57:14 to 15:58:13): `npx tsc --noEmit` printed "TypeScript: No errors found", `tsc exit=0`.
+- **vitest, foreground** (16:01:03 to 16:01:55, `rtk proxy npx vitest run`): " Test Files  176 passed (176)" /
+  "      Tests  2471 passed (2471)", `vitest exit=0`. (The run before it through the shell's wrapper, 15:58:27 to
+  16:00:29, printed "PASS (2471) FAIL (0)", exit 0.) The 17 new tests: laptop-first-screen 4, intake-a11y 3, signoff 3,
+  first-bundle +1, credit-order 2, look-switch 4. Round 68's floor was 2,282; origin/main at the start carried the
+  blog rounds' tests (2,454 before this round's 17, by subtraction; not run separately).
+- **crawler** (16:02:29 to 16:07:00): `node scripts/qa-crawl.mjs http://127.0.0.1:3102` printed "PASS  crawl: all 349
+  internal links resolve", "PASS  mobile 390: no horizontal overflow on any page", six "PASS  county ...: 6 cards all
+  in-county", "ALL PASS", `crawl exit=0`.
+- **focus paint, the pinned copy with the base replaced** (`scripts/_scratch-r69/focus-paint.mjs`: `verify-focus-paint.mjs`
+  with `http://localhost:3100` made `http://127.0.0.1:3102` and its output folder moved into the round's scratch):
+  1440 (16:07 to 16:14:25) "checked 427 focusable elements across 7 pages at 1440x900" and "1 paint NOTHING on focus:
+  0.00%  /  A  81x44  "© OpenStreetMap contributors"", exit 1; 390 (16:17:23 to 16:20:57) "checked 329 focusable
+  elements across 7 pages at 390x844" and the same one reading, exit 1. That reading is round 68's known instrument
+  case (an 81 x 44 box at the window's bottom edge where the link is 158 x 14): re-proved the way a visitor reaches it
+  (`credit-focus.mjs`): a real Tab from "Talk to us", the content's last control, reached "© OpenStreetMap
+  contributors" (the new order) and 908 of 21,600 corner pixels changed, the ring drawn (`scripts/_scratch-r69/
+  credit-focus.png`, looked at).
+- **dialogs probe** (16:21:17 to 16:24:51, `scripts/_scratch-r60-dialogs.mjs --tag=r69-dlg`, `dialogs exit=0`): at 1440
+  and 390, signin, flyout or menu, save, suggest, quiz, quiz2, offer, connect, wizard each "light=0 contrast=0
+  small16=0"; tour "light=1" (the selected day, a white button at 16.4:1, the known class since round 60); gallery at
+  390 clean; "1440 gallery FAILED locator.dispatchEvent: Timeout 30000ms exceeded", twice. Not this round: today's first
+  listing (`KEY1020470`) renders no `[data-lightbox-index]` tile when its photos are blocked by CDP (0, against 11 when
+  they are aborted by a page route), and the round touched no listing file (`git diff --name-only 3aabe4a..HEAD`: 15
+  files, none under `components/listing`, `components/idx` or the listing routes). An instrument item for the next
+  listing round: the probe should pick a listing whose photos are mirrored.
+- **axe** (axe-core 4.14): before, `aria-allowed-attr` critical x3 at 390, 768, 1280, 1920; after, "0 violation
+  rules" at all four (`axe-before.txt`, `axe-after.txt`).
+- **0 overflow at 320**: `shot-home.mjs after-320 320` printed "w=320 h=11355 tiles=14 overflow 0"; 390, 768, 1280 and
+  1920 "overflow 0" (the after set), and the decision page 0 at 1280 and 390.
+- **Lighthouse 12.8.2 on the home page, media and lead blocked, median of three** (`lh.mjs`; one JSON per run kept):
+
+  | | perf | FCP | LCP | TBT | CLS | a11y | best | seo |
+  |---|---|---|---|---|---|---|---|---|
+  | mobile before (14:52) | 53 (51, 53, 60) | 1.24 s | 5.79 s | 1,266 ms | 0.003 | 95 | 75 | 69 |
+  | mobile after (16:28) | 59 (56, 61, 59) | 1.24 s | 5.69 s | 786 ms | 0.003 | **100** | 75 | 69 |
+  | desktop before | 96 (97, 95, 96) | 0.34 s | 1.23 s | 96 ms | 0.001 | 95 | 74 | 69 |
+  | desktop after (16:28) | 90 (96, 90, 75) | 0.33 s | 1.93 s | 79 ms | 0.002 | 100 | 74 | 69 |
+  | desktop after, rerun alone (16:35) | 97 (97, 95, 97) | 0.34 s | 1.24 s | 64 ms | 0.002 | 100 | 74 | 69 |
+
+  What it shows: accessibility 95 to 100 (the intake's attribute); the desktop's first after run had one 75 (the push
+  to origin ran in the same minutes) and the rerun alone is level with before; Lighthouse's SIMULATED mobile LCP (5.79
+  to 5.69 s) and TBT move inside their run-to-run spread, so no gain is claimed from them. The entrance's gain is the
+  real browser's (§2: the headline recorded 1.2 to 2 s earlier on a throttled phone). SEO 69 and best-practices 74/75
+  are the lab's, unchanged (§1c). Mobile bytes 2,967 KB before, 2,968 after (the look switch's 0.2 KB of script).
+- **Not run, with the reason:** calibration and the walks (round 68's map gates): no plate, film, map style or camera
+  changed; the credit block moved inside MlGround's JSX and nothing else in that file.
+
+## 4. His pick, the questions for him, and what stays open
+
+**His pick (one variable, both looks from one build):** the two labels that carry no fact, "Start here" over the
+intake's heading and "Reach out" over the footer's address. B, dropped, is the branch's default and the
+recommendation: each block already opens with its own heading or the logo, the frontend-design lens counts an unneeded
+label over a heading as a generated tell, and DESIGN-ROUND68 §1 move 2 named it; the labels that carry a fact stay. A,
+kept, is live today. On the preview: the home page as it opens (B) and with `?r69=labels-on` (A). The tiles:
+`docs/parity/r69-home-decision.html` (self-contained, 500 KB of which 368 KB are its 14 JPEGs), group 3. The page also
+shows the two fixes he sees before main (the laptop's first screen at three windows, the footer's sign-off), each before
+and after.
+
+**Questions for him (collected here, never asked in the chat):**
+
+1. **The sign-off, with his supervising broker.** The footer now reads "© 2026 Levan Tsiklauri, Licensed Real Estate
+   Salesperson, United Real Estate Hudson Valley Edge. Each office is independently owned and operated.", the state's
+   record of his licence. Example: a page with no title of its own is still titled "RealtyLT | Levan Tsiklauri | United Real
+   Estate" (`app/layout.tsx`), and the structured data names "Levan Tsiklauri | United Real Estate". What each answer changes: "the footer's words
+   are right, use them everywhere" changes `SITE.legalName` (the title default, the structured data, the privacy and
+   DMCA pages) and the blog author card's "United RE Hudson Valley Edge"; "the short name is fine" reverts the footer
+   line to `SITE.legalName` with the licence type added; "my broker wants other words" is one constant in `lib/site.ts`.
+2. **The REALTOR® line.** "Member of the National Association of REALTORS®" is a membership claim (the association's
+   manual allows the mark only to show membership). Example: his NRDS number in our memory is 650537157; no primary
+   source in this repo shows the membership current. What each answer changes: "a member" keeps the line; "not now"
+   takes the line off every page (the test `components/site/legal-marks.test.ts` names it).
+3. **The labels pick** (above). Example: the intake as it opens on the preview, against `?r69=labels-on`. What each
+   answer changes: R70 handoff §1 lists the edits for each.
+
+**Open, not his call today (each measured, §1c):** the first film's 1,339 KB fetched on load on a phone (a product
+call); the header's "Top areas" opening on keyboard focus (a header round); Lighthouse mobile's TBT, mostly the page's
+own scripts and the ads tag (the bootup list in §3); the blog author card's "Realtor®, licensed real estate
+salesperson" (the association's manual names a title use of the mark as incorrect: the blog's next round, on his answer
+to question 2).
+
+## 5. The preview
+
+- **Pushed** `r69-home` only (16:35:18 to 16:35:23, `* [new branch] r69-home -> r69-home`); `main` and
+  `design/futuristic-r53` not pushed; no Vercel command run.
+- **The preview:** https://realtylt-website-git-r69-home-levans-projects-a543d940.vercel.app, behind his Vercel
+  sign-in. At 16:37:28 an unauthenticated request answered `302` to `https://vercel.com/sso-api?...` with "Protected by
+  Vercel Authentication" (the expected answer; measured beside it, a branch with no deployment answers `404
+  DEPLOYMENT_NOT_FOUND`, and `r68-preview` answers the same 302). Whether the build had finished cannot be read without
+  his sign-in (the `gh` CLI here is not logged in): his first open of the link shows it.
+- **His comparison:** the preview against https://realtylt.com at his laptop's own window (most laptops are the short
+  windows of §1b.1), then the preview's home page with `?r69=labels-on` for the one pick.
