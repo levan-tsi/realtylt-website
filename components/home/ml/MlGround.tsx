@@ -1285,12 +1285,38 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
           ))}
         </div>
       </div>
+      <a
+        ref={label}
+        data-g3d-label
+        data-open="0"
+        href="/search"
+        tabIndex={-1}
+        aria-hidden
+        onClick={onLabelClick}
+        className="fixed left-0 top-0 z-[15] block whitespace-nowrap rounded-lg px-3 py-2 text-ink no-underline transition-opacity ease-out motion-reduce:transition-none [-webkit-tap-highlight-color:transparent]"
+        style={{ opacity: 0, pointerEvents: "none", background: "color-mix(in srgb, var(--color-night-raise) 94%, transparent)", border: "1px solid rgba(255,255,255,0.14)", boxShadow: "0 6px 12px rgba(0,0,0,0.35)", transitionDuration: "120ms" }}
+      >
+        <span ref={labelTown} className="block text-[13px] font-medium leading-[18px] text-ink-soft" />
+        <span ref={labelRow} className="mt-0.5 items-baseline gap-2" style={{ display: "none" }}>
+          <span ref={labelPrice} className="text-[14px] font-semibold leading-[20px] tabular-nums text-ink" />
+          <span ref={labelFacts} className="text-[13px] leading-[20px] text-ink-soft" />
+        </span>
+        <span ref={labelAddr} className="mt-1.5 min-h-[24px] items-center justify-between gap-3 border-t border-white/10 pt-1.5" style={{ display: "none" }}>
+          <span ref={labelAddrText} className="text-[14px] font-medium leading-[20px] text-ink underline decoration-white/35 underline-offset-4" />
+          <span className="text-[14px] font-semibold leading-[20px] text-ink">View</span>
+        </span>
+      </a>
+      <div ref={contentRef} className={`relative z-10 ${NO_HOLE_ON_PHONE}`} style={CLEAR_STYLE}>
+        {children}
+      </div>
       {/* THE DATA'S CREDIT (./style.ts ATTRIBUTION; CREDIT_SHOWN_MS above for the guideline's words):
           bottom left, where the Google map kept its logo, over everything, never under a word of ours.
           The two required names for five seconds, then the (i); the (i) opens the whole notice, the
           terrain's sources named there (public-domain data whose sources ask to be named) and
           OpenFreeMap, whose name is optional. Round 65: the ink-soft at full opacity (the white at 60 %
-          measured 3.4:1 on the map; a credit must be legible, not merely present). */}
+          measured 3.4:1 on the map; a credit must be legible, not merely present). Round 69: after the
+          page's content in the DOM, so the keyboard and a screen reader reach it after the home page's
+          sections, not before the hero's search (it is fixed: nothing moves on screen; credit-order.test.ts). */}
       <div
         ref={creditRef}
         data-ml-credit
@@ -1346,30 +1372,6 @@ export function MlGround({ poster, tail, featured = [], engine: engineProp = "ml
             . Terrain: USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1 (Mapzen terrain tiles).
           </p>
         </details>
-      </div>
-      <a
-        ref={label}
-        data-g3d-label
-        data-open="0"
-        href="/search"
-        tabIndex={-1}
-        aria-hidden
-        onClick={onLabelClick}
-        className="fixed left-0 top-0 z-[15] block whitespace-nowrap rounded-lg px-3 py-2 text-ink no-underline transition-opacity ease-out motion-reduce:transition-none [-webkit-tap-highlight-color:transparent]"
-        style={{ opacity: 0, pointerEvents: "none", background: "color-mix(in srgb, var(--color-night-raise) 94%, transparent)", border: "1px solid rgba(255,255,255,0.14)", boxShadow: "0 6px 12px rgba(0,0,0,0.35)", transitionDuration: "120ms" }}
-      >
-        <span ref={labelTown} className="block text-[13px] font-medium leading-[18px] text-ink-soft" />
-        <span ref={labelRow} className="mt-0.5 items-baseline gap-2" style={{ display: "none" }}>
-          <span ref={labelPrice} className="text-[14px] font-semibold leading-[20px] tabular-nums text-ink" />
-          <span ref={labelFacts} className="text-[13px] leading-[20px] text-ink-soft" />
-        </span>
-        <span ref={labelAddr} className="mt-1.5 min-h-[24px] items-center justify-between gap-3 border-t border-white/10 pt-1.5" style={{ display: "none" }}>
-          <span ref={labelAddrText} className="text-[14px] font-medium leading-[20px] text-ink underline decoration-white/35 underline-offset-4" />
-          <span className="text-[14px] font-semibold leading-[20px] text-ink">View</span>
-        </span>
-      </a>
-      <div ref={contentRef} className={`relative z-10 ${NO_HOLE_ON_PHONE}`} style={CLEAR_STYLE}>
-        {children}
       </div>
     </AreaContext.Provider>
   );
