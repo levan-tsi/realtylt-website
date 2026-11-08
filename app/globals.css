@@ -993,6 +993,26 @@ body.rlt-quiz-open .rlt-panel {
     opacity: 1 !important;
   }
 }
+/* Round 69, HIS PICK (docs/parity/DESIGN-ROUND69.md §4; DESIGN-ROUND68 §1 move 2 on the home page): the two
+   labels that carry no fact, "Start here" over the intake's heading and "Reach out" over the footer's address,
+   are dropped on the branch (the recommendation: the heading and the logo already open their blocks); the
+   address keeps the logo-to-details step the label used to make. `?r69=labels-on` on the home page draws them as
+   live has them (components/home/look-switch.ts). One of the two looks goes when he has picked. Outside every
+   @layer, so the margin beats the address's own mt-4 utility (inside `@layer components` it did not). */
+p.t-eyebrow:has(+ h2 #value-heading),
+footer [data-r69-label] {
+  display: none;
+}
+footer [data-r69-label] + address {
+  margin-top: 2.25rem;
+}
+:root[data-r69~="labels-on"] p.t-eyebrow:has(+ h2 #value-heading),
+:root[data-r69~="labels-on"] footer [data-r69-label] {
+  display: block;
+}
+:root[data-r69~="labels-on"] footer [data-r69-label] + address {
+  margin-top: 1rem;
+}
 /* Round 69: THE LAPTOP'S FIRST SCREEN ON A SHORT WINDOW. The hero's column is 864 px tall from 1280
    wide (160 top + 608 of words + 96 bottom), so on every shorter window (a 1440 x 900 or 1280 x 800
    laptop's browser window, a 1536 x 864 or 1366 x 768 Windows laptop) it ran past the fold and the

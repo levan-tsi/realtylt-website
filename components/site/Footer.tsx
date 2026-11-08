@@ -64,7 +64,8 @@ export function Footer() {
             className="h-auto w-44"
           />
 
-          <p className="t-eyebrow mt-9 text-ink">Reach out</p>
+          {/* Round 69: one of the two labels his pick decides (app/globals.css, data-r69-label). */}
+          <p data-r69-label className="t-eyebrow mt-9 text-ink">Reach out</p>
           <address className="mt-4 space-y-1 text-sm font-light not-italic">
             <p>{SITE.address.street}</p>
             <p>

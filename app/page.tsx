@@ -29,6 +29,7 @@ import { OG_DEFAULTS, SITE } from "@/lib/site";
 import type { ReactNode } from "react";
 import { EARLY_LIGHTS_SCRIPT } from "@/lib/idx/lights-client";
 import { PLATE_REVEAL_SCRIPT } from "@/components/home/plates/plate-reveal";
+import { LOOK_SWITCH_SCRIPT } from "@/components/home/look-switch";
 
 /** THE LIGHTS' EARLY FETCH (round 59): one line of script at the top of the page starts the fetch
  * of /api/lights while the document is still parsing, ahead of the page's own bundle, and leaves
@@ -136,6 +137,8 @@ export default async function HomePage() {
     // `.nocturne` re-points the site's tokens to the night (app/globals.css).
     <div className="nocturne isolate relative">
       <script dangerouslySetInnerHTML={{ __html: EARLY_LIGHTS }} />
+      {/* Round 69: the preview's look switch for his pick (components/home/look-switch.ts); goes when he has picked. */}
+      <script dangerouslySetInnerHTML={{ __html: LOOK_SWITCH_SCRIPT }} />
       {/* Round 65: the first plate eases in from the moment its bytes land (components/home/plates/plate-reveal.ts). */}
       {ground === "plates" ? <script dangerouslySetInnerHTML={{ __html: PLATE_REVEAL_SCRIPT }} /> : null}
       {/* `tail`: the flight does not stop where the page's sections do. Everything below them is
