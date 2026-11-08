@@ -171,9 +171,12 @@ export function Footer() {
               Round 66: the font swap (round 65) made the sentence 606px at 14px, past max-w-xl's
               576, and "operated." stood alone again at 1280 and up (and "REALTORS®." beside it).
               So max-w-2xl, no shrinking from xl (where the row has the room), and balanced
-              lines on both sides wherever they must wrap. */}
+              lines on both sides wherever they must wrap.
+              Round 69: the sign-off the state's advertising rule asks for (19 NYCRR 175.25: the
+              licence type and the brokerage's name as licensed, lib/site.ts), in place of the
+              short "Levan Tsiklauri | United Real Estate". */}
           <p className="t-small [text-wrap:balance] sm:max-w-2xl sm:text-right xl:shrink-0">
-            &copy; {new Date().getFullYear()} {SITE.legalName}. {SITE.disclaimer}
+            &copy; {new Date().getFullYear()} {SITE.licensee}, {SITE.licenseType}, {SITE.brokerage}. {SITE.disclaimer}
           </p>
         </div>
       </div>

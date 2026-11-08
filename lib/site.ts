@@ -30,6 +30,13 @@ export const SITE = {
    * deliver into levan@realtylt.com the same day (test token RLT-0922-A7 landed in his inbox). */
   infoEmail: "info@realtylt.com",
   disclaimer: "Each office is independently owned and operated.",
+  /** The footer's sign-off (round 69). 19 NYCRR 175.25 asks a licensee's advertising for the licence type
+   * and the brokerage's name as licensed; these are the Department of State's record (data.ny.gov, rows
+   * updated 2026-11-04: REAL ESTATE SALESPERSON, UNITED REAL ESTATE HUDSON VALLEY EDGE). He is a
+   * salesperson, never "broker" (the rule prohibits that title for him). components/site/signoff.test.ts. */
+  licensee: "Levan Tsiklauri",
+  licenseType: "Licensed Real Estate Salesperson",
+  brokerage: "United Real Estate Hudson Valley Edge",
   /** The STABLE landing path, not a dated file path. The old link
    *  (`/system/files/documents/2025/04/fairhousingnotice.pdf`) 404'd on 2026-08-02: NY DOS moved
    *  the file and renamed it the "Housing and Anti-Discrimination Notice" (02.2025). This path
