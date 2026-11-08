@@ -50,6 +50,9 @@ export function HomeIntake() {
   const arrived = useRef(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  // Round 69: the first three answers are links until the page hydrates, buttons after (below).
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
 
   useEffect(() => {
     if (!arrived.current) {
@@ -185,12 +188,20 @@ export function HomeIntake() {
                   const selected = answers.intent === o.value;
                   return (
                     /* Anchors, not buttons: with JavaScript off they are the three most useful
-                       links on the page. With it on, the click is the answer. */
+                       links on the page. With it on, the click is the answer. Round 69: so the
+                       role and the pressed state arrive with hydration (a link may not carry
+                       aria-pressed: axe aria-allowed-attr), and Space answers as on a button. */
                     <a
                       key={o.value}
                       href={o.href}
-                      aria-pressed={selected}
+                      role={hydrated ? "button" : undefined}
+                      aria-pressed={hydrated ? selected : undefined}
                       onClick={(e) => {
+                        e.preventDefault();
+                        choose("intent", o.value);
+                      }}
+                      onKeyDown={(e) => {
+                        if (!hydrated || e.key !== " ") return;
                         e.preventDefault();
                         choose("intent", o.value);
                       }}
