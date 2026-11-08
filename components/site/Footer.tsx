@@ -177,7 +177,12 @@ export function Footer() {
               licence type and the brokerage's name as licensed, lib/site.ts), in place of the
               short "Levan Tsiklauri | United Real Estate". */}
           <p className="t-small [text-wrap:balance] sm:max-w-2xl sm:text-right xl:shrink-0">
-            &copy; {new Date().getFullYear()} {SITE.licensee}, {SITE.licenseType}, {SITE.brokerage}. {SITE.disclaimer}
+            {/* Each name kept whole from sm, so a balanced break never splits the brokerage's name
+                ("United Real Estate / Hudson Valley Edge" at 1280); a phone lets them wrap (320 is
+                narrower than the name at 16 px). */}
+            &copy; {new Date().getFullYear()} {SITE.licensee},{" "}
+            <span className="sm:whitespace-nowrap">{SITE.licenseType}</span>,{" "}
+            <span className="sm:whitespace-nowrap">{SITE.brokerage}</span>. {SITE.disclaimer}
           </p>
         </div>
       </div>

@@ -23,9 +23,12 @@ describe("the footer sign-off", () => {
     expect(SITE.brokerage).toBe("United Real Estate Hudson Valley Edge");
   });
 
-  it("prints them in the copyright line, from the constants", () => {
-    expect(footer).toContain("&copy; {new Date().getFullYear()} {SITE.licensee}, {SITE.licenseType}, {SITE.brokerage}. {SITE.disclaimer}");
-    expect(footer).not.toContain("{SITE.legalName}. {SITE.disclaimer}");
+  it("prints them in the copyright line, from the constants, each name whole from sm", () => {
+    const src = footer.replace(/\r\n/g, "\n");
+    expect(src).toMatch(
+      /&copy; \{new Date\(\)\.getFullYear\(\)\} \{SITE\.licensee\},\{" "\}\s*<span className="sm:whitespace-nowrap">\{SITE\.licenseType\}<\/span>,\{" "\}\s*<span className="sm:whitespace-nowrap">\{SITE\.brokerage\}<\/span>\. \{SITE\.disclaimer\}/,
+    );
+    expect(src).not.toContain("{SITE.legalName}. {SITE.disclaimer}");
   });
 
   it("never calls him a broker", () => {
