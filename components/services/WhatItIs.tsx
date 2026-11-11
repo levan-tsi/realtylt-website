@@ -24,7 +24,7 @@ export function WhatItIs({ service }: { service: Service }) {
         <Reveal delay={140} className="lg:pt-2">
           <aside className="border-t-2 border-ink pt-6">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-stone">
-              What it runs on
+              What it covers
             </p>
             <ul className="mt-5 divide-y divide-[#e3e6ea] border-y border-line">
               {service.specs.map((s) => (

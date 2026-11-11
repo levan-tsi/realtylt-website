@@ -12,7 +12,7 @@ export function HowItWorks({ service }: { service: Service }) {
         <Reveal>
           <SectionHeading eyebrow="How it works" dark as="h2">
             <span id="how-heading">
-              What happens, <strong>in order</strong>
+              What we do, <strong>step by step</strong>
             </span>
           </SectionHeading>
         </Reveal>
@@ -37,6 +37,31 @@ export function HowItWorks({ service }: { service: Service }) {
             </Reveal>
           ))}
         </ol>
+
+        {/* Round 28: who does what. Inside this section rather than a section of its own, so the
+            page keeps its rhythm and its table of contents (lib/services/toc.ts). */}
+        {service.handoff && (
+          <div className="mt-14 grid gap-10 md:grid-cols-2 lg:mt-20 lg:gap-16">
+            {(
+              [
+                ["What the owner provides", service.handoff.provides],
+                ["What a person still approves", service.handoff.approves],
+              ] as const
+            ).map(([label, items], i) => (
+              <Reveal key={label} delay={i * 110}>
+                <h3 className="text-xl font-bold leading-snug text-paper">{label}</h3>
+                <ul className="mt-5 border-t border-paper/15">
+                  {items.map((item) => (
+                    <li key={item} className="flex gap-3 border-b border-paper/15 py-4 leading-relaxed text-paper/80">
+                      <span aria-hidden className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-porchlight" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -49,7 +49,7 @@ export function ServiceHero({ service }: { service: Service }) {
           </h1>
           <p data-toc-after="" className="mt-6 max-w-xl text-lg leading-relaxed text-paper/80">{service.lede}</p>
 
-          <ul className="mt-8 flex flex-wrap gap-2" aria-label="What it runs on">
+          <ul className="mt-8 flex flex-wrap gap-2" aria-label="What it covers">
             {service.specs.map((s) => (
               <li
                 key={s}

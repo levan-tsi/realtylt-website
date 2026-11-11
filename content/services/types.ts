@@ -134,6 +134,17 @@ export interface Service {
 
   faqs: FaqItem[];
 
+  /** Who does what, said plainly (round 28, the owner's word of 2026-11-11: a service page
+   * shows "what actually will be done through the service"). `provides` = what the owner hands
+   * over before it runs; `approves` = what a person still decides once it runs. Rendered as two
+   * short lists at the foot of How it works. The business augments people: nothing here may
+   * hint that anyone loses a job. */
+  handoff?: { provides: string[]; approves: string[] };
+
+  /** Which free door the closing names (CTA-2 section 4, 2026-11-11): absent = both doors
+   * (version E); "assessment" = version C; "website" = version D. */
+  door?: "assessment" | "website";
+
   /** HeyGen / Higgsfield walkthrough. Absent until one is recorded; the VideoObject
    * JSON-LD and the video section both activate the moment this is filled in. */
   video?: ServiceVideo;
