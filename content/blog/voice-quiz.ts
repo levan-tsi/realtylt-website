@@ -1,5 +1,6 @@
-/** The ten-question check at the end of "AI voice agent for real estate and small business"
- * (slug ai-voice-agent-missed-calls-real-estate).
+/** The ten-question check at the end of "AI voice agent for small business" (slug
+ * ai-voice-agent-missed-calls-real-estate; round 28 re-aimed the post at local owners, the
+ * questions already were).
  *
  * ROUND 24, 2026-11-03, the refresh of the voice post. The owner's quiz rule (2026-10-31): about
  * ten questions, four answers each, the result at the end. DATA only.

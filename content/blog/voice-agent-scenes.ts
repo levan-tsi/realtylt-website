@@ -108,7 +108,7 @@ export const RESPONSE_AUDIT = {
   sourceText:
     "Harvard Business Review, The Short Life of Online Sales Leads (2011), reporting the audit by James Oldroyd, Kristina McElheran and David Elkington.",
   sourceHref: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads",
-  note: "Cross-industry research from 2011, timing replies to inquiries submitted through a website rather than to phone calls. These percentages are not a real estate benchmark and should not be quoted as one. They are a reason to measure your own response times, not a measurement of them.",
+  note: "Cross-industry research from 2011, timing replies to inquiries submitted through a website rather than to phone calls. These percentages are not a benchmark for any one trade and should not be quoted as one. They are a reason to measure your own response times, not a measurement of them.",
 };
 
 /** SCENE copy — the size of the gap. The page's SECOND cited graphic, and the reason it
@@ -174,7 +174,7 @@ export const TURN_GAP = {
 export const FOUR_MOVES: GridItem[] = [
   {
     lead: "It answers the calls you cannot take, including the ones at nine on a Sunday.",
-    body: "Inbound calls route to the agent whenever you are unavailable, or always, depending on how you set it up. It says it is an AI assistant, answers what it can from your listings, and books a call back for the rest.",
+    body: "Inbound calls route to the agent whenever you are unavailable, or always, depending on how you set it up. It says it is an AI assistant, answers what it can from your own information, and books a call back for the rest.",
   },
   {
     lead: "It can call new inquiries back quickly, when the checks allow.",
@@ -182,7 +182,7 @@ export const FOUR_MOVES: GridItem[] = [
   },
   {
     lead: "It qualifies inside a normal conversation.",
-    body: "Budget, area, timeline, whether they are pre-approved, whether they have a house to sell. Not a script read at someone. The questions you would ask, in the order a conversation actually goes.",
+    body: "What the job is, where it is, how soon it is needed and how they found you. Not a script read at someone. The questions you would ask, in the order a conversation actually goes.",
   },
   {
     lead: "It books, and then it writes it down.",
@@ -213,7 +213,7 @@ export const OUTBOUND: GridItem[] = [
   },
   {
     lead: "A person approves every list first.",
-    body: "A price drop or an open house can go to the people who asked to hear about it. A person approves the list and the script before the first call, and the call step cannot run without that approval.",
+    body: "A seasonal reminder or a new opening in the calendar can go to the people who asked to hear about it. A person approves the list and the script before the first call, and the call step cannot run without that approval.",
   },
 ];
 
@@ -228,24 +228,24 @@ export const CALL_TURNS: ConversationTurn[] = [
   {
     who: "them",
     at: "9:42 pm",
-    text: "Hi. I am looking at the colonial you have listed. Is it still available?",
+    text: "Hi. Water is coming through our bedroom ceiling since the storm. Do you come out to Beacon?",
   },
   {
     who: "us",
     at: "9:42 pm",
-    text: "It is. I am the office's AI assistant, and this call is recorded so nothing gets lost between now and the morning. What would you like to know about it?",
+    text: "I am the company's AI assistant, and this call is recorded so nothing gets lost between now and the morning. Beacon is inside the area the company covers. What would you like to know?",
   },
   {
     who: "them",
     at: "9:43 pm",
-    text: "What are the taxes on it, and would the seller look at a contingent offer?",
+    text: "Can someone look at it tomorrow, and what does a repair like that usually cost?",
   },
   {
     who: "us",
     at: "9:43 pm",
-    text: "The taxes I can read you straight off the listing. The contingent offer I am not going to guess at. Nobody knows until the listing agent is actually asked, and it is the kind of answer that decides an offer. Let me put you with a person in the morning.",
+    text: "The visit I can book straight from the calendar. The cost I am not going to guess at. Nobody knows until the roofer has looked at it, and it is the kind of answer that decides who you hire. Let me book the visit, and a person will go through the cost with you there.",
   },
-  { who: "them", at: "9:44 pm", text: "Morning is fine." },
+  { who: "them", at: "9:44 pm", text: "Tomorrow morning is fine." },
   {
     who: "us",
     at: "9:44 pm",
@@ -256,7 +256,7 @@ export const CALL_TURNS: ConversationTurn[] = [
 export const CALL_EVENTS: ConversationEvent[] = [
   { at: "9:42 pm", label: "Answered on the second ring", detail: "No hold, no voicemail, no callback form." },
   { at: "9:42 pm", label: "Said what it was", detail: "An AI assistant, and the call is recorded. Before anything else." },
-  { at: "9:43 pm", label: "Answered from the record", detail: "Read off the listing rather than recalled." },
+  { at: "9:43 pm", label: "Answered from the record", detail: "The service area, read off the company's own list rather than recalled." },
   { at: "9:43 pm", label: "Declined to invent an answer", detail: "Flagged for a person instead of guessing at it." },
   { at: "9:44 pm", label: "Booked from the connected calendar", detail: "Offered a time from the live availability." },
   { at: "9:45 pm", label: "Written to the records", detail: "The notes and the outcome, before dinner ended." },
@@ -296,7 +296,7 @@ export const CALL_PATH: { label: string; connects: string; at?: string }[] = [
   // Kept short deliberately: this is the third node, and the third node is the last one visible
   // before the spine scrolls on a 390px phone. A longer caption here cuts mid-phrase and reads as
   // a broken layout rather than as a scroller.
-  { label: "Your listings", connects: "What it may state" },
+  { label: "Your services", connects: "What it may state" },
   { label: "Your calendar", connects: "Live availability, not a guess" },
   { label: "The record", connects: "Your records, with the notes" },
   { label: "The handoff", connects: "Time booked with a person", at: "9:30 am" },
@@ -395,7 +395,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "missed",
           label: "Calls you miss in a month",
-          hint: "Evenings, weekends, showings, the school run. Count the ones that rang out.",
+          hint: "Evenings, weekends, a job site, a client in the chair. Count the ones that rang out.",
           min: 5,
           max: 120,
           step: 5,
@@ -407,7 +407,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "real",
           label: "Of those, the share that were a real inquiry",
-          hint: "Wrong numbers, vendors and the title company are not leads.",
+          hint: "Wrong numbers, sales calls and suppliers are not inquiries.",
           min: 10,
           max: 100,
           step: 5,
@@ -441,17 +441,6 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
             },
           ],
         },
-        {
-          kind: "range",
-          id: "commission",
-          label: "Your average commission per closed deal",
-          min: 1000,
-          max: 30000,
-          step: 500,
-          initial: 6000,
-          format: "money",
-          width: "w-[7.5rem]",
-        },
       ],
       chain: [
         {
@@ -478,22 +467,10 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
           format: "count",
           unit: "a year",
         },
-        {
-          label: "That would have become a closing",
-          by: { from: "rate", value: 0.05, display: "a 5% close rate" },
-          format: "count",
-          unit: "a year",
-        },
-        {
-          label: "In commission",
-          by: { from: "input", id: "commission" },
-          format: "money",
-          unit: "a year",
-        },
       ],
-      headline: 5,
-      resultLabel: "Going to whoever picked up",
-      note: "Two things are worth knowing about these sums. The first is that they are far gentler than the research above would justify. The 1.25 million lead study found firms contacting within an hour were nearly seven times likelier to get a meaningful conversation with a decision maker than firms that waited one more hour. The same study found them more than sixty times likelier than firms that waited a day. Turning odds like that into a slider would produce a number nobody should believe. So the callback curve here is a plain judgement, and yours to disagree with. The second is that the 5% close rate is the same conservative one the website chat piece uses, even though someone who dialled you is warmer than someone who filled in a form. Neither post gets to tune its own number. This counts inbound calls only, and the contacts already sitting cold in your CRM are a different population in a different article.",
+      headline: 3,
+      resultLabel: "Conversations a year going to whoever picked up",
+      note: "Two things are worth knowing about these sums. The first is that they are far gentler than the research above would justify. The 1.25 million lead study found firms contacting within an hour were nearly seven times likelier to get a meaningful conversation with a decision maker than firms that waited one more hour, and more than sixty times likelier than firms that waited a day. Turning odds like that into a slider would produce a number nobody should believe, so the callback curve here is a plain judgement, and yours to disagree with. The second is that the sum stops at conversations. What one is worth depends on your trade and your prices, so that last step is yours to finish. This counts inbound calls only, and the contacts already sitting cold in your records are a different population in a different article.",
       action: { label: "See how it is built", href: "/services/ai-voice-agents" },
       secondary: { label: "Ask about yours", href: "/connect" },
     },
@@ -518,7 +495,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       // camera is standing on the stony shore looking out, not on the river.
       alt: "Dusk over the Hudson at Cold Spring, New York, four broken pilings and a slab of an old dock standing in the shallows in front of a stony shore, dark wooded hills closing the river on both sides and the sky going gold and pink between them",
       caption:
-        "Cold Spring, from the shore. The call at 9:42 is someone deciding whether they are driving up on Saturday, and that decision does not wait until Monday to get made.",
+        "Cold Spring, from the shore. The call at 9:42 is someone deciding who comes to look at their roof this week, and that decision does not wait until Monday to get made.",
       credit: "Photograph by eleephotography, CC BY 2.0.",
       ariaLabel: "A Hudson Valley river town",
     },
@@ -616,7 +593,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/ai-voice-agents", variant: "outline-light" },
       ],
       footnote:
-        "The chat assistant on that page is live and will answer you right now. A voice agent is stood up per office, against your own number and your own calendar, so there is no shared demo line to ring.",
+        "The chat assistant on that page is live and will answer you right now. A voice agent is set up for each business, against its own number and its own calendar, so there is no shared demo line to ring.",
     },
 
     /** ROUND 24: the four things it never does, as tiles. */
@@ -646,7 +623,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       heading: "A good fit, a poor fit, and what to do instead",
       columns: 2,
       items: [
-        { lead: "A good fit", body: "Calls that come while you cannot pick up: showings, job sites, a client in the chair, evenings and weekends. First questions that repeat, and a booked time as the next step." },
+        { lead: "A good fit", body: "Calls that come while you cannot pick up: job sites, a patient or a client in the chair, showings, evenings and weekends. First questions that repeat, and a booked time as the next step." },
         { lead: "A poor fit", body: "An office where a person answers almost every call, or callers who are nearly all past clients and referrals expecting you by name." },
         { lead: "Instead, for a poor fit", body: "A shared phone rota, a greeting that says when you call back and keeps that promise, or a text back where the caller agreed to texts." },
         { lead: "Either way", body: "Whatever answers the phone says what it is, and a person owns what happens next." },
@@ -673,7 +650,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
         title: "Set it up with a person on it",
         detail: "Risk at least 3: the agent says only what a person approved, and outbound calls wait for an approved list.",
       },
-      example: "The home stager's assistant stalls at availability, so that default is written first.",
+      example: "The accounting office's assistant stalls at tax-season appointments, so that default is written first.",
       sources: [METHOD],
     },
 
@@ -715,7 +692,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
   headingLabels: {
     "what-a-missed-call-actually-costs": "The cost",
     "why-nobody-leaves-the-voicemail": "No voicemail",
-    "what-an-ai-voice-agent-for-real-estate-does": "What it does",
+    "what-an-ai-voice-agent-for-small-business-does": "What it does",
     "the-same-agent-pointed-the-other-way": "Calling out",
     "the-one-thing-that-decides-whether-it-works": "Latency",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",

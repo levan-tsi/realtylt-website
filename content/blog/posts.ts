@@ -546,8 +546,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-voice-agent-missed-calls-real-estate",
     cluster: "answering",
-    title: "AI voice agent for real estate and small business: answering the calls you miss",
-    seoTitle: "AI Voice Agent for Real Estate and Small Business",
+    title: "AI voice agent for small business: answering the calls an owner misses",
+    seoTitle: "AI Voice Agent for Small Business: Answer Missed Calls",
     date: "2026-07-30",
     /** A real revision, not a freshness fiction: the all-party-consent paragraph asserted a
      * count of states that had not been checked against the statutes, and now says only what
@@ -572,12 +572,19 @@ export const POSTS: BlogPost[] = ([
      * New York's recording rule from the 250.00 definition without the unconditional sentence;
      * AB 2905 with its chapter, effective date and scope; the capability lines conditional on
      * the connections; four new sections and the quiz. 2,587 words to (see NOTES); 10 H2 to 15;
-     * 15 scenes to 20 (B18). See docs/blog-r24/NOTES.md. */
-    updated: "2026-11-03",
+     * 15 scenes to 20 (B18). See docs/blog-r24/NOTES.md.
+     *
+     * ROUND 28 (2026-11-11), re-aimed at local business owners (his order of 2026-11-11: the AI
+     * posts are for business owners, a real estate office one example among several): the
+     * opener is a roofer's missed call, the teardown a roof-leak call, the examples a contractor,
+     * a dental and an accounting office, a salon, a gym and a real estate office; the calculator
+     * stops at conversations (no commission, no per-deal figure); the closing line goes to the
+     * quiz; the sources re-read on 11-11. The slug is kept. See docs/blog-r28/NOTES-voice.md. */
+    updated: "2026-11-11",
     excerpt:
-      "An AI voice agent for real estate and small business, in plain words: what it does when you cannot pick up, what it must never do, the federal and state rules for AI voices and call recording, a test of whether it is worth it, and a plan for this week.",
+      "An AI voice agent for small business, in plain words: what it does when nobody can pick up, what it must never do, the federal and state rules for AI voices and call recording, a test of whether it is worth it, and a plan for this week.",
     seoDescription:
-      "An AI voice agent for real estate and small business: what it does, what it must never do, the AI voice and call recording rules, and whether it is worth it.",
+      "An AI voice agent for small business: what it does with the calls an owner misses, what it must never do, the rules for AI voices, and whether it is worth it.",
     cover: "/images/hero/millerton-night.jpg",
     body: [],
     placeholder: false,
