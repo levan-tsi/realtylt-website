@@ -4,57 +4,52 @@ import type { Service } from "./types";
  *
  * THE MECHANIC ON THIS PAGE WAS REWRITTEN 2026-08-25 (SERVICES-CRITIQUE.md §1), and the
  * rewrite is not a wording change. The page used to describe review gating in three places
- * while its own FAQ defined gating as the thing you must not do and claimed "This asks
- * everyone." Everyone got the survey; only the fives got the review link, and the link is
- * what the rule is about.
+ * while its own FAQ defined gating as the thing you must not do. So the mechanic is: EVERYONE
+ * gets the same Google link, whatever they scored. A low score ALSO opens a private line to the
+ * owner, as well as the link and never instead of it.
  *
  * Google's contribution policy (support.google.com/contributionpolicy/answer/7400114) lists
- * under "We do not allow merchants to": "Discourage or prohibit negative reviews, or
- * selectively solicit positive reviews from customers." That sentence described the product
- * this page was selling.
+ * under "We do not allow merchants to": "Offer incentives", "Discourage or prohibit negative
+ * reviews, or selectively solicit positive reviews from customers", and, when soliciting, "nor
+ * should they request that specific content be included", "Merchants requesting that staff
+ * solicit a certain number of reviews". Re-read 2026-11-11.
  *
- * So the mechanic here is now: EVERYONE gets the same Google link, whatever they scored. A
- * low score ALSO opens a private line to the owner, as well as the link and never instead of
- * it. That is the version that is compliant and, on this page's own argument, the better
- * product: a business with nothing but fives reads as filtered, and a four answered well
- * reads as real.
+ * The website embed is described as "a selection of recent reviews" for a federal reason:
+ * 16 CFR 465.7(b) turns on MISREPRESENTING that a review block represents most or all reviews
+ * submitted while suppressing by rating. Re-read 2026-11-11 (eCFR).
  *
- * The website embed is described as "a selection of recent reviews" for a second, federal
- * reason: 16 CFR 465.7(b) (89 FR 68077, 22 August 2024) turns on MISREPRESENTING that a
- * review block represents most or all reviews submitted while suppressing by rating. A
- * labelled selection is a different thing from a reviews section that implies it is the whole
- * set, so the label is load-bearing and the words "your best feedback" are gone. */
+ * THE 73% IS DEAD (Round B, 2026-08-25): it had no source. The stat is BrightLocal's 74%, quoted
+ * as written, with the survey and its seller named beside it (re-read 2026-11-11: "74% seek
+ * reviews written in the last three months"; "47% of consumers won't use a business with fewer
+ * than 20 reviews"; "a representative panel of 1,002 US adult consumers via SurveyMonkey").
+ *
+ * Round 28 (2026-11-11): re-aimed at local business owners (a plumber, a dental or accounting
+ * office, a salon or spa, a real estate office as one example); the closing transcript is a
+ * water-heater job, not a closing. Sources saved in realtylt-agents
+ * company/agents/seo/runs/r28-services/sources/reviews/. */
 export const reviewAutomation: Service = {
   slug: "review-automation",
   aiKey: "reviews",
   name: "Review Automation",
   tier: "core",
 
-  eyebrow: "Reputation · Reviews on autopilot",
-  title: "More 5-star reviews, without the awkward ask",
-  lede: "The moment a job wraps, the AI texts the customer and takes them, in one tap, to your Google review page. No chasing, no forgetting. Everyone gets the same link, whatever they scored. Asking only the people you expect to be kind is called review gating, and Google’s policy rules it out. A low score gets the link and a private message from you as well. So you hear about a problem the day it happens, instead of reading it later.",
-  specs: ["auto-request at job end", "one-tap Google reviews", "the same link for everyone", "a low score reaches you too"],
-  // THE 73% IS DEAD (Round B, 2026-08-25). "73% of customers read reviews before they book"
-  // sat here, in `stat` and in an FAQ, with no source. It was hunted for: BrightLocal's Local
-  // Consumer Review Survey is the only annually repeated primary survey of this behaviour, its
-  // 2026 edition publishes its method (a representative panel of 1,002 US adult consumers via
-  // SurveyMonkey), and 73 is not a figure in it. What is in it is 97% who read reviews for
-  // local businesses at all, 41% who "always" do, and, most usefully for THIS page, 74% who
-  // seek reviews written in the last three months. So the number here is now that one, quoted
-  // as written, with the survey named beside it.
-  why: "People read reviews before anyone ever mentions them, and the ones they read are the recent ones. This asks every customer while the work is fresh in their mind. That is the only moment the ask really works. A steady trickle beats a good year three years ago.",
+  eyebrow: "Reputation · Review requests",
+  title: "More Google reviews without the awkward ask",
+  lede: "The job went well, the customer meant to write a review, and then the week moved on. We set up a text that goes to every customer when the job ends, one tap from the business's Google review page. Everyone gets the same link, whatever they scored, because asking only the people expected to be kind is what Google's policy rules out. A low score also reaches the owner the same minute, so a problem gets a call that day instead of a surprise later.",
+  specs: ["asks when the job ends", "one tap to Google", "the same link for everyone", "a low score reaches the owner"],
+  why: "People read reviews before they call, and the ones they read are the recent ones. This asks every customer while the work is fresh in their mind, every time, not only when somebody remembers. A steady trickle of honest reviews says more about a business today than a good year three years ago.",
   keywords: [
+    "how to get more google reviews",
+    "how to get more google reviews for my business",
     "automated review requests",
-    "get more google reviews",
-    "review request automation",
+    "review request text",
     "online reputation management small business",
-    "ask for reviews by text",
   ],
 
   seo: {
-    title: "Automated Google Review Requests by Text",
+    title: "Get more Google reviews: automated review requests by text",
     description:
-      "Every customer is asked at the right moment, one tap from your Google review page. The same link for everyone, and a low score reaches you privately as well.",
+      "We text every customer one tap to the Google review page when the job ends. The same link for everyone, no incentives, and a low score reaches the owner too.",
   },
 
   stat: {
@@ -70,101 +65,124 @@ export const reviewAutomation: Service = {
     kind: "transcript",
     caption: "A four gets the link too, and a call the same day",
     turns: [
-      { who: "ai", text: "Hi Marcus, glad the closing went through today. Quick one: how did we do, one to five?" },
-      { who: "visitor", text: "4. everything was fine, the lender just took forever to send the clear to close" },
-      { who: "ai", text: "That is worth knowing, thank you. I have sent the lender point straight to Levan and he will call you today. Here is the Google link too, if you want to say that in your own words: [link]" },
+      { who: "ai", text: "Hi Dana, thanks for having us out to fix the water heater today. Quick one: how did we do, one to five?" },
+      { who: "visitor", text: "4. great work, the wait for the first visit was just long" },
+      { who: "ai", text: "That is worth knowing, thank you. I have passed the wait straight to Mike, the owner, and he will call you today. Here is the Google link too, if you would like to say it in your own words: [link]" },
       { who: "visitor", text: "will do" },
     ],
-    footnote: "Every customer gets this link, whatever they scored. What a low score adds is the private message to the owner, sent the same minute.",
+    footnote: "An invented example. Every customer gets this link, whatever they scored. What a low score adds is the private message to the owner, sent the same minute.",
   },
 
   whatItIs: [
-    "It is the review request that never gets sent. Every business knows it should ask. Almost nobody asks every time, and the ones who do ask late, when the customer has moved on and the enthusiasm has cooled.",
-    "The AI texts the customer at the moment the job wraps, which is the only moment the ask actually works. It takes them one tap to your Google review page. Every customer gets that link, including the ones who were not thrilled. That is because only asking the people you expect to be kind is review gating, and Google's policy names selectively soliciting positive reviews as something merchants may not do.",
-    "What the score changes is what happens on your side. A low answer opens a private message to you at the same time as the link goes out. So the thing that went wrong reaches you the day it happened, while it is still something you can put right. That is a better outcome than a suppressed review, and it is also the only version of this that is allowed.",
+    "It is the review request that otherwise never gets sent. Every owner knows to ask. Asking every time, on the busy weeks too, is the hard part, and an ask that comes after the customer has moved on is easy to ignore.",
+    "We set up a text that goes out when the job is marked done, which is the moment the ask works. It takes the customer one tap to the business's Google review page. Every customer gets that link, including the ones who were not thrilled, because only asking the people expected to be kind is review gating, and Google's policy names selectively soliciting positive reviews as something merchants may not do.",
+    "What the score changes is what happens on the owner's side. A low answer sends a private message to the owner at the same time as the link goes out. So the thing that went wrong reaches the business the day it happened, while it can still be put right. That is better than a suppressed review, and it is also the only version of this that is allowed.",
+    "It fits any business that finishes work for customers it can text: a plumber or a roofer after a job, a dental or accounting office after an appointment, a salon or spa after a visit, a real estate office after a closing. For an office that keeps health or financial records, the text names the business and never the treatment or the return.",
   ],
 
   howItWorks: [
     {
-      title: "It asks the moment the job is done",
-      // ROUND 47: "the difference between asking today and asking on Friday is most of your
-      // reviews" is a magnitude nobody has measured, which is the class round D removed from
-      // three other service pages. The flagship makes the same point without a quantity.
-      body: "Not next week. Enthusiasm has a half-life. An ask that lands after somebody has moved on does not produce a worse review. It produces no review.",
+      title: "We connect it to the moment a job ends",
+      body: "The trigger is an event in the software the business already uses: a job marked done, an invoice paid, an appointment checked out. That event, rather than somebody's memory, starts the message, so the ask happens on the busy weeks too.",
     },
     {
-      title: "One tap, no friction",
-      body: "A text with a direct link to your Google review page. Every extra step between the ask and the review costs you a share of the people willing to leave one.",
+      title: "We write the text with the owner",
+      body: "Short, in the business's own name, with one question, one to five, and the link. No discount, gift or prize for a review, no pressure, and no request for particular words: all three are on Google's list of what merchants may not do. The owner approves the wording before the first text goes out.",
     },
     {
       title: "Everyone gets the same link",
-      body: "The review page goes to every customer, whatever they scored. Only asking the ones you expect to be kind is review gating. Google's contribution policy lists selectively soliciting positive reviews as a thing merchants may not do.",
+      body: "The review page goes to every customer, whatever they scored. Only asking the ones expected to be kind is review gating, and Google's contribution policy lists selectively soliciting positive reviews as a thing merchants may not do.",
     },
     {
-      title: "A rough score also reaches you, privately, at once",
-      body: "As well as the link, not instead of it. A low answer pings you with what they said and who said it, the same minute. So you get to make the call before the week is out, rather than finding out from the review.",
+      title: "A rough score also reaches the owner, at once",
+      body: "As well as the link, not instead of it. A low answer pings the owner with what was said and who said it, the same minute. So the call happens before the week is out, rather than the owner finding out from the review.",
+    },
+    {
+      title: "Replies are handled, and STOP means stop",
+      body: "A reply of STOP ends every text to that number. A question or a complaint in a reply goes to a person, not to an automatic answer. Nobody is asked twice for the same job.",
     },
   ],
 
+  handoff: {
+    provides: [
+      "The event that marks a job done, in the software the business already uses.",
+      "Customers' mobile numbers, from people who agreed to get texts from the business.",
+      "The link to the business's Google review page.",
+      "Who gets the low-score message, and how soon they call back.",
+    ],
+    approves: [
+      "The wording of the text, once, and every change to it.",
+      "Every reply posted under a review, in the owner's name.",
+      "The call back to the customer who gave a low score.",
+      "Which reviews appear on the business's own website, labelled as a selection.",
+    ],
+  },
+
   useCases: [
     {
-      // ROUND 47: this said "Asking every HAPPY customer, every time". The mechanic round B
-      // rewrote this whole page for is that everyone is asked whatever they scored, which the
-      // lede, whatItIs, howItWorks[2], the figure footnote and limits[0] all now say. The
-      // retraction swept five fields and missed this one, and the word it missed is the word the
-      // page exists to remove. The title went with it: on this page's own argument the rating
-      // moves toward the truth rather than upward, which is limits[4]'s point.
-      title: "The ask that actually happens, every time",
-      body: "Asking every customer, at the moment the work is fresh in their mind, is a simple idea. It fails purely on consistency. Automating it removes the only failure mode it has.",
+      title: "A plumber or a roofer, after every job",
+      body: "The job is marked done on the phone in the truck and the text goes out while the customer is still at home. Asking every customer at the moment the work is fresh is a simple idea that fails only on consistency, and automating it removes that failure.",
     },
     {
-      title: "Recency, which is what people actually read",
-      body: "A steady flow of recent reviews reads as a business that is busy right now, which is the thing a prospect is silently checking for.",
+      title: "A dental or accounting office, after an appointment",
+      body: "The front desk checks the client out and the text follows. It names the office and asks how the visit went, and never mentions a treatment or a tax matter. A low score goes to the office manager, not to the person at the desk.",
     },
     {
-      title: "The four you answered the same day",
-      body: "A four with a straight reply under it reads more honestly than a wall of fives. And the customer who got a call about it often comes back and edits it themselves. What changes is that you heard about it on the day.",
+      title: "A salon or spa, after a visit",
+      body: "The visit is paid and the text arrives while the customer is still on the way home. A steady flow of recent reviews reads as a business that is busy right now, which is what a new customer is quietly checking for.",
+    },
+    {
+      title: "A real estate office, after a closing",
+      body: "The closing is recorded and the client gets the same one-tap link. A slow lender or a long wait shows up as a four with the reason, and the agent hears about it the same day.",
+    },
+    {
+      title: "The four answered the same day",
+      body: "A four with a straight reply under it reads more honestly than a wall of fives. And a customer who got a call about it sometimes edits the review themselves. What changes is that the owner heard about it on the day.",
     },
     {
       title: "A profile that does not look managed",
-      body: "Asking everyone produces a mix, and a mix is what a real business looks like. Prospects read the low reviews and the replies to them first. That is the part a filtered profile cannot give you.",
+      body: "Asking everyone produces a mix, and a mix is what a real business looks like. New customers read the low reviews and the replies to them first. That is the part a filtered profile cannot give.",
     },
   ],
 
   limits: [
-    "It does not choose who gets asked. Everyone does, whatever they scored. That is because selectively soliciting the people you expect to be kind is the practice Google's policy rules out.",
-    "It does not remove a review. A published review belongs to the customer. The only things that change it are you answering it and you fixing what is behind it.",
+    "It does not choose who gets asked. Everyone does, whatever they scored. That is because selectively soliciting the people expected to be kind is the practice Google's policy rules out.",
+    "It does not remove a review. A published review belongs to the customer. The only things that change it are the owner answering it and fixing what is behind it.",
     "It does not make anybody leave one. It removes the friction and the forgetting. The customer still has to want to.",
-    "It does not present a selection as your whole reputation. Reviews pulled through to your own site are labelled a selection of recent reviews. The reason is in the FAQ below.",
+    "It offers no discount, gift or prize for a review, and it does not ask for particular words or a staff member's name in one. Google's policy lists all of those under what merchants may not do.",
+    "It does not present a selection as the whole reputation. Reviews pulled through to the business's own site are labelled a selection of recent reviews. The reason is in the questions below.",
     "It does not fix the service. A steady flow of honest reviews of a bad experience is simply a faster way to find out.",
   ],
 
   faqs: [
     {
       q: "How do I get more Google reviews?",
-      a: "Ask every customer, by text, at the moment the job finishes, and make it one tap to the review page. The reason most businesses have few reviews is not that customers are unwilling. It is that the ask is late, and it does not happen every time. Volume and recency both matter. In BrightLocal's Local Consumer Review Survey 2026, run on a panel of 1,002 US adults, 47% said they would not use a business with fewer than 20 reviews. And 74% said they look for reviews written in the last three months. That is a survey by a company that sells review software. So treat it as what people say they do, rather than as a measurement of what they did.",
+      a: "Ask every customer, by text, at the moment the job finishes, and make it one tap to the review page. Volume and recency both matter. In BrightLocal's Local Consumer Review Survey 2026, run on a panel of 1,002 US adults, 47% said they would not use a business with fewer than 20 reviews, and 74% said they look for reviews written in the last three months. That is a survey by a company that sells review software, so treat it as what people say they do rather than a measurement of what they did.",
+    },
+    {
+      q: "How do I get reviews without begging customers?",
+      a: "Ask once, at the right moment, with nothing attached. One short text when the job ends, one question and one link, and no follow-up chain. Nobody is asked twice for the same job, a reply of STOP ends the texts, and no discount or gift is offered, which Google's policy forbids anyway. One plain ask at the right hour reads as a business that cares how the job went.",
     },
     {
       q: "Is it against Google's policy to automate review requests?",
-      a: "Asking every customer for an honest review is fine, and automating the timing of that ask does not change it. What is not allowed is incentivising reviews, or only asking the people you expect to leave a good one. Google's contribution policy lists, under what merchants may not do, discouraging or prohibiting negative reviews or selectively soliciting positive ones. So this sends the same link to everyone, whatever they scored. The score decides what reaches you privately, rather than who gets asked.",
+      a: "Asking every customer for an honest review is allowed, and automating the timing of that ask does not change it. What is not allowed is offering an incentive, asking for particular content, or only asking the people expected to leave a good one. Google's contribution policy lists, under what merchants may not do, discouraging or prohibiting negative reviews or selectively soliciting positive ones. So this sends the same link to everyone, whatever they scored. The score decides what reaches the owner privately, rather than who gets asked.",
     },
     {
       q: "What is review gating?",
-      a: "Review gating is surveying customers first, and only sending the public review link to the ones who answered well. It is common, and it is usually sold as catching problems early. It is also the specific practice Google's policy rules out. Screening feedback so you can fix things is fine. Screening who is allowed to review you is not. The difference is whether the unhappy customer still gets the link.",
+      a: "Review gating is surveying customers first, and only sending the public review link to the ones who answered well. It is common, and it is usually sold as catching problems early. It is also the specific practice Google's policy rules out. Screening feedback so problems get fixed is fine. Screening who is allowed to leave a review is not. The difference is whether the unhappy customer still gets the link.",
     },
     {
       q: "What happens when someone is unhappy?",
-      a: "You get told straight away, with their score and what they wrote. They get the review link like everybody else. The private message is what buys you the chance to make it right the same day. Doing that well is worth more than a suppressed review, and a four with your answer under it is more persuasive to the next prospect than a page of fives.",
+      a: "The owner is told straight away, with the score and what the customer wrote. The customer gets the review link like everybody else. The private message is what buys the chance to make it right the same day. Doing that well is worth more than a suppressed review, and a four with the owner's answer under it says more to the next customer than a page of fives.",
     },
     {
       q: "Can my Google reviews go on my own website?",
-      a: "Yes. Recent reviews can be pulled through to your site automatically. They are shown and labelled as a selection of recent reviews, rather than as the whole set. That wording matters. The FTC's rule on consumer reviews, 16 CFR 465.7, is about misrepresenting a review block as representing most or all of what customers submitted while quietly holding back the low ones. A labelled selection is honest. A reviews section that implies it is everything is not.",
+      a: "Yes. Recent reviews can be pulled through to the business's site automatically. They are shown and labelled as a selection of recent reviews, rather than as the whole set. That wording matters. The FTC's rule on consumer reviews, 16 CFR 465.7, is about misrepresenting a review block as representing most or all of what customers submitted while quietly holding back the low ones. A labelled selection is honest. A reviews section that implies it is everything is not.",
     },
   ],
 
-  /** Own flagship first, then the sibling, which is the pattern the other posted services
-   * follow. Two cards and not three because RelatedPosts is a two-column grid and an odd count
-   * leaves a visible empty cell. */
+  /** Own post first, then the sibling. Two cards and not three because RelatedPosts is a
+   * two-column grid and an odd count leaves a visible empty cell. */
   relatedPosts: [
     "automated-google-review-requests-real-estate",
     "workflow-automation-real-estate-business",
