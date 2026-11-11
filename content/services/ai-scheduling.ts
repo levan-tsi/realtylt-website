@@ -28,7 +28,7 @@ export const aiScheduling: Service = {
   title: "An AI scheduling assistant that books real open times",
   lede: "A customer asks for a time and the answer waits until somebody is off the phone, by which point the customer has asked somewhere else. We set up an AI scheduling assistant that offers real open times from the business's own calendar inside the chat or the call, holds the slot the moment it is taken, sends the confirmation and the reminders, and moves the time on request. Where other people have to agree, it asks them and tracks who has actually said yes.",
   specs: ["your live calendar", "real open times only", "reminders sent for you", "who has said yes, tracked"],
-  why: "The gap between “interested” and “on the calendar” is where a customer cools. Booking inside the same conversation closes that gap. Holding the slot the moment it is taken means the business's own calendar is never offered twice, and a time that needs other people is called confirmed only when they have said so.",
+  why: "The gap between “interested” and “on the calendar” is where a customer cools. Booking inside the same conversation closes that gap. Holding the slot the moment it is taken is built against one kind of double booking, the business's own time offered twice, while the hold is set up and working; and a time that needs other people is called confirmed only when they have said so.",
   keywords: [
     "ai scheduling assistant for business",
     "ai calendar assistant",
@@ -91,7 +91,7 @@ export const aiScheduling: Service = {
     },
     {
       title: "It holds the slot as it is taken",
-      body: "The booking is written to the calendar the moment somebody accepts, rather than at the end of the exchange. So two people asking within a minute of each other cannot both be offered it. A system that can only read a calendar cannot do this.",
+      body: "The booking is written to the calendar the moment somebody accepts, rather than at the end of the exchange. So, while the hold is set up and working, two people asking within a minute of each other are not both given it. A system that can only read a calendar cannot do this.",
     },
     {
       title: "It tracks who has actually agreed",
@@ -125,11 +125,15 @@ export const aiScheduling: Service = {
     },
     {
       title: "A dental or accounting office, offered once",
-      body: "Availability is read live and each slot is written as it is taken, so the same time cannot go out twice from the office's side. The reminder carries the time and the address, and the front desk spends no call on either.",
+      body: "Availability is read live and each slot is written as it is taken, which is built against the office's own time going out twice. The reminder carries the time and the address, and the front desk spends no call on either.",
     },
     {
       title: "A meeting that needs three people",
       body: "An accounting office books a client meeting with two partners. The assistant holds the office's side, sends the request, records who has replied and calls it confirmed only when all three have said yes. Until then the client hears that a request has gone in.",
+    },
+    {
+      title: "A plumber in a managed building",
+      body: "The job needs the apartment owner's yes, the building manager's, notice to the tenant and the super who holds the way in. The assistant sends each request, records who has answered, holds the plumber's slot, and tells the customer a time only when every yes is in.",
     },
     {
       title: "A salon, spa or gym, moved without a call",
@@ -157,7 +161,7 @@ export const aiScheduling: Service = {
     },
     {
       q: "How does AI scheduling avoid double-booking?",
-      a: "It reads the live calendar at the moment it offers a slot, and writes the slot as soon as somebody takes it. So the same time cannot go out twice from the business's side. That is the half it can guarantee. It cannot see or control another office's diary, so if somebody else promises the same slot to another person, no scheduling software prevents that.",
+      a: "It reads the live calendar at the moment it offers a slot, and writes the slot as soon as somebody takes it. So the same time is not given out twice from the business's side, while the hold is set up and working. That is the half it is built against. It cannot see or control another office's diary, so if somebody else promises the same slot to another person, no scheduling software prevents that.",
     },
     {
       q: "Does it work with Google Calendar and Outlook?",
