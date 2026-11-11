@@ -34,7 +34,7 @@ export const reviewAutomation: Service = {
   tier: "core",
 
   eyebrow: "Reputation · Review requests",
-  title: "More Google reviews without the awkward ask",
+  title: "Google review requests: ask every customer once, on the day",
   lede: "The job went well, the customer meant to write a review, and then the week moved on. We set up a text that goes to every customer when the job ends, one tap from the business's Google review page. Everyone gets the same link, whatever they scored, because asking only the people expected to be kind is what Google's policy rules out. A low score also reaches the owner the same minute, so a problem gets a call that day instead of a surprise later.",
   specs: ["asks when the job ends", "one tap to Google", "the same link for everyone", "a low score reaches the owner"],
   why: "People read reviews before they call, and the ones they read are the recent ones. This asks every customer while the work is fresh in their mind, every time, not only when somebody remembers. A steady trickle of honest reviews says more about a business today than a good year three years ago.",
@@ -47,7 +47,7 @@ export const reviewAutomation: Service = {
   ],
 
   seo: {
-    title: "Get more Google reviews: automated review requests by text",
+    title: "How to get more Google reviews: one request, on the day",
     description:
       "We text every customer one tap to the Google review page when the job ends. The same link for everyone, no incentives, and a low score reaches the owner too.",
   },
@@ -65,9 +65,9 @@ export const reviewAutomation: Service = {
     kind: "transcript",
     caption: "A four gets the link too, and a call the same day",
     turns: [
-      { who: "ai", text: "Hi Dana, thanks for having us out to fix the water heater today. Quick one: how did we do, one to five?" },
-      { who: "visitor", text: "4. great work, the wait for the first visit was just long" },
-      { who: "ai", text: "That is worth knowing, thank you. I have passed the wait straight to Mike, the owner, and he will call you today. Here is the Google link too, if you would like to say it in your own words: [link]" },
+      { who: "ai", text: "Hi Marcus, thanks for having us out today. Quick one: how did we do, one to five?" },
+      { who: "visitor", text: "4. great work, the part just took three weeks to arrive" },
+      { who: "ai", text: "That is worth knowing, thank you. I have sent the point about the part straight to the owner, and she will call you today. Here is the Google link too, if you would like to say it in your own words: [link]" },
       { who: "visitor", text: "will do" },
     ],
     footnote: "An invented example. Every customer gets this link, whatever they scored. What a low score adds is the private message to the owner, sent the same minute.",
@@ -148,7 +148,7 @@ export const reviewAutomation: Service = {
   limits: [
     "It does not choose who gets asked. Everyone does, whatever they scored. That is because selectively soliciting the people expected to be kind is the practice Google's policy rules out.",
     "It does not remove a review. A published review belongs to the customer. The only things that change it are the owner answering it and fixing what is behind it.",
-    "It does not make anybody leave one. It removes the friction and the forgetting. The customer still has to want to.",
+    "It does not make anybody leave one. It is built to take the forgetting and the delay out of the ask; whether a customer writes is the customer's choice.",
     "It offers no discount, gift or prize for a review, and it does not ask for particular words or a staff member's name in one. Google's policy lists all of those under what merchants may not do.",
     "It does not present a selection as the whole reputation. Reviews pulled through to the business's own site are labelled a selection of recent reviews. The reason is in the questions below.",
     "It does not fix the service. A steady flow of honest reviews of a bad experience is simply a faster way to find out.",
