@@ -48,7 +48,13 @@ import type { Service } from "./types";
  * NO `stat`. Every number that could go here would be about this system's own improvement and
  * nobody has measured it. The field is optional precisely so a page can decline it.
  *
- * House rules: no em dashes, no arrow glyphs, limits are required and are the load-bearing part. */
+ * House rules: no em dashes, no arrow glyphs, limits are required and are the load-bearing part.
+ *
+ * Round 28 (2026-11-11): re-aimed at local business owners, surgically (the owner chose this copy
+ * in round 44): one opening sentence in an owner's words, a paragraph on who it fits by trade, a
+ * contractor's and an office's case, the two handoff lists, "brokerages" to "small businesses",
+ * and the title, description and keywords on "self improving ai system" for small business. No new
+ * claim about the system: every added line restates a mechanism the page already describes. */
 export const theSingularity: Service = {
   slug: "the-singularity",
   aiKey: "singularity",
@@ -57,7 +63,7 @@ export const theSingularity: Service = {
 
   eyebrow: "The Singularity · the tipping point",
   title: "The point where it starts improving itself",
-  lede: "Scattered tools become one brain, and this is the moment that brain starts working on itself. It builds and runs your other agents. It writes and changes the software around them. It keeps what it learns in files it has to read before it starts anything. Every other tool you own peaked the day you installed it. This one writes down what it got wrong, and nothing it writes ships until the tests pass and you approve it.",
+  lede: "A chat on the website, a voice agent on the phone and a pile of automations each know a different version of the same customer. Scattered tools become one brain, and this is the moment that brain starts working on itself. It builds and runs your other agents. It writes and changes the software around them. It keeps what it learns in files it has to read before it starts anything. Every other tool you own peaked the day you installed it. This one writes down what it got wrong, and nothing it writes ships until the tests pass and you approve it.",
   specs: [
     "builds and runs your agents",
     "writes and ships real code",
@@ -68,7 +74,7 @@ export const theSingularity: Service = {
   ],
   why: "Most tools are worth the most on the day you install them, then they age. This system keeps its own memory. It writes down the corrections you give it. It can change the software it runs on. So it is worth more a year in than on day one. Everything else you buy gets older. This gets better.",
   keywords: [
-    "ai agent orchestration real estate",
+    "ai agent orchestration for small business",
     "self improving ai system",
     "ai that writes and ships code",
     "ai with persistent project memory",
@@ -76,9 +82,9 @@ export const theSingularity: Service = {
   ],
 
   seo: {
-    title: "The Singularity: AI That Builds, Remembers and Improves",
+    title: "The Singularity: a self-improving AI system for small business",
     description:
-      "AI agent orchestration for real estate: it builds and runs your agents, keeps what it learns in readable files, and improves its own code with your approval.",
+      "A self-improving AI system for a small business: it builds and runs its agents, keeps what it learns in readable files, and improves its own code with approval.",
   },
 
   figure: {
@@ -111,6 +117,7 @@ export const theSingularity: Service = {
     "It is the layer above everything else on this site. Instead of a chat assistant here, a voice agent there, and a pile of automations that have never met, one system stands them up. It gives each one its job, and it holds the memory they all read from. A caller who explained their situation on the phone on Tuesday does not explain it again to the website on Thursday.",
     "The second half is the part the name is about. A system that can see everything its agents did can also see where they went wrong. And it can do something about it. It can change the instructions. It can change the routing. And when the fix belongs in the software, it writes and tests the software. What it learns does not stay in a conversation. It goes into files that the next piece of work has to read before it starts, which is why a correction you give once is a correction you only have to give once. It does the work the way a person would, a real browser included. It opens what it changed and clicks through it to see that it behaves. And a job is not sized to a sitting. It can work unattended for hours or days depending on the task, saving its place as it goes, while the gate stays exactly where it was.",
     "It is worth saying plainly what that is and is not. It is not a different kind of intelligence, and there is no point at which it stops needing you. It writes real changes, code included. Not one of them reaches a client until a test suite has run over it and a person has approved it. The reason it earns a name is not that it runs on its own. It is that almost nothing else a business buys has any way of remembering what it got wrong.",
+    "It fits a business already running two or more of the services on this site and starting to feel the seams between them: a contractor whose phone agent, website chat and quote follow-up each keep their own notes, a dental or accounting office whose front desk repeats the same correction to three tools, a salon, spa or gym with several locations, a real estate office whose calls, chats and deals never meet. For a business running one tool, the right first step is that tool, done well.",
   ],
 
   howItWorks: [
@@ -132,10 +139,29 @@ export const theSingularity: Service = {
     },
   ],
 
+  handoff: {
+    provides: [
+      "The agents and tools already running, with access to each.",
+      "The corrections and rules the business keeps repeating, said once so they are written down.",
+      "A named person who reads and approves every change before it ships.",
+      "Months of real conversations, which is what the loop learns from.",
+    ],
+    approves: [
+      "Every change before it ships, code included, after the tests have passed.",
+      "What counts as better for the business, which only the people in it can judge.",
+      "Where the conversations and the memory are stored, and their deletion on request.",
+      "Any new agent before it is switched on.",
+    ],
+  },
+
   useCases: [
     {
       title: "The answer that was wrong in March and is still wrong",
       body: "Somewhere in your funnel a question gets an answer that quietly costs you people, and nobody has read enough transcripts to notice. A loop that reads all of them is looking for exactly that. It is the kind of thing that never gets found by anyone who has a day job.",
+    },
+    {
+      title: "A contractor whose phone, website and quotes finally agree",
+      body: "The caller who described the leak on Tuesday is the same person who fills in the website form on Thursday and accepts the quote on Friday. One memory means each tool knows what the others heard, and nobody asks the customer to start again.",
     },
     {
       title: "Four tools, four versions of the same client",
@@ -176,7 +202,7 @@ export const theSingularity: Service = {
     },
     {
       q: "How long before it is actually better than what I started with?",
-      a: "The shared memory helps straight away, because it stops a client having to repeat themselves from the first conversation onwards. The improvement loop is slower, and honestly so. It needs enough real conversations to tell a genuine weak point from a bad week. For most brokerages that is a matter of months rather than weeks. Anybody quoting a timeline shorter than that is quoting one they have not measured.",
+      a: "The shared memory helps straight away, because it stops a client having to repeat themselves from the first conversation onwards. The improvement loop is slower, and honestly so. It needs enough real conversations to tell a genuine weak point from a bad week. For most small businesses that is a matter of months rather than weeks. Anybody quoting a timeline shorter than that is quoting one they have not measured.",
     },
     {
       q: "What happens if one of its changes makes things worse?",
