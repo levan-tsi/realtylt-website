@@ -1,171 +1,195 @@
 import type { Service } from "./types";
 
-/** COPY key `voice` on realtylt.com/ai. Deep link: /ai#voice */
+/** COPY key `voice` on realtylt.com/ai. Deep link: /ai#voice
+ *
+ * Round 28 (2026-11-11, the owner's word: AI is for business owners, a real estate office is one
+ * example among several; a service page shows what is actually done). Re-aimed at local owners and
+ * made to agree with the refreshed post `ai-voice-agent-missed-calls-real-estate` (branch r28-voice):
+ * the AI-assistant sentence first, answers only from what the owner approved, a call-back only after
+ * the consent and calling-hours checks, a named person reading every call in the trial. The
+ * "sub-second" figure is gone: the post dropped it as a promised response time with no test behind
+ * it (the owner's question since round 24), and the page now says what the post says.
+ * Sources (read 2026-11-11, saved in realtylt-agents company/agents/seo/runs/r28-services/sources/):
+ * HBR 2011, FCC 24-17, 47 CFR 64.1200(c)(1), PNAS 2009, NY Penal Law 250.00 and 250.05, California
+ * Penal Code 632. */
 export const aiVoiceAgents: Service = {
   slug: "ai-voice-agents",
   aiKey: "voice",
   name: "AI Voice Agents",
   tier: "flagship",
 
-  eyebrow: "Voice · Inbound + Outbound",
-  title: "AI that answers the calls, and makes them",
-  lede: "An AI voice agent picks up every call, day or night. It also calls new leads back to ask what they need. It talks like a person and answers in under a second. Then it writes down what was said and books the next step.",
-  specs: ["Vapi", "sub-second latency", "inbound + outbound", "auto follow-up"],
-  why: "A missed call is a lost conversation, and the conversation is where every deal starts. An AI that picks up right away, and calls leads back in seconds, turns dead inquiries into booked appointments. You do not have to hire a person just to work the phones.",
+  eyebrow: "Voice · Answering and call-backs",
+  title: "An AI voice agent that answers the calls an owner misses",
+  lede: "The phone rings while the owner is on a roof, with a patient or halfway through a haircut, and the caller tries the next business on the list. We set up an AI voice agent that answers those calls, says it is an AI assistant, answers from the information the owner approved and books the next step. Anything it cannot check goes to a person.",
+  specs: ["answers when nobody can", "says it is an AI", "books on your calendar", "call notes to your CRM"],
+  why: "A call nobody answers can go to the next business on the list. The agent picks up, takes down what the job is, where it is and how soon it is needed, and books the visit. The person who calls back has the notes in hand, and nobody on the team has to sit by the phone to make that happen.",
   keywords: [
+    "ai voice agent",
+    "ai receptionist for small business",
+    "ai answering service",
+    "ai phone answering service for small business",
     "ai voice agent for real estate",
-    "ai phone agent real estate",
-    "real estate ai cold calling",
-    "automated lead follow up calls",
-    "real estate isa replacement",
   ],
 
   seo: {
-    title: "AI Voice Agents for Real Estate: Inbound and Outbound Calls",
+    title: "AI voice agent and answering service for small business",
     description:
-      "AI phone agents that answer every call 24/7 and call new leads back in seconds, qualify them in a natural conversation, book the appointment, and log it.",
+      "An AI voice agent that answers the calls a busy owner misses, says it is an AI assistant, books the visit and passes anything it cannot check to a person.",
   },
 
   figure: {
     kind: "timeline",
-    caption: "One inbound call, end to end",
+    caption: "One evening call to a roofer, end to end",
     events: [
-      { at: "0.0s", label: "The phone rings", note: "9:42pm. A buyer who just saw a listing on your site." },
-      { at: "0.4s", label: "The agent picks up", note: "Sub-second first word. No hold music, no voicemail." },
-      { at: "0:38", label: "Question answered", note: "Beds, taxes, and what the seller will look at." },
-      { at: "1:26", label: "Qualified", note: "Price band, area, timeline, financing, all captured." },
-      { at: "2:11", label: "Appointment booked", note: "Saturday 11:00am, straight into your calendar." },
-      { at: "2:12", label: "Logged", note: "Transcript, outcome, and next step written to the CRM." },
+      { at: "0:00", label: "The phone rings", note: "9:42pm. Water is coming through a ceiling, and the roofer is off for the night." },
+      { at: "0:03", label: "The agent picks up", note: "Its first sentence says it is the company's AI assistant." },
+      { at: "0:40", label: "Question answered", note: "Yes, the town is inside the service area. The answer comes from the company's own list." },
+      { at: "1:10", label: "Price refused", note: "It does not guess a cost. The roofer quotes after seeing the roof." },
+      { at: "1:50", label: "Visit booked", note: "Tomorrow 8:00am, a slot the roofer left open on the calendar." },
+      { at: "1:52", label: "Notes sent", note: "The address, the leak and the booked time, in the roofer's inbox and the CRM." },
     ],
-    footnote: "The same agent runs the call in reverse: a new lead comes in, it dials them back before they cool off.",
+    footnote: "An invented example. The same agent can call new inquiries back, once the consent and calling-hours checks pass.",
   },
 
   whatItIs: [
-    "It is a voice on the phone, running on Vapi, that can hold a real conversation. It answers your inbound calls when you cannot. It dials your new leads back before they move on to the next agent. It listens, it answers, it asks the questions that qualify a person, and it books the next step on your calendar.",
-    "Sub-second latency is the reason it works. The gap between a person finishing their sentence and the agent starting its reply is short enough that the conversation feels like a conversation. Long pauses are what make people hang up on a phone bot. The whole design goes after that one problem.",
-    // "rather than the industry-standard hours" was here until 2026-08-25 and had no industry
-    // and no standard behind it. Replaced with the figure this repo has actually read in the
-    // primary document, carrying its own caveat, the way the chat page carries the same study.
-    "It runs in both directions. Inbound, it is the receptionist who never misses a call at 9pm on a Sunday. Outbound, it is the follow-up caller who reaches a new lead within seconds of the inquiry landing. It also keeps calling the ones who do not answer the first time. Here is a sense of the gap that closes. Harvard Business Review audited 2,241 US companies in 2011 by submitting an inquiry through each firm's own website. The companies that replied at all took an average of 42 hours. That is cross-industry work about web forms rather than phone calls. So read it as the shape of the problem, and not as a real estate benchmark.",
+    "An AI voice agent is a phone voice that answers when nobody at the business can. It says at the start that it is an AI assistant. It answers from the information the owner approved, asks the first questions a person would ask, and books the next step on the calendar. Anything it cannot check, such as a price, a diagnosis or a promise, becomes a call back from a person, with the notes already written.",
+    "It fits businesses whose calls come in while hands are busy: a roofer or a plumber on a job, a dental or accounting office whose front desk is with someone, a salon, spa or gym in the middle of an appointment, a real estate office out on a showing. It does not fit an office where a person already answers almost every call and calls after hours are rare. There a voicemail greeting that says when someone will call back, and a team that keeps that promise, does the job without us.",
+    "Speed matters because people move on. In 2011 Harvard Business Review reported an audit of 2,241 US companies, each sent an inquiry through its own website: 23 percent never replied at all, and among the companies that replied within 30 days the average reply took 42 hours. That is cross-industry research about web forms rather than phone calls, and not a study of any one trade. Read it as the shape of the problem, not as a benchmark.",
+    "The pause decides whether it sounds usable. On a phone there is no face to read, so a silence makes the caller guess whether the line dropped or nobody is there. A 2009 study of conversation in 10 languages, in the Proceedings of the National Academy of Sciences, found the most common gap between one speaker finishing and the next starting was between 0 and 200 milliseconds. So the setup keeps the agent's pause as short as it can, and we ask every owner to test it on a real call before it goes live rather than take anyone's figure, ours included.",
   ],
 
   howItWorks: [
     {
+      title: "We write down what it may say",
+      body: "Before anything goes live we sit with the owner and write the defaults on one page: the questions it may answer and the answers, the jobs it may book and how long each takes, what it never says (a price, a diagnosis, a promise), and its first sentence, that it is an AI assistant. The owner approves that page.",
+    },
+    {
       title: "Every call gets answered",
-      body: "Inbound calls route to the voice agent whenever you are unavailable, or always, depending on how you want it set up. It greets the caller, answers what it can from your listings and your knowledge base, and never sends someone to voicemail.",
+      body: "Calls go to the agent when nobody can pick up, after hours, or on every call, as the owner chooses. It greets the caller, answers from the approved page and the calendar, and never leaves someone in a voicemail box.",
     },
     {
-      title: "New leads get called back immediately",
-      // ROUND 48: "the person who reaches the lead first usually gets the appointment" is the
-      // claim round C removed from /services/ai-appointment-booking as "Most jobs go to whoever
-      // books first". The audited research this page cites measures how much likelier a fast
-      // contact is to reach a real conversation, not who wins the job. Retraction swept here.
-      body: "The moment a lead comes in from your site, a portal, or a campaign, the agent dials them. Speed is the whole advantage. The agent is dialing while the lead is still on the page, rather than after they have moved on to the next name on their list.",
+      title: "It asks the first questions, then books",
+      body: "What the job is, where it is and how soon it is needed, asked in a normal conversation rather than read from a script. Then it offers a real open slot from the calendar and confirms it on the call.",
     },
     {
-      title: "It qualifies inside a normal conversation",
-      body: "Budget, area, timeline, whether they are pre-approved, and whether they have a house to sell all come out naturally. It is not reading a script at them. It is asking the questions you would ask, and following what they say.",
+      title: "It hands over, with the notes",
+      body: "Anything outside the approved page becomes a call back from a person. After every call the transcript, the answers and the next step go to the owner's inbox and the CRM, so whoever calls back already knows the story.",
     },
     {
-      title: "It books, then it writes it down",
-      body: "Real availability from your calendar, offered on the call, confirmed on the call. Afterwards the transcript, the qualification, and the outcome go into your CRM. So the appointment you walk into is one you understand.",
+      title: "Call-backs only after two checks",
+      body: "It can call a new inquiry back, call one person when told to, or work through a list. Before it dials, two checks must pass: the person gave consent for that kind of call, and it is within calling hours where they live, 8 a.m. to 9 p.m. If either check fails, the call is scheduled for a person.",
+    },
+    {
+      title: "A trial with a person reading every call",
+      body: "For the first weeks a named person, usually the owner, reads every call, decides what gets fixed and can switch the agent off. It stays on only when the calls read cleanly, and the page of what it may say is changed only by that person.",
     },
   ],
+
+  handoff: {
+    provides: [
+      "The phone line, forwarded to the agent when nobody can answer.",
+      "The answers it may give: the service area, the hours, the jobs taken and what each visit involves.",
+      "The calendar, with the slots it may offer.",
+      "The consent wording on the website's forms, approved by the business's attorney, before any call-back runs.",
+    ],
+    approves: [
+      "The page of what it may say, and every change to it.",
+      "Any price, quote, discount or promise. Those are always a person's.",
+      "Any list of people to call, before the first call is made.",
+      "The trial calls, read one by one, and whether the agent stays on.",
+    ],
+  },
 
   useCases: [
     {
-      title: "The Sunday evening call",
-      body: "A buyer sees a listing on Sunday night and calls. You are at dinner. The agent answers, tells them what they want to know, and books a Tuesday showing. You find out about it from your calendar, not from a missed call.",
+      title: "A roofer on a ladder",
+      body: "A homeowner calls about a leak at 7:40 in the evening. The agent answers, checks the address is inside the service area, declines to guess a price and books a morning visit. The roofer sees it on the calendar with the caller's notes, and calls back if anything needs a person.",
     },
     {
-      title: "Speed to lead on new inquiries",
-      body: "A portal lead arrives. The agent calls it back in seconds. It qualifies the lead while your competitors are still waiting for the next batch of their morning call list. The conversation happens while the person is still thinking about it.",
+      title: "A dental or accounting office with a busy desk",
+      body: "The front desk is with a patient or a client and the second line rings. The agent answers the routine questions it was given, such as the hours, the parking and which documents to bring, and books a time or takes a message for the desk. It does not discuss anyone's records, treatment or taxes.",
     },
     {
-      title: "Working an old list without a caller",
-      body: "You have a list of leads nobody has called in months. The agent works through it outbound and holds real conversations. It finds the handful who are ready to move now, and puts them on your calendar.",
+      title: "A salon, spa or gym in the middle of an appointment",
+      body: "Hands are busy with a client and the caller wants Saturday. The agent offers the open Saturday slots for that service, books one, and the booking lands in the calendar the business already uses.",
     },
     {
-      title: "Call this one, now",
-      body: "You do not have to wait for a trigger. Point the agent at a single contact and tell it to call. It dials on the spot, with the same qualifying conversation and the same booking. Useful the moment someone registers and you want them spoken to before they open the next tab.",
+      title: "A real estate office out on a showing",
+      body: "An agent is showing a house when a call comes in about another listing. The voice agent answers the questions it was given about that listing, books a showing on the agent's calendar and passes anything about price or terms to the agent.",
     },
     {
-      title: "Telling a lot of people at once",
-      body: "A price drop, an open house, a new listing that matches what a group of people told you they wanted. The agent works the whole list in parallel instead of one at a time. It has a real conversation with whoever picks up, and books the ones who are interested. Consent and calling windows apply exactly as they would if you dialed the list yourself.",
+      title: "Calling back a new inquiry",
+      body: "A form comes in at 2pm from a person who ticked the box to be called. Inside calling hours, the agent calls back, asks the first questions and books a time. If the box was not ticked, or the hour is wrong where the person lives, the call goes on a person's list instead.",
     },
     {
-      title: "The ISA you did not hire",
-      // "at a fraction of that" was an unsourced cost comparison against a salary nobody here
-      // has measured. Removed 2026-08-25; what is left is true and checkable.
-      body: "An inside sales agent costs a salary, needs training, and works a shift. The voice agent runs every hour of every day. It does not need a rota, and it never has a bad morning on the phones. What it costs tracks how many calls it takes rather than how many people you employ.",
+      title: "One call, now",
+      body: "The owner points the agent at a single contact who asked to be called and tells it to call. It dials on the spot, with the same first questions and the same booking. Useful when someone asks for a call and should hear from the business before they try the next one.",
+    },
+    {
+      title: "A list of people who asked to hear",
+      body: "Past customers asked to be told when spring bookings open. The agent can work the list in parallel rather than one call at a time, but only the people with a written line beside their name saying how and when they consented, and only after a person approves the list.",
     },
   ],
 
-  /** These were already the best writing on the services surface. They were just buried inside
-   * three FAQ answers and a whatItIs paragraph, where a reader has to go looking for them and
-   * an AI answer will not lift them. Promoted, plus the fourth one from this service's own
-   * flagship post. SERVICES-CRITIQUE.md §4 named this page as the proof the section was worth
-   * building: "That is the standard. It is just not a field, so nineteen pages do not have to
-   * meet it." */
   limits: [
-    "It does not close, and on the phone the reason is specific. Half of what a good agent hears in a first call is not in the words. A transcript records none of it.",
-    "It does not replace an experienced agent on a listing appointment. It replaces the mechanical part of the ISA role: picking up, qualifying on budget, area and timeline, and booking the next step.",
-    "It will not invent a price, a legal position, or a fact about a property. Anything it cannot verify becomes a booked call, which is the honest outcome and the higher-converting one.",
-    "It does not pretend to be a specific human being. The agent identifies itself as an assistant, and we do not build ones that do otherwise.",
-    "It does not replace ringing back the people who matter. If the caller is a past client or your seller's neighbor, then the agent's job is to hold the door open for twenty minutes, not to be the relationship.",
-    /** ROUND I, SERVICES-CRITIQUE.md §5, raised 2026-08-03 and open through eight rounds: this
-     * page said "it logs every call so the record is there" and never said whether the thing
-     * logged is audio. It still does not say, because nobody here knows: it is OWNER-QUESTIONS
-     * §1.3 and writing an answer would be inventing a product fact, which Round A's rule
-     * forbids on exactly this example.
-     *
-     * What CAN be written is the rule the build has to satisfy whichever way the answer goes,
-     * and that is what this entry and the FAQ below carry. It is a selling point under either
-     * answer, which is the point SERVICES-CRITIQUE made: the page was silent about the thing
-     * its own flagship post spends a paragraph on. */
-    "It does not settle your recording policy. That policy is decided by where the caller is sitting rather than where you are. New York is a one-party consent state, and California is an all-party one. So a line that answers calls from out of state has to be set up for the stricter rule. Whether a particular build keeps the audio or only the transcript is part of that setup, and it is a decision to make on purpose.",
+    "It does not close a sale or agree a price. Much of what a person hears on a first call is not in the words, and a transcript records none of it.",
+    "It does not take over the front desk. It takes the repeatable first contact off the desk: picking up, asking the first questions and booking the next step, so the people there have more time for the conversations that need them.",
+    "It will not invent a price, a diagnosis, a legal position or a fact about a job. Anything it cannot check from the approved page becomes a call back from a person.",
+    "It does not pretend to be a person. It says in its first sentence that it is an AI assistant, and we do not build one that claims to be a particular human being.",
+    "It is not the relationship. A past customer or a long-time client gets a call back from a person; the agent only holds the door open until then.",
+    "It does not call anyone who has not consented to that kind of call, and it does not call outside calling hours where the person lives. When either check fails, a person makes the call.",
+    // The recording rule stays as a limit because nobody here can say whether a given build keeps
+    // the audio (OWNER-QUESTIONS 1.3): what CAN be written is the rule the setup has to meet.
+    "It does not settle the recording policy. That is decided by where the caller is, not where the business is: New York lets one party to a call consent, California requires every party for a confidential call. A line that takes calls from out of state is set up for the stricter rule, and whether a build keeps the audio or only the transcript is decided on purpose, with the business's attorney.",
   ],
 
   faqs: [
     {
-      q: "Can an AI voice agent replace an ISA?",
-      a: "It replaces the mechanical part of the ISA role: answering every call, dialing every new lead within seconds, qualifying on budget, area, and timeline, and booking the appointment. It does not replace an experienced agent on a listing appointment. Most teams run the AI as the first contact and keep people for the conversations where judgment and relationship matter.",
+      q: "What is an AI voice agent for a small business?",
+      a: "A phone voice that answers the calls nobody at the business can take. It says it is an AI assistant, holds a short conversation from the information and calendar the owner approved, and books the next step. Anything it cannot check, such as a price, becomes a call back from a person, with the notes written.",
     },
     {
-      q: "Do callers know they are speaking to an AI?",
-      a: "The agent identifies itself as an assistant. In practice, callers care far more that someone picked up at 9pm and answered their question than about who did. We do not build agents that pretend to be a specific human being.",
+      q: "Can an AI phone answering service work for a small business?",
+      a: "It works where calls come in while hands are busy: trades on job sites, offices whose front desk is with someone, salons, spas and gyms mid-appointment, a real estate office on showings. It is the wrong buy where a person already answers almost every call and calls after hours are rare. A voicemail greeting that names when someone will call back, kept every time, does that job for free.",
+    },
+    {
+      q: "Will callers know they are talking to an AI?",
+      a: "Yes. The agents we set up say they are an AI assistant in their first sentence, and we will not build one that pretends to be a particular human being. Where the call is recorded, the opening says that too. Saying it is an AI and asking consent to record are two different things, and the script handles both.",
     },
     {
       q: "How fast does an AI phone agent respond during a call?",
-      a: "Sub-second. The delay between the caller finishing a sentence and the agent starting its answer is short enough to feel like a normal conversation. That latency is the single thing that decides whether a phone AI sounds usable or unbearable. That is why the stack is built around it.",
+      a: "The pause is kept as short as the setup allows, because on a phone a silence makes the caller wonder whether the line dropped. In ordinary conversation the most common gap between turns is under a fifth of a second, by a 2009 study of 10 languages. We do not quote a figure for the agent: test it on a real call before it goes live, ours included.",
     },
     {
-      q: "Can it call leads back automatically?",
-      a: "Yes, and that is where most of the value sits. A new lead from your website, a portal, or an ad triggers an outbound call within seconds. It can also retry on a schedule. So the lead that did not answer at 2pm gets a call at 6pm instead of being written off.",
+      q: "Can it call new inquiries back automatically?",
+      a: "Yes, after two checks. The person must have given consent for that kind of call, and it must be within calling hours where they live, 8 a.m. to 9 p.m. Then it calls, asks the first questions and books a time, and it can try once more later the same day inside those hours. If either check fails, the call is scheduled for a person.",
     },
     {
-      q: "What happens if the caller asks something the AI cannot answer?",
-      a: "It says so plainly, and it books time with you rather than guessing. It will not invent a price, a legal position, or a fact about a property. Anything it cannot verify becomes a booked call, which is the honest and the higher-converting outcome.",
+      q: "What happens when it cannot answer something?",
+      a: "It says so plainly and books a call back from a person rather than guessing. It will not invent a price, a diagnosis, a legal position or a fact about a job. The person who calls back gets the transcript and the caller's answers first, so the caller does not have to start over.",
+    },
+    {
+      q: "Does it take over the front desk?",
+      a: "No. It takes the repeatable first contact off the desk: answering the calls nobody can pick up, calling back new inquiries where the consent and calling-hours checks pass, asking the first questions the owner approved, and booking a time. The people at the desk keep every conversation that needs judgment, and have more time for them.",
     },
     {
       q: "Does it work with my calendar and my CRM?",
-      a: "Yes. It reads your live availability, so it only ever offers slots you actually have. It writes the call transcript, the qualification, and the outcome back into your CRM. It plugs into the systems you already run rather than adding another one.",
+      a: "Yes. It reads the live availability, so it only offers slots that are really open, and it writes the transcript, the answers and the outcome back to the CRM after every call. It plugs into the systems the business already runs rather than adding another one to keep up.",
     },
     {
       q: "Do I need consent to record these calls?",
-      a: "It is decided by the caller's state rather than yours. New York is a one-party state. The offense is Penal Law section 250.05. The definition that governs a telephone call, at section 250.00, is the recording of a telephonic communication by a person who is not a sender or receiver of it. So a participant may record a call they are on. California is the other kind, and Penal Code section 632 makes it an offense to record a confidential communication without the consent of all parties. On an inbound call you rarely know where the caller is until they say. So the workable rule is to plan for the stricter one, and to disclose at the start of the call rather than at the end. Whether a particular build keeps the audio or only the transcript is part of setting it up. It is worth having in writing before the line goes live. None of this is legal advice, and the article on this service carries both statutes in full.",
+      a: "It is decided by the caller's state rather than the business's. In New York the offense is eavesdropping, Penal Law section 250.05, and the definition that governs a phone call, at section 250.00, is the recording of a telephonic communication by a person other than a sender or receiver of it, without the consent of either. So a party to the call can consent. California's Penal Code section 632 makes it an offense to record a confidential communication without the consent of all parties. On an inbound call the caller's state is rarely known until they say, so the workable rule is to plan for the stricter one and to say it at the start of the call. None of this is legal advice; the article on this service carries both statutes.",
     },
     {
       q: "Is it legal to have an AI make outbound calls?",
-      a: "The same rules that govern your own outbound calling apply. You need consent to call. You must honor do-not-call requests. And the agent identifies itself as an AI assistant. We configure it to respect calling windows and opt-outs, and it logs every call so the record is there.",
+      a: "Under the Telephone Consumer Protection Act, a call that uses an artificial voice needs the called person's prior express consent unless an emergency or an exemption applies, and in 2024 the Federal Communications Commission confirmed that an AI-generated voice counts as an artificial voice. Telemarketing calls also have to respect do-not-call requests and calling hours, 8 a.m. to 9 p.m. where the person is. The purpose of the call and the states involved matter, so the business's attorney reviews the setup before the first outbound call.",
     },
   ],
 
-  /** Own flagship first, the way ai-chat-assistant does it: the deep dive on THIS service is
-   * the most useful next click from this page, not a sibling topic. */
+  /** Own post first: the deep dive on THIS service is the most useful next click from here. */
   relatedPosts: [
     "ai-voice-agent-missed-calls-real-estate",
     "ai-chat-assistant-real-estate-website",
-    "ai-clone-real-estate-agent-video-avatar",
+    "ai-appointment-booking-no-shows-real-estate",
   ],
 };
