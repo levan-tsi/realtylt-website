@@ -117,6 +117,7 @@ vendor contract ever surfaces saying otherwise, this row is where to revisit.
 | public/images/lifestyle/buying.jpg | Wheaton | *rboed* | BY 2.0 | [source](https://www.flickr.com/photos/92082510@N04/29246201572) |
 | public/images/lifestyle/selling.jpg | Round House in Rush Creek Village | dok1 | BY 2.0 | [source](https://www.flickr.com/photos/51096110@N00/7516923314) |
 | public/images/lifestyle/financing.jpg | Accounting Finance | Wilfred Iven | CC0 1.0 | [source](https://stocksnap.io/photo/accounting-finance-JONMP7TPGK) |
+| public/images/lifestyle/beacon-main-street.jpg | Beacon, NY (Main Street, a brick commercial row of local shops). Round 28 (2026-11-11): the cover of the Google reviews post, re-aimed at local business owners; scaled from the Wikimedia 3840 px copy to 1920 x 1280, otherwise unedited | ajay_suresh | BY 4.0 | [source](https://commons.wikimedia.org/wiki/File:Beacon,_NY_(55194236052).jpg) |
 | public/images/listings/house-01.jpg | red house | CodyR | BY 2.0 | [source](https://www.flickr.com/photos/21603648@N00/235609922) |
 | public/images/listings/house-02.jpg | White house details, white flowering trees, green hedge, oct | Wonderlane | BY 2.0 | [source](https://www.flickr.com/photos/71401718@N00/4670987654) |
 | public/images/listings/house-03.jpg | Cape house for sale with realtor for sale sign | jongorey | BY 2.0 | [source](https://www.flickr.com/photos/13548221@N04/39946020074) |

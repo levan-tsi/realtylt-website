@@ -3203,75 +3203,89 @@ That pair of numbers is the whole of this article in your own handwriting. If th
 
 [[scene:funnel]]`;
 
-export const REVIEW_AUTOMATION_POST = `Last Tuesday a woman in Beacon stood in her kitchen. She had a phone in one hand and two names on the screen. Both had been recommended by somebody she trusted. She had about ten minutes before she had to leave for the pool.
+export const REVIEW_AUTOMATION_POST = `We help local business owners ask for Google reviews the same way every time: every customer, on the day the job ends, with the same link for all. When nobody asks, a happy customer may never write the review, and the profile a stranger reads goes quiet. Below is how to get more Google reviews inside Google's rules and the federal review rule, how to test a tool, whether it is worth automating, and what to do first this week.
 
-She tapped the first name. Twelve reviews, every single one of them five stars, and the most recent was from 2023.
+This page is for owners of any local business that finishes work for a named customer: a contractor, a cleaner, a salon or a gym, a dental or accounting office, a real estate office.
 
-She tapped the second. Thirty one reviews, an average of 4.6, and the newest written eight days ago. There was also a three star from March, with four lines underneath it from the agent. He explained what had gone wrong with the appraisal and what he had done about it.
+An invented example shows why a date can matter more than the stars. A woman in Beacon stands in her kitchen on a Tuesday evening with two electricians' names on her phone. Someone she trusts recommended both, and she has ten minutes before she leaves for the pool.
 
-She called the second one.
+The first has twelve reviews, all five stars, the newest two years old. The second has thirty one, an average of 4.6, the newest eight days old. Among them is a three star from March, with four lines from the owner on what went wrong at an inspection and what he did about it.
 
-The first agent will never find out that this happened. There is no alert for it and no line in any report. Nothing in the CRM records that a Tuesday evening in August went somewhere else on the strength of a date.
+She calls the second. The first will never know. No alert records an evening that went elsewhere on the strength of a date.
 
 [[scene:in-short]]
 
 ## The number this is usually sold on, and why it is not in here
 
-Seventy three percent of customers read reviews before they book. If you have been sold a reputation product in the last five years you have seen that figure on a slide. Until recently it was on our own service page, which is how this article started. It has no source, and this article does not use it. The paragraphs below are what happened when we went looking for the document behind it.
+One figure gets repeated on sales slides: that seventy three percent of customers read reviews before they book. We found no source for it, and it was on our own service page until recently, so this page does not use it.
 
-So we went hunting for the survey it is supposed to have come from. One survey in this field repeats every year. It publishes its sample and its method on the same page as its findings. And it is what almost everybody in the category is quietly paraphrasing. It is BrightLocal's Local Consumer Review Survey. The 2026 edition was run on a representative panel of 1,002 US adult consumers through SurveyMonkey. Roughly a quarter of them sat in each of four age bands, from eighteen to over sixty. It says so on the page.
+We looked for the survey it is supposed to come from. The one that repeats every year and prints its sample and method is the [Local Consumer Review Survey](https://www.brightlocal.com/research/local-consumer-review-survey/), published by a company that sells review software. The 2026 edition asked a panel of 1,002 US adults, about a quarter in each of four age bands from eighteen to over sixty.
 
-Seventy three is not a figure in it. What is in it is 97% who say they read reviews for local businesses at all. And 41% who say they always do when they are browsing. Neither of those is 73%. Neither of them is the claim the unsourced figure is usually pinned to.
+Seventy three is not in it. According to the 2026 survey, 97 percent read reviews for local businesses at all, and 41 percent always do when browsing. It also finds that 31 percent now want 4.5 stars or more, against 17 percent a year earlier.
 
-It has been taken off that page. It is not going to be propped up here either. Everything below rests on figures that are actually in the published survey, quoted alongside the question they answered. It also rests on one piece of academic work where the thing measured was money rather than opinion.
+Two limits come first. Its publisher sells review software, so this is a vendor survey: a company with an interest in the answer wrote the questions. And it records what a panel says it does, which is softer evidence than what anyone was seen doing. It still beats a figure with no sample and no method, so read it for its direction.
 
-One thing has to be said out loud about the survey before it is used. BrightLocal sells review software. A company with a commercial interest in the answer ran the questions. And the answers are what a panel says it does, rather than what anybody was observed doing. Both of those are real limits, and neither is a reason to throw it away. That is because the alternative on offer is a figure with no sample, no method and no document at all. Read it as a direction and not as a decimal.
+Before repeating any review statistic, open the page it came from, and if there is no page, leave the number out.
 
 [[scene:thresholds]]
 
 ## What a stranger actually does with your profile
 
-Nobody reads your reviews. They scan them, once, for a few seconds, on a phone, usually while doing something else. Then they either call you or they do not.
+A stranger choosing between two local businesses often has little time and a phone, like the woman in the invented example with her ten minutes.
 
-That scan has a shape, and it is not the one most businesses aim at. Almost everybody who worries about reviews is worrying about the average. The average is the least interesting thing on the page after the first two seconds. That is because everybody in your market has a good one. What separates two agents with 4.7 stars is everything underneath the number.
+When both businesses have a good average, the average tells little. In an invented example of two businesses at 4.7 stars, the difference sits underneath: the date of the newest review, how many came this quarter, and whether anybody answered the bad one.
 
-The woman in the kitchen never put any of this into words. She did not think, this profile is stale. She thought, without words, that one of these two people is busy right now and the other one might have retired. That impression came from a date, and it was formed before she read a single sentence.
+The count this quarter matters for a reason the 2026 survey states: according to it, 74 percent of the panel only care about reviews written in the last three months. In an invented example, a profile that collected forty reviews two years ago and none since looks, to that 74 percent, like a profile with none.
+
+The woman in the invented example never put this into words. From one date, before reading a sentence, she sensed that one electrician was busy and the other might have retired.
+
+The first thing to read on your own profile is the date on the newest review, before the stars.
 
 [[scene:profile-scan]]
 
-## What one extra star was worth, in the only study that measured money
+## What one extra star was worth, in a study that measured money
 
-Opinion surveys tell you what people say. There is one well known piece of work that measured what really happened to a business's revenue when its rating changed. It is worth reading properly, because both its finding and its caveats are useful.
+One star was worth 5.4 percent of revenue in the best-known study we found that measured money rather than opinion. It dates from 2011, and it stays here because no newer source we found measures revenue.
 
-Michael Luca, then at Harvard Business School, matched Yelp's reviews to revenue records for every restaurant in Seattle. The records are the ones the Washington State Department of Revenue holds, from January 2003 to October 2009. That is 3,582 restaurants across the period, and about 1,587 open in any given quarter. They were measured against tax filings rather than against anybody's self-report. His [working paper](https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf) reports that a one-star increase is associated with a 5.4% increase in revenue.
+Michael Luca, then at Harvard Business School, matched one large review site's ratings to Washington State Department of Revenue records for Seattle restaurants from January 2003 to October 2009. That is 3,582 restaurants, about 1,587 open in any given quarter, measured against tax filings. His 2011 [working paper](https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf) reports that a one-star increase is associated with a 5.4 percent increase in revenue.
 
-The clever part is what he did next. It is the reason the number can be treated as a cause rather than a coincidence. Yelp displays a restaurant's rating rounded to the nearest half star. Take two restaurants whose true averages sit a hair either side of a rounding threshold. They have almost identical reviews, and they are shown different ratings. Comparing those two groups separates the effect of the displayed rating from everything else about the restaurant. On that comparison, an exogenous one-star improvement leads to roughly a 9% increase in revenue. Exogenous here means the change came from the rounding rather than from the restaurant.
+Rounding makes it a cause. According to the same paper, the site shows a rating rounded to the nearest half star, so two restaurants a hair either side of a threshold have almost the same reviews and different displayed ratings. On that comparison, a one-star rise from rounding alone (the paper's word is exogenous) leads to roughly a 9 percent rise in revenue.
 
-Two more findings are worth carrying away. The effect appears among independent restaurants. It is statistically insignificant and close to zero for chains. That is because a brand name already answers the question that reviews answer. And the market response is largest when a restaurant has many reviews. That is a technical way of saying that a rating built on more reviews is believed more.
+Two more findings travel. The effect shows among independent restaurants and is close to zero for chains, because a brand name already answers what reviews answer. And the response is largest when a restaurant has many reviews: a rating built on more reviews is believed more.
+
+The data covers restaurants in one city and ends in 2009. Its direction may hold for other independent businesses, but nobody has measured that here, and its percentages stay in Seattle. What any owner controls either way is the asking; whether a customer writes is the customer's choice.
 
 [[scene:yelp-lift]]
 
 ## Why the ask does not happen
 
-Every business owner already knows they should ask. Nobody needs persuading. The ask still does not happen. The reasons are worth naming, because two of the three are solvable and one is not.
+The ask does not happen for three reasons, and a system can solve two of them.
 
-The first is timing, and it is almost the whole problem. The moment somebody is most willing to say something nice about you is the day the thing finished. That is also the day you are least likely to be at a desk. By the time there is a quiet Friday afternoon to catch up on it, the closing is nine days old. The person has moved on to the next chapter of their life. Asking late does not produce a worse review. It produces no review, which is worse.
+The first is timing. The day the job finished is the day it is on the customer's mind, and it is also the day you are least likely to be at a desk. An invented example: a painter finishes a kitchen on a Wednesday and means to ask on the next quiet afternoon. It comes nine days later, and by then the customer has moved on. A dental office has the same gap between the visit and the end of the day, and a real estate agent between the closing and the next showing.
 
-The second is that asking is truly awkward, in a way that is hard to admit to. You have just been paid a large sum of money by somebody you like. And the next thing out of your mouth is a favour. Most people would rather do almost anything else. So they intend to do it later, and later is a place where reviews go to die.
+The second is awkwardness. You have just been paid by someone you like, and the next thing you say is a favor. So it waits for later, which is where reviews go to die.
 
-The third is fear, and it is the one that produces the actual misconduct in this field. If you ask everybody, some of them will say something you would rather they did not. That fear is where review gating comes from. The survey above is the best argument against it. Only 10% of that panel said they would use nothing below five stars, while 68% put their floor at four. The room between four and five is where almost every real business lives. It is much larger than the fear suggests.
+The third is fear. Ask everybody and some will say something unwelcome, and review gating grows from that fear. According to the 2026 survey, only 10 percent of its panel would use nothing below five stars, while 68 percent set their floor at four.
+
+Most owners can name which of the three stops them, and a system fixes only the first two.
 
 [[scene:plate]]
 
 ## What review automation actually does
 
-Underneath the category name it is a small and dull piece of plumbing. The shortest honest description is this. It removes the two solvable reasons above, and does nothing at all about the third.
+Review automation is small, dull plumbing. It is aimed at the first two reasons and leaves the third with you.
 
-Something in your systems already knows when a job is finished. A file moves to closed, a status changes, a calendar event ends. That event, rather than a person's memory, is what starts the message. The message goes out the same day, in your name. It is a few sentences that sound like you rather than like a survey vendor. And it asks one question that takes a customer four seconds to answer.
+Something in your systems already knows when a job is finished. An invented example: a bike shop's job card moves to "paid". That event, instead of anyone's memory, starts the message. It goes out the same day, in your name: a few sentences that sound like you, with one question a customer can answer with one tap.
 
-Whatever comes back, the same Google link goes out. That is the sentence the rest of this article is about. It is worth being blunt about how much of this industry does the opposite.
+An invented example of the whole message, for a salon: "Hi Dana, thank you for coming in today. How was it, from one to five? If you have a minute, this is where to say it in your own words: [link]." It is three sentences, it carries the link whatever she answers, and it names nobody she should mention.
 
-What the answer changes is what happens on your side of the wall. A rough score pushes the score, the words and the customer's name to you straight away. One way, you hear about a problem while there is still an afternoon to fix it. The other way, you read about it on a Tuesday in a public place.
+Whatever comes back, the same Google link goes out. The rest of this page turns on that sentence, because much of this industry does the opposite.
+
+The answer changes only your side. A rough score sends the score, the words and the customer's name to you at once, while there is still an afternoon left to fix the problem.
+
+Sending the ask, the link and the alert are steps a system can repeat. Deciding what counts as finished, what the message says and how to answer a rough score are the judgement you are paid for, written down once as defaults the system reads every time.
+
+The first thing to write at the top of a page is the one event in your systems that means a job is finished.
 
 [[scene:three-moves]]
 
@@ -3279,29 +3293,33 @@ What the answer changes is what happens on your side of the wall. A rough score 
 
 ## The line you may not cross, and exactly where it is
 
-Review gating is the practice of surveying customers first. Only the ones who answered well are then sent the public review link. It is sold as catching problems early. It is very common, and it is the specific thing the rules are about.
+The line is review gating: surveying customers first and sending the public review link only to those who answered well. It can look like a way to catch problems early, and it is the thing the rules are written about.
 
-Google's [contribution policy](https://support.google.com/contributionpolicy/answer/7400114) has a section listing what merchants may not do. Two of its entries are the ones that matter here. The first is offering incentives, and the policy spells out the currency. It names payment, discounts, free goods or services, in exchange for posting a review, revising one, or removing a negative one. The second is a single sentence, and it is the whole argument. The policy says merchants may not discourage or prohibit negative reviews, or selectively solicit positive reviews from customers.
+Google's [contribution policy](https://support.google.com/contributionpolicy/answer/7400114) lists what merchants may not do. Two entries matter here. One is incentives: payment, discounts, or free goods or services in exchange for posting, revising or removing a review. The other is a single sentence: merchants may not discourage or prohibit negative reviews, or selectively solicit positive reviews from customers.
 
-Read that sentence twice, because most gating products are described in language designed to make it sound like something else. Sending the survey to everyone and the link to the fives is selective solicitation. The survey is not what the rule is about. The link is.
+Sending the survey to everyone and the link only to the fives is selective solicitation, and the rule turns on who gets the link.
 
-There are two more prohibitions in the same section that almost nobody mentions. Both of them cover practices that get taught as good practice. Merchants should not require or pressure people to write a review while they are on the premises. That covers the tablet at the closing table. And merchants should not request that specific content be included. The policy gives its own examples: asking staff to solicit a certain number of reviews, or to solicit reviews mentioning a particular staff member. If you have ever been told to ask clients to mention the town you want to rank for, that is the sentence it collides with.
+Two more prohibitions in the same section are often taught as good practice. Merchants should not require or pressure people to write a review on the premises, which covers the tablet at the counter. And merchants should not ask for specific content. The policy's own example is asking staff to solicit a set number of reviews, or reviews that mention a particular staff member. Asking customers to name the town you want to rank for runs into the same sentence.
 
-The permission side of the policy is one line long. It allows you to solicit or encourage content that represents a genuine experience, without offering incentives and without attempting to influence the rating or the contents of the review. Everything legitimate in this field lives inside that sentence. It is roomier than it sounds, because asking everybody at the right moment is exactly what it allows.
+The permission is one line: you may solicit or encourage content that represents a genuine experience, without incentives and without trying to influence the rating or the contents. Asking everybody at the right moment sits inside it.
+
+Your current ask is worth reading against that list, starting with who receives the link.
 
 [[scene:gating-line]]
 
 ## The federal half, which is about your own website
 
-The Google rules govern what happens on Google. There is a second rule that governs what you do with the reviews afterwards, on your own site. It arrived recently enough that a lot of website widgets came before it.
+Google's rules govern Google. A second rule governs what you do with reviews on your own website.
 
-The Federal Trade Commission's rule on consumer reviews and testimonials took effect in 2024. The part that applies here is [16 CFR 465.7](https://www.law.cornell.edu/cfr/text/16/465.7), on review suppression. Its second paragraph makes it an unfair or deceptive practice for a business to materially misrepresent, expressly or by implication, that the reviews displayed in a section of its own website dedicated to reviews represent most or all of the reviews submitted, when reviews are being suppressed based on their rating or their negative sentiment.
+The Federal Trade Commission's rule on consumer reviews and testimonials took effect in 2024. The part that applies is [16 CFR 465.7](https://www.law.cornell.edu/cfr/text/16/465.7), on review suppression. Its second paragraph makes it unfair or deceptive for a business to materially misrepresent, expressly or by implication, that the reviews in a reviews section of its own website represent most or all of those submitted, when reviews are suppressed for their rating or negative sentiment.
 
-The word carrying the weight is misrepresent. The rule does not require you to publish everything. It has an explicit carve-out for withholding reviews on criteria applied equally to all of them regardless of sentiment. And it lists what those criteria can be: confidential commercial information, defamatory or abusive or obscene content, somebody else's personal information, discriminatory content, content that is clearly false or misleading, a review the seller reasonably believes is fake, or a review wholly unrelated to what the business sells.
+The word carrying the weight is misrepresent. Withholding is allowed on criteria applied to all reviews regardless of sentiment. The rule lists them: confidential commercial information; defamatory, abusive or obscene content; someone else's personal information; discriminatory content; content that is clearly false or misleading; a review the seller reasonably believes is fake; or a review wholly unrelated to what the business sells.
 
-What that means in practice is small and specific. A block on your website labelled as a selection of recent reviews is honest. The same block is the thing the paragraph describes when three things are true together. It is unlabelled. It sits under a heading that implies it is your reviews. And a filter quietly holds back everything under four stars. The label is the whole difference, and it costs four words.
+An invented example: a plumber's website shows six reviews. Under the label "a selection of recent reviews", the block is honest. Unlabelled, under a heading that implies these are the reviews, with a filter holding back everything under four stars, it is what the paragraph describes.
 
-Nothing in this section is a legal opinion. And a rule you can read for yourself in four minutes is not a reason to skip asking a lawyer about your own set-up. It is here because it is checkable, and the text is one click away. A vendor who cannot tell you which of these two paragraphs their widget sits inside has not read either of them.
+This is not a legal opinion, and a rule short enough to read in one sitting is no reason to skip asking a lawyer about your own set-up. A vendor who cannot say which side of these rules their widget sits on has not read them.
+
+Any review block on your own website is best labelled for what it is.
 
 [[scene:review-calculator]]
 
@@ -3309,93 +3327,168 @@ Nothing in this section is a legal opinion. And a rule you can read for yourself
 
 ## What to do when the review is genuinely bad
 
-Sooner or later somebody writes something unfair. Or something fair that you wish they had said to your face. This is the moment the whole strategy is actually tested. And there is an industry that will take your money to make it disappear.
+When a review is unfair, or fair but unwelcome, the answer is a public reply and a fix of what is underneath. Paying someone to make it disappear does not change the platform's rules.
 
-Start with the arithmetic, because it is calming. A single one star review inside a page of thirty is a rounding error on your average. It is also a large asset in how much you are believed. The survey above is the reason. 68% of that panel wanted four stars or better, and only 10% insisted on five. The review that hurts is not the bad one. It is the bad one with nothing under it.
+Start with the arithmetic. In an invented example, twenty nine five-star reviews and one one-star review average 4.87, against 5.0 for thirty fives: a drop of about 0.13 of a star. According to the 2026 survey, 68 percent wanted four stars or better and only 10 percent insisted on five. The review that hurts is the bad one with nothing under it.
 
-Answer it in public, once, short, and without arguing. Say what happened, say what you have changed, and offer to talk offline. You are not writing to the person who left it, who has usually stopped reading. You are writing to the next forty people who will scroll past it. They are looking for exactly one thing. It is whether you are the kind of business that gets defensive.
+The reply is written once, briefly, without arguing: what happened, what changed, and an offer to talk offline. It is written for the strangers who scroll past it later, and they are checking whether you get defensive. An invented example: three customers of a cleaning company mention the same late supplier in a year, so the fix is the supplier.
 
-Then fix the thing underneath it if there is one. If three people in a year mention the same lender, that is not a review problem.
+Platforms remove content that breaks their own rules, such as a review from someone who was never a customer, a competitor's review or a personal attack. Whether a review breaks those rules is the platform's decision, and paying someone to argue does not change the rules.
 
-The one route worth knowing about is that platforms will remove content that breaks their own rules. That is a narrow door. It covers a review from somebody who was never a customer, a competitor, a personal attack. A review that is merely wrong about you is not in that category. No amount of paying somebody will make it so.
+A four-line reply to the worst unanswered review is a good week's start.
 
 ## How to test one before you buy it
 
-Four questions, and you can ask all of them in a demo without knowing anything technical. The first two are about the rules. The second two are about whether it will actually run.
+Four questions test a review tool in any demo, with no technical knowledge needed. Two are about the rules and two are about whether it will keep running.
 
-Show me the message that goes to somebody who scores you a two. Do not accept a description of it. Ask to see the actual outgoing message on a screen. Check that the review link is in it. If the link is missing, you are looking at the gated version, whatever the sales page calls it. The same goes if the link is replaced by a form that comes back to the business.
+Show me the message that goes to someone who scores you a two. Ask to see the actual outgoing message on the screen. If the review link is missing, or swapped for a form that comes back to the business, it is the gated version, whatever the sales page calls it.
 
-Show me what the website widget does with a three star review. Then ask what the block is labelled on the page. Those two answers together tell you which side of 465.7 the product is sitting on. The second one is usually the one nobody has thought about.
+Show me what the website widget does with a middling review, and how the block is labelled. Together, those two answers place the product on one side of the federal regulation, 465.7, or the other.
 
-What starts the ask, exactly. If the answer is a manual upload, or a list somebody pastes in weekly, you have bought a mail merge. You will stop using it in six weeks. The value of this whole category is that a real event in a system you already use starts the message. Nobody has to decide to.
+What starts the ask, exactly. A list somebody pastes in weekly is a mail merge, and a mail merge depends on somebody remembering to paste it. The value of the category is a real event in a system you already use.
 
-What happens to the reply. Somebody replies to your review request, because people do. Ask where that message lands, and what happens if the reply arrives on a Sunday. A product that sends beautifully and drops the answers is a product that will embarrass you in front of a client.
+What happens to the reply. Some people answer review requests. Ask where the answer lands and what happens on a Sunday, because a tool that sends well and drops the replies can embarrass you in front of a customer.
+
+An invented example: in a demo for a gym, the two-star message carries a private form and no link, so the demo can end at the first question.
+
+These four questions, written down, belong in the next demo anyone books.
 
 [[scene:offer]]
 
-## What it costs, and how long it takes
+## Is it worth automating
 
-We do not print a figure for this. The reason is the one that keeps a figure off every other page in this series. What it costs depends on what has to be connected to what. What can be said is where the money actually goes, and it is not where most people expect.
+Automating review requests is worth it when finished jobs come often enough that a missed ask is noticed within a week. These are the screening questions of our AI assessment, our own method rather than a published standard, and three of them cross the idea off or keep it:
 
-The software is the cheap part. What actually comes round again and again is the messaging. The ask goes out as a text, and carriers charge for texts. So the bill rises and falls with how many jobs you finished last month. Nothing else on it moves. A quiet month is a cheap month. That is an unusual and rather pleasant thing for a marketing line to be.
+- Does the job happen often enough that a failure shows within a week?
+- Can the rule be written down for a new hire?
+- Does a wrong send land where a person sees it first?
 
-The setup is short, and the reason is that this is the least complicated automation in the category. One trigger, one message, one link, one alert. The work is not building it. It is deciding two things. The first is what event counts as finished. That is a genuine business question, and it usually takes longer to settle than the build. The second is what the message actually says. It has to sound like you rather than like a survey vendor. It is the difference between a message people answer and one they delete.
+Then the stop question, which asks what breaks if the job stopped: if nothing breaks, stop doing it and do not automate it. Then check whether a tool you already pay for does it, since some CRMs already send a review request.
 
-The cost that never appears on any quote is the replying. Budget fifteen minutes a week for it, permanently, in your own name. If nobody in the business is going to do that, the honest advice is not to switch the asking on. That is because a growing pile of unanswered reviews is a worse profile than a small quiet one.
+Score the job's impact from 1 to 5. At 1 or 2, leave it alone: ask by hand with one written line, because a setup you maintain for a few asks a month takes more attention than it saves. The ask reaches a customer, so it carries risk, and a person approves the message wording before anything goes out and reads the low-score alerts after.
+
+An invented example: an owner who finishes 15 jobs a week and spends 3 minutes on each hand ask spends 15 x 3 = 45 minutes a week (the owner's estimate), and still forgets on busy days. A sole trader who finishes two jobs a month spends 2 x 3 = 6 minutes, and the answer is to leave it alone.
+
+The three questions are run on your own finished-job event before anyone looks at a tool.
+
+## What it takes to run
+
+We print no price on this page. What a review-request setup takes from the owner is mostly two decisions and a little time each week.
+
+The setup is short, because this is one of the least complicated automations there is: one trigger, one message, one link, one alert. The work is the two decisions. What event counts as finished is a real business question and often takes longer to settle than the build. What the message says has to sound like the owner, and it affects whether people answer or delete it.
+
+An invented example: a landscaper decides that for his business the job ends the day the invoice is paid, not the day the crew leaves, because the invoice is when the customer looks at the job again.
+
+The part that is easy to forget is the replying. Our suggestion is fifteen minutes a week for it, permanently, in your own name. If nobody will do that, leave the asking switched off, because, in our view, a growing pile of unanswered reviews reads worse than a small, quiet profile.
+
+Fifteen minutes a week for replies goes on the calendar before anything is switched on.
 
 ## What it does not do, and should not pretend to
 
-It does not choose who gets asked. Everybody does, whatever they scored. If that sentence makes you uncomfortable, then the discomfort is worth sitting with rather than engineering around. It is also, on this page's own evidence, the version that works better.
+It does not choose who gets asked: everybody is asked, whatever they scored. If that is uncomfortable, leave the setup as it is; on this page's own evidence, asking everyone is the version that works.
 
-It does not make anybody leave a review. It removes the forgetting and the friction and the four-day delay. The customer still has to want to, and a good share of them will not. That is why the calculator above asks you for that share rather than telling you one.
+It does not make anybody leave a review. It is built to take the forgetting, the friction and the delay out of the ask. The customer still has to want to, and some will not, which is why the share who write is left for you to set.
 
-It does not remove a review, and it does not know a person who can. A published review belongs to the person who wrote it and to the platform it sits on. Only two things ever change it. One is you answering it, and one is you fixing what caused it. The second one occasionally makes somebody edit their own review, which is the only version of removal worth having.
+It does not remove a review. A published review belongs to its writer and to the platform, and only its writer, or the platform under its own rules, takes one down. What the owner controls is the reply and the fix. An invented example: a customer whose leaking tap was refitted the next morning edits her own two star to a four.
 
-It does not present a selection as the whole picture. Reviews pulled through to your own website are labelled as a selection of recent ones. They are labelled that way because that is what they are, and because of the paragraph above.
+It does not present a selection as the whole picture. Reviews pulled onto your website are labelled as a selection of recent ones.
 
-And it does not fix the service. A steady flow of honest reviews of an experience people did not enjoy is simply a faster and more public way of finding that out. That is not a fault in the tool. For some businesses it is the most valuable thing the tool will ever do. It is also the reason to start with one trigger, rather than switching it on across everything in one afternoon.
+And it does not fix the service. Honest reviews of an experience people did not enjoy are a faster, more public way to learn that. It is the reason to start with one trigger instead of everything in one afternoon.
+
+One trigger and a month of results come before a second trigger.
 
 [[scene:failure-modes]]
 
+## Who this fits, and who it does not
+
+Review requests on a trigger fit a business with a clear moment when a job ends and local customers who choose by reading reviews: trades, cleaners, repair shops, salons, spas and gyms, tutors, dental and accounting offices, real estate offices, and small offices that finish work for a named person.
+
+Three kinds of business do something else. A business that finishes only a handful of jobs a year asks by hand, on the day, with one written line. A chain or a franchise may get less from its own reviews: in the 2011 study the effect was close to zero for chain restaurants, so its effort may be better spent on the brand. A business where nobody will reply each week does the signed-out check at the end of this page, answers its existing reviews, and decides after that.
+
+An invented example: a one-person piano tuner with forty visits a year keeps a text template on his phone and sends it from the driveway.
+
+Most businesses fall into one of these groups, and the group decides the next step.
+
+[[scene:fits]]
+
+## What to do first
+
+What to do first is one job, taken a week at a time, ending with a decision written down.
+
+- Week 1: do the signed-out check at the end of this page on your own profile, and write down the event that means a job is finished.
+- Week 2: write the message in your own words and ask everyone by hand for a week, starting from that event, with the same link for all.
+- Weeks 3 and 4: run the test in "Is it worth automating". If it passes, connect the event to the message, approve the wording and send low scores to your phone. If it fails, keep asking by hand and write that decision down.
+
+This is also how our [AI readiness assessment](/services/ai-readiness-assessment) starts. In its interview we ask for one job written in two minutes under input, do, output and your check, then handed to a colleague who does not know it, noting where they stall. Each job is then scored for impact and risk from 1 to 5, with four checks: it binds the business, it reaches a customer, it feeds another system, it can damage trust. The owner leaves with each job marked to automate, to keep a person on, or to leave alone.
+
+An invented example: a salon owner writes her review ask in two minutes. Her colleague stalls at "when the bill is paid, or when the client leaves", and that answer becomes the trigger.
+
+[[scene:roadmap]]
+
 ## Common questions, answered honestly
+
+### How do I get more Google reviews?
+
+Ask every customer on the day the job finishes, with one direct link, the same for all. A system that sends the ask from a real event is built to take the forgetting and the delay out of it, and the replies stay yours.
+
+### How do I get more reviews without begging customers?
+
+Ask once, on the day, in a message answered with one tap, and never chase. A single ask at the right moment is not begging; three reminders are. The awkwardness in "Why the ask does not happen" comes from asking late and in person, and a short message sent the same day is meant to take both away.
+
+### How should a business respond to Google reviews?
+
+Reply to every review in your own name, the good ones in a line and the bad ones in four: what happened, what changed, and an offer to talk offline. Never argue in public and never ask for a review to be changed. The reply is written for the next stranger who reads it, and the fifteen minutes a week suggested in "What it takes to run" is the time we set aside for it.
 
 ### What is review automation, in plain terms?
 
-It is a small piece of software that watches for the moment a job is finished in a system you already use. It then sends that customer a short message asking how it went, with a direct link to your public review page. Everybody gets the same link, whatever they answer. If the answer is a low score, you personally get told at the same moment, with their words and their name. So you can call them the same day. That is the whole product. It is not clever and it does not need to be, because the problem it solves is consistency rather than difficulty.
+Review automation is software that watches for the moment a job is finished in a system you already use and sends that customer a short message with a direct link to your public review page. A low score also reaches you at once, so you can call the same day.
 
 ### Is this different from the review tool my CRM already has?
 
-Probably not in what it does, and quite possibly in whether it is allowed. Most CRMs now ship something that texts a customer at the end of a job. The mechanics are the same everywhere. A trigger, a message, a link. There is very little technology of the vendors' own in this category. There is a great deal of variation in what the default settings do. So there are two questions worth asking about whichever one you already own. They are the ones in the testing section above. Does somebody who scores you a two still get the public review link, or a private form that comes back to the business. And what does the website widget do with a three star review, and how is that block labelled. If the tool you already pay for passes both, use it and spend the money somewhere else.
+Probably not in what it does, and possibly in whether its defaults are allowed. Ask it the two rule questions from the testing section. If it passes both, use it and spend the money elsewhere.
 
 ### Is it against Google's rules to automate review requests?
 
-No. Automating when the ask happens is not something the policy speaks about at all. The permission it does grant is to solicit content that reflects a genuine experience, without incentives and without influencing the rating or the content. What is against the rules is offering anything in exchange. So is only asking the people you expect to be kind, pressuring somebody to write one on the spot, or asking them to include particular content. A product that automates the first thing is fine. A product that automates the second is a compliance problem running on a schedule.
+No, because the policy says nothing about when the ask happens. It permits soliciting content that reflects a genuine experience, without incentives and without influencing the rating or content. Offering anything in exchange, asking only the people you expect to be kind, pressuring someone on the spot, or asking for particular content is against them.
 
 ### What is review gating, and where exactly is the line?
 
-Gating is surveying customers first. The public review link then goes only to the ones who answered well. The line is not whether you survey people. It is not whether the score changes what you do. The line is whether the unhappy customer still gets the link. Screening feedback so you can fix things is normal and sensible. Screening who is allowed to review you is what Google's policy lists under selectively soliciting positive reviews. If you want a single test, here it is. If two customers answer differently and get different links, you are on the wrong side of it.
+Review gating is surveying customers first and sending the public review link only to those who answered well, and the line is whether the unhappy customer still gets the link. Screening feedback so you can fix things is normal. Screening who may review you is what Google lists as selectively soliciting positive reviews.
 
 ### Can I get a bad review taken down?
 
-Usually not, and the effort is better spent elsewhere. Platforms remove content that breaks their own rules. That covers a review from somebody who was never a customer, a personal attack, or content that is plainly not about the business. A review that is merely unflattering, or unfair in your view, is not in that category. The services that offer to make one disappear are mostly selling you the appeal you could file yourself. The reliable move is the public reply. It works on the audience that matters, which is everybody who reads the review afterwards.
+Usually only when it breaks the platform's own rules: someone who was never a customer, a personal attack, or content plainly not about the business. Whether it breaks those rules is the platform's decision, and paying someone to argue does not change the rules.
 
 ### Do I have to put my Google reviews on my own website?
 
-You do not have to, and if you do there is one rule worth knowing. Under 16 CFR 465.7 it is the misrepresentation that matters, not the selection. A block of reviews that implies it represents most or all of what customers submitted, while quietly holding back the low ones, is the thing the rule describes. The same block, labelled as a selection of recent reviews, is honest. Label it and the question goes away.
+No. If you do, the Federal Trade Commission regulation to know is 16 CFR 465.7: a block labelled as a selection of recent reviews is honest, and one implying it shows most or all while holding back the low ones is what the rule describes.
 
 ### How many reviews do I actually need?
 
-More than most people have, and fewer than most people fear. In the survey above, 47% said they would not use a business with fewer than twenty. Only 9% were willing to use one with five or fewer. That makes twenty a real threshold rather than a target somebody invented. After that the count matters less than the dates. A business with thirty reviews and four written this quarter reads as busy. A business with two hundred, and none since last year, reads as one that used to be busy. That impression is formed in about two seconds.
+About twenty. According to the 2026 vendor survey, 47 percent said they would not use a business with fewer than twenty, and only 9 percent would use one with five or fewer. Past twenty, the same survey's other figure matters: 74 percent of the panel only care about reviews written in the last three months. An invented example: thirty reviews with four this quarter reads as busy; two hundred with none since last year reads as a business that used to be busy.
+
+[[scene:quiz]]
 
 ## What to do about it
 
-Do the thing the woman in the kitchen did, tonight, to yourself. It costs nothing and takes ninety seconds.
+The signed-out check needs nobody, us included. It is your own Google profile opened on a phone, signed out, the way a stranger arrives at it: the star rating skipped, the date on the newest review read first, the reviews of the last three months counted, and the worst one on the first screen checked for a reply.
 
-Open your own Google profile on a phone, signed out, the way a stranger arrives at it. Do not look at the star rating. Look at the date on the newest review. Count how many of them were written in the last three months. Then scroll to the worst one on the first screen and see whether anybody ever answered it.
+What you find is what a stranger finds. If the newest review is two years old, the place to start is the asking.
 
-Whatever you find is what a stranger found last Tuesday, and it is the honest starting point. If the newest one is from 2023, you do not have a review problem. You have an asking problem, and it has been quietly costing you the ten-minute decisions you never hear about.
+[[scene:funnel]]
 
-[[scene:funnel]]`;
+Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+
+## Sources
+
+- BrightLocal, Local Consumer Review Survey 2026, [on brightlocal.com](https://www.brightlocal.com/research/local-consumer-review-survey/). Read November 11, 2026.
+- Harvard Business School working paper 12-016 by Michael Luca (its title names the review site, Yelp.com), on review-site ratings and Seattle restaurant revenue, 2003 to 2009, [the paper](https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf), 2011. Read November 11, 2026; kept for the argument, the study in this post that measured revenue.
+- Google, Maps user contributed content policy, the section on what merchants may not do, [the policy page](https://support.google.com/contributionpolicy/answer/7400114), a live document. Read November 11, 2026.
+- Federal Trade Commission, Trade Regulation Rule on the Use of Consumer Reviews and Testimonials, 16 CFR 465.7, review suppression, a regulation in effect since 2024, [the text](https://www.law.cornell.edu/cfr/text/16/465.7). Read November 11, 2026.
+
+Sources checked November 11, 2026.
+
+Written with an AI assistant and checked by Levan.`;
 
 export const AI_CHAT_ASSISTANT_POST = `Someone found your listing at twenty to midnight. They were on a phone, in bed, three tabs deep, comparing your Beacon colonial against two others. They had one question: would the seller look at a contingent offer.
 

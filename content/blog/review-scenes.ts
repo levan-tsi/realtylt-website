@@ -21,6 +21,7 @@
  * House rules apply: no em dashes, no arrow glyphs, no claims not already made on the site. */
 
 import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
+import { REVIEW_QUIZ } from "./review-quiz";
 
 /** SCENE copy — "In short".
  *
@@ -31,7 +32,7 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
 export const IN_SHORT: string[] = [
   "Asking only the customers you expect to be kind is called review gating. Google's contribution policy lists it under what merchants may not do, in the same breath as paying for reviews. The compliant version is also the better one. Everyone gets the same link, and a rough score reaches you privately as well.",
   "Volume is not the goal, recency is. In BrightLocal's 2026 survey of 1,002 US adults, 74% said they look for reviews written in the last three months. Only 10% said they will use nothing below five stars.",
-  "The one study that measured money rather than opinion found a one-star increase worth 5 to 9 percent of revenue. It found that only for independent businesses. It was done on Seattle restaurants. That is why this article will not turn it into a commission figure for you.",
+  "The best-known study we found that measured money rather than opinion found a one-star increase worth 5 to 9 percent of revenue. It found that only for independent businesses. It was done on Seattle restaurants. That is why this article will not turn it into a dollar figure for your business.",
 ];
 
 /** SCENE copy — the thresholds chart. Cited data graphic ONE.
@@ -98,7 +99,7 @@ export const PROFILE_SCAN: GridItem[] = [
   },
   {
     lead: "The date on the newest one.",
-    body: "This is the move almost nobody aims at, and the one the survey above puts highest. A wall of praise from three years ago tells a stranger that you were good in 2023. It says nothing whatever about whether you are busy now.",
+    body: "This is the move almost nobody aims at, and the one the survey above puts highest. A wall of praise from three years ago tells a stranger that you were good three years ago. It says nothing whatever about whether you are busy now.",
   },
   {
     lead: "The worst review on the first screen.",
@@ -152,7 +153,7 @@ export const YELP_LIFT = {
   sourceText:
     "Michael Luca, Reviews, Reputation, and Revenue: The Case of Yelp.com, Harvard Business School Working Paper 12-016. Yelp reviews matched to Washington State Department of Revenue records for every restaurant in Seattle, January 2003 to October 2009.",
   sourceHref: "https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf",
-  note: "Restaurants, in one city, ending in 2009, measured against sales tax records. Nobody has run this study on real estate agents, and nobody should pretend the multiplier transfers. A restaurant is chosen dozens of times a year by people spending forty dollars. An agent is chosen once by somebody spending the largest sum of their life. What does transfer is the direction and the shape of the mechanism. That includes the part that is truly useful to a small business. The effect showed up for independents and not for chains. A one-office brokerage is a great deal closer to the first of those than to the second.",
+  note: "Restaurants, in one city, ending in 2009, measured against sales tax records. Nobody has run this study on contractors, salons or local offices, and nobody should pretend the multiplier transfers. A restaurant is chosen dozens of times a year by people spending forty dollars, and most local businesses are chosen in a different way. What does transfer is the direction and the shape of the mechanism. That includes the part that is truly useful to a small business. The effect showed up for independents and not for chains, and an owner-run business is a great deal closer to the first of those.",
 };
 
 /** SCENE copy — the four moves.
@@ -214,7 +215,7 @@ export const GATING_LINE: GridItem[] = [
   },
   {
     lead: "Not allowed: paying for it, in any currency.",
-    body: "Incentives are named specifically, and the list is broad. It covers payment, discounts, free goods or services, offered for posting a review, for revising one, or for taking a negative one down. A closing gift that arrives with a request attached is inside that sentence.",
+    body: "Incentives are named specifically, and the list is broad. It covers payment, discounts, free goods or services, offered for posting a review, for revising one, or for taking a negative one down. A thank-you gift that arrives with a request attached is inside that sentence.",
   },
   {
     lead: "Not allowed: telling them what to say, or standing over them.",
@@ -241,17 +242,17 @@ export const THE_ASK = {
   turnsHeading: "The exchange",
   eventsHeading: "What happened on your side",
   turns: [
-    { who: "us" as const, at: "4:12 pm", text: "Hi Marcus, congratulations on closing today. One question while it is fresh: how did we do, one to five?" },
-    { who: "them" as const, at: "4:31 pm", text: "4. Honestly you were great, the lender just took three weeks to send the clear to close and nobody told me it was normal." },
-    { who: "us" as const, at: "4:31 pm", text: "That is fair and it is useful, thank you. I have sent the lender point straight to Levan and he will call you today. Here is the Google link as well, if you want to put that in your own words: [link]" },
+    { who: "us" as const, at: "4:12 pm", text: "Hi Marcus, thanks for having us out today. One question while it is fresh: how did we do, one to five?" },
+    { who: "them" as const, at: "4:31 pm", text: "4. Honestly the crew was great, the part just took three weeks to arrive and nobody told me that was normal." },
+    { who: "us" as const, at: "4:31 pm", text: "That is fair and it is useful, thank you. I have sent the point about the part straight to the owner, and she will call you today. Here is the Google link as well, if you want to put that in your own words: [link]" },
     { who: "them" as const, at: "4:40 pm", text: "Will do. Probably say the same thing there." },
     { who: "us" as const, at: "4:40 pm", text: "Please do. A four that says what actually happened is worth more to the next person than a five that says nothing." },
   ],
   events: [
-    { at: "4:12 pm", label: "The trigger", detail: "The file moved to closed. Nobody typed anything." },
+    { at: "4:12 pm", label: "The trigger", detail: "The job moved to paid. Nobody typed anything." },
     { at: "4:31 pm", label: "The link goes out", detail: "The same Google link every customer gets, sent regardless of the score." },
     { at: "4:31 pm", label: "The private line opens", detail: "Score, verbatim comment and contact pushed to the owner, as well as the link and not instead of it." },
-    { at: "4:33 pm", label: "The call happens", detail: "Two minutes on the phone about the lender, on the day, while it can still be fixed for the next client." },
+    { at: "4:33 pm", label: "The call happens", detail: "Two minutes on the phone about the part, on the day, while it can still be fixed for the next customer." },
   ],
 };
 
@@ -266,7 +267,7 @@ export const FAILURE_MODES: GridItem[] = [
   },
   {
     lead: "It gets pointed at the wrong moment.",
-    body: "The moment a job is finished is not always the moment the customer feels finished. Ask the seller the day the sign goes up, and you are asking somebody in the middle of the stressful part. The trigger is a decision about your business, not a setting.",
+    body: "The moment a job is finished is not always the moment the customer feels finished. Ask a homeowner the day the old kitchen comes out, and you are asking somebody in the middle of the stressful part. The trigger is a decision about your business, not a setting.",
   },
   {
     lead: "You treat a bad review as a problem with the review.",
@@ -381,7 +382,7 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
         {
           kind: "range",
           id: "jobs",
-          label: "Closings, sales or jobs you finish in a month",
+          label: "Jobs, visits or sales you finish in a month",
           hint: "Whatever counts as finished for you: the thing after which it would be reasonable to ask somebody how it went.",
           min: 1,
           max: 40,
@@ -429,7 +430,7 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
        * evidence is about recency. */
       headline: 3,
       resultLabel: "Reviews dated in the last three months",
-      note: "This counts reviews and stops there. It deliberately does not multiply anything by the five to nine percent revenue figure further up this page. That figure was measured on Seattle restaurants against quarterly sales tax records. Its author found the effect only among independent businesses. Turning it into a commission forecast for a brokerage is arithmetic he never did. We are not going to do it on his behalf. The share who actually write one is yours for the same reason. There is no published conversion rate for review requests in any vertical. And the one number we would most benefit from inventing is the one we will not.",
+      note: "This counts reviews and stops there. It deliberately does not multiply anything by the five to nine percent revenue figure further up this page. That figure was measured on Seattle restaurants against quarterly sales tax records. Its author found the effect only among independent businesses. Turning it into a sales forecast for your business is arithmetic he never did. We are not going to do it on his behalf. The share who actually write one is yours for the same reason. There is no published conversion rate for review requests in any vertical. And the one number we would most benefit from inventing is the one we will not.",
       action: { label: "See how it is built", href: "/services/review-automation" },
       secondary: { label: "Ask us to look at your profile", href: "/connect" },
     },
@@ -468,13 +469,60 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Somebody stood in a kitchen last week with your name and one other on a phone screen. They picked the other one on the strength of a date. Neither of you will ever hear about it. And it will happen again this week.",
+      text: "In the invented example at the top, a woman stood in her kitchen with two names on a phone screen and picked one on the strength of a date. The other business never heard about it. The newest date on your own profile is worth reading tonight.",
       actions: [
         { label: "See it on the AI page", href: "/ai#reviews", variant: "light" },
         { label: "How it is built", href: "/services/review-automation", variant: "outline-light" },
       ],
       footnote:
-        "There is no price on this page, because the cost is mostly not the software. It is the messaging that carries the ask, which is billed by the message. And it is the fifteen minutes a week that somebody has to spend replying. The AI assessment is an hour, done with you. The plan it leads to starts with the ask switched on for one real trigger.",
+        "There is no price on this page. What a setup takes is mostly two decisions and fifteen minutes a week of replies. The AI assessment is an hour, done with you. The plan it leads to starts with the ask switched on for one real trigger.",
+    },
+
+    /** ROUND 28: who it fits and who it does not, with what the second group does instead. */
+    fits: {
+      kind: "grid",
+      band: "light",
+      label: "Who it fits",
+      eyebrow: "Who this is for",
+      heading: "A good fit, a poor fit, and what to do instead",
+      columns: 2,
+      items: [
+        { lead: "A good fit", body: "A clear moment when a job ends and local customers who choose by reading reviews: trades, cleaners, salons, gyms, dental and accounting offices, real estate offices." },
+        { lead: "A poor fit", body: "A handful of jobs a year, a chain or a franchise whose brand already answers what reviews answer, or nobody to reply each week." },
+        { lead: "Instead, for a poor fit", body: "Ask by hand on the day with one written line, answer the reviews already there, and decide after that." },
+        { lead: "Either way", body: "Everybody gets the same link, and a person reads the low scores." },
+      ],
+    },
+
+    /** ROUND 28: the roadmap, one job a week at a time. Our method. */
+    roadmap: {
+      kind: "steps",
+      band: "light",
+      label: "The roadmap",
+      eyebrow: "A suggested schedule",
+      heading: "One job, a week at a time, a decision written down",
+      alt: "A suggested schedule: in week 1 the signed-out check and the finished-job event written down; in week 2 the message in your own words, everyone asked by hand; in weeks 3 and 4 the worth-it test, then the event connected and the low scores sent to your phone, or the decision to keep asking by hand written down.",
+      steps: [
+        { title: "Week 1", body: "The signed-out check on your own profile; the event that means a job is finished, written down." },
+        { title: "Week 2", body: "The message in your own words; everyone asked by hand, with the same link for all." },
+        { title: "Weeks 3 and 4", body: "The worth-it test; then the event connected and the wording approved, or the hand ask kept and the decision written down." },
+      ],
+      close: "A schedule to start from, not a deadline.",
+      sources: [{ text: "our method, the RealtyLT AI assessment" }],
+    },
+
+    /** ROUND 28: the owner's quiz (2026-10-31), tested against the post in review-quiz.test.ts. AI brand. */
+    quiz: {
+      kind: "quiz",
+      band: "night",
+      label: "Quiz",
+      ariaLabel: "Quiz: what did you learn",
+      eyebrow: "Ten questions",
+      title: "What did you learn? Check it in two minutes",
+      brand: "ai",
+      passLine: "You know the rules and the timing. The free AI quiz at the end of this page turns them into your own result.",
+      failLine: "Under half this time. Read the line you may not cross and the federal half again, then have another go.",
+      questions: REVIEW_QUIZ,
     },
   },
 
@@ -483,15 +531,18 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
   headingLabels: {
     "the-number-this-is-usually-sold-on-and-why-it-is-not-in-here": "The number",
     "what-a-stranger-actually-does-with-your-profile": "The scan",
-    "what-one-extra-star-was-worth-in-the-only-study-that-measured-money": "The one study",
+    "what-one-extra-star-was-worth-in-a-study-that-measured-money": "The study",
     "why-the-ask-does-not-happen": "Why nobody asks",
     "what-review-automation-actually-does": "What it does",
     "the-line-you-may-not-cross-and-exactly-where-it-is": "The line",
     "the-federal-half-which-is-about-your-own-website": "Your own site",
     "what-to-do-when-the-review-is-genuinely-bad": "The bad one",
     "how-to-test-one-before-you-buy-it": "How to test one",
-    "what-it-costs-and-how-long-it-takes": "Cost and time",
+    "what-it-takes-to-run": "What it takes",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
+    "is-it-worth-automating": "Worth automating?",
+    "who-this-fits-and-who-it-does-not": "Who it fits",
+    "what-to-do-first": "Your first weeks",
     "common-questions-answered-honestly": "Common questions",
     "what-to-do-about-it": "What to do",
   },

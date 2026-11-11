@@ -111,7 +111,7 @@ describe("flagshipToc", () => {
       { id: "the-number-this-is-usually-sold-on-and-why-it-is-not-in-here", label: "The number" },
       { id: "scene-thresholds", label: "What they need", scene: true },
       { id: "what-a-stranger-actually-does-with-your-profile", label: "The scan" },
-      { id: "what-one-extra-star-was-worth-in-the-only-study-that-measured-money", label: "The one study" },
+      { id: "what-one-extra-star-was-worth-in-a-study-that-measured-money", label: "The study" },
       { id: "scene-yelp-lift", label: "The money", scene: true },
       { id: "why-the-ask-does-not-happen", label: "Why nobody asks" },
       { id: "what-review-automation-actually-does", label: "What it does" },
@@ -122,10 +122,18 @@ describe("flagshipToc", () => {
       { id: "scene-review-calculator", label: "Your numbers", scene: true },
       { id: "what-to-do-when-the-review-is-genuinely-bad", label: "The bad one" },
       { id: "how-to-test-one-before-you-buy-it", label: "How to test one" },
-      { id: "what-it-costs-and-how-long-it-takes", label: "Cost and time" },
+      // Round 28 (2026-11-11): the refresh re-aimed at local owners added the teaching shape and the quiz;
+      // "What it costs" became "What it takes to run" (the second reader read the cost lines as our pricing).
+      { id: "is-it-worth-automating", label: "Worth automating?" },
+      { id: "what-it-takes-to-run", label: "What it takes" },
       { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
+      { id: "who-this-fits-and-who-it-does-not", label: "Who it fits" },
+      { id: "what-to-do-first", label: "Your first weeks" },
+      { id: "scene-roadmap", label: "The roadmap", scene: true },
       { id: "common-questions-answered-honestly", label: "Common questions" },
+      { id: "scene-quiz", label: "Quiz", scene: true },
       { id: "what-to-do-about-it", label: "What to do" },
+      { id: "sources", label: "Sources" },
     ]);
   });
 

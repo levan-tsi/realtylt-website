@@ -456,11 +456,19 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "automated-google-review-requests-real-estate",
     cluster: "visibility",
-    title: "Twelve five-star reviews. The newest one is from 2023.",
-    seoTitle: "Automated Google Review Requests for Real Estate: The Rules",
+    title: "How to get more Google reviews: ask every customer on the day the job ends",
+    seoTitle: "How to Get More Google Reviews: Automated Review Requests",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` SET IN ROUND 47, which is the condition the note below always named: the first
+    updated: "2026-11-11",
+    /** ROUND 28 (2026-11-11), re-aimed at local business owners (his order of 2026-11-11): the
+     * title is the owners' phrase "how to get more google reviews"; the story two electricians; the
+     * examples a painter, a bike shop, a plumber, a cleaning company, a gym, a salon, a dental and an
+     * accounting office and a real estate office as one of them; the shape added (is it worth
+     * automating, who this fits, what to do first, the quiz); the closing line goes to the quiz;
+     * the cover a Beacon main street of local shops (CC BY 4.0). Slug kept. See
+     * docs/blog-r28/NOTES-reviews.md.
+     *
+     * `updated` SET IN ROUND 47, which is the condition the note below always named: the first
      * real revision. Published 2026-08-25, revised 2026-08-27 when the relevance pass found the
      * survey's minimum-rating figure read backwards, as 68% for whom four stars was enough
      * rather than 68% whose floor is four. See docs/parity/ROUND47-RELEVANCE-PASS.md. C3 stays
@@ -469,10 +477,10 @@ export const POSTS: BlogPost[] = ([
      * The rule the superseded note recorded still stands and is worth keeping: set `updated`
      * when the article takes its first real revision, never to satisfy a gate. */
     excerpt:
-      "Twelve five-star reviews, the newest from 2023, and the client who never told you she looked. What review automation really does. Exactly where Google's line between asking and gating falls. And what one extra star was worth in the one study that measured money instead of opinion.",
+      "How to get more Google reviews for a local business: ask every customer on the day the job ends, with the same link for all. Where Google's line between asking and gating falls, the federal rule for reviews on your own website, what one extra star was worth in a study that measured money, and what to do first.",
     seoDescription:
-      "What automated Google review requests do, where Google's policy draws the line on review gating, and the FTC rule that governs reviews on your own website.",
-    cover: "/images/lifestyle/selling.jpg",
+      "How to get more Google reviews: ask every customer the day the job ends, one link for all, inside Google's rules and the FTC rule for your website.",
+    cover: "/images/lifestyle/beacon-main-street.jpg",
     body: [],
     placeholder: false,
     markdown: REVIEW_AUTOMATION_POST,
