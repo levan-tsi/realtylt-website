@@ -523,8 +523,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "database-reactivation-old-real-estate-leads",
     cluster: "records",
-    title: "They said not right now. That was three years ago.",
-    seoTitle: "Database Reactivation: Old Real Estate Leads and the Rules",
+    title: "How to follow up with old leads and win back past customers",
+    seoTitle: "How to Follow Up With Old Leads: Win Back Past Customers",
     /** Researched and drafted 07-30, finished and shipped 07-31. Both dates are real: this
      * session began on the 30th and the piece was rewritten and verified on the 31st. */
     date: "2026-07-30",
@@ -538,11 +538,20 @@ export const POSTS: BlogPost[] = ([
      * regulation actually attaches (the scene file had it right, the prose had dropped it); and
      * "three hundred conversations to find four people", a conversion rate this same post calls
      * made up two screens later. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-09-18",
+    updated: "2026-11-14",
+    /** ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-11): the title is
+     * the owners' phrase "how to follow up with old leads" (the keyword map's AC 2); the story a heating
+     * company and a furnace tune-up; the examples a heating company, a gym's tour-no-buy list, an accounting
+     * office, a salon and a real estate office as one of them; the federal rules re-read 2026-11-14 and
+     * quoted from the regulation and the statute (no dollar figure in digits, no vendor named, the
+     * texting-vendor threshold and the FTC ceiling removed); the shape added (is it worth automating, who
+     * it fits, what to do first, the quiz). The reason the SEO agent blocked the 2026-11-05 draft (F5, a
+     * dollar figure on a public piece, and 35 second-reader notes) is in docs/blog-r29/NOTES-reactivation.md.
+     * Slug kept. */
     excerpt:
-      "Your CRM is full of people who told you not right now, and nobody has asked them since. Here is what an AI reactivation campaign really does with that list. The consent rules with dates in them that nobody selling you one mentions. And what it costs when it goes wrong.",
+      "How to follow up with old leads and past customers: what database reactivation is, the three federal rule checks to run on your own records before a message goes out, an invented worked example by channel, and whether it is worth doing at all.",
     seoDescription:
-      "What AI database reactivation does with old real estate leads, the federal consent and do-not-call rules with dates in them, and what getting it wrong costs.",
+      "How to follow up with old leads and win back past customers: the three federal rule checks, a worked example by channel, when it is worth it and what to do first.",
     cover: "/images/hero/valley-aerial.jpg",
     body: [],
     placeholder: false,

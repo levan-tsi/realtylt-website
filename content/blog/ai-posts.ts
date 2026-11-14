@@ -3812,93 +3812,135 @@ The same argument at the other end of the day is on the [website chat side](/blo
 
 [[scene:funnel]]`;
 
-export const DATABASE_REACTIVATION_POST = `In the spring of 2023 someone filled in the home valuation form on your website. They wanted a number. You called twice. They said they were still thinking about it, and the thread went quiet the way most threads go quiet.
+export const DATABASE_REACTIVATION_POST = `We help local business owners work out how to follow up with old leads and past customers: which records they may contact, which message goes to whom, and what a person approves before anything is sent. Below is what database reactivation is, the three rule checks to run on your own records before a single message goes out, an invented worked example by channel, whether it is worth doing at all, and what to do first this week.
 
-They are still in your CRM. Their number still works. Nobody has dialed it since.
+This page is for owners of a business with a list older than its memory: a heating, plumbing or roofing company, an accounting or insurance office, a salon, a spa or a gym, a real estate office. The rules quoted are the federal ones. Nothing here is legal advice.
 
-Last year they sold that house. Someone else listed it.
+An invented example shows the problem. A heating company serviced a furnace on Maple Street last November, and the customer, Dana, never booked this year's tune-up. Her number still works, her address is on the record and nobody has asked her anything since the day the technician left.
 
-Nothing was neglected in that story, which is exactly what makes it expensive. No ball was dropped and nobody was lazy. It is that a person who said not right now needs following up three years later, in the one month it stopped being not right now. Following up like that is not a thing a human being is built to do.
+Nothing was neglected on purpose. No one dropped a ball. The record simply sits in a list of fourteen hundred names, and a list that long is not worked by hand on a busy Tuesday.
 
 [[scene:in-short]]
 
 [[scene:reel]]
 
-## What is actually sitting in that database
+## What is database reactivation?
 
-Everybody says the money is in the database. Almost nobody says what the money is made of, so here is the honest version.
+Database reactivation is the practice of contacting the past customers and old leads in your own records, once and with a reason, to find the ones whose situation has changed. In this post, reactivated means an old contact who was quiet and has replied, booked or said no with a reason.
 
-The National Association of REALTORS surveys recent buyers and sellers every year. Among a hundred other things, it asks how they found the agent they hired. The most recent generational cut of that survey is worth looking at properly, because the two biggest answers are not marketing.
+The point is that reactivation does not buy new traffic. It asks people who already know you, so the work is the asking and the limit is permission.
+
+The people on the list are not strangers and not friends. They raised a hand once, or bought once, at a moment when the answer turned out to be later. The reason to ask them again is that they already know you, and one survey of the real estate market points that way.
+
+The National Association of REALTORS published its 2026 Generational Trends report release on April 15, 2026. According to that release, 91% of buyers said they would use their real estate agent again or recommend them to others, and sellers typically stayed in their homes for 11 years before selling.
 
 [[scene:agent-source]]
 
-Two thirds of sellers hired somebody who was already known to them: referred by a friend, a neighbor or a relative, or an agent they had worked with before. Four percent found their agent on a website.
-
-Read the small bars too, because they are the honest half. Four percent of sellers hired an agent who had contacted them directly. Cold outreach is not what fills a listing calendar, and this piece is not going to pretend otherwise.
-
-What that leaves is an interesting middle. The people sitting in your CRM are not strangers, and they are not friends. They are the group that raised a hand once, at a moment when the answer turned out to be later. They already know your name. They contacted you first. And they are the only group anywhere near the top of that chart that you actually hold a list of.
+That is a survey of what buyers say, not a measurement of how well any outreach works, and it covers one industry. Read it as a reason the list is worth a question. It is not a forecast of what a campaign will return.
 
 [[scene:plate]]
 
-## Why nobody works it
+The one thing to apply: open your records and count how many contacts carry a date and a source. That count is your real list.
 
-Ask an agent when they last went through their old leads properly and you get a wince.
+## How do you follow up with old leads?
 
-It is not laziness, and it is not a discipline problem. It is that the work is genuinely awful. Hundreds of conversations to find the handful of people whose life has changed. Most of them go to voicemail. A few of them are annoyed. And the majority of the ones who do answer say no for the second time. The reward for doing it properly is getting to do it again next quarter.
+You follow up once, about something that is true of that person, at a sensible hour, and you take the first no. A good follow-up names what they bought or asked about, asks one real question and offers a real time. A bad one says that you are checking in.
 
-There is a quieter trap in it too. Human follow-up dies at the second attempt, because a third starts to feel like pestering. But the person who did not pick up at two on a Tuesday was driving, not deciding. And the difference between those two is invisible from your end. So the list gets a burst of attention in a slow month, produces nothing that week, and gets closed again.
+The work in the middle is the part that takes time. In an invented example, a gym keeps a list of people who toured and did not join, often called tour-no-buy, and an accounting office keeps a list of last tax season's inquiries who said they would call back. Each list has hundreds of names. Working one by hand means hundreds of conversations to find the handful whose situation has changed, and the reward for doing it properly is doing it again next quarter.
 
-Meanwhile the contacts in it keep aging in two directions at once. Some are drifting further out of reach. Some are quietly becoming ready. Nobody is watching which.
-
-## What database reactivation actually does
+What reactivation does is the same job, done with patience. These are the four moves.
 
 [[scene:four-moves]]
 
-The last one is the part that decides whether any of it was worth doing. An appointment that arrives with the reply attached is a different object from an appointment that arrives as a name and a time. You already know there is a house to sell, and you already know they said so themselves.
+The last move decides whether any of it was worth doing. An appointment that arrives with the reply attached is a different object from a name and a time. You already know what the person said, in their own words.
 
-## The part nobody selling you this will mention
+What you get: a written count of who may be contacted and by which channel, openers written with you, and the replies read and recorded. What you provide: the customer list with the date and source of each record where one exists, what your forms and invoices said about texts and calls, and what each customer bought or asked about. What a person still approves: the list it may contact, every opener and every follow-up word for word, and any booking that needs a price or an offer. What it does not do is on its own heading below.
 
-Reactivation is the one AI use case in real estate where the technology is the easy half and the rules are the hard half. Everything above this line is a build problem, and it is a solved one. Everything below it is the reason a large share of these campaigns should never have been sent at all.
+## Which old leads and past customers may you contact?
 
-I am not a lawyer, and none of what follows is legal advice. Read it instead as the list of things you are entitled to ask about before anybody sends a message with your name on it, ourselves included. There are three of them. They are all answerable from your own records in an afternoon. And a vendor who cannot answer all three has told you something important.
+It depends on what each record says, and the rules have dates in them. These are the federal rules as written on the day we read them, November 14, 2026, quoted from the regulation and the statute, not from a summary. A lawyer reads your own records against them. State law can add rules this page does not cover.
 
-**There is a clock on your old lead, and it is shorter than you think.** Federal rules exempt calls to somebody you have an established business relationship with from the national do-not-call registry. That exemption is defined with dates in it. Under [47 CFR 64.1200(f)(5)](https://www.law.cornell.edu/cfr/text/47/64.1200), the relationship runs from "the subscriber's purchase or transaction with the entity within the eighteen (18) months immediately preceding the date of the telephone call or on the basis of the subscriber's inquiry or application regarding products or services offered by the entity within the three months immediately preceding the date of the call". A closed deal buys you eighteen months. A form fill buys you three. Your 2023 lead ran out of both a long time ago. And if that number is on the registry, then warmth is not a defense.
-
-**An automated call or text is a separate question with a stricter answer.** The do-not-call registry is one rule. Using an autodialer or an artificial voice is another one entirely. And clearing the first does not clear the second. The same regulation, at paragraph (a)(2), bars a telemarketing call or text to a mobile number placed with "an automatic telephone dialing system or an artificial or prerecorded voice" unless you have the prior express written consent of the person you are calling. Written consent is defined narrowly: a signed agreement, with a clear and conspicuous disclosure that the person is authorizing automated calls, and a statement that agreeing is not a condition of buying anything. An electronic signature counts. A checkbox on an IDX registration page that said "by registering you agree to be contacted" almost certainly does not.
-
-**A no has to be easy, and it has to stick.** The rules were tightened here recently, and the current version is unusually specific. A person can revoke consent "by using any reasonable method". Stop, quit, end, revoke, opt out, cancel and unsubscribe are all listed as reasonable by definition. If somebody replies with different words, you have to treat that as an opt-out too whenever "a reasonable person would understand those words to have conveyed a request to revoke consent". And the request "must be honored within a reasonable time not to exceed ten business days from receipt". You cannot make people use one specific channel to get out.
+Three checks come first. They are not a full legal review, and a record can pass all three and still need a lawyer's reading.
 
 [[scene:consent-check]]
 
-Every one of those is checkable in an afternoon, and the answers live in your own systems: the form your leads filled in, the dates on the records, and whatever your CRM does with the word stop. If a vendor cannot tell you how their campaign handles all three, then the campaign is not ready to send.
+### How long does an old lead stay yours to call?
 
-Once you know how much of that list you are actually allowed to contact, the rest is a sum. And it is a sum nobody can do for you.
+The federal telemarketing rules separate people you have a relationship with from people you do not. According to 47 CFR 64.1200(f)(5), an established business relationship is a prior or existing relationship formed by a voluntary two-way communication, on the basis of the person's purchase or transaction "within the eighteen (18) months immediately preceding the date of the telephone call", or on the basis of an inquiry or application "within the three months immediately preceding the date of the call". It ends if either party has previously terminated it.
+
+A telephone solicitation, as the same regulation defines it in (f)(15), does not include a call or message to a person with whom the caller has an established business relationship. So the national do-not-call registry (c)(2) is about people outside that window. Within it, a seller-specific do-not-call request still ends the relationship for telemarketing, according to (f)(5)(i), even if the person keeps doing business with you.
+
+In an invented example, a heating company's furnace customer from last November is inside the eighteen months. A form fill from the spring of 2023 is outside both windows. Count the date on the record, not how promising the lead looked.
+
+An invented example of the count: the heating company holds 1,400 records. 520 are customers who bought within the last eighteen months, so a person may call them if they are not on the company's own do-not-call list. Of those 520, 210 signed a form that clearly authorizes automated texts, so those 210 can be texted by a system. The other 310 recent customers get a person's call or an email. The remaining 880 records are older than eighteen months, so they go to a cleanup or to an email or a letter first. Nobody has guessed a rate: the count is only arithmetic on the records (1,400 - 520 = 880, and 520 - 210 = 310).
+
+### When does an automated text or call need written consent?
+
+The registry is one rule, and using an autodialer or an artificial or prerecorded voice is another one. According to 47 CFR 64.1200(a)(2), a call that includes or introduces an advertisement or constitutes telemarketing, using an automatic telephone dialing system or an artificial or prerecorded voice, to a wireless number needs the prior express written consent of the called party. The regulation's paragraph (a)(10) on revoking consent refers to "calls or text messages made pursuant to paragraphs (a)(1) through (3)". Whether a particular software-sent text falls under a particular paragraph depends on the equipment, the purpose and the recipient, and that is a question for a lawyer.
+
+The regulation defines prior express written consent in (f)(9) as an agreement in writing bearing the person's signature, which includes an electronic signature, that clearly authorizes the seller to deliver advertisements or telemarketing messages using an autodialer or an artificial voice, and the number to which they are to be delivered. It has to include a clear and conspicuous disclosure that signing authorizes such calls and that the person is not required to sign as a condition of buying anything. Read the actual form your leads filled in, with its actual disclosure, against that wording. A sentence in a registration form saying you agree to be contacted has to be read against it, not assumed to match.
+
+### How does a stop request have to be handled?
+
+Under paragraph (a)(10), a called party may revoke consent "by using any reasonable method to clearly express a desire not to receive further calls or text messages". A reply of stop, quit, end, revoke, opt out, cancel or unsubscribe sent to an incoming text counts as a reasonable means per se. A reply in other words has to be treated as a revocation if a reasonable person would understand it to convey one. And a request "must be honored within a reasonable time not to exceed ten business days from receipt".
+
+That ten business days is the legal outer limit. Stopping further campaign messages to that number at once is a stricter practice, and it is the one we run. According to the FCC's order of January 6, 2026, DA 26-12, the rule requires callers to treat a request to revoke consent made in response to one type of informational message as applicable to all future robocalls and robotexts from that caller on unrelated matters, and the order extended the waiver of that requirement until January 31, 2027. So the rule on how far one stop reaches is still moving, which is a reason to treat any stop as covering everything you send that person.
+
+### What about calling hours and email?
+
+For live telephone solicitations to a residential subscriber, the regulation in (c)(1) bars calls before 8 a.m. or after 9 p.m., local time at the called party's location. That is the legal floor. Many businesses set a narrower window for their own reasons.
+
+Email has its own statute. According to the CAN-SPAM statute, 15 U.S.C. 7704, a commercial email must identify itself as an advertisement or solicitation, carry a clear notice of how to decline further messages and give a valid physical postal address of the sender, and the sender may not send a message that falls within a request to opt out more than 10 business days after receiving it. For many local businesses an email or a letter to past customers is a simpler first channel than a text, and the same discipline applies: a person approves the message and the list.
+
+### What is 10DLC registration?
+
+Business texting from an ordinary ten-digit number is called 10DLC, ten digit long code. According to the registry that runs it, US mobile network operators sanction it as a channel for non-consumer, application-to-person messaging, and ask the companies that send it to declare who is sending messages and what messaging is being sent. The Campaign Registry collects that brand and campaign information so the carriers can see the sender and the content. Registration is a carrier requirement for the channel, separate from the federal consent rules above, and passing one does not satisfy the other.
 
 [[scene:list-calculator]]
 
-## What it costs when it goes wrong
+## What can go wrong if the rules are missed?
 
-We do not publish a price for this, and I am not going to invent one here, because it depends entirely on the size and state of the list. What is worth publishing is the other side of the ledger. That is because it is a fixed number and almost nobody quotes it.
+The sources name two kinds of exposure, and neither is a reason for fear. Both are a reason to check before the first message, not after the first complaint.
 
-The Telephone Consumer Protection Act carries a private right of action. Under [47 U.S.C. 227(b)(3)](https://www.law.cornell.edu/uscode/text/47/227), a person can recover their actual loss "or to receive $500 in damages for each such violation, whichever is greater", and a court that finds the violation was willful or knowing may treble it. Per message. To treble a sum is to make it three times as big. There is a whole plaintiff's bar that does nothing else. And a list of thirty thousand contacts is a large multiplier attached to a small mistake.
+The first is a private lawsuit. According to 47 U.S.C. 227(b)(3), a person may bring an action to recover actual monetary loss from a violation or to receive five hundred dollars in damages for each violation, whichever is greater. If the court finds the violation willful or knowing, it may increase the award to not more than three times that amount. That is the statute's wording, and it is not a promise that any message creates a claim. It is the reason the list is checked before the campaign is written.
 
-While we are here: you will see agents quote a figure of sixteen thousand dollars per text, and it is the wrong number twice over. Sixteen thousand was the Federal Trade Commission's ceiling for an unfair or deceptive practice until the [June 2016 adjustment](https://www.federalregister.gov/documents/2016/06/30/2016-15302/adjustment-of-civil-monetary-penalty-amounts) raised it to forty thousand, and [16 CFR 1.98](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-A/part-1/subpart-L/section-1.98) now puts that ceiling at $53,088. It is also a penalty an agency assesses rather than the claim a person brings against you. The number in a private lawsuit is five hundred. And five hundred multiplied by a list is the one that should worry you.
+The second is the carriers' own rules. Registration of a business texting campaign is a carrier requirement for the channel, as the section above says, and what a carrier does with traffic that does not meet it is the carrier's decision. We did not find a published threshold, so this page prints none. Ask your provider in writing what happens to unregistered traffic.
 
-The second cost is less dramatic and far more likely, and it has a threshold you can actually look up. Send messages people did not want and some of them reply stop, which is their right and takes one word. Twilio, whose pipes a great many of these campaigns run through, publishes where that becomes a problem: an opt-out rate ["under 1% is considered healthy; over 3% may lead to carrier filtering"](https://www.twilio.com/docs/messaging/features/twilio-health-score-for-messaging). Filtering is not a bounce. Your messages to real clients simply stop arriving, silently, with no error. You find out a fortnight later when somebody mentions they never got your text about the inspection.
+Both are checked in the same place: before the first message goes out, not after.
 
-Both of those costs are avoidable, and both of them are avoided in the same place: before the first message goes out, not after the first complaint.
+## What does it take to run?
 
-## What to ask before you let anybody text that list
+The first job is a count, not a campaign. We read the records for a date and a source, read the forms for what consent they hold, and decide which records go to a person's call, which to a letter or an email and which to a text. That decides the size of the first run.
 
-Everything above is theory until you are sitting across from somebody who wants the export. Four questions separate the people who have done this properly from the people who are about to use your database as their sandbox. None of them require you to know anything technical.
+After the count, the work is steady and small: openers written with you and approved word for word, the replies read, the stops recorded, and a person taking each booking from there. What it takes from you is access to the list, the facts about where each name came from and the time to read the answers.
 
-Show me the consent evidence for one specific record. Pick a name yourself, at random, and ask what date that person gave permission, through what form, and where that date is stored. If the answer is a general assurance about the CRM rather than a date on a screen, then nothing has been checked and the first message is a guess.
+## Is it worth automating at all?
 
-What happens to a message that would land at nine at night. You want to hear a rule that is enforced by the system, not a promise about scheduling discipline. Ask what happens when somebody replies at 9:40pm, too, because the answer to that one is usually more revealing.
+For a list with real dates on it and a repeat cycle, yes. For a short list or a list with no source on any record, no. These are the same tests we use in an assessment, applied to this job.
 
-Show me a real opt-out, end to end. Have somebody send stop from a phone in the room, and then try to send that number another message. If the second message goes out, then the suppression list is decoration. This takes four minutes and almost nobody asks for it.
+First, does the job happen often enough that a failure is noticed within a week? A reactivation run is a few times a year, so a failure is not noticed within a week by default. That is a reason for a person to read every batch of replies.
 
-Whose number is it. If the campaign runs from a number the vendor owns, then the replies, the reputation attached to it and the ability to keep using it all belong to the vendor. And moving to anybody else means starting again. That is not a reason to say no. It is a reason to know before you sign rather than after.
+Second, can the rule be written for a new hire? Yes, once it is written: who may be contacted, by which channel, in which hours and with what wording. The first run is writing it down.
+
+Third, where does a wrong answer land? In a customer's pocket, with your name on it. That is why a person approves the list, the opener and every follow-up before it goes.
+
+The stop question: what breaks if we stop doing this? Nothing breaks. The list ages and the people whose situation changed are served by whoever was in front of them that week.
+
+A tool you already have may do the job. A short list can be worked by a person with the customer system you already pay for, or by a letter. Automation is worth considering only where the list is long, the records are dated and a person will read the replies.
+
+The verdict, in plain words. Leave a list with no dates and sources alone until the records are cleaned. Work a short, dated list by hand. Consider a system only for a long, dated list, with a person approving the contact list and every message.
+
+## What should you ask before anybody texts your list?
+
+Four questions separate someone who has done this carefully from someone who wants your export. None of them needs technical knowledge.
+
+Ask to see the consent evidence for one specific record. Pick a name yourself and ask what date that person gave permission, through what form, and where the date is stored. A general assurance about the CRM is not evidence.
+
+Ask what the system does with a message due at a time of night when the rule says no. You want a rule enforced by the system, not a promise about discipline.
+
+Ask for a real opt-out, from a phone in the room. Send stop, then try to send that number another message. Whether the second message goes out is the whole answer.
+
+Ask about the sending number and the registration. Who holds the number, who can export the replies, can the number be moved and who registered the campaign with the carriers? These are contract questions, and the answers belong in writing.
 
 [[scene:offer]]
 
@@ -3908,55 +3950,106 @@ Whose number is it. If the campaign runs from a number the vendor owns, then the
 
 ## What it does not do, and should not pretend to
 
-It does not manufacture intent. Most of that list is going to say no again, because most of them meant it. What reactivation changes is two things. One is that somebody finally asked. The other is that the small number whose circumstances moved get found in the same week they moved, rather than eighteen months later. Anybody quoting you a conversion rate on a cold database before they have seen the database is quoting you a number they made up.
+It does not manufacture intent. A list will hold plenty of nos, and a no is an expected answer, not a failure. What changes is that somebody finally asked, so a contact whose situation has moved can say so. Anyone quoting you a conversion rate on a list they have not seen is quoting a guess, and this page prints none.
 
-It does not fix a list that has no consent behind it. If the records do not carry a date and a source, then the honest first project is not a campaign. It is a cleanup.
+It does not fix a list with no consent behind it. If the records carry no date and no source, the first project is a cleanup, not a campaign.
 
-It is not a subscription, and you should be suspicious of anybody who sells it as one. A database is finite. You work it once, you find the people whose situation changed, and then the same list is a year away from being worth working again. Vendors in this category run out of inventory and quietly pivot the client onto something else. The ones who are straight with you say so at the start. Reactivation is a harvest, not a lead source, and it does not replace generating new business.
+It is not a lead source. A list is finite. Working it again straight away tests the same people, so the second pass should be based on what the first pass learned: who replied, who opted out, who asked to be called later.
 
-It does not replace you calling the people who actually matter. Your past clients, the neighbor who sold with you in 2019, anybody whose relationship is the real asset: those calls are yours. A machine reintroducing itself to somebody who came to your daughter's christening is worse than no contact at all.
+It does not replace you calling the people who matter. Long-time customers, the neighbour who recommended you and anybody whose relationship is the real asset get a call from a person.
 
-It also does not survive being run twice in a row. The first pass takes the accumulated years off the list, and whatever it finds is genuinely there. The second pass, three months later, is fishing in a pond somebody already emptied. And the temptation at that point is to widen the definition of who counts as a lead until there is a list again. That is the moment a reactivation campaign quietly turns into cold outreach, with none of the consent behind it that made the first one defensible.
-
-And it does not close. It finds the conversation. Everything that happens after somebody says yes to a Thursday is the reason you have a job.
+It does not close. It finds the conversation. Everything after somebody says yes to a Thursday is the work your people do.
 
 [[scene:revival-path]]
 
-## Where it goes wrong
+## Where does it go wrong?
 
 [[scene:failure-modes]]
 
+## Who this fits, and who it does not
+
+It fits a business with a list of dated past customers or inquiries and a reason for them to hear from you again: a heating company's tune-ups, a landscaper's spring cleanup, a salon's lapsed regulars, an accounting office's former clients, a gym's tour-no-buy list, a real estate office's old sellers and buyers.
+
+It fits poorly where records carry no date or source, where the list is a few dozen names, where nobody will read the replies, or where the relationship is the business. We do not run it for patient lists, because a health practice carries privacy rules this page does not cover.
+
+If it is a poor fit, the first step is still free: open one record and see what it says.
+
+[[scene:fits]]
+
+## What to do first
+
+Start with one record, not a campaign, and end with a decision written down. This is a suggested schedule, not a deadline.
+
+In week one, open your customer system, sort by oldest, and look at one record: is there a date, is there a source and is there anything that says how that person agreed to be contacted? Write down what you find.
+
+In week two, count the records by channel. How many have a purchase in the last eighteen months, how many hold signed consent for automated texts and how many have an email address and no stop on file. The count decides the channel for each group.
+
+In weeks three and four, read your own answer to the worth-it test above. Then decide: clean the records first, work a short list by hand, or have a system work a long dated one with a person approving every message. Write the decision and the date down.
+
+[[scene:roadmap]]
+
 ## Common questions, answered honestly
 
-### Do old real estate leads actually convert?
+### How do I follow up with old leads?
 
-Some of them do, and that is the whole business case rather than a sales line. A person who said not right now two years ago was giving you a timeline, and that timeline has since run out. The job is finding the small share whose circumstances changed. That is exactly the kind of patient, repetitive work software does well and people do not.
+Once, about what they asked or bought, at a sensible hour, in your own words and with a real question. First check the record's date and source and the channel it allows, then send, then record every answer, including no.
 
-### Is it not annoying to text people who went quiet years ago?
+### How do I win back past customers?
 
-It is, if the opener is generic. The difference between reactivation and a blast is whether the first message references what that specific person actually asked about, asks a real question, and takes no for an answer the first time. It also matters enormously that the person hears from you rather than from a stranger. That is why the consent and identification questions above are not paperwork. They are the reason the message lands as a follow-up instead of as spam.
+Ask them about something they actually bought, at the time of year it matters, and make it easy to say yes or no. A reminder to last year's furnace customers is a question. A newsletter to everyone is not one.
 
-### How does it decide who is worth calling?
+### Do old leads actually convert?
 
-It reads intent from what the person says back: whether the move is still on, whether the timeline shifted, whether there is now a house to sell. Everybody in scope gets an attempt. Only the ones showing real intent reach your calendar.
+This page cites no independent measurement of cold database response rates, so it prints no rate and makes no claim about how many convert. The job is to find the contacts whose circumstances have changed. Your own records and a first small run will tell you more than an average will.
 
-### Can I just do this myself with a mail merge?
+### Is it annoying to text people who went quiet years ago?
 
-You can, and for a list of two hundred you probably should. The reason it stops working is volume and follow-through, not sophistication. A merge sends one message. What actually produces appointments is the second and third exchange, held at the hour the person happens to reply, across a few thousand contacts, without anybody getting bored. That is the part that is hard to staff and easy to automate.
+It can be, and a personalised opener does not establish permission. Check eligibility, the applicable restrictions and the opt-out first. If you send, an honest opener refers to what the person asked about and takes the first no.
+
+### Am I allowed to text leads from 2023?
+
+It depends on what the record says. The established business relationship runs eighteen months from a purchase and three months from an inquiry under 47 CFR 64.1200(f)(5), so a 2023 form fill is outside both. An automated text is a separate question that depends on written consent, and the actual form and its disclosure are read against the regulation. A stop has to be honored within ten business days at the outside. Have a lawyer read your own records.
+
+### What does reactivated mean in real estate?
+
+In this post it means an old lead or past client who was quiet and has replied or booked again. It is how we use the word, not a legal term.
+
+### What does tour no buy mean?
+
+In a gym or studio, a tour-no-buy is a person who toured and did not join. It is a list of old leads like any other, and the same checks apply before anyone contacts it.
+
+### Can I do this myself with a mail merge?
+
+Yes, for a short list, and often you should. A mail merge sends one message. What takes time is the second and third exchange, held when the person happens to reply, and the checking of each record first.
 
 ### What happens to the people who say no?
 
-They get recorded as a no, with whatever reason they gave, and they are not contacted again by the campaign. That is not only politeness. A no with a reason attached is the most useful thing the whole exercise produces, because it tells you which part of your list is genuinely dead and which part is just early.
+They are recorded with the date, the source and the words they used, and the campaign does not contact them again. A no with a reason is the most useful output of the exercise, and it is a record of what a person said, not a guess about their future.
+
+[[scene:quiz]]
 
 ## What to do about it
 
-Start with one record instead of with a campaign, and do it before you talk to a vendor. Open your CRM, sort by oldest, and find your own version of the person who asked what their house was worth in the spring of 2023. Then look at what you are actually holding: is there a date on the record, is there a source, and is there anything anywhere that says how that person agreed you could contact them. Four minutes on one record will tell you which of the two projects in this article you are really looking at, a campaign or a cleanup. And no consultant can tell you that faster than your own database can.
+One record opened tells you which of the two projects on this page you are looking at, a campaign or a cleanup: what the date is, what the source is and whether anything says how that person agreed to hear from you. It needs nobody, us included.
 
-The system is laid out on [the RealtyLT AI page](/ai#reactivation). The [database reactivation page](/services/database-reactivation) sets out what it reads, what it sends, and what happens to a reply once somebody sends one.
+The system is laid out on [the RealtyLT AI page](/ai#reactivation), and the [database reactivation page](/services/database-reactivation) sets out what it reads, what it sends and what happens to a reply.
 
-Two earlier moments in the same story are written out elsewhere. [The missed call at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate) is this problem before the lead ever goes cold. And [the buyer messaging your website at 11:40pm](/blog/ai-chat-assistant-real-estate-website) is where the record you just opened came from in the first place.
+[[scene:funnel]]
 
-[[scene:funnel]]`;
+Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+
+## Sources
+
+- Federal Communications Commission rules, 47 CFR 64.1200, delivery restrictions (telephone solicitations, prior express written consent, revocation, established business relationship), [the regulation](https://www.law.cornell.edu/cfr/text/47/64.1200), in force on the read date. Read November 14, 2026.
+- United States Code, 47 U.S.C. 227, restrictions on the use of telephone equipment, paragraph (b)(3), [the statute](https://www.law.cornell.edu/uscode/text/47/227), in force on the read date. Read November 14, 2026.
+- Federal Communications Commission, order DA 26-12, January 6, 2026, extending the waiver of the cross-message part of 47 CFR 64.1200(a)(10) to January 31, 2027, [the order](https://docs.fcc.gov/public/attachments/DA-26-12A1.pdf). Read November 14, 2026.
+- United States Code, 15 U.S.C. 7704, CAN-SPAM, [the statute](https://www.law.cornell.edu/uscode/text/15/7704), in force on the read date. Read November 14, 2026.
+- The Campaign Registry, an introduction to 10DLC and the registry, [the introduction](https://www.campaignregistry.com/Assets%2FTCR-Intro_V4.pdf), a vendor-neutral industry document. Read November 14, 2026.
+- National Association of REALTORS, 2026 Generational Trends release of April 15, 2026, [the release](https://www.nar.realtor/newsroom/baby-boomers-remain-largest-share-of-home-buyers-as-first-time-buying-falls-to-record-low). Read November 14, 2026.
+
+Sources checked November 14, 2026.
+
+Written with an AI assistant and checked by Levan.`;
 
 export const LEAD_QUALIFICATION_POST = `Open your CRM tomorrow morning and you will see a list. It is sorted by when each name arrived, because arrival time is the only thing the software knows for certain about any of them.
 

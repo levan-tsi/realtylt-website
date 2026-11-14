@@ -12,6 +12,7 @@
  * House rules apply: no em dashes, no arrow glyphs, no claims not already made on the site. */
 
 import type { ConversationEvent, ConversationTurn, FlagshipContent, GridItem } from "@/lib/blog/flagship";
+import { REACTIVATION_QUIZ } from "./reactivation-quiz";
 
 /** The film. One definition, read by the scene that plays it AND by the VideoObject JSON-LD, so
  * the two can never disagree about length, dimensions or what the clip actually shows.
@@ -44,65 +45,35 @@ export const REACTIVATION_FILM = {
  * that increasingly answer on somebody's behalf. Every line is argued in the body; a summary
  * that claims something the article does not support is how a summary box becomes a liability. */
 export const IN_SHORT: string[] = [
-  "The leads you already paid for are the cheapest pipeline you own, and almost nobody works them. That is because working them properly is repetitive misery rather than a discipline problem.",
-  "Two thirds of sellers hire an agent who was referred by somebody they know, or one they had already worked with. Your database is the only version of that group you hold a list of.",
-  "Before any of it there is a consent question with a date on it. An inquiry buys three months under the federal do-not-call rules. And an automated call or text to a mobile needs written consent that no amount of warmth substitutes for.",
+  "The people already on your list are the cheapest customers you can ask, and the asking is the part that gets skipped. Reactivation does that work with a person approving what is sent.",
+  "A survey is a reason to ask, not a forecast. In the real estate market, the National Association of REALTORS release of April 2026 reports that 91 percent of buyers would use their agent again or recommend them.",
+  "Before any message there are three checks: the date on the record, the written consent behind an automated text, and how a stop is recorded. The rules have dates in them, and a lawyer reads your own records against them.",
 ];
 
-/** SCENE copy — how sellers found their agent. The page's cited data graphic.
+/** SCENE copy — what buyers and sellers reported about agents. The page's cited data graphic.
  *
- * REAL third-party data, and deliberately a different study from the one the other two flagships
- * lean on. Those cite HBR/Oldroyd on response speed, which is the wrong evidence for a piece
- * about a list that went cold two years ago.
- *
- * Figures are Exhibit 7-1, "Method used to find real estate agent", all sellers, from the
- * National Association of REALTORS 2025 Home Buyers and Sellers Generational Trends Report.
- * Methodology, from the report's own page: NAR mailed a 127-question survey in July 2024 to
- * 167,750 recent home buyers, received 5,390 responses, an adjusted response rate of 3.2
- * percent, covering the twelve months ending June 2024. Seller data comes from those buyers who
- * also sold a home.
- *
- * WHICH BAR IS LIT MATTERS. The accent is on "used the agent previously", not on the biggest
- * bar, because that is the one this piece is about. And the 4 percent bar for an agent making
- * contact is on the chart on purpose: it is the number that argues AGAINST cold outreach, and a
- * chart that only carries the flattering bars is an advert with axes. */
+ * ROUND 29 (2026-11-14): the 2025 report's exhibit 7-1 (how sellers found their agent, a seller
+ * sub-sample) is replaced by the three shares the NAR news release of April 15, 2026 prints, read in
+ * the release itself today. Lit bar: buyers who would use their agent again or recommend them, the
+ * one that argues for asking people who already know a business. It is a survey of what buyers say,
+ * in one industry, and the note says so. */
 export const AGENT_SOURCE = {
   eyebrow: "The evidence",
-  caption: "How sellers found the agent they hired",
+  caption: "What buyers and sellers reported about agents, in the 2026 NAR release",
   bars: [
-    { label: "Referred by a friend, neighbor or relative", value: 38, display: "38%" },
-    { label: "Used the agent previously to buy or sell", value: 28, display: "28%" },
-    { label: "Referred by another agent or broker", value: 4, display: "4%" },
-    { label: "Found them on a website", value: 4, display: "4%" },
-    { label: "The agent made contact directly", value: 4, display: "4%" },
+    { label: "Buyers who would use their agent again or recommend them", value: 91, display: "91%" },
+    { label: "Sellers who worked with an agent", value: 91, display: "91%" },
+    { label: "Buyers who bought through an agent", value: 88, display: "88%" },
   ],
-  /** Shares of a whole, so the axis runs to 100 rather than to the biggest bar. Scaled to its
-   * own maximum, the 38 percent bar would be drawn full width, and a full-width bar reads as
-   * "all of them". */
+  /** Shares of a whole, so the axis runs to 100. */
   max: 100,
-  lit: 1,
-  /** NAR's own category is "Referred by (or is) a friend, neighbor or relative", and the bar
-   * label drops the "(or is)" only because it will not fit. It is restored here because it
-   * matters in our favour: the largest bar includes the agent who WAS the friend or the
-   * relative, which is a stronger version of the point this page makes, not a weaker one. */
-  basis: "Share of all sellers surveyed. NAR's largest category is worded \"referred by (or is) a friend, neighbor or relative\", so it counts the agent who was already the friend. The remaining options each accounted for 3 percent or less.",
-  /** The period is on screen deliberately. This report was published in 2025 but the survey
-   * behind it was mailed in July 2024 and covers the twelve months to June 2024, and a reader
-   * who assumes "2025 report" means "2025 data" has been misled by an accurate citation. NAR's
-   * newer edition reports the same two categories at 37 and 29 percent, so the two thirds this
-   * page argues from holds in both, but the numbers drawn here are this report's.
-   *
-   * The SELLER caveat was added 2026-08-03 after reading the methodology page. The survey was
-   * mailed to recent BUYERS; NAR states plainly that "Information about sellers comes from
-   * those buyers who also sold a home". So 5,390 is the buyer response count and the seller
-   * sub-sample behind this exhibit is smaller than that. Printing the buyer figure under a
-   * seller chart without saying so overstates the base, which is the sort of accurate-looking
-   * citation that is still misleading. */
+  lit: 0,
+  basis: "Shares of the respondents the release describes. NAR mailed a 120-question survey in July 2025 to 173,250 recent home buyers and received 6,103 responses; the seller shares come from the same release.",
   sourceText:
-    "National Association of REALTORS, 2025 Home Buyers and Sellers Generational Trends Report, Exhibit 7-1, covering the twelve months to June 2024. Survey mailed to 167,750 recent buyers, 5,390 responses; seller answers come from those buyers who also sold a home, so the seller base is smaller.",
+    "National Association of REALTORS, 2026 Home Buyers and Sellers Generational Trends, news release of April 15, 2026. Read November 14, 2026.",
   sourceHref:
-    "https://cms.nar.realtor/sites/default/files/2025-03/2025-home-buyers-and-sellers-generational-trends-report-04-01-2025.pdf",
-  note: "This measures how sellers found the agent they ended up hiring. It is not a measurement of how well any outreach method works, and it says nothing about reactivating a CRM. The reason it is here is the shape. The business goes to people who were already known, and the small bar for direct contact is the honest limit on that argument.",
+    "https://www.nar.realtor/newsroom/baby-boomers-remain-largest-share-of-home-buyers-as-first-time-buying-falls-to-record-low",
+  note: "This is what buyers say they would do, in one industry. It is not a measurement of how well any outreach works, and it says nothing about reactivating a customer list. It is here for one reason: the people who already know a business are a reason to ask a question. The numbers are the survey's, and nothing in this page converts them into a forecast.",
 };
 
 /** SCENE copy — the four moves.
@@ -112,20 +83,20 @@ export const AGENT_SOURCE = {
  * it, so these words appear exactly once on the page. */
 export const FOUR_MOVES: GridItem[] = [
   {
-    lead: "It goes through the whole list, not the top of it.",
-    body: "Every dormant contact gets a genuine attempt rather than a blast. They are grouped by what they originally asked for and how long ago they went quiet. That is what lets the first message be specific instead of generic.",
+    lead: "It goes through every contact you may reach, not the top of the list.",
+    body: "Each permitted contact gets one genuine attempt rather than a blast. They are grouped by what they bought or asked for and how long ago they went quiet. That is what lets the first message be specific instead of generic.",
   },
   {
     lead: "It opens with something that is true about them.",
-    body: "It references what that person actually asked about, asks a real question rather than checking in, and takes no for an answer the first time it is given. The opener is the entire difference between a follow-up and spam.",
+    body: "It references what that person actually bought or asked about, asks a real question rather than checking in, and takes no for an answer the first time it is given. A person approves the opener before it goes out.",
   },
   {
-    lead: "It holds the conversation, by text and by phone.",
-    body: "Is the move still on, what changed, what does the timeline look like now, is there a house to sell. It follows the answer instead of reading a script over the top of it, at whatever hour the reply happens to arrive.",
+    lead: "It holds the conversation, by text and by phone where the consent allows.",
+    body: "Is the need still there, what changed, what does the timeline look like now. It follows the answer instead of reading a script over the top of it, at whatever hour the reply happens to arrive.",
   },
   {
     lead: "It books the few who are ready, with the context attached.",
-    body: "Most of the list will still say no, and that is the expected result rather than a failure. The handful whose circumstances moved get put on your calendar along with what they just said, so you walk in already knowing.",
+    body: "The list will still hold plenty of nos, and that is the expected result rather than a failure. The handful whose circumstances moved are put on your calendar along with what they just said, so a person walks in already knowing.",
   },
 ];
 
@@ -137,16 +108,16 @@ export const FOUR_MOVES: GridItem[] = [
  * summary of it. Nothing here is legal advice and the body says so. */
 export const CONSENT_CHECK: GridItem[] = [
   {
-    lead: "Go and read the form they actually filled in.",
-    body: "For an automated call or text the rule wants a signed agreement that says, in clear and conspicuous words, that you may use an automatic dialer or an artificial voice, and that agreeing is not a condition of getting anything. An electronic signature counts. A line saying you agree to be contacted almost certainly does not.",
+    lead: "Read the form they actually filled in.",
+    body: "For an automated call or text the regulation wants a signed agreement with a clear and conspicuous disclosure that the person authorizes automated calls and is not required to sign. Read your actual form and its actual disclosure against that wording, not against a summary of it.",
   },
   {
     lead: "Check the date, not how warm it feels.",
-    body: "An inquiry gives you three months of established business relationship. A closed transaction gives you eighteen. After that a number on the national registry is a number you may not solicit. And there is no version of that rule that cares how promising the lead looked in your CRM.",
+    body: "A relationship counts for eighteen months after a purchase and three months after an inquiry. Outside it, a number on the national registry is a number you may not solicit by phone. Nothing in the rule asks how promising the lead looked.",
   },
   {
-    lead: "Decide how a no gets recorded before the first message goes out.",
-    body: "Stop, quit, end, revoke, opt out, cancel and unsubscribe are opt-outs by definition, and so is anything else a person reasonably says. It has to be honored within ten business days. You cannot force people through one specific channel to do it. And it has to reach every list you hold rather than the one it arrived on.",
+    lead: "Decide how a stop is recorded before the first message.",
+    body: "Stop, quit, end, revoke, opt out, cancel and unsubscribe each count as a reasonable way to revoke by themselves, and other words count when a reasonable person would understand them that way. Ten business days is the outer limit. Stopping at once is stricter, and it is what we run.",
   },
 ];
 
@@ -163,33 +134,28 @@ export const REVIVAL_TURNS: ConversationTurn[] = [
   {
     who: "us",
     at: "Tue 10:12 am",
-    text: "Hi Dana, it is Levan's office. You asked us about Wappingers back in 2023. Is a move still on the table, or did that get shelved?",
+    text: "Hi Dana, this is the assistant at the heating company that serviced your furnace last November. Are you due for this year's check, or has that been taken care of?",
   },
-  {
-    who: "them",
-    at: "Tue 12:48 pm",
-    text: "shelved for a while honestly. we have started talking about it again though",
-  },
+  { who: "them", at: "Tue 12:48 pm", text: "oh right, we never booked it this year" },
   {
     who: "us",
     at: "Tue 12:49 pm",
-    text: "That happens more than you would think. Same area, or has that changed? And is this a buy, a sell, or both?",
+    text: "Happy to help with that. Same address on Maple Street? There is Tuesday at 10:00am or Thursday at 2:00pm.",
   },
-  { who: "them", at: "Tue 12:53 pm", text: "both. we would have to sell this one first" },
+  { who: "them", at: "Tue 12:53 pm", text: "thursday" },
   {
     who: "us",
     at: "Tue 12:54 pm",
-    text: "Then the useful first step is knowing what yours is worth now. Levan has Thursday at 5:30 or Saturday morning. Which is easier?",
+    text: "Booked for Thursday at 2:00pm, and a technician will confirm the day before. Reply STOP any time and we will not text again.",
   },
-  { who: "them", at: "Tue 1:31 pm", text: "thursday works" },
 ];
 
 export const REVIVAL_EVENTS: ConversationEvent[] = [
-  { at: "Before any of it", label: "Consent and dates checked", detail: "What the 2023 form said, and whether a no had ever been recorded." },
-  { at: "Tue 10:12 am", label: "Opened on their own question", detail: "Wappingers, because Wappingers is what they asked about." },
-  { at: "Tue 12:49 pm", label: "Followed the answer", detail: "The house to sell is the news. The script would have missed it." },
-  { at: "Tue 12:54 pm", label: "Offered real availability", detail: "Read off the calendar rather than proposed and confirmed later." },
-  { at: "Tue 1:31 pm", label: "Written back to the CRM", detail: "The reply, the timeline and the second property, on the record." },
+  { at: "Before any of it", label: "Consent and dates checked", detail: "What the form said, whether a stop had ever been recorded, and that this customer is inside the eighteen months. A person approved the list and the opener." },
+  { at: "Tue 10:12 am", label: "Opened on what she bought", detail: "The furnace service, because that is what she bought." },
+  { at: "Tue 12:49 pm", label: "Followed the answer", detail: "The tune-up was never booked. That is the news a script would have missed." },
+  { at: "Tue 12:54 pm", label: "Offered real availability", detail: "Read off the calendar and confirmed with a stop notice." },
+  { at: "Tue 1:31 pm", label: "Written back to the record", detail: "The reply, the booking and the stop option, on the record." },
 ];
 
 /** SCENE copy — the revival path.
@@ -203,12 +169,12 @@ export const REVIVAL_PATH: { label: string; connects: string; at?: string }[] = 
   // spacing has nowhere to go on the left and is clipped by the container's own edge rather than
   // hidden behind a scroll affordance. "Your CRM, including the quiet half" lost its first
   // letter at 390px. Measured, not guessed: scripts/_scratch-r3-shots.mjs frames this scene.
-  { label: "The list", connects: "Your CRM, all of it", at: "2023" },
+  { label: "The list", connects: "Your records, all of them", at: "Last Nov" },
   { label: "The check", connects: "What the form said" },
   { label: "The opener", connects: "What they asked for" },
   { label: "The reply", connects: "Text or phone" },
   { label: "The record", connects: "Every answer, including no" },
-  { label: "The handoff", connects: "Booked time with a person", at: "Thu 5:30" },
+  { label: "The handoff", connects: "Booked time with a person", at: "Thu 2:00" },
 ];
 
 /** SCENE copy — the three failure modes.
@@ -219,15 +185,15 @@ export const REVIVAL_PATH: { label: string; connects: string; at?: string }[] = 
 export const FAILURE_MODES: GridItem[] = [
   {
     lead: "The whole list goes out on day one.",
-    body: "Thirty thousand messages from a business number that has never sent one is not a campaign. It is a filtering event. The carriers make that decision quietly and they do not tell you. So the first thing you notice is that your ordinary messages to real clients stopped arriving.",
+    body: "A business number that has never sent a campaign suddenly sends thousands of messages. Carriers set their own rules for that traffic, and the registration the channel asks for exists for it. Start with a small, registered batch that a person has approved.",
   },
   {
     lead: "The opener is about you.",
-    body: "Just checking in. Wanted to touch base. Circling back. Those three phrases are what turns a follow-up into a blast, because none of them contain a single fact about the person receiving them. If the first line would work on anybody, then it will work on nobody.",
+    body: "Just checking in. Wanted to touch base. Circling back. None of those contains a single fact about the person receiving them. If the first line would work on anybody, it says nothing to the one who reads it.",
   },
   {
     lead: "The answers get thrown away.",
-    body: "A no with a reason attached is the most valuable thing the whole exercise produces. Bought last year. Waiting on rates. Moving out of state. That is a map of what your market is actually doing, written by the market. And most campaigns record it as a status change and delete the sentence.",
+    body: "A no with a reason attached is the most useful thing the whole exercise produces. Bought last year. Waiting on a quote. Moved away. That is what your customers are telling you, in their own words, and most campaigns record it as a status change and drop the sentence.",
   },
 ];
 
@@ -248,8 +214,8 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
    * left on, not a phone nobody is answering. Breakneck Ridge rather than the twilight or the
    * night street, so the three heroes are three different photographs. */
   hero: {
-    moment: "2023",
-    suffix: "last contact",
+    moment: "18",
+    suffix: "months",
     photo: "/images/hero/valley-aerial.jpg",
     signature: "porchlight",
   },
@@ -279,7 +245,7 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
     },
     "agent-source": {
       kind: "statbars",
-      band: "light",
+      band: "dark",
       label: "The evidence",
       ...AGENT_SOURCE,
     },
@@ -342,8 +308,8 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
         {
           kind: "range",
           id: "reachable",
-          label: "The share you can still legally message",
-          hint: "Dated consent, a source on the record, and not on the registry. Read the three checks above before you guess high.",
+          label: "The share you may still contact",
+          hint: "A date, a source and a consent that covers the channel. Read the three checks above before you guess high.",
           min: 5,
           max: 100,
           step: 5,
@@ -354,7 +320,7 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
         {
           kind: "range",
           id: "moving",
-          label: "Of those, the share who answer AND are actually moving",
+          label: "Of those, the share who answer AND have a need again",
           hint: "Not the reply rate. The people whose situation genuinely changed.",
           min: 1,
           max: 20,
@@ -366,7 +332,7 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
         {
           kind: "range",
           id: "taken",
-          label: "Of those, the share that becomes a deal you take",
+          label: "Of those, the share that becomes a booked job",
           min: 5,
           max: 60,
           step: 5,
@@ -377,11 +343,11 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
         {
           kind: "range",
           id: "commission",
-          label: "Your average commission per closed deal",
-          min: 1000,
-          max: 30000,
-          step: 500,
-          initial: 6000,
+          label: "Your average job, visit or sale, before costs",
+          min: 100,
+          max: 20000,
+          step: 100,
+          initial: 500,
           format: "money",
           width: "w-[7.5rem]",
         },
@@ -394,25 +360,25 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
           unit: "in total",
         },
         {
-          label: "You can still legally message",
+          label: "You may still contact",
           by: { from: "input", id: "reachable" },
           format: "count",
           unit: "contacts",
         },
         {
-          label: "Who answer and are actually moving",
+          label: "Who answer and have a need again",
           by: { from: "input", id: "moving" },
           format: "count",
           unit: "conversations",
         },
         {
-          label: "That become a deal you take",
+          label: "That become a booked job",
           by: { from: "input", id: "taken" },
           format: "count",
-          unit: "deals",
+          unit: "jobs",
         },
         {
-          label: "In commission",
+          label: "At your average job",
           by: { from: "input", id: "commission" },
           format: "money",
           unit: "once",
@@ -420,7 +386,7 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
       ],
       headline: 4,
       resultLabel: "What working the list once might return",
-      note: "Every multiplier in this one is yours. There is not a single rate of ours in it, and that is deliberate rather than lazy. There are three reasons. No independent study of cold database response rates in real estate exists. This article says a few paragraphs up that anybody quoting you a conversion rate before they have seen your database is quoting a number they made up. And we are not going to do it in a widget either. The defaults are set low on purpose so the first thing you do is argue with them. Note also that there is no row turning this into an annual figure. A database is finite. This is what working the list once might return, not a number that repeats every year. And a vendor who annualises it is selling you a subscription to a harvest.",
+      note: "Every multiplier in this one is yours, and there is no rate of ours in it. This page prints no response rate because no independent measurement of cold list response is cited in it, and a figure we invented would be the thing the page warns about. The defaults are set low on purpose so the first thing you do is argue with them. There is also no row that turns the result into an annual figure: a list is finite, and this is what working it once might return.",
       action: { label: "See how it is built", href: "/services/database-reactivation" },
       secondary: { label: "Check yours with us", href: "/connect" },
     },
@@ -449,7 +415,7 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
       layout: "bubbles",
       label: "The teardown",
       eyebrow: "The teardown",
-      heading: "Watch it open a record from 2023.",
+      heading: "Watch it open a record from last November.",
       note: "The pattern, not a recording of a real client. The contact is invented.",
       themLabel: "Dana",
       usLabel: "The assistant",
@@ -483,6 +449,50 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
      * demo. There is nothing to try: it runs against one office's own database. The chat
      * assistant on the AI page is the thing that is genuinely live, and the footnote says which
      * is which rather than letting the button imply otherwise. */
+    /** ROUND 29: who it fits and who it does not, with what the second group does instead. */
+    fits: {
+      kind: "grid",
+      band: "light",
+      label: "Who it fits",
+      eyebrow: "Who this is for",
+      heading: "A good fit, a poor fit, and what to do instead",
+      columns: 2,
+      items: [
+        { lead: "A good fit", body: "A list of dated past customers or inquiries and a reason for them to hear from you again: tune-ups, seasonal work, lapsed regulars, former clients, a tour-no-buy list, old sellers and buyers." },
+        { lead: "A poor fit", body: "Records with no date or source, a list of a few dozen names, nobody to read the replies, or a patient list, which carries privacy rules this page does not cover." },
+        { lead: "Instead, for a poor fit", body: "Open one record, clean the list, and work a short one by hand with your own words." },
+        { lead: "Either way", body: "A person approves the list and every message, and a stop is recorded the day it arrives." },
+      ],
+    },
+    /** ROUND 29: the roadmap, one record and then one count. Our method. */
+    roadmap: {
+      kind: "steps",
+      band: "light",
+      label: "The roadmap",
+      eyebrow: "A suggested schedule",
+      heading: "One record, then one count, then a decision written down",
+      alt: "A suggested schedule: in week 1 one record opened and its date and source written down; in week 2 the records counted by channel; in weeks 3 and 4 the worth-it test and a decision written down.",
+      steps: [
+        { title: "Week 1", body: "Open one record. Is there a date, a source and a consent? Write down what you find." },
+        { title: "Week 2", body: "Count the records by channel: recent purchase, signed consent for automated texts, email with no stop on file." },
+        { title: "Weeks 3 and 4", body: "The worth-it test; then clean the records, work a short list by hand, or have a system work a long dated one with a person approving every message. Write the decision and the date down." },
+      ],
+      close: "A schedule to start from, not a deadline.",
+      sources: [{ text: "our method, the RealtyLT AI assessment" }],
+    },
+    /** ROUND 29: the owner's quiz (2026-10-31), tested against the post in reactivation-quiz.test.ts. AI brand. */
+    quiz: {
+      kind: "quiz",
+      band: "night",
+      label: "Quiz",
+      ariaLabel: "Quiz: what did you learn",
+      eyebrow: "Ten questions",
+      title: "What did you learn? Check it in two minutes",
+      brand: "ai",
+      passLine: "You know the checks that come before a message. The free AI quiz at the end of this page turns them into your own result.",
+      failLine: "Under half this time. Read the three checks and the stop rules again, then have another go.",
+      questions: REACTIVATION_QUIZ,
+    },
     funnel: {
       kind: "statement",
       band: "dark",
@@ -490,7 +500,7 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "That list is not going to get warmer on its own. Every month a few more of those people stop being not right now. And the ones who move are helped by whoever happened to be in front of them that week.",
+      text: "Every record on your own list either carries a date and a source, or it does not. Which of the two it is decides what comes next, and one record opened tonight tells you faster than anybody can.",
       actions: [
         { label: "See it on the AI page", href: "/ai#reactivation", variant: "light" },
         { label: "How it is built", href: "/services/database-reactivation", variant: "outline-light" },
@@ -504,14 +514,17 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
    * document, so a renamed heading degrades to its full text instead of leaving a dead row, and
    * the toc probe fails on a key that matches no heading. */
   headingLabels: {
-    "what-is-actually-sitting-in-that-database": "The database",
-    "why-nobody-works-it": "Why nobody does it",
-    "what-database-reactivation-actually-does": "What it does",
-    "the-part-nobody-selling-you-this-will-mention": "The rules",
-    "what-it-costs-when-it-goes-wrong": "What it costs",
-    "what-to-ask-before-you-let-anybody-text-that-list": "What to ask",
+    "what-is-database-reactivation": "What it is",
+    "how-do-you-follow-up-with-old-leads": "How to follow up",
+    "which-old-leads-and-past-customers-may-you-contact": "The rules",
+    "what-can-go-wrong-if-the-rules-are-missed": "What goes wrong",
+    "what-does-it-take-to-run": "What it takes",
+    "is-it-worth-automating-at-all": "Worth automating?",
+    "what-should-you-ask-before-anybody-texts-your-list": "What to ask",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
-    "where-it-goes-wrong": "Where it fails",
+    "where-does-it-go-wrong": "Where it fails",
+    "who-this-fits-and-who-it-does-not": "Who it fits",
+    "what-to-do-first": "Your first weeks",
     "common-questions-answered-honestly": "Common questions",
     "what-to-do-about-it": "What to do",
   },
