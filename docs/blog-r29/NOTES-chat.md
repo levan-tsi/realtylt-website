@@ -16,7 +16,7 @@ redone has to be the best ones ... to bring organic traffic. For the business ow
 
 ## B18 (against origin/main 3aabe4a)
 
-Live 3,044 words, 10 H2, 14 scenes (the gate's count); this page 4,850 words, 13 H2, 17 scenes; 24.2 minutes, over the 20-minute
+Live 3,044 words, 10 H2, 14 scenes (the gate's count); this page 4,664 words, 13 H2, 17 scenes; 23.3 minutes, over the 20-minute
 ceiling as round 28's pages were (a WARN).
 
 ## The gates
