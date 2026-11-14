@@ -617,7 +617,7 @@ export const POSTS: BlogPost[] = ([
     excerpt:
       "Workflow automation for small business in plain words: how to follow up every quote without chasing it, list the small jobs your team retypes between programs, score each for impact and risk, and catch the chains that fail quietly. For a roofer, a dental or accounting office, a salon, or a real estate or title office. With a four-week plan and a ten-question quiz.",
     seoDescription:
-      "Workflow automation for small business: follow up every quote, find the jobs worth wiring first, and catch the chains that fail quietly. Real estate and title offices too.",
+      "Workflow automation for small business: follow up every quote, find the jobs worth wiring first and catch the chains that fail quietly. Real estate and title offices too.",
     // Was /images/team-bg.jpg, which does not exist and never has: the raw asset 404s and the
     // optimizer therefore 400s, so this post's card on /blog and its own hero were both broken.
     // Accounting Finance (CC0, already in public/images/ATTRIBUTIONS.md) is the paperwork this
