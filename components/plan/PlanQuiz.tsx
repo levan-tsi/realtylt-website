@@ -1,5 +1,6 @@
 "use client";
 
+import { readAttribution } from "@/lib/leads/attribution-client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
@@ -696,6 +697,7 @@ function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<ty
       email: String(fd.get("email") ?? ""),
       phone: String(fd.get("phone") ?? ""),
       source: "/plan#quiz",
+      attribution: readAttribution(),
       interestReason:
         answers.path === "selling" ? INTEREST_REASONS[1] : answers.path === "both" ? INTEREST_REASONS[2] : INTEREST_REASONS[0],
       qualifier,

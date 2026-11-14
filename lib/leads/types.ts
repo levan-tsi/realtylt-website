@@ -2,6 +2,7 @@
 
 import type { InterestReason } from "@/lib/site";
 import type { ContactConsent } from "./consent";
+import type { LeadAttribution } from "./attribution";
 
 export interface LeadPayload {
   name: string;
@@ -41,6 +42,8 @@ export interface LeadPayload {
    * a thing the CRM needs to know before someone presses dial, and an absent field cannot say
    * it. See lib/leads/consent.ts for what the law actually requires here. */
   consent?: ContactConsent;
+  /** Where this person came from (lib/leads/attribution.ts). Absent when the browser sent none. */
+  attribution?: LeadAttribution;
 }
 
 export interface SavedSearchRequest {

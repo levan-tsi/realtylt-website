@@ -1,5 +1,6 @@
 "use client";
 
+import { readAttribution } from "@/lib/leads/attribution-client";
 import { ConsentCheckbox } from "./ConsentCheckbox";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
@@ -150,6 +151,7 @@ export function LeadForm({
         body: JSON.stringify({
           ...data,
           source: source ?? pathname,
+          attribution: readAttribution(),
           ...(addressValue && !data.address ? { address: addressValue } : {}),
           ...(qualifier ? { qualifier } : {}),
           ...(savedSearches?.length ? { savedSearches } : {}),

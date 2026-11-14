@@ -1,5 +1,6 @@
 "use client";
 
+import { readAttribution } from "@/lib/leads/attribution-client";
 import { PRESS } from "@/components/ui/Button";
 import { ConsentCheckbox } from "./ConsentCheckbox";
 import { LeadSheet } from "./LeadSheet";
@@ -33,7 +34,7 @@ async function postLead(body: Record<string, unknown>): Promise<boolean> {
     const res = await fetch("/api/lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      body: JSON.stringify({ ...body, attribution: readAttribution() }),
     });
     const json = (await res.json()) as { ok?: boolean };
     const ok = res.ok && !!json.ok;

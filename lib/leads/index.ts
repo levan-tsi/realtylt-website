@@ -5,6 +5,7 @@ import fs from "node:fs";
 import { INTEREST_REASONS, type InterestReason } from "@/lib/site";
 import { parseAddress, parseFullName } from "./field-parsers";
 import { buildConsent } from "./consent";
+import { attributionLine, parseAttribution } from "./attribution";
 import type { LeadPayload, LeadResult, SavedSearchRequest } from "./types";
 
 const OTHER: InterestReason = "Other reason to contact an agent";
@@ -108,6 +109,15 @@ export function parseLead(body: unknown, source: string, ip = "unknown"): Parsed
       ? `${message}\n\n[Listing alerts requested]\n${summary}`
       : `[Listing alerts requested]\n${summary}`;
     lead.message = message;
+  }
+
+  // WHERE THEY CAME FROM. Kept whole for reports, and one line of it folded into the message
+  // (as the qualifier and the alerts are) so it shows wherever the lead's note shows.
+  const attribution = parseAttribution(b.attribution);
+  if (attribution) {
+    lead.attribution = attribution;
+    const line = attributionLine(attribution);
+    lead.message = lead.message ? `${lead.message}\n\n${line}` : line;
   }
   return { kind: "lead", lead };
 }
@@ -213,6 +223,8 @@ async function notifyLeadThankYou(lead: LeadPayload): Promise<void> {
         email: lead.email,
         consented: lead.consent?.granted === true,
         source: lead.source,
+        // The browser's own zone, so the CRM times the assistant's call on the lead's clock.
+        ...(lead.attribution?.tz ? { tz: lead.attribution.tz } : {}),
       }),
       signal: AbortSignal.timeout(3000),
     });

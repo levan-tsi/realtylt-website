@@ -1,5 +1,6 @@
 "use client";
 
+import { readAttribution } from "@/lib/leads/attribution-client";
 import { useState } from "react";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { SITE, type InterestReason } from "@/lib/site";
@@ -40,6 +41,7 @@ export function TalkToAgent({
           ? `${message.trim()}\n\nRe: ${reportTitle}`
           : `Raised their hand from their portal report: ${reportTitle}`,
       source: "/portal/reports",
+      attribution: readAttribution(),
     };
     try {
       const res = await fetch("/api/lead", {

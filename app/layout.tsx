@@ -5,6 +5,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Providers } from "@/components/auth/Providers";
 import { PostHogInit } from "@/components/site/PostHogInit";
+import { AttributionCapture } from "@/components/site/AttributionCapture";
 import { QualifyingWizardProvider } from "@/components/leads/QualifyingWizard";
 import { OG_DEFAULTS, SERVED_AREAS, SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
@@ -128,6 +129,7 @@ export default function RootLayout({
         {/* PostHog: cookieless, proxied through /relay-ph, replay masked. GA below stays —
             it feeds the owner's Ads conversions; two tools, two jobs. */}
         <PostHogInit />
+<AttributionCapture />
         {/* The SAME chat widget the live site injects via BlueRoof custom code —
             extracted byte-exact from realtylt.com (self-contained, talks to the n8n
             agent webhook). Keeping it a static file means updates are a re-extract. */}

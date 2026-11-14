@@ -1,5 +1,6 @@
 "use client";
 
+import { readAttribution } from "@/lib/leads/attribution-client";
 import {
   createContext,
   useCallback,
@@ -221,6 +222,7 @@ function QualifyingWizard({
         phone: prefill.phone,
         address: prefill.address,
         source: prefill.source ?? "/selling",
+        attribution: readAttribution(),
         interestReason: reasonFor(a.intent),
         qualifier: buildQualifier(a),
         // The SAME consent answer as the primary lead. Without it, buildConsent reads the
