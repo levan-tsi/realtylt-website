@@ -262,18 +262,25 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-scheduling-real-estate-showing-confirmations",
     cluster: "appointments",
-    title: "You said it was confirmed. One of the three people had not replied.",
-    seoTitle: "AI Scheduling in Real Estate: When Confirmations Reset",
+    title: "AI scheduling assistant for appointments other people must confirm",
+    seoTitle: "AI Scheduling Assistant for Appointment Confirmations",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
+    updated: "2026-11-11",
+    /** ROUND 28 (2026-11-11), re-aimed at local business owners (his order of 2026-11-11): the
+     * title carries "ai scheduling assistant"; the story is a plumber's repair in a managed building
+     * (the owner, the manager, the tenant); the examples a contractor, a cleaning firm, a dental
+     * office with an interpreter, a salon, a gym, a tutoring agency and a real estate office as one
+     * of them; the teaching shape and the quiz added; the closing line goes to the quiz. Slug kept.
+     * See docs/blog-r28/NOTES-scheduling.md.
+     *
+     * `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
      * pass pointed the fine-tuning caveat at the right Microsoft Graph page and rewrote the
      * seo.description ending; see docs/parity/ROUND45-RELEVANCE-PASS.md and ROUND46. First real
      * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
-      "The appointment was booked. It was booked by one of the three people whose agreement it needed, and that one was you. What a scheduling system can really do when the calendars it needs belong to other people. Why the standards already have a word for an appointment nobody has agreed to. And why moving the time throws every yes away.",
+      "An AI scheduling assistant for appointments other people must confirm: what it can really do when the calendars it needs belong to other people, why the standards already have a word for an appointment nobody has agreed to, why moving the time throws every yes away, and four tests before buying one.",
     seoDescription:
-      "What a scheduling system can do when the calendars it needs belong to other people, and why moving an appointment resets every confirmation you had.",
+      "An AI scheduling assistant for appointments other people must confirm: what it can do, why a moved time resets every yes, and four tests before buying one.",
     cover: "/images/editorial/clock-not-in-use.jpg",
     body: [],
     placeholder: false,

@@ -36,6 +36,7 @@
  * House rules apply: no em dashes, no arrow glyphs, no claims not already made on the site. */
 
 import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
+import { SCHEDULING_QUIZ } from "./scheduling-quiz";
 
 /** SCENE copy — "In short".
  *
@@ -122,7 +123,7 @@ export const ESCALATIONS = {
   sourceText:
     "Cranshaw, Elwany, Newman, Kocielnik, Yu, Soni, Teevan and Monroy-Hernandez, Calendar.help: Designing a Workflow-Based Scheduling Agent with Humans in the Loop, CHI 2017, Table 3.",
   sourceHref: "https://arxiv.org/abs/1703.08428",
-  note: "These are meetings between information workers, not showings. The assistant worked by email rather than by text. What carries is the shape, and the shape is uncomfortable for anybody selling this category. The failures cluster almost entirely on the side of the table the vendor does not control. The failure the demonstrations are about, reading the organiser's calendar, is the smallest bar on the chart. Four other rows are not drawn. One is an uninstrumented bucket at 14%. Three at 8%, 7% and 2% are the system escalating internally, rather than anything a party to the meeting did. One thing the table cannot tell you is how many of those requests were recoverable. An escalation means a trained person picked it up, not that the meeting failed. The paper is about how much skilled attention a scheduling agent consumes, rather than about how many appointments it loses.",
+  note: "These are meetings between office workers, not jobs in other people's buildings. The assistant worked by email rather than by text. What carries is the shape, and the shape is uncomfortable for anybody selling this category. The failures cluster almost entirely on the side of the table the vendor does not control. The failure the demonstrations are about, reading the organiser's calendar, is the smallest bar on the chart. Four other rows are not drawn. One is an uninstrumented bucket at 14%. Three at 8%, 7% and 2% are the system escalating internally, rather than anything a party to the meeting did. One thing the table cannot tell you is how many of those requests were recoverable. An escalation means a trained person picked it up, not that the meeting failed. The paper is about how much skilled attention a scheduling agent consumes, rather than about how many appointments it loses.",
 };
 
 /** SCENE copy — the ceiling. Cited data graphic TWO.
@@ -168,19 +169,19 @@ export const CEILING = {
 export const WHO_AGREES: GridItem[] = [
   {
     lead: "The person you are meeting",
-    body: "The only one everybody thinks about. The only one whose calendar the conversation can actually negotiate with, because they are in the conversation. If this were the whole problem then a booking link would have solved it years ago. For a listing appointment at your own office it very nearly is.",
+    body: "The only one everybody thinks about. The only one whose calendar the conversation can actually negotiate with, because they are in the conversation. If this were the whole problem then a booking link would have solved it years ago. For an appointment at your own shop it very nearly is.",
   },
   {
-    lead: "Whoever controls the property",
-    body: "On your own listing that is you. That is why your own listings feel easy and other people's do not. On someone else's it is an agent with a full week. Behind that agent is a seller who has to leave the house, or a tenant who has rights about being given notice. None of those three is in your conversation. None of them owes you a reply this afternoon.",
+    lead: "Whoever controls the place",
+    body: "At your own shop that is you. That is why your own appointments feel easy and other people's do not. In someone else's building it is a manager with a full week. Behind that manager is an owner who has to approve the work, or a tenant who has rights about being given notice. None of those three is in your conversation. None of them owes you a reply this afternoon.",
   },
   {
     lead: "The way in",
-    body: "A code, a key, a box, an alarm, a doorman, a gate. This one is not a person, which is why it is the one left off the list. It silently carries a time window of its own. A code that works between ten and four is a constraint on the appointment. It constrains it exactly as much as a seller who works from home does.",
+    body: "A code, a key, a super, an alarm, a doorman, a gate. This one is not a person, which is why it is the one left off the list. It silently carries a time window of its own. A code that works between ten and four is a constraint on the appointment. It constrains it exactly as much as an owner who works from home does.",
   },
   {
-    lead: "The professionals, on a closing",
-    body: "A closing is the same problem with the volume turned up. An attorney, a lender, a title company and both sides of the deal have to be in one room or on one call. Every one of them is running the same week you are. This is the appointment where the cost of a wrong assumption is not an empty morning.",
+    lead: "The professionals, on a bigger job",
+    body: "A bigger job is the same problem with the volume turned up. An inspector, an adjuster, the owner and the contractor may all have to be on site in the same hour, and a real estate closing puts an attorney, a lender and a title company in one room. Every one of them is running the same week you are. These are the appointments where the cost of a wrong assumption is not an empty morning.",
   },
 ];
 
@@ -274,7 +275,7 @@ export const THE_REQUEST = {
   eyebrow: "The mechanic",
   heading: "Thursday, half past four.",
   note: "A staged illustration, not a real exchange. No address, name or number appears in it because none of them would be real. The sequence is the one the service page describes.",
-  themLabel: "The listing side",
+  themLabel: "The building manager",
   usLabel: "The assistant",
   turnsHeading: "The exchange",
   eventsHeading: "What happened on your side",
@@ -282,18 +283,18 @@ export const THE_REQUEST = {
     {
       who: "us" as const,
       at: "4:31 pm",
-      text: "Buyer would like to view your listing. Saturday 11am or Saturday 2pm both work our side. Either possible?",
+      text: "The owner of 4C has asked us to fix a leak under the kitchen sink. Saturday 11am or Saturday 2pm both work our side. Either possible?",
     },
-    { who: "them" as const, at: "6:02 pm", text: "not 11, tenant needs 24h notice. 2 is probably ok, checking with them" },
-    { who: "us" as const, at: "6:02 pm", text: "Understood. Holding 2pm Saturday as unconfirmed on our side and not offering it elsewhere. Tell us either way by Friday 6pm and we will confirm to the buyer then." },
-    { who: "them" as const, at: "Fri 11:14 am", text: "tenant is fine with 2. code is on the sheet" },
+    { who: "them" as const, at: "6:02 pm", text: "not 11, tenant needs 24h notice and super is off til 1. 2 is probably ok, checking with them" },
+    { who: "us" as const, at: "6:02 pm", text: "Understood. Holding 2pm Saturday as unconfirmed on our side and not offering it elsewhere. Tell us either way by Friday 6pm and we will confirm to the owner then." },
+    { who: "them" as const, at: "Fri 11:14 am", text: "tenant is fine with 2. super will meet you in the lobby" },
     { who: "us" as const, at: "11:14 am", text: "Confirmed. Saturday 2pm. Sending an invitation to this number so it lands on your calendar too." },
   ],
   events: [
     {
       at: "4:31 pm",
       label: "Two times proposed, nothing promised",
-      detail: "The buyer is told a request has gone in. The buyer is not told a time. Nobody has agreed to anything yet, and the message the buyer receives says exactly that.",
+      detail: "The owner is told a request has gone in. The owner is not told a time. Nobody has agreed to anything yet, and the message the owner receives says exactly that.",
     },
     {
       at: "6:02 pm",
@@ -307,8 +308,8 @@ export const THE_REQUEST = {
     },
     {
       at: "Fri 11:14 am",
-      label: "The buyer is told, once",
-      detail: "Nineteen hours after the request went in. It is the first time the buyer has been given a time. That delay is the honest cost of not having promised anything on Thursday.",
+      label: "The owner is told, once",
+      detail: "Nineteen hours after the request went in. It is the first time the owner has been given a time. That delay is the honest cost of not having promised anything on Thursday.",
     },
   ],
 };
@@ -481,7 +482,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "appts",
           label: "Appointments you arrange in a month",
-          hint: "Everything you have to set up with someone outside your own office. Showings on other people's listings, inspections, appraisals, walkthroughs, closings.",
+          hint: "Everything you have to set up with someone outside your own business: jobs in other people's buildings, inspections, site visits, interpreters, showings.",
           min: 2,
           max: 80,
           step: 1,
@@ -493,12 +494,12 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
           kind: "choice",
           id: "parties",
           label: "People who have to agree, other than you",
-          hint: "Count the ones who can stop it happening. The person you are meeting is one. The listing side is another. An occupant with a notice period is a third. On a closing it is more than that.",
+          hint: "Count the ones who can stop it happening. The person you are meeting is one. The building's manager is another. An occupant with a notice period is a third. On a bigger job it is more than that.",
           initial: 1,
           options: [
-            { value: 1, label: "One", sub: "Your own listing, your own office", display: "1 other party" },
-            { value: 2, label: "Two", sub: "The usual showing on somebody else's listing", display: "2 other parties" },
-            { value: 3, label: "Three", sub: "An occupied property, or a small closing", display: "3 other parties" },
+            { value: 1, label: "One", sub: "Your own shop, your own customer", display: "1 other party" },
+            { value: 2, label: "Two", sub: "The usual job in somebody else's building", display: "2 other parties" },
+            { value: 3, label: "Three", sub: "An occupied home, or a job with an inspector", display: "3 other parties" },
           ],
         },
         {
@@ -549,7 +550,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 3,
       resultLabel: "Agreements a year that were never actually given",
-      note: "The headline is the fourth row rather than the hours. The hours row underneath it is doing deliberate work. At the settings this opens with, the chasing comes to a number of hours that any owner would shrug at. That is the trap. The cost of this is not the time. It is that a share of those unconfirmed agreements are being described to a client as confirmed. Shares produce fractions, and two thirds of an agreement is not a thing. So read anything with a decimal in it as a rough count. Four things this deliberately refuses. There is no no-show rate anywhere in it, because whether somebody turns up is a different article on this site with real evidence behind it and this one has nothing to add to it. There is no figure for how often a listing side declines a request, and that gap was looked for rather than assumed: the largest showing scheduling platform in the country sits on exactly this data and publishes a monthly index off it, and its own page describes that index as a leading indicator of demand trends. It counts showings that happened. What share of requests were refused, and how long the rest took to be answered, is not in it, and we could not find it published anywhere else. There is no money row, because the value of a Saturday morning depends on what was in it. And there is no second column showing what this becomes with a scheduling layer switched on, because we have not measured that on your appointments and the study on this page was run on office meetings between two people.",
+      note: "The headline is the fourth row rather than the hours. The hours row underneath it is doing deliberate work. At the settings this opens with, the chasing comes to a number of hours that any owner would shrug at. That is the trap. The cost of this is not the time. It is that a share of those unconfirmed agreements are being described to a client as confirmed. Shares produce fractions, and two thirds of an agreement is not a thing. So read anything with a decimal in it as a rough count. Four things this deliberately refuses. There is no no-show rate anywhere in it, because whether somebody turns up is a different article on this site with real evidence behind it and this one has nothing to add to it. There is no figure for how often the other side declines a request, and that gap was looked for rather than assumed: we could not find one published. There is no money row, because the value of a Saturday morning depends on what was in it. And there is no second column showing what this becomes with a scheduling layer switched on, because we have not measured that on your appointments and the study on this page was run on office meetings between two people.",
       action: { label: "See how it is built", href: "/services/ai-scheduling" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },
@@ -586,11 +587,11 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The honest read",
-      text: "Tell us how a showing on somebody else's listing gets set up in your office today, from the message arriving to the buyer being told a time. We will send back where the unconfirmed gap is in your version of it, and which single message is the one that turns a proposal into a promise.",
+      text: "Tell us how a job in somebody else's building gets set up in your business today, from the message arriving to the customer being told a time. We will send back where the unconfirmed gap is in your version of it, and which single message is the one that turns a proposal into a promise.",
       reassure:
         "It is a short reply from a person, it costs nothing, we do not need access to your calendar to answer it, and the answer is useful whether you buy anything or not.",
       action: { label: "Send us your version", href: "/connect" },
-      ariaLabel: "Send us how a showing gets set up in your office",
+      ariaLabel: "Send us how a job gets set up in your business",
     },
     funnel: {
       kind: "statement",
@@ -599,13 +600,76 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Open your calendar and find the next appointment that needs somebody outside your office. Then answer one question about it out loud: which of the people it depends on has actually replied, in writing, and where is that reply. If the answer is that you are fairly sure, you have found the thing this whole article is about, and you have found it while there is still time to send a message.",
+      text: "Open your calendar and find the next appointment that needs somebody outside your business. Then answer one question about it out loud: which of the people it depends on has actually replied, in writing, and where is that reply. If the answer is that you are fairly sure, you have found the thing this whole article is about, and you have found it while there is still time to send a message.",
       actions: [
         { label: "See it on the AI page", href: "/ai#scheduling", variant: "light" },
         { label: "How it is built", href: "/services/ai-scheduling", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because two things move it and neither is the calendar connection: how many parties a typical appointment of yours needs, and whether the people on the other side can be reached the same way every time or whether half of them are a phone call. The AI assessment is an hour, done with you, and for this topic it starts by walking one real showing backwards from the confirmation to the first message.",
+        "There is no price here because two things move it and neither is the calendar connection: how many parties a typical appointment of yours needs, and whether the people on the other side can be reached the same way every time or whether half of them are a phone call. The AI assessment is an hour, done with you, and for this topic it starts by walking one real appointment backwards from the confirmation to the first message.",
+    },
+
+    /** ROUND 28: the screening questions for one appointment type. Our method. */
+    "worth-it": {
+      kind: "grid",
+      band: "dark",
+      label: "Worth automating?",
+      eyebrow: "Before anything is set up",
+      heading: "Three questions, then the stop question",
+      columns: 2,
+      items: [
+        { lead: "Often enough?", body: "Frequent enough that a failure would show within a week." },
+        { lead: "Can the rule be written?", body: "Access rules included, on one page a new hire could follow." },
+        { lead: "Seen first?", body: "A wrong confirmation should reach a person on your side before it reaches the customer." },
+        { lead: "What breaks if it stopped?", body: "If nothing breaks, stop doing it. An impact of 1 or 2 out of 5 means leave it alone." },
+      ],
+    },
+
+    /** ROUND 28: who it fits and who it does not, with what the second group does instead. */
+    fits: {
+      kind: "grid",
+      band: "light",
+      label: "Who it fits",
+      eyebrow: "Who this is for",
+      heading: "A good fit, a poor fit, and what to do instead",
+      columns: 2,
+      items: [
+        { lead: "A good fit", body: "Appointments that need a yes from outside the business: jobs in managed buildings and occupied homes, interpreters, visiting suppliers, showings on other people's listings." },
+        { lead: "A poor fit", body: "Bookings with two calendars and no third party, like a haircut at your own chair." },
+        { lead: "Instead, for a poor fit", body: "A booking link does the job." },
+        { lead: "Keep it by hand", body: "Where a wrong time costs a contract or a legal deadline, such as a real estate closing: a person arranges it, with two columns, agreed and asked." },
+      ],
+    },
+
+    /** ROUND 28: the roadmap, one appointment type at a time. Our method. */
+    roadmap: {
+      kind: "steps",
+      band: "light",
+      label: "The roadmap",
+      eyebrow: "A suggested schedule",
+      heading: "One appointment type, three weeks, a decision written down",
+      alt: "A suggested schedule: this week the two-column check and the four defaults of the appointment type with the biggest gap; next week the job written down so someone else could run it, then the three questions; the week after the decision written down, with a person approving every confirmation that reaches a customer.",
+      steps: [
+        { title: "This week", body: "The two-column check; the appointment type with the biggest gap and its four defaults." },
+        { title: "Next week", body: "The job written down so someone else could run it; the three questions." },
+        { title: "The week after", body: "Leave it alone, keep it by hand, or take the four tests to a demonstration; a person approves every confirmation." },
+      ],
+      close: "A schedule to start from, not a deadline.",
+      sources: [{ text: "our method, the RealtyLT AI assessment" }],
+    },
+
+    /** ROUND 28: the owner's quiz (2026-10-31), tested against the post in scheduling-quiz.test.ts. AI brand. */
+    quiz: {
+      kind: "quiz",
+      band: "night",
+      label: "Quiz",
+      ariaLabel: "Quiz: what did you learn",
+      eyebrow: "Ten questions",
+      title: "What did you learn? Check it in two minutes",
+      brand: "ai",
+      passLine: "You know what confirmed means. The free AI quiz at the end of this page turns it into your own result.",
+      failLine: "Under half this time. Read the two standards sections again, then have another go.",
+      questions: SCHEDULING_QUIZ,
     },
   },
 
@@ -614,15 +678,18 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
   headingLabels: {
     "what-a-scheduling-problem-is-once-the-calendar-is-not-yours": "The real problem",
     "the-part-nobody-automates-is-the-part-that-is-other-people": "What broke",
-    "who-has-to-say-yes-before-a-showing-is-real": "Who agrees",
+    "who-has-to-say-yes-before-an-appointment-is-real": "Who agrees",
     "the-standard-already-has-a-word-for-an-appointment-nobody-agreed-to": "The word for it",
     "moving-the-time-throws-away-every-yes-you-had": "Moving it",
     "your-own-system-knows-whether-the-message-arrived": "Did it arrive",
-    "what-a-scheduling-layer-can-honestly-do-across-calendars-it-does-not-own": "What it does",
+    "what-an-ai-scheduling-assistant-can-honestly-do-across-calendars-it-does-not-own": "What it does",
     "why-offering-a-slot-you-cannot-hold-is-worse-than-offering-nothing": "The false yes",
     "how-to-test-one-before-you-buy-it": "Test one yourself",
     "what-it-costs-and-how-long-it-takes": "Cost and time",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
+    "is-it-worth-automating": "Worth automating?",
+    "who-this-fits-and-who-it-does-not": "Who it fits",
+    "what-to-do-first": "Your first weeks",
     "common-questions-answered-honestly": "Common questions",
     "what-to-do-about-it": "What to do",
   },
