@@ -579,8 +579,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "workflow-automation-real-estate-business",
     cluster: "building",
-    title: "The busywork tax: what workflow automation actually removes",
-    seoTitle: "Workflow Automation for a Real Estate Business, Explained",
+    title: "Workflow automation for small business: follow up every quote, then wire the next job",
+    seoTitle: "Workflow Automation for Small Business: Quotes and Follow-Up",
     date: "2026-07-13",
     /** A REAL revision, not a freshness fiction. Shipped 07-13 as a plain 1,200-word article; on
      * 08-01 it was rebuilt onto the flagship path with a cited field study, an original data
@@ -595,12 +595,29 @@ export const POSTS: BlogPost[] = ([
      * condition is now on all of them. A "three lies" card also derived an afternoon from forty
      * minutes, and a superlative claimed the study was the clearest anybody has published. Every
      * other figure re-verified in the CHI 2005 paper, on Zapier's two help pages and in n8n's
-     * error-handling docs. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-09-18",
+     * error-handling docs. See docs/parity/ROUND48-RELEVANCE-PASS.md.
+     *
+     * ROUND 24 (2026-11-03), the agents' refresh, which his click of 2026-11-11 approved on a
+     * preview page that was never merged (approval row 24, `pushed`): written for small businesses of
+     * any kind, the opener says what we do and what the reader learns, jobs scored for impact and
+     * risk before anything is built, a person approves anything a customer reads, four new sections
+     * (is it worth automating, who it fits, what to do first, the quiz), no platform name in
+     * visitor copy. 2,793 words to 4,393; 14 scenes to 20. See docs/blog-r24/NOTES.md.
+     *
+     * ROUND 29 (2026-11-14), built on that page and re-aimed at local business owners (his order of
+     * 2026-11-14): the title is the owners' phrase "workflow automation for small business" with the
+     * quote follow-up; a section on following up every quote (a roofer, with the arithmetic) and a
+     * scene for the same wiring in six kinds of business, a real estate or title office one of
+     * them (the Search Console phrases "title company workflow automation", "real estate workflow
+     * automation" stay served); a section on what the AI readiness assessment hands over; "What it
+     * costs, and how long it takes" became "What it takes to run" (no price, no delivery time);
+     * four owner questions; the Small Business Administration's 2026 FAQ added; the closing line goes
+     * to the quiz (CTA-2 version B, plain text). Slug kept. See docs/blog-r29/NOTES-workflow.md. */
+    updated: "2026-11-14",
     excerpt:
-      "The manual step takes ninety seconds. In the study that timed it, getting back to interrupted work averaged twenty five minutes when it resumed the same day. Here is what workflow automation really removes from a real estate business. How to find your own version of it in an hour. And the failure mode nobody warns you about.",
+      "Workflow automation for small business in plain words: how to follow up every quote without chasing it, list the small jobs your team retypes between programs, score each for impact and risk, and catch the chains that fail quietly. For a roofer, a dental or accounting office, a salon, or a real estate or title office. With a four-week plan and a ten-question quiz.",
     seoDescription:
-      "What workflow automation removes from a real estate business, how to find your list in an hour, and the quiet failure platforms document but nobody mentions.",
+      "Workflow automation for small business: follow up every quote, find the jobs worth wiring first, and catch the chains that fail quietly. Real estate and title offices too.",
     // Was /images/team-bg.jpg, which does not exist and never has: the raw asset 404s and the
     // optimizer therefore 400s, so this post's card on /blog and its own hero were both broken.
     // Accounting Finance (CC0, already in public/images/ATTRIBUTIONS.md) is the paperwork this

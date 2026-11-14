@@ -15,9 +15,27 @@
  * demonstration this topic actually has is a chain of system hops with no second party in it.
  * Forcing it into bubbles would have put topic 1's content on topic 5's page.
  *
- * House rules apply: no em dashes, no arrow glyphs, no claims not already made on the site. */
+ * House rules apply: no em dashes, no arrow glyphs, no claims not already made on the site.
+ *
+ * ROUND 24 REFRESH (2026-11-03), from the agents' refresh draft and its second reader's 24 notes
+ * (realtylt-agents company/agents/seo/drafts/2026-11-03-workflow-automation-real-estate-business*).
+ * What changed in the scenes, and why: no platform name in visitor copy (the brand rule; the
+ * sources stay linked in the body); the twenty five minutes is ELAPSED TIME before resumption in
+ * one study's sample, never a cost per task; the rebuilt chain's reply is DRAFTED and waits for a
+ * person's approval (our own scoring: anything that reaches a customer is risk 3 or more and keeps
+ * a person on it); "stays green, nobody is told" became what the documentation supports (failed
+ * runs are marked errored in the run history; who hears about it depends on the setup); the
+ * prevalence lines with no source ("almost nobody", "most people", "nearly every") are gone; six
+ * scenes added for the new sections (the screening questions, the cost shape, the first month,
+ * who it fits, the roadmap, the quiz). The film is kept as it was rendered; its caption now says
+ * where the page and the film differ. */
 
 import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
+import { WORKFLOW_QUIZ } from "./workflow-quiz";
+
+/** Our own method, cited as ours: the screening questions, the scores, the four checks and the
+ * verdicts of the AI assessment (published in full on the post on what to automate first). */
+const METHOD = { text: "our method, the RealtyLT AI assessment" };
 
 /** The film. One definition, read by the scene that plays it AND by the VideoObject JSON-LD, so
  * the two can never disagree about length, dimensions or what the clip actually shows.
@@ -43,9 +61,9 @@ export const WORKFLOW_FILM = {
   seconds: 59,
   /** ISO 8601, which is the only duration format VideoObject accepts. */
   duration: "PT59S",
-  name: "Ninety seconds of typing, and the twenty five minutes it actually costs",
+  name: "Ninety seconds of typing, and the wait before the work comes back",
   description:
-    "A form arrives at 11:47pm and nobody sees it until the morning. The film follows the same lead by hand, eight steps spread across three days, then wired as a single chain whose first and last hop land in the same minute. It closes on the failure nobody warns you about: the platforms only switch a chain off when it fails almost every time it runs, so a chain failing one time in twenty stays on, stays green, and nobody is told.",
+    "A form arrives at 11:47pm and nobody sees it until the morning. The film follows the same lead by hand, eight steps spread across three days, then wired as a single chain whose first and last hop land in the same minute. It closes on the quiet failure: one platform's default pause applies only when a chain fails on 95 percent or more of its runs, so a chain failing one time in twenty keeps running, and its failed runs wait in a history somebody has to open.",
 } as const;
 
 /** SCENE copy — "In short".
@@ -54,9 +72,9 @@ export const WORKFLOW_FILM = {
  * that increasingly answer on somebody's behalf. Each one is a number somebody else can check:
  * the first two are the cited field study, the third is Zapier's own documented default. */
 export const IN_SHORT: string[] = [
-  "The ninety seconds of typing is not the cost. Twenty four information workers were timed to the second at their desks. The interrupted work that got picked up again the same day took an average of twenty five minutes and twenty six seconds to come back to.",
-  "You are not automating step four. You are automating one through eight, because the chain is where the reloading happens and a chain is exactly what these tools are good at.",
-  "Zapier's own documentation says it pauses a chain that errors ninety five percent of the times it ran in the last seven days. Read that the other way: a chain failing one time in twenty is a chain nobody is going to tell you about.",
+  "Workflow automation connects the programs you already pay for, so that finishing one step, such as sending a quote, starts the next and nobody retypes what a system already knows.",
+  "Score each job for impact and risk before building anything. A job whose result reaches a customer keeps a person approving it, and a low-impact job is left alone.",
+  "A chain can fail quietly. One platform pauses a chain only when 95 percent of its runs in 7 days fail, so every chain needs a failure report to a named owner, tested once.",
 ];
 
 /** SCENE copy — work fragmentation. The page's cited data graphic.
@@ -119,9 +137,9 @@ export const FRAGMENTED = {
   basis:
     "Average elapsed time, 24 information workers observed at their desks and timed to the second. All three resumption figures count work picked up again the same day, which was 77.2 percent of everything interrupted. The middle figure is not a third category. That is because nine resumptions in ten were self-started, and 90.1% at 21 min 28 sec with 9.9% at 61 min 37 sec averages out to exactly the 25 min 26 sec on the third bar.",
   sourceText:
-    "Gloria Mark, Victor M. Gonzalez and Justin Harris, No Task Left Behind? Examining the Nature of Fragmented Work, Proceedings of CHI 2005, University of California, Irvine. Over 700 hours of observation; 57 percent of work segments ended in an interruption and 77.2 percent of interrupted work was resumed the same day.",
+    "Mark, Gonzalez and Harris, the CHI 2005 paper from UC Irvine. 57 percent of working spheres were interrupted and 77.2 percent of interrupted work was resumed the same day.",
   sourceHref: "https://ics.uci.edu/~gmark/CHI2005.pdf",
-  note: "These were managers, analysts and software developers at one technology company, observed in a single field study, and not one of them sold a house. It measures how fragmented desk work is. It is not a measurement of how much of your week is copy and paste. It cannot be turned into one, and no automation should be sold to you on the back of it. What it establishes is the only thing this page needs it for: the interruption costs far more than the task that caused it.",
+  note: "These were managers, analysts and software developers at one technology company, observed in a single field study, and none of them ran a small business. The times are how long passed before work was picked up again, usually with other activities in between, not time lost. It measures how fragmented desk work was. It is not a measurement of your week, and no automation should be sold to you on the back of it.",
 };
 
 /** SCENE copy — the three excuses.
@@ -131,11 +149,11 @@ export const FRAGMENTED = {
 export const THREE_LIES: GridItem[] = [
   {
     lead: "It only takes a minute.",
-    body: "It takes a minute forty times a month, and forty minutes is the smallest possible version of that number. A minute of typing is never a minute. It is a minute plus whatever it costs to get back to what you were doing, which the study above puts closer to twenty five.",
+    body: "In the invented example it takes a minute forty times a month. And the minute is not the whole of it: in the study above, interrupted work went to the back of the queue and usually waited a while, with other things done first, before anyone came back to it.",
   },
   {
     lead: "I would rather do it myself, so I know it is done right.",
-    body: "This is the honest objection, and the other two are excuses. Wanting to see the work is correct. The answer is not to trust a system blindly. It is to build one you can watch, and that is a different thing with a different price.",
+    body: "This is the fair objection. Wanting to see the work is correct. The answer is not to trust a system blindly. It is to build one you can watch, with a person approving anything a customer will read.",
   },
   {
     lead: "It is not worth automating something this small.",
@@ -151,19 +169,19 @@ export const THREE_LIES: GridItem[] = [
 export const AUDIT: GridItem[] = [
   {
     lead: "Follow one real job, end to end.",
-    body: "Not the ideal version. The one that actually happened last week, including the part where somebody had to chase a signature twice. Write down every step, including the ones that feel too small to write down. Those are the ones.",
+    body: "Not the ideal version. The one that actually happened last week, including the part where somebody had to chase a signature twice. Write down every step, including the ones that feel too small to write down.",
   },
   {
     lead: "Mark every step where information moves between two systems by hand.",
-    body: "That is your list. It is always longer than the person writing it expected, and the worst offenders are invisible because everyone stopped noticing them years ago.",
+    body: "That is your list. The steps worth finding are often the ones nobody notices any more, because they have been done by hand for years.",
   },
   {
     lead: "Mark every step that only happens if somebody remembers.",
     body: "That is your risk, and it is a different list. In the study above, work people came back to themselves resumed in twenty one minutes and twenty eight seconds. Work that waited for somebody else to prompt it sat for sixty one minutes and thirty seven seconds.",
   },
   {
-    lead: "Rank by how often it happens, not by how annoying it is.",
-    body: "The most irritating task is rarely the most expensive one. The expensive one is the boring thing you do fifty times a month without noticing. Most people are surprised twice: by how long the list is, and then by how dull the top of it is.",
+    lead: "Score each job for impact and risk, not by how annoying it is.",
+    body: "Two scores from 1 to 5, each with a reason. How often a job happens and how much judgement it needs feed both, and the four checks set a floor under the risk.",
   },
 ];
 
@@ -183,9 +201,52 @@ export const REBUILT_CHAIN: { label: string; connects: string; at?: string }[] =
   { label: "The form", connects: "Site or portal", at: "11:47 pm" },
   { label: "The record", connects: "Matched, not duplicated" },
   { label: "The details", connects: "Phone and address checked" },
-  { label: "The reply", connects: "A real answer, in seconds" },
+  { label: "The reply", connects: "Drafted, for a person to approve" },
   { label: "The route", connects: "Scored, then assigned" },
   { label: "The task", connects: "Calendared, with the context" , at: "11:47 pm" },
+];
+
+/** ROUND 29 (2026-11-14): one sent quote, followed up. The service page's own figure
+ * (content/services/workflow-automation.ts: a roofing quote sent on Tuesday at 4:10pm) in the
+ * article's voice. An invented example, said in the text above the scene. The first caption is
+ * the shortest, as the rebuilt chain's is. */
+export const QUOTE_CHAIN: { label: string; connects: string; at?: string }[] = [
+  { label: "The quote", connects: "Sent", at: "Tue 4:10 pm" },
+  { label: "The record", connects: "Logged once" },
+  { label: "Day 3", connects: "Note drafted, approved" },
+  { label: "A reply", connects: "Stops it, goes to you" },
+  { label: "Day 7", connects: "A task: call them" },
+  { label: "The outcome", connects: "Won or lost marked" },
+];
+
+/** ROUND 29: the same wiring in other kinds of business. Every line is the service page's own
+ * example (content/services/workflow-automation.ts "Where it earns its keep"); the people in them
+ * stay with a person. */
+export const BY_TRADE: GridItem[] = [
+  {
+    lead: "A roofer, plumber or heating company",
+    body: "A sent quote starts the follow-up above. Any reply stops it and goes to the owner with the quote attached.",
+  },
+  {
+    lead: "A dental office",
+    body: "The new-patient forms land in the right place and a confirmation is drafted for the front desk to approve, so the front desk sees one finished record. Nothing in the chain reads or moves anyone's treatment record.",
+  },
+  {
+    lead: "An accounting office in tax season",
+    body: "A list of the documents each client still owes is kept current from what has arrived, and a drafted reminder, once approved, goes only to the clients still missing something.",
+  },
+  {
+    lead: "A salon, spa or gym",
+    body: "A booking starts a drafted confirmation and reminder. A person approves what the message says before the chain is switched on.",
+  },
+  {
+    lead: "A real estate or title office",
+    body: "A signed contract puts the inspection reminder, the document requests and the key dates on the calendar. What each date means is still a person's call.",
+  },
+  {
+    lead: "A one-person business",
+    body: "Start with the one chain at the top of the frequency list, and judge it after a month against the baseline.",
+  },
 ];
 
 /** SCENE copy — the three rules for automation you can watch.
@@ -196,15 +257,15 @@ export const REBUILT_CHAIN: { label: string; connects: string; at?: string }[] =
 export const WATCHABLE: GridItem[] = [
   {
     lead: "Every run gets logged.",
-    body: "If you cannot answer did it run, and what did it do, then you have not built an automation. You have built a black box that mostly agrees with you. Every one of these platforms keeps a per-run history. The real question is whether anybody has opened it since the week it went live.",
+    body: "If you cannot answer did it run, and what did it do, you have built a black box that mostly agrees with you. The platforms cited on this page keep a run history. The real question is whether anybody has opened it since the week it went live.",
   },
   {
-    lead: "Failures shout.",
-    body: "n8n's documented pattern is a separate error workflow, beginning with an Error Trigger, that runs when an execution fails and can message a person. It is one setting on each chain and it takes five minutes. Without it, a failure lands in a log nobody reads.",
+    lead: "Failures reach a named person.",
+    body: "Whatever the tool, a failure goes to an owner, the failed work is kept so it can be finished by hand, and the report is tested once.",
   },
   {
     lead: "Anything genuinely ambiguous stops and asks.",
-    body: "The line is easy to find: any step where a person would have hesitated is a step the machine should hand back. Hesitation is information, and it is the only signal you get before the mistake.",
+    body: "A possible duplicate it cannot confirm, a request that matches no rule, a model suggestion it is unsure of: the chain hands the item to a person instead of guessing.",
   },
 ];
 
@@ -216,15 +277,15 @@ export const WATCHABLE: GridItem[] = [
 export const FAILURE_MODES: GridItem[] = [
   {
     lead: "You automate the impressive one.",
-    body: "The chain that demonstrates well is almost never the chain that runs forty times a month. The boring one at the top of the frequency list is worth more than the clever one, and it is the one nobody volunteers to build.",
+    body: "The chain that demonstrates well is not always the one with the most impact or the smallest worst day. Score first, and the dull, contained job often goes to the top.",
   },
   {
     lead: "It automates a bad process, faster.",
-    body: "If the manual version loses leads, the automated version loses them at three in the morning, at scale, with a log entry saying it worked. Fix the process on paper first, while it is still cheap to argue with.",
+    body: "If the manual version loses inquiries, the automated version can lose them at three in the morning, with a log entry saying it ran. Fix the process on paper first, while it is still cheap to argue with.",
   },
   {
     lead: "Nobody owns it.",
-    body: "Chains get built during a project and abandoned after it. Six months later a vendor renames a field, and the person who knew what the third step did has moved on. Write down who is responsible for each chain before you switch it on, or it becomes one of the mistakes it was built to remove.",
+    body: "A chain built during a project can be abandoned after it. If a program later renames a field, somebody has to know what the third step did. Write down who owns each chain before you switch it on.",
   },
 ];
 
@@ -236,13 +297,13 @@ export const FAILURE_MODES: GridItem[] = [
  * rather than letting it ship as a silent hole. */
 export const WORKFLOW_FLAGSHIP: FlagshipContent = {
   film: WORKFLOW_FILM,
-  /** A duration rather than a clock, a year or a share: the held moment on this topic is the gap
-   * between what a small job takes and what it costs. The four heroes before this one were
-   * 11:40pm, 9:42pm, 2023 and 15%, so this is the first that is a length of time rather than a
-   * point in one. */
+  /** ROUND 24: the held moment is the post's own plan, four weeks from one job to a written
+   * decision, in place of "25 minutes". The second reader of 2026-11-03 was right that the study's
+   * twenty five minutes beside the title reads as the cost of a small task, which the study never
+   * measured. The plan is ours and it is what the reader leaves with. */
   hero: {
-    moment: "25",
-    suffix: "minutes",
+    moment: "4",
+    suffix: "weeks",
     photo: "/images/counties/orange.jpg",
     signature: "porchlight",
   },
@@ -262,7 +323,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       eyebrow: "Watch it work",
       heading: "One lead, by hand and then wired.",
       caption: [
-        `Narrated, ${WORKFLOW_FILM.seconds} seconds. The voice reading it is a licensed clone of my own, which seemed worth saying rather than leaving you to wonder. The lead is invented and the timestamps are staged, but both numbers on screen are the cited ones from further down this page: the twenty five minutes is the field study and the ninety five percent is Zapier's own documentation. The chain it draws is the one on the `,
+        `Narrated, ${WORKFLOW_FILM.seconds} seconds. The voice reading it is a licensed clone of my own, which seemed worth saying rather than leaving you to wonder. The lead is invented and the timestamps are staged. Both numbers are the cited ones further down this page: the twenty five minutes is the field study's average wait before interrupted work was resumed, and the one time in twenty comes from a platform's documented 95 percent pause rule. One difference: in the film the reply goes out by itself, and on our builds a person approves a reply before it is sent. The chain is the one on the `,
         { href: "/services/workflow-automation", label: "service page" },
         ".",
       ],
@@ -272,6 +333,25 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       band: "light",
       label: "The real cost",
       ...FRAGMENTED,
+    },
+    "quote-chain": {
+      kind: "diagram",
+      band: "dark",
+      label: "One quote",
+      eyebrow: "An invented example",
+      heading: "A quote, followed up, with nobody chasing it.",
+      lede: "The day-3 note is drafted from the owner's wording and waits for a person to approve it. On day 7 the chain puts a call on the owner's list rather than drafting another message.",
+      steps: QUOTE_CHAIN,
+      altPrefix: "The chain from a roofing quote sent on Tuesday at 4:10pm to a won or lost mark",
+    },
+    "by-trade": {
+      kind: "grid",
+      band: "light",
+      label: "Other trades",
+      eyebrow: "The same wiring",
+      heading: "Six kinds of business, one idea.",
+      columns: 3,
+      items: BY_TRADE,
     },
     "three-lies": {
       kind: "grid",
@@ -296,7 +376,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       // the photograph the whole article rests on and it was described wrongly.
       alt: "A person at a dark wooden desk with an accounting screen open on a laptop, a large desk calculator lying across the laptop's own keyboard and both of their hands at it, one keying the number pad and the other resting on its edge, with the laptop's trackpad visible and untouched, a potted plant and an orange folder at the left and a stack of ring binders and a glass of water at the right",
       caption:
-        "A number is on the screen. A person is typing it into something else. This is the entire subject of this article. And if the picture looks unremarkable, then that is the finding: nobody in this business thinks they spend their week doing this, and everybody does.",
+        "A number is on the screen. A person is typing it into something else. That is the subject of this whole guide, and the picture looks unremarkable because the work does: it is easy to stop noticing how often it happens.",
       credit: "Photograph by Wilfred Iven, CC0.",
       ariaLabel: "The busywork, photographed",
     },
@@ -305,8 +385,8 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       band: "dark",
       label: "The chain, wired",
       eyebrow: "The system",
-      heading: "The same job, with nobody in the middle of it.",
-      lede: "Every hop below is a step somebody used to do by hand the following morning. The two timestamps are the point: the first and the last are the same minute.",
+      heading: "The same job, with nobody retyping it.",
+      lede: "Every hop below is a step somebody used to do by hand the following morning. The first and the last land in the same minute, and the drafted reply waits there for a person to approve it.",
       steps: REBUILT_CHAIN,
       altPrefix: "The chain from a form submitted at 11:47pm to a task on somebody's calendar",
     },
@@ -331,7 +411,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "steps",
           label: "Manual steps you or your team repeat in a week",
-          hint: "Count from the audit above: every time somebody types in something another system already knows.",
+          hint: "Count from the hour with the paper above: every time somebody types in something another system already knows.",
           min: 10,
           max: 400,
           step: 10,
@@ -343,7 +423,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "minutes",
           label: "Minutes each one takes",
-          hint: "The article's example is ninety seconds. Most people guess low here, then find the real number in the audit.",
+          hint: "The invented example uses ninety seconds. Time a few of yours rather than guess.",
           min: 0.5,
           max: 15,
           step: 0.5,
@@ -398,7 +478,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       ],
       headline: 3,
       resultLabel: "Hours of typing, a year",
-      note: "This counts the typing and nothing else, which makes it the smallest honest version of the number. It deliberately does not multiply anything by twenty five minutes and twenty six seconds. That figure is real and it is on this page. But it was measured on twenty four desk workers at a technology company, and none of them were selling houses. And this article says a few paragraphs up that anybody converting it into a dollar figure for your business has stopped citing it and started decorating with it. That applies to us. So the interruption cost, which is almost certainly the larger half, is missing from the number above on purpose. And the hourly figure is yours rather than an average we picked.",
+      note: "This counts the typing and nothing else. It does not multiply anything by twenty five minutes and twenty six seconds: that figure is how long interrupted work waited before it was resumed in one study of twenty four desk workers at a technology company, not a cost per task, and it cannot be turned into a dollar figure for your business. The interruption is left out on purpose, and the hourly figure is yours rather than an average we picked. Use the result as a baseline for the outcome brief, not as a promise.",
       action: { label: "See how it is built", href: "/services/workflow-automation" },
       secondary: { label: "Bring us your week", href: "/connect" },
     },
@@ -420,7 +500,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       band: "dark",
       field: "river",
       tone: "quote",
-      text: "The task worth automating first is almost never the one that sounds impressive. It is the one you have done so many times that you stopped seeing it.",
+      text: "The first job to wire is the one with real impact and the smallest worst day, not the one that sounds most impressive.",
     },
     silence: {
       kind: "grid",
@@ -439,7 +519,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       // gave a screen reader the place and none of the picture.
       alt: "The Hudson at dusk from a wooded height above West Point, the river running away between two dark forested headlands, a band of cloud lit orange and red low over the far reach, and deep blue sky with pale cloud above it",
       caption:
-        "This is what a chain failing one time in twenty looks like. It stays switched on. It stays green, and it is doing exactly what you think it is doing ninety five percent of the time. The two people a month it drops never appear anywhere, and nothing in the system has the job of telling you their names.",
+        "A chain failing one time in twenty is not paused by a 95 percent rule. It keeps running, its failed runs sit in a history somebody has to open, and whether anyone hears about them depends on how it was set up.",
       credit: "Photograph by Wei Zhang@Hudson, CC BY 2.0.",
       ariaLabel: "The evening nothing went wrong",
     },
@@ -458,13 +538,127 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Somewhere in your week is a step you have done four hundred times and stopped being able to see. It is not the interesting one. It is the dull one that has been costing you an afternoon a month since the year you started.",
+      text: "Somewhere in your week is a step done so often that nobody sees it any more. One page, one highlighter and one honest hour will find it.",
       actions: [
         { label: "See it on the AI page", href: "/ai#workflow", variant: "light" },
         { label: "How it is built", href: "/services/workflow-automation", variant: "outline-light" },
       ],
       footnote:
-        "There is no price on this page because there is no honest one. What a chain costs depends on two things. One is how many systems it has to touch. The other is how much of it needs a judgment rather than a field copy. The AI assessment is the hour described above, done with you, and the plan it leads to starts with the first chain.",
+        "What a chain takes depends on how many systems it touches, whether they connect, and how much of it needs a judgement rather than a field copy. The AI assessment is the hour described above, done with you, and it ends with a written plan.",
+    },
+
+    /** ROUND 24: the screening questions and the verdict, as a track with exits. Our method,
+     * labelled as ours (the second reader's note 10: proposed screening questions, not a sourced
+     * universal test). */
+    "worth-it": {
+      kind: "flow",
+      band: "dark",
+      label: "The screening questions",
+      eyebrow: "Before anything is built",
+      heading: "Five questions, and leaving it alone is an answer",
+      lede: "Each question can send a job to the tray. What survives gets an outcome brief and a verdict from its two scores.",
+      alt: "A track runs past five gates: what breaks if we stopped doing this, whether a tool you already pay for does it, whether a failure would be noticed within a week, whether the rule can be written for a new hire, and whether the impact scores 3 or more, where a no at any gate sends the job to a tray marked leave it alone and what survives gets a written outcome brief and a verdict from its risk score.",
+      tray: "Leave it alone",
+      gates: [
+        { ask: "Does anything break if we stop doing it?", pass: "Yes", exit: "No", outcome: "Stop doing it", detail: "A job nobody needs is stopped, not wired." },
+        { ask: "Is it missing from the programs you already pay for?", pass: "Missing", exit: "One does it", outcome: "Switch the setting on", detail: "No build for a gap the tool already closes." },
+        { ask: "Would a failure be noticed within a week?", pass: "Yes", exit: "No", outcome: "Too rare to watch", detail: "Or a check is put in place first." },
+        { ask: "Can the rule be written for a new hire?", pass: "Yes", exit: "No", outcome: "Settle the rule first", detail: "Each stall in the two-minute test is a missing rule." },
+        { ask: "Does the impact score 3 or more out of 5?", pass: "Yes", exit: "No", outcome: "Saves too little", detail: "A small saving still adds a chain to look after." },
+      ],
+      end: {
+        title: "Write the outcome brief, then the verdict from the risk score",
+        detail: "Risk 3 or more, or it reaches a customer: a person approves every result. Low risk and high impact: it runs by itself, with limits and a log.",
+      },
+      example: "The salon's quarterly stock report leaves at the fifth gate.",
+      sources: [METHOD],
+    },
+
+    /** ROUND 24: the cost section's three drivers and the ongoing cost, as tiles. No price and no
+     * delivery promise (the second reader's note 14): our build times stay in the prose, labelled
+     * "in our builds". */
+    "cost-shape": {
+      kind: "tiles",
+      band: "light",
+      label: "What it takes",
+      eyebrow: "What it takes to run",
+      heading: "Three things to settle, and one people forget",
+      alt: "Four tiles: how many systems the chain touches, whether those systems have a usable connection, how many steps need a judgement rather than a field copy, and ownership, the person who notices when the chain breaks.",
+      columns: 2,
+      tiles: [
+        { figure: "1", title: "Systems touched", body: "A form into a calendar is two. A quote request that checks history, drafts and books is four." },
+        { figure: "2", title: "Usable connections", body: "Whether each program lets software read and write to it, or a person has to stay in between." },
+        { figure: "3", title: "Judgement steps", body: "Most of the time goes on agreeing what the right answer is, not on the wiring." },
+        { figure: "4", title: "Ownership", body: "A login expires, a field is renamed, a form gets a new question. Somebody has to notice." },
+      ],
+      sources: [METHOD],
+    },
+
+    /** ROUND 24: the first month as a path. The test is on a COPY with test records and test logins
+     * (the second reader's note 17), and it tests the approval step as well as the alert. The
+     * quarterly cadence is labelled a suggested starting plan (note 18). */
+    "first-month": {
+      kind: "steps",
+      band: "dark",
+      label: "The first month",
+      eyebrow: "After it goes live",
+      heading: "Read it, break a copy of it, then check it on a schedule",
+      alt: "Three steps after a chain goes live: in week one read its run history line by line against what you meant; then break a test copy on purpose with test records and test logins and try to send without approval; then a suggested check of the history once a quarter, more often for a busy chain that reaches customers.",
+      steps: [
+        { title: "Week one: read the history", body: "Line by line, for one chain, against what you meant it to do." },
+        { title: "Break a copy on purpose", body: "Test records and test logins only. Watch who hears about it, and try sending without approval." },
+        { title: "Then a regular check", body: "A suggested start: once a quarter, more often for a busy chain that reaches customers." },
+      ],
+      close: "A successful run can still do the wrong thing. Reading the history is how you find out.",
+      sources: [METHOD],
+    },
+
+    /** ROUND 24: who it fits and who it does not, with what the second group does instead. */
+    fits: {
+      kind: "grid",
+      band: "light",
+      label: "Who it fits",
+      eyebrow: "Who this is for",
+      heading: "A good fit, a poor fit, and what to do instead",
+      columns: 2,
+      items: [
+        { lead: "A good fit", body: "A job that happens many times a week across two or more tools: inquiries by form or email, bookings that must reach a calendar, orders copied into a sheet. Or a small team where one person runs the office." },
+        { lead: "A poor fit", body: "Work that is mostly judgement on each case, a process that still changes every month, a job done once a quarter, or a step a program you already pay for can do." },
+        { lead: "Instead, for a poor fit", body: "Write the process down and run it by hand for a month, switch on the feature in the tool you have, or leave the job alone." },
+        { lead: "Either way", body: "Anything a customer reads keeps a person approving it, whoever builds the chain." },
+      ],
+    },
+
+    /** ROUND 24: the four-week roadmap, one job to a written decision. */
+    roadmap: {
+      kind: "steps",
+      band: "light",
+      label: "The roadmap",
+      eyebrow: "Your four weeks",
+      heading: "From one job to a decision written down",
+      alt: "The four-week roadmap: in week one pick the most frequent job, write its steps, run the two-minute test and write the baseline; in weeks two and three score it, run the screening questions, write the outcome brief and build one chain with a failure report and an approval step; in week four break the test copy, try to send without approval, and write the decision and its owner.",
+      steps: [
+        { title: "Week one", body: "The most frequent job, every step written, the two-minute test, the baseline." },
+        { title: "Weeks two and three", body: "The two scores, the screening questions, the outcome brief, one chain with a failure report and an approval step." },
+        { title: "Week four", body: "Break the test copy, try to send without approval, then write it down: keep, change or switch off, and who owns it." },
+      ],
+      close: "In the plumber's office: keep, office manager owns it, next check in January.",
+      sources: [METHOD],
+    },
+
+    /** The owner's quiz (2026-10-31): ten questions from facts the post teaches, tested against the
+     * post in workflow-quiz.test.ts. AI brand, so the AI brand's pass state. */
+    quiz: {
+      kind: "quiz",
+      band: "night",
+      label: "Quiz",
+      ariaLabel: "Quiz: what did you learn",
+      eyebrow: "Ten questions",
+      title: "What did you learn? Check it in two minutes",
+      brand: "ai",
+      passLine: "You have the method. If you want a second pair of eyes on your own list, we can run the assessment with you.",
+      failLine: "Under half this time. Skim the screening questions and the four checks again, then have another go.",
+      questions: WORKFLOW_QUIZ,
     },
   },
 
@@ -473,13 +667,19 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
   headingLabels: {
     "what-ninety-seconds-actually-costs": "The real cost",
     "what-it-actually-looks-like": "The chain today",
-    "what-automation-actually-is-without-the-jargon": "What it is",
+    "what-workflow-automation-for-small-business-is-without-the-jargon": "What it is",
     "how-to-find-your-own-version-of-this": "Find yours",
+    "is-it-worth-automating": "Worth automating?",
     "the-failure-nobody-warns-you-about": "When it goes quiet",
-    "what-it-costs-and-how-long-it-takes": "Cost and time",
+    "how-to-follow-up-on-every-quote-without-chasing-it": "Every quote",
+    "what-the-ai-readiness-assessment-hands-over": "The assessment",
+    "what-it-takes-to-run": "What it takes",
     "the-first-month-and-the-two-things-to-do-in-it": "The first month",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
-    "common-questions-answered-honestly": "Common questions",
+    "who-this-fits-and-who-it-does-not": "Who it fits",
+    "what-to-do-first": "Your four weeks",
+    "common-questions": "Common questions",
     "what-to-do-about-it": "What to do",
+    "sources": "Sources",
   },
 };

@@ -4103,13 +4103,13 @@ None of this has anything to score unless a conversation happened first. [The 11
 
 [[scene:funnel]]`;
 
-export const WORKFLOW_AUTOMATION_POST = `Ask an agent what they do all day and they will tell you they sell houses.
+export const WORKFLOW_AUTOMATION_POST = `We help local business owners find the small jobs they retype from one program into another and the quotes nobody follows up, and decide which are worth connecting. The first connected job comes with a named owner and an alert when it fails. This guide explains workflow automation for small business in plain words, so you can find your own busywork and judge which jobs are worth connecting.
 
-Then get them to write down every step of one deal, from the first inquiry to the closing table. Hand them a highlighter for anything that means typing something into a system that another system already knows. The page turns yellow.
+It is written for owners who run the front desk themselves or with a small team: a roofer, a plumbing or heating company, a dental, accounting or insurance office, a salon, spa or gym, a real estate or title office. You will learn how to follow up on every quote without chasing it, how to list your small jobs in an hour, how we score each for impact and risk before anything is built, what an AI readiness assessment hands over, a four-week plan that ends with a decision written down, and how these chains fail quietly.
 
-That yellow is the busywork tax. It is not one big thing. It is forty small ones. Each takes about ninety seconds, and none of them feels worth automating on its own.
+An invented example: ask the owner of a small cleaning company to write down every step of one job, from the first inquiry to the paid invoice, with a highlighter for anything that means typing something into a system that another system already knows. The page turns yellow.
 
-Ninety seconds is also not what any of them cost.
+In this invented example, that yellow is the busywork tax: forty small jobs on her page, each about ninety seconds by her own guess, none of which feels worth automating on its own. The ninety seconds is the part she can see, and it is not the whole price.
 
 [[scene:in-short]]
 
@@ -4117,52 +4117,83 @@ Ninety seconds is also not what any of them cost.
 
 ## What ninety seconds actually costs
 
-In 2005 three researchers at the Donald Bren School of Information and Computer Science, University of California, Irvine shadowed twenty four information workers at their desks with a stopwatch, and published what they found. Seven managers, nine analysts, eight developers. Each one was formally observed and timed for three and a half days. That was an average of twenty five hours and forty two minutes per person, and more than seven hundred hours of observation in total, with every action noted to the second.
+In 2005 three researchers at the Donald Bren School of Information and Computer Science, University of California, Irvine, shadowed twenty four information workers at their desks and [published what they found](https://ics.uci.edu/~gmark/CHI2005.pdf). There were seven managers, nine analysts and eight developers. Each was formally observed and timed for about three days, an average of twenty five hours and forty two minutes per person, with every action noted to the second.
 
-It is not a survey of how busy people feel. It is a timed log of what they actually did. It is also the clearest measurement of the thing this article is about that we have been able to find.
+It is a timed log of what people did, not a survey of how busy they felt. We looked for a newer measurement of the same thing on November 14, 2026 and found none, so the 2005 study stays for the argument it makes, with its year in plain view.
 
-They found that people spent an average of eleven minutes and four seconds on one piece of work before switching to something else or being interrupted. They found that fifty seven percent of those stretches ended in an interruption rather than in a decision to stop. Then they measured the part almost nobody measures: how long it took to come back.
+People spent an average of eleven minutes and four seconds on one piece of work before switching or being interrupted, and fifty seven percent of those stretches were interrupted. Then the researchers timed how long it took to come back.
 
 [[scene:fragmented]]
 
-Put the middle bar next to the ninety seconds. The typing is not the cost. The cost is that a ninety second job pulls you out of something. That something takes an average of twenty five minutes and twenty six seconds to get back to, counting only the work that got picked up again the same day.
+Read the middle bar carefully, because it is easy to stretch. When people resumed interrupted work on the same day, an average of twenty five minutes and twenty six seconds passed first, and the paper says more than two other activities usually came in between. That is elapsed time, not time thrown away. What it shows is that an interrupted piece of work goes to the back of the queue and stays there a while. The study did not time small office tasks or put a cost on them, and nothing on this page does either.
 
-The third bar is the one that should worry a real estate business in particular. That is because it is the shape of every step in your week that only happens when somebody remembers. Work that people picked back up themselves resumed in twenty one minutes and twenty eight seconds. Work that waited for somebody else to prompt the return sat for sixty one minutes and thirty seven seconds, nearly three times as long.
+The third bar matters if your week has steps that only happen when somebody remembers, though the study measured desk work, not your reminders. Work people picked back up on their own resumed after twenty one minutes and twenty eight seconds on average. Work that waited for somebody else to prompt the return sat for sixty one minutes and thirty seven seconds, nearly three times as long.
 
-One caution about that study, because it is the honest way to use it. Those were desk workers at a technology company, in one field study, and none of them were selling houses. It tells you what interruption does to knowledge work. It does not tell you what your own week looks like. And anybody who turns it into a dollar figure for your business has stopped citing it and started decorating with it.
+One caution. Those were desk workers at one technology company, in one field study, and none of them ran a small business. It tells you what interruption does to that kind of work, not what your own week looks like, and it cannot be turned into a dollar figure for your business. A cheaper first step than any study: for a week, keep a tally on a sticky note each time a small job pulls you off the work in front of you.
 
 ## What it actually looks like
 
-Here is a real chain, the kind that exists in almost every real estate business, written out honestly:
+An invented example, written out step by step, of an inquiry chain in a business that takes inquiries through a website form:
 
-1. A lead fills in a form at 11:47pm.
+1. A customer fills in a form late at night.
 2. It lands in an inbox.
 3. In the morning, somebody reads it.
-4. They type the name, email, and phone into the CRM.
-5. They do not notice this person is already in the CRM, so now there are two of them.
+4. They type the name, email and phone into the customer list.
+5. They do not notice this person is already on the list, so now there are two of them.
 6. They write a reply.
 7. They set a reminder to follow up.
 8. Three days later the reminder fires and they cannot remember who this was, so they read the original email again.
 
-Eight steps. Maybe twelve minutes of human attention, spread across three days. Most of it is spent reloading context that was already written down somewhere. Step eight is the twenty five minutes in miniature, three days late.
-
-Now do that forty times a month.
+In this invented example that is eight steps and maybe twelve minutes of attention, spread across three days, most of it spent finding context that was already written down. Step eight is the queue from the study in a small form: coming back to the work meant reading it all again. The owner in the example gets forty inquiries a month, so the chain runs forty times.
 
 [[scene:three-lies]]
 
 [[scene:plate]]
 
-## What automation actually is, without the jargon
+The useful exercise here is to pick one chain like this in your own business and write every step down in the order it really happens, including the steps that only happen when somebody remembers. That page is the raw material for everything that follows.
+
+## What workflow automation for small business is, without the jargon
 
 It is plumbing between the tools you already pay for.
 
-Your CRM holds the contact. Your calendar holds the time. Your email holds the conversation. Your forms hold the intake. Your documents hold the deal. All five of them know things the other four need. And the way that information travels between them today is a human being with a mouse.
+Your customer list holds the contact. Your calendar holds the time. Your email holds the conversation. Your forms hold the intake. Your documents hold the job. Each of them knows things the others need, and today that information travels between them through a person with a mouse.
 
-Tools like [n8n, Make, and Zapier](/services/workflow-automation) connect them, so that finishing one step starts the next. Put a language model in the middle and it can also make the small judgment calls that used to need a person. They sound like this: is this the same Sarah Miller who inquired in March, is this lead actually hot, does this message need a human being rather than a template.
+[Automation platforms](/services/workflow-automation) connect them, so that finishing one step starts the next. A chain has four kinds of step, and each is trusted differently:
+
+- **Fixed operations.** A field copied from the form into the customer list. No judgement, the same every time.
+- **Written rules.** If the request is for a date we cannot do, offer the next two open dates. The owner writes the rule once and the chain follows it.
+- **Interpretation by a language model.** Reading free text and suggesting an answer: is this the same person who asked for a quote in March, does this message sound urgent. A model can suggest. It does not decide anything a customer will see.
+- **A person's decision.** Anything that binds the business, reaches a customer, or could damage trust if it were wrong.
+
+When a step is uncertain, such as a possible duplicate the chain cannot confirm, a request that matches no rule, or a model suggestion with low confidence, the chain stops and puts the item in front of a person instead of guessing.
 
 [[scene:rebuilt]]
 
-Nobody woke up. Nobody typed. The lead was answered while they were still on the site. The second record was never created. And the reminder in step seven was never needed, because the task arrived with the context already attached to it.
+In the rebuilt chain, nobody retyped anything. The second record was never created, because the chain matched the person it already had. The reply was drafted with the inquiry and the customer's history beside it, and it waited for a person to approve it before anything was sent. The reminder in step seven was never needed, because the task arrived with the context attached.
+
+Before you wire anything, take one sheet and draw a line down the middle: clicks on the left, decisions on the right, for one job you did today. A decision you can write down as a rule a new hire could follow becomes a default the chain reads every time it runs. A decision you cannot write down stays with a person.
+
+## How to follow up on every quote without chasing it
+
+A sent quote is a good first chain because it happens every week, the steps are the same every time, and the owner notices when it is missed. An invented example shows the shape for a roofer.
+
+A quote for a roof repair goes out on Tuesday at 4:10pm. By hand, the owner means to ring on Friday, is on a roof on Friday, and the quote sits. Wired, the same quote starts a short chain, in which a person still approves every message a customer reads:
+
+[[scene:quote-chain]]
+
+Two details carry the design. On day 3 the chain drafts a short check-in note from wording the owner wrote once, with the quote attached, and puts it in front of the owner to approve with one tap; nothing goes to the customer unapproved. And on day 7 the chain does not draft another message: it puts a call on the owner's list, because a person decides whether to chase, discount or let the quote go.
+
+Speed matters for the same reason it does with a web inquiry. According to a 2011 study of 1.25 million sales leads reported in the Harvard Business Review, firms that tried to make contact within an hour were nearly seven times as likely to have a meaningful conversation with a key decision maker as those that tried even an hour later. That is a study of web leads, not of quotes, and it is from 2011, so read it for the direction.
+
+The sum, in an invented example: the roofer sends 10 quotes a week and spends about 4 minutes on each of two follow-ups, so 10 x 2 x 4 = 80 minutes a week (the owner's estimate). The chain does not make anyone buy. It takes the remembering out of the follow-up.
+
+The chain is designed to give every quote the same follow-up path, to route any reply to the owner with the quote attached, and to mark each quote won or lost so that month end shows which ones close. The owner provides the wording of the day-3 note, the days, and the person who gets the day-7 task. A person still approves each note before it goes, any discount and every call. It does not decide a price, send anything unapproved or chase a customer who said no.
+
+The same wiring fits other kinds of business.
+
+[[scene:by-trade]]
+
+Workflow automation for a real estate or title office is this same wiring started from a signed contract instead of a quote: the inspection reminder, the document requests and the key dates land on the calendar, and a person reads the contract for what each date means. Whatever the trade, start from the one job that repeats most often.
 
 ## How to find your own version of this
 
@@ -4170,11 +4201,17 @@ You do not need a consultant for the first pass. You need a piece of paper and a
 
 [[scene:audit]]
 
-Then rank it, because the order you do them in matters more than the list does. Sort by two things and ignore everything else. The first is how often the step happens. The second is how little judgment it needs. The top of that list is always something dull and frequent, a field being copied from one system into another twenty times a week. And it is worth more than the impressive-sounding thing at the bottom that happens twice a month and needs somebody to think.
+Then score the list, because the order matters more than the list. In our assessment each job gets two scores from 1 to 5, each with a written reason. Impact is what the job costs you today in hours, errors and things that slip. Risk is how bad a wrong result would be. How often a job happens and how little judgement it needs feed those scores, but neither sets the order on its own.
 
-Most people get this backwards, and it is an expensive way round. The interesting problem is the one with judgment in it, so that is the one they want to automate first. It is also the one most likely to be wrong in front of a client. Start with the boring repetitive hop that nobody will miss. Watch it run for a fortnight, and let the trust be earned by something whose failure costs an apology rather than a deal.
+Four checks set a floor under the risk score. Does the result bind the business, such as a price or a promised date? Does it reach a customer? Does it feed another system people act on, such as the books? Could it damage trust if it were wrong? One yes means the risk is at least 3, and a person approves every result. Two or more mean the risk is at least 4, and the binding part stays with that person alone.
 
-There is a third column worth adding while you have the page out. Write down who notices when this step does not happen. If the answer is nobody, then you have found something more useful than a time saving. You have found a step that has probably already been skipped, more than once, and nobody knows which deals it was skipped on.
+An invented example: a small bakery copies each online order into its kitchen sheet twenty times a week, at about ninety seconds each. That is 20 x 90 seconds = 1,800 seconds, or 30 minutes a week on one hop. The order feeds the sheet the bakers work from, so one check is yes and the risk is at least 3: a person glances over each copied order before the kitchen uses it.
+
+In our method the first build is the job with real impact and the smallest worst day, not the one that sounds most impressive. A job whose wrong answer is caught inside the office is a better first build than one that writes to customers, because a mistake there still costs only a correction.
+
+Add a third column while you have the page out: who notices when this step does not happen. If the answer is nobody, you may have found a step that has already been skipped without anyone knowing.
+
+When we sit with an owner for the AI assessment, we follow one real job with the person who does it. One test from that interview works alone: write one job in two minutes under four headings, input, do, output and the person's check, hand it to a colleague who does not know the job, and note where they stall. Each stall is a decision nobody wrote down.
 
 When you have that list in front of you, the sums are the easy part.
 
@@ -4182,15 +4219,41 @@ When you have that list in front of you, the sums are the easy part.
 
 [[scene:pull-quote]]
 
+## Is it worth automating
+
+These are the screening questions we use in the assessment. They are our method, not a law of nature, and they are meant to make the list shorter.
+
+First, three questions about the job. Does it happen often enough that a failure would be noticed within a week? Can the rule be written down for a new hire? Does a wrong answer land where a person sees it first? Frequency alone does not make a failure visible, so the first question also asks whether a check is in place.
+
+Then the stop question: what breaks if we stopped doing this? If nothing breaks and nobody notices, stop doing it rather than automate it. Next, ask whether a tool you already pay for has a setting for it, because a chain built around a gap the program already closes is wasted work.
+
+For a job that survives, write a four-line outcome brief before anything is built: the baseline (how often the job happens and how long it takes today, and whether that is measured or estimated), the target, the quality the result must meet, and the person who owns it. Without a baseline nobody can say later whether the chain helped.
+
+Then the verdict, from the scores. In our method a job with an impact of 1 or 2 out of 5 is left alone at any risk: it saves little, and every chain is one more thing that can break. A job with a risk of 3 or more, or any job whose result reaches a customer, keeps a person on it: the system drafts, a person approves, and the send step cannot run without that approval. Only a low-risk, high-impact job runs by itself, with stated limits and a log the owner can read.
+
+An invented example: a hair salon owner wants to automate her quarterly stock report. It happens four times a year, so its impact is low and a failure would sit unnoticed for months. Our verdict is to leave it alone. Her booking confirmations reach every customer, so the system drafts each one and she approves it.
+
+[[scene:worth-it]]
+
+Taking the ranked list through those questions crosses most jobs off, and what is left is the real shortlist.
+
+## What the AI readiness assessment hands over
+
+The [AI readiness assessment](/services/ai-readiness-assessment) is these questions run with you, in one hour, on one real job from the last week, and it ends with a written plan rather than a build. What comes back is a short list in an order with the reason beside each line, the list of what was crossed off and why, and the precautions for what survives.
+
+An invented example of the shape: following up on quotes nobody answered happens weekly, the rule is settled and a person sends the last message, so it is third on the list. Chasing missing signatures happens weekly too, but the rule still needs deciding, so it waits.
+
+You provide the hour, one real job, the names of the tools it passes through (no logins) and an honest account of the workarounds. A person approves every item on the plan, its order, whether to build at all and who builds it. The assessment does not decide for you, does not put a price on a candidate before anyone has looked at the systems, and does not stay true for ever: the list is for months, not years. Deciding not to build something is a result, not a failed assessment.
+
 ## The failure nobody warns you about
 
-Automation you cannot see is automation you cannot trust. And the failure is never the one people brace for. Nothing explodes. A chain quietly stops firing and nobody notices for a fortnight, because nothing visibly broke. It just went quiet.
+Automation you cannot see is automation you cannot trust. The failure people brace for is something visibly breaking. The one to plan for is quieter: a chain stops doing part of its job and nobody looks for a fortnight.
 
-The platforms are more candid about this in their documentation than any vendor will be in a sales call. [Zapier's own help pages](https://help.zapier.com/hc/en-us/articles/14167175792909-Decide-how-your-Zap-handles-errors-with-advanced-settings) state that by default it "automatically pauses a Zap if it hits an error 95% or more percent of the times that it has run in the last 7 days". Its [run status reference](https://help.zapier.com/hc/en-us/articles/20505304170637-Review-run-statuses-in-Zap-workflows) adds that a chain erroring repeatedly "will automatically turn off".
+The platforms describe this in their own documentation. One widely used automation platform says in [its help pages on error settings](https://help.zapier.com/hc/en-us/articles/14167175792909-Decide-how-your-Zap-handles-errors-with-advanced-settings), read on November 14, 2026, that by default it automatically pauses a chain if it hits an error on 95 percent or more of the times it has run in the last 7 days. Its [run status reference](https://help.zapier.com/hc/en-us/articles/20505304170637-Review-run-statuses-in-Zap-workflows) adds that a chain that errors repeatedly each time it runs will automatically turn off, and that each failed run is marked as errored in the run history.
 
-That is a sensible default, and it is not the interesting part. Read the threshold the other way round. A chain that fails nineteen times out of twenty gets switched off, and you find out, because the work visibly stops. A chain that fails one time in twenty stays on. It stays green, and it is doing exactly what it looks like it is doing ninety five percent of the time. Over forty leads a month that is two people who wrote to you and got nothing, every month. And there is nothing in the system whose job it is to tell you their names.
+That is a sensible default. Read the threshold the other way round. A chain that fails nineteen times out of twenty is paused, and you find out because the work stops. A chain that fails one time in twenty is not paused by that rule. Its failed runs are recorded in the history, but whether a person hears about them depends on how the chain and its notifications are set up. An invented example: at forty inquiries a month, one failure in twenty is two inquiries a month that did not get the reply, the record or the reminder they should have had.
 
-The same asymmetry is in the tools that do it properly. [n8n documents an error workflow](https://docs.n8n.io/flow-logic/error-handling/) that begins with an Error Trigger and runs when an execution fails. So a failure can send a message to a person instead of landing in a log. It is one setting per chain. Almost nobody sets it, because on the day you build a chain it works, and a thing that works does not feel like it needs a smoke alarm.
+The requirement is the same whatever tool runs the chain: a failure is reported to a named owner, the failed work is kept so it can be finished by hand, and the report has been tested at least once. On the day a chain is built it usually appears to work, which is why that last part is easy to skip.
 
 [[scene:silence]]
 
@@ -4198,70 +4261,132 @@ The same asymmetry is in the tools that do it properly. [n8n documents an error 
 
 [[scene:offer]]
 
-## What it costs, and how long it takes
+The check that matters is simple: for each chain you run today, ask who is told when a run fails, and where the failed work goes. If nobody can answer, that is the first thing to fix, before anything new is built.
 
-There is no honest price on this page, because the number depends on three things nobody can guess from an article. The first is how many systems the chain has to touch. The second is whether those systems have a usable interface for software to talk to. The third is how many steps need a judgment rather than a field copy. Anybody who quotes you before asking all three is quoting a template.
+## What it takes to run
 
-What can be said honestly is the shape of it. The platforms themselves are the cheap part, and they are billed by how often your chains run. So a small business pays a subscription rather than a project. Simple chains, like intake and an instant reply, are typically live in days. Multi-system workflows with real branching take longer, and the slow part is almost never the building. It is mapping what your business actually does today. That is the hour with the piece of paper, done properly, with somebody arguing with you about it.
+We print no price on this page. What a chain takes from the owner is mostly three things to settle and a little time each week. The first is how many systems the chain has to touch. The second is whether those systems have a usable connection for software to talk to. The third is how many steps need a judgement rather than a field copy.
 
-The ongoing cost people forget is ownership. A chain is software. It will break the day a vendor renames a field, and somebody has to be the person who notices. Budget for that, or the chain quietly becomes one of the mistakes it was built to remove.
+Check any platform's plan against how often your chains would run. The hardest part to predict is mapping what your business does today: the hour with the piece of paper, done properly, with somebody arguing with you about it.
+
+An invented example: a chain that copies a booking from a form into a calendar touches two systems and needs no judgement, so it is quick to map. A chain that reads a quote request, checks the customer's history, drafts a reply for approval and books a visit touches four systems and has a judgement step in the middle, so most of the effort goes on agreeing what the right answer is.
+
+The part people forget is ownership. A chain is software. It can break when a program changes a field, a login expires or a form gets a new question, and somebody has to notice. Plan for that, or the chain quietly becomes one of the mistakes it was built to remove.
+
+[[scene:cost-shape]]
 
 ## The first month, and the two things to do in it
 
-Nearly every chain that dies quietly dies in its first four weeks. And it dies because the go-live was treated as the finish. Two habits in that first month are worth more than anything you can specify beforehand, and both are free.
+The first weeks after go-live are when the gap shows between what a chain does and what the owner thought it would do, because that is the first time it meets real inquiries. Two habits in that month cost nothing.
 
-The first is to open the run history in week one and read it, line by line, for one chain. Not to check whether it worked. To check whether what it did matches what you thought you asked for. This is the week you discover one of three things. That a duplicate record is being created rather than matched. That the reply going out in your name says something you would never say. Or that the step you assumed ran on every lead is only running on the ones that came through the website. None of that shows up as a failure. It shows up as a green run doing the wrong thing politely.
+The first is to open the run history in week one and read it, line by line, for one chain, to check whether what it did matches what you meant. This is where you might find a duplicate record created where it should have matched, a drafted reply that says something you would never say, or a step you assumed ran on every inquiry running only on the ones from the website. None of those shows up as a failure. Each one shows up as a successful run that did the wrong thing.
 
-The second is to break it on purpose. Put a deliberately bad value into one chain, or switch off a credential for ten minutes. Then sit and wait to find out whether anybody is actually told. If nothing arrives, then you have learned the most important fact about your own system before it mattered. And you have learned it on a test record instead of on a client. That is the whole argument of the section above, run once, in the only way that proves it.
+The second is to break it on purpose, safely. Make a copy of the chain that runs on test records and test logins only, so nothing reaches a customer and nobody's shared access is switched off. Put a deliberately bad value into that copy and see whether the named owner is told and the failed record is kept. Then try to send a drafted reply without approval and confirm that the chain cannot. If nothing arrives, you have learned the most important fact about your system on a test record instead of a customer.
 
-After the first month, put a repeating reminder in your own calendar to open the run history once a quarter. It takes ten minutes. And it is the difference between a system you own and a system that owns a corner of your business without telling you what it is doing in there.
+An invented example: a dog groomer reads her booking chain's history in week one and sees that bookings made by phone never reached the reminder step. Nothing had failed. The chain had only ever been told about online bookings.
+
+After the first month, a suggested starting plan is to open the run history once a quarter, more often for a busy chain that reaches customers. Each check reads the history against the outcome brief, confirms the retries have a limit, and confirms that a person still approves anything before it leaves the business.
+
+[[scene:first-month]]
 
 ## What it does not do, and should not pretend to
 
-It does not fix a bad process. If the manual version of the job loses leads, then the automated version loses them faster, at three in the morning, with a log entry saying it worked. Wiring makes a process the same every time, and that is only an improvement when the process was right.
+It does not fix a bad process. If the manual version of the job loses inquiries, the automated version can lose them faster, at three in the morning, with a log entry saying it ran. Wiring makes a process the same every time, and that is only an improvement when the process was right.
 
-It does not remove judgment. Every chain worth building has a step where a person would have paused. The correct behaviour at that step is to stop and ask rather than to guess. A system that guesses when it should have asked will eventually guess wrong in front of a client, in writing, at a time of its own choosing.
+It does not remove judgement where judgement is needed. Where a person would have paused, the right behaviour is to stop and ask rather than guess. A chain with no such step, such as a field copied between two systems, needs no person in the middle, which is part of why it makes a good first build.
 
-It is mostly not artificial intelligence, whatever it gets sold as. Four of the six hops in the diagram above are a field moving from one place to another with no cleverness in them at all. They are more reliable for it. A model earns its place at the one or two steps that genuinely need a decision. A build that puts a language model in front of a step which was really an if statement has bought unpredictability it did not need and cannot debug.
+It is mostly not artificial intelligence, whatever it gets sold as. Most hops in the rebuilt chain are a field moving from one place to another, and they are more reliable for it. A model earns its place at the one or two steps that need interpretation; one put in front of a step that was really an if statement adds unpredictability nobody needed.
 
-And it does not hand you back a day. It hands back an afternoon a month and removes a category of mistake. That is a smaller and duller claim than the one usually made for this, and it is the one that survives contact with a real business.
+And it does not hand you back a day. In the invented bakery example the hop was 30 minutes a week, so 30 x 4 = 120 minutes, two hours over four weeks, and fewer chances to type an order wrong. That is a smaller and duller claim than the one usually made for this, and it is the kind of claim that can be checked against a baseline.
 
 [[scene:failure-modes]]
 
-## Common questions, answered honestly
+The order that follows is to fix the manual version of the job on paper first. If the right process cannot be written down, the wiring will only repeat the wrong one.
+
+## Who this fits, and who it does not
+
+This fits owners with a job that happens many times a week and lives across two or more tools: inquiries that arrive by form or email, bookings that have to reach a calendar, orders copied into a sheet. It fits small teams where one person is the whole office and every manual step comes out of the same calendar.
+
+It does not fit a business whose work is mostly judgement on each case, or a process that still changes every month. A job done once a quarter usually scores too low on impact to be worth a build in our method. It also does not fit a step the program you already pay for can do. Those readers do better to write the process down and run it by hand for a month, to switch on the feature in the tool they have, or to leave the job alone.
+
+An invented example: a one-person bookkeeping practice whose every client file needs her own reading gets little from wiring. Her intake form and appointment reminders are the only hops worth connecting, and the reminders are drafted for her approval because they reach clients.
+
+[[scene:fits]]
+
+## What to do first
+
+Start from one job and end with a decision written down. The roadmap, week by week:
+
+1. **Week one.** Pick the most frequent job on your list. Write every step in the order it really happens, mark each click and each decision, run the two-minute test with a colleague, and write the baseline: how often the job happens and how long it takes, measured or estimated.
+2. **Weeks two and three.** Score the job for impact and risk, run the screening questions and write the outcome brief. If it passes, build one chain with a failure report to a named person and an approval step for anything a customer sees, and read its run history line by line in its first week.
+3. **Week four.** Break the test copy on purpose and see who is told, and try to send without approval. Then write the decision down: keep it, change it or switch it off, and who owns it from here.
+
+An invented example: a plumber's office picks its quote-request inquiries in week one, builds a chain over the next two weeks that drafts each reply for the office manager to approve, breaks the test copy on purpose in week four, and writes "keep, office manager owns it, next check in January" on the page.
+
+[[scene:roadmap]]
+
+## Common questions
 
 ### What is workflow automation, in plain terms?
 
-It is connecting the software you already use so that finishing one step automatically starts the next. Instead of a person copying a lead from a form into a CRM, writing a reply, and setting a reminder, the whole chain fires by itself the moment the form is submitted.
+Connecting the software you already use so that finishing one step starts the next. The chain copies an inquiry into the customer list and sets the reminder the moment the form is submitted, and puts the drafted reply in front of a person to approve.
 
-### What is the difference between n8n, Make, and Zapier?
+### How do I follow up on quotes automatically?
 
-They all wire apps together, and they differ in depth. Zapier is the simplest and the most limited. Make handles branching and more complicated logic. n8n is self-hostable and the most flexible. That matters when a workflow needs custom code, or the data has to stay in your own environment. The right answer is decided by the workflow, not by a preference, and it is worth asking anybody who tells you otherwise why.
+Connect the moment a quote is sent to a short sequence: log the quote, draft one note a few days later for the owner to approve, stop at any reply and send it to the owner, and put a call on the owner's list if nobody answers after a week. The roofer in "How to follow up on every quote without chasing it" shows the steps. A person decides every price and makes every call.
+
+### What should a small business automate first?
+
+Automate the job that repeats most often, has a rule you can write down and has the smallest worst day, and leave the rest. For many offices that is a sent quote, a form that must reach the customer list, or a reminder for documents still owed. The screening questions in "Is it worth automating" pick the job from your own list.
+
+### What is workflow automation for a real estate or title office?
+
+Workflow automation for a real estate or title office connects the tools the office already uses so that a signed contract starts the next steps itself: the key dates on the calendar, the document requests and the reminders. A person still reads the contract for what each date means, and a person approves anything a client reads.
+
+### How do I choose between automation platforms?
+
+By what the workflow needs, not by a brand. Ask whether it connects to the programs you use, handles the branching your rules need, runs where your data has to stay, and who will maintain the chain when something changes.
 
 ### Do I have to replace the software I already use?
 
-No, and that is the point of it. Automation sits between your existing tools and connects them. Your CRM, your calendar and your inbox stay exactly where they are. That is also why this is usually the cheapest improvement available to a small business: nothing has to be moved.
+Not as a rule. Automation is built to sit between your existing tools, so your customer list, your calendar and your inbox can stay where they are, and the assessment says where one of them cannot do its part.
 
 ### What happens when an automation breaks?
 
-It should alert, log what failed and why, and not silently drop the work. That is a build decision rather than something you get for free. The platforms will retry and will eventually switch a chain off. But only a chain that was built with an error path tells a human being. Chains should also be versioned so a bad change can be rolled back, and any step needing real judgment should be built to stop and ask.
+That depends on how it was built. A good chain reports the failure to a named person and keeps the failed work so it can be finished by hand. Platforms have their own retry and pause rules, so read what yours does.
 
 ### How long does it take to automate a workflow?
 
-Simple chains, like intake and an instant reply, are typically live in days. Multi-system workflows with real branching take longer, mostly because mapping what your business actually does today is the slow part, not the building.
+It depends on the scope, so we give a time only after the assessment. A chain across several systems with real branching takes longer than one that copies a field, and mapping the job is the part that is hardest to predict.
 
 ### Is any of this worth it for a one-person business?
 
-Often more, not less. A one-person business has no one to absorb the busywork, so every manual step is taken out of the only calendar there is. Start with a single chain at the top of the frequency list rather than a platform, and judge it after a month against how many times you touched that job by hand.
+It can be, because every manual step comes out of the only calendar there is, and most small businesses are one-person businesses: according to the Small Business Administration's Office of Advocacy, 82.3 percent of the 36,207,130 small businesses in the United States have no employees. Start with one chain on the most frequent job that passes the screening questions, and judge it after a month against your baseline.
+
+[[scene:quiz]]
 
 ## What to do about it
 
-Go and get the highlighter. One deal, from the first inquiry to the closing table. Every step written down in the order it really happens. And a mark against anything where a person types in something another system already knows. Nobody has to approve it, and it costs an hour. At the end of it you are holding the only document that makes any of the rest of this decidable. Until that page exists, every quote you are given is a guess about a business the person quoting has not seen.
+The free half of this needs a highlighter and an hour: one job, from the first inquiry to the paid invoice, every step written down in the order it really happens, and a mark against anything where a person types in something another system already knows. Nobody has to approve it. At the end you are holding the document that makes the rest of this decidable, and any quote you are given before that page exists is a guess about a business the person quoting has not seen.
 
-You can see the wiring on [the RealtyLT AI page](/ai#workflow). What gets connected to what is on the [workflow automation page](/services/workflow-automation). If you would rather somebody sat through that hour with you, that is exactly what the [AI assessment](/services/ai-readiness-assessment) is: we follow one real job, put the fixes in order, and write the plan.
+You can see the wiring on [the RealtyLT AI page](/ai#workflow). What gets connected to what is on the [workflow automation page](/services/workflow-automation), and the scoring is set out in full in [what to automate first and what to leave alone](/blog/ai-assessment-small-business-what-not-to-automate).
 
-Three of the hops are written out at length on their own: [the 11:40pm website conversation](/blog/ai-chat-assistant-real-estate-website), [the 9:42 Sunday phone call](/blog/ai-voice-agent-missed-calls-real-estate), and [scoring the lead once it arrives](/blog/ai-lead-qualification-real-estate-scoring).
+Some of the hops are written out at length on their own, set in a real estate office, with steps that look the same in any small business: [the late-night website conversation](/blog/ai-chat-assistant-real-estate-website), [the Sunday phone call](/blog/ai-voice-agent-missed-calls-real-estate), and [scoring an inquiry once it arrives](/blog/ai-lead-qualification-real-estate-scoring).
 
-The tax is not going to itemise itself.
+If you would rather somebody sat through that hour with you, that is the [AI assessment](/services/ai-readiness-assessment), which some firms call an AI audit: we follow one real job, put the fixes in order and write the plan.
 
-[[scene:funnel]]`;
+[[scene:funnel]]
+
+Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+
+## Sources
+
+- Gloria Mark, Victor M. Gonzalez and Justin Harris, "No Task Left Behind? Examining the Nature of Fragmented Work", Proceedings of CHI 2005, University of California, Irvine, 2005. Kept for the argument; no newer measurement was found. Read November 14, 2026.
+- An automation platform's help center, on error settings (the default pause at 95 percent in 7 days) and on run statuses. Read November 14, 2026.
+- Harvard Business Review, The Short Life of Online Sales Leads, by James Oldroyd, Kristina McElheran and David Elkington, [on hbr.org](https://hbr.org/2011/03/the-short-life-of-online-sales-leads), 2011. Read November 14, 2026; kept for the argument.
+- US Small Business Administration, Office of Advocacy, Frequently Asked Questions About Small Business 2026, [the PDF](https://advocacy.sba.gov/wp-content/uploads/2026/02/FINAL_FAQsAboutSmallBusiness_2026_012826.pdf), February 2026. Read November 14, 2026.
+- Our own method: the screening questions, the scores, the four checks and the verdicts of the RealtyLT AI assessment.
+
+Sources checked November 14, 2026.
+
+Written with an AI assistant and checked by Levan.`;
