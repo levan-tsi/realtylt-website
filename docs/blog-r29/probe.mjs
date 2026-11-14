@@ -173,7 +173,7 @@ for (const [short, slug] of SLUGS) {
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
   await page.goto(`${base}/blog/${slug}`, { waitUntil: "networkidle", timeout: 90000 });
-  await page.waitForTimeout(6000); // dev server: hydration is slow
+  await page.waitForTimeout(15000); // dev server: hydration is slow
   await page.locator(QUIZ).scrollIntoViewIfNeeded();
   await hideFixed(page);
   const count = await page.locator(`${QUIZ} [data-quiz-count]`).innerText();
@@ -270,7 +270,7 @@ for (const [short, slug] of SLUGS) {
   await ctx.close();
   const { ctx: c2, page: p2 } = await newPage({ viewport: { width: 390, height: 844 } });
   await p2.goto(`${base}/blog/${slug}`, { waitUntil: "networkidle", timeout: 90000 });
-  await p2.waitForTimeout(6000); // dev server: hydration is slow (round 29 probes run against next dev)
+  await p2.waitForTimeout(15000); // dev server: hydration is slow (round 29 probes run against next dev)
   await p2.evaluate(() => window.scrollTo(0, 2400));
   await p2.waitForTimeout(600);
   await p2.locator("[data-toc-trigger]").click();

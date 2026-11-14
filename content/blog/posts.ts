@@ -434,19 +434,31 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-appointment-booking-no-shows-real-estate",
     cluster: "appointments",
-    title: "You booked the showing for nine days out. Nobody came.",
-    seoTitle: "AI Appointment Booking and No-Shows in Real Estate",
+    title: "How to reduce no-shows: AI appointment booking and reminders for a local business",
+    seoTitle: "How to Reduce No-Shows: AI Appointment Booking and Reminders",
     date: "2026-08-25",
-    updated: "2026-09-18",
+    updated: "2026-11-14",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27: the limitation
      * paragraph on the Hangzhou reminder trial asserted the participants had paid for their
      * appointments, which the paper does not say anywhere. See
      * docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so the
-     * slug ships at 18/19. */
+     * slug ships at 18/19.
+     *
+     * ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-14): the
+     * title is the phrase the post already ranks third for, "how to reduce no shows" (28 days of
+     * Search Console: the phrase is the keyword map's, the page carries it in the title, the opener
+     * and a heading); the story an estimate visit and a landscaper; the examples a roofer, a
+     * salon, a piano tuner, a dental or accounting office, a real estate office as one of them;
+     * the 2026 review of ten randomised trials of reminders added (March 2026, 8,236 people), the
+     * 2015 clinic study and the 2008 trial kept for the argument with their years; new: how to
+     * reduce no-shows in three moves, is it worth automating, who it fits, what to do first, owner
+     * questions, a quiz; "What it costs, and how long it takes" became "What it takes to run" (no
+     * price); the closing line goes to the quiz (CTA-2 version B, plain text). Slug kept. See
+     * docs/blog-r29/NOTES-booking.md. */
     excerpt:
-      "You answered, you were pleasant, you agreed on a time that suited everyone, and nobody came. What AI appointment booking really does about the gap between the ask and the day. What 51,529 appointments say about booking too far ahead. And the one reminder with a randomised trial behind it.",
+      "How to reduce no-shows when you take appointments: book inside the first conversation, keep the date close, and remind before the day. What 51,529 appointments say about booking too far ahead, what one reminder was worth in a randomised trial and in a 2026 review of ten, how to test an AI appointment booking tool, and whether it is worth it. For a roofer, a salon, a dental or accounting office, or a real estate office.",
     seoDescription:
-      "What AI appointment booking does about no-shows, what 51,529 appointments say about lead time, and why a calendar invitation is not the same as a text message.",
+      "How to reduce no-shows: book in the first conversation, keep the date close, remind before the day. The evidence, how to test AI booking, and whether it is worth it.",
     cover: "/images/counties/rockland.jpg",
     body: [],
     placeholder: false,

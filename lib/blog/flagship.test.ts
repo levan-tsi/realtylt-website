@@ -140,8 +140,11 @@ describe("flagshipToc", () => {
   /** And the same freeze for topic 7. */
   it("derives exactly the rail the appointment booking post shipped with", () => {
     const bookingOutline = parseOutline(AI_APPOINTMENT_BOOKING_POST);
+    // Round 29 (2026-11-14): the refresh for local owners added "How to reduce no-shows: three moves",
+    // the teaching shape, the quiz and the sources; "What it costs" became "What it takes to run".
     expect(flagshipToc(bookingOutline, BOOKING_FLAGSHIP)).toEqual([
-      { id: "the-gap-nobody-measures-because-it-does-not-look-like-a-loss", label: "The gap" },
+      { id: "how-to-reduce-no-shows-three-moves", label: "Three moves" },
+      { id: "the-gap-between-the-ask-and-the-day-does-not-look-like-a-loss", label: "The gap" },
       { id: "scene-lead-time", label: "The lead time", scene: true },
       { id: "why-distance-kills-an-appointment", label: "Why it dies" },
       { id: "the-second-half-which-is-the-reminder", label: "The second half" },
@@ -149,15 +152,21 @@ describe("flagshipToc", () => {
       { id: "what-ai-appointment-booking-actually-does", label: "What it does" },
       { id: "scene-the-booking", label: "The booking", scene: true },
       { id: "what-reading-your-calendar-should-actually-mean", label: "Your calendar" },
-      { id: "what-a-booking-is-technically-and-why-most-of-them-are-not-one", label: "What a booking is" },
+      { id: "what-a-booking-is-technically-and-why-many-of-them-are-not-one", label: "What a booking is" },
       { id: "scene-booking-path", label: "The path", scene: true },
       { id: "scene-booking-calculator", label: "Your numbers", scene: true },
       { id: "what-to-do-about-the-ones-who-still-do-not-turn-up", label: "When they miss" },
       { id: "how-to-test-one-before-you-buy-it", label: "How to test one" },
-      { id: "what-it-costs-and-how-long-it-takes", label: "Cost and time" },
+      { id: "is-it-worth-automating", label: "Worth automating?" },
+      { id: "what-it-takes-to-run", label: "What it takes" },
       { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
+      { id: "who-this-fits-and-who-it-does-not", label: "Who it fits" },
+      { id: "what-to-do-first", label: "Your first weeks" },
+      { id: "scene-roadmap", label: "The roadmap", scene: true },
       { id: "common-questions-answered-honestly", label: "Common questions" },
+      { id: "scene-quiz", label: "Quiz", scene: true },
       { id: "what-to-do-about-it", label: "What to do" },
+      { id: "sources", label: "Sources" },
     ]);
   });
 
