@@ -804,7 +804,7 @@ Workflow automation is the building. An assessment is the deciding, and it comes
 
 ## Next step
 
-The offer is the one-hour assessment: we go through your list with you, then send back a written plan of what we would build first, how, and what we would cross off. [Book a Consultation](/connect): (914) 875-2424, levan@realtylt.com.
+The offer is the one-hour assessment: we go through your list with you, then send back a written plan of what we would build first, how, and what we would cross off. Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
 
 By Levan Tsiklauri.
 
