@@ -615,8 +615,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-chat-assistant-real-estate-website",
     cluster: "answering",
-    title: "Your website answered that buyer at 11:40pm. Did you?",
-    seoTitle: "AI Chat Assistant for a Real Estate Website: How to Test One",
+    title: "AI chatbot for small business websites: the question that arrives at 11:40pm",
+    seoTitle: "AI Chatbot for Small Business Websites: How to Test One",
     date: "2026-07-12",
     /** 08-02: the largest revision this post has had. It had been resting on an unsourced "78%"
      * and carried one citation, which the voice post also used, so it effectively had no source
@@ -632,11 +632,21 @@ export const POSTS: BlogPost[] = ([
      * pair of claims was swept off /services/ai-chat-assistant. `updated` moves to 08-27 because
      * the served text changed, and the change is recorded here rather than dressed up as more
      * than it was. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-09-18",
+    /** ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-14): the title
+     * is the owners' phrase "ai chatbot for small business"; the story a furnace at twenty to
+     * midnight in Fishkill, the teardown the same conversation; the examples a heating company,
+     * a salon, a piano tuner, and a real estate office as one of them (the live listings, the
+     * contingent-offer film); the calculator stops at conversations a year (a commission figure
+     * is on the brand's never list); the unsourced ten million visitor line of the California
+     * law and the WCAG quotation are out until read in the orchestrator's browser; new: who it
+     * fits, is it worth automating, what to do first, a Canadian tribunal's 2024 decision on who
+     * owns a chatbot's answer, the Census Bureau's AI-use survey, a quiz. The closing is the free
+     * website door (CTA-2 version D). Slug kept. See docs/blog-r29/NOTES-chat.md. */
+    updated: "2026-11-14",
     excerpt:
-      "Someone read your listing at twenty to midnight with one question, and you answered at nine the next morning. What an AI chat assistant really does in that gap. Why the number this whole category is sold on cannot be sourced. And what to ask before you buy one.",
+      "A homeowner asked a heating company's website one question at twenty to midnight, and the answer came at nine. What an AI chatbot for a small business, or a real estate website, really does in that gap. Why the number this category is sold on cannot be sourced. Who owns what it says, whether it is worth it for your kind of business, and what to do first.",
     seoDescription:
-      "What an AI chat assistant does when a buyer messages your site at 11:40pm, why the 78% everyone quotes has no study behind it, and how to test one first.",
+      "An AI chatbot for a small business or real estate website: what it answers at 11:40pm, what it hands to a person, how to test one, and whether it is worth it.",
     cover: "/images/lifestyle/buying.jpg",
     body: [],
     placeholder: false,

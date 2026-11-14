@@ -88,14 +88,22 @@ describe("flagshipToc", () => {
       { id: "scene-four-moves", label: "Four moves", scene: true },
       { id: "what-makes-an-answer-true-which-is-the-whole-job", label: "True answers" },
       { id: "the-part-nobody-selling-you-a-chat-widget-mentions", label: "The fine print" },
-      { id: "what-it-costs-and-how-long-it-takes", label: "What it costs" },
+      // Round 29 (2026-11-14): the refresh re-aimed at local owners added the teaching shape, the
+      // quiz and the sources; "What it costs" became "What it takes to run".
+      { id: "what-it-takes-to-run", label: "What it takes" },
       { id: "how-to-test-one-before-you-buy-it", label: "How to test one" },
+      { id: "is-it-worth-automating", label: "Worth automating?" },
       { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
       { id: "scene-teardown", label: "The teardown", scene: true },
+      { id: "who-this-fits-and-who-it-does-not", label: "Who it fits" },
+      { id: "what-to-do-first", label: "Your first weeks" },
+      { id: "scene-roadmap", label: "The roadmap", scene: true },
       { id: "common-questions-answered-honestly", label: "Common questions" },
+      { id: "scene-quiz", label: "Quiz", scene: true },
       { id: "where-it-goes-wrong", label: "Where it goes wrong" },
       { id: "scene-system-diagram", label: "What it connects to", scene: true },
       { id: "what-to-do-about-it", label: "What to do" },
+      { id: "sources", label: "Sources" },
     ]);
   });
 

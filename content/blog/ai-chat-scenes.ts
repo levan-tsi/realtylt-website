@@ -11,6 +11,7 @@
  * House rules apply: no em dashes, no arrow glyphs, no claims not already made on the site. */
 
 import type { FlagshipContent } from "@/lib/blog/flagship";
+import { CHAT_QUIZ } from "./chat-quiz";
 
 /** The film. One definition, read by the scene that plays it AND by the VideoObject JSON-LD,
  * so the two can never disagree about length, dimensions or what the clip actually shows.
@@ -43,10 +44,10 @@ export interface Move {
 export const SYSTEM_STEPS: { label: string; connects: string; at?: string }[] = [
   { label: "The question", connects: "Your own website, any hour", at: "11:40 pm" },
   { label: "The assistant", connects: "A language model, given limits" },
-  { label: "Live inventory", connects: "The MLS Grid feed" },
+  { label: "Live facts", connects: "Your calendar and answers" },
   { label: "The reply", connects: "Sent by text" },
   { label: "The record", connects: "CRM, with the transcript" },
-  { label: "The handoff", connects: "A booked call with a person", at: "9:15 am" },
+  { label: "The handoff", connects: "A booked visit, a person", at: "8:30 am" },
 ];
 
 /** SCENE 2b copy — the response curve.
@@ -108,9 +109,9 @@ export const RESPONSE_CURVE = {
  * summary, the calculator note and the chart caption are separate files and none of them moves
  * on its own. */
 export const IN_SHORT: string[] = [
-  "Being first buys the conversation. Trying within the hour was nearly seven times likelier to reach a decision maker than waiting one more hour.",
-  "A good assistant answers at any hour, searches the live MLS, moves to text, and writes what it learns to the CRM.",
-  "It does not close, and it should say so rather than invent an answer it cannot verify.",
+  "Being first buys the conversation. In a 2011 study, trying within the hour was nearly seven times likelier to reach a decision maker than waiting one more hour. Of 2,241 companies sent a test inquiry, 23 percent never responded.",
+  "A good assistant answers at any hour from what you approved, reads the live calendar, moves to text, and writes what it learns to the CRM. It is worth it only where questions arrive when nobody can answer and a person reads the transcripts.",
+  "It does not close, and it should say so rather than invent an answer it cannot verify: a company owns what its chatbot says.",
 ];
 
 /** SCENE copy — the three failure modes.
@@ -140,7 +141,7 @@ export const SELF_CHECKS: Move[] = [
     body: "The test is not whether a disclosure exists somewhere in your terms. It is whether a stranger on a phone would know, inside one line, that they are talking to software. If you have to go looking for it, it is not clear and conspicuous, and the fix is one sentence you can write this evening.",
   },
   {
-    lead: "Time one of your own listing pages twice, and keep both numbers.",
+    lead: "Time your busiest page twice, and keep both numbers.",
     body: "Once before the widget goes on and once after, on a phone rather than on your desktop, because that is where your traffic is. The thresholds are published and the test costs nothing. If the vendor cannot tell you what their script weighs, that is your answer, and the good ones load nothing at all until somebody taps the bubble.",
   },
   {
@@ -152,15 +153,15 @@ export const SELF_CHECKS: Move[] = [
 export const FAILURE_MODES: Move[] = [
   {
     lead: "It is not connected to anything.",
-    body: "An assistant with no MLS access can only talk in generalities, and a visitor works that out in about one question.",
+    body: "An assistant with no calendar and no live data can only talk in generalities, and a visitor works that out in about one question.",
   },
   {
     lead: "The handoff is a dead end.",
-    body: "It qualifies a hot lead beautifully and then drops them into an inbox nobody watches. The value was never the captured email. It was the booked appointment.",
+    body: "It qualifies a hot lead beautifully and then drops them into an inbox nobody watches. The value was never the captured email. It was the booked visit.",
   },
   {
     lead: "Nobody reads the transcripts.",
-    body: "They are the most useful sales material you will ever own, because they are a record of the exact questions your market is asking, in their own words. Most people never open them.",
+    body: "They are the most useful sales material you will ever own, because they are a record of the exact questions your customers are asking, in their own words. Most people never open them.",
   },
 ];
 
@@ -189,51 +190,52 @@ export const TEARDOWN_TURNS: Turn[] = [
   {
     who: "visitor",
     at: "11:40 pm",
-    text: "Would the seller look at a contingent offer?",
+    text: "Do you come to Fishkill? My furnace is banging and I would rather not wait.",
   },
   {
     who: "assistant",
     at: "11:40 pm",
-    text: "I am not going to guess at that one. Nobody knows until it is asked, and it is the kind of answer that decides an offer. I will have someone ask the listing agent and come back to you with a real answer.",
+    text: "Yes, Fishkill is inside our service area. I cannot tell what the noise is from here, and I will not guess at a cause or a price. A technician can look at it. The first open visits are tomorrow at 9:00am or 1:00pm. Would one of those work?",
   },
-  {
-    who: "assistant",
-    at: "11:40 pm",
-    text: "While you are here: do you want the three bedrooms under $600k that are actually active in Beacon right now? I can text them over.",
-  },
-  { who: "visitor", at: "11:41 pm", text: "Yes please." },
+  { who: "visitor", at: "11:41 pm", text: "9 works." },
   {
     who: "assistant",
     at: "11:41 pm",
-    text: "Sent. I have also put you down for a call in the morning so you get the contingency answer from a person.",
+    text: "Booked for 9:00am. What name and number should the technician use? I will text you the confirmation.",
+  },
+  { who: "visitor", at: "11:42 pm", text: "Sam, 845-555-0134." },
+  {
+    who: "assistant",
+    at: "11:42 pm",
+    text: "Thank you, Sam. The confirmation is on its way by text, and the technician will have this conversation before the visit.",
   },
 ];
 
 export const TEARDOWN_EVENTS: Event[] = [
   { at: "11:40 pm", label: "Answered", detail: "No wait, no form, no canned reply." },
-  { at: "11:40 pm", label: "Declined to invent an answer", detail: "Flagged for a human instead." },
-  { at: "11:41 pm", label: "Searched the live MLS", detail: "Active matches from the MLS Grid feed." },
-  { at: "11:41 pm", label: "Sent by text", detail: "The channel people actually open." },
-  { at: "11:41 pm", label: "Written to the CRM", detail: "Name, price band, area, and the transcript." },
-  { at: "9:15 am", label: "Call booked", detail: "A person, starting from what they already said." },
+  { at: "11:40 pm", label: "Declined to guess", detail: "No diagnosis and no price: a person looks at it." },
+  { at: "11:41 pm", label: "Read the live calendar", detail: "9:00am and 1:00pm were open, so those were offered, and 9:00am is now held." },
+  { at: "11:42 pm", label: "Sent by text", detail: "The confirmation, to the number the visitor gave." },
+  { at: "11:42 pm", label: "Written to the CRM", detail: "Name, number, the job, the town, and the transcript." },
+  { at: "8:30 am", label: "A person starts from it", detail: "The technician reads the conversation before the 9:00 visit." },
 ];
 
 export const FOUR_MOVES: Move[] = [
   {
     lead: "It answers immediately, at any hour.",
-    body: "Not a canned reply. An actual answer to the actual question.",
+    body: "Not a canned reply. An actual answer to the actual question, from the answers you approved.",
   },
   {
-    lead: "It searches the live MLS.",
-    body: "Ask it for three bedrooms under $600k in Beacon and it queries the MLS Grid feed and tells you what is genuinely active right now, not what was active when somebody last exported a spreadsheet.",
+    lead: "It checks what is live.",
+    body: "Ask it whether a technician can come tomorrow and it reads the calendar and offers the times that are open right now, not the ones that were open when somebody last edited a page. For a real estate office it queries the live listings the same way.",
   },
   {
     lead: "It moves to a channel people open.",
-    body: "Matching listings go out by text. People read texts. People do not read the fourth email from an agent they have never met.",
+    body: "The confirmation goes out by text, to the number the visitor gave. People read texts. People do not read the fourth email from a business they have never used.",
   },
   {
     lead: "It captures what it learns.",
-    body: "Name, number, price band, area, timeline, and the transcript, all written to the CRM so your callback starts from what they said rather than from a blank record.",
+    body: "Name, number, what the job is, where and when, and the transcript, all written to the CRM so your callback starts from what they said rather than from a blank record.",
   },
 ];
 
@@ -273,7 +275,7 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       caption: [
         `Narrated, ${FILM.seconds} seconds. The flight through the galaxy into the neural map is live footage of the system running at `,
         { href: "/ai#chat", label: "realtylt.com/ai" },
-        ". The 11:40pm exchange is staged for the film, and every line in it is something this page already says the assistant does. For the unstaged version, go and ask it yourself.",
+        ". The 11:40pm exchange is staged for the film, with a real estate question because that is the office it was made for, and every line in it is something this page already says the assistant does. For the unstaged version, go and ask it yourself.",
       ],
     },
     /** This plate used to be the Poughkeepsie railroad bridge, which the reactivation post also
@@ -293,7 +295,7 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       // site argues at length about publishing an address somebody did not publish themselves.
       alt: "A cedar shingled house with a gambrel roof and a row of shingled dormers, a deep covered porch across the front carried on bracketed white posts with a lantern hanging under it, seen from the street over a river stone wall and a brick retaining wall, with mature trees crowding in on both sides",
       caption:
-        "A shingled house with a deep porch and a light hanging in it. This is the shape of nearly every question this article is about. Nobody messages a real estate website at twenty to midnight to ask what an AI assistant is. They ask whether the seller of one specific house would look at a contingent offer, and no amount of fluency answers that. Something behind the conversation has to know which house you mean.",
+        "A shingled house with a deep porch and a light hanging in it. A real estate office is one of the businesses this article is about, and its version of the question is specific: would the seller of one particular house look at a contingent offer. No amount of fluency answers that. Something behind the conversation has to know which house you mean, as a heating company's assistant has to know which towns it covers.",
       credit: "Photograph by CodyR, CC BY 2.0.",
       ariaLabel: "A house with a porch light on",
     },
@@ -311,7 +313,7 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "inquiries",
           label: "Inquiries through your site each month",
-          hint: "Form fills, chat starts, is-this-still-available texts.",
+          hint: "Form fills, chat starts, do-you-cover-my-town and is-this-still-available texts.",
           min: 5,
           max: 200,
           step: 5,
@@ -342,17 +344,6 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
             },
           ],
         },
-        {
-          kind: "range",
-          id: "commission",
-          label: "Your average commission per closed deal",
-          min: 1000,
-          max: 30000,
-          step: 500,
-          initial: 6000,
-          format: "money",
-          width: "w-[7.5rem]",
-        },
       ],
       chain: [
         {
@@ -368,27 +359,15 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
           unit: "a month",
         },
         {
-          label: "Over a year",
+          label: "Conversations that began somewhere else",
           by: { from: "rate", value: 12, display: "12 months" },
           format: "count",
           unit: "a year",
         },
-        {
-          label: "That would have become a closing",
-          by: { from: "rate", value: 0.05, display: "a 5% close rate" },
-          format: "count",
-          unit: "a year",
-        },
-        {
-          label: "In commission",
-          by: { from: "input", id: "commission" },
-          format: "money",
-          unit: "a year",
-        },
       ],
-      headline: 4,
-      resultLabel: "Commission you are handing over",
-      note: "The arithmetic is on screen on purpose, because the easy version of this calculator is a lie. The reply curve is a judgement and not a measurement: an immediate reply is treated as winning roughly nine conversations in ten, a few hours about half, the next day about a fifth. It is shaped by the research quoted above rather than derived from it, and deliberately not by the unsourced 78% figure this article declines to use. The 5% close rate is ours and is deliberately low, because an inquiry is a conversation and not a signed deal, and a calculator that multiplies every missed inquiry by a full commission is selling you something. The two numbers you can drag are yours. All three are a place to start arguing from, not a measurement of your business.",
+      headline: 2,
+      resultLabel: "Conversations a year that began somewhere else",
+      note: "The arithmetic is on screen on purpose, because the easy version of this calculator is a lie. The reply curve is a judgement and not a measurement: an immediate reply is treated as winning roughly nine conversations in ten, a few hours about half, the next day about a fifth. It is shaped by the research quoted above rather than derived from it, and deliberately not by the unsourced 78% figure this article declines to use. It stops at conversations a year, because what one is worth differs in every trade, from a first dental visit to a furnace repair to a house, and a calculator that multiplies every missed inquiry by a job or a commission is selling you something. The two numbers you can drag are yours. Both are a place to start arguing from, not a measurement of your business.",
       action: { label: "See how it is built", href: "/services/ai-chat-assistant" },
       secondary: { label: "Talk it through", href: "/connect" },
     },
@@ -455,13 +434,60 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "The buyer at 11:40pm is not coming back tomorrow to check whether you replied. They are going to be at somebody's open house on Saturday. The only real question is whose.",
+      text: "In the invented example at the top, the homeowner with the banging furnace was never coming back to check whether anyone replied. She was home at 9 when another company's technician arrived. The only real question is whose.",
       actions: [
         { label: "Talk to it right now", href: "/ai#chat", variant: "light" },
         { label: "See how it is built", href: "/services/ai-chat-assistant", variant: "outline-light" },
       ],
       footnote:
         "Ask it the thing you think would catch it out. The answer you want is either a real one or an honest no.",
+    },
+
+    /** ROUND 29: who it fits and who it does not, with what the second group does instead. */
+    fits: {
+      kind: "grid",
+      band: "light",
+      label: "Who it fits",
+      eyebrow: "Who this is for",
+      heading: "A good fit, a poor fit, and what to do instead",
+      columns: 2,
+      items: [
+        { lead: "A good fit", body: "Questions that arrive when nobody can answer: a home services company, a dental, accounting or insurance office, a salon, spa or gym, a real estate office." },
+        { lead: "A poor fit", body: "A handful of website visits a week, a person who already answers every inquiry within minutes, or nobody to read the transcripts." },
+        { lead: "Instead, for a poor fit", body: "One clear page with a phone number and a promise of when you reply, kept every time." },
+        { lead: "Either way", body: "A person approves what it may say, and a person reads what it said." },
+      ],
+    },
+
+    /** ROUND 29: the roadmap, one job a week at a time. Our method. */
+    roadmap: {
+      kind: "steps",
+      band: "light",
+      label: "The roadmap",
+      eyebrow: "A suggested schedule",
+      heading: "One job, a week at a time, a decision written down",
+      alt: "A suggested schedule: in week 1, read the last thirty website messages and write the page of answers; in week 2, put the five test questions to whatever answers on your site now; in weeks 3 and 4, run the worth-it test, then approve the answers page and read every conversation, or keep the contact form and write the decision down.",
+      steps: [
+        { title: "Week 1", body: "Read the last thirty website messages; write the page of answers a new hire would need." },
+        { title: "Week 2", body: "Put the five test questions to whatever answers on your site now, or to a demo." },
+        { title: "Weeks 3 and 4", body: "The worth-it test; then approve the answers page and read every conversation, or keep the contact form and write the decision down." },
+      ],
+      close: "A schedule to start from, not a deadline.",
+      sources: [{ text: "our method, the RealtyLT AI assessment" }],
+    },
+
+    /** ROUND 29: the owner's quiz (2026-10-31), tested against the post in chat-quiz.test.ts. AI brand. */
+    quiz: {
+      kind: "quiz",
+      band: "night",
+      label: "Quiz",
+      ariaLabel: "Quiz: what did you learn",
+      eyebrow: "Ten questions",
+      title: "What did you learn? Check it in two minutes",
+      brand: "ai",
+      passLine: "You know what to test and when to leave it alone. The free AI quiz at the end of this page turns that into your own result.",
+      failLine: "Under half this time. Read what makes an answer true and the worth-it test again, then have another go.",
+      questions: CHAT_QUIZ,
     },
   },
 
@@ -473,9 +499,12 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
     "what-an-ai-chat-assistant-actually-does": "What it does",
     "what-makes-an-answer-true-which-is-the-whole-job": "True answers",
     "the-part-nobody-selling-you-a-chat-widget-mentions": "The fine print",
-    "what-it-costs-and-how-long-it-takes": "What it costs",
+    "what-it-takes-to-run": "What it takes",
     "how-to-test-one-before-you-buy-it": "How to test one",
+    "is-it-worth-automating": "Worth automating?",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
+    "who-this-fits-and-who-it-does-not": "Who it fits",
+    "what-to-do-first": "Your first weeks",
     "common-questions-answered-honestly": "Common questions",
     "what-to-do-about-it": "What to do",
   },
