@@ -26,6 +26,7 @@
  * House rules apply: no em dashes, no arrow glyphs, no claims not already made on the site. */
 
 import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
+import { LOCAL_SEO_QUIZ } from "./local-seo-quiz";
 
 /** SCENE copy — "In short".
  *
@@ -33,9 +34,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * of it. The first is Google's own sentence, the second is a 2005 Cornell experiment, the third
  * is a field experiment run inside eBay. */
 export const IN_SHORT: string[] = [
-  "Google publishes what decides the local results, in one sentence. They are mainly based on relevance, distance and popularity. One of those three is where the person searching happens to be standing. Nothing you do will move it.",
-  "Being at the top of a short list is worth something on its own. A Cornell eye-tracking study secretly swapped the top two results. Most readers still clicked the one on top, even when a panel of judges had rated the other one better.",
-  "eBay switched off the search ads it was buying against its own name. 99.5% of the clicks it had been paying for came back through unpaid search anyway. Renting attention and earning it are not the same purchase. And the difference is only visible if somebody runs the experiment.",
+  "Google publishes what decides the local results, in one sentence. They are mainly based on relevance, distance and popularity. One of those three is where the person searching happens to be standing. Nothing you do will move it, and nothing you pay will buy a better place.",
+  "A panel of 47 local search experts scored 187 factors for the map results. The main category on the profile came first and distance second. They are opinions, and Google's own rules cap two of the factors they rank high: the business name and a visible address.",
+  "Being at the top of a short list is worth something on its own. A Cornell eye-tracking study secretly swapped the top two results, and most readers still clicked the one on top, even when judges had rated the other one better.",
 ];
 
 /** SCENE copy — the three factors, in Google's own words.
@@ -131,6 +132,36 @@ export const TRUST_BIAS = {
   note: "Sixteen undergraduates in a laboratory, published in 2005, on ten blue links. That is twenty years before the results page looked anything like it looks now. Nobody has run this experiment on a map pack, and these percentages are not a benchmark for one. What transfers is the mechanism, and it is uncomfortable. A share of the clicks at the top of a list are going there because the list said so, not because the reader compared anything. The paper was written to work out whether clicks can be trusted as feedback for a search engine. That is a different question from the one this article is asking. And its authors make no marketing claim anywhere in it.",
 };
 
+/** SCENE copy: the experts' list. ROUND 29 (2026-11-14), read today in the report itself:
+ * Darren Shaw, Whitespark, "Local Search Ranking Factors" (2026 edition, published November 6, 2025,
+ * whitespark.ca/local-search-ranking-factors). 47 experts scored 187 factors from 0 to 5, so 235 is the
+ * most a factor could score (47 x 5). The six bars are the first six local pack/Maps factors with the
+ * scores the report prints: primary GBP category 227, proximity of address to the point of search 225,
+ * keywords in the GBP business title 223, physical address in the city of search 213, business open at
+ * time of search 189, high numerical Google ratings 181. The report says none of the experts has special
+ * access to Google's algorithm. THE AXIS IS PINNED TO 235, the highest score a factor could reach. */
+export const EXPERT_FACTORS = {
+  eyebrow: "The experts' list",
+  caption: "The first six factors for the map results, scored by 47 local search experts",
+  bars: [
+    { label: "Main category on the profile", value: 227, display: "227" },
+    { label: "How close the business is to the searcher", value: 225, display: "225" },
+    { label: "Keywords in the profile's business name", value: 223, display: "223" },
+    { label: "Physical address in the city searched", value: 213, display: "213" },
+    { label: "Business open at the time of the search", value: 189, display: "189" },
+    { label: "High Google rating, 4 to 5", value: 181, display: "181" },
+  ],
+  max: 235,
+  lit: 1,
+  basis:
+    "Each of 47 experts scored 187 factors from 0 to 5 for their effect on the local pack and Maps results. The scores are summed, so a factor could reach at most 235 (47 x 5). The bars are the six highest of the 187 as the report prints them. The axis runs to 235.",
+  sourceText:
+    "Darren Shaw, Whitespark, Local Search Ranking Factors, 2026 edition, published November 6, 2025. A survey of expert opinion; the report says none of the experts has special access to Google's algorithm.",
+  sourceHref: "https://whitespark.ca/local-search-ranking-factors/",
+  note: "This is a survey of opinion, not Google's rules, and Google's own guidelines limit two of these factors: the business name must be your real name, and a service-area business should hide its address. Distance is second, which agrees with Google's page. The factors you control are the category, the name you are allowed to use, the hours and the reviews.",
+};
+
+
 /** SCENE copy — the eligibility rules. Cited from the primary.
  *
  * support.google.com/business/answer/3038177, "Guidelines for representing your business on
@@ -160,20 +191,20 @@ export const TRUST_BIAS = {
  * otherwise list them, so each appears once on the page. */
 export const PROFILE_RULES: GridItem[] = [
   {
-    lead: "An agent is a practitioner, and the guidelines say so by name.",
-    body: "Doctors, dentists, lawyers, financial planners and real estate agents are all listed in the same sentence as individual practitioners. That is the category that gets its own profile. Support staff are told not to create one. Sales associates and lead generation agents for corporations are named as not eligible at all.",
+    lead: "The name is the name on your sign, and nothing more.",
+    body: "Google says your name should reflect your real-world name, as used on your storefront, website and stationery. A tagline, a phone number, hours or a list of services in the name is not permitted and can lead to the suspension of the profile. Put the rest in the fields built for it.",
   },
   {
-    lead: "One profile each, not one per thing you do.",
-    body: "A practitioner should not hold several profiles to cover their specialisations. The buyer's-agent profile, the listings profile and the investment profile are one profile with three services on it. Splitting them is a suspension risk, not a clever way to cover more ground.",
+    lead: "An address you do not operate from is not an address.",
+    body: "A rented mailing address you do not work from is called a virtual office in the guidelines, and is not eligible. A desk in a co-working space needs clear signage, staff during business hours and the ability to receive customers there.",
   },
   {
-    lead: "Your profile carries your name, not the brokerage's.",
-    body: "Say several public-facing practitioners work at one location. The guidelines say the organisation gets its own profile, and the practitioner's title should include only the practitioner's name. The exception is the solo practitioner at a branded location. They are told it is best to share the organisation's profile rather than start a second one.",
+    lead: "If you travel to customers, hide a home address.",
+    body: "A business that serves customers at their locations should have one profile for its central office, with a designated service area, and should hide its address from customers. The example in Google's guidelines is a plumber working from a home address.",
   },
   {
-    lead: "An address you do not sit in is not an address.",
-    body: "A rented mailing address that you do not operate from is called a virtual office in the guidelines, and is not eligible. A desk in a co-working space needs clear signage, staff during business hours, and the ability to receive customers there. And the guidelines say a service area should not reach farther than about two hours of driving from where the business is based. They allow that some businesses will need more.",
+    lead: "Fewest categories, and one profile per business.",
+    body: "Choose the fewest categories it takes to describe your overall core business, and do not use a category solely as a keyword. Complete the statement 'This business IS a', not 'This business HAS a'. There should be only one profile per business, or Google's own display of your information can break.",
   },
 ];
 
@@ -193,7 +224,7 @@ export const THE_WORK: GridItem[] = [
   },
   {
     lead: "It keeps the two things Google actually names moving.",
-    body: "The first is reviews, which means asking every client rather than the pleased ones. The second is mentions on other people's websites. Those come from the ordinary work of being somewhere. A local sponsorship, a chamber page, a piece of coverage. Both are named in the ranking document. Neither can be bought without buying a problem.",
+    body: "The first is reviews, which means asking every customer rather than the pleased ones. The second is mentions on other people's websites. Those come from the ordinary work of being somewhere. A local sponsorship, a chamber page, a piece of coverage. Both are named in the ranking document. Neither can be bought without buying a problem.",
   },
   {
     lead: "It watches the searches you were actually shown for.",
@@ -306,6 +337,56 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       items: THREE_FACTORS,
       label: "The three",
     },
+    "expert-factors": {
+      kind: "statbars",
+      band: "dark",
+      label: "The experts",
+      ...EXPERT_FACTORS,
+    },
+    /** ROUND 29: who it fits and who it does not, with what the second group does instead. */
+    fits: {
+      kind: "grid",
+      band: "light",
+      label: "Who it fits",
+      eyebrow: "Who this is for",
+      heading: "A good fit, a poor fit, and what to do instead",
+      columns: 2,
+      items: [
+        { lead: "A good fit", body: "A business customers find by searching nearby and that finishes work for a named person: trades, dental and accounting offices, salons, spas, gyms, real estate offices." },
+        { lead: "A poor fit", body: "A rented mailing address or a virtual office, nobody to answer the phone the profile advertises, or so few jobs that a review a quarter is all there will be." },
+        { lead: "Instead, for a poor fit", body: "By hand: one written line to each customer, a reply to every review already waiting, and a decision after a quarter." },
+        { lead: "Either way", body: "One profile, the real name, the same review link for everyone, and a person approving what goes out in your name." },
+      ],
+    },
+    /** ROUND 29: the roadmap, one profile a week at a time. Our method. */
+    roadmap: {
+      kind: "steps",
+      band: "light",
+      label: "The roadmap",
+      eyebrow: "A suggested schedule",
+      heading: "One profile, a week at a time, a decision written down",
+      alt: "A suggested schedule: in week 1 the ten-minute check and the category, hours and name fixed; in week 2 every customer asked for a review and the waiting reviews answered; in weeks 3 and 4 the performance screen read again and a decision written down.",
+      steps: [
+        { title: "Week 1", body: "The ten-minute check; the category, hours and name fixed; the event that means a job is finished written down." },
+        { title: "Week 2", body: "Every customer asked, with the same link; the reviews already waiting answered, each reply read by a person first." },
+        { title: "Weeks 3 and 4", body: "The performance screen read against week 1; then keep it by hand or put the request and the report on a system, and write the decision and the date down." },
+      ],
+      close: "A schedule to start from, not a deadline.",
+      sources: [{ text: "our method, the RealtyLT AI assessment" }],
+    },
+    /** ROUND 29: the owner's quiz (2026-10-31), tested against the post in local-seo-quiz.test.ts. AI brand. */
+    quiz: {
+      kind: "quiz",
+      band: "night",
+      label: "Quiz",
+      ariaLabel: "Quiz: what did you learn",
+      eyebrow: "Ten questions",
+      title: "What did you learn? Check it in two minutes",
+      brand: "ai",
+      passLine: "You know what Google publishes and what you can change. The free AI quiz at the end of this page turns it into your own result.",
+      failLine: "Under half this time. Read the three inputs and the profile rules again, then have another go.",
+      questions: LOCAL_SEO_QUIZ,
+    },
     "trust-bias": {
       /** BOTH CHARTS ON THIS POST ARE DARK, and it is a rhythm decision taken across the pair of
        * posts written this round rather than one at a time. Every shipped chart in the cohort is
@@ -327,7 +408,7 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       // house rather than rising through the middle of the roof.
       alt: "A brick and stone cottage with red-painted timbering, red window frames and a red front door, a wide stone chimney stack standing against the front of the house and rising past the roof, set in mature woodland behind a short mown lawn with deep shrub borders and a line of flat stepping stones leading toward the door",
       caption:
-        "Somebody within a few miles of this house is looking for an agent this week. They will choose from three names on a phone screen. Whether yours is one of them is decided partly by a number nobody in this business ever writes down. That number is how far away from them your front door happens to be.",
+        "Somewhere within a few miles of this house a pipe is leaking, a roof needs a look or a furnace has stopped. The owner will choose from three names on a phone screen. Whether yours is one of them is decided partly by a number nobody in this business ever writes down. That number is how far away from them you happen to be.",
       credit: "Photograph by hoyasmeg, CC BY 2.0.",
       ariaLabel: "The house down the path",
     },
@@ -388,11 +469,11 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
         {
           kind: "range",
           id: "client",
-          label: "Share of those that eventually became a client",
-          hint: "Your own rate on a stranger who found you cold, which is usually lower than your rate on a referral.",
+          label: "Share of those that became a paying customer",
+          hint: "Your own rate on a stranger who found you cold, which is usually lower than your rate on a referral. If you do not know it, count last month.",
           min: 1,
-          /** Capped at 25 rather than 40. A quarter of cold callers becoming clients is already
-           * at the top of anything anybody in this business would claim, and a slider that can
+          /** Capped at 25 rather than 40. A quarter of cold callers becoming customers is already
+           * at the top of anything anybody in a local trade would claim, and a slider that can
            * be dragged to 40 invites a reader to build a number out of the top of every range at
            * once. */
           max: 25,
@@ -404,12 +485,12 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
         {
           kind: "range",
           id: "commission",
-          label: "Your average commission on one of those",
-          hint: "Your side of one closing, after the split, before tax.",
-          min: 2000,
-          max: 30000,
-          step: 500,
-          initial: 9000,
+          label: "Your average job, visit or sale, before costs",
+          hint: "What one of those customers usually spends with you the first time. Your own number, not an industry average.",
+          min: 100,
+          max: 20000,
+          step: 100,
+          initial: 500,
           format: "money",
           width: "w-[8rem]",
         },
@@ -418,8 +499,8 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
         { label: "Calls from the profile", by: { from: "input", id: "calls" }, format: "count", unit: "a month" },
         { label: "Over a year", by: { from: "rate", value: 12, display: "12 months" }, format: "count", unit: "calls a year" },
         { label: "People you could help", by: { from: "input", id: "real" }, format: "count", unit: "conversations" },
-        { label: "Who became a client", by: { from: "input", id: "client" }, format: "count", unit: "closings" },
-        { label: "At your commission", by: { from: "input", id: "commission" }, format: "money", unit: "a year" },
+        { label: "Who became a customer", by: { from: "input", id: "client" }, format: "count", unit: "customers" },
+        { label: "At your average job", by: { from: "input", id: "commission" }, format: "money", unit: "a year" },
       ],
       headline: 4,
       resultLabel: "What the free listing is already producing",
@@ -467,7 +548,7 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       // and the brass lantern beside it were missing at either crop.
       alt: "The front of a white-painted stone house with black shutters, an octagonal window over a dark panelled front door and a brass lantern beside it, a mass of white flowering shrub arching over the entrance, two terracotta pots of red flowers standing either side of the door, and a white fretwork fence above clipped box hedges across the foreground",
       caption:
-        "This is what a Business Profile is, and it is worth being unromantic about it. Somebody stands here for a moment. They read the name, the hours and the last few things other people said. Then they decide whether to knock. Everything in this article is about that doorstep rather than about your website.",
+        "This is what a Business Profile is, and it is worth being unromantic about it. Somebody stands here for a moment. They read the name, the hours and the last few things other people said. Then they decide whether to call or to knock. Everything in this article is about that doorstep rather than about your website.",
       credit: "Photograph by Wonderlane, CC BY 2.0.",
       ariaLabel: "The front door somebody arrives at",
     },
@@ -501,17 +582,21 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
   /** Short rail labels for the prose headings. Ids and ORDER are derived from the document, so a
    * renamed heading degrades to its full text rather than leaving a dead row. */
   headingLabels: {
-    "the-search-that-already-happened-and-why-you-cannot-see-it": "The search",
-    "what-google-actually-publishes-about-this": "What Google says",
-    "the-input-you-cannot-do-anything-about": "Distance",
-    "why-the-top-of-a-very-short-list-is-worth-more-than-it-should-be": "The top slot",
-    "what-prominence-is-made-of-and-what-it-is-not": "Prominence",
-    "the-profile-rules-that-decide-whether-you-can-have-one-at-all": "The rules",
-    "what-local-seo-actually-does-week-to-week": "What it does",
-    "what-renting-the-same-attention-costs": "Renting it",
-    "what-it-costs-and-how-long-it-takes": "Cost and time",
+    "how-do-you-rank-in-google-maps": "How to rank",
+    "what-do-local-search-experts-say-matters-most": "The experts",
+    "which-parts-of-the-ranking-can-you-not-change": "Distance",
+    "why-does-the-top-of-a-short-list-matter-so-much": "The top slot",
+    "how-do-reviews-affect-your-ranking-in-google-maps": "Reviews",
+    "what-does-google-allow-in-your-profile": "The rules",
+    "what-does-a-local-profile-need-week-to-week": "What it does",
+    "what-is-your-google-profile-already-producing": "Your numbers",
+    "what-does-it-cost-to-rent-the-same-attention": "Renting it",
+    "is-it-worth-doing-this-yourself-or-having-it-done": "Worth doing?",
+    "what-it-takes-to-run-and-how-long-it-takes": "What it takes",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
-    "how-to-find-out-where-you-actually-stand-in-ten-minutes": "How to check",
+    "who-this-fits-and-who-it-does-not": "Who it fits",
+    "how-do-you-find-out-where-you-stand-in-ten-minutes": "How to check",
+    "what-to-do-first": "Your first weeks",
     "common-questions-answered-honestly": "Common questions",
     "what-to-do-about-it": "What to do",
   },

@@ -157,23 +157,31 @@ describe("flagshipToc", () => {
   it("derives exactly the rail the local SEO post shipped with", () => {
     const localOutline = parseOutline(LOCAL_SEO_POST);
     expect(flagshipToc(localOutline, LOCAL_SEO_FLAGSHIP)).toEqual([
-      { id: "the-search-that-already-happened-and-why-you-cannot-see-it", label: "The search" },
-      { id: "what-google-actually-publishes-about-this", label: "What Google says" },
+      // Round 29 (2026-11-14): the refresh re-aimed at local owners (plain question headings, the experts' list,
+      // the worth-it test, who it fits, what to do first, the quiz and the sources).
+      { id: "how-do-you-rank-in-google-maps", label: "How to rank" },
       { id: "scene-ranking-factors", label: "The three", scene: true },
-      { id: "the-input-you-cannot-do-anything-about", label: "Distance" },
-      { id: "why-the-top-of-a-very-short-list-is-worth-more-than-it-should-be", label: "The top slot" },
-      { id: "what-prominence-is-made-of-and-what-it-is-not", label: "Prominence" },
-      { id: "the-profile-rules-that-decide-whether-you-can-have-one-at-all", label: "The rules" },
-      { id: "what-local-seo-actually-does-week-to-week", label: "What it does" },
+      { id: "what-do-local-search-experts-say-matters-most", label: "The experts" },
+      { id: "which-parts-of-the-ranking-can-you-not-change", label: "Distance" },
+      { id: "why-does-the-top-of-a-short-list-matter-so-much", label: "The top slot" },
+      { id: "how-do-reviews-affect-your-ranking-in-google-maps", label: "Reviews" },
+      { id: "what-does-google-allow-in-your-profile", label: "The rules" },
+      { id: "what-does-a-local-profile-need-week-to-week", label: "What it does" },
       { id: "scene-the-work", label: "The work", scene: true },
-      { id: "scene-local-calculator", label: "Your numbers", scene: true },
-      { id: "what-renting-the-same-attention-costs", label: "Renting it" },
+      { id: "what-is-your-google-profile-already-producing", label: "Your numbers" },
+      { id: "what-does-it-cost-to-rent-the-same-attention", label: "Renting it" },
       { id: "scene-paid-search", label: "The experiment", scene: true },
-      { id: "what-it-costs-and-how-long-it-takes", label: "Cost and time" },
+      { id: "is-it-worth-doing-this-yourself-or-having-it-done", label: "Worth doing?" },
+      { id: "what-it-takes-to-run-and-how-long-it-takes", label: "What it takes" },
       { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
-      { id: "how-to-find-out-where-you-actually-stand-in-ten-minutes", label: "How to check" },
+      { id: "who-this-fits-and-who-it-does-not", label: "Who it fits" },
+      { id: "how-do-you-find-out-where-you-stand-in-ten-minutes", label: "How to check" },
+      { id: "what-to-do-first", label: "Your first weeks" },
+      { id: "scene-roadmap", label: "The roadmap", scene: true },
       { id: "common-questions-answered-honestly", label: "Common questions" },
+      { id: "scene-quiz", label: "Quiz", scene: true },
       { id: "what-to-do-about-it", label: "What to do" },
+      { id: "sources", label: "Sources" },
     ]);
   });
 

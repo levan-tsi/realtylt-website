@@ -413,18 +413,25 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "local-seo-real-estate-map-pack-google-business-profile",
     cluster: "visibility",
-    title: "Three businesses show up. Yours is not one of them.",
-    seoTitle: "Local SEO for Real Estate: Map Pack and Business Profile",
+    title: "How to rank in Google Maps: fix the profile, ask for reviews, accept the distance",
+    seoTitle: "How to Rank in Google Maps: Business Profile and Reviews",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
+    updated: "2026-11-14",
+    /** ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-11): the title is
+     * the owners' phrase "how to rank in google maps"; the story a plumber and a basement; the
+     * examples a plumber, a roofer, an HVAC contractor, a dental, accounting or insurance office, a salon,
+     * spa or gym and a real estate office as one of them; Google's help pages re-read 2026-11-14 and the
+     * 2026 expert survey added; the shape added (is it worth doing, who it fits, what to do first, the
+     * quiz); the closing line goes to the quiz. Slug kept. See docs/blog-r29/NOTES-local-seo.md.
+     *
+     * `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
      * pass restored the exception Google's own service-area guideline carries in its very next
      * sentence; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays red, no
      * film, so the slug ships at 18/19. */
     excerpt:
-      "Someone nearby searched for an agent this week and picked from three names on a phone. Google publishes what decides that list. One of the three inputs is a fact about you that nothing can change. And the rules for whether you may even have a profile name this industry by name.",
+      "How to rank in Google Maps for a local business: what Google publishes about relevance, distance and prominence, what 47 local search experts rank first, the profile rules that get a listing suspended, and a ten-minute check you can run tonight.",
     seoDescription:
-      "What Google publishes about local ranking, the profile rules that name real estate agents specifically, and what an experiment found about paid search traffic.",
+      "How to rank in Google Maps: what Google publishes, what local experts rank first, the profile rules and the reviews, for plumbers, salons, dental offices and more.",
     cover: "/images/hero/hudson-olana.jpg",
     body: [],
     placeholder: false,

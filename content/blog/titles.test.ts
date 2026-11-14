@@ -12,7 +12,7 @@ import { POSTS } from "./posts";
  * A new name goes on the list on purpose, when a title needs it.
  */
 const PHRASES = ["Hudson Valley", "New York"];
-const WORDS = new Set(["I", "NY", "March", "July", "October", "AI", "CRM", "ROI", "BRRRR", "FSBO", "FHA", "VA"]);
+const WORDS = new Set(["I", "NY", "March", "July", "October", "AI", "CRM", "ROI", "BRRRR", "FSBO", "FHA", "VA", "Google", "Maps"]);
 
 /** The words in `title` that break sentence case; empty when it is in sentence case. */
 function offenders(title: string): string[] {

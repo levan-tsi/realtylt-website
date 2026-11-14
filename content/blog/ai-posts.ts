@@ -2833,125 +2833,169 @@ Then take the two pages you already have that you are least sure about. Delete e
 
 [[scene:funnel]]`;
 
-export const LOCAL_SEO_POST = `On a Tuesday in February a woman sat in her car outside a school with eleven minutes to fill. Her sister had sold a house badly the year before. That morning, in the way people really decide things, she had decided she was going to get this right. She typed four words into her phone.
+export const LOCAL_SEO_POST = `We help local business owners work out how to rank in Google Maps: the profile to fix and keep current, the reviews to ask for every time, and a person approving everything that is published in the business's name. Below is how to rank in Google Maps using what Google itself publishes, what a panel of local search experts says matters most, a check you can run tonight, whether the work is worth doing yourself or having done, and what to do first this week.
 
-Three businesses came back, with a small map above them and a row of stars under each name. She read them for about as long as it takes to read three names. She tapped the second one, and left a voicemail.
+This page is for owners of a business that people search for nearby: a plumber, a roofer or an HVAC contractor, a dental, accounting or insurance office, a salon, a spa or a gym, a real estate office.
 
-You were not on that screen. You have never known this happened, and there is nowhere you could go to find out. It is not a lost lead, because it never became a lead. Nothing arrived in the CRM because nothing was sent. The most ordinary way a stranger picks an agent produced no record of you at all.
+An invented example shows what is at stake. On a Tuesday in February a man in Fishkill stands in his basement with water around the heater. He types "plumber near me" into his phone. Three businesses come back under a small map, each with a row of stars. He reads three names, taps the second and calls.
 
-The part worth knowing is that the order she saw was neither an accident nor a secret. Google publishes what decides it. Almost nobody in this industry has read that paragraph. And one of the three things it names is a fact about you that no amount of money or effort will change.
+A plumber two miles away has done good work for years and is not one of the three. He will never know that this call happened. There is no lost lead in his records, because the lead never reached him. This page is about how that list of three gets made.
 
 [[scene:in-short]]
 
-## The search that already happened, and why you cannot see it
+## How do you rank in Google Maps?
 
-Every other way a client finds you leaves a trace. A referral comes with a name attached. A portal inquiry arrives with a timestamp. Even the person who does nothing at all with your open house has stood in a room you were in.
+Google ranks local results mainly on three things, relevance, distance and prominence, and it says there is no way to request or pay for a better position. Two of the three are work you can do. The third, distance, is a fact about where you and the searcher are standing.
 
-Local search leaves nothing. A person types a phrase into a phone. Three businesses appear. They choose one, and the two they did not choose are never told. There is no impression count on a search you lost. No notification. No weekly digest of the times your name was not in the list. This is the only meaningful channel in the business where the failures are completely silent. And silence is why it is so easy to believe nothing is happening.
+Google's page on [improving your local ranking](https://support.google.com/business/answer/7091) is short, public and free, and it says exactly that. It opens with a list of what to do: verify your business, keep your information up to date, respond to reviews and add photos. Then it states the limit: "There's no way to request or pay for a better local ranking on Google." It adds that Google keeps "the search algorithm details confidential to make the ranking system as fair as possible for everyone". An offer to place you is an offer of something Google says does not exist.
 
-Something is happening. What you can see of it is one screen. It is the Business Profile's own performance report. It tells you how many people rang from the listing, how many asked for directions, and how many tapped through to the website. It also tells you which searches surfaced you. It is not the whole picture and it is not a ranking report. It is the only truly first-party number in this entire subject. It is free. And in most small businesses nobody has opened it in a year.
+Then comes the sentence the whole industry is built on. "Local results are mainly based on relevance, distance, and popularity." Under it, the three subheadings read Relevance, Distance and Prominence, and the page does not define either word with a number.
 
-It is worth separating two things that get called the same name. There is the map pack, which is the short list of businesses with the map above it. And there is the ordinary run of blue links under that. They are ranked by different machinery, and they are won in different ways. This article is about the first one. It sits above everything else, and the person in the car never scrolled far enough to reach the second.
+- Relevance is "how well a Business Profile matches what someone is searching for." To improve it, Google says to provide complete and detailed business info.
+- Distance "refers to how far each business is from the customer who's searching." When the customer has not said where they are, Google uses what it knows about their location.
+- Prominence means how well known a business is. The page says it is based on information "like how many websites link to your business and how many reviews you have", and that more reviews and positive ratings can help your local ranking.
 
-## What Google actually publishes about this
-
-Most of what is written about local rankings is someone's inference from watching results move. The document under it is short, public and free. It is worth reading rather than reading about.
-
-Google's [page on improving your local ranking](https://support.google.com/business/answer/7091) opens the section on ranking with a warning rather than a technique. There is no way to request or pay for a better local ranking on Google, it says. And it says the algorithm details are kept confidential to make the ranking system as fair as possible for everyone. Anyone offering to place you is either selling something that does not exist, or selling something Google would suspend you for.
-
-Then comes the sentence the whole industry is built on top of. Local results, the page says, are mainly based on relevance, distance and popularity. Under that, the three subheadings read Relevance, Distance and Prominence. The third one has quietly changed names between the summary and the detail. That is a small thing. But it is the kind of small thing worth noticing on a page this heavily quoted. The word people repeat is prominence. The word in the sentence is popularity. And neither one is defined anywhere with a number.
-
-Relevance is described as how well a Business Profile matches what someone is searching for. The advice for improving it is to provide complete and detailed business information. Distance is how far each business is from the customer who is searching. When the customer has not said where they are, Google uses what it already knows about their location. Prominence is how well known a business is. The page says it is based on information like how many websites link to your business and how many reviews you have.
-
-That is the whole published model. Three inputs, no weights, no thresholds. And one sentence saying the details are deliberately withheld.
+That is the whole published model: three inputs, no weights, no thresholds. The one practical advice sentence under it is the least exciting one: businesses with complete and accurate information are more likely to show up in local search results.
 
 [[scene:ranking-factors]]
 
-## The input you cannot do anything about
+The one thing to apply: open your own profile tonight and read it against those four verbs, verify, update, respond and add photos. Whichever one you have not done is your first job.
 
-Distance is the one that changes how you should think about all of this. It is also the one nobody selling local search wants to dwell on.
+## What do local search experts say matters most?
 
-Your presence on the map has a shape. It is roughly centred on the address you verified. It fades as you move away from it. And it is competing against a different set of businesses in every direction. The person in the car was ranked against whoever was near that school. Fifteen minutes north, the same search produces a different three. One of them may well be someone you have beaten on service every time you have met them.
+Google publishes the three inputs and no weights, so a panel of practitioners has filled the gap with a survey. Whitespark's Local Search Ranking Factors report, published on November 6, 2025, asked 47 local search experts to score 187 factors, each from 0 to 5, for their effect on the map results. Its own caveat is on the page: none of the experts has special access to the internal workings of Google's local search algorithm. So read it as informed opinion, not as Google's rules.
 
-Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) put a number on the outer edge of this. It is the only number in the whole subject that is stated plainly. The boundaries of a profile's overall service area, the guidelines say, should not extend farther than about two hours of driving time from where the business is based. That is generous. The very next sentence softens it further, by allowing that larger areas may be appropriate for some businesses. So it is a boundary rather than a wall. What it is not is a marketing decision. A service area is a description of where you are.
+Because 47 experts each score from 0 to 5, 235 is the most any factor could score (47 x 5 = 235). The top of the 2026 list, according to the report, is below.
 
-So there is a limit built into this work, and it is honest to say it early. Local search will help you win the ground around you. It will not put you on the map in a town twenty-five minutes away where someone else's office actually sits. The thing being ranked is a business with an address, and the address is one of the three inputs. That is a real gap. The answer to it is a different surface entirely, which is an indexable page for each area you truly serve. That has its own rules, its own risks and its own article.
+[[scene:expert-factors]]
+
+Three things stand out for an owner.
+
+First, the list agrees with Google's page where it can. Distance is second on the list, with a score of 225. The main category you pick on your profile is first, with 227. A high Google rating, a count of Google reviews that carry text and the recency of reviews all sit in the top fifteen, according to the report, which fits Google's own words about reviews under prominence.
+
+Second, the experts rank the business name and the address high, and Google's rules limit both. The words in your profile's business name rank third in the report. Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) say the name should be your real-world name as used on your storefront, website and stationery, and that "including unnecessary information in your business name isn't permitted, and could result in the suspension of your Business Profile". Whether your address shows on the profile ranks seventh in the report, yet Google tells a service-area business to hide it: "if you're a plumber and run your business from your residential address, clear the address from your Business Profile." Follow Google's rule. A suspended profile ranks nowhere.
+
+Third, a citation is not on the short list. Consistency of your details across the major map services sits at 124 in the same report, well below the factors above it. Keeping your phone number right everywhere is still worth doing, because a wrong number is wrong for the person who rings it. It is not where the first week should go.
+
+The one thing to apply: check the main category on your profile today, because the report puts it first and Google's guidelines tell you to choose the fewest categories that describe your core business.
+
+## Which parts of the ranking can you not change?
+
+Distance is the one input that no work will move, and it changes how to think about all of this.
+
+Your presence on the map has a shape. It is roughly centred on the address you verified and fades as you move away from it, and it competes against a different set of businesses in every direction. The man in the basement was ranked against whoever was near him. Twenty minutes north, the same search can produce a different three, and one of them may be a contractor you have beaten on service every time you have met.
+
+Google's guidelines put a number on the outer edge. A service-area business's overall service area "shouldn't extend farther than about 2 hours of driving time from where your business is based", and the next sentence adds that for some businesses larger service areas may be appropriate. That is a boundary on what you can claim, not a plan. In an invented example, an HVAC contractor in Newburgh whose trucks cover Orange and Dutchess counties can describe that service area honestly. Describing it does not by itself put the profile at the top in a town where another contractor's office actually sits.
+
+So there is a limit built into this work, and it is honest to say it early. Local search work is aimed at the ground around your address, and distance counts against you in a town where someone else is based. An answer to that is a different surface, an ordinary page on your own website for each area you really serve, which has its own rules and its own risks.
 
 [[scene:plate]]
 
-## Why the top of a very short list is worth more than it should be
+## Why does the top of a short list matter so much?
 
-There is an assumption under everything written about ranking. It is that being first is worth more than being third. The sensible reason given is that people compare the options, and the first one is usually the best. It is worth knowing that someone tested that. And that it is only partly true.
+Being first on a list of three is worth more than the order alone deserves, and a Cornell experiment measured part of why.
 
-A group at Cornell put 22 people in front of Google with an eye tracker running. They also put a proxy between them and the search engine that could quietly rewrite the results page. Sixteen of them produced usable data. Some got Google's ordering untouched. Some got the top two results swapped. And some got the whole page reversed. Nobody was told. The paper records that when asked afterwards, none of the subjects had suspected any manipulation. A separate panel of judges then rated the results by how promising each one looked, without knowing what anyone had clicked.
+According to the paper, a group at Cornell put 22 people in front of Google with an eye tracker running, behind a proxy that could quietly rewrite the results page. Sixteen produced usable data. Some saw Google's ordering untouched. Some saw the top two results swapped, and some saw the page reversed. None of the subjects, asked afterwards, had suspected any manipulation. The paper, published in 2005, reports counts, because the counts are small.
 
-The [paper](https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf), published in 2005, reports the result as counts, because the counts are small. They are worth reading in that form. Take the readers who clicked exactly one of the top two links. Say the judges had rated the first one better. The click went to the top link nineteen times out of twenty, which is what you would hope. Now say the judges had rated the second one better. The click still went to the top link five times out of seven. And take the group where the pair had been secretly swapped, so the link on top was there for no reason at all. The click still went to the top link ten times out of seventeen.
+According to the paper's table, among readers who clicked exactly one of the top two links, 19 of 20 chose the top link when judges had rated it better. When judges had rated the second link better, 5 of 7 still clicked the top link. In the group where the top two had been secretly swapped, 10 of 17 clicked the top link even though the judges preferred the one below it. The authors conclude that users have substantial trust in the search engine's ability to estimate the relevance of a page.
 
-The authors call this a trust bias. Their conclusion is a single sentence: users have substantial trust in the search engine's ability to estimate the relevance of a page, which influences their clicking behaviour. Read that beside a list of three businesses on a phone. Some share of the first business's calls are arriving because it is first. That share is not earned in any sense a person would recognise as merit. It is an inheritance.
+Put that beside three businesses on a phone. If readers of a short list trust its order the same way, the first business is read first partly because it is first, and that is why the order of a short list is worth reading closely.
+
+Two limits. It was 16 usable subjects in a laboratory in 2005, on a page of ordinary web results, so these percentages are not a benchmark for a map result. This source is kept for the argument, because it is the experiment on how readers treat the order of a list that we could read in full.
 
 [[scene:trust-bias]]
 
-## What prominence is made of, and what it is not
+## How do reviews affect your ranking in Google Maps?
 
-Here the industry consensus and the document disagree with each other. There is no polite way to put it. And this website was on the wrong side of the disagreement until this article was written.
+Reviews are one of the two inputs Google names under prominence, and they are the one you control by asking.
 
-Ask anyone what moves the map pack and you will get three things. A complete profile. Consistent name, address and phone details everywhere you appear online. And recent reviews. The middle item is the one that funds an entire category of software. It is not in Google's document. What the document names under prominence is how many websites link to your business and how many reviews you have.
+Google's page says more reviews and positive ratings can help your local ranking. Its [page on getting more reviews](https://support.google.com/business/answer/3474122) says you can ask customers to visit a Google link or scan a QR code, and that you should reply to reviews. It also states a mixed record is not a weakness: a mix of positive and negative feedback often feels more trustworthy, according to the same page.
 
-That does not make directory tidying worthless. A phone number that is wrong in four places is wrong for the people who ring it, which is reason enough. And links and directory entries are not always separable. It does mean something else. A plan built mostly on submitting your details to ninety directories is a plan built on something the ranking document does not mention. Meanwhile the two things it does mention are the two that are hardest to buy. Someone else choosing to link to you. And clients choosing to write about you.
+The rule on how to ask matters as much as the asking. Offering incentives such as free or discounted goods or services in exchange for a review is, in Google's words, "strictly prohibited". Google's [contribution policy](https://support.google.com/contributionpolicy/answer/7400114) also lists, among what a business may not do, "selectively solicit positive reviews from customers", which means sending the link only to the customers you expect to be happy. The same link goes to everyone.
 
-That is an uncomfortable answer for a service page, and it is the true one. The prominence half of local search is mostly a consequence of being truly present somewhere. The work that produces it looks like sponsoring the thing your town does in September. Being the person a local reporter calls. And asking every single client for a review rather than the pleased ones. Software can keep all of that current. It cannot manufacture any of it.
+Reviews also work on the person reading them, not only on the algorithm. According to BrightLocal's Local Consumer Review Survey 2026, a panel of 1,002 US adults, 97% of consumers read reviews for local businesses, 74% only care about reviews written in the last three months, and 42% are unlikely to use a business that ignores its reviews entirely. BrightLocal sells review software and the panel reports what it says it does, so read these as direction, not as a measurement of what Google counts.
 
-## The profile rules that decide whether you can have one at all
+The ask is covered in full in [our page on getting more Google reviews](/blog/automated-google-review-requests-real-estate), including where the line between asking and gating falls.
 
-Before ranking is worth thinking about, there is a shorter question that most agents have never checked. It is whether the profile they have is one they are allowed to have.
+The one thing to apply: ask the next ten customers, every one of them, on the day the job ends, with the same link.
 
-The same guidelines document names this business explicitly. Doctors, dentists, lawyers, financial planners and insurance or real estate agents are all listed together as individual practitioners. That is the category that gets a profile of its own. In the next breath the guidelines say something else. Sales associates or lead generation agents for corporations are not individual practitioners, and are not eligible for a Business Profile at all. Where you sit between those two sentences is a question about how you actually work, rather than about what your card says.
+## What does Google allow in your profile?
 
-The rest of the rules are the sort that get broken by someone being clever. A practitioner is told not to hold several profiles to cover different specialisations. Say several public-facing practitioners share a location. Then the organisation gets its own profile. And the practitioner's profile should be titled with only the practitioner's name, not the brokerage's. A solo practitioner at a branded location is told it is best to share the organisation's profile rather than start a competing one. And an address has to be an address. A rented mailing address you do not operate from is a virtual office, and is not eligible. A desk in a co-working space needs signage, staff during business hours, and the ability to receive customers.
+Before ranking is worth thinking about, there is a shorter question most owners have never checked: whether the profile you have is one you are allowed to have.
 
-None of this is exotic, and all of it is enforced by suspension rather than by a warning letter. A profile that disappears takes its reviews and its position with it. And the appeal is a form.
+Google's guidelines are specific, and a profile that breaks them can be suspended. These four decide the most for a local business.
 
 [[scene:profile-rules]]
 
-## What local SEO actually does, week to week
+A salon, a gym or an office with a front door and a sign needs a real address that people can visit. A plumber or roofer who travels to customers gets one service-area profile, with the address hidden if it is a home. A real estate office is one example among several: the guidelines list real estate agents with doctors and lawyers as individual practitioners, which has its own rules about who may hold a profile. If you work that way, read that section of the guidelines before you create anything.
 
-Under the category name it is four unglamorous jobs. The AI part is not the clever part. It is the part that does not get bored.
+The one thing to apply: read your profile name out loud and compare it with your van, your sign and your invoices. If it holds a tagline, a phone number or a list of services that your sign does not hold, it is the first thing to fix.
 
-The first job is finishing the profile, which almost nobody has. Categories. Every service written out. The service area drawn honestly. The hours, including the strange ones. The address, the attributes, real photographs of a real place. For the relevance half, Google's own advice is simply to provide complete and detailed information. That is an unsatisfying instruction precisely because there is no trick in it.
+## What does a local profile need week to week?
 
-The second is keeping it true, which is where this decays. Businesses change quietly. A number moves. A service stops. An office is left. A holiday changes the hours. None of those events tell the profile about themselves. A profile is at its most accurate on the day someone fills it in, and gets worse every day after that.
+Under the category name it is four unglamorous jobs. The software part is not the clever part. It is the part that does not get bored.
 
-The third is feeding the two inputs the document actually names. That means a steady flow of reviews, and the slow build up of other people's pages mentioning yours. The fourth is reading the report. How many calls, how many direction requests, which searches, this month against last. That last one is the difference between a service you can judge and a service you have to trust.
+The first job is finishing the profile. The main category, the services written out, the service area drawn honestly, the hours, including the odd ones, and real photographs of real work. For relevance, Google's own advice is simply to provide complete and detailed information, which is an unsatisfying instruction precisely because there is no trick in it.
+
+The second is keeping it true, which is where it decays. Businesses change quietly: a number moves, a service stops, a holiday changes the hours. None of those events tell the profile about themselves. Google's guidelines allow special hours for particular days, like holidays. The experts in the Whitespark survey also rank "open at time of search" fifth, so a profile that shows you closed when you are working loses searches it should have won.
+
+The third is feeding the two inputs the document names: a steady flow of reviews, and other websites mentioning yours.
+
+The fourth is reading the report. How many calls, how many direction requests, which searches surfaced you, this month against last. That one is the difference between a service you can judge and a service you have to trust.
 
 [[scene:the-work]]
+
+## What is your Google profile already producing?
+
+You can put a number on the listing you already have before anybody optimises anything. Take the calls from your profile in a month, as shown on the profile's own performance screen, and follow them down.
+
+An invented example for a plumber in the Hudson Valley: the performance screen shows 9 calls a month. Over a year that is 9 x 12 = 108 calls. Half were somebody the plumber could help: 108 x 0.5 = 54 conversations. One in five of those became a job: 54 x 0.2 = about 11 jobs a year. The plumber multiplies that by an average job value, which is the plumber's own number.
+
+An invented example for a salon: 20 calls and booking taps a month is 240 a year. If two thirds are new clients who could be booked, that is 160. If one in four books, that is 40 new clients a year, and the salon's average first visit and return rate are the salon's own numbers.
+
+The calculator below runs the same ladder with your numbers. It has no row for what a better position would add, and that absence is the honest part: Google publishes no weights, so multiplying your calls by a ranking improvement would be arithmetic with a made-up number in the middle.
 
 [[scene:local-calculator]]
 
 [[scene:pull-quote]]
 
-## What renting the same attention costs
+## What does it cost to rent the same attention?
 
-The obvious alternative to all of this is to buy the position. The honest comparison is not that ads are bad. It is that almost nobody has measured what their ads are adding. And the one organisation that ran the experiment properly got an answer that surprised everyone.
+The obvious alternative is to buy the position, and the honest comparison is not that ads are bad. It is that only a test shows what the ads add. One organisation ran the experiment properly and got an answer that surprised everyone.
 
-In March 2012 eBay stopped bidding on search queries containing its own name on two search engines. It kept buying exactly the same terms on a third. That third one is the control, which is the whole point. Without it you are comparing this month against last month, and calling seasonality a result. Three economists then wrote up what happened in a [working paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf) that was later published in Econometrica.
+In March 2012 eBay stopped bidding on search queries containing its own name on two search engines. It kept buying exactly the same terms on a third, and that third is the control, which is the whole point. Three economists, two of them employed by eBay's research lab when the work was done, wrote it up in a [National Bureau of Economic Research working paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf) in May 2014.
 
-The naive comparison, before and after, said click volume was 5.6% lower once the ads stopped. Measured against the platform where the ads kept running, only 0.529% of the click traffic was lost. So 99.5% of it was retained. The people were still coming. They were simply arriving through the unpaid result sitting directly under the advert, instead of through the advert.
+The naive comparison, before and after, said click volume was 5.6 percent lower once the ads stopped. Measured against the platform where the ads kept running, only 0.529 percent of the click traffic was lost, so 99.5 percent was retained. The people were still coming, through the unpaid result under the advert instead of the advert. The paper then reports a return on investment of over 1,400 percent from ordinary methods with controls, and negative 63 percent from the experiment.
 
-The paper then does the same thing to the return on investment, and this is the number worth carrying out of it. Using ordinary regression on the observational data, the return came out at over 4,100% without controls. With time and geographic controls, it came out at over 1,400%. Using the experiment, it came out at negative 63%. The confidence interval rejects the possibility of the channel yielding positive returns at all.
-
-Be careful with this. It is eBay, a name tens of millions of people type deliberately, and the queries were ones containing that name. Nobody is typing your name, which is exactly why the brand-keyword half does not transfer. What does transfer is the shape of the mistake. The traffic that substitutes most cleanly for paid clicks is the traffic that was coming anyway. And no amount of dashboard staring will reveal that. The dashboard is built from the observational data that produced the 4,100%.
+Be careful with this. It is eBay, a name tens of millions of people type, and the ads were on queries containing that name. A person who types your company's name already knows you, which is exactly why the brand-keyword half does not transfer. What transfers is the shape of the mistake: the traffic that substitutes most cleanly for paid clicks is the traffic that was coming anyway, and a dashboard cannot show you that. This source is from 2014 and is kept for the argument.
 
 [[scene:paid-search]]
 
-## What it costs, and how long it takes
+## Is it worth doing this yourself, or having it done?
 
-The first month is mostly repair, and repair is priced by how wrong things currently are. Take a single profile that is two thirds filled in, one address, one set of hours and a handful of reviews. That is a short piece of work. Now take three agents, an office profile and two practitioner profiles that disagree with each other. Add a phone number that changed in 2023, and a service area drawn around a wish. That is a longer one. Most of the time in it goes on finding out what is true, rather than on typing it in.
+For one location, doing the first pass yourself is worth it, and having it kept current is worth it where the profile would otherwise be forgotten. These are the same tests we use in an assessment, applied to this job.
 
-After that the cost is a monthly rhythm rather than a project. Two things drive it. How many surfaces have to stay current. And how much of the review asking you want handled rather than remembered. There is no software licence here that dwarfs the rest. The recurring number tracks attention.
+First, does the job happen often enough that a failure is noticed within a week? A profile does not fail loudly. Hours go stale and a review sits unanswered with no warning, so the answer is no, which is the argument for putting it on a calendar or a system rather than on memory.
 
-The honest answer on time is that the two halves move at different speeds. Fixing a profile changes what people see immediately, because the profile is a record rather than a ranking. An accurate record with real photographs and current hours converts better on the day it goes up. Position is slower. It is not promised by anybody, including us, for the reason printed at the top of Google's own page.
+Second, can the rule be written down for a new hire? Yes: this category, these services, these hours, one link to every customer, a reply within two days. A job with a writable rule is one a system can keep.
 
-There is one cost that never appears on a quote, and it is the one that decides the outcome. Reviews arrive because someone asks, every time, including on the deals that went sideways. If nobody in the business is willing to do that, the plan is missing one of the two inputs Google actually names. And no amount of profile maintenance replaces it.
+Third, where does a wrong answer land? In public, on a page strangers read before they call you. A wrong hour or a reply with the wrong tone is seen by a customer first. That is why a person approves every change and every reply before it is published, however it was drafted.
+
+Then the stop question: what breaks if we stop doing this? Nothing breaks on day one. The profile slowly drifts out of date, and the searches you never see are lost quietly.
+
+And a tool you already have: Google's own profile editor is free, and Google says you can add or claim a business at no charge. For one location with a handful of services, an evening for the first pass and a monthly look at the report is the starting job, and paying for anything else is not worth it yet.
+
+The verdict, in plain words. Leave the ranking itself alone, because Google says no one can buy it. Do the profile by hand once. Automate the part that decays: the review request on the day the job ends, the monthly report and the reminder to check the hours before a holiday. Anything that goes out in your name, a reply to a review included, a person approves first.
+
+## What it takes to run, and how long it takes
+
+The first month is mostly repair, and repair takes as long as the profile is wrong. In an invented example, one profile two thirds filled in is a short job, while three profiles that disagree with each other, a phone number that changed and a service area drawn around a wish are a longer one, and most of the time goes on finding out what is true rather than typing it in.
+
+After that it is a rhythm, not a project: how many places have to stay current, and how much of the review asking you want handled rather than remembered. What it takes from you is access, the facts and the asking. We need manager access to the profile, which stays in the business's name, the real service area, hours and services, photographs of real work, and customers who are asked.
+
+The two halves move at different speeds. Fixing a profile corrects the record people read when they open it, which is different from a ranking. Position has no promised date, and nobody offers one, us included, for the reason printed at the top of Google's own page.
+
+One cost never appears on a quote and decides the outcome: reviews arrive because someone asks, every time, including after the jobs that went sideways. If nobody in the business will do that, the plan is missing one of the two inputs Google names.
 
 [[scene:offer]]
 
@@ -2959,73 +3003,126 @@ There is one cost that never appears on a quote, and it is the one that decides 
 
 ## What it does not do, and should not pretend to
 
-It does not buy a position. This is not a disclaimer, it is a quotation. Google's page says in bold that there is no way to request or pay for a better local ranking. Any proposal that includes a promised position is either untrue, or is describing something that will get the profile suspended.
+It does not buy a position. This is a quotation, not a disclaimer: Google's page says there is no way to request or pay for a better local ranking.
 
-It does not move you closer to anybody. Distance is one of the three published inputs, and it is a physical fact. A business on the eastern edge of a county will lose searches on the western edge. It loses them to someone who is simply standing there. The correct response to that is a different tactic rather than a better profile.
+It does not move you closer to anybody. Distance is one of the three published inputs and a physical fact. A business on the eastern edge of a county loses searches on the western edge to someone who is simply standing there.
 
-It does not survive a business that will not ask for reviews. Reviews are one of two things named in the ranking document. They cannot be bought without breaking policy. And the asking has to be systematic to produce a recent history rather than a cluster from 2023.
+It does not survive a business that will not ask for reviews, and reviews cannot be bought without breaking Google's policy.
 
-It does not fix a business that is hard to reach. A profile is a promise about hours, a phone that gets answered, and an address a person can arrive at. Winning the search and then missing the call is an expensive way to fail. The guidelines are explicit that a practitioner should be contactable at the verified location during the hours stated.
+It does not fix a business that is hard to reach. A profile is a promise about hours, a phone that gets answered and an address a person can arrive at. Winning the search and then missing the call is an expensive way to fail.
 
-And it does not stay done. Everything above decays, quietly, in the direction of being wrong. A profile nobody maintains is a profile slowly becoming a liability rather than an asset.
+It does not write replies for you to send unread. A reply is public and speaks for the business, so a person reads it first.
+
+And it does not stay done. Everything above decays in the direction of being wrong, and a profile nobody maintains slowly becomes a liability.
 
 [[scene:wasted]]
 
-## How to find out where you actually stand, in ten minutes
+## Who this fits, and who it does not
 
-All of this is checkable tonight, for nothing. And the checking is more useful than any report anyone will sell you.
+It fits a business that customers find by searching nearby and that finishes work for a named person: a plumber, roofer or HVAC contractor, a dental, accounting or insurance office, a salon, spa or gym, a real estate office. It matters most where people search for the service and not for your name, which is how a new customer who has never heard of you searches.
 
-Open a browser you are not signed into, on a phone that is not yours if you can borrow one. Search the phrase a stranger would use for your service in the town you want to work in. Not your name. Write down the three businesses that come back. Do it again standing somewhere else in your market. Write down the three that come back there. The difference between the two lists is distance doing its work. It is the single most useful thing you will learn all week.
+It fits poorly where the business is an address on a form. Google says a rented mailing address from which you do not operate is a virtual office and is not eligible for a Business Profile, and a desk in a co-working space needs signage, customers received during business hours and staff on site. Nothing on this page repairs that.
 
-Then open your own Business Profile and read the performance screen. Calls, direction requests, website taps, and the searches that surfaced you, this month against a year ago. If you have never seen it, the number will go one of two ways. It will be higher than you expected, which means something is already working. Or it will be close to nothing, which means the listing is not finished.
+It is a poor fit if nobody will answer the phone the profile advertises, or if jobs are so few that a single review each quarter is all there will ever be. In those cases, ask each customer by hand with one written line, answer the reviews already there and decide after a quarter.
 
-Then go through the profile as if you were an inspector rather than the owner. Is the primary category the one a stranger would choose. Are all of your services written out. Are the hours right this week. Is the address one you actually sit in. Is the most recent review from this quarter or from two years ago.
+[[scene:fits]]
 
-Finally, count the reviews and count the closings you had last year. Put the two numbers beside each other. Most agents in this business are asking a small fraction of their clients, usually the ones who were already delighted. The gap between those two numbers is the clearest picture of the prominence half you will ever get.
+## How do you find out where you stand in ten minutes?
+
+All of this is checkable tonight, for nothing, and the checking is more useful than any report anyone will sell you.
+
+Open a browser you are not signed into, on a phone that is not yours if you can borrow one. Search the phrase a stranger would use for your service in the town you want to work in. Not your name. Write down the three businesses that come back. Do it again standing somewhere else in your market and write down the three that come back there. The difference between the two lists is distance doing its work.
+
+Then open your own Business Profile and read the performance screen: calls, direction requests, website taps and the searches that surfaced you, this month against a year ago. If you have never seen it, note the numbers and the date. Whatever they are, they are the baseline to compare against in a month.
+
+Then go through the profile as an inspector, not the owner. Is the main category the one a stranger would choose? Are all your services written out? Are the hours right this week? Is the address one you really operate from, or hidden if you work from home? Is the newest review from this quarter or from two years ago?
+
+Finally count the reviews and count the jobs you finished last year, and put the two numbers side by side. The gap is the number of jobs with no review, which is where the asking starts.
+
+## What to do first
+
+Start with one profile and one week at a time, and end with a decision written down. This is a suggested schedule, not a deadline.
+
+In week one, run the ten-minute check above and fix the three things it finds: the main category, the hours and the name. Write down the event that means a job is finished, because that is the moment you will ask for a review.
+
+In week two, ask every customer for a review with the same link, and reply to the reviews already waiting. A person reads each reply before it is posted.
+
+In weeks three and four, open the performance screen again and compare it with week one. Then decide using the worth-it test above: keep doing it by hand, or put the review request and the monthly report on a system with a person approving what goes out. Write the decision and the date down.
+
+[[scene:roadmap]]
 
 ## Common questions, answered honestly
 
-### What is local SEO for a real estate agent, in plain terms?
+### How do I rank in Google Maps?
 
-It is the work of being the business that comes up when someone nearby searches for what you do. Most of it is not writing. It is a Google Business Profile that is complete, correctly categorised and actually true. It is a steady flow of recent reviews. It is other people's websites mentioning yours. And it is real pages for the places and services you cover. The AI part is maintenance rather than magic. It keeps the profile current. It keeps the review requests going out. And it watches what the profile's own report says. Those are the three things that stop happening the moment a human gets busy.
+Google publishes the inputs, not the recipe: local results are mainly based on relevance, distance and popularity, and Google says no one can request or pay for a better position. In practice that means a complete and accurate profile for relevance, a steady flow of real reviews and other websites linking to you for prominence, and acceptance that distance is fixed.
 
-### How is this different from getting my website to rank?
+### How do I rank higher in Google Maps without spending a fortune on ads?
 
-They are two different competitions, and they are decided by different things. The map pack ranks businesses. The inputs Google publishes for it are relevance, distance and popularity. One of those is where the searcher is standing. The blue links below it rank pages, and distance is not one of the inputs in the same way. In practice, your website can be excellent and you can still be missing from the short list at the top. And your profile can be perfect while your website is invisible for everything except your own name. Most agents need both. Finishing the listing is normally the smaller job of the two.
+Fix the profile, ask for reviews and read the report, which cost an evening, a link and a monthly look, not an advertising budget. Google's page says there is no way to pay for a better local ranking, and the eBay experiment above found that most of the click traffic the ads were credited with arrived without them.
 
-### How do I get into the map pack?
+### How do I get my business on Google Maps?
 
-Nobody can tell you how. Google says out loud that it keeps the details confidential. It also says there is no way to request or pay for a place. What is known is the list of inputs it publishes. Finish the profile so relevance has something to work with. Accept that distance is fixed. And work on the two things named under prominence, which are reviews and other websites linking to yours. Anyone giving you a more specific recipe than that is describing their own inference, and should say so.
+Create or claim a Business Profile and verify it. Google says you can add or claim your business at no charge, and that once it is verified customers can find you on Search and Maps. Check first that your business is eligible: Google's guidelines rule out a virtual office and a bare mailing address.
 
-### How long does it take?
+### Why am I not higher on Google Maps with lots of five-star reviews?
 
-The accuracy half changes the day you do it. A finished profile with the right categories, real photographs and current hours is immediately more convincing to the person reading it, whatever it does to position. The position half is slow, and is not guaranteed by anybody. The honest framing is that you are not buying a date. You are removing the reasons you are currently not eligible for a place. Then you carry on being the sort of business that gathers reviews and mentions.
+Because reviews are only part of one of the three inputs. A searcher who is closer to another business is more likely to see that business first, and a profile with the wrong main category or missing details is less relevant to the search however good its reviews are. Check the category, the services and the hours first, then the recency of the reviews.
+
+### What does it mean to optimize your Google profile?
+
+It is the work of making the profile complete, correct and current so Google can match it to what people search for: the main category, the other categories if they are accurate, the service area or address, the hours, the services, the photographs and the replies to reviews. Google's guidelines say to choose the fewest categories that describe your core business, and not to use categories solely as keywords.
+
+### Can a plumber who works from home show a home address?
+
+Google says to hide it. A service-area business should hide its address from customers, and Google's example is a plumber who runs the business from a residential address. The experts in the Whitespark survey rank a showing address highly, but a profile that breaks Google's rules can be suspended, which is worse.
+
+### Is local SEO worth it for a small business?
+
+For a business that customers find by searching nearby, the first pass is worth doing: it costs an evening and nothing else. Whether to keep paying someone to maintain it depends on whether you will otherwise let it decay. The test above gives the answer for your own business.
+
+### How long does it take to rank in Google Maps?
+
+A fixed profile is a corrected record, which is not the same as a changed position. Position has no date attached, and nobody can promise one, because Google says it keeps the algorithm confidential. What you can do is remove the reasons you are not eligible for a place, and keep gathering real reviews.
 
 ### Can I rank in a town my office is not in?
 
-In the map pack, not really. The reason is the distance input rather than any failing on your part. The other route is a normal web page, on your own site, covering what you have truly done in that town. A page is judged by what is written on it. That is a separate piece of work carrying a separate risk. A set of thin pages with the town name swapped is something Google's spam policy names specifically. Our article on area pages covers it properly instead of glossing it here.
+In the map results, distance works against you, because it is one of the three published inputs. The other route is an ordinary page on your own website covering work you have really done in that town. A set of thin pages with the town name swapped is something Google's spam policy names.
 
 ### Do citations and directory listings still matter?
 
-They matter for being correct, and they are not what Google's ranking page names. That page lists links from other websites and reviews under prominence. It does not mention directory consistency at all. Keeping your details right everywhere is still worth doing. A wrong phone number is a wrong phone number, and some of those entries are links. What is not defensible is a plan whose main activity is submitting your details to a long list of directories, while the two published inputs go untouched.
-
-### Is this better than running Google ads?
-
-They do different jobs, and the honest comparison needs a measurement most people have never made. Ads deliver traffic the day you turn them on, and nothing the day you turn them off. A ranking arrives slowly and keeps working. What the eBay experiment shows is not that ads do not work. It is that the returns most businesses believe they are getting come from observational data that overstates them by an enormous factor. And the only way to find out what yours are worth is to turn them off in one place and leave them on in another.
+They matter for being correct and they are not what Google's ranking page names. That page lists links from other websites and reviews under prominence and does not mention directory consistency. In the Whitespark survey, citation consistency ranks well below the category, distance and reviews.
 
 ### Can anybody guarantee me a position?
 
-No, and the sentence to quote back is Google's own. There is no way to request or pay for a better local ranking on Google. What can be guaranteed is the work. A finished profile. A review request that actually goes out every time. The mentions that come from being present somewhere. And a report you can read every month. Position is the outcome of those. It is not a product anyone can sell you.
+No, and the sentence to quote back is Google's own: there is no way to request or pay for a better local ranking. What you can do yourself is the work: a finished profile, a review request sent after each job and a monthly look at the report.
+
+[[scene:quiz]]
 
 ## What to do about it
 
-Go and be the woman in the car for ten minutes.
+The check needs nobody, us included. It is your own profile and a borrowed phone, run the way the man in the basement ran his search: the three names that come back, how little he had to choose between them, and whether the profile beside them is finished, current and honest.
 
-Borrow a phone. Stand somewhere in your market that is not your office, and run the search a stranger would run. Look at the three names that come back, and at how little information she had to choose between them. Then open your own profile beside it. See whether the thing she would have read is finished, current and honest.
+If your name is in the three, the work is to stay there, which is duller and more important than getting there. If it is not, you now know something you did not know this morning: a screen you have never opened is answering a question about you, over and over, to people you will never meet.
 
-If your name is in the three, the work is to stay there, which is duller and more important than getting there. If it is not, you now know something you did not know this morning. It is not that you are worse than the second business she called. It is that a screen you have never opened is answering a question about you, over and over, to people you will never meet. And nobody has been checking the answer.
+[[scene:funnel]]
 
-[[scene:funnel]]`;
+Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+
+## Sources
+
+- Google, Business Profile Help, "Tips to improve your local ranking on Google", [on support.google.com](https://support.google.com/business/answer/7091), a live document. Read November 14, 2026.
+- Google, Business Profile Help, "Guidelines for representing your business on Google", [the guidelines](https://support.google.com/business/answer/3038177), a live document. Read November 14, 2026.
+- Google, Business Profile Help, "Tips to get more reviews", [the page](https://support.google.com/business/answer/3474122), and "Add or claim your Business Profile", [the page](https://support.google.com/business/answer/2911778), live documents. Read November 14, 2026.
+- Google, Maps user contributed content policy, [the policy page](https://support.google.com/contributionpolicy/answer/7400114), a live document. Read November 14, 2026.
+- Darren Shaw, Whitespark, Local Search Ranking Factors 2026, published November 6, 2025, [the report](https://whitespark.ca/local-search-ranking-factors/): a survey of 47 experts scoring 187 factors, opinion and not Google's rules. Read November 14, 2026.
+- BrightLocal, Local Consumer Review Survey 2026, 1,002 US adult consumers, [the survey](https://www.brightlocal.com/research/local-consumer-review-survey/), published by a company that sells review software. Read November 14, 2026.
+- Cornell University, Joachims, Granka, Pan, Hembrooke and Gay, the SIGIR 2005 paper on interpreting clickthrough data as implicit feedback, [the paper](https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf). Read November 14, 2026; kept for the argument, the one experiment in this post on how readers treat the order of a list.
+- Tom Blake, Chris Nosko and Steven Tadelis, Consumer Heterogeneity and Paid Search Effectiveness: A Large Scale Field Experiment, NBER working paper 20171, May 2014, [the paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf). Read November 14, 2026; kept for the argument, the one experiment that measured what paid search adds.
+
+Sources checked November 14, 2026.
+
+Written with an AI assistant and checked by Levan.`;
 
 export const AI_APPOINTMENT_BOOKING_POST = `On a Sunday evening in June someone messaged about a house on Delavan. They wanted to see it. You were at dinner. You saw the message at nine, and you did the right thing. You called back first thing on Monday and had a good conversation.
 
