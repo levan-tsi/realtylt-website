@@ -22,10 +22,10 @@ export const databaseReactivation: Service = {
   tier: "core",
 
   eyebrow: "Revive · Past customers and old leads",
-  title: "Win back past customers from the list already in the CRM",
-  lede: "There are hundreds of past customers and old inquiries in the CRM, and nobody has asked any of them anything since the day they came in. We set up an AI that works that list by text, and by phone where the consent allows, with an opener about what each person actually bought or asked for. It finds who is ready now and books them on the calendar. The cheapest list a business owns is the one it forgot.",
+  title: "Database reactivation service: win back past customers from your CRM",
+  lede: "Database reactivation is a service that works the past customers and old inquiries in a small business's CRM by text, and by phone where the consent allows. There are hundreds of them, and nobody has asked any of them anything since the day they came in. We set up an AI that opens each conversation with what the person actually bought or asked for. It finds who is ready now and books them on the calendar. The cheapest list a business owns is the one it forgot.",
   specs: ["consent checked first", "a real question, not a blast", "finds who is ready now", "books to your calendar"],
-  why: "Every name on that list was paid for once, in advertising or in work done, and nobody has asked them anything since. Reactivation works the customers and leads the business already has instead of buying new ones, so the main cost is the asking. What that is worth depends on the business's own list, not on an average of somebody else's.",
+  why: "Database reactivation matters because every name on that list was paid for once, in advertising or in work done, and nobody has asked them anything since. Reactivation works the customers and leads the business already has instead of buying new ones, so the main cost is the asking. What that is worth depends on the business's own list, not on an average of somebody else's.",
   keywords: [
     "database reactivation",
     "how to win back past customers",
@@ -34,15 +34,19 @@ export const databaseReactivation: Service = {
     "database reactivation real estate",
   ],
 
+  sources: [
+    { text: "47 CFR 64.1200, the telemarketing consent and do-not-call rules", href: "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-B/part-64/subpart-L/section-64.1200" },
+  ],
+
   seo: {
-    title: "Database reactivation: win back past customers and old leads",
+    title: "Database reactivation service for small business: old leads",
     description:
       "AI database reactivation for a small business: past customers and old leads worked by text and, with consent, by phone, the ready ones found and booked in.",
   },
 
   figure: {
     kind: "transcript",
-    caption: "A past customer, worked by text this morning",
+    caption: "Database reactivation at work: a past customer, worked by text this morning",
     turns: [
       { who: "ai", text: "Hi Dana, this is the assistant at the heating company that serviced your furnace last November. Are you due for this year's check, or has that been taken care of?" },
       { who: "visitor", text: "oh right, we never booked it this year" },
@@ -54,7 +58,7 @@ export const databaseReactivation: Service = {
   },
 
   whatItIs: [
-    "It is an AI that works the people already sitting in the CRM: past customers due for the next visit, the inquiries from two years ago, the people who said not right now, the ones nobody has called since the day they came in. It texts, and calls where the consent allows, with a real, conversational opener. It listens to what comes back and finds the ones whose circumstances have changed.",
+    "Database reactivation is an AI that works the people already sitting in the CRM: past customers due for the next visit, the inquiries from two years ago, the people who said not right now, the ones nobody has called since the day they came in. It texts, and calls where the consent allows, with a real, conversational opener. It listens to what comes back and finds the ones whose circumstances have changed.",
     "The economics are the point. Those names were already paid for, in advertising or in work done. Reactivation does not buy new traffic. It works a list the business already owns, which makes the appointments it books cheap compared with every other source in the budget.",
     "The reason nobody does it by hand is that the work is genuinely awful. Hundreds of conversations to find the handful of people whose circumstances changed, most of them going to voicemail, and the reward for doing it properly is doing it again next quarter. Human follow-up also dies at the second attempt, because a third starts to feel like pestering, and the person who did not pick up at two on a Tuesday was driving rather than deciding.",
     "It fits any business with a list older than its memory: a heating, plumbing or landscaping company whose past customers are due again, an accounting office whose former clients may need help this year, a salon, spa or gym with lapsed members, a real estate office with buyer and seller inquiries from years ago. We do not run it for a health practice: a list of patients is not one we work.",
@@ -129,7 +133,7 @@ export const databaseReactivation: Service = {
    * to" (content/blog/ai-posts.ts). The "not a subscription" entry is the one worth keeping
    * whatever else changes: it is the sentence a competitor selling this will not say. */
   limits: [
-    "It does not manufacture intent. Most of that list will say no again, because most of them meant it. What changes is that somebody finally asked, and the few whose situation moved get found in the week it moved.",
+    "Database reactivation does not manufacture intent. Most of that list will say no again, because most of them meant it. What changes is that somebody finally asked, and the few whose situation moved get found in the week it moved.",
     "It does not fix a list with no consent behind it. If the records carry no date and no source, the honest first project is a cleanup, not a campaign.",
     "It is not a subscription. A list is finite: it is worked once, and the same list is a year away from being worth working again. Reactivation is a harvest, not a lead source.",
     "It is not the relationship. Long-time clients, and anybody whose relationship is the real asset, get a call from a person. A machine reintroducing itself to them is worse than no contact at all.",
@@ -140,27 +144,27 @@ export const databaseReactivation: Service = {
   faqs: [
     {
       q: "What is database reactivation?",
-      a: "It is the practice of systematically re-contacting the past customers and old leads already in the CRM to find the ones whose situation has changed. Because those contacts were already paid for, in advertising or in work done, the appointments it produces cost little compared with finding new customers.",
+      a: "Database reactivation is the practice of systematically re-contacting the past customers and old leads already in the CRM to find the ones whose situation has changed. Because those contacts were already paid for, in advertising or in work done, the appointments it produces cost little compared with finding new customers.",
     },
     {
       q: "How do I win back past customers?",
-      a: "Ask them, once, about something they actually bought or asked about, at the time of year it matters, and make it easy to say yes or no. A tune-up reminder to last year's furnace customers works; a generic newsletter to everyone does not ask anything. Read the consent first, honor every stop, and leave the long-time clients to a person.",
+      a: "To win back past customers, ask them once about something they actually bought or asked about, at the time of year it matters, and make it easy to say yes or no. A tune-up reminder to last year's furnace customers works; a generic newsletter to everyone does not ask anything. Read the consent first, honor every stop, and leave the long-time clients to a person.",
     },
     {
       q: "Do old leads actually convert?",
-      a: "Some of them do, and that is the whole business case. A lead who said not right now two years ago was giving a timeline, and that timeline has since passed. The job is finding the small share whose circumstances changed. That is exactly the kind of patient, repetitive work AI does well and people do not have time for.",
+      a: "Some old leads do convert, and that is the whole business case. A lead who said not right now two years ago was giving a timeline, and that timeline has since passed. The job is finding the small share whose circumstances changed. That is exactly the kind of patient, repetitive work AI does well and people do not have time for.",
     },
     {
       q: "Is it annoying to text people who went quiet years ago?",
-      a: "Not if the opener is honest and relevant, which is what separates this from a blast. It refers to what they originally bought or asked about, it asks a real question, and it takes no for an answer the first time. Opt-outs are honored immediately.",
+      a: "Texting people who went quiet years ago is not annoying if the opener is honest and relevant, which is what separates this from a blast. It refers to what they originally bought or asked about, it asks a real question, and it takes no for an answer the first time. Opt-outs are honored immediately.",
     },
     {
       q: "Am I allowed to text leads from 2023?",
-      a: "It depends on what the record says, and the rules have dates in them. The established business relationship that exempts a business from the national do-not-call registry runs eighteen months from a purchase or transaction, and three months from an inquiry, under 47 CFR 64.1200(f)(5). So a 2023 form fill ran out of both a long time ago. An automated text is a separate and stricter question: the same regulation requires prior express written consent before a telemarketing call or text made with an autodialer or an artificial voice reaches a mobile number, and a checkbox saying you agree to be contacted is usually not that. And a request to stop has to be honored within ten business days, in any reasonable words. All three are answerable from the business's own records in an afternoon, and a vendor who cannot say how a campaign handles them is not ready to send it. None of this is legal advice.",
+      a: "Whether a business may text a lead from 2023 depends on what the record says, and the rules have dates in them. The established business relationship that exempts a business from the national do-not-call registry runs eighteen months from a purchase or transaction, and three months from an inquiry, under 47 CFR 64.1200(f)(5). So a 2023 form fill ran out of both a long time ago. An automated text is a separate and stricter question: the same regulation requires prior express written consent before a telemarketing call or text made with an autodialer or an artificial voice reaches a mobile number, and a checkbox saying you agree to be contacted is usually not that. And a request to stop has to be honored within ten business days, in any reasonable words. All three are answerable from the business's own records in an afternoon, and a vendor who cannot say how a campaign handles them is not ready to send it. None of this is legal advice.",
     },
     {
       q: "How does it decide who is worth calling?",
-      a: "It reads intent from what the person actually says: whether the need is still there, whether the timing moved, whether something changed. Everyone permitted gets one attempt. Only the ones showing real intent reach the calendar, and a person takes it from there.",
+      a: "Database reactivation decides who is worth calling by reading intent from what the person actually says: whether the need is still there, whether the timing moved, whether something changed. Everyone permitted gets one attempt. Only the ones showing real intent reach the calendar, and a person takes it from there.",
     },
   ],
 
