@@ -3217,11 +3217,11 @@ She calls the second. The first will never know. No alert records an evening tha
 
 ## What is the review figure on sales slides, and why is it not here?
 
-One figure gets repeated on sales slides: that seventy three percent of customers read reviews before they book. We found no source for it, and it was on our own service page until recently, so this page does not use it.
+A figure of the kind quoted without a source says that most customers read reviews before they book. We found no source for the version of it that was on our own service page until recently, so this page does not use it.
 
 We looked for the survey it is supposed to come from. The one that repeats every year and prints its sample and method is the [Local Consumer Review Survey](https://www.brightlocal.com/research/local-consumer-review-survey/), published by a company that sells review software. The 2026 edition asked a panel of 1,002 US adults, about a quarter in each of four age bands from eighteen to over sixty.
 
-Seventy three is not in it. According to the 2026 survey, 97 percent read reviews for local businesses at all, and 41 percent always do when browsing. It also finds that 31 percent now want 4.5 stars or more, against 17 percent a year earlier.
+That figure is not in it. According to the 2026 survey, 97 percent read reviews for local businesses at all, and 41 percent always do when browsing. It also finds that 31 percent now want 4.5 stars or more, against 17 percent a year earlier.
 
 Two limits come first. Its publisher sells review software, so this is a vendor survey: a company with an interest in the answer wrote the questions. And it records what a panel says it does, which is softer evidence than what anyone was seen doing. It still beats a figure with no sample and no method, so read it for its direction.
 
@@ -3475,7 +3475,7 @@ The signed-out check needs nobody, us included. It is your own Google profile op
 
 What you find is what a stranger finds. If the newest review is two years old, the place to start is the asking.
 
-Reviews are one of the inputs Google names for local ranking, and [how to rank in Google Maps](/blog/local-seo-real-estate-map-pack-google-business-profile) covers the rest of them. A customer who rings a business that never picks up is the other way a local job goes elsewhere, and [an AI voice agent for small business](/blog/ai-voice-agent-missed-calls-real-estate) is written about that.
+How reviews fit into a local map ranking is covered in [how to rank in Google Maps](/blog/local-seo-real-estate-map-pack-google-business-profile). A customer who rings a business that never picks up is the other way a local job goes elsewhere, and [an AI voice agent for small business](/blog/ai-voice-agent-missed-calls-real-estate) is written about that.
 
 [[scene:funnel]]
 
