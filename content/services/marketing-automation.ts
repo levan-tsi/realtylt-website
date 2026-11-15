@@ -26,7 +26,7 @@ export const marketingAutomation: Service = {
   title: "Email and text marketing that reacts to customers",
   lede: "Somebody asked about a patio in March, got one reply, and heard nothing until a generic newsletter in July. We set up email and text marketing that reacts to what each customer actually does: a question, an opened estimate, a click on a seasonal offer. The next message goes out on its own, the quiet ones hear less rather than more, and the owner is told the moment someone looks ready.",
   specs: ["email and text that react", "set off by what people do", "backs off on silence", "sent so it arrives"],
-  why: "A customer who is months from deciding hears from a lot of businesses in between, and most of it is generic and easy to forget. Messages set off by what a customer does are how a business stays useful across that wait, and nobody has to remember to send them.",
+  why: "Marketing automation matters because a customer who is months from deciding hears from a lot of businesses in between, and most of it is generic and easy to forget. Messages set off by what a customer does are how a business stays useful across that wait, and nobody has to remember to send them.",
   keywords: [
     "email marketing automation for small business",
     "marketing automation for small businesses",
@@ -68,7 +68,7 @@ export const marketingAutomation: Service = {
   },
 
   whatItIs: [
-    "It is marketing that reacts. A calendar sends the same email to everyone on day three. Instead, the sequence watches what each customer actually does: what they opened, which service they looked at, which offer they keep coming back to. It sends the next message off that.",
+    "Marketing automation is marketing that reacts. A calendar sends the same email to everyone on day three. Instead, the sequence watches what each customer actually does: what they opened, which service they looked at, which offer they keep coming back to. It sends the next message off that.",
     "It runs across the channels that reach people, email and text first, from one signal rather than from four tools that do not talk to each other. The customer who is warming up hears more. The customer who is six months out is kept in touch with, without being worn out. Where the owner wants it, the same signal also schedules the business's social posts and shows ads to people who already visited the website, so a listing, an offer or a season reaches them more than once.",
     "Half of it is getting the mail delivered at all. Google's sender guidelines, under the requirements for every sender, ask for authentication on the sending domain and a spam complaint rate kept below 0.3 percent, and Yahoo publishes the same ceiling. So the setup includes the domain records, one-click unsubscribe and a list of people who asked to hear from the business. None of that improves a message. It stops the message being judged before anybody reads it.",
     "It fits a business with customers who decide slowly: a landscaper or contractor whose estimates turn into jobs months later, an accounting office whose clients come back each season, a salon or spa with past clients, a gym with lapsed members, a real estate office sending listing alerts to people who asked for them.",
@@ -148,7 +148,7 @@ export const marketingAutomation: Service = {
   faqs: [
     {
       q: "What is email marketing automation?",
-      a: "It is software that sends the right message to a customer based on what they did rather than on a fixed schedule. Asking for an estimate, opening an email or going quiet each start a different next step across email and text, so the follow-up stays relevant without anyone sending it by hand.",
+      a: "Email marketing automation is software that sends the right message to a customer based on what they did rather than on a fixed schedule. Asking for an estimate, opening an email or going quiet each start a different next step across email and text, so the follow-up stays relevant without anyone sending it by hand.",
     },
     {
       q: "What is a drip campaign, and how is this different?",
@@ -156,27 +156,27 @@ export const marketingAutomation: Service = {
     },
     {
       q: "How do I automate follow-up emails?",
-      a: "Pick one moment that matters, such as an estimate sent or a first visit done, write the two or three messages that should follow it, and set each to go only if the customer has not already replied or booked. Stop the sequence on any reply and hand it to a person. Start with one sequence and read the replies for a month before adding a second.",
+      a: "To automate follow-up emails, pick one moment that matters, such as an estimate sent or a first visit done, write the two or three messages that should follow it, and set each to go only if the customer has not already replied or booked. Stop the sequence on any reply and hand it to a person. Start with one sequence and read the replies for a month before adding a second.",
     },
     {
       q: "Will automated marketing annoy my customers?",
-      a: "It annoys them when it is irrelevant, which is exactly what behaviour triggers fix. A customer who goes quiet gets less contact and different content, not more of the same. The opt-out is always honored, and the cadence backs off automatically.",
+      a: "Automated marketing annoys customers when it is irrelevant, which is exactly what behaviour triggers fix. A customer who goes quiet gets less contact and different content, not more of the same. The opt-out is always honored, and the cadence backs off automatically.",
     },
     {
       q: "Can it text customers, not just email them?",
-      a: "Yes. Texts are part of the same sequence. They are sent under a different and stricter set of consent rules than email, with opt-outs honored automatically, and the rules that govern messaging someone who has gone quiet have dates in them.",
+      a: "Yes, marketing automation can text customers as well as email them. Texts are part of the same sequence. They are sent under a different and stricter set of consent rules than email, with opt-outs honored automatically, and the rules that govern messaging someone who has gone quiet have dates in them.",
     },
     {
       q: "Do I need permission before I email somebody?",
-      a: "Not under the federal statute, which is the part most people have backwards. CAN-SPAM sets rules for the message rather than for the relationship: it must identify itself as an advertisement, carry a valid physical postal address, and offer a working opt-out that stays live for at least thirty days, with the request honored within ten business days. Permission still matters enormously, for a different reason: mailbox providers judge a sender on how the people it emails react, and mail to people who never asked is what generates the reactions that get the rest filtered.",
+      a: "A business does not need permission before it emails somebody under the federal statute, which is the part most people have backwards. CAN-SPAM sets rules for the message rather than for the relationship: it must identify itself as an advertisement, carry a valid physical postal address, and offer a working opt-out that stays live for at least thirty days, with the request honored within ten business days. Permission still matters enormously, for a different reason: mailbox providers judge a sender on how the people it emails react, and mail to people who never asked is what generates the reactions that get the rest filtered.",
     },
     {
       q: "Why do my emails go to spam?",
-      a: "The causes a sender controls are three: the sending domain is not authenticated, people are marking the mail as spam, or the list includes people who never asked for it. The complaint rate matters most; Google and Yahoo both publish 0.3 percent as the ceiling. Google shows a sender its own complaint rate for free, and that number is a better health check than the open rate.",
+      a: "Emails go to spam for three causes a sender controls: the sending domain is not authenticated, people are marking the mail as spam, or the list includes people who never asked for it. The complaint rate matters most; Google and Yahoo both publish 0.3 percent as the ceiling. Google shows a sender its own complaint rate for free, and that number is a better health check than the open rate.",
     },
     {
       q: "Why did my open rate drop?",
-      a: "Possibly because fewer people opened it, and possibly for two reasons that have nothing to do with the writing. An open is only recorded when a mail client fetches a tracking image, so clients that block or reroute remote images bend the count, and the mix of clients on a list changes over time. Separately, if more of the mail is being filtered, fewer people are offered the chance to open it at all.",
+      a: "An open rate can drop because fewer people opened the email, and possibly for two reasons that have nothing to do with the writing. An open is only recorded when a mail client fetches a tracking image, so clients that block or reroute remote images bend the count, and the mix of clients on a list changes over time. Separately, if more of the mail is being filtered, fewer people are offered the chance to open it at all.",
     },
   ],
 
