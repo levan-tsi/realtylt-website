@@ -27,7 +27,7 @@ export const aiScheduling: Service = {
 
   eyebrow: "Scheduling · AI calendar assistant",
   title: "An AI scheduling assistant that books real open times",
-  lede: "An AI scheduling assistant for a small business offers real open times from the business's own calendar inside the chat or the call, holds the slot the moment it is taken, sends the confirmation and the reminders, and moves the time on request. Without one, a customer asks for a time and the answer waits until somebody is off the phone, by which point the customer has asked somewhere else. Where other people have to agree, it asks them and tracks who has actually said yes.",
+  lede: "An AI scheduling app for a small business offers real open times from the business's own calendar inside the chat or the call, holds the slot the moment it is taken, sends the confirmation and the reminders, and moves the time on request. Without one, a customer asks for a time and the answer waits until somebody is off the phone, by which point the customer has asked somewhere else. Where other people have to agree, it asks them and tracks who has actually said yes.",
   specs: ["your live calendar", "real open times only", "reminders sent for you", "who has said yes, tracked"],
   why: "An AI scheduling assistant matters because the gap between “interested” and “on the calendar” is where a customer cools. Booking inside the same conversation closes that gap. Holding the slot the moment it is taken is built against one kind of double booking, the business's own time offered twice, while the hold is set up and working; and a time that needs other people is called confirmed only when they have said so.",
   keywords: [
@@ -39,7 +39,7 @@ export const aiScheduling: Service = {
   ],
 
   seo: {
-    title: "AI scheduling assistant for small business appointments",
+    title: "AI scheduling app for small business: books real open times",
     description:
       "An AI scheduling assistant that offers real open times from the business's calendar, holds the slot, sends reminders and tracks who has actually said yes.",
   },
