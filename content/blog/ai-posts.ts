@@ -3047,9 +3047,9 @@ To reduce no-shows, book the appointment inside the first conversation, keep the
 
 None of that research comes from your trade, so it shows a direction, not your own rate. The sections below give each move its evidence, then what an AI appointment booking tool does about it, and how to tell a good one from a poor one.
 
-## The gap between the ask and the day does not look like a loss
+## Why does the gap to the appointment hide the cost of no-shows?
 
-A business with a calendar in it has two numbers on hand: how many inquiries came in, and how much work came out. The distance between them is a number worth knowing: the days between the moment someone asked for your time and the moment that time arrives.
+The gap hides the cost of no-shows because a business with a calendar in it has two numbers on hand: how many inquiries came in, and how much work came out. The distance between them is a number worth knowing: the days between the moment someone asked for your time and the moment that time arrives.
 
 That number has a name in the scheduling literature. It is called lead time, and there is a study that measures what it does. Michael McMullen and Peter Netland pulled every appointment out of the scheduling database at the University of Virginia Eye Clinic for a twelve month period. That was 51,529 of them, sorted by how far in advance each had been booked. Their [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC4370946/), published in 2015, reports two clinics separately, one run by residents and one by faculty. The resident clinic missed 21.7% of its appointments and the faculty clinic 6.6%. That is a reminder before any of the rest: the level depends on who the customers are.
 
@@ -3059,9 +3059,9 @@ A patient is not a customer, and an eye clinic is not a roofer or a salon. The p
 
 [[scene:lead-time]]
 
-## Why distance kills an appointment
+## Why do longer waits lead to more no-shows?
 
-The chart measures the effect. It does not explain it. So it is worth being honest about which parts of the explanation have evidence under them and which are how people tend to work. The grid below gives four reasons: the person's situation moves, the commitment cools, they forget, and they book somebody else. The first is closest to what the chart measures, since more days is more time for a situation to move. The other three are mechanisms, offered as mechanisms.
+Longer waits go with more no-shows, and the reasons are only partly proven. The chart measures the effect. It does not explain it. So it is worth being honest about which parts of the explanation have evidence under them and which are how people tend to work. The grid below gives four reasons: the person's situation moves, the commitment cools, they forget, and they book somebody else. The first is closest to what the chart measures, since more days is more time for a situation to move. The other three are mechanisms, offered as mechanisms.
 
 What they have in common is that none of them is about the person being unreliable. The instinct after an empty evening is to decide something about the character of the people who did not come. A more useful reading is that they made a plan while they were keen, the plan sat for a week and a half, and life got to it.
 
@@ -3069,9 +3069,9 @@ What they have in common is that none of them is about the person being unreliab
 
 [[scene:plate]]
 
-## The second half, which is the reminder
+## Does a reminder reduce no-shows?
 
-Of those four reasons, one can be helped by software on its own. It happens to be the one with the best evidence behind it anywhere in this guide.
+A reminder helps reduce no-shows because, of those four reasons, one can be helped by software on its own. It happens to be the one with the best evidence behind it anywhere in this guide.
 
 In 2007 four researchers at Sir Run Run Shaw Hospital in Hangzhou took 1,859 people with booked appointments at a health check-up centre and put them into three groups at random. One group got a text message 72 hours before their appointment. One got a phone call at the same interval, with the same content. The third got nothing, which was the normal practice. 1,848 of them were analysed.
 
@@ -3083,9 +3083,9 @@ Read all of it as a shape rather than a promise. These trials were run in clinic
 
 [[scene:reminders]]
 
-## What AI appointment booking actually does
+## What does an AI appointment booking system do to reduce no-shows?
 
-Under the category name it is four small things in a row, and only the last one has a trial behind it.
+Under the category name, AI appointment booking is four small things in a row, and only the last one has a trial behind it.
 
 It answers immediately, which is the part that gets sold. It offers times, which is where the real judgement lives, because a system that lists a fortnight of availability has handed the customer the choice that the evidence above suggests can hurt. It writes the slot down in both places. And then it reminds.
 
@@ -3107,7 +3107,7 @@ There is a second half to this that is easy to miss: the writing rather than the
 
 ## What a booking is, technically, and why many of them are not one
 
-This sounds fussy and it is the difference between an appointment that happens and one that may not.
+The technical meaning of a booking sounds fussy, and it is the difference between an appointment that happens and one that may not.
 
 When a booking system says it has confirmed an appointment, it has done one of three things. It may have sent a text message that contains a date and a time, which is a sentence. It may have attached a calendar file, which is a document. Or it may have sent an actual invitation, which is a transaction with a reply.
 
@@ -3121,7 +3121,7 @@ The same specification defines an alarm component, a reminder that lives on the 
 
 [[scene:pull-quote]]
 
-## What to do about the ones who still do not turn up
+## What should you do about the no-shows that still happen?
 
 Even with the shortest lead times and a reminder, some appointments will not happen. The difference between businesses is in what happens in the following hour.
 
@@ -3131,7 +3131,7 @@ Write the message so it assumes something got in the way, because something usua
 
 Then count them, not to punish anyone but because a business that does not know its own attendance rate cannot tell whether any of this worked. The number is simple: of the last twenty appointments you agreed, how many happened.
 
-## How to test one before you buy it
+## How do you test a tool to reduce no-shows before you buy it?
 
 Four questions, each answerable inside a demo without knowing anything technical.
 
@@ -3147,7 +3147,7 @@ Ask what happens when two people take the same slot within a minute of each othe
 
 [[scene:plate-two]]
 
-## Is it worth automating
+## Is automating booking and reminders worth it to reduce no-shows?
 
 Automating booking and reminders is worth it when appointments are made often enough that a missed one is noticed within a week. These are the screening questions of our AI assessment, our own method rather than a published standard, and three of them keep the idea or cross it off:
 
@@ -3163,7 +3163,7 @@ An invented example: a salon books 30 appointments a week and 3 of them are no-s
 
 The three questions are run on your own last twenty appointments before anyone looks at a tool.
 
-## What it takes to run
+## What does it take to run booking and reminders that reduce no-shows?
 
 We print no price on this page. What booking and reminders take from the owner is mostly four decisions and a calendar that tells the truth.
 
@@ -3173,9 +3173,9 @@ The part people forget is keeping the calendar true. A booking system is only as
 
 Our setup sends messages only to people who agreed to get confirmations and reminders, and a reply of STOP ends them for that number. What the message says is the owner's to approve before the first one goes out.
 
-## What it does not do, and should not pretend to
+## What can AI appointment booking not do about no-shows?
 
-It does not make anyone turn up. Reminders went with higher attendance in the trials above, and they are still only reminders.
+AI appointment booking does not make anyone turn up. Reminders went with higher attendance in the trials above, and they are still only reminders.
 
 It does not decide who is worth an appointment. A system that fills your week faster fills it with whoever asked. Booking speed and lead quality are separate problems with separate answers, and a booking assistant in front of an unfiltered inbox can fill a quiet Saturday with whoever asked, which is busier without being better.
 
@@ -3187,7 +3187,7 @@ And it does not repair a calendar you do not trust. If you already override the 
 
 [[scene:failure-modes]]
 
-## Who this fits, and who it does not
+## Who this fits: the businesses that lose money to no-shows
 
 Booking and reminders fit a business that sells its time in slots and loses money when a slot sits empty: a roofer, plumber or heating company with estimate visits, a salon, spa or gym, a dental or accounting office, a real estate office with showings and listing appointments.
 
@@ -3199,13 +3199,13 @@ Which of these groups your business is in decides the next step.
 
 [[scene:fits]]
 
-## What to do first
+## What should an owner do first to reduce no-shows?
 
-What to do first is one job, taken a week at a time, ending with a decision written down.
+The first step to reduce no-shows is one job, taken a week at a time, ending with a decision written down.
 
 - Week 1: count the last twenty appointments you agreed. For each, write the days between the conversation and the slot, and whether it happened. Work out the median of the first column and the share of the second.
 - Week 2: for the next appointments, offer the two soonest real slots first, send one reminder by hand the day before, and write down what changed.
-- Weeks 3 and 4: run the test in "Is it worth automating". If it passes, approve the booking rules and the reminder wording and read every booking for a month. If it fails, keep the hand reminder and write that decision down.
+- Weeks 3 and 4: run the test in "Is automating booking and reminders worth it to reduce no-shows?". If it passes, approve the booking rules and the reminder wording and read every booking for a month. If it fails, keep the hand reminder and write that decision down.
 
 This is also how our [AI readiness assessment](/services/ai-readiness-assessment) starts. In its interview we ask for one job written in two minutes under input, do, output and your check, then handed to a colleague who does not know it, noting where they stall. Each job is then scored for impact and risk from 1 to 5, with four checks: it binds the business, it reaches a customer, it feeds another system, it can damage trust. The owner leaves with each job marked to automate, to keep a person on, or to leave alone.
 
@@ -3241,7 +3241,7 @@ Two parts of it can, and it is worth knowing which. The reminder is the part wit
 
 ### How does it know when I am free?
 
-It asks your calendar. A free and busy query returns only the time ranges you are busy, with none of the contents. Full access lets a system read the events themselves. Ask which one a vendor wants. For booking alone, free and busy plus permission to create an event is enough, and anything beyond that should come with a reason.
+An AI booking tool knows when you are free by asking your calendar. A free and busy query returns only the time ranges you are busy, with none of the contents. Full access lets a system read the events themselves. Ask which one a vendor wants. For booking alone, free and busy plus permission to create an event is enough, and anything beyond that should come with a reason.
 
 ### Can it book on the phone as well as by text?
 
@@ -3257,7 +3257,7 @@ Not always, and the study is about attendance rather than revenue. An appointmen
 
 [[scene:quiz]]
 
-## What to do about it
+## What can you do about no-shows this week?
 
 The count needs nobody, us included. It takes ten minutes on paper: the last twenty appointments you agreed with someone outside the business, each with two numbers, the days between the conversation and the slot and whether it happened. The median of the first column and the share of the second are the whole of this guide in your own handwriting.
 
