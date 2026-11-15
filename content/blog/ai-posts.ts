@@ -2983,7 +2983,7 @@ Third, where does a wrong answer land? In public, on a page strangers read befor
 
 Then the stop question: what breaks if we stop doing this? Nothing breaks on day one. The profile slowly drifts out of date, and the searches you never see are lost quietly.
 
-And a tool you already have: Google's own profile editor is free, and Google says you can add or claim a business at no charge. For one location with a handful of services, an evening for the first pass and a monthly look at the report is the starting job, and paying for anything else is not worth it yet.
+And a tool you already have: Google's own profile editor is free, and Google says you can add or claim a business at no charge. For one location with a handful of services, an evening for the first pass of a profile that is mostly right, longer for one that is badly wrong, and a monthly look at the report is the starting job, and paying for anything else is not worth it yet.
 
 The verdict, in plain words. Leave the ranking itself alone, because Google says no one can buy it. Do the profile by hand once. Automate the part that decays: the review request on the day the job ends, the monthly report and the reminder to check the hours before a holiday. Anything that goes out in your name, a reply to a review included, a person approves first.
 
@@ -3039,7 +3039,7 @@ Then open your own Business Profile and read the performance screen: calls, dire
 
 Then go through the profile as an inspector, not the owner. Is the main category the one a stranger would choose? Are all your services written out? Are the hours right this week? Is the address one you really operate from, or hidden if you work from home? Is the newest review from this quarter or from two years ago?
 
-Finally count the reviews and count the jobs you finished last year, and put the two numbers side by side. The gap is the number of jobs with no review, which is where the asking starts.
+Finally count the reviews and count the jobs you finished last year, and put the two numbers side by side. The gap is a rough estimate of how many jobs went without a review, on the assumption that each review came from a different job from last year, and it is where the asking starts.
 
 ## What should you do first to rank in Google Maps?
 
@@ -3061,7 +3061,7 @@ Google publishes the inputs, not the recipe: local results are mainly based on r
 
 ### How do I rank higher in Google Maps without spending a fortune on ads?
 
-Fix the profile, ask for reviews and read the report, which cost an evening, a link and a monthly look, not an advertising budget. Google's page says there is no way to pay for a better local ranking, and the eBay experiment above found that most of the click traffic the ads were credited with arrived without them.
+Fix the profile, ask for reviews and read the report, which take an evening for a profile that is mostly right (longer for one that is badly wrong), a link and a monthly look, not an advertising budget. Google's page says there is no way to pay for a better local ranking, and the eBay experiment above found that most of the click traffic the ads were credited with arrived without them.
 
 ### How do I get my business on Google Maps?
 
@@ -3081,7 +3081,7 @@ Google says to hide it. A service-area business should hide its address from cus
 
 ### Is local SEO worth it for a small business?
 
-For a business that customers find by searching nearby, the first pass is worth doing: it costs an evening and nothing else. Whether to keep paying someone to maintain it depends on whether you will otherwise let it decay. The test above gives the answer for your own business.
+For a business that customers find by searching nearby, the first pass is worth doing: it takes an evening for a profile that is mostly right, longer for one that is badly wrong, and costs no money. Whether to keep paying someone to maintain it depends on whether you will otherwise let it decay. The test above gives the answer for your own business.
 
 ### How long does it take to rank in Google Maps?
 
