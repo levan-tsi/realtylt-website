@@ -22,9 +22,9 @@ export const aiClone: Service = {
 
   eyebrow: "AI clone · Video and voice of the owner",
   title: "An AI video avatar and voice clone of the owner",
-  lede: "Customers trust the owner's face and voice, and the owner has no time to record a video for every new client, quote or question. We build a video avatar and a voice clone of the owner, with the owner's written consent, working only from the business's own scripts and information. It records the welcome, the walkthrough and the explainer in the owner's face and voice, each one says it was made with AI, and a person approves every video before it goes out.",
+  lede: "An AI video avatar and voice clone of the owner puts the owner's face and voice in the welcome, the walkthrough and the explainer for every new client, quote or question. Customers trust the owner's face and voice, and the owner has no time to record a video for every one. We build it with the owner's written consent, working only from the business's own scripts and information; each video says it was made with AI, and a person approves every video before it goes out.",
   specs: ["a licensed avatar platform", "a licensed voice engine", "only your own scripts", "every video labelled AI"],
-  why: "An owner can only be on one call, one video, one visit at a time. A digital twin can be in many places at once. It multiplies the two things customers really buy from a small business, the owner's face and voice, so personal attention stops being the thing that slows the business down.",
+  why: "An AI video avatar and voice clone matters because an owner can only be on one call, one video, one visit at a time. A digital twin can be in many places at once. It multiplies the two things customers really buy from a small business, the owner's face and voice, so personal attention stops being the thing that slows the business down.",
   keywords: [
     "ai avatar for business",
     "ai clone of yourself",
@@ -64,7 +64,7 @@ export const aiClone: Service = {
   },
 
   whatItIs: [
-    "It is a digital twin of the owner: a video avatar that looks like them and a voice clone that sounds like them, both working from a private library of the business's own scripts and information. It can welcome a new customer, walk someone through a quote or a property, or explain a deadline, in the owner's face and voice, while the owner is somewhere else.",
+    "An AI video avatar and voice clone is a digital twin of the owner: a video avatar that looks like them and a voice clone that sounds like them, both working from a private library of the business's own scripts and information. It can welcome a new customer, walk someone through a quote or a property, or explain a deadline, in the owner's face and voice, while the owner is somewhere else.",
     "It matters because in a small business the owner's face and voice are what customers buy, and both are stuck in one place at a time. A twin does not stand in for the owner on the conversations that need them. It lifts the ceiling on the personal attention everyone else can get.",
     "It fits an owner customers already know by face: a contractor who explains every quote, an accountant who sends the same deadline explanation to fifty clients, a dentist or salon owner who welcomes every new client, a real estate agent who records a walkthrough for every listing. It is built only of the owner, with the owner's written consent.",
   ],
@@ -123,7 +123,7 @@ export const aiClone: Service = {
   ],
 
   limits: [
-    "It does not speak for anyone but the owner who consented. It carries one person's likeness and voice, only on that business's own content. We do not build a likeness of anybody else, living or dead, at any price.",
+    "An AI clone does not speak for anyone but the owner who consented. It carries one person's likeness and voice, only on that business's own content. We do not build a likeness of anybody else, living or dead, at any price.",
     "It does not say anything the owner has not already stood behind. The scripts come from the business's own material, so what it can say is bounded by what goes into it.",
     "It does not know which sentences are the costly ones. A price, a deadline, a diagnosis or a permit status all read like plain data and all behave like liability, so those get decided by a person in advance rather than by a script.",
     "It does not belong in the moments that need the owner. A twin scales the welcome, the walkthrough and the explainer. The hard conversation and the decision are still the owner's.",
@@ -134,27 +134,27 @@ export const aiClone: Service = {
   faqs: [
     {
       q: "What is an AI clone for a business owner?",
-      a: "It is a video avatar that looks like the owner and a voice clone that sounds like them, both working from a private library of the business's own scripts and information. It records personal welcome videos, walkthroughs and explainers, so the owner's face and voice are no longer limited to one conversation at a time. Every video says it was made with AI.",
+      a: "An AI clone for a business owner is a video avatar that looks like the owner and a voice clone that sounds like them, both working from a private library of the business's own scripts and information. It records personal welcome videos, walkthroughs and explainers, so the owner's face and voice are no longer limited to one conversation at a time. Every video says it was made with AI.",
     },
     {
       q: "Will the videos actually look like me?",
-      a: "The avatar is built from a recording of the owner and the voice from the owner's own speech, so what it is built from is entirely them. How convincing any particular result is depends on the recording and on the platform; judge it on your own footage rather than on a promise from a website. What anybody can control is the writing. The scripts come from the business's own material, and that is what stops it reading like a template.",
+      a: "The videos will look like the owner, because the avatar is built from a recording of the owner and the voice from the owner's own speech, so what it is built from is entirely them. How convincing any particular result is depends on the recording and on the platform; judge it on your own footage rather than on a promise from a website. What anybody can control is the writing. The scripts come from the business's own material, and that is what stops it reading like a template.",
     },
     {
       q: "Is it legal to use an AI video of myself in my marketing?",
-      a: "Yes, and the paperwork is worth doing properly anyway. New York Civil Rights Law section 50 makes it a misdemeanor to use a living person's likeness or voice for advertising or trade without first obtaining that person's written consent. Where the person is the owner, that is a document signed once. Do it properly rather than informally: consent for one video is not consent for a model that can produce a thousand, and writing it down forces a decision about what may be produced.",
+      a: "Yes, it is legal to use an AI video of yourself in your marketing, and the paperwork is worth doing properly anyway. New York Civil Rights Law section 50 makes it a misdemeanor to use a living person's likeness or voice for advertising or trade without first obtaining that person's written consent. Where the person is the owner, that is a document signed once. Do it properly rather than informally: consent for one video is not consent for a model that can produce a thousand, and writing it down forces a decision about what may be produced.",
     },
     {
       q: "Can I make one of a colleague, or of a customer?",
-      a: "A colleague, only with their own written permission, given apart from their employment, and with a written answer to what happens to the model when they leave. A customer, no. A real customer recorded with their permission is plain marketing; a synthesised version of them, or words they did not say assembled into their voice, is what statutes like section 50 exist to stop.",
+      a: "A colleague can have one made only with their own written permission, given apart from their employment, and with a written answer to what happens to the model when they leave. A customer, no. A real customer recorded with their permission is plain marketing; a synthesised version of them, or words they did not say assembled into their voice, is what statutes like section 50 exist to stop.",
     },
     {
       q: "Do I have to tell people the video was made with AI?",
-      a: "Treat it as required whatever any particular rule says today, because published research says the viewer cannot work it out. In a 2022 study, 315 people sorting synthetic faces from real ones averaged 48.2 percent, against a 50 percent coin flip. Another 219 people were trained and told the answer every time; they reached 59.0 percent and got no better with practice. A spoken sentence at the start costs four seconds and turns something a person could discover into something they were told.",
+      a: "Tell people the video was made with AI: treat it as required whatever any particular rule says today, because published research says the viewer cannot work it out. In a 2022 study, 315 people sorting synthetic faces from real ones averaged 48.2 percent, against a 50 percent coin flip. Another 219 people were trained and told the answer every time; they reached 59.0 percent and got no better with practice. A spoken sentence at the start costs four seconds and turns something a person could discover into something they were told.",
     },
     {
       q: "Who owns the avatar and the voice?",
-      a: "Two answers, worth keeping apart. The technology is licensed, not owned: the video runs on a licensed avatar platform and the voice on a licensed voice engine, and those models belong to the companies that built them. What belongs to the owner is the likeness, the recording it was built from, the scripts and the finished videos. Those are used only on the business's own content, never licensed on to anybody else, and deleted on request.",
+      a: "Who owns an AI avatar and voice has two answers, worth keeping apart. The technology is licensed, not owned: the video runs on a licensed avatar platform and the voice on a licensed voice engine, and those models belong to the companies that built them. What belongs to the owner is the likeness, the recording it was built from, the scripts and the finished videos. Those are used only on the business's own content, never licensed on to anybody else, and deleted on request.",
     },
   ],
 
