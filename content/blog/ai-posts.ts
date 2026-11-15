@@ -538,7 +538,7 @@ An assessment worth your time hands your list back shorter, with a reason beside
 
 [[scene:deliverable]]
 
-## Start with one job written down
+## Where to start with AI: one job written down
 
 The three questions need one real job written down first, in the order it happened, including the steps that exist only because a system does not do what it was bought to do. [The workflow automation article on this site](/blog/workflow-automation-real-estate-business) shows how, with a piece of paper.
 
@@ -582,7 +582,7 @@ That is how we build: the person stays, and the system takes the repeated typing
 
 ## The three questions: is it worth automating at all?
 
-These three questions each take a different kind of idea off a list. Run each idea past them in order, and stop at the first no.
+Three questions decide whether an idea for AI is worth automating at all. These three questions each take a different kind of idea off a list. Run each idea past them in order, and stop at the first no.
 
 ### One: it happens often enough that a failure gets noticed within a week
 
@@ -604,9 +604,9 @@ Try your own numbers. From 12 ideas (an invented example), if 65 percent happen 
 
 The federal AI Risk Management Framework from the National Institute of Standards and Technology agrees: it lists the responses to a risk as "mitigating, transferring, avoiding, or accepting", so not building is a legitimate result, and it "does not prescribe risk tolerance". Version 1.0, from January 2023, was still current on October 31, 2026 ([NIST AI 100-1](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf); [NIST, AI RMF page](https://www.nist.gov/itl/ai-risk-management-framework)).
 
-## What should not be automated
+## What should a small business not automate with AI?
 
-Three kinds of work stay with a person in every assessment we run: any fact a customer relies on, such as a price or a policy, unless the system reads it from the record that governs it; the judgment calls made a few times a year, such as taking on a client; and anything whose failure is silent, such as a reminder that stops sending without an error. A fourth test costs nothing: anything you would be embarrassed to say a machine did.
+A small business should not automate three kinds of work with AI. Three kinds of work stay with a person in every assessment we run: any fact a customer relies on, such as a price or a policy, unless the system reads it from the record that governs it; the judgment calls made a few times a year, such as taking on a client; and anything whose failure is silent, such as a reminder that stops sending without an error. A fourth test costs nothing: anything you would be embarrassed to say a machine did.
 
 [[scene:do-not]]
 
@@ -628,7 +628,7 @@ The one exception is a fixed message whose exact words you approved once, with o
 
 [[scene:plate-garage]]
 
-## Why ranking by the average outcome gets it wrong
+## Why does ranking AI ideas by the average outcome get it wrong?
 
 With a short list, the natural move is to estimate what each idea is worth and start at the top. We sort by how contained the worst case is. Most jobs come in close to plan; a few go badly wrong, and an average blends both into a number that describes neither.
 
@@ -648,9 +648,9 @@ Our plan also scores each job from 1 to 5 for impact and for risk, each with its
 
 An invented example: a Friday list of open quotes for the owner. Only the owner reads it, so a wrong line costs a minute: risk 2. It saves two hours of digging: impact 3. It goes near the top, checked by the owner for four Fridays before it runs alone.
 
-## What the assessment is and how it runs
+## What is an AI readiness assessment and how does it run?
 
-This page is the whole method, and you can run it without us. If you ask us to run it, the assessment is a one-hour call with you, or with you and your manager, and a written plan after it.
+An [AI readiness assessment](/services/ai-readiness-assessment) is a one-hour call and a written plan. This page is the whole method, and you can run it without us. If you ask us to run it, the assessment is a one-hour call with you, or with you and your manager, and a written plan after it.
 
 ### Why this is different from an automation agency
 
@@ -716,7 +716,7 @@ Answer these in writing, about the last real time something happened, before you
 
 Before the call, send a week of your calendar, the tracker you run the work from, two real messages you sent customers, and your quote template. A good answer to question 8 sounds like this invented one: "Every new customer is typed in three times: the phone log, the quote and the invoice. About 25 a week."
 
-## What you get at the end
+## What do you get at the end of an AI assessment?
 
 Your time is the hour on the call and about another hour later for the notes and the walk-through. The plan, written from what you told us, says what we would build and in what order, how, how long each piece takes, and which system does which job. It names the precautions: what stays with a person, what is checked before anything reaches a customer, and how a failure shows. For every repeated job it gives the scores with reasons, the verdict, current hours and a four-week trial target, plus what we crossed off and why, and our open questions instead of guesses. Hours back are a trial target, never a promise, and every number says how it is known.
 
@@ -730,9 +730,9 @@ Systems break: a program changes, a rule moves, and a job that ran for months st
 
 ### What an assessment does not do
 
-It does not decide for you or see what nobody will say, and it goes stale within months, because your business moves. A found hour has to be spent on purpose, or it is absorbed within a month.
+An AI assessment does not decide for you or see what nobody will say, and it goes stale within months, because your business moves. A found hour has to be spent on purpose, or it is absorbed within a month.
 
-## How to run one yourself in one evening
+## How do you run an AI assessment yourself in one evening?
 
 1. Write every idea down without judging it.
 2. Ask the rule question to three people, separately.
@@ -744,7 +744,7 @@ It does not decide for you or see what nobody will say, and it goes stale within
 
 [[scene:sheet]]
 
-## Your roadmap, week by week
+## Your AI roadmap, week by week
 
 Nothing here needs us, and nothing costs money until an idea has passed every test. Where no job repeats yet, writing the process down comes first.
 
@@ -802,7 +802,7 @@ Workflow automation is the building. An assessment is the deciding, and it comes
 
 [[scene:quiz]]
 
-## Next step
+## Next step: book an AI assessment
 
 The offer is the one-hour assessment: we go through your list with you, then send back a written plan of what we would build first, how, and what we would cross off. [Book a Consultation](/connect): (914) 875-2424, levan@realtylt.com.
 

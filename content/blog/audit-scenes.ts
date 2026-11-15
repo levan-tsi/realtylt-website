@@ -605,7 +605,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
             "Ask the customer to check it",
           ],
           answer: 1,
-          why: "From the section on what should not be automated: a system may report what a source says, or say it does not know.",
+          why: "From the section on what a small business should not automate with AI: a system may report what a source says, or say it does not know.",
         },
         {
           q: "In our builds, what has to happen before a message a model wrote reaches a customer?",
@@ -627,7 +627,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
             "We review your website",
           ],
           answer: 1,
-          why: "From the section on how the assessment runs: one hour on the last real week, with no pitch, no tools named and no savings promised.",
+          why: "From the section on what an AI readiness assessment is and how it runs: one hour on the last real week, with no pitch, no tools named and no savings promised.",
         },
         {
           q: "Why does this page give no failure rate for AI projects?",
@@ -646,17 +646,17 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
 
   headingLabels: {
     "what-an-ai-assessment-for-a-small-business-is-for": "What an assessment is for",
-    "start-with-one-job-written-down": "One job written down",
+    "where-to-start-with-ai-one-job-written-down": "One job written down",
     "how-small-businesses-use-ai-in-2026": "Who uses AI",
     "the-three-questions-is-it-worth-automating-at-all": "The three questions",
-    "what-should-not-be-automated": "What not to automate",
+    "what-should-a-small-business-not-automate-with-ai": "What not to automate",
     "who-should-stay-on-the-job": "Who stays on the job",
-    "why-ranking-by-the-average-outcome-gets-it-wrong": "Rank by worst day",
-    "what-the-assessment-is-and-how-it-runs": "How the assessment runs",
+    "why-does-ranking-ai-ideas-by-the-average-outcome-get-it-wrong": "Rank by worst day",
+    "what-is-an-ai-readiness-assessment-and-how-does-it-run": "How the assessment runs",
     "the-questions-we-ask-in-an-assessment": "The questions we ask",
-    "what-you-get-at-the-end": "What you get",
-    "how-to-run-one-yourself-in-one-evening": "Run it yourself",
-    "your-roadmap-week-by-week": "Your roadmap",
+    "what-do-you-get-at-the-end-of-an-ai-assessment": "What you get",
+    "how-do-you-run-an-ai-assessment-yourself-in-one-evening": "Run it yourself",
+    "your-ai-roadmap-week-by-week": "Your roadmap",
     "common-questions-about-using-ai-in-a-small-business": "Common questions",
   },
 };
