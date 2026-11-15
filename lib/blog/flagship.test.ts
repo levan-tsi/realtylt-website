@@ -108,7 +108,7 @@ describe("flagshipToc", () => {
   it("derives exactly the rail the review automation post shipped with", () => {
     const reviewOutline = parseOutline(REVIEW_AUTOMATION_POST);
     expect(flagshipToc(reviewOutline, REVIEW_FLAGSHIP)).toEqual([
-      { id: "what-is-the-review-figure-on-sales-slides-and-why-is-it-not-here", label: "The number" },
+      { id: "why-is-the-claim-that-most-customers-read-reviews-not-used-here", label: "The number" },
       { id: "scene-thresholds", label: "What they need", scene: true },
       { id: "what-does-a-stranger-look-at-on-your-google-profile", label: "The scan" },
       { id: "what-was-one-extra-star-worth-in-a-study-that-measured-money", label: "The study" },

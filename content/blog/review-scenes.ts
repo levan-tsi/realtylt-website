@@ -529,7 +529,7 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
   /** Short rail labels for the prose headings. Ids and ORDER are derived from the document, so a
    * renamed heading degrades to its full text rather than leaving a dead row. */
   headingLabels: {
-    "what-is-the-review-figure-on-sales-slides-and-why-is-it-not-here": "The number",
+    "why-is-the-claim-that-most-customers-read-reviews-not-used-here": "The number",
     "what-does-a-stranger-look-at-on-your-google-profile": "The scan",
     "what-was-one-extra-star-worth-in-a-study-that-measured-money": "The study",
     "why-does-the-ask-for-a-google-review-not-happen": "Why nobody asks",

@@ -3215,9 +3215,9 @@ She calls the second. The first will never know. No alert records an evening tha
 
 [[scene:in-short]]
 
-## What is the review figure on sales slides, and why is it not here?
+## Why is the claim that most customers read reviews not used here?
 
-A figure of the kind quoted without a source says that most customers read reviews before they book. We found no source for the version of it that was on our own service page until recently, so this page does not use it.
+This page does not use the claim that most customers read reviews before they book, because we found no source for it. A version of it was on our own service page until recently.
 
 We looked for the survey it is supposed to come from. The one that repeats every year and prints its sample and method is the [Local Consumer Review Survey](https://www.brightlocal.com/research/local-consumer-review-survey/), published by a company that sells review software. The 2026 edition asked a panel of 1,002 US adults, about a quarter in each of four age bands from eighteen to over sixty.
 
@@ -3231,7 +3231,7 @@ Before repeating any review statistic, open the page it came from, and if there 
 
 ## What does a stranger look at on your Google profile?
 
-A stranger choosing between two local businesses often has little time and a phone, like the woman in the invented example with her ten minutes.
+A stranger choosing between two local businesses may have little time and a phone, like the woman in the invented example with her ten minutes.
 
 When both businesses have a good average, the average tells little. In an invented example of two businesses at 4.7 stars, the difference sits underneath: the date of the newest review, how many came this quarter, and whether anybody answered the bad one.
 
@@ -3259,15 +3259,15 @@ The data covers restaurants in one city and ends in 2009. Its direction may hold
 
 ## Why does the ask for a Google review not happen?
 
-The ask does not happen for three reasons, and a system can solve two of them.
+The ask can fail to happen for three reasons, and a system can solve two of them.
 
 The first is timing. The day the job finished is the day it is on the customer's mind, and it is also the day you are least likely to be at a desk. An invented example: a painter finishes a kitchen on a Wednesday and means to ask on the next quiet afternoon. It comes nine days later, and by then the customer has moved on. A dental office has the same gap between the visit and the end of the day, and a real estate agent between the closing and the next showing.
 
 The second is awkwardness. You have just been paid by someone you like, and the next thing you say is a favor. So it waits for later, which is where reviews go to die.
 
-The third is fear. Ask everybody and some will say something unwelcome, and review gating grows from that fear. According to the 2026 survey, only 10 percent of its panel would use nothing below five stars, while 68 percent set their floor at four.
+The third is fear. Ask everybody and some will say something unwelcome, and review gating is the answer that fear suggests. According to the 2026 survey, only 10 percent of its panel would use nothing below five stars, while 68 percent set their floor at four.
 
-Most owners can name which of the three stops them, and a system fixes only the first two.
+An owner can name which of the three is the one that stops them, and a system fixes only the first two.
 
 [[scene:plate]]
 
@@ -3279,7 +3279,7 @@ Something in your systems already knows when a job is finished. An invented exam
 
 An invented example of the whole message, for a salon: "Hi Dana, thank you for coming in today. How was it, from one to five? If you have a minute, this is where to say it in your own words: [link]." It is three sentences, it carries the link whatever she answers, and it names nobody she should mention.
 
-Whatever comes back, the same Google link goes out. The rest of this page turns on that sentence, because much of this industry does the opposite.
+Whatever comes back, the same Google link goes out. The rest of this page turns on that sentence, because sending the link only to the customers who answered well is what Google's policy rules out.
 
 The answer changes only your side. A rough score sends the score, the words and the customer's name to you at once, while there is still an afternoon left to fix the problem.
 
@@ -3293,13 +3293,13 @@ The first thing to write at the top of a page is the one event in your systems t
 
 ## Where is the line for asking customers for Google reviews?
 
-The line is review gating: surveying customers first and sending the public review link only to those who answered well. It can look like a way to catch problems early, and it is the thing the rules are written about.
+The line is review gating: surveying customers first and sending the public review link only to those who answered well. It can look like a way to catch problems early, and Google's policy and the federal rule address it.
 
 Google's [contribution policy](https://support.google.com/contributionpolicy/answer/7400114) lists what merchants may not do. Two entries matter here. One is incentives: payment, discounts, or free goods or services in exchange for posting, revising or removing a review. The other is a single sentence: merchants may not discourage or prohibit negative reviews, or selectively solicit positive reviews from customers.
 
 Sending the survey to everyone and the link only to the fives is selective solicitation, and the rule turns on who gets the link.
 
-Two more prohibitions in the same section are often taught as good practice. Merchants should not require or pressure people to write a review on the premises, which covers the tablet at the counter. And merchants should not ask for specific content. The policy's own example is asking staff to solicit a set number of reviews, or reviews that mention a particular staff member. Asking customers to name the town you want to rank for runs into the same sentence.
+Two more prohibitions in the same section concern things an owner might take for good practice. Merchants should not require or pressure people to write a review on the premises, which covers the tablet at the counter. And merchants should not ask for specific content. The policy's own example is asking staff to solicit a set number of reviews, or reviews that mention a particular staff member. Asking customers to name the town you want to rank for runs into the same sentence.
 
 The permission is one line: you may solicit or encourage content that represents a genuine experience, without incentives and without trying to influence the rating or the contents. Asking everybody at the right moment sits inside it.
 
@@ -3317,7 +3317,7 @@ The word carrying the weight is misrepresent. Withholding is allowed on criteria
 
 An invented example: a plumber's website shows six reviews. Under the label "a selection of recent reviews", the block is honest. Unlabelled, under a heading that implies these are the reviews, with a filter holding back everything under four stars, it is what the paragraph describes.
 
-This is not a legal opinion, and a rule short enough to read in one sitting is no reason to skip asking a lawyer about your own set-up. A vendor who cannot say which side of these rules their widget sits on has not read them.
+This is not a legal opinion, and a rule short enough to read in one sitting is no reason to skip asking a lawyer about your own set-up. A vendor who cannot say which side of these rules their widget sits on is one to question.
 
 Any review block on your own website is best labelled for what it is.
 
@@ -3363,7 +3363,7 @@ Automating review requests is worth it when finished jobs come often enough that
 - Can the rule be written down for a new hire?
 - Does a wrong send land where a person sees it first?
 
-Then the stop question, which asks what breaks if the job stopped: if nothing breaks, stop doing it and do not automate it. Then check whether a tool you already pay for does it, since some CRMs already send a review request.
+Then the stop question, which asks what breaks if the job stopped: if nothing breaks, stop doing it and do not automate it. Then check whether a tool you already pay for does it, since a CRM you use may already send a review request.
 
 Score the job's impact from 1 to 5. At 1 or 2, leave it alone: ask by hand with one written line, because a setup you maintain for a few asks a month takes more attention than it saves. The ask reaches a customer, so it carries risk, and a person approves the message wording before anything goes out and reads the low-score alerts after.
 
@@ -3375,7 +3375,7 @@ The three questions are run on your own finished-job event before anyone looks a
 
 What a review-request setup takes from the owner is mostly two decisions and a little time each week. We print no price on this page.
 
-The setup is short, because this is one of the least complicated automations there is: one trigger, one message, one link, one alert. The work is the two decisions. What event counts as finished is a real business question and often takes longer to settle than the build. What the message says has to sound like the owner, and it affects whether people answer or delete it.
+The setup is short, because it has one trigger, one message, one link and one alert. The work is the two decisions. What event counts as finished is a real business question and often takes longer to settle than the build. What the message says has to sound like the owner, and it affects whether people answer or delete it.
 
 An invented example: a landscaper decides that for his business the job ends the day the invoice is paid, not the day the crew leaves, because the invoice is when the customer looks at the job again.
 
@@ -3407,7 +3407,7 @@ Three kinds of business do something else. A business that finishes only a handf
 
 An invented example: a one-person piano tuner with forty visits a year keeps a text template on his phone and sends it from the driveway.
 
-Most businesses fall into one of these groups, and the group decides the next step.
+The group a business falls into decides the next step.
 
 [[scene:fits]]
 
@@ -3453,11 +3453,11 @@ No, automating review requests is not against Google's rules, because the policy
 
 ### What is review gating, and where exactly is the line?
 
-Review gating is surveying customers first and sending the public review link only to those who answered well, and the line is whether the unhappy customer still gets the link. Screening feedback so you can fix things is normal. Screening who may review you is what Google lists as selectively soliciting positive reviews.
+Review gating is surveying customers first and sending the public review link only to those who answered well, and the line is whether the unhappy customer still gets the link. Screening feedback so you can fix things is not what the policy lists. Screening who may review you is what Google lists as selectively soliciting positive reviews.
 
 ### Can I get a bad review taken down?
 
-A bad review is usually taken down only when it breaks the platform's own rules: someone who was never a customer, a personal attack, or content plainly not about the business. Whether it breaks those rules is the platform's decision, and paying someone to argue does not change the rules.
+A review comes down when it breaks the platform's own rules: someone who was never a customer, a personal attack, or content plainly not about the business. Whether it breaks those rules is the platform's decision, and paying someone to argue does not change the rules.
 
 ### Do I have to put my Google reviews on my own website?
 
