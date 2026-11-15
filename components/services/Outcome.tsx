@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/ui/Reveal";
 import type { Service } from "@/lib/services";
+import { serviceHeadings } from "@/lib/services/headings";
 
 /** The stakes, stated once, in large type. This is `COPY.why` from the /ai journey.
  * The stat is pulled out as the visual only when it is a number we already publish. */
@@ -9,7 +10,7 @@ export function Outcome({ service }: { service: Service }) {
   return (
     <section className="bg-mist py-14 md:py-20" aria-labelledby="outcome-heading">
       <h2 id="outcome-heading" className="sr-only">
-        Why it matters
+        {serviceHeadings(service).why.text}
       </h2>
       <div
         className={`mx-auto max-w-7xl px-4 lg:px-8 ${

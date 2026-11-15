@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { Service } from "@/lib/services";
+import { serviceHeadings } from "@/lib/services/headings";
 
 /** What the service will NOT do. The structural gap the blog standard closed and the
  * commercial surface had not (SERVICES-CRITIQUE.md §4).
@@ -18,6 +19,7 @@ import type { Service } from "@/lib/services";
  * rejected on sight, because the dot is this site's affirmative marker and putting it in front
  * of "it will not invent a price" makes a limitation read as a feature. */
 export function Limits({ service }: { service: Service }) {
+  const hd = serviceHeadings(service);
   return (
     <section id="limits" className="scroll-mt-24 bg-mist py-16 md:py-24" aria-labelledby="limits-heading">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1fr_1.75fr] lg:gap-20 lg:px-8">
@@ -25,7 +27,7 @@ export function Limits({ service }: { service: Service }) {
           <div className="lg:sticky lg:top-28">
             <SectionHeading eyebrow="Limits" as="h2">
               <span id="limits-heading">
-                What it <strong>does not do</strong>
+                {hd.limits.lead}{hd.limits.strong && <strong>{hd.limits.strong}</strong>}{hd.limits.tail}
               </span>
             </SectionHeading>
             <p className="mt-5 max-w-sm leading-relaxed text-stone">

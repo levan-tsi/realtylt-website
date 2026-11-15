@@ -20,6 +20,7 @@ export const geoLandingPages: Service = {
   slug: "geo-landing-pages",
   aiKey: "geopages",
   name: "Local & GEO Pages",
+  noun: "service area page building",
   tier: "more",
 
   eyebrow: "Local and GEO pages · Get found nearby",

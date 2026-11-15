@@ -20,6 +20,7 @@ export const aiAgentWorkforce: Service = {
   slug: "ai-agent-workforce",
   aiKey: "agents",
   name: "AI Agent Workforce",
+  noun: "an AI assistant",
   tier: "core",
 
   eyebrow: "AI assistants · One per repeated job",

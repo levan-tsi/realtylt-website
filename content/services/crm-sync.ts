@@ -19,6 +19,7 @@ export const crmSync: Service = {
   slug: "crm-sync",
   aiKey: "crmsync",
   name: "Two-Way CRM Sync",
+  noun: "two-way CRM sync",
   tier: "more",
 
   eyebrow: "Sync · Two-way CRM",

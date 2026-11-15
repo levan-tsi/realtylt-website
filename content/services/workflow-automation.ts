@@ -17,6 +17,7 @@ export const workflowAutomation: Service = {
   slug: "workflow-automation",
   aiKey: "workflow",
   name: "Workflow Automation",
+  noun: "workflow automation",
   tier: "core",
 
   eyebrow: "Automation · Connect your tools",

@@ -18,6 +18,7 @@ export const aiAppointmentBooking: Service = {
   slug: "ai-appointment-booking",
   aiKey: "book",
   name: "AI Appointment Booking",
+  noun: "AI appointment booking",
   tier: "core",
 
   eyebrow: "Booking · Fewer no-shows",

@@ -82,6 +82,10 @@ export interface Service {
   aiKey: string;
   /** Short label for nav, cards, breadcrumbs. */
   name: string;
+  /** The service as a noun phrase that reads inside a sentence, with its article when it has
+   * one ("an AI receptionist", "workflow automation"). The shared section headings are built
+   * from it (lib/services/headings.ts). The `name` above is a label and does not. */
+  noun: string;
   tier: ServiceTier;
 
   /** COPY.sys — kicker above the H1. */

@@ -19,6 +19,7 @@ export const marketingAutomation: Service = {
   slug: "marketing-automation",
   aiKey: "marketing",
   name: "Marketing Automation",
+  noun: "marketing automation",
   tier: "core",
 
   eyebrow: "Marketing · Email and text that react",

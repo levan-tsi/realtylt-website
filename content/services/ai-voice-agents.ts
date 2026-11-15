@@ -16,6 +16,7 @@ export const aiVoiceAgents: Service = {
   slug: "ai-voice-agents",
   aiKey: "voice",
   name: "AI Voice Agents",
+  noun: "an AI receptionist",
   tier: "flagship",
 
   eyebrow: "Voice · Answering and call-backs",

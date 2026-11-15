@@ -18,6 +18,7 @@ export const dataEnrichment: Service = {
   slug: "data-enrichment",
   aiKey: "enrich",
   name: "Data Enrichment",
+  noun: "data enrichment",
   tier: "more",
 
   eyebrow: "Enrichment · Append and check",

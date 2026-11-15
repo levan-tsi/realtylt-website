@@ -14,6 +14,7 @@ export const leadQualification: Service = {
   slug: "lead-qualification",
   aiKey: "qualify",
   name: "Lead Qualification",
+  noun: "AI lead qualification",
   tier: "more",
 
   eyebrow: "Qualification · Score and route",

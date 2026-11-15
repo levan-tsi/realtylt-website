@@ -22,6 +22,7 @@ export const localSeo: Service = {
   slug: "local-seo",
   aiKey: "localseo",
   name: "Local SEO",
+  noun: "local SEO",
   tier: "more",
 
   eyebrow: "Local SEO · Get found nearby",

@@ -21,6 +21,7 @@ export const invoicingAndPayments: Service = {
   slug: "invoicing-and-payments",
   aiKey: "pay",
   name: "Invoicing & Payments",
+  noun: "automated invoicing",
   tier: "core",
 
   eyebrow: "Payments · Invoices and deposits",

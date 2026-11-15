@@ -31,6 +31,7 @@ export const reviewAutomation: Service = {
   slug: "review-automation",
   aiKey: "reviews",
   name: "Review Automation",
+  noun: "Google review automation",
   tier: "core",
 
   eyebrow: "Reputation · Review requests",

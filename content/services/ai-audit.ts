@@ -17,6 +17,7 @@ export const aiAudit: Service = {
   slug: "ai-readiness-assessment",
   aiKey: "consult",
   name: "AI Assessment",
+  noun: "an AI readiness assessment",
   tier: "core",
 
   eyebrow: "AI Assessment · Start here",

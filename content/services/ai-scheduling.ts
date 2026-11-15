@@ -22,6 +22,7 @@ export const aiScheduling: Service = {
   slug: "ai-scheduling",
   aiKey: "scheduling",
   name: "Calendar Autopilot",
+  noun: "an AI scheduling assistant",
   tier: "more",
 
   eyebrow: "Scheduling · AI calendar assistant",

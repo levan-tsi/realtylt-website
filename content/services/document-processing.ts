@@ -18,6 +18,7 @@ export const documentProcessing: Service = {
   slug: "document-processing",
   aiKey: "docs",
   name: "Document Processing",
+  noun: "AI document processing",
   tier: "more",
 
   eyebrow: "Documents · Read and file",

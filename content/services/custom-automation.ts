@@ -18,6 +18,7 @@ export const customAutomation: Service = {
   slug: "custom-automation",
   aiKey: "plus",
   name: "Custom Automation",
+  noun: "custom AI automation",
   tier: "core",
 
   eyebrow: "Custom builds · The step no tool covers",

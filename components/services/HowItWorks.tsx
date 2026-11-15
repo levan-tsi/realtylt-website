@@ -1,18 +1,20 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { Service } from "@/lib/services";
+import { serviceHeadings } from "@/lib/services/headings";
 
 /** The steps, on a rail. Ink section: it is the spine of the page and it should read
  * that way. Big index numerals carry the hierarchy, so no icons are needed and none are
  * invented. */
 export function HowItWorks({ service }: { service: Service }) {
+  const hd = serviceHeadings(service);
   return (
     <section id="how-it-works" className="daylight scroll-mt-24 bg-ink py-16 text-paper md:py-24" aria-labelledby="how-heading">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <Reveal>
           <SectionHeading eyebrow="How it works" dark as="h2">
             <span id="how-heading">
-              What we do, <strong>step by step</strong>
+              {hd.howItWorks.lead}{hd.howItWorks.strong && <strong>{hd.howItWorks.strong}</strong>}{hd.howItWorks.tail}
             </span>
           </SectionHeading>
         </Reveal>

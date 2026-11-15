@@ -17,6 +17,7 @@ export const aiClone: Service = {
   slug: "ai-clone",
   aiKey: "clone",
   name: "AI Clone",
+  noun: "an AI video avatar and voice clone",
   tier: "core",
 
   eyebrow: "AI clone · Video and voice of the owner",

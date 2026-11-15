@@ -2,18 +2,20 @@ import { Constellation } from "@/components/services/Constellation";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { aiJourneyHref, type Service } from "@/lib/services";
+import { serviceHeadings } from "@/lib/services/headings";
 
 /** The bridge back to realtylt.com/ai — the one place a visitor can actually touch this
  * stuff. `nodeIndex` is the service's position in the registry, so each page lights a
  * different node on the hub and the band never repeats itself across the site. */
 export function SeeItLive({ service, nodeIndex }: { service: Service; nodeIndex: number }) {
+  const hd = serviceHeadings(service);
   return (
     <section id="see-it-live" className="daylight scroll-mt-24 bg-ink py-16 text-paper md:py-24" aria-labelledby="live-heading">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:gap-20 lg:px-8">
         <Reveal>
           <SectionHeading eyebrow="See it live" dark as="h2">
             <span id="live-heading">
-              Easier to understand <strong>by touching it</strong>
+              {hd.live.lead}{hd.live.strong && <strong>{hd.live.strong}</strong>}{hd.live.tail}
             </span>
           </SectionHeading>
           <p className="mt-6 max-w-lg leading-relaxed text-paper/75">

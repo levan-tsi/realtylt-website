@@ -18,6 +18,7 @@ export const databaseReactivation: Service = {
   slug: "database-reactivation",
   aiKey: "reactivation",
   name: "Database Reactivation",
+  noun: "database reactivation",
   tier: "core",
 
   eyebrow: "Revive · Past customers and old leads",

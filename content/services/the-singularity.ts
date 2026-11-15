@@ -59,6 +59,7 @@ export const theSingularity: Service = {
   slug: "the-singularity",
   aiKey: "singularity",
   name: "The Singularity",
+  noun: "The Singularity",
   tier: "core",
 
   eyebrow: "The Singularity · the tipping point",

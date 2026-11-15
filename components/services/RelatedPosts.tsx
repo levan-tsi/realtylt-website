@@ -4,11 +4,13 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fmtDate, getArticles } from "@/lib/blog";
 import type { Service } from "@/lib/services";
+import { serviceHeadings } from "@/lib/services/headings";
 
 /** Blog cross-links, resolved through the same loader the blog uses, so a post published
  * from the CRM under one of these slugs replaces the static stub here too. Renders nothing
  * when a service has no related posts, or when the slugs no longer resolve. */
 export async function RelatedPosts({ service }: { service: Service }) {
+  const hd = serviceHeadings(service);
   const slugs = service.relatedPosts ?? [];
   if (slugs.length === 0) return null;
 
@@ -24,7 +26,7 @@ export async function RelatedPosts({ service }: { service: Service }) {
         <Reveal>
           <SectionHeading eyebrow="Read more" as="h2">
             <span id="related-heading">
-              Written up in <strong>more detail</strong>
+              {hd.related.lead}{hd.related.tail}
             </span>
           </SectionHeading>
         </Reveal>

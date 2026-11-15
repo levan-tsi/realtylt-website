@@ -30,6 +30,7 @@ export const aiChatAssistant: Service = {
   slug: "ai-chat-assistant",
   aiKey: "chat",
   name: "AI Chat Assistant",
+  noun: "an AI chatbot",
   tier: "flagship",
 
   eyebrow: "Website chat · Answers and bookings",

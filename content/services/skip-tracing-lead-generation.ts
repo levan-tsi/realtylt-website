@@ -24,6 +24,7 @@ export const skipTracingLeadGeneration: Service = {
   slug: "skip-tracing-lead-generation",
   aiKey: "data",
   name: "Skip Tracing & Lead Generation",
+  noun: "skip tracing and lead generation",
   tier: "flagship",
 
   eyebrow: "Prospecting · Lists and skip tracing",
