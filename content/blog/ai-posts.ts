@@ -3215,7 +3215,7 @@ She calls the second. The first will never know. No alert records an evening tha
 
 [[scene:in-short]]
 
-## The number this is usually sold on, and why it is not in here
+## What is the review figure on sales slides, and why is it not here?
 
 One figure gets repeated on sales slides: that seventy three percent of customers read reviews before they book. We found no source for it, and it was on our own service page until recently, so this page does not use it.
 
@@ -3229,7 +3229,7 @@ Before repeating any review statistic, open the page it came from, and if there 
 
 [[scene:thresholds]]
 
-## What a stranger actually does with your profile
+## What does a stranger look at on your Google profile?
 
 A stranger choosing between two local businesses often has little time and a phone, like the woman in the invented example with her ten minutes.
 
@@ -3243,7 +3243,7 @@ The first thing to read on your own profile is the date on the newest review, be
 
 [[scene:profile-scan]]
 
-## What one extra star was worth, in a study that measured money
+## What was one extra star worth in a study that measured money?
 
 One star was worth 5.4 percent of revenue in the best-known study we found that measured money rather than opinion. It dates from 2011, and it stays here because no newer source we found measures revenue.
 
@@ -3257,7 +3257,7 @@ The data covers restaurants in one city and ends in 2009. Its direction may hold
 
 [[scene:yelp-lift]]
 
-## Why the ask does not happen
+## Why does the ask for a Google review not happen?
 
 The ask does not happen for three reasons, and a system can solve two of them.
 
@@ -3271,7 +3271,7 @@ Most owners can name which of the three stops them, and a system fixes only the 
 
 [[scene:plate]]
 
-## What review automation actually does
+## What does review automation actually do?
 
 Review automation is small, dull plumbing. It is aimed at the first two reasons and leaves the third with you.
 
@@ -3291,7 +3291,7 @@ The first thing to write at the top of a page is the one event in your systems t
 
 [[scene:the-ask]]
 
-## The line you may not cross, and exactly where it is
+## Where is the line for asking customers for Google reviews?
 
 The line is review gating: surveying customers first and sending the public review link only to those who answered well. It can look like a way to catch problems early, and it is the thing the rules are written about.
 
@@ -3307,9 +3307,9 @@ Your current ask is worth reading against that list, starting with who receives 
 
 [[scene:gating-line]]
 
-## The federal half, which is about your own website
+## What does the federal review rule say about your own website?
 
-Google's rules govern Google. A second rule governs what you do with reviews on your own website.
+Google's rules govern Google, and a second rule, the federal review rule, governs what you do with reviews on your own website.
 
 The Federal Trade Commission's rule on consumer reviews and testimonials took effect in 2024. The part that applies is [16 CFR 465.7](https://www.law.cornell.edu/cfr/text/16/465.7), on review suppression. Its second paragraph makes it unfair or deceptive for a business to materially misrepresent, expressly or by implication, that the reviews in a reviews section of its own website represent most or all of those submitted, when reviews are suppressed for their rating or negative sentiment.
 
@@ -3325,7 +3325,7 @@ Any review block on your own website is best labelled for what it is.
 
 [[scene:pull-quote]]
 
-## What to do when the review is genuinely bad
+## What should you do when a Google review is genuinely bad?
 
 When a review is unfair, or fair but unwelcome, the answer is a public reply and a fix of what is underneath. Paying someone to make it disappear does not change the platform's rules.
 
@@ -3337,7 +3337,7 @@ Platforms remove content that breaks their own rules, such as a review from some
 
 A four-line reply to the worst unanswered review is a good week's start.
 
-## How to test one before you buy it
+## How do you test a review tool before you buy it?
 
 Four questions test a review tool in any demo, with no technical knowledge needed. Two are about the rules and two are about whether it will keep running.
 
@@ -3355,7 +3355,7 @@ These four questions, written down, belong in the next demo anyone books.
 
 [[scene:offer]]
 
-## Is it worth automating
+## Is it worth automating Google review requests?
 
 Automating review requests is worth it when finished jobs come often enough that a missed ask is noticed within a week. These are the screening questions of our AI assessment, our own method rather than a published standard, and three of them cross the idea off or keep it:
 
@@ -3371,9 +3371,9 @@ An invented example: an owner who finishes 15 jobs a week and spends 3 minutes o
 
 The three questions are run on your own finished-job event before anyone looks at a tool.
 
-## What it takes to run
+## What does it take to run automated review requests?
 
-We print no price on this page. What a review-request setup takes from the owner is mostly two decisions and a little time each week.
+What a review-request setup takes from the owner is mostly two decisions and a little time each week. We print no price on this page.
 
 The setup is short, because this is one of the least complicated automations there is: one trigger, one message, one link, one alert. The work is the two decisions. What event counts as finished is a real business question and often takes longer to settle than the build. What the message says has to sound like the owner, and it affects whether people answer or delete it.
 
@@ -3383,9 +3383,9 @@ The part that is easy to forget is the replying. Our suggestion is fifteen minut
 
 Fifteen minutes a week for replies goes on the calendar before anything is switched on.
 
-## What it does not do, and should not pretend to
+## What does review automation not do, and should not pretend to?
 
-It does not choose who gets asked: everybody is asked, whatever they scored. If that is uncomfortable, leave the setup as it is; on this page's own evidence, asking everyone is the version that works.
+Review automation does not choose who gets asked: everybody is asked, whatever they scored. If that is uncomfortable, leave the setup as it is; on this page's own evidence, asking everyone is the version that works.
 
 It does not make anybody leave a review. It is built to take the forgetting, the friction and the delay out of the ask. The customer still has to want to, and some will not, which is why the share who write is left for you to set.
 
@@ -3411,13 +3411,13 @@ Most businesses fall into one of these groups, and the group decides the next st
 
 [[scene:fits]]
 
-## What to do first
+## What should you do first to get more Google reviews?
 
-What to do first is one job, taken a week at a time, ending with a decision written down.
+To get more Google reviews, start with one job, taken a week at a time, and end with a decision written down.
 
 - Week 1: do the signed-out check at the end of this page on your own profile, and write down the event that means a job is finished.
 - Week 2: write the message in your own words and ask everyone by hand for a week, starting from that event, with the same link for all.
-- Weeks 3 and 4: run the test in "Is it worth automating". If it passes, connect the event to the message, approve the wording and send low scores to your phone. If it fails, keep asking by hand and write that decision down.
+- Weeks 3 and 4: run the test in "Is it worth automating Google review requests?". If it passes, connect the event to the message, approve the wording and send low scores to your phone. If it fails, keep asking by hand and write that decision down.
 
 This is also how our [AI readiness assessment](/services/ai-readiness-assessment) starts. In its interview we ask for one job written in two minutes under input, do, output and your check, then handed to a colleague who does not know it, noting where they stall. Each job is then scored for impact and risk from 1 to 5, with four checks: it binds the business, it reaches a customer, it feeds another system, it can damage trust. The owner leaves with each job marked to automate, to keep a person on, or to leave alone.
 
@@ -3429,15 +3429,15 @@ An invented example: a salon owner writes her review ask in two minutes. Her col
 
 ### How do I get more Google reviews?
 
-Ask every customer on the day the job finishes, with one direct link, the same for all. A system that sends the ask from a real event is built to take the forgetting and the delay out of it, and the replies stay yours.
+To get more Google reviews, ask every customer on the day the job finishes, with one direct link, the same for all. A system that sends the ask from a real event is built to take the forgetting and the delay out of it, and the replies stay yours.
 
 ### How do I get more reviews without begging customers?
 
-Ask once, on the day, in a message answered with one tap, and never chase. A single ask at the right moment is not begging; three reminders are. The awkwardness in "Why the ask does not happen" comes from asking late and in person, and a short message sent the same day is meant to take both away.
+To get more reviews without begging customers, ask once, on the day, in a message answered with one tap, and never chase. A single ask at the right moment is not begging; three reminders are. The awkwardness in "Why does the ask for a Google review not happen?" comes from asking late and in person, and a short message sent the same day is meant to take both away.
 
 ### How should a business respond to Google reviews?
 
-Reply to every review in your own name, the good ones in a line and the bad ones in four: what happened, what changed, and an offer to talk offline. Never argue in public and never ask for a review to be changed. The reply is written for the next stranger who reads it, and the fifteen minutes a week suggested in "What it takes to run" is the time we set aside for it.
+A business should reply to every Google review in its own name, the good ones in a line and the bad ones in four: what happened, what changed, and an offer to talk offline. Never argue in public and never ask for a review to be changed. The reply is written for the next stranger who reads it, and the fifteen minutes a week suggested in "What does it take to run automated review requests?" is the time we set aside for it.
 
 ### What is review automation, in plain terms?
 
@@ -3445,11 +3445,11 @@ Review automation is software that watches for the moment a job is finished in a
 
 ### Is this different from the review tool my CRM already has?
 
-Probably not in what it does, and possibly in whether its defaults are allowed. Ask it the two rule questions from the testing section. If it passes both, use it and spend the money elsewhere.
+A review tool in your CRM probably does not differ in what it does, and may differ in whether its defaults are allowed. Ask it the two rule questions from the testing section. If it passes both, use it and spend the money elsewhere.
 
 ### Is it against Google's rules to automate review requests?
 
-No, because the policy says nothing about when the ask happens. It permits soliciting content that reflects a genuine experience, without incentives and without influencing the rating or content. Offering anything in exchange, asking only the people you expect to be kind, pressuring someone on the spot, or asking for particular content is against them.
+No, automating review requests is not against Google's rules, because the policy says nothing about when the ask happens. It permits soliciting content that reflects a genuine experience, without incentives and without influencing the rating or content. Offering anything in exchange, asking only the people you expect to be kind, pressuring someone on the spot, or asking for particular content is against them.
 
 ### What is review gating, and where exactly is the line?
 
@@ -3457,23 +3457,25 @@ Review gating is surveying customers first and sending the public review link on
 
 ### Can I get a bad review taken down?
 
-Usually only when it breaks the platform's own rules: someone who was never a customer, a personal attack, or content plainly not about the business. Whether it breaks those rules is the platform's decision, and paying someone to argue does not change the rules.
+A bad review is usually taken down only when it breaks the platform's own rules: someone who was never a customer, a personal attack, or content plainly not about the business. Whether it breaks those rules is the platform's decision, and paying someone to argue does not change the rules.
 
 ### Do I have to put my Google reviews on my own website?
 
-No. If you do, the Federal Trade Commission regulation to know is 16 CFR 465.7: a block labelled as a selection of recent reviews is honest, and one implying it shows most or all while holding back the low ones is what the rule describes.
+No, you do not have to put your Google reviews on your own website. If you do, the Federal Trade Commission regulation to know is 16 CFR 465.7: a block labelled as a selection of recent reviews is honest, and one implying it shows most or all while holding back the low ones is what the rule describes.
 
 ### How many reviews do I actually need?
 
-About twenty. According to the 2026 vendor survey, 47 percent said they would not use a business with fewer than twenty, and only 9 percent would use one with five or fewer. Past twenty, the same survey's other figure matters: 74 percent of the panel only care about reviews written in the last three months. An invented example: thirty reviews with four this quarter reads as busy; two hundred with none since last year reads as a business that used to be busy.
+A business needs about twenty Google reviews. According to the 2026 vendor survey, 47 percent said they would not use a business with fewer than twenty, and only 9 percent would use one with five or fewer. Past twenty, the same survey's other figure matters: 74 percent of the panel only care about reviews written in the last three months. An invented example: thirty reviews with four this quarter reads as busy; two hundred with none since last year reads as a business that used to be busy.
 
 [[scene:quiz]]
 
-## What to do about it
+## What should you do about your Google reviews?
 
 The signed-out check needs nobody, us included. It is your own Google profile opened on a phone, signed out, the way a stranger arrives at it: the star rating skipped, the date on the newest review read first, the reviews of the last three months counted, and the worst one on the first screen checked for a reply.
 
 What you find is what a stranger finds. If the newest review is two years old, the place to start is the asking.
+
+Reviews are one of the inputs Google names for local ranking, and [how to rank in Google Maps](/blog/local-seo-real-estate-map-pack-google-business-profile) covers the rest of them. A customer who rings a business that never picks up is the other way a local job goes elsewhere, and [an AI voice agent for small business](/blog/ai-voice-agent-missed-calls-real-estate) is written about that.
 
 [[scene:funnel]]
 
