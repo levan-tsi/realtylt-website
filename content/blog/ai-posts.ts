@@ -534,7 +534,7 @@ Everything on this page is free to use: the method, the eighteen questions we as
 
 ## What an AI assessment for a small business is for
 
-An AI assessment for a small business is for one result: your list handed back shorter, with a reason beside each removal that you can apply again on your own. In a small business every idea that gets built becomes a job someone has to own, and a build that skips the assessment usually automates the wrong job, or the right job on a rule nobody had settled. Every idea crossed off is a build you do not pay for and a failure you never have to find.
+An AI assessment for a small business is for one result: your list handed back shorter, with a reason beside each removal that you can apply again on your own. In a small business every idea that gets built becomes a job someone has to own, and a build that skips the assessment risks automating the wrong job, or the right job on a rule nobody had settled. Every idea crossed off is one less build to pay for, own and watch.
 
 [[scene:deliverable]]
 
@@ -560,7 +560,7 @@ When three people in an office describe the same decision three ways, nobody is 
 
 ### Three: a wrong answer lands where a person sees it first
 
-A wrong figure in a sheet someone checks on Friday costs an hour. A wrong answer sent to a customer in writing costs the customer and then the business. An idea passes when a person reads the result before a customer does, or when the message is a fixed one whose exact words a person approved once. This question removes the most ideas, and better software does not change its answer, because where a mistake lands is a fact about the business.
+A wrong figure in a sheet someone checks on Friday costs an hour. A wrong answer sent to a customer in writing costs the customer and then the business. An idea passes when a person reads the result before a customer does, or when the message is a fixed one whose exact words a person approved once. Better software does not change this question's answer, because where a mistake lands is a fact about the business.
 
 [[scene:three-gates]]
 
@@ -590,9 +590,9 @@ A small business should not automate three kinds of work with AI: any fact a cus
 
 [[scene:do-not]]
 
-The first kind gets built most often. A model asked about a price will answer, and the risk is a wrong answer in the right format that nobody checks. The right build is smaller: it fetches the value from the record that governs it and says so when there is no record. It may report what a source says or say it does not know.
+The first kind is the tempting one. A model asked about a price will answer, and the risk is a wrong answer in the right format that nobody checks. The right build is smaller: it fetches the value from the record that governs it and says so when there is no record. It may report what a source says or say it does not know.
 
-**Maria's plumbing company (invented).** Answering price questions was the idea Maria wanted most, and it is the kind that comes off in almost every office. If she builds it one day, the system will read each price from her price list and, where the list is silent, say that Tom will confirm. It will never write a price of its own, and Tom still confirms a quote before it goes out.
+**Maria's plumbing company (invented).** Answering price questions was the idea Maria wanted most, and it is exactly what the third question is for. If she builds it one day, the system will read each price from her price list and, where the list is silent, say that Tom will confirm. It will never write a price of its own, and Tom still confirms a quote before it goes out.
 
 **Your turn.** Mark every idea on your list that states a fact to a customer, and ask where that fact is read from.
 
@@ -646,7 +646,7 @@ Not every job on the list needs AI. A fixed step, such as copying a customer's d
 
 [[scene:audit-path]]
 
-## How do you run an AI assessment yourself in one evening?
+## How do you run an AI assessment yourself?
 
 To run an AI assessment yourself, start with one evening and five steps: list, ask, trace, cross off, then wait two weeks and read it again.
 
@@ -672,7 +672,7 @@ Nothing here needs us, and nothing costs money until an idea has passed every te
 
 [[scene:roadmap]]
 
-**Maria's plumbing company (invented).** In weeks two and three Maria, Tom and the senior plumber settle the discount rule at last, so that idea can be tested again at the next read. Maria also finds that the invoicing program she already pays for can send payment reminders. She sends one to herself to check the amount and the timing, and that idea is done with a switch.
+**Maria's plumbing company (invented).** In weeks two and three Maria, Tom and the senior plumber settle the discount rule at last, so that idea can be tested again at the next read. Maria also finds that the invoicing program she already pays for can send payment reminders. A reminder is a fixed message, the one exception named above: she approves its words once, sends one to herself to check the amount and the timing, and switches it on. That idea needed no build.
 
 **Maria's plumbing company (invented).** In week four Maria picks the Friday list and names herself as its approver. It is small on purpose: every quote sent more than a week ago with no answer, read from the program the quotes live in, on one page in her inbox each Friday morning. No AI is needed for it. Before the trial she times her Friday digging at about two and a half hours. For four Fridays she checks every line against her records, which takes half an hour. By week eight she knows the list saves about two hours a week, measured rather than promised. Eleven ideas became seven: one was a switch she already owned, one runs and is measured, and the copying is next, with Tom checking every record.
 
@@ -686,7 +686,7 @@ An [AI readiness assessment](/services/ai-readiness-assessment) is a one-hour ca
 
 ### Why this is different from an automation agency
 
-Most people selling automations start from the tool. We start from the person who does the work and the hours they get back, keep a person on anything a customer sees, and tell you in writing what not to build.
+A tool-first pitch starts from what the software can do. We start from the person who does the work and the hours they get back, keep a person on anything a customer sees, and tell you in writing what not to build.
 
 ### The steps, in order
 
@@ -800,7 +800,7 @@ An AI assessment for a small business is a structured look at how the business r
 
 ### What can I automate in my business first?
 
-The first thing to automate in a small business is usually something plain that passes all three questions and fails where you can see it: a confirmation, a reminder, a copy from one system to another.
+The first thing to automate in a small business should be something plain that passes all three questions and fails where you can see it: a confirmation, a reminder, a copy from one system to another.
 
 ### How long does an AI assessment take?
 

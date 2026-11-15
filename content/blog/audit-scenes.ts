@@ -583,11 +583,19 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
           answer: 1,
           why: "From the second question: software freezes whichever version its builder heard, so the rule gets decided first.",
         },
+        /** ROUND 31: the old question asked which test crosses off the most ideas. The page no longer
+         * claims that (it had no source, and the worked list contradicted it), so the question asks
+         * what the third test does with an idea. */
         {
-          q: "Which of the three questions crosses off the most ideas?",
-          choices: ["How often it happens", "Whether the rule can be written down", "Where a wrong answer lands", "How much it would cost"],
-          answer: 2,
-          why: "The third one. Where a mistake lands is a fact about your business, so better software does not change the answer.",
+          q: "An idea would send a wrong answer to a customer in writing before any person reads it. What does the third question say?",
+          choices: [
+            "Build it with a better model",
+            "Cross it off, or put a person's approval in front of it",
+            "Send it and check a sample later",
+            "Ask the customer to confirm the answer",
+          ],
+          answer: 1,
+          why: "From the third question: where a mistake lands is a fact about your business, so better software does not change the answer.",
         },
         {
           q: "Among AI-using firms in the 2026 Census paper, what share reported a decrease in headcount?",
@@ -660,7 +668,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
     "what-is-an-ai-readiness-assessment-and-how-does-it-run": "How the assessment runs",
     "the-questions-we-ask-in-an-assessment": "The questions we ask",
     "what-do-you-get-at-the-end-of-an-ai-assessment": "What you get",
-    "how-do-you-run-an-ai-assessment-yourself-in-one-evening": "Run it yourself",
+    "how-do-you-run-an-ai-assessment-yourself": "Run it yourself",
     "your-ai-roadmap-week-by-week": "Your roadmap",
     "common-questions-about-using-ai-in-a-small-business": "Common questions",
   },
