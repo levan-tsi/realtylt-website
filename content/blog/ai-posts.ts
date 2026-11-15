@@ -1265,7 +1265,7 @@ That last line is where the money is. The fix for it does not start with buying 
 
 export const AI_SCHEDULING_POST = `A job that needs someone else's yes can be booked on your calendar and still not be agreed by the people it depends on. We help local business owners set up an AI scheduling assistant that calls a time confirmed only after everyone who must agree has replied. Below is what such an assistant can and cannot do across calendars it does not own, four tests before buying one, whether the job is worth automating, and a three-week plan.
 
-An AI scheduling assistant is software that proposes times, tracks who has answered and holds your calendar while it waits; on calendars it does not own, it can ask but cannot confirm. This page is for owners whose appointments need people outside the business: a contractor working in someone else's building, a dental office booking an interpreter, a salon booking a visiting stylist, a real estate office arranging a showing on another agent's listing.
+An AI scheduling assistant is software that proposes times, tracks who has answered and holds your calendar while it waits; on calendars it does not own, it can ask, and only the other person's reply can confirm. This page is for owners whose appointments need people outside the business: a contractor working in someone else's building, a dental office booking an interpreter, a salon booking a visiting stylist, a real estate office arranging a showing on another agent's listing.
 
 An invented example, from a plumbing company. The repair was for eleven on Saturday, in an apartment in a managed building. Three people had to be willing: the owner of the apartment, who called; the building's manager, who controls access; and the tenant living there, who is entitled to notice. Two of them had not been asked yet.
 
@@ -1469,7 +1469,7 @@ A person has to decide, and the useful questions are when and who. A sound setup
 
 ### What should the first message to the customer say?
 
-The first message should say that the request has gone in, who it is waiting on, and when you will be back to them. An invented example, for the plumbing company: "Your repair request for Saturday has gone to the building's manager. We will confirm a time as soon as they reply, and by Friday at six either way." It names no time, so nothing has to be taken back.
+The first message should say that the request has gone in, who it is waiting on, and when you will be back to them. An invented example, for the plumbing company: "Your repair request for Saturday has gone to the building's manager and the tenant. We will confirm a time once both have agreed, and by Friday at six either way." It names no time, so nothing has to be taken back.
 
 ### Who gets the chase, and when?
 
