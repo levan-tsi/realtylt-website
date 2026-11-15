@@ -198,8 +198,14 @@ export const POSTS: BlogPost[] = ([
     title: "How to use AI in my business: what to automate first and what to leave alone",
     seoTitle: "How to use AI in my business: what not to automate",
     date: "2026-08-26",
-    updated: "2026-10-31",
-    /** ROUND 14 (2026-10-30): the refreshed post from the agents' review chain, with its scenes
+    updated: "2026-11-15",
+    /** AGENTS ROUND 31 (2026-11-15), the owner's order that a post be one story that teaches and that
+     * the long video and its shorts are cut from: one invented plumbing company (Maria and Tom) now
+     * runs through every method section, with its whole eleven-idea list shown; the method comes
+     * before the survey figures; every figure has its source beside it; the answer is in the first
+     * sentence. Chosen over the round-30 text by a blind second reader in both orders. Set `updated`
+     * to the day it ships. Record: realtylt-agents company/agents/seo/runs/r31-best-version/.
+     * ROUND 14 (2026-10-30): the refreshed post from the agents' review chain, with its scenes
      * rebuilt from the piece's data points. Title and search title moved to the owners' phrase
      * "how to use ai in my business". ROUND 15 (2026-10-31): rebuilt to the old post's depth on
      * the owner's verdict, with the 2026 sources, the audit's own questions, a quiz and relatable

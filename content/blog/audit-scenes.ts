@@ -44,12 +44,14 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       band: "light",
       ariaLabel: "In short",
       eyebrow: "In short",
+      /** ROUND 31 (2026-11-15): the method first, the survey figures after it, the order the page now
+       * runs in (the statistics section moved below the method and the offer). */
       claims: [
+        "Three questions cross ideas off: often enough to be noticed, a rule a new hire can follow, a wrong answer a person sees first.",
+        "Rank what survives by its worst day, and keep a person on anything a customer sees.",
         "About one firm in five uses AI inside a business function; close to one in two has someone using a tool somewhere.",
         "The use is narrow: sales and marketing first, and most users run it in three or fewer functions.",
         "It adds to the work people already do: 2.3 percent of AI-using firms added staff and 2.0 percent cut.",
-        "Three questions cross ideas off: often enough to be noticed, a rule a new hire can follow, a wrong answer a person sees first.",
-        "Rank what survives by its worst day, and keep a person on anything a customer sees.",
       ],
     },
 
@@ -494,11 +496,14 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       eyebrow: "One evening, then two weeks",
       heading: "Run the test yourself",
       alt: "A checklist of five steps for one evening, from writing every idea down to reading the list again in two weeks, ending with the line that what is left is usually short.",
+      /** ROUND 31: steps one and four now carry all three tests (how often, a settled rule, who reads a
+       * wrong answer first). The blind second reader found the old step four crossed off every
+       * customer-facing idea, while the page allows one a person approves. */
       steps: [
-        { title: "Write every idea down, without judging it" },
+        { title: "Write every idea down, without judging it", body: "And how often each job happens." },
         { title: "Ask three people the rule question, separately" },
         { title: "Note where a wrong answer would land, and who would find out", body: "Before writing any benefit." },
-        { title: "Cross off what lands on a customer, and what lands on nobody" },
+        { title: "Cross off the rare, the unsettled, and what would reach a customer unapproved, or nobody" },
         { title: "Read the list again in two weeks" },
       ],
       close: "What is left is usually short.",
