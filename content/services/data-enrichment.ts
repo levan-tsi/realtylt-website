@@ -25,7 +25,7 @@ export const dataEnrichment: Service = {
   title: "Data enrichment: from half a contact to a usable record",
   lede: "The customer list has a first name and an email for one person, a phone that stopped working for another, and the same customer three times. We run a pass that fills in what is missing from trusted data sources, checks what is already there, collapses the duplicates and marks every new value with where it came from and when. What came back is never mixed silently into what the business already knew.",
   specs: ["fills in missing contact details", "phone and email checks", "duplicates collapsed", "source and date on every value"],
-  why: "A customer nobody can reach is a customer nobody can serve. Enrichment fills the gaps in records the business already owns, and writes down where each value came from and when, so every row says how much to trust it.",
+  why: "Data enrichment matters because a customer nobody can reach is a customer nobody can serve. Enrichment fills the gaps in records the business already owns, and writes down where each value came from and when, so every row says how much to trust it.",
   keywords: [
     "data enrichment",
     "contact data enrichment for small business",
@@ -66,7 +66,7 @@ export const dataEnrichment: Service = {
   },
 
   whatItIs: [
-    "It is the pass that makes the records a business already owns usable. Most customer lists are full of half-records: a first name and an email, an address with no phone, a duplicate of a contact that already exists, a number that stopped working two years ago.",
+    "Data enrichment is the pass that makes the records a business already owns usable. Most customer lists are full of half-records: a first name and an email, an address with no phone, a duplicate of a contact that already exists, a number that stopped working two years ago.",
     "Enrichment resolves them through trusted data sources and public records into a phone number, an email and, for a business that works on homes, the property detail behind the address. Then it collapses duplicates and checks each value, so the list handed to the team is one it can actually work. What a check establishes is that a number is well formed, in service and not a duplicate. That is useful, and it is not the same as establishing that it reaches that person.",
     "It fits any business with an old or messy customer list: a contractor or landscaper with years of job addresses, an accounting office with client emails from three systems, a salon or gym with members who changed numbers, a real estate office with open-house sign-ins. Before anything is appended, we agree with the owner which part of the list is worth working at all.",
   ],
@@ -133,7 +133,7 @@ export const dataEnrichment: Service = {
   ],
 
   limits: [
-    "It does not invent a contact. A record that will not resolve comes back flagged as thin or unreachable, because a dead number that looks live costs more than a blank field.",
+    "Data enrichment does not invent a contact. A record that will not resolve comes back flagged as thin or unreachable, because a dead number that looks live costs more than a blank field.",
     "It does not guarantee a match. How much resolves depends on the area and on how much public record sits behind the address. No honest provider quotes a rate before seeing the list.",
     "It does not say how old a value is unless the source passes that through. Freshness is the most useful thing an appended field could carry, and it is the one most often missing from the response, so it is worth asking for by name.",
     "It does not know which answer is right when two sources disagree. That is a decision about the business, and it gets made once. It is worth asking which way the CRM leans before the first import: keep the value it already holds, or take the new one.",
@@ -145,7 +145,7 @@ export const dataEnrichment: Service = {
   faqs: [
     {
       q: "What is data enrichment?",
-      a: "It is filling in what a contact record is missing, and checking what it already has: appending a phone number or an email, adding the property detail behind an address where it matters, confirming that a number is in service, and collapsing duplicates. What arrives is an assertion from an outside file rather than something the business observed, which is why the source and the date matter as much as the value.",
+      a: "Data enrichment is filling in what a contact record is missing, and checking what it already has: appending a phone number or an email, adding the property detail behind an address where it matters, confirming that a number is in service, and collapsing duplicates. What arrives is an assertion from an outside file rather than something the business observed, which is why the source and the date matter as much as the value.",
     },
     {
       q: "How is enrichment different from skip tracing?",
@@ -153,19 +153,19 @@ export const dataEnrichment: Service = {
     },
     {
       q: "Will enrichment overwrite the data I already have?",
-      a: "Only if the pass is set up that way, so settle which way rather than assuming. Decide it deliberately: fill blanks only, keep both values in separate fields, or send disagreements to a person. Whichever is chosen, the previous value, the source and the date should be written to the record. Without them there is no way back from a bad pass.",
+      a: "Enrichment overwrites the data a business already has only if the pass is set up that way, so settle which way rather than assuming. Decide it deliberately: fill blanks only, keep both values in separate fields, or send disagreements to a person. Whichever is chosen, the previous value, the source and the date should be written to the record. Without them there is no way back from a bad pass.",
     },
     {
       q: "How fast does contact data go stale?",
-      a: "There is no published rate worth quoting: the figures that circulate trace back to press releases and vendor pages rather than to a study with a stated sample. What is knowable is the mechanism. A field stops being true when something happens to a person: a move, a new job, a new number. So the rate belongs to the people on a particular list rather than to the data, and it is different for a gym's members than for an accounting office's long-time clients.",
+      a: "Contact data has no published rate of going stale worth quoting: the figures that circulate trace back to press releases and vendor pages rather than to a study with a stated sample. What is knowable is the mechanism. A field stops being true when something happens to a person: a move, a new job, a new number. So the rate belongs to the people on a particular list rather than to the data, and it is different for a gym's members than for an accounting office's long-time clients.",
     },
     {
       q: "What happens to records that cannot be enriched?",
-      a: "They come back flagged as thin or unreachable rather than padded out with a guess. A dead number that looks like a live one is worse than a blank field, and it is paid for in dialling time.",
+      a: "Records that cannot be enriched come back flagged as thin or unreachable rather than padded out with a guess. A dead number that looks like a live one is worse than a blank field, and it is paid for in dialling time.",
     },
     {
       q: "How do I clean up my CRM data?",
-      a: "Start with the part of the list worth working, not all of it. Collapse the duplicates first, then check the numbers and emails, then fill what is missing, keeping the source and date on every new value. Send every disagreement with an existing value to a person. Then keep it clean going forward with one identity field that every app matches on.",
+      a: "To clean up CRM data, start with the part of the list worth working, not all of it. Collapse the duplicates first, then check the numbers and emails, then fill what is missing, keeping the source and date on every new value. Send every disagreement with an existing value to a person. Then keep it clean going forward with one identity field that every app matches on.",
     },
   ],
 
