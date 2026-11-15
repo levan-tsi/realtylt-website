@@ -25,9 +25,9 @@ export const geoLandingPages: Service = {
 
   eyebrow: "Local and GEO pages · Get found nearby",
   title: "Service area pages: a real page for every town served",
-  lede: "A plumber works in nine towns, and the website has one page that lists all nine in a sentence, so it is found in none of them. We build a real page for each town and service the business genuinely covers, in its own look: what it does there, the jobs done there, the questions people there ask, and a way to book. Each page is written to be found in Google and quoted in AI answers, and a person who knows the place reads it before it goes live.",
+  lede: "Service area pages for a local business give each town and service it genuinely covers a real page, in its own look: what it does there, the jobs done there, the questions people there ask, and a way to book. A plumber who works in nine towns and has one page that lists all nine in a sentence is found in none of them. Each page is written to be found in Google and quoted in AI answers, and a person who knows the place reads it before it goes live.",
   specs: ["one page per town served", "built to be found locally", "written to be quoted by AI", "the inquiry lands on your site"],
-  why: "People search for a service by where they are: they type “near me”, or their town by name. A page for each area the business really covers meets them where they are looking, in Google and in AI answers, and the inquiry lands on the business's own website rather than on a directory's.",
+  why: "Service area pages matter because people search for a service by where they are: they type “near me”, or their town by name. A page for each area the business really covers meets them where they are looking, in Google and in AI answers, and the inquiry lands on the business's own website rather than on a directory's.",
   keywords: [
     "service area pages",
     "local landing pages for business",
@@ -67,7 +67,7 @@ export const geoLandingPages: Service = {
   },
 
   whatItIs: [
-    "It is a genuine page for each service area, rather than one page that lists them all. People search by where they are, and a page that mentions eight towns in a sentence ranks for none of them.",
+    "Service area page building gives a business a genuine page for each service area, rather than one page that lists them all. People search by where they are, and a page that mentions eight towns in a sentence ranks for none of them.",
     "Each page says what the business actually does in that area. It carries local proof, answers the questions people ask about that place, and captures the inquiry on the business's own site. It is written for both audiences that now decide whether a business is found: Google's index, and the AI assistants that increasingly answer the question before a search result is ever clicked.",
     "It fits a business that works across several towns: a plumber, roofer or landscaper with a wide service area, an accounting office with clients in the next towns over, a dental office or salon with two locations, a real estate office covering several communities. The number of pages is the number of places the business can write about honestly, which is usually fewer than the first list.",
   ],
@@ -134,7 +134,7 @@ export const geoLandingPages: Service = {
   ],
 
   limits: [
-    "It is not a template with the town name swapped. Google's spam policy names doorway abuse and scaled content abuse separately. The second one gives generative AI producing many pages without adding value as its first example.",
+    "A service area page is not a template with the town name swapped. Google's spam policy names doorway abuse and scaled content abuse separately. The second one gives generative AI producing many pages without adding value as its first example.",
     "It does not rank a place the business does not serve. A page for an area it has never worked has nothing true to put on it. Both a reader and an engine notice.",
     "It does not put anybody in an AI answer on request. Nobody controls what an assistant quotes. Writing a page that is quotable is the only lever there is.",
     "It does not replace the rest of local search. A page for each area is one surface. The Google Business Profile, the reviews and the links are another, and they are decided by different machinery.",
@@ -145,27 +145,27 @@ export const geoLandingPages: Service = {
   faqs: [
     {
       q: "What are GEO landing pages?",
-      a: "They are pages built for a specific location and service, so someone searching for that service in that place finds a page that is actually about it. GEO now carries a second meaning as well: generative engine optimisation, which means writing pages AI assistants can quote when they answer a question.",
+      a: "GEO landing pages are pages built for a specific location and service, so someone searching for that service in that place finds a page that is actually about it. GEO now carries a second meaning as well: generative engine optimisation, which means writing pages AI assistants can quote when they answer a question.",
     },
     {
       q: "Are location pages considered doorway pages by Google?",
-      a: "Only if they behave like one. Google's spam policy defines doorway abuse as pages created to rank for specific, similar queries that lead users to intermediate pages less useful than the final destination, and gives the example of pages targeted at specific regions or cities that funnel users to one page. Nothing in the policy forbids having a page per area. A page that answers the question it was found for, on its own, is not doing what that entry describes.",
+      a: "Location pages are considered doorway pages by Google only if they behave like one. Google's spam policy defines doorway abuse as pages created to rank for specific, similar queries that lead users to intermediate pages less useful than the final destination, and gives the example of pages targeted at specific regions or cities that funnel users to one page. Nothing in the policy forbids having a page per area. A page that answers the question it was found for, on its own, is not doing what that entry describes.",
     },
     {
       q: "Is it against the rules to have AI write them?",
-      a: "Not in itself. Google's guidance on helpful content frames automation as a question about the output rather than the tool. What the spam policy names is using generative AI tools to generate many pages without adding value for users. The difference is whether anything was added between the draft and the publication. In practice that means a person who knows the place read it and changed it before it went live.",
+      a: "Having AI write service area pages is not against the rules in itself. Google's guidance on helpful content frames automation as a question about the output rather than the tool. What the spam policy names is using generative AI tools to generate many pages without adding value for users. The difference is whether anything was added between the draft and the publication. In practice that means a person who knows the place read it and changed it before it went live.",
     },
     {
       q: "How many service area pages should a business have?",
-      a: "As many as it can write about honestly: one for each town or service where it has done real work and has something specific to say. A short set of real pages does better for a reader than a long set of near copies, and the near copies are what the spam policy describes.",
+      a: "A business should have as many service area pages as it can write about honestly: one for each town or service where it has done real work and has something specific to say. A short set of real pages does better for a reader than a long set of near copies, and the near copies are what the spam policy describes.",
     },
     {
       q: "Is there a fair housing issue with area pages?",
-      a: "For a real estate office, yes, and it is the part nobody raises. The advertising rules apply to a web page exactly as they apply to a flyer. 24 CFR 100.75 names selecting locations for advertising that deny parts of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. 24 CFR 100.70 names discouraging someone, on those same grounds, by exaggerating drawbacks or failing to inform them of the desirable features of a community. Both turn on the reason, so an uneven set of pages is not unlawful by itself. In practice, write about the housing and the transaction rather than about who lives somewhere, and give every area comparable effort: the pattern across a set of pages is what a reason gets read off, and it is invisible from inside any one of them.",
+      a: "For a real estate office, area pages do raise a fair housing issue, and it is the part nobody raises. The advertising rules apply to a web page exactly as they apply to a flyer. 24 CFR 100.75 names selecting locations for advertising that deny parts of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. 24 CFR 100.70 names discouraging someone, on those same grounds, by exaggerating drawbacks or failing to inform them of the desirable features of a community. Both turn on the reason, so an uneven set of pages is not unlawful by itself. In practice, write about the housing and the transaction rather than about who lives somewhere, and give every area comparable effort: the pattern across a set of pages is what a reason gets read off, and it is invisible from inside any one of them.",
     },
     {
       q: "How do I get my business quoted in AI answers?",
-      a: "Answer the question directly, in plain language, on a real page that an assistant can read. Structured data helps a machine understand the page, and a clear question-and-answer format is what gets quoted. Vague marketing copy does not get cited, because there is nothing in it to quote. Nobody can promise the citation itself.",
+      a: "To get a business quoted in AI answers, answer the question directly, in plain language, on a real page that an assistant can read. Structured data helps a machine understand the page, and a clear question-and-answer format is what gets quoted. Vague marketing copy does not get cited, because there is nothing in it to quote. Nobody can promise the citation itself.",
     },
   ],
 
