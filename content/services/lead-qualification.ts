@@ -175,7 +175,7 @@ export const leadQualification: Service = {
     },
     {
       q: "Is it legal to score and route leads with software?",
-      a: "Scoring and routing leads with software is legal, and scoring the team's own time is not the risk. The risk is scoring on anything that stands in for who a person is rather than what they said, and then delivering a different level of service on the back of it. For a real estate office, the Fair Housing Act, at 42 U.S.C. 3604, makes no exception for a routing rule, and Article 10 of the NAR Code of Ethics covers sexual orientation and gender identity, which the federal statute does not. Keep the inputs to the plans people describe, keep every score traceable to their own words, and never let the ranking change what anybody is allowed to see or ask. None of this is legal advice.",
+      a: "On whether it is legal to score and route leads with software, scoring the team's own time is not the risk. The risk is scoring on anything that stands in for who a person is rather than what they said, and then delivering a different level of service on the back of it. For a real estate office, the Fair Housing Act, at 42 U.S.C. 3604, makes no exception for a routing rule, and Article 10 of the NAR Code of Ethics covers sexual orientation and gender identity, which the federal statute does not. Keep the inputs to the plans people describe, keep every score traceable to their own words, and never let the ranking change what anybody is allowed to see or ask. None of this is legal advice.",
     },
   ],
 
