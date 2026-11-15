@@ -63,8 +63,8 @@ export const theSingularity: Service = {
   tier: "core",
 
   eyebrow: "The Singularity · the tipping point",
-  title: "The point where it starts improving itself",
-  lede: "A chat on the website, a voice agent on the phone and a pile of automations each know a different version of the same customer. Scattered tools become one brain, and this is the moment that brain starts working on itself. It builds and runs your other agents. It writes and changes the software around them. It keeps what it learns in files it has to read before it starts anything. Every other tool you own peaked the day you installed it. This one writes down what it got wrong, and nothing it writes ships until the tests pass and you approve it.",
+  title: "The Singularity: the AI system that starts improving itself",
+  lede: "The Singularity is an AI agent system for a small business: one brain that builds and runs your other agents and improves itself. A chat on the website, a voice agent on the phone and a pile of automations each know a different version of the same customer. Scattered tools become one brain, and this is the moment that brain starts working on itself. It builds and runs your other agents. It writes and changes the software around them. It keeps what it learns in files it has to read before it starts anything. Every other tool you own peaked the day you installed it. This one writes down what it got wrong, and nothing it writes ships until the tests pass and you approve it.",
   specs: [
     "builds and runs your agents",
     "writes and ships real code",
@@ -73,7 +73,7 @@ export const theSingularity: Service = {
     "works unattended for hours or days",
     "nothing ships without approval",
   ],
-  why: "Most tools are worth the most on the day you install them, then they age. This system keeps its own memory. It writes down the corrections you give it. It can change the software it runs on. So it is worth more a year in than on day one. Everything else you buy gets older. This gets better.",
+  why: "The Singularity matters because most tools are worth the most on the day you install them, then they age. This system keeps its own memory. It writes down the corrections you give it. It can change the software it runs on. So it is worth more a year in than on day one. Everything else you buy gets older. This gets better.",
   keywords: [
     "ai agent orchestration for small business",
     "self improving ai system",
@@ -83,14 +83,14 @@ export const theSingularity: Service = {
   ],
 
   seo: {
-    title: "The Singularity: a self-improving AI system for small business",
+    title: "The Singularity AI agent system for small business: one memory",
     description:
       "A self-improving AI system for a small business: it builds and runs its agents, keeps what it learns in readable files, and improves its own code with approval.",
   },
 
   figure: {
     kind: "flow",
-    caption: "One memory, the agents it runs, and the gate every change has to pass",
+    caption: "The Singularity: one memory, the agents it runs, and the gate every change has to pass",
     trigger: "A task, and everything the last one wrote down",
     nodes: [
       {
@@ -115,7 +115,7 @@ export const theSingularity: Service = {
   },
 
   whatItIs: [
-    "It is the layer above everything else on this site. Instead of a chat assistant here, a voice agent there, and a pile of automations that have never met, one system stands them up. It gives each one its job, and it holds the memory they all read from. A caller who explained their situation on the phone on Tuesday does not explain it again to the website on Thursday.",
+    "The Singularity is the layer above everything else on this site. Instead of a chat assistant here, a voice agent there, and a pile of automations that have never met, one system stands them up. It gives each one its job, and it holds the memory they all read from. A caller who explained their situation on the phone on Tuesday does not explain it again to the website on Thursday.",
     "The second half is the part the name is about. A system that can see everything its agents did can also see where they went wrong. And it can do something about it. It can change the instructions. It can change the routing. And when the fix belongs in the software, it writes and tests the software. What it learns does not stay in a conversation. It goes into files that the next piece of work has to read before it starts, which is why a correction you give once is a correction you only have to give once. It does the work the way a person would, a real browser included. It opens what it changed and clicks through it to see that it behaves. And a job is not sized to a sitting. It can work unattended for hours or days depending on the task, saving its place as it goes, while the gate stays exactly where it was.",
     "It is worth saying plainly what that is and is not. It is not a different kind of intelligence, and there is no point at which it stops needing you. It writes real changes, code included. Not one of them reaches a client until a test suite has run over it and a person has approved it. The reason it earns a name is not that it runs on its own. It is that almost nothing else a business buys has any way of remembering what it got wrong.",
     "It fits a business already running two or more of the services on this site and starting to feel the seams between them: a contractor whose phone agent, website chat and quote follow-up each keep their own notes, a dental or accounting office whose front desk repeats the same correction to three tools, a salon, spa or gym with several locations, a real estate office whose calls, chats and deals never meet. For a business running one tool, the right first step is that tool, done well.",
@@ -175,7 +175,7 @@ export const theSingularity: Service = {
   ],
 
   limits: [
-    "It does not ship anything on its own. It writes real changes, code included. Not one of them reaches a client until the tests have run over it and you have read it and approved it. That gate is the entire reason it is safe to let it run.",
+    "The Singularity does not ship anything on its own. It writes real changes, code included. Not one of them reaches a client until the tests have run over it and you have read it and approved it. That gate is the entire reason it is safe to let it run.",
     "It does not remember what nobody wrote down. What survives the end of a working session is what got written to a file. So a correction given in passing and never recorded is a correction you will be giving again.",
     "It does not know anything it was not connected to. A deal that lived in a spreadsheet nobody wired in is a deal it has never heard of. The useful version of this system is one that says so rather than guessing.",
     "It does not improve on a schedule you can bank on. A week in which nothing went obviously wrong is a week whose honest output is no change. Anybody promising a measurable gain every week is describing a sales cycle rather than a system.",
@@ -187,27 +187,27 @@ export const theSingularity: Service = {
   faqs: [
     {
       q: "What does the Singularity do that the individual services do not?",
-      a: "Two things, and neither is available to a service bought on its own. The first is one memory. Every agent reads from and writes to the same record, so a client explains themselves once rather than once per channel. And a correction you give is written down once rather than repeated to each tool in turn. The second is a loop that reads what actually happened, proposes one improvement, and proves it before it ships. That includes improvements that mean changing the software. A single service can be good. Only a system that sees all of them can tell you which part of the whole is worst this week.",
+      a: "The Singularity does two things, and neither is available to a service bought on its own. The first is one memory. Every agent reads from and writes to the same record, so a client explains themselves once rather than once per channel. And a correction you give is written down once rather than repeated to each tool in turn. The second is a loop that reads what actually happened, proposes one improvement, and proves it before it ships. That includes improvements that mean changing the software. A single service can be good. Only a system that sees all of them can tell you which part of the whole is worst this week.",
     },
     {
       q: "What does improving itself actually mean, and does it write real code?",
-      a: "It writes real code, and that is worth saying plainly, because most descriptions of this category promise the opposite. It changes two things. The first is the written layer, meaning prompts, worked examples, routing rules and standing constraints. The second is the software itself. Which one is being changed decides what grades it. A change to the software goes through a type checker and a test suite that do not care how confident anything sounded. A change to what an agent says is replayed against conversations that already happened, and compared against what is currently live. Either way it is one change at a time. It ships only if it wins, and only after you approve it. And nothing changes without a record of what changed and why.",
+      a: "The Singularity writes real code, and that is worth saying plainly, because most descriptions of this category promise the opposite. It changes two things. The first is the written layer, meaning prompts, worked examples, routing rules and standing constraints. The second is the software itself. Which one is being changed decides what grades it. A change to the software goes through a type checker and a test suite that do not care how confident anything sounded. A change to what an agent says is replayed against conversations that already happened, and compared against what is currently live. Either way it is one change at a time. It ships only if it wins, and only after you approve it. And nothing changes without a record of what changed and why.",
     },
     {
       q: "Where does the memory actually live?",
-      a: "In files you can open, not inside a model. There is the record of the conversations. There are the written instructions your agents run on. And there is a set of notes about your business that the system has to read before it starts any piece of work. That last one is where a correction goes when you give it. It goes into a line in a file, with a date on it, rather than into something a model is trusted to have taken in. It is worth insisting on that shape whoever you buy from. That is because a memory kept in files is one you can read, correct and take with you. A memory kept inside somebody else's model is one you are renting.",
+      a: "The Singularity keeps its memory in files you can open, not inside a model. There is the record of the conversations. There are the written instructions your agents run on. And there is a set of notes about your business that the system has to read before it starts any piece of work. That last one is where a correction goes when you give it. It goes into a line in a file, with a date on it, rather than into something a model is trusted to have taken in. It is worth insisting on that shape whoever you buy from. That is because a memory kept in files is one you can read, correct and take with you. A memory kept inside somebody else's model is one you are renting.",
     },
     {
       q: "Does it learn from my data, and can that data reach anybody else?",
-      a: "It learns from your own conversations, which is the only material that could make it better at your business specifically. Where that material is held is one contract question. What the underlying model vendors may do with it is another. Both are worth asking in writing rather than assuming. Ask for three things. That your conversations are stored in an environment you control. That they are not used to train anything general. And that they can be deleted on request. Those are the same three lines worth insisting on with any vendor in this category.",
+      a: "The Singularity learns from your own conversations, which is the only material that could make it better at your business specifically. Where that material is held is one contract question. What the underlying model vendors may do with it is another. Both are worth asking in writing rather than assuming. Ask for three things. That your conversations are stored in an environment you control. That they are not used to train anything general. And that they can be deleted on request. Those are the same three lines worth insisting on with any vendor in this category.",
     },
     {
       q: "How long before it is actually better than what I started with?",
-      a: "The shared memory helps straight away, because it stops a client having to repeat themselves from the first conversation onwards. The improvement loop is slower, and honestly so. It needs enough real conversations to tell a genuine weak point from a bad week. For most small businesses that is a matter of months rather than weeks. Anybody quoting a timeline shorter than that is quoting one they have not measured.",
+      a: "The Singularity's shared memory helps straight away, because it stops a client having to repeat themselves from the first conversation onwards. The improvement loop is slower, and honestly so. It needs enough real conversations to tell a genuine weak point from a bad week. For most small businesses that is a matter of months rather than weeks. Anybody quoting a timeline shorter than that is quoting one they have not measured.",
     },
     {
       q: "What happens if one of its changes makes things worse?",
-      a: "It gets undone, and the reason that is a short answer is that the loop is built backwards from it. Every change is one change rather than a batch. It is compared against what was live before it shipped. And the comparison and the approval are both written down. So a change that looks wrong a fortnight later can be spotted and reversed rather than argued about. That is the difference between a system that learns and a system that drifts.",
+      a: "A change from The Singularity that makes things worse gets undone, and the reason that is a short answer is that the loop is built backwards from it. Every change is one change rather than a batch. It is compared against what was live before it shipped. And the comparison and the approval are both written down. So a change that looks wrong a fortnight later can be spotted and reversed rather than argued about. That is the difference between a system that learns and a system that drifts.",
     },
   ],
 
