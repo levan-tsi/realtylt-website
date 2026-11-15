@@ -3035,7 +3035,7 @@ An invented example shows how an appointment is lost without anyone doing anythi
 
 Then the two of them look for a time. His Tuesday is gone. Wednesday the homeowner is away. Thursday he has a job. The first slot that works cleanly for both is the Wednesday of the following week, half past six. He writes it down, and the homeowner sounds delighted.
 
-Nine days later he drives out, parks at the curb, and waits twenty minutes.
+Nine days after that Monday call he drives out, parks at the curb, and waits twenty minutes.
 
 Nothing in that story is a failure of service. He answered, he was pleasant and he was flexible, and he lost the evening anyway. In the schedule it is logged as an estimate visit, and if anyone counts visits this month, it will be counted.
 
@@ -3261,7 +3261,7 @@ Not always, and the study is about attendance rather than revenue. An appointmen
 
 The count needs nobody, us included. It needs only paper: the last twenty appointments you agreed with someone outside the business, each with two numbers, the days between the conversation and the slot and whether it happened. The median of the first column and the share of the second are the whole of this guide in your own handwriting.
 
-In the invented example the median was nine days, and the empty curb on the ninth was not the fault of the person who did not come.
+In the invented example the median was nine days, from the Monday call to the slot, and the empty curb on the ninth day was not the fault of the person who did not come.
 
 [[scene:funnel]]
 

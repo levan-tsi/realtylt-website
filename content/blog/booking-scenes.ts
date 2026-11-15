@@ -317,7 +317,7 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       // the alt now says rather than guesses.
       alt: "An ornate yellow and maroon Victorian house with a turret, a bracketed entrance porch under fretwork, curtains and blinds at most of the windows and two wreaths on the front door, photographed from the street under a white overcast sky with nobody in the frame and a white sign in red capitals standing at the foot of the steps, its wording cut off by the bottom of the frame",
       caption:
-        "This is the half past six that nobody came to. Nobody is in the frame, which is the entire subject: the drive out, the twenty minutes at the curb, and the Saturday slot quietly given away nine days earlier in order to hold this one.",
+        "This is the half past six that nobody came to. Nobody is in the frame, which is the entire subject: the drive out, the twenty minutes at the curb, and the nine days between the Monday call and this slot.",
       credit: "Photograph by Jimmy_Joe, CC BY 2.0.",
       ariaLabel: "The appointment nobody kept",
     },
@@ -448,7 +448,7 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "In the invented example at the top, the slot was agreed nine days out for a person who was certain on the Sunday. Nothing in the schedule records it as a loss, and the count of your own last twenty appointments is where it would show.",
+      text: "In the invented example at the top, the slot was agreed nine days out, on the Monday call, for a person who was certain on the Sunday. Nothing in the schedule records it as a loss, and the count of your own last twenty appointments is where it would show.",
       actions: [
         { label: "See it on the AI page", href: "/ai#book", variant: "light" },
         { label: "How it is built", href: "/services/ai-appointment-booking", variant: "outline-light" },
