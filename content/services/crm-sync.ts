@@ -24,9 +24,9 @@ export const crmSync: Service = {
 
   eyebrow: "Sync · Two-way CRM",
   title: "CRM sync: the customer record stays current without retyping",
-  lede: "The booking is in one app, the invoice in another, the call notes on somebody's phone, and the CRM shows a customer who has not been touched in a month. We connect the apps the business already uses to its CRM in both directions: every call, text, booking and job is written to the customer's record as it happens, and a change in the CRM flows back out to the systems that act on it.",
+  lede: "Two-way CRM sync for a small business connects the apps it already uses to its CRM in both directions: every call, text, booking and job is written to the customer's record as it happens, and a change in the CRM flows back out to the systems that act on it. Without it, the booking is in one app, the invoice in another, the call notes on somebody's phone, and the CRM shows a customer who has not been touched in a month.",
   specs: ["works with the CRM you use", "two-way sync", "one person, one record", "no double entry"],
-  why: "A stale record is not a filing problem. It is the reason an automated message goes to somebody who already booked, or already paid, last week. With two-way sync, the record in front of the team is the one the other systems act on, and every touch is written to it as it happens.",
+  why: "Two-way CRM sync matters because a stale record is not a filing problem. It is the reason an automated message goes to somebody who already booked, or already paid, last week. With two-way sync, the record in front of the team is the one the other systems act on, and every touch is written to it as it happens.",
   keywords: [
     "crm integration for small business",
     "two way crm sync",
@@ -67,7 +67,7 @@ export const crmSync: Service = {
   },
 
   whatItIs: [
-    "It is the connection between the CRM and everything that actually happens. Calls, texts, bookings, jobs, invoices and website conversations all produce information that belongs on the customer's record. Most of it never gets there, because putting it there is somebody's manual job.",
+    "Two-way CRM sync is the connection between the CRM and everything that actually happens. Calls, texts, bookings, jobs, invoices and website conversations all produce information that belongs on the customer's record. Most of it never gets there, because putting it there is somebody's manual job.",
     "Two-way sync means it lands automatically, and that changes made in the CRM flow back out to the systems that need them. So the record the team is looking at is the one the automations are acting on, not a copy of how things were last month.",
     "It fits any business that runs on more than one app: a contractor with a job app, a CRM and an accounting tool; an accounting office with a client portal and a practice tool; a salon or gym with a booking app and a CRM; a real estate office with a CRM and a transaction tool. Before anything is connected, we write down which app is the record of truth for each kind of fact.",
   ],
@@ -144,23 +144,23 @@ export const crmSync: Service = {
   faqs: [
     {
       q: "What is two-way CRM sync?",
-      a: "It means information flows in both directions. Activity from calls, texts, bookings, jobs and automations writes into the CRM, and changes made inside the CRM flow back out to the systems that act on them. One-way sync leaves one side permanently out of date.",
+      a: "Two-way CRM sync means information flows in both directions. Activity from calls, texts, bookings, jobs and automations writes into the CRM, and changes made inside the CRM flow back out to the systems that act on them. One-way sync leaves one side permanently out of date.",
     },
     {
       q: "Does it work with the CRM I already use?",
-      a: "Usually, yes. Most CRMs and the common booking, job and invoicing apps expose a connection for this, and the sync is built to each one rather than limited to a fixed list of supported integrations. Where an app offers no connection at all, we say so before anything is built.",
+      a: "Two-way CRM sync usually works with the CRM a business already uses. Most CRMs and the common booking, job and invoicing apps expose a connection for this, and the sync is built to each one rather than limited to a fixed list of supported integrations. Where an app offers no connection at all, we say so before anything is built.",
     },
     {
       q: "Will it create duplicate contacts?",
-      a: "Preventing them is what it is for. The owner nominates an identity field and a matching rule is agreed when it is built, so an inbound record matching an existing contact updates that contact. What no honest build promises is that matching is never wrong in either direction, because the published model behind all of this sets its thresholds from the two error rates a business is willing to accept and cannot drive both to zero. That is why ambiguous pairs go to a review list instead of being merged.",
+      a: "Two-way CRM sync does not create duplicate contacts: preventing them is what it is for. The owner nominates an identity field and a matching rule is agreed when it is built, so an inbound record matching an existing contact updates that contact. What no honest build promises is that matching is never wrong in either direction, because the published model behind all of this sets its thresholds from the two error rates a business is willing to accept and cannot drive both to zero. That is why ambiguous pairs go to a review list instead of being merged.",
     },
     {
       q: "Which side wins when both systems have changed the same field?",
-      a: "Whichever one the conflict rule says. The rule is a decision made when the sync is built, rather than a default. A common arrangement has two halves: the most recently changed value wins for facts like a phone number, and the CRM wins for anything about the relationship, such as the stage of a job. There is no rule that is right for every field. The important part is that it is written down somewhere the team can read it.",
+      a: "When both systems have changed the same field, whichever side the conflict rule names wins. The rule is a decision made when the sync is built, rather than a default. A common arrangement has two halves: the most recently changed value wins for facts like a phone number, and the CRM wins for anything about the relationship, such as the stage of a job. There is no rule that is right for every field. The important part is that it is written down somewhere the team can read it.",
     },
     {
       q: "How do I stop duplicate contacts in my CRM?",
-      a: "Decide which field identifies a person, usually the mobile number or the email, make every app match on it before creating a record, and send the uncertain pairs to a person rather than merging them automatically. Then clean the duplicates already there once, as a separate job, and the sync keeps new ones from piling up.",
+      a: "To stop duplicate contacts in a CRM, decide which field identifies a person, usually the mobile number or the email, make every app match on it before creating a record, and send the uncertain pairs to a person rather than merging them automatically. Then clean the duplicates already there once, as a separate job, and the sync keeps new ones from piling up.",
     },
   ],
 
