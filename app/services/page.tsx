@@ -15,13 +15,13 @@ import { SITE } from "@/lib/site";
  * anyone loses a job (company/BRAND.md section 3). The close is the two free doors (CTA-2 version
  * E), the quiz address as text until it answers. */
 export const metadata: Metadata = {
-  title: "AI services for local business owners",
+  title: "AI services for small business: calls, bookings and paperwork",
   description:
-    "AI services for local business owners: calls answered, reviews asked for, bookings and follow-ups run, paperwork off the desk, and a person approving what matters.",
+    "AI services for small business: an AI receptionist, chatbot, scheduling, review requests, follow-ups and paperwork, with a person approving what matters.",
   alternates: { canonical: `${SITE.url}/services` },
   openGraph: {
     type: "website",
-    title: "AI services for local business owners, by RealtyLT AI",
+    title: "AI services for small business, by RealtyLT AI",
     description:
       "Calls answered, reviews asked for, bookings and follow-ups run and paperwork off the desk, on the tools a business already uses, with a person approving what matters.",
     url: `${SITE.url}/services`,
@@ -50,7 +50,7 @@ function ServiceCard({ service, large = false }: { service: Service; large?: boo
         {service.name}
       </h3>
       <p className={`mt-2.5 leading-relaxed text-stone ${large ? "" : "line-clamp-2 text-sm"}`}>
-        {service.title}
+        {service.seo.title}
       </p>
 
       {large && (
@@ -167,7 +167,7 @@ function Rows({ items }: { items: Service[] }) {
               <span className="block text-base font-bold leading-snug text-ink-soft transition-colors group-hover:text-ink group-hover:underline group-hover:underline-offset-4">
                 {s.name}
               </span>
-              <span className="mt-1 block t-small leading-relaxed text-stone">{s.title}</span>
+              <span className="mt-1 block t-small leading-relaxed text-stone">{s.seo.title}</span>
             </span>
           </Link>
         </Reveal>
@@ -236,13 +236,14 @@ export default function ServicesIndexPage() {
               RealtyLT AI
             </p>
             <h1 id="services-title" className="t-h1 mt-3 max-w-2xl text-paper">
-              AI services for <strong>local business owners</strong>
+              AI services for <strong>small business owners</strong>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-paper/80">
-              A roofer on a ladder, a dental office with a full front desk, a salon mid-appointment, a
-              real estate office out on a showing: the phone still rings, the reviews still need asking
-              for and the paperwork still piles up. We set up AI that answers, books, follows up and
-              files, on the tools the business already uses, and a person on the team approves
+              AI services for a small business answer the phone, book the work, follow up and file
+              the paperwork while the owner is on the job: a roofer on a ladder, a dental office with
+              a full front desk, a salon mid-appointment, a real estate office out on a showing. The
+              phone still rings, the reviews still need asking for and the paperwork still piles up.
+              We set up AI on the tools the business already uses, and a person on the team approves
               everything that matters.
             </p>
             <p className="mt-4 max-w-xl leading-relaxed text-paper/70">
