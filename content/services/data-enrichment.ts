@@ -23,7 +23,7 @@ export const dataEnrichment: Service = {
 
   eyebrow: "Enrichment · Append and check",
   title: "Data enrichment: from half a contact to a usable record",
-  lede: "The customer list has a first name and an email for one person, a phone that stopped working for another, and the same customer three times. We run a pass that fills in what is missing from trusted data sources, checks what is already there, collapses the duplicates and marks every new value with where it came from and when. What came back is never mixed silently into what the business already knew.",
+  lede: "Data enrichment for a small business is a pass that fills in what is missing from trusted data sources, checks what is already there, collapses the duplicates and marks every new value with where it came from and when. The customer list has a first name and an email for one person, a phone that stopped working for another, and the same customer three times. What came back is never mixed silently into what the business already knew.",
   specs: ["fills in missing contact details", "phone and email checks", "duplicates collapsed", "source and date on every value"],
   why: "Data enrichment matters because a customer nobody can reach is a customer nobody can serve. Enrichment fills the gaps in records the business already owns, and writes down where each value came from and when, so every row says how much to trust it.",
   keywords: [
