@@ -31,7 +31,7 @@ export const skipTracingLeadGeneration: Service = {
   title: "Lead lists built fresh for the area a business works",
   lede: "Bought lead lists are old, shared with everyone who paid, and full of numbers that no longer work. We build a fresh list for the exact area and kind of customer a business wants: businesses on the map for a company that sells to offices, or property owners on chosen streets for one that works on homes. Each row gets a contact where the record has one, its source and date, and a do-not-call check, and a person decides how it is worked.",
   specs: ["built for your area", "owner and business lookups", "source and date on every row", "do-not-call checked"],
-  why: "Prospecting means reaching out to find new customers, and it runs on lists. Bought lists cost a lot and go stale fast. This builds a fresh list of the businesses or owners themselves, whenever it is needed, for the area being worked, on the day it is worked, with the rules about how each row may be contacted written beside it.",
+  why: "Lead generation starts with prospecting, which means reaching out to find new customers, and it runs on lists. Bought lists cost a lot and go stale fast. This builds a fresh list of the businesses or owners themselves, whenever it is needed, for the area being worked, on the day it is worked, with the rules about how each row may be contacted written beside it.",
   keywords: [
     "lead generation for small business",
     "how to build a lead list",
@@ -83,7 +83,7 @@ export const skipTracingLeadGeneration: Service = {
   },
 
   whatItIs: [
-    "It is a pipeline that turns an area into a list a business can work. The owner names the area and the kind of customer: offices, restaurants or shops on the map for a company that sells to businesses, or the owners of homes or buildings on chosen streets for one that works on property. The system pulls the businesses or properties, then looks up a contact for each from public records and licensed data sources: a business phone and the contact form for a business, an owner name and a phone or email for a property, wherever one exists.",
+    "Skip tracing and lead generation is a pipeline that turns an area into a list a business can work. The owner names the area and the kind of customer: offices, restaurants or shops on the map for a company that sells to businesses, or the owners of homes or buildings on chosen streets for one that works on property. The system pulls the businesses or properties, then looks up a contact for each from public records and licensed data sources: a business phone and the contact form for a business, an owner name and a phone or email for a property, wherever one exists.",
     "The difference that matters is fresh versus bought. A purchased list is a snapshot of someone else's data from some point in the past, sold to everyone who paid for it. This builds the list on demand, from current sources, for the exact area being worked.",
     "It runs the same way for ten rows or ten thousand: pull, look up, check, collapse duplicates, run against the do-not-call registry and the business's own suppression list, and flag what is unreachable. Then it hands over a clean file, or writes it into the CRM, with the way each row may be contacted written beside it.",
     "It fits a business that finds customers by going out to them: a commercial cleaner, a landscaper or a bookkeeper selling to other businesses in its towns, a roofer or a solar installer working streets after a storm, a property manager looking for owners of rental buildings, a real estate office farming a neighborhood.",
@@ -180,19 +180,19 @@ export const skipTracingLeadGeneration: Service = {
     },
     {
       q: "Can I find a property owner's phone number from just the address?",
-      a: "Often, and the rate depends entirely on the area. Public records tie the address to an owner on the record, and licensed data sources then resolve that owner to a phone number and, where one exists, an email. Trusts, companies and recently transferred properties resolve less cleanly and come back flagged. The figure worth having is a measured one, on a sample of your own area.",
+      a: "A property owner's phone number can often be found from just the address, and the rate depends entirely on the area. Public records tie the address to an owner on the record, and licensed data sources then resolve that owner to a phone number and, where one exists, an email. Trusts, companies and recently transferred properties resolve less cleanly and come back flagged. The figure worth having is a measured one, on a sample of your own area.",
     },
     {
       q: "Is skip tracing legal?",
-      a: "It is not one act, so it does not have one answer. Reading a deed or a tax roll is plainly fine, because those records are public by law. The appended contact details are the part that carries rules. The Driver's Privacy Protection Act covers anything derived from a state motor vehicle record and permits release only for a listed set of purposes, with a minimum award per person set in the statute when it is broken. The Fair Credit Reporting Act defines a consumer report by the purpose it is used or expected to be used for. Both attach to the person obtaining and using the data rather than to the tool. This is not legal advice. Two questions are worth putting to any provider in writing: which permitted purpose the account is established under, and whether anything supplied derives from a consumer reporting agency.",
+      a: "Skip tracing is not one act, so it does not have one answer. Reading a deed or a tax roll is plainly fine, because those records are public by law. The appended contact details are the part that carries rules. The Driver's Privacy Protection Act covers anything derived from a state motor vehicle record and permits release only for a listed set of purposes, with a minimum award per person set in the statute when it is broken. The Fair Credit Reporting Act defines a consumer report by the purpose it is used or expected to be used for. Both attach to the person obtaining and using the data rather than to the tool. This is not legal advice. Two questions are worth putting to any provider in writing: which permitted purpose the account is established under, and whether anything supplied derives from a consumer reporting agency.",
     },
     {
       q: "Does using a licensed provider make it safe?",
-      a: "It makes it accountable, which is worth having, and is not the same thing. A licence means there is a regulator, a record and something to lose. What it does not do is create a permitted purpose the statute does not list: the clause granting licensed investigators access grants it only for purposes already permitted elsewhere in the same subsection. Ask the licensing question, then ask separately what purpose the account sits under.",
+      a: "Using a licensed provider makes it accountable, which is worth having, and is not the same thing. A licence means there is a regulator, a record and something to lose. What it does not do is create a permitted purpose the statute does not list: the clause granting licensed investigators access grants it only for purposes already permitted elsewhere in the same subsection. Ask the licensing question, then ask separately what purpose the account sits under.",
     },
     {
       q: "Can an AI call the list for me?",
-      a: "Not a cold list. An AI voice calls only people who have given consent for that kind of call, which a list built from records does not carry. The list is worked by a person: the business's own calls within the do-not-call rules, its contact form, one email, or mail. An AI assistant can take over after someone says yes, to set a time.",
+      a: "An AI cannot call a cold list. An AI voice calls only people who have given consent for that kind of call, which a list built from records does not carry. The list is worked by a person: the business's own calls within the do-not-call rules, its contact form, one email, or mail. An AI assistant can take over after someone says yes, to set a time.",
     },
     {
       q: "How is this different from buying a lead list?",
@@ -200,11 +200,11 @@ export const skipTracingLeadGeneration: Service = {
     },
     {
       q: "What happens to the list after it is built?",
-      a: "It lands wherever the team works it: the CRM, a short email sequence for the rows that may be emailed, or a call list for a person. Each row carries how it may be contacted, so nobody has to remember the rules while working it. Building the list only pays if someone works it well, so the handoff is part of the build, not an afterthought.",
+      a: "The list lands wherever the team works it: the CRM, a short email sequence for the rows that may be emailed, or a call list for a person. Each row carries how it may be contacted, so nobody has to remember the rules while working it. Building the list only pays if someone works it well, so the handoff is part of the build, not an afterthought.",
     },
     {
       q: "How many records can it process?",
-      a: "It runs the same path for ten rows or ten thousand. The practical limit is the lookup budget and how many people the team can actually reach out to well, not the pipeline.",
+      a: "The pipeline runs the same path for ten rows or ten thousand. The practical limit is the lookup budget and how many people the team can actually reach out to well, not the pipeline.",
     },
   ],
 
