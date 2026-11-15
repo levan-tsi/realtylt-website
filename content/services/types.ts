@@ -113,6 +113,11 @@ export interface Service {
    * comes from outside this business has no excuse. */
   stat?: { value: string; label: string; source?: { text: string; href: string } };
 
+  /** The primary sources of facts the page states and that have no `stat` to carry one (rule
+   * MD14: link out to the primary source of each fact). Rendered as a "Sources" line under the
+   * FAQ. Each entry was read and saved beside the page's record; never a page that was not read. */
+  sources?: { text: string; href: string }[];
+
   figure: Figure;
 
   /** "What it is" — plain-language prose. Two or three paragraphs. */

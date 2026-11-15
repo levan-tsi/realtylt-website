@@ -270,3 +270,16 @@ describe("structured data", () => {
     }
   });
 });
+
+describe("service sources (round 30)", () => {
+  it("every source is a plain https address with a label, and a page lists each address once", () => {
+    for (const s of getServices()) {
+      const hrefs = (s.sources ?? []).map((x) => x.href);
+      for (const x of s.sources ?? []) {
+        expect(x.href, s.slug).toMatch(/^https:\/\/[^\s]+$/);
+        expect(x.text.trim().length, s.slug).toBeGreaterThan(3);
+      }
+      expect(new Set(hrefs).size, s.slug).toBe(hrefs.length);
+    }
+  });
+});

@@ -48,6 +48,25 @@ export function Faq({ service }: { service: Service }) {
               </details>
             ))}
           </div>
+          {service.sources && service.sources.length > 0 && (
+            <p className="mt-6 max-w-2xl text-sm leading-relaxed text-stone">
+              Sources:{" "}
+              {service.sources.map((src, i) => (
+                <span key={src.href}>
+                  {i > 0 && "; "}
+                  <a
+                    href={src.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-ink/20 underline-offset-2 hover:decoration-ink/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                  >
+                    {src.text}
+                  </a>
+                </span>
+              ))}
+              .
+            </p>
+          )}
         </Reveal>
       </div>
     </section>
