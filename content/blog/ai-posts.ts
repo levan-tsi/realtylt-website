@@ -3259,7 +3259,7 @@ Not always, and the study is about attendance rather than revenue. An appointmen
 
 ## What can you do about no-shows this week?
 
-The count needs nobody, us included. It takes ten minutes on paper: the last twenty appointments you agreed with someone outside the business, each with two numbers, the days between the conversation and the slot and whether it happened. The median of the first column and the share of the second are the whole of this guide in your own handwriting.
+The count needs nobody, us included. It needs only paper: the last twenty appointments you agreed with someone outside the business, each with two numbers, the days between the conversation and the slot and whether it happened. The median of the first column and the share of the second are the whole of this guide in your own handwriting.
 
 In the invented example the median was nine days, and the empty curb on the ninth was not the fault of the person who did not come.
 
