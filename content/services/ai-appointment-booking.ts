@@ -22,10 +22,10 @@ export const aiAppointmentBooking: Service = {
   tier: "core",
 
   eyebrow: "Booking · Fewer no-shows",
-  title: "Fewer no-shows: booked in the first conversation",
-  lede: "A customer asks for a time in the evening, gets a callback the next morning, and has booked somewhere else by then. We set up AI appointment booking that replies in seconds, offers the business's real open times and books the appointment inside that first conversation. Then it sends the confirmation and one reminder before the day, so more people actually show up.",
+  title: "An AI appointment booking system: fewer no-shows, booked in the first conversation",
+  lede: "An AI appointment booking system for a small business replies in seconds, offers the business's real open times and books the appointment inside the first conversation. Without one, a customer asks for a time in the evening, gets a callback the next morning, and has booked somewhere else by then. We set it up to send the confirmation and one reminder before the day, so more people actually show up.",
   specs: ["reply and book in one go", "real open times only", "confirmation and reminder", "easy to move, hard to forget"],
-  why: "An inquiry waiting on a callback is one somebody else can answer. A time agreed months away is one that is missed far more often. So book inside the first conversation, keep the date close, and remind before the day. Those are the cheap moves that turn more inquiries into work that actually happens.",
+  why: "AI appointment booking matters because an inquiry waiting on a callback is one somebody else can answer. A time agreed months away is one that is missed far more often. So book inside the first conversation, keep the date close, and remind before the day. Those are the cheap moves that turn more inquiries into work that actually happens.",
   keywords: [
     "how to reduce no shows",
     "appointment booking system",
@@ -35,7 +35,7 @@ export const aiAppointmentBooking: Service = {
   ],
 
   seo: {
-    title: "How to reduce no-shows: AI appointment booking and reminders",
+    title: "AI appointment booking system for small business: fewer no-shows",
     description:
       "AI appointment booking for a local business: it replies in seconds, offers real open times, books in the first conversation and sends the reminder that cuts no-shows.",
   },
@@ -54,7 +54,7 @@ export const aiAppointmentBooking: Service = {
 
   figure: {
     kind: "timeline",
-    caption: "Inquiry to confirmed booking, in one conversation",
+    caption: "AI appointment booking, from inquiry to confirmed booking in one conversation",
     events: [
       { at: "0s", label: "The inquiry arrives", note: "8:15pm, from the website: a homeowner wants an estimate for a new patio." },
       { at: "6s", label: "The AI replies", note: "Not tomorrow morning. Now, while they are still there." },
@@ -66,7 +66,7 @@ export const aiAppointmentBooking: Service = {
   },
 
   whatItIs: [
-    "It is the piece between someone asking for the business's time and that time appearing on the calendar. Today that gap is a callback somebody owes, a voicemail, a text sent at a bad moment, and a few hours in which another business answered first.",
+    "AI appointment booking is the piece between someone asking for the business's time and that time appearing on the calendar. Today that gap is a callback somebody owes, a voicemail, a text sent at a bad moment, and a few hours in which another business answered first.",
     "The AI closes the gap. It replies in seconds. It reads the real availability, so it only offers times the business actually has. It books the appointment inside the same conversation. Then it sends the confirmation and the reminder that decide whether the person turns up.",
     "How far ahead a time is booked matters as much as how fast. At one university eye clinic, appointments booked up to two weeks ahead were missed 9.1 percent of the time in the clinic run by residents, against 38.3 percent for appointments booked six months ahead. That is a clinic, not any other trade, so read the direction rather than the decimals: a time kept close is a time kept.",
     "It fits any business that books time with customers: a contractor's estimate visits, a dental office's cleanings, a salon, spa or gym's sessions, an accounting office's consultations, a real estate office's showings and listing appointments. For a practice that keeps health records it books and reminds only, and the reminder names the time and the place, never the treatment.",
@@ -134,7 +134,7 @@ export const aiAppointmentBooking: Service = {
   ],
 
   limits: [
-    "It does not make anyone turn up. Confirmations and reminders are the most reliable things anyone has for attendance, and they are still only reminders.",
+    "AI appointment booking does not make anyone turn up. Confirmations and reminders are the most reliable things anyone has for attendance, and they are still only reminders.",
     "It does not create availability. If the week is full it books nothing, and it does not offer a time the business has blocked out.",
     "It does not qualify the appointment. Booking fast puts more of the week in front of people, including the ones who were never going to buy.",
     "It does not handle the meeting that follows. It gets the time on the calendar. What happens in that meeting is the part the business is paid for.",
@@ -145,27 +145,27 @@ export const aiAppointmentBooking: Service = {
   faqs: [
     {
       q: "How do I reduce no-shows?",
-      a: "Book inside the first conversation, keep the date close, and send a reminder before the day with an easy way to move it. In a randomised trial of 1,848 appointments at one health check-up centre, attendance was 80.5 percent with no reminder and 87.5 percent with a single text sent 72 hours ahead. At one university eye clinic, appointments booked far ahead were missed several times more often than ones booked within two weeks. Neither study is about any other trade, so read the direction rather than the decimal.",
+      a: "To reduce no-shows, book inside the first conversation, keep the date close, and send a reminder before the day with an easy way to move it. In a randomised trial of 1,848 appointments at one health check-up centre, attendance was 80.5 percent with no reminder and 87.5 percent with a single text sent 72 hours ahead. At one university eye clinic, appointments booked far ahead were missed several times more often than ones booked within two weeks. Neither study is about any other trade, so read the direction rather than the decimal.",
     },
     {
       q: "What should an appointment reminder text say?",
-      a: "The business's name, the day and the time, the address, and one way to move it. Nothing private: for a health or financial practice, never the treatment or the matter. Send it to people who agreed to get reminders, and let a reply of STOP end them.",
+      a: "An appointment reminder text should say the business's name, the day and the time, the address, and one way to move it. Nothing private: for a health or financial practice, never the treatment or the matter. Send it to people who agreed to get reminders, and let a reply of STOP end them.",
     },
     {
       q: "What is an AI appointment setter?",
-      a: "Software that answers an inquiry immediately, offers the business's genuine open times and books the appointment inside that first conversation, then confirms it and sends the reminder. It removes the callback and the phone tag, which is where many inquiries go quiet.",
+      a: "An AI appointment setter is software that answers an inquiry immediately, offers the business's genuine open times and books the appointment inside that first conversation, then confirms it and sends the reminder. It removes the callback and the phone tag, which is where many inquiries go quiet.",
     },
     {
       q: "How does it know when I am free?",
-      a: "It reads the live calendar, so what it offers is time the calendar still shows as free. Blocking time out removes those slots. That is the half it can guarantee. The half it cannot is anyone else's calendar, which is why an appointment that needs another office is treated as a request until they agree.",
+      a: "An AI appointment booking system reads the live calendar, so what it offers is time the calendar still shows as free. Blocking time out removes those slots. That is the half it can guarantee. The half it cannot is anyone else's calendar, which is why an appointment that needs another office is treated as a request until they agree.",
     },
     {
       q: "Will it reduce no-shows?",
-      a: "That is what the confirmations and reminders are for, and it is the part of this with a randomised trial behind it: one text 72 hours ahead moved attendance from 80.5 to 87.5 percent in that study. The other half is less obvious. Booking inside the first conversation usually shortens the gap between the ask and the day, and in the eye clinic study shorter gaps went with far fewer missed appointments.",
+      a: "AI appointment booking reduces no-shows through its confirmations and reminders, and that is the part of this with a randomised trial behind it: one text 72 hours ahead moved attendance from 80.5 to 87.5 percent in that study. The other half is less obvious. Booking inside the first conversation usually shortens the gap between the ask and the day, and in the eye clinic study shorter gaps went with far fewer missed appointments.",
     },
     {
       q: "Can it book on the phone as well as by text?",
-      a: "Yes. The same booking runs behind the AI voice agent, so a caller can be booked mid-conversation exactly as a website visitor can, with the same rules and the same reminder.",
+      a: "Yes, AI appointment booking works on the phone as well as by text: the same booking runs behind the AI voice agent, so a caller can be booked mid-conversation exactly as a website visitor can, with the same rules and the same reminder.",
     },
   ],
 
