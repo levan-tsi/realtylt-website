@@ -1303,7 +1303,7 @@ The system ran in tiers: software first, then a person doing one small, tightly 
 
 A current figure points the same way. A 2026 paper on calendar conflict decisions, [PEARL](https://arxiv.org/abs/2601.11957) (revised 2026-06-23), reports that one 30-billion-parameter reasoning model in its experiments had an average error rate of 35 percent. Its experiments test conflict decisions, not your appointments, so it gives no rate for them; it does suggest a person should still own the decision. Before trusting any tool, it is worth asking where a reply it cannot read goes, and who sees it.
 
-## Who has to say yes before an appointment is real
+## Who must say yes before an AI scheduling assistant can confirm?
 
 How hard an appointment is to arrange tracks how many separate permissions it needs, and that count is rarely written down. They are not all people, and they fail in different ways. Three of the four below can say no to you. The fourth cannot say anything at all, which is how it stays off the list.
 
@@ -1313,7 +1313,7 @@ How hard an appointment is to arrange tracks how many separate permissions it ne
 
 An invented example: a contractor's site visit needs the owner, the contractor, the tenant living there and the building's rule on access hours. The rule never replies; it simply makes some times impossible. Beside any time you offer, it helps to write how many permissions it needs.
 
-## The standard already has a word for an appointment nobody agreed to
+## How does a scheduling standard name an appointment nobody agreed to?
 
 The standard already has a word for an appointment nobody agreed to, and the word is NEEDS-ACTION. What your calendar does when it sends an invitation is defined in iTIP, [RFC 5546](https://www.rfc-editor.org/rfc/rfc5546.txt), a standard in force. It splits everyone into an organizer, who owns the event, and attendees, who cannot change the master copy but can reply. The reply carries one value, PARTSTAT, short for participation status.
 
@@ -1323,7 +1323,7 @@ Section 2.1.1 says that when the organizer issues the first invitation, attendee
 
 The same standard names what the manager in the story was doing: COUNTER, an attendee's way to negotiate a change, such as a different time. A counter is neither a yes nor a no, and a system with no place for it will file it as one of the two. An invented example: a cleaning firm proposes Tuesday at ten and the landlord texts back "cant do mornings thursday?"; that is a counter. A third column for counters helps, even on a sheet of paper.
 
-## Moving the time throws away every yes you had
+## Why does moving the time reset every yes in scheduling?
 
 Moving the time throws away every yes you had, and the standard says so. [RFC 6638](https://www.rfc-editor.org/rfc/rfc6638.txt) defines how a calendar server schedules on your behalf, and section 3.2.8 sets out what the server must do when an appointment moves.
 
@@ -1361,9 +1361,9 @@ One more thing already exists that demonstrations rarely show. A major calendar 
 
 An invented example: a tutoring agency sees two suggested evenings, one far likelier than the other, and offers the likelier one first. Any tool worth buying can show that confidence beside each time.
 
-## Why offering a slot you cannot hold is worse than offering nothing
+## Why is an unheld slot worse than no slot at all?
 
-Offering a slot you cannot hold is worse than offering nothing, because the two failures differ in size. When a system feels slow, the instinct is to make it more decisive. Here the instinct is wrong.
+For an AI scheduling assistant, offering a slot you cannot hold is worse than offering nothing, because the two failures differ in size. When a system feels slow, the instinct is to make it more decisive. Here the instinct is wrong.
 
 In an invented example, a slot you did not offer costs a message. The customer waits until Friday morning, then hears a time, and loses a day of not knowing. Saying on Thursday that you are waiting on the other side covers that.
 
@@ -1375,9 +1375,9 @@ A demonstration tends to flatter the faster setup: a quick answer with a time lo
 
 An invented example: a salon tells a bridal party their trial is booked before the visiting stylist has replied, then cancels; on the next booking the party asks twice whether it is real. Until every yes is in, the word for the customer is "requested".
 
-## How to test one before you buy it
+## How do you test an AI scheduling assistant before you buy it?
 
-To test one before you buy it, ask four questions; none of them is technical.
+To test an AI scheduling assistant before you buy it, ask four questions; none of them is technical.
 
 Ask to see what the person on the other end receives before anyone has agreed. If that first message carries a bare time with no qualification, that is the product, and no later setting undoes it.
 
@@ -1393,7 +1393,7 @@ Ask how you find out that an invitation was never delivered. The standard has a 
 
 An invented example: an owner types "maybe thurs" as the reply during a demonstration and watches the tool mark it accepted; that one answer settles the purchase. These four questions, written out, belong in every demonstration.
 
-## What it costs, and how long it takes
+## What decides the cost and time of an AI scheduling assistant?
 
 We print no price on this page. What decides the size of the job is how many kinds of people you have to reach and how each of them likes to be reached, more than the software.
 
@@ -1403,9 +1403,9 @@ The work is in the decisions. Your week splits into clicks, the steps a system c
 
 A system can report who has confirmed only if someone put the confirmation in, so the people on your side have to forward the text instead of remembering it. Four defaults on one page is the week's job.
 
-## What it does not do, and should not pretend to
+## What does an AI scheduling assistant not do?
 
-It does not make anyone reply. The three largest reasons in the 2016 study were an unexpected reply, no time suiting everyone, and no reply at all, all on the other side, and nothing on your side changes what happens on theirs.
+An AI scheduling assistant does not make anyone reply. The three largest reasons in the 2016 study were an unexpected reply, no time suiting everyone, and no reply at all, all on the other side, and nothing on your side changes what happens on theirs.
 
 It does not read a calendar it has not been given. Inside one calendar system it may see the availability of people who share theirs, as the meeting-time call above does; for everyone outside it, a calendar is a message. A product that promises live availability across every party is describing the ones who shared.
 
@@ -1419,9 +1419,9 @@ And it inherits whatever your diary already gets wrong. Availability that lives 
 
 An invented example: a gym connects a tool while the owner still keeps her own lunch hour only in her head, and the tool offers that hour to clients. The gaps in your own calendar come first, before anything is connected to it.
 
-## Is it worth automating
+## Is an AI scheduling assistant worth it for your business?
 
-Whether it is worth automating depends on three questions, and "leave it alone" is a real answer. These are the screening questions of our AI assessment, our own method rather than a published standard, run on one appointment type. Does it happen often enough that a failure would be noticed within a week? Can the rule, access rules included, be written down for a new hire? Does a wrong answer land where a person sees it before the customer does?
+Whether an AI scheduling assistant is worth it depends on three questions, and "leave it alone" is a real answer. These are the screening questions of our AI assessment, our own method rather than a published standard, run on one appointment type. Does it happen often enough that a failure would be noticed within a week? Can the rule, access rules included, be written down for a new hire? Does a wrong answer land where a person sees it before the customer does?
 
 Then the stop question, which asks what breaks if the job stopped: if nothing breaks, stop doing it, and do not automate it. Then check whether a tool you already pay for does it; your calendar may already send, chase and hold.
 
@@ -1431,9 +1431,9 @@ An invented example: a picture framer books a handful of consultations a month, 
 
 [[scene:worth-it]]
 
-## Who this fits, and who it does not
+## Who an AI scheduling assistant fits, and who it does not
 
-This fits owners whose appointments need a yes from outside the business: contractors and inspectors working in occupied homes and managed buildings, dental offices booking interpreters, venues coordinating suppliers, real estate offices arranging visits on other people's listings. It fits less where only you and the customer must agree, such as a haircut at your own chair; a booking link does that job. It does not fit appointments where a wrong time costs a contract or a legal deadline, such as a real estate closing: a person arranges those by hand, with the two columns described below.
+An AI scheduling assistant fits owners whose appointments need a yes from outside the business: contractors and inspectors working in occupied homes and managed buildings, dental offices booking interpreters, venues coordinating suppliers, real estate offices arranging visits on other people's listings. It fits less where only you and the customer must agree, such as a haircut at your own chair; a booking link does that job. It does not fit appointments where a wrong time costs a contract or a legal deadline, such as a real estate closing: a person arranges those by hand, with the two columns described below.
 
 [[scene:fits]]
 
@@ -1449,7 +1449,7 @@ Booking is about getting one person from interested to a time they have written 
 
 ### Can it stop a double booking?
 
-It is built against one kind of double booking and not the other. Because it can read and write your own calendar, holding a slot the moment a proposal goes live is what guards against your own time being offered twice, if the hold is set up and working. It cannot stop the other side promising the same two o'clock to someone else, because it has no view of their diary. A product that says double booking cannot happen is describing the first kind.
+An AI scheduling assistant is built against one kind of double booking and not the other. Because it can read and write your own calendar, holding a slot the moment a proposal goes live is what guards against your own time being offered twice, if the hold is set up and working. It cannot stop the other side promising the same two o'clock to someone else, because it has no view of their diary. A product that says double booking cannot happen is describing the first kind.
 
 ### What happens when somebody replies "maybe"?
 
@@ -1461,7 +1461,7 @@ Yes, and that is the standard's rule, not ours. The specification for calendar s
 
 ### How does it know when I am free?
 
-It reads your calendar, which is the ordinary part. Two more things are worth checking: what level of access it asks for, covered in the appointment booking post, and whether it may write as well as read. Reading alone reserves nothing, and a proposal that has not been reserved is still open to whoever asks next.
+An AI scheduling assistant reads your calendar, which is the ordinary part. Two more things are worth checking: what level of access it asks for, covered in the appointment booking post, and whether it may write as well as read. Reading alone reserves nothing, and a proposal that has not been reserved is still open to whoever asks next.
 
 ### What if the other side never answers at all?
 
@@ -1469,7 +1469,7 @@ A person has to decide, and the useful questions are when and who. A sound setup
 
 ### What should the first message to the customer say?
 
-That the request has gone in, who it is waiting on, and when you will be back to them. An invented example, for the plumbing company: "Your repair request for Saturday has gone to the building's manager. We will confirm a time as soon as they reply, and by Friday at six either way." It names no time, so nothing has to be taken back.
+The first message should say that the request has gone in, who it is waiting on, and when you will be back to them. An invented example, for the plumbing company: "Your repair request for Saturday has gone to the building's manager. We will confirm a time as soon as they reply, and by Friday at six either way." It names no time, so nothing has to be taken back.
 
 ### Who gets the chase, and when?
 
@@ -1481,7 +1481,7 @@ A closing is the same problem with more parties and a much higher cost of being 
 
 [[scene:quiz]]
 
-## What to do about it
+## What to do about scheduling that needs a yes from outside
 
 The check needs nothing but your own calendar for the next two weeks. For every appointment that needs someone outside your business, one column holds how many people had to agree, and a second holds how many of those agreements you could produce if someone asked: not remember, produce, as a message with a time on it.
 
@@ -1491,13 +1491,13 @@ An invented example: a dental office lists eleven appointments for the next two 
 
 [[scene:funnel]]
 
-## What to do first
+## What should an owner do first with an AI scheduling assistant?
 
-What to do first is one appointment type, never the whole calendar. Here is the order, week by week.
+The first step is one appointment type, never the whole calendar. Here is the order, week by week.
 
 This week: the two-column check above, and the appointment type with the biggest gap. Its four defaults get written: the access rule, how long you will hold the slot, when a chase goes out, and who decides when the wait runs out.
 
-Next week: the job written down so someone else could run it. When we run the [AI readiness assessment](/services/ai-readiness-assessment), the interview asks one thing of every job: one job written in two minutes under input, do, output and the person's check, handed to a colleague who does not know it, noting where they stall. Where the colleague stalls is a decision nobody has written down yet. Then the three questions from "Is it worth automating" go to the job.
+Next week: the job written down so someone else could run it. When we run the [AI readiness assessment](/services/ai-readiness-assessment), the interview asks one thing of every job: one job written in two minutes under input, do, output and the person's check, handed to a colleague who does not know it, noting where they stall. Where the colleague stalls is a decision nobody has written down yet. Then the three questions from "Is an AI scheduling assistant worth it for your business?" go to the job.
 
 The week after: the decision, written down. Leave it alone, keep it by hand with the two columns, or take the four tests to a demonstration. Whatever the choice, a person approves every confirmation that reaches a customer.
 

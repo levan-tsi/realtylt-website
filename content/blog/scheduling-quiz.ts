@@ -14,13 +14,13 @@ export const SCHEDULING_QUIZ: QuizQuestion[] = [
     q: "What moves an invitation's participation status out of NEEDS-ACTION?",
     choices: ["A reply from that attendee", "The appointment time arriving", "A day passing with no objection", "The organizer marking it in bold"],
     answer: 0,
-    why: 'Only a reply from that person moves it; see "The standard already has a word for an appointment nobody agreed to".',
+    why: 'Only a reply from that person moves it; see "How does a scheduling standard name an appointment nobody agreed to?".',
   },
   {
     q: "What happens to attendees' answers when an appointment's start time changes?",
     choices: ["They carry over unchanged", "They reset to needs action", "Only the organizer's answer resets", "They turn tentative"],
     answer: 1,
-    why: 'A new start, end or duration resets every attendee; see "Moving the time throws away every yes you had".',
+    why: 'A new start, end or duration resets every attendee; see "Why does moving the time reset every yes in scheduling?".',
   },
   {
     q: "In the 2016 study, where did the three commonest escalation reasons sit?",
@@ -49,7 +49,7 @@ export const SCHEDULING_QUIZ: QuizQuestion[] = [
     q: "What is a counter?",
     choices: ["A rejection", "An acceptance", "A request to change the appointment, such as a new time", "A failed delivery"],
     answer: 2,
-    why: 'A counter is neither a yes nor a no; see "The standard already has a word for an appointment nobody agreed to".',
+    why: 'A counter is neither a yes nor a no; see "How does a scheduling standard name an appointment nobody agreed to?".',
   },
   {
     q: "Why is offering a slot you cannot hold worse than offering nothing?",
@@ -60,19 +60,19 @@ export const SCHEDULING_QUIZ: QuizQuestion[] = [
       "It slows the system down",
     ],
     answer: 1,
-    why: 'A withdrawn slot costs something a message cannot buy back; see "Why offering a slot you cannot hold is worse than offering nothing".',
+    why: 'A withdrawn slot costs something a message cannot buy back; see "Why is an unheld slot worse than no slot at all?".',
   },
   {
     q: "In the worth-automating test, what does an impact of 1 or 2 mean?",
     choices: ["Leave it alone", "Automate it first", "Buy a new tool", "Score it again next month"],
     answer: 0,
-    why: 'A rare job costs less to do by hand than to set up, watch and repair; see "Is it worth automating".',
+    why: 'A rare job costs less to do by hand than to set up, watch and repair; see "Is an AI scheduling assistant worth it for your business?".',
   },
   {
     q: "Which of these is a decision, not a click?",
     choices: ["Sending the request", "Sending the chase", "How long to hold your calendar waiting for an answer", "Releasing a dead slot"],
     answer: 2,
-    why: 'Sending, chasing, blocking and releasing are clicks; the hold is a decision; see "What it costs, and how long it takes".',
+    why: 'Sending, chasing, blocking and releasing are clicks; the hold is a decision; see "What decides the cost and time of an AI scheduling assistant?".',
   },
   {
     q: "What is the first step of the roadmap?",
@@ -83,6 +83,6 @@ export const SCHEDULING_QUIZ: QuizQuestion[] = [
       "Ask other businesses for access to their calendars",
     ],
     answer: 2,
-    why: 'One appointment type, never the whole calendar; see "What to do first".',
+    why: 'One appointment type, never the whole calendar; see "What should an owner do first with an AI scheduling assistant?".',
   },
 ];
