@@ -26,10 +26,10 @@ export const localSeo: Service = {
   tier: "more",
 
   eyebrow: "Local SEO · Get found nearby",
-  title: "How to rank in Google Maps: the profile, the reviews, the pages",
-  lede: "Somebody nearby searches “plumber near me”, three businesses show up on the map, and the one with the half-finished profile is not one of them. We fix and keep current the business's Google profile, its details wherever they appear, the reviews that come in and a real page for each place and service it covers, so it competes for those three spots on the searches local customers actually type.",
+  title: "Local SEO for small business: the profile, the reviews, the pages",
+  lede: "Local SEO for a small business decides who shows up when somebody nearby searches “plumber near me”: three businesses show up on the map, and the one with the half-finished profile is not one of them. We fix and keep current the business's Google profile, its details wherever they appear, the reviews that come in and a real page for each place and service it covers, so it competes for those three spots on the searches local customers actually type.",
   specs: ["Google Business Profile", "map and local ranking", "details kept current", "a page per town and service"],
-  why: "A nearby search shows three businesses above everything else. Google publishes what decides that order: relevance, distance and popularity. Two of the three are work a business can do, and that work keeps adding up after a budget stops, which a paid click never does.",
+  why: "Local SEO matters because a nearby search shows three businesses above everything else. Google publishes what decides that order: relevance, distance and popularity. Two of the three are work a business can do, and that work keeps adding up after a budget stops, which a paid click never does.",
   keywords: [
     "how to rank in google maps",
     "google business profile optimization",
@@ -39,7 +39,7 @@ export const localSeo: Service = {
   ],
 
   seo: {
-    title: "Local SEO for small business: rank in Google Maps",
+    title: "Local SEO service for small business: Google profile, reviews",
     description:
       "Local SEO for a small business: the Google profile fixed and kept current, reviews and links that Google names, and a real page for each town and service covered.",
   },
@@ -70,7 +70,7 @@ export const localSeo: Service = {
   },
 
   whatItIs: [
-    "It is the work that decides whether a business appears when someone nearby searches for what it does. Most of it is unglamorous: a Google Business Profile with the right categories and service area, details that agree with each other wherever they appear, a steady flow of reviews, and a real page for each place and each service the business covers.",
+    "Local SEO is the work that decides whether a business appears when someone nearby searches for what it does. Most of it is unglamorous: a Google Business Profile with the right categories and service area, details that agree with each other wherever they appear, a steady flow of reviews, and a real page for each place and each service the business covers.",
     "We keep that maintenance current, which is the part that fails in practice. A profile is at its most accurate on the day someone fills it in. Hours change. A service stops. A number moves. None of those events tell the listing about themselves.",
     "It fits any business customers find by searching nearby: a plumber, roofer or landscaper, a dental or accounting office, a salon, spa or gym, a real estate office. It matters most where people search for the service rather than for the business's name, which is how a new customer who has never heard of it searches.",
   ],
@@ -133,7 +133,7 @@ export const localSeo: Service = {
   ],
 
   limits: [
-    "It does not buy a position. Google's own page says there is no way to request or pay for a better local ranking, so anyone promising one is selling something that does not exist.",
+    "Local SEO does not buy a position. Google's own page says there is no way to request or pay for a better local ranking, so anyone promising one is selling something that does not exist.",
     "It does not move a business closer to anybody. Distance is one of the three inputs Google publishes, and it is a physical fact about the address. That is why a business on one edge of a county loses searches on the other edge.",
     "It does not replace ads while it is still arriving. A ranking keeps paying after the spending stops, and until it exists it is delivering nothing.",
     "It does not manufacture reviews. Reviews are one of the two things Google's ranking page names under prominence. They cannot be bought without breaking policy. Getting them means asking every customer, which is review requests rather than this.",
@@ -143,23 +143,23 @@ export const localSeo: Service = {
   faqs: [
     {
       q: "How do I rank in Google Maps?",
-      a: "Google publishes the inputs rather than the recipe. Local results are mainly based on relevance, distance and popularity; the same page says the details are kept confidential, and that no position can be requested or paid for. Relevance is the profile being complete and correctly categorised. Distance is where the searcher is, which nobody can change. Under prominence the page names how many websites link to the business and how many reviews it has. Directory consistency is worth keeping right, but it is not named on that page.",
+      a: "Ranking in Google Maps depends on inputs Google publishes rather than a recipe. Local results are mainly based on relevance, distance and popularity; the same page says the details are kept confidential, and that no position can be requested or paid for. Relevance is the profile being complete and correctly categorised. Distance is where the searcher is, which nobody can change. Under prominence the page names how many websites link to the business and how many reviews it has. Directory consistency is worth keeping right, but it is not named on that page.",
     },
     {
       q: "We have many five-star reviews. Why are we not higher on the map?",
-      a: "Because reviews are only part of one of the three inputs. A searcher further away sees closer businesses first, and a profile with the wrong main category or missing details is less relevant to the search however good its reviews are. Check the category, the service area and the details first; then the links from other websites, which Google names beside reviews.",
+      a: "A business with many five-star reviews is not higher on the map because reviews are only part of one of the three inputs. A searcher further away sees closer businesses first, and a profile with the wrong main category or missing details is less relevant to the search however good its reviews are. Check the category, the service area and the details first; then the links from other websites, which Google names beside reviews.",
     },
     {
       q: "Is SEO worth it for a small business?",
-      a: "It is slower to arrive, and it does not stop. Ads deliver traffic the day they are turned on and nothing the day they are turned off. The harder question is what ads are actually adding. eBay tested that in a series of large field experiments, published by the National Bureau of Economic Research: the returns from paid search were a fraction of what ordinary reporting suggested, and brand-keyword ads had no measurable short-term benefit. What transfers to a business nobody searches for by name is set out in the post.",
+      a: "Local SEO is slower to arrive, and it does not stop. Ads deliver traffic the day they are turned on and nothing the day they are turned off. The harder question is what ads are actually adding. eBay tested that in a series of large field experiments, published by the National Bureau of Economic Research: the returns from paid search were a fraction of what ordinary reporting suggested, and brand-keyword ads had no measurable short-term benefit. What transfers to a business nobody searches for by name is set out in the post.",
     },
     {
       q: "How long does local SEO take to work?",
-      a: "The accuracy half changes the day it is done. A finished profile with the right categories, real photographs and current hours is immediately more convincing to whoever reads it. Position is slower, and is not promised by anybody, including us. The reason is printed at the top of Google's own ranking page. What is being bought is the removal of the reasons the business is not currently eligible for a place.",
+      a: "In local SEO, the accuracy half changes the day it is done. A finished profile with the right categories, real photographs and current hours is immediately more convincing to whoever reads it. Position is slower, and is not promised by anybody, including us. The reason is printed at the top of Google's own ranking page. What is being bought is the removal of the reasons the business is not currently eligible for a place.",
     },
     {
       q: "Can I show up in a town my office is not in?",
-      a: "On the map, not really. Distance is one of the three inputs, and Google's own guidelines say a profile's service area should not reach farther than about two hours of driving from where the business is based, while allowing that some businesses will need more. The other route is an ordinary page on the business's own website about the work genuinely done in that town. A page is judged on what is written on it rather than on where the office sits. That is a different piece of work with a different risk attached, and it has its own article.",
+      a: "A business cannot really show up on the map in a town its office is not in. Distance is one of the three inputs, and Google's own guidelines say a profile's service area should not reach farther than about two hours of driving from where the business is based, while allowing that some businesses will need more. The other route is an ordinary page on the business's own website about the work genuinely done in that town. A page is judged on what is written on it rather than on where the office sits. That is a different piece of work with a different risk attached, and it has its own article.",
     },
   ],
 
