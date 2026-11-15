@@ -34,7 +34,7 @@ export const aiVoiceAgents: Service = {
 
   sources: [
     { text: "Harvard Business Review, The Short Life of Online Sales-Leads (2011)", href: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads" },
-    { text: "PNAS (2009), universals and cultural variation in turn-taking", href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2705608/" },
+    { text: "Universals and cultural variation in turn-taking in conversation, PNAS (2009)", href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2705608/" },
     { text: "FCC 24-17, artificial voices under the TCPA", href: "https://docs.fcc.gov/public/attachments/FCC-24-17A1.pdf" },
     { text: "47 CFR 64.1200, calling hours and consent", href: "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-B/part-64/subpart-L/section-64.1200" },
     { text: "New York Penal Law 250.05", href: "https://codes.findlaw.com/ny/penal-law/pen-sect-250-05/" },
