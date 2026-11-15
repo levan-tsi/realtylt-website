@@ -214,7 +214,7 @@ export const POSTS: BlogPost[] = ([
      * assessment" where the phrase matters, "AI audit" kept once as the synonym); the slug moved
      * from ai-audit-... with a permanent redirect in next.config.ts; the one-hour flow. */
     excerpt:
-      "How to use AI in your business, from what 2026 government surveys show small firms really do with it to the three questions that cross ideas off your list. The questions we ask in an assessment, so you can answer them yourself; how the assessment runs and what you get; a week-by-week roadmap you can follow alone; a one-page sheet; and a ten-question quiz to check what stuck.",
+      "How to use AI in your business, shown on one invented plumbing company's list: eleven ideas, three questions that cross four of them off, and a first build chosen by its worst day. The questions we ask in an assessment, so you can answer them yourself; how the assessment runs and what you get; a week-by-week roadmap you can follow alone; what 2026 government surveys show small firms really do with AI; a one-page sheet; and a ten-question quiz to check what stuck.",
     seoDescription:
       "How to use AI in my business: an AI assessment for a small business in plain steps, 2026 Census data, three questions to cut your list, and what to automate first.",
     cover: "/images/editorial/front-desk-phone.jpg",
