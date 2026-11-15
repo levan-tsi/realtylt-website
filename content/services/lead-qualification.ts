@@ -19,9 +19,9 @@ export const leadQualification: Service = {
 
   eyebrow: "Qualification · Score and route",
   title: "Lead scoring that puts the ready customers first",
-  lede: "Thirty quote requests came in this week and they all look the same in the inbox: a name, a number, “please call”. We set up lead scoring that reads what each person actually said, how soon they need it, what the job is and whether it fits, and ranks the list by who to call now. Everyone still gets an answer. The score only changes the order.",
+  lede: "Lead scoring and qualification for a small business ranks the list by who to call now. Thirty quote requests came in this week and they all look the same in the inbox: a name, a number, “please call”. We set up lead scoring with AI that reads what each person actually said, how soon they need it, what the job is and whether it fits, and ranks the list by who to call now. Everyone still gets an answer. The score only changes the order.",
   specs: ["reads what they said", "scores need, fit and timing", "routes to the right person", "every score shows its reason"],
-  why: "Treating every lead the same spends the best hours of the day on people who were only pricing. Sorting leads this way is called qualification. It puts the customers who are ready to go ahead at the top of the list, and every other lead still gets its answer, just later in the day or on a slower track.",
+  why: "Lead qualification matters because treating every lead the same spends the best hours of the day on people who were only pricing. Sorting leads this way is called qualification. It puts the customers who are ready to go ahead at the top of the list, and every other lead still gets its answer, just later in the day or on a slower track.",
   keywords: [
     "lead scoring",
     "how to qualify leads",
@@ -30,8 +30,13 @@ export const leadQualification: Service = {
     "lead scoring real estate",
   ],
 
+  sources: [
+    { text: "Fair Housing Act, 42 U.S.C. 3604", href: "https://www.law.cornell.edu/uscode/text/42/3604" },
+    { text: "NAR Code of Ethics and Standards of Practice, 2026", href: "https://www.nar.realtor/about-nar/governing-documents/code-of-ethics/2026-code-of-ethics-standards-of-practice" },
+  ],
+
   seo: {
-    title: "Lead scoring and qualification for small business, with AI",
+    title: "Lead scoring and qualification for small business: with AI",
     description:
       "AI lead scoring for a small business: every inquiry ranked on need, fit and timing from what the person said, routed to the right person, and never ignored.",
   },
@@ -61,7 +66,7 @@ export const leadQualification: Service = {
   },
 
   whatItIs: [
-    "It is the difference between a list of inquiries and a ranked list. Every inbound lead looks the same on a form. What separates them is what they say next, and that is where the need, the fit and the timing actually live.",
+    "AI lead qualification is the difference between a list of inquiries and a ranked list. Every inbound lead looks the same on a form. What separates them is what they say next, and that is where the need, the fit and the timing actually live.",
     "The AI reads the conversation, the chat, the email or the call transcript, and scores the lead on those three things. Then it routes it: to a person straight away if it is ready, to a slower follow-up if it is not. The list the owner looks at in the morning is ordered by who is worth calling first, with the reason written beside each name.",
     "There is a line under all of this, and it belongs on the page that sells it: change the order, never the access. Qualification decides who gets called first. It must never decide who gets an answer, who gets a fair price or who is allowed to reach a person. So the score reads the job and never the person: never a name, a language, an accent or a neighborhood, and every point of it traces back to a sentence the lead actually wrote.",
     "It fits a business that gets more inquiries than it can answer in the order they arrive: a roofer or a landscaper after a storm or in spring, an accounting office in tax season, a gym or a salon with more trial requests than open sessions, a real estate office with more buyer inquiries than agents. For a real estate office the same rule is the law: the Fair Housing Act, at 42 U.S.C. 3604, has no software exemption, and Article 10 of the NAR Code of Ethics is broader still.",
@@ -140,7 +145,7 @@ export const leadQualification: Service = {
    * the same rule as the access paragraph in `whatItIs`, said from the product's side: scoring
    * suggests an order and never decides an outcome. */
   limits: [
-    "It is not a prediction about a person. It is a guess about a date, made from limited evidence, and it will be wrong regularly. Somebody twelve months out calls in March because a storm took their roof.",
+    "AI lead qualification is not a prediction about a person. It is a guess about a date, made from limited evidence, and it will be wrong regularly. Somebody twelve months out calls in March because a storm took their roof.",
     "It does not do the reading for anyone. The score is a sort order, not a summary, and calling the top of the list without opening the conversation underneath it is a faster way to be unprepared.",
     "It does not work on nothing. A lead who filled in a form, said no more and never replied has given the system exactly what they gave the business. No model extracts intent from silence.",
     "It never reads who a person is. A name, a language, an accent or a neighborhood is not an input, and a score that leans on one has been built wrong.",
@@ -150,27 +155,27 @@ export const leadQualification: Service = {
   faqs: [
     {
       q: "How do I qualify leads?",
-      a: "Read what the person actually said rather than the form, and score three things a person can be specific about before anything has happened: what they need, whether it fits what the business does, and how soon. Call the ready ones first and give everyone else a reply on a slower track. Write the rules down so anyone in the business can see why a lead sits where it does.",
+      a: "To qualify leads, read what the person actually said rather than the form, and score three things a person can be specific about before anything has happened: what they need, whether it fits what the business does, and how soon. Call the ready ones first and give everyone else a reply on a slower track. Write the rules down so anyone in the business can see why a lead sits where it does.",
     },
     {
       q: "What is lead scoring?",
-      a: "It is ranking leads by how soon they are likely to go ahead, so the team's time goes first to the ones that are ready. Without it, every inquiry in the CRM looks identical and the order of the day is set by whatever arrived first.",
+      a: "Lead scoring is ranking leads by how soon they are likely to go ahead, so the team's time goes first to the ones that are ready. Without it, every inquiry in the CRM looks identical and the order of the day is set by whatever arrived first.",
     },
     {
       q: "Does a low score mean the lead is dropped?",
-      a: "No. It means the lead goes to a slower follow-up instead of the morning call list. Many leads are not ready today and are ready later, and the point of scoring is to stop those two groups getting the same treatment. A low score changes when somebody calls. It never changes what that person can ask or be told.",
+      a: "No, a low score does not mean the lead is dropped. It means the lead goes to a slower follow-up instead of the morning call list. Many leads are not ready today and are ready later, and the point of scoring is to stop those two groups getting the same treatment. A low score changes when somebody calls. It never changes what that person can ask or be told.",
     },
     {
       q: "Can the score be wrong?",
-      a: "Regularly, and in both directions. A cautious person underplays their timeline and scores low. Somebody who talks a good game scores high and never goes ahead. Treat the ranking as a sort order that saves starting at a random point rather than as a verdict, and read the conversation before dialing either way.",
+      a: "A lead score can be wrong regularly, and in both directions. A cautious person underplays their timeline and scores low. Somebody who talks a good game scores high and never goes ahead. Treat the ranking as a sort order that saves starting at a random point rather than as a verdict, and read the conversation before dialing either way.",
     },
     {
       q: "How does AI qualify a real estate lead?",
-      a: "The same way, with the real estate office's three questions: whether a buyer is pre-approved, whether they have a house to sell, and when they need to move. Those are things a person can be specific about before anything has happened, and none of them appear on a contact form. The score sets the order of calls, never who gets to see a listing.",
+      a: "AI qualifies a real estate lead the same way, with the real estate office's three questions: whether a buyer is pre-approved, whether they have a house to sell, and when they need to move. Those are things a person can be specific about before anything has happened, and none of them appear on a contact form. The score sets the order of calls, never who gets to see a listing.",
     },
     {
       q: "Is it legal to score and route leads with software?",
-      a: "Scoring the team's own time is not the risk. The risk is scoring on anything that stands in for who a person is rather than what they said, and then delivering a different level of service on the back of it. For a real estate office, the Fair Housing Act, at 42 U.S.C. 3604, makes no exception for a routing rule, and Article 10 of the NAR Code of Ethics covers sexual orientation and gender identity, which the federal statute does not. Keep the inputs to the plans people describe, keep every score traceable to their own words, and never let the ranking change what anybody is allowed to see or ask. None of this is legal advice.",
+      a: "Scoring and routing leads with software is legal, and scoring the team's own time is not the risk. The risk is scoring on anything that stands in for who a person is rather than what they said, and then delivering a different level of service on the back of it. For a real estate office, the Fair Housing Act, at 42 U.S.C. 3604, makes no exception for a routing rule, and Article 10 of the NAR Code of Ethics covers sexual orientation and gender identity, which the federal statute does not. Keep the inputs to the plans people describe, keep every score traceable to their own words, and never let the ranking change what anybody is allowed to see or ask. None of this is legal advice.",
     },
   ],
 
