@@ -13,9 +13,12 @@ import { LETTERS, scoreQuiz, shuffleQuiz } from "@/lib/blog/quiz";
  * porch light and the windows on, and the stars out, on a pass. The two brands never share a
  * motif, so `brand` picks the whole drawing rather than a colour.
  *
- * WITHOUT JAVASCRIPT the server markup is the whole quiz as a list, each answer folded inside a
- * <details>, so nothing is hidden behind a script. With JavaScript the list is swapped for the
- * one-question-at-a-time run after mount; the run is shuffled on the client only, which keeps
+ * The quiz opens only when the reader clicks (his word, 2026-11-15: "it should be that way unless
+ * they click and then test comes up"). WITHOUT JAVASCRIPT the server markup is one closed
+ * <details> whose summary is "Take the quiz"; inside it the whole quiz as a list, each answer
+ * folded in its own <details>, so nothing is hidden behind a script. With JavaScript, after mount,
+ * the list is swapped for a closed invitation with one button; the click starts the
+ * one-question-at-a-time run at question 1. The run is shuffled on the client only, which keeps
  * the server and the first client render identical.
  *
  * Teaching, not scolding: whichever choice is tapped, the right answer is shown with its one
@@ -28,6 +31,9 @@ type Brand = "ai" | "realtylt";
 
 const ACCENT: Record<Brand, string> = { ai: "#c79bff", realtylt: "#28a8e0" };
 const WRONG = "#f2a38f";
+const TAKE = "Take the quiz";
+const WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
+const countWord = (n: number) => WORDS[n] ?? String(n);
 
 export function Quiz({
   band,
@@ -51,6 +57,7 @@ export function Quiz({
 }) {
   const dark = band === "night";
   const [live, setLive] = useState(false);
+  const [started, setStarted] = useState(false);
   const [run, setRun] = useState<QuizQuestion[]>(questions);
   const [at, setAt] = useState(0);
   const [picks, setPicks] = useState<(number | null)[]>([]);
@@ -70,7 +77,7 @@ export function Quiz({
   useEffect(() => {
     if (!moved.current) return;
     (done ? resultRef.current : headRef.current)?.focus({ preventScroll: false });
-  }, [at, done]);
+  }, [at, done, started]);
 
   const muted = dark ? "text-paper/65" : "text-stone";
   const strong = dark ? "text-paper" : "text-ink";
@@ -83,6 +90,7 @@ export function Quiz({
     setPicks([]);
     setAt(0);
     setDone(false);
+    setStarted(true);
   };
 
   return (
@@ -96,9 +104,36 @@ export function Quiz({
         <h2 className={`mt-5 max-w-2xl text-2xl font-light leading-[1.25] tracking-[-0.015em] md:text-[34px] ${strong}`}>
           {title}
         </h2>
+        {!started && (
+          <p className={`mt-4 max-w-2xl text-base leading-relaxed ${dark ? "text-paper/80" : "text-ink-soft"}`}>
+            {countWord(questions.length)} questions on what this page taught. It takes about two minutes.
+          </p>
+        )}
 
         {!live ? (
-          <QuizList questions={questions} dark={dark} muted={muted} strong={strong} rule={rule} />
+          <details className="mt-8 max-w-3xl" data-quiz-invite>
+            <summary
+              className={`qz-start inline-flex min-h-12 cursor-pointer items-center rounded-xl px-6 text-base font-bold ${
+                dark ? "bg-paper text-ink" : "bg-ink text-paper"
+              }`}
+            >
+              {TAKE}
+            </summary>
+            <QuizList questions={questions} dark={dark} muted={muted} strong={strong} rule={rule} />
+          </details>
+        ) : !started ? (
+          <div className="mt-8 max-w-3xl" data-quiz-invite>
+            <button
+              type="button"
+              onClick={start}
+              data-quiz-start
+              className={`qz-start inline-flex min-h-12 items-center rounded-xl px-6 text-base font-bold ${
+                dark ? "bg-paper text-ink hover:bg-paper/90" : "bg-ink text-paper hover:bg-ink-soft"
+              }`}
+            >
+              {TAKE}
+            </button>
+          </div>
         ) : done ? (
           <Result
             brand={brand}
@@ -608,7 +643,9 @@ function House({ lit }: { lit: boolean }) {
 /** Every animation starts from the dim frame and rests on the lit one (fill-mode both), so
  * with reduced motion, where animation is removed, the base style IS the finished frame. */
 const QUIZ_CSS = `
-.qz-choice:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+.qz-choice:focus-visible, .qz-start:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+summary.qz-start { list-style: none; }
+summary.qz-start::-webkit-details-marker { display: none; }
 @keyframes qz-bloom { from { opacity: 0; transform: scale(0.82); } to { opacity: 1; transform: scale(1); } }
 @keyframes qz-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes qz-on { from { opacity: 0.08; } to { opacity: 1; } }
