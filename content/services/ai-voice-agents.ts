@@ -20,10 +20,10 @@ export const aiVoiceAgents: Service = {
   tier: "flagship",
 
   eyebrow: "Voice · Answering and call-backs",
-  title: "An AI voice agent that answers the calls an owner misses",
-  lede: "The phone rings while the owner is on a roof, with a patient or halfway through a haircut, and the caller tries the next business on the list. We set up an AI voice agent that answers those calls, says it is an AI assistant, answers from the information the owner approved and books the next step. Anything it cannot check goes to a person.",
+  title: "An AI receptionist that answers the calls an owner misses",
+  lede: "An AI receptionist for a small business is an AI voice agent that answers the calls the owner cannot take, says it is an AI assistant, answers from the information the owner approved and books the next step. The phone rings while the owner is on a roof, with a patient or halfway through a haircut, and the caller tries the next business on the list. Anything it cannot check goes to a person.",
   specs: ["answers when nobody can", "says it is an AI", "books on your calendar", "call notes to your CRM"],
-  why: "A call nobody answers can go to the next business on the list. The agent picks up, takes down what the job is, where it is and how soon it is needed, and books the visit. The person who calls back has the notes in hand, and nobody on the team has to sit by the phone to make that happen.",
+  why: "An AI receptionist matters because a call nobody answers can go to the next business on the list. The agent picks up, takes down what the job is, where it is and how soon it is needed, and books the visit. The person who calls back has the notes in hand, and nobody on the team has to sit by the phone to make that happen.",
   keywords: [
     "ai voice agent",
     "ai receptionist for small business",
@@ -32,8 +32,17 @@ export const aiVoiceAgents: Service = {
     "ai voice agent for real estate",
   ],
 
+  sources: [
+    { text: "Harvard Business Review, The Short Life of Online Sales-Leads (2011)", href: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads" },
+    { text: "PNAS (2009), universals and cultural variation in turn-taking", href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2705608/" },
+    { text: "FCC 24-17, artificial voices under the TCPA", href: "https://docs.fcc.gov/public/attachments/FCC-24-17A1.pdf" },
+    { text: "47 CFR 64.1200, calling hours and consent", href: "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-B/part-64/subpart-L/section-64.1200" },
+    { text: "New York Penal Law 250.05", href: "https://codes.findlaw.com/ny/penal-law/pen-sect-250-05/" },
+    { text: "California Penal Code 632", href: "https://codes.findlaw.com/ca/penal-code/pen-sect-632/" },
+  ],
+
   seo: {
-    title: "AI voice agent and answering service for small business",
+    title: "AI receptionist for small business: answers missed calls",
     description:
       "An AI voice agent that answers the calls a busy owner misses, says it is an AI assistant, books the visit and passes anything it cannot check to a person.",
   },
@@ -53,7 +62,7 @@ export const aiVoiceAgents: Service = {
   },
 
   whatItIs: [
-    "An AI voice agent is a phone voice that answers when nobody at the business can. It says at the start that it is an AI assistant. It answers from the information the owner approved, asks the first questions a person would ask, and books the next step on the calendar. Anything it cannot check, such as a price, a diagnosis or a promise, becomes a call back from a person, with the notes already written.",
+    "An AI receptionist, or AI voice agent, is a phone voice that answers when nobody at the business can. It says at the start that it is an AI assistant. It answers from the information the owner approved, asks the first questions a person would ask, and books the next step on the calendar. Anything it cannot check, such as a price, a diagnosis or a promise, becomes a call back from a person, with the notes already written.",
     "It fits businesses whose calls come in while hands are busy: a roofer or a plumber on a job, a dental or accounting office whose front desk is with someone, a salon, spa or gym in the middle of an appointment, a real estate office out on a showing. It does not fit an office where a person already answers almost every call and calls after hours are rare. There a voicemail greeting that says when someone will call back, and a team that keeps that promise, does the job without us.",
     "Speed matters because people move on. In 2011 Harvard Business Review reported an audit of 2,241 US companies, each sent an inquiry through its own website: 23 percent never replied at all, and among the companies that replied within 30 days the average reply took 42 hours. That is cross-industry research about web forms rather than phone calls, and not a study of any one trade. Read it as the shape of the problem, not as a benchmark.",
     "The pause decides whether it sounds usable. On a phone there is no face to read, so a silence makes the caller guess whether the line dropped or nobody is there. A 2009 study of conversation in 10 languages, in the Proceedings of the National Academy of Sciences, found the most common gap between one speaker finishing and the next starting was between 0 and 200 milliseconds. So the setup keeps the agent's pause as short as it can, and we ask every owner to test it on a real call before it goes live rather than take anyone's figure, ours included.",
@@ -133,7 +142,7 @@ export const aiVoiceAgents: Service = {
   ],
 
   limits: [
-    "It does not close a sale or agree a price. Much of what a person hears on a first call is not in the words, and a transcript records none of it.",
+    "An AI voice agent does not close a sale or agree a price. Much of what a person hears on a first call is not in the words, and a transcript records none of it.",
     "It does not take over the front desk. It takes the repeatable first contact off the desk: picking up, asking the first questions and booking the next step, so the people there have more time for the conversations that need them.",
     "It will not invent a price, a diagnosis, a legal position or a fact about a job. Anything it cannot check from the approved page becomes a call back from a person.",
     "It does not pretend to be a person. It says in its first sentence that it is an AI assistant, and we do not build one that claims to be a particular human being.",
@@ -147,39 +156,39 @@ export const aiVoiceAgents: Service = {
   faqs: [
     {
       q: "What is an AI voice agent for a small business?",
-      a: "A phone voice that answers the calls nobody at the business can take. It says it is an AI assistant, holds a short conversation from the information and calendar the owner approved, and books the next step. Anything it cannot check, such as a price, becomes a call back from a person, with the notes written.",
+      a: "An AI voice agent for a small business is a phone voice that answers the calls nobody at the business can take. It says it is an AI assistant, holds a short conversation from the information and calendar the owner approved, and books the next step. Anything it cannot check, such as a price, becomes a call back from a person, with the notes written.",
     },
     {
       q: "Can an AI phone answering service work for a small business?",
-      a: "It works where calls come in while hands are busy: trades on job sites, offices whose front desk is with someone, salons, spas and gyms mid-appointment, a real estate office on showings. It is the wrong buy where a person already answers almost every call and calls after hours are rare. A voicemail greeting that names when someone will call back, kept every time, does that job for free.",
+      a: "An AI phone answering service works for a small business where calls come in while hands are busy: trades on job sites, offices whose front desk is with someone, salons, spas and gyms mid-appointment, a real estate office on showings. It is the wrong buy where a person already answers almost every call and calls after hours are rare. A voicemail greeting that names when someone will call back, kept every time, does that job for free.",
     },
     {
       q: "Will callers know they are talking to an AI?",
-      a: "Yes. The agents we set up say they are an AI assistant in their first sentence, and we will not build one that pretends to be a particular human being. Where the call is recorded, the opening says that too. Saying it is an AI and asking consent to record are two different things, and the script handles both.",
+      a: "Yes, callers know they are talking to an AI, because the agents we set up say they are an AI assistant in their first sentence, and we will not build one that pretends to be a particular human being. Where the call is recorded, the opening says that too. Saying it is an AI and asking consent to record are two different things, and the script handles both.",
     },
     {
       q: "How fast does an AI phone agent respond during a call?",
-      a: "The pause is kept as short as the setup allows, because on a phone a silence makes the caller wonder whether the line dropped. In ordinary conversation the most common gap between turns is under a fifth of a second, by a 2009 study of 10 languages. We do not quote a figure for the agent: test it on a real call before it goes live, ours included.",
+      a: "An AI phone agent keeps the pause as short as the setup allows, because on a phone a silence makes the caller wonder whether the line dropped. In ordinary conversation the most common gap between turns is under a fifth of a second, by a 2009 study of 10 languages. We do not quote a figure for the agent: test it on a real call before it goes live, ours included.",
     },
     {
       q: "Can it call new inquiries back automatically?",
-      a: "Yes, after two checks. The person must have given consent for that kind of call, and it must be within calling hours where they live, 8 a.m. to 9 p.m. Then it calls, asks the first questions and books a time, and it can try once more later the same day inside those hours. If either check fails, the call is scheduled for a person.",
+      a: "Yes, an AI voice agent can call new inquiries back automatically, after two checks. The person must have given consent for that kind of call, and it must be within calling hours where they live, 8 a.m. to 9 p.m. Then it calls, asks the first questions and books a time, and it can try once more later the same day inside those hours. If either check fails, the call is scheduled for a person.",
     },
     {
       q: "What happens when it cannot answer something?",
-      a: "It says so plainly and books a call back from a person rather than guessing. It will not invent a price, a diagnosis, a legal position or a fact about a job. The person who calls back gets the transcript and the caller's answers first, so the caller does not have to start over.",
+      a: "When an AI voice agent cannot answer something, it says so plainly and books a call back from a person rather than guessing. It will not invent a price, a diagnosis, a legal position or a fact about a job. The person who calls back gets the transcript and the caller's answers first, so the caller does not have to start over.",
     },
     {
       q: "Does it take over the front desk?",
-      a: "No. It takes the repeatable first contact off the desk: answering the calls nobody can pick up, calling back new inquiries where the consent and calling-hours checks pass, asking the first questions the owner approved, and booking a time. The people at the desk keep every conversation that needs judgment, and have more time for them.",
+      a: "No, an AI voice agent does not take over the front desk. It takes the repeatable first contact off the desk: answering the calls nobody can pick up, calling back new inquiries where the consent and calling-hours checks pass, asking the first questions the owner approved, and booking a time. The people at the desk keep every conversation that needs judgment, and have more time for them.",
     },
     {
       q: "Does it work with my calendar and my CRM?",
-      a: "Yes. It reads the live availability, so it only offers slots that are really open, and it writes the transcript, the answers and the outcome back to the CRM after every call. It plugs into the systems the business already runs rather than adding another one to keep up.",
+      a: "Yes, an AI voice agent works with a calendar and a CRM. It reads the live availability, so it only offers slots that are really open, and it writes the transcript, the answers and the outcome back to the CRM after every call. It plugs into the systems the business already runs rather than adding another one to keep up.",
     },
     {
       q: "Do I need consent to record these calls?",
-      a: "It is decided by the caller's state rather than the business's. In New York the offense is eavesdropping, Penal Law section 250.05, and the definition that governs a phone call, at section 250.00, is the recording of a telephonic communication by a person other than a sender or receiver of it, without the consent of either. So a party to the call can consent. California's Penal Code section 632 makes it an offense to record a confidential communication without the consent of all parties. On an inbound call the caller's state is rarely known until they say, so the workable rule is to plan for the stricter one and to say it at the start of the call. None of this is legal advice; the article on this service carries both statutes.",
+      a: "Whether a call can be recorded is decided by the caller's state rather than the business's. In New York the offense is eavesdropping, Penal Law section 250.05, and the definition that governs a phone call, at section 250.00, is the recording of a telephonic communication by a person other than a sender or receiver of it, without the consent of either. So a party to the call can consent. California's Penal Code section 632 makes it an offense to record a confidential communication without the consent of all parties. On an inbound call the caller's state is rarely known until they say, so the workable rule is to plan for the stricter one and to say it at the start of the call. None of this is legal advice; the article on this service carries both statutes.",
     },
     {
       q: "Is it legal to have an AI make outbound calls?",
