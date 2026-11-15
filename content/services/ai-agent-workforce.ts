@@ -25,9 +25,9 @@ export const aiAgentWorkforce: Service = {
 
   eyebrow: "AI assistants · One per repeated job",
   title: "AI assistants for the jobs a small team repeats",
-  lede: "The same quote gets written from site notes every evening, the same inbox gets sorted every morning, the same paperwork gets chased every week, and the owner does all of it after hours. We set up AI assistants, each one briefed for a single job the team repeats, connected to the tools that job needs. They draft and prepare; a named person on the team reads, approves and sends, and gets the evenings back.",
+  lede: "AI assistants for a small business each take one job the team repeats. The same quote gets written from site notes every evening, the same inbox gets sorted every morning, the same paperwork gets chased every week, and the owner does all of it after hours. We brief each assistant for a single job and connect it to the tools that job needs. They draft and prepare; a named person on the team reads, approves and sends, and gets the evenings back.",
   specs: ["one assistant per job", "briefed in writing", "plugs into your tools", "drafts for a person to approve"],
-  why: "A small team cannot add a person for every task that repeats. It can hand each one to its own AI assistant that drafts the work, so the people spend their time on the reading, the deciding and the customers rather than on the typing.",
+  why: "AI assistants matter because a small team cannot add a person for every task that repeats. It can hand each one to its own AI assistant that drafts the work, so the people spend their time on the reading, the deciding and the customers rather than on the typing.",
   keywords: [
     "ai assistant for small business",
     "ai agents for small business",
@@ -67,7 +67,7 @@ export const aiAgentWorkforce: Service = {
   },
 
   whatItIs: [
-    "It is a set of AI assistants, each one pointed at a single recurring job. An assistant is not a general chatbot somebody has to re-explain the business to every morning. It is set up for one task, it knows the tools that task uses, and it does that task the same way every time.",
+    "An AI agent workforce is a set of AI assistants, each one pointed at a single recurring job. An assistant is not a general chatbot somebody has to re-explain the business to every morning. It is set up for one task, it knows the tools that task uses, and it does that task the same way every time.",
     "The gain is that they all run at once, and that each one hands a person a draft instead of a blank page. The inbox one, the quote one and the paperwork one can all run overnight. What grows with each one added is the reading, and that is the limit that actually binds, rather than the software.",
     "It fits a small team that repeats the same written work every week: a contractor writing quotes from site notes, a dental or accounting office sorting the same kinds of email, a salon or gym drafting the week's posts and replies, a real estate office preparing the same market report before every appointment. The people stay on the work; the assistants take the first draft.",
   ],
@@ -126,7 +126,7 @@ export const aiAgentWorkforce: Service = {
   ],
 
   limits: [
-    "It does not think for anyone. An assistant does one job the way it was described, so a vague brief produces output that is fast, consistent and useless.",
+    "An AI assistant does not think for anyone. An assistant does one job the way it was described, so a vague brief produces output that is fast, consistent and useless.",
     "It is not a hire. There is nobody to take responsibility, notice that the job has changed, or say the process itself is wrong. Those stay with the people in the business.",
     "It does not remove the review. Anything that reaches a customer is read by a person first. An assistant that drafts is worth more than one that sends.",
     "It does not fix a job nobody has written down. If the task lives only in someone's head and changes every time, describing it is the first piece of work, not building it.",
@@ -136,19 +136,19 @@ export const aiAgentWorkforce: Service = {
   faqs: [
     {
       q: "What is an AI agent workforce?",
-      a: "It is a set of AI assistants, each set up for one recurring task and connected to the tools that task needs. Instead of one general chatbot that has to be briefed every time, there is an assistant for the inbox, one for quotes and one for paperwork, all running at once and all drafting for a person on the team to approve.",
+      a: "An AI agent workforce is a set of AI assistants, each set up for one recurring task and connected to the tools that task needs. Instead of one general chatbot that has to be briefed every time, there is an assistant for the inbox, one for quotes and one for paperwork, all running at once and all drafting for a person on the team to approve.",
     },
     {
       q: "How many AI assistants can I run at once?",
-      a: "In theory, as many as there are jobs for, because they run at the same time and one does not queue behind another. In practice the limit is not the software. It is how many streams of output one person can read before the reading quietly stops. It is a number worth working out rather than assuming, and it is the one to settle first.",
+      a: "A business can run in theory as many AI assistants as there are jobs for, because they run at the same time and one does not queue behind another. In practice the limit is not the software. It is how many streams of output one person can read before the reading quietly stops. It is a number worth working out rather than assuming, and it is the one to settle first.",
     },
     {
       q: "What happens when one of them gets something wrong?",
-      a: "It produces something wrong that reads exactly like everything it produced when it was right. That is why the answer has to be built in rather than left to attention: anything unclear stops and asks rather than decides, anything that goes to a customer is drafted rather than sent, there is a readable record of what each assistant did, and somebody reads a sample of the output on a fixed day each week.",
+      a: "When an AI assistant gets something wrong, it produces something wrong that reads exactly like everything it produced when it was right. That is why the answer has to be built in rather than left to attention: anything unclear stops and asks rather than decides, anything that goes to a customer is drafted rather than sent, there is a readable record of what each assistant did, and somebody reads a sample of the output on a fixed day each week.",
     },
     {
       q: "Do I need technical skills to use them?",
-      a: "No. The owner describes the job the way they would describe it to a new assistant on their first day, and we build and tune the agent. The team deals with the output, not the plumbing.",
+      a: "No, an owner needs no technical skills to use AI assistants. The owner describes the job the way they would describe it to a new assistant on their first day, and we build and tune the agent. The team deals with the output, not the plumbing.",
     },
     {
       q: "How is this different from using a general AI chatbot?",
@@ -156,7 +156,7 @@ export const aiAgentWorkforce: Service = {
     },
     {
       q: "Will AI assistants take over my staff's jobs?",
-      a: "No. They take the first draft of the repeated written work, and every draft still goes to a person who reads, decides and sends. The team gets time back for the customers and the judgment calls, which is the part of the work only they can do.",
+      a: "No, AI assistants do not take over a staff's jobs. They take the first draft of the repeated written work, and every draft still goes to a person who reads, decides and sends. The team gets time back for the customers and the judgment calls, which is the part of the work only they can do.",
     },
   ],
 
