@@ -24,7 +24,7 @@ export const marketingAutomation: Service = {
 
   eyebrow: "Marketing · Email and text that react",
   title: "Email and text marketing that reacts to customers",
-  lede: "Somebody asked about a patio in March, got one reply, and heard nothing until a generic newsletter in July. We set up email and text marketing that reacts to what each customer actually does: a question, an opened estimate, a click on a seasonal offer. The next message goes out on its own, the quiet ones hear less rather than more, and the owner is told the moment someone looks ready.",
+  lede: "Email and text marketing automation for a small business reacts to what each customer actually does: a question, an opened estimate, a click on a seasonal offer. Somebody asked about a patio in March, got one reply, and heard nothing until a generic newsletter in July. The next message goes out on its own, the quiet ones hear less rather than more, and the owner is told the moment someone looks ready.",
   specs: ["email and text that react", "set off by what people do", "backs off on silence", "sent so it arrives"],
   why: "Marketing automation matters because a customer who is months from deciding hears from a lot of businesses in between, and most of it is generic and easy to forget. Messages set off by what a customer does are how a business stays useful across that wait, and nobody has to remember to send them.",
   keywords: [
