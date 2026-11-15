@@ -3630,7 +3630,7 @@ Most businesses fall into one of these groups, and the group decides the next st
 
 [[scene:fits]]
 
-## What should an owner do first about an AI chatbot?
+## What to do first with an AI chatbot
 
 The first step with an AI chatbot is one job, taken a week at a time, ending with a decision written down.
 

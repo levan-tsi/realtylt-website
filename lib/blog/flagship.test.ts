@@ -96,7 +96,7 @@ describe("flagshipToc", () => {
       { id: "what-should-an-ai-chatbot-never-do", label: "What it will not do" },
       { id: "scene-teardown", label: "The teardown", scene: true },
       { id: "which-businesses-an-ai-chatbot-fits-and-which-it-does-not", label: "Who it fits" },
-      { id: "what-should-an-owner-do-first-about-an-ai-chatbot", label: "Your first weeks" },
+      { id: "what-to-do-first-with-an-ai-chatbot", label: "Your first weeks" },
       { id: "scene-roadmap", label: "The roadmap", scene: true },
       { id: "common-questions-about-ai-chatbots-answered-honestly", label: "Common questions" },
       { id: "scene-quiz", label: "Quiz", scene: true },

@@ -96,7 +96,7 @@ export const CHAT_QUIZ: QuizQuestion[] = [
       "The last thirty website messages are read and the page of answers is written",
     ],
     answer: 3,
-    why: 'Week 1 reads the messages and writes the page of answers a new hire would need; see "What should an owner do first about an AI chatbot?".',
+    why: 'Week 1 reads the messages and writes the page of answers a new hire would need; see "What to do first with an AI chatbot".',
   },
   {
     q: "Which is a real reason to leave the assistant switched off?",

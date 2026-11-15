@@ -504,7 +504,7 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
     "is-an-ai-chatbot-worth-it-for-a-small-business": "Worth automating?",
     "what-should-an-ai-chatbot-never-do": "What it will not do",
     "which-businesses-an-ai-chatbot-fits-and-which-it-does-not": "Who it fits",
-    "what-should-an-owner-do-first-about-an-ai-chatbot": "Your first weeks",
+    "what-to-do-first-with-an-ai-chatbot": "Your first weeks",
     "common-questions-about-ai-chatbots-answered-honestly": "Common questions",
     "what-to-do-next-about-an-ai-chatbot": "What to do",
   },
