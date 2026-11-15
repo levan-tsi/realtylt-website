@@ -26,9 +26,9 @@ export const invoicingAndPayments: Service = {
 
   eyebrow: "Payments · Invoices and deposits",
   title: "Automated invoicing: get paid on time without chasing",
-  lede: "The job is finished on Friday, the invoice goes out the following Thursday, and the reminder that should follow it never gets sent at all. We set up invoicing that raises the invoice when the job is booked or done, asks for a deposit up front with a tap-to-pay link, and follows up politely on anything unpaid on a schedule the owner sets. After the last reminder, anything still open goes to a person with the history attached.",
+  lede: "Automated invoicing for a small business raises the invoice when the job is booked or done, asks for a deposit up front with a tap-to-pay link, and follows up politely on anything unpaid on a schedule the owner sets. Without it, the job is finished on Friday, the invoice goes out the following Thursday, and the reminder that should follow it never gets sent at all. After the last reminder, anything still open goes to a person with the history attached.",
   specs: ["invoices raised on the day", "deposit and tap-to-pay links", "polite reminders on schedule", "tracks who owes what"],
-  why: "Nobody enjoys sending the third reminder, which is why it does not get sent. Automate the invoice and the follow-up, and both happen on the day they were supposed to, worded the same way every time. The owner keeps the hard conversations and loses the awkward ones.",
+  why: "Automated invoicing matters because nobody enjoys sending the third reminder, which is why it does not get sent. Automate the invoice and the follow-up, and both happen on the day they were supposed to, worded the same way every time. The owner keeps the hard conversations and loses the awkward ones.",
   keywords: [
     "automated invoicing software",
     "invoice payment reminders",
@@ -69,7 +69,7 @@ export const invoicingAndPayments: Service = {
   },
 
   whatItIs: [
-    "It is the part of getting paid that everyone puts off. The invoice that goes out three days late. The deposit nobody asked for. The reminder that feels awkward to send. And the fortnight of silence that follows.",
+    "Automated invoicing is the part of getting paid that everyone puts off. The invoice that goes out three days late. The deposit nobody asked for. The reminder that feels awkward to send. And the fortnight of silence that follows.",
     "The system raises the invoice when the thing that creates the charge happens. It takes the deposit up front with a tap-to-pay link. It follows up on anything unpaid, on a schedule the owner sets. It tracks who owes what, so the owner always knows. And it hands the case to a person only when it truly needs one.",
     "It fits any business that sends invoices: a contractor taking deposits before a job, a cleaning or landscaping company billing every month, an accounting office sending engagement fees, a salon or spa selling packages. For a real estate office the harder half comes earlier: a referral fee falls due because of a closing in somebody else's office, and nothing can be chased until somebody asks whether it has happened. There a standing job goes and asks.",
   ],
@@ -140,7 +140,7 @@ export const invoicingAndPayments: Service = {
   ],
 
   limits: [
-    "It does not collect a debt. After the sequence it hands the case back to a person with the full history. A customer who will not pay is still a conversation somebody has to have.",
+    "Automated invoicing does not collect a debt. After the sequence it hands the case back to a person with the full history. A customer who will not pay is still a conversation somebody has to have.",
     "It does not know an outside event happened. It can ask, cheaply and again and again. Anybody at the other end can decline to answer.",
     "It does not handle a real estate commission, and does not claim to. A commission comes out of a closing somebody else runs, on a date the deal sets, which is a different thing from an invoice the business sends and follows up.",
     "It does not make money arrive sooner than the payment system allows. When a cheque deposit can be spent is set by Regulation CC, which stops the ordinary schedule above a set amount in one banking day, and by the bank's own policy inside it. No software moves that.",
@@ -152,31 +152,31 @@ export const invoicingAndPayments: Service = {
   faqs: [
     {
       q: "How do I get clients to pay on time?",
-      a: "Raise the invoice when the thing that creates the charge happens, rather than at the end of the week. Ask for a deposit up front where the terms allow it. Then follow up on a fixed schedule, so the awkward second and third reminders really do go out. Where money falls due because of somebody else's work, such as a referral fee, somebody has to ask whether it has happened; there is no invoice to chase until they do.",
+      a: "To get clients to pay on time, raise the invoice when the thing that creates the charge happens, rather than at the end of the week. Ask for a deposit up front where the terms allow it. Then follow up on a fixed schedule, so the awkward second and third reminders really do go out. Where money falls due because of somebody else's work, such as a referral fee, somebody has to ask whether it has happened; there is no invoice to chase until they do.",
     },
     {
       q: "Can it take a deposit before the job starts?",
-      a: "Yes. A tap-to-pay link goes out with the booking confirmation. Whether a deposit is right at all is a question about the business's terms, and for some kinds of money held for clients it is a question about which account it is allowed to sit in.",
+      a: "Yes, automated invoicing can take a deposit before the job starts. A tap-to-pay link goes out with the booking confirmation. Whether a deposit is right at all is a question about the business's terms, and for some kinds of money held for clients it is a question about which account it is allowed to sit in.",
     },
     {
       q: "What happens if they still do not pay?",
-      a: "After the automatic sequence, it comes to a person with the full history: what was sent, when, and what was opened. At that point it is a real conversation, and nobody has spent their own time getting there.",
+      a: "When a client still does not pay after the automatic sequence, the invoice comes to a person with the full history: what was sent, when, and what was opened. At that point it is a real conversation, and nobody has spent their own time getting there.",
     },
     {
       q: "Somebody emailed asking us to change their bank details. What now?",
-      a: "Phone them on a number the business already had before that email arrived, and confirm it with a person. Not the number in the message, and not one found this afternoon. The FBI's Internet Crime Complaint Center received 21,442 business email compromise complaints in 2024, with reported losses in the billions. No software replaces the phone call.",
+      a: "When someone emails to change their bank details, phone them on a number the business already had before that email arrived, and confirm it with a person. Not the number in the message, and not one found this afternoon. The FBI's Internet Crime Complaint Center received 21,442 business email compromise complaints in 2024, with reported losses in the billions. No software replaces the phone call.",
     },
     {
       q: "Does this handle a real estate commission?",
-      a: "No, and any product that says it does should be asked to explain exactly how, in that state, with that closing agent. A commission is paid out of a closing another party runs, on a date the deal sets. What automation can usefully do around it is track that the deal happened and reconcile what arrived against what was expected.",
+      a: "No, automated invoicing does not handle a real estate commission, and any product that says it does should be asked to explain exactly how, in that state, with that closing agent. A commission is paid out of a closing another party runs, on a date the deal sets. What automation can usefully do around it is track that the deal happened and reconcile what arrived against what was expected.",
     },
     {
       q: "What should a payment reminder say?",
-      a: "The business's name, the invoice number, the amount due as it appears on the invoice, the date it was due and one link to pay, in a sentence that assumes the customer forgot rather than refused. The second reminder says the same thing a little more plainly. Anything sharper than that is a conversation for a person, not a template.",
+      a: "A payment reminder should say the business's name, the invoice number, the amount due as it appears on the invoice, the date it was due and one link to pay, in a sentence that assumes the customer forgot rather than refused. The second reminder says the same thing a little more plainly. Anything sharper than that is a conversation for a person, not a template.",
     },
     {
       q: "Does it work with my accounting software?",
-      a: "It connects to the invoicing and accounting tools the business already runs and does not replace them, so the record of who owes what stays in one place, and the matching happens against the real bank feed rather than against a list of what was sent.",
+      a: "Automated invoicing connects to the invoicing and accounting tools the business already runs and does not replace them, so the record of who owes what stays in one place, and the matching happens against the real bank feed rather than against a list of what was sent.",
     },
   ],
 
