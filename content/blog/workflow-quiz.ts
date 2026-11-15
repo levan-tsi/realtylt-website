@@ -36,7 +36,7 @@ export const WORKFLOW_QUIZ: QuizQuestion[] = [
       "How long people spent on one piece of work before switching",
     ],
     answer: 2,
-    why: 'It is elapsed time before same-day resumption, usually with other activities in between, not time thrown away; see "What ninety seconds actually costs".',
+    why: 'It is elapsed time before same-day resumption, usually with other activities in between, not time thrown away; see "What does ninety seconds of busywork really cost?".',
   },
   {
     q: "In our assessment, what sets the order of the list of jobs?",
@@ -47,13 +47,13 @@ export const WORKFLOW_QUIZ: QuizQuestion[] = [
       "How many steps the job has",
     ],
     answer: 0,
-    why: 'Each job gets an impact score and a risk score from 1 to 5, and frequency only feeds them; see "How to find your own version of this".',
+    why: 'Each job gets an impact score and a risk score from 1 to 5, and frequency only feeds them; see "How do you find your own jobs for workflow automation?".',
   },
   {
     q: "A job's result reaches a customer. What is the lowest its risk score can be?",
     choices: ["1", "2", "3", "5"],
     answer: 2,
-    why: 'One yes on the four checks means the risk is at least 3 and a person approves every result; see "How to find your own version of this".',
+    why: 'One yes on the four checks means the risk is at least 3 and a person approves every result; see "How do you find your own jobs for workflow automation?".',
   },
   {
     q: "On day 7, with no reply to the sent quote, what does the quote chain do?",
@@ -64,7 +64,7 @@ export const WORKFLOW_QUIZ: QuizQuestion[] = [
       "Offers the customer a discount",
     ],
     answer: 2,
-    why: 'It sends no further message: a task lands on the owner\'s list to call, and a person decides; see "How to follow up on every quote without chasing it".',
+    why: 'It sends no further message: a task lands on the owner\'s list to call, and a person decides; see "How does workflow automation follow up on every quote?".',
   },
   {
     q: "The stop question returns \"nothing breaks and nobody notices\". What is the verdict?",
@@ -75,7 +75,7 @@ export const WORKFLOW_QUIZ: QuizQuestion[] = [
       "Stop doing it rather than automate it",
     ],
     answer: 3,
-    why: 'A job nobody needs is stopped, not wired; see "Is it worth automating".',
+    why: 'A job nobody needs is stopped, not wired; see "Is workflow automation worth it for your business?".',
   },
   {
     q: "In our method, what happens to a job with an impact of 1 or 2 out of 5?",
@@ -86,7 +86,7 @@ export const WORKFLOW_QUIZ: QuizQuestion[] = [
       "It runs twice a day",
     ],
     answer: 0,
-    why: 'A low-impact job saves little and is one more thing that can break, so it is left alone; see "Is it worth automating".',
+    why: 'A low-impact job saves little and is one more thing that can break, so it is left alone; see "Is workflow automation worth it for your business?".',
   },
   {
     q: "A chain fails one run in twenty. What does the documented default pause rule do about it?",
@@ -108,7 +108,7 @@ export const WORKFLOW_QUIZ: QuizQuestion[] = [
       "Use a copy of the chain on test records and test logins, and try to send without approval",
     ],
     answer: 3,
-    why: 'A test copy, test records and test logins, so nothing reaches a customer; see "The first month, and the two things to do in it".',
+    why: 'A test copy, test records and test logins, so nothing reaches a customer; see "What should you do in the first month of workflow automation?".',
   },
   {
     q: "What does week four of the roadmap end with?",
@@ -119,6 +119,6 @@ export const WORKFLOW_QUIZ: QuizQuestion[] = [
       "A new customer list",
     ],
     answer: 2,
-    why: 'Week four breaks the test copy on purpose and ends with the decision and its owner written down; see "What to do first".',
+    why: 'Week four breaks the test copy on purpose and ends with the decision and its owner written down; see "What should an owner do first about workflow automation?".',
   },
 ];

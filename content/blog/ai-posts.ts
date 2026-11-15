@@ -4180,7 +4180,7 @@ None of this has anything to score unless a conversation happened first. [The 11
 
 [[scene:funnel]]`;
 
-export const WORKFLOW_AUTOMATION_POST = `We help local business owners find the small jobs they retype from one program into another and the quotes nobody follows up, and decide which are worth connecting. The first connected job comes with a named owner and an alert when it fails. This guide explains workflow automation for small business in plain words, so you can find your own busywork and judge which jobs are worth connecting.
+export const WORKFLOW_AUTOMATION_POST = `We help local business owners with workflow automation for small business: finding the small jobs they retype from one program into another and the quotes nobody follows up, and deciding which are worth connecting. The first connected job comes with a named owner and an alert when it fails. This guide explains it in plain words, so you can find your own busywork and judge which jobs are worth connecting.
 
 It is written for owners who run the front desk themselves or with a small team: a roofer, a plumbing or heating company, a dental, accounting or insurance office, a salon, spa or gym, a real estate or title office. You will learn how to follow up on every quote without chasing it, how to list your small jobs in an hour, how we score each for impact and risk before anything is built, what an AI readiness assessment hands over, a four-week plan that ends with a decision written down, and how these chains fail quietly.
 
@@ -4192,7 +4192,9 @@ In this invented example, that yellow is the busywork tax: forty small jobs on h
 
 [[scene:reel]]
 
-## What ninety seconds actually costs
+## What does ninety seconds of busywork really cost?
+
+The cost of the busywork that workflow automation takes out is more than the ninety seconds an owner can see.
 
 In 2005 three researchers at the Donald Bren School of Information and Computer Science, University of California, Irvine, shadowed twenty four information workers at their desks and [published what they found](https://ics.uci.edu/~gmark/CHI2005.pdf). There were seven managers, nine analysts and eight developers. Each was formally observed and timed for about three days, an average of twenty five hours and forty two minutes per person, with every action noted to the second.
 
@@ -4208,9 +4210,9 @@ The third bar matters if your week has steps that only happen when somebody reme
 
 One caution. Those were desk workers at one technology company, in one field study, and none of them ran a small business. It tells you what interruption does to that kind of work, not what your own week looks like, and it cannot be turned into a dollar figure for your business. A cheaper first step than any study: for a week, keep a tally on a sticky note each time a small job pulls you off the work in front of you.
 
-## What it actually looks like
+## What does an inquiry look like before workflow automation?
 
-An invented example, written out step by step, of an inquiry chain in a business that takes inquiries through a website form:
+An invented example, written out step by step, of an inquiry chain done by hand, the kind workflow automation replaces, in a business that takes inquiries through a website form:
 
 1. A customer fills in a form late at night.
 2. It lands in an inbox.
@@ -4231,7 +4233,7 @@ The useful exercise here is to pick one chain like this in your own business and
 
 ## What workflow automation for small business is, without the jargon
 
-It is plumbing between the tools you already pay for.
+Workflow automation for small business is plumbing between the tools you already pay for.
 
 Your customer list holds the contact. Your calendar holds the time. Your email holds the conversation. Your forms hold the intake. Your documents hold the job. Each of them knows things the others need, and today that information travels between them through a person with a mouse.
 
@@ -4250,9 +4252,9 @@ In the rebuilt chain, nobody retyped anything. The second record was never creat
 
 Before you wire anything, take one sheet and draw a line down the middle: clicks on the left, decisions on the right, for one job you did today. A decision you can write down as a rule a new hire could follow becomes a default the chain reads every time it runs. A decision you cannot write down stays with a person.
 
-## How to follow up on every quote without chasing it
+## How does workflow automation follow up on every quote?
 
-A sent quote is a good first chain because it happens every week, the steps are the same every time, and the owner notices when it is missed. An invented example shows the shape for a roofer.
+A sent quote is a good first chain for workflow automation because it happens every week, the steps are the same every time, and the owner notices when it is missed. An invented example shows the shape for a roofer.
 
 A quote for a roof repair goes out on Tuesday at 4:10pm. By hand, the owner means to ring on Friday, is on a roof on Friday, and the quote sits. Wired, the same quote starts a short chain, in which a person still approves every message a customer reads:
 
@@ -4272,7 +4274,7 @@ The same wiring fits other kinds of business.
 
 Workflow automation for a real estate or title office is this same wiring started from a signed contract instead of a quote: the inspection reminder, the document requests and the key dates land on the calendar, and a person reads the contract for what each date means. Whatever the trade, start from the one job that repeats most often.
 
-## How to find your own version of this
+## How do you find your own jobs for workflow automation?
 
 You do not need a consultant for the first pass. You need a piece of paper and an honest hour.
 
@@ -4296,9 +4298,9 @@ When you have that list in front of you, the sums are the easy part.
 
 [[scene:pull-quote]]
 
-## Is it worth automating
+## Is workflow automation worth it for your business?
 
-These are the screening questions we use in the assessment. They are our method, not a law of nature, and they are meant to make the list shorter.
+Workflow automation is worth it for a job that passes the screening questions we use in the assessment. They are our method, not a law of nature, and they are meant to make the list shorter.
 
 First, three questions about the job. Does it happen often enough that a failure would be noticed within a week? Can the rule be written down for a new hire? Does a wrong answer land where a person sees it first? Frequency alone does not make a failure visible, so the first question also asks whether a check is in place.
 
@@ -4314,7 +4316,7 @@ An invented example: a hair salon owner wants to automate her quarterly stock re
 
 Taking the ranked list through those questions crosses most jobs off, and what is left is the real shortlist.
 
-## What the AI readiness assessment hands over
+## What does the AI readiness assessment hand over for automation?
 
 The [AI readiness assessment](/services/ai-readiness-assessment) is these questions run with you, in one hour, on one real job from the last week, and it ends with a written plan rather than a build. What comes back is a short list in an order with the reason beside each line, the list of what was crossed off and why, and the precautions for what survives.
 
@@ -4340,7 +4342,7 @@ The requirement is the same whatever tool runs the chain: a failure is reported 
 
 The check that matters is simple: for each chain you run today, ask who is told when a run fails, and where the failed work goes. If nobody can answer, that is the first thing to fix, before anything new is built.
 
-## What it takes to run
+## What does workflow automation take to run?
 
 We print no price on this page. What a chain takes from the owner is mostly three things to settle and a little time each week. The first is how many systems the chain has to touch. The second is whether those systems have a usable connection for software to talk to. The third is how many steps need a judgement rather than a field copy.
 
@@ -4352,7 +4354,7 @@ The part people forget is ownership. A chain is software. It can break when a pr
 
 [[scene:cost-shape]]
 
-## The first month, and the two things to do in it
+## What should you do in the first month of workflow automation?
 
 The first weeks after go-live are when the gap shows between what a chain does and what the owner thought it would do, because that is the first time it meets real inquiries. Two habits in that month cost nothing.
 
@@ -4366,9 +4368,9 @@ After the first month, a suggested starting plan is to open the run history once
 
 [[scene:first-month]]
 
-## What it does not do, and should not pretend to
+## What should workflow automation not do?
 
-It does not fix a bad process. If the manual version of the job loses inquiries, the automated version can lose them faster, at three in the morning, with a log entry saying it ran. Wiring makes a process the same every time, and that is only an improvement when the process was right.
+Workflow automation does not fix a bad process. If the manual version of the job loses inquiries, the automated version can lose them faster, at three in the morning, with a log entry saying it ran. Wiring makes a process the same every time, and that is only an improvement when the process was right.
 
 It does not remove judgement where judgement is needed. Where a person would have paused, the right behaviour is to stop and ask rather than guess. A chain with no such step, such as a field copied between two systems, needs no person in the middle, which is part of why it makes a good first build.
 
@@ -4380,9 +4382,9 @@ And it does not hand you back a day. In the invented bakery example the hop was 
 
 The order that follows is to fix the manual version of the job on paper first. If the right process cannot be written down, the wiring will only repeat the wrong one.
 
-## Who this fits, and who it does not
+## Which businesses does workflow automation fit, and which not?
 
-This fits owners with a job that happens many times a week and lives across two or more tools: inquiries that arrive by form or email, bookings that have to reach a calendar, orders copied into a sheet. It fits small teams where one person is the whole office and every manual step comes out of the same calendar.
+Workflow automation fits owners with a job that happens many times a week and lives across two or more tools: inquiries that arrive by form or email, bookings that have to reach a calendar, orders copied into a sheet. It fits small teams where one person is the whole office and every manual step comes out of the same calendar.
 
 It does not fit a business whose work is mostly judgement on each case, or a process that still changes every month. A job done once a quarter usually scores too low on impact to be worth a build in our method. It also does not fit a step the program you already pay for can do. Those readers do better to write the process down and run it by hand for a month, to switch on the feature in the tool they have, or to leave the job alone.
 
@@ -4390,7 +4392,7 @@ An invented example: a one-person bookkeeping practice whose every client file n
 
 [[scene:fits]]
 
-## What to do first
+## What should an owner do first about workflow automation?
 
 Start from one job and end with a decision written down. The roadmap, week by week:
 
@@ -4410,11 +4412,11 @@ Connecting the software you already use so that finishing one step starts the ne
 
 ### How do I follow up on quotes automatically?
 
-Connect the moment a quote is sent to a short sequence: log the quote, draft one note a few days later for the owner to approve, stop at any reply and send it to the owner, and put a call on the owner's list if nobody answers after a week. The roofer in "How to follow up on every quote without chasing it" shows the steps. A person decides every price and makes every call.
+Connect the moment a quote is sent to a short sequence: log the quote, draft one note a few days later for the owner to approve, stop at any reply and send it to the owner, and put a call on the owner's list if nobody answers after a week. The roofer in "How does workflow automation follow up on every quote?" shows the steps. A person decides every price and makes every call.
 
 ### What should a small business automate first?
 
-Automate the job that repeats most often, has a rule you can write down and has the smallest worst day, and leave the rest. For many offices that is a sent quote, a form that must reach the customer list, or a reminder for documents still owed. The screening questions in "Is it worth automating" pick the job from your own list.
+Automate the job that repeats most often, has a rule you can write down and has the smallest worst day, and leave the rest. For many offices that is a sent quote, a form that must reach the customer list, or a reminder for documents still owed. The screening questions in "Is workflow automation worth it for your business?" pick the job from your own list.
 
 ### What is workflow automation for a real estate or title office?
 
@@ -4430,19 +4432,19 @@ Not as a rule. Automation is built to sit between your existing tools, so your c
 
 ### What happens when an automation breaks?
 
-That depends on how it was built. A good chain reports the failure to a named person and keeps the failed work so it can be finished by hand. Platforms have their own retry and pause rules, so read what yours does.
+What happens when an automation breaks depends on how it was built. A good chain reports the failure to a named person and keeps the failed work so it can be finished by hand. Platforms have their own retry and pause rules, so read what yours does.
 
 ### How long does it take to automate a workflow?
 
-It depends on the scope, so we give a time only after the assessment. A chain across several systems with real branching takes longer than one that copies a field, and mapping the job is the part that is hardest to predict.
+How long workflow automation takes depends on the scope, so we give a time only after the assessment. A chain across several systems with real branching takes longer than one that copies a field, and mapping the job is the part that is hardest to predict.
 
 ### Is any of this worth it for a one-person business?
 
-It can be, because every manual step comes out of the only calendar there is, and most small businesses are one-person businesses: according to the Small Business Administration's Office of Advocacy, 82.3 percent of the 36,207,130 small businesses in the United States have no employees. Start with one chain on the most frequent job that passes the screening questions, and judge it after a month against your baseline.
+Workflow automation can be worth it for a one-person business, because every manual step comes out of the only calendar there is. Most small businesses are one-person businesses: according to the Small Business Administration's Office of Advocacy, 82.3 percent of the 36,207,130 small businesses in the United States have no employees. Start with one chain on the most frequent job that passes the screening questions, and judge it after a month against your baseline.
 
 [[scene:quiz]]
 
-## What to do about it
+## What can you do about workflow automation this week?
 
 The free half of this needs a highlighter and an hour: one job, from the first inquiry to the paid invoice, every step written down in the order it really happens, and a mark against anything where a person types in something another system already knows. Nobody has to approve it. At the end you are holding the document that makes the rest of this decidable, and any quote you are given before that page exists is a guess about a business the person quoting has not seen.
 
