@@ -29,7 +29,7 @@ export const skipTracingLeadGeneration: Service = {
 
   eyebrow: "Prospecting · Lists and skip tracing",
   title: "Lead lists built fresh for the area a business works",
-  lede: "Bought lead lists are old, shared with everyone who paid, and full of numbers that no longer work. We build a fresh list for the exact area and kind of customer a business wants: businesses on the map for a company that sells to offices, or property owners on chosen streets for one that works on homes. Each row gets a contact where the record has one, its source and date, and a do-not-call check, and a person decides how it is worked.",
+  lede: "Lead generation for a small business starts with a fresh list built for the exact area and kind of customer it wants: businesses on the map for a company that sells to offices, or property owners on chosen streets for one that works on homes. Bought lead lists are old, shared with everyone who paid, and full of numbers that no longer work. Each row gets a contact where the record has one, its source and date, and a do-not-call check, and a person decides how it is worked.",
   specs: ["built for your area", "owner and business lookups", "source and date on every row", "do-not-call checked"],
   why: "Lead generation starts with prospecting, which means reaching out to find new customers, and it runs on lists. Bought lists cost a lot and go stale fast. This builds a fresh list of the businesses or owners themselves, whenever it is needed, for the area being worked, on the day it is worked, with the rules about how each row may be contacted written beside it.",
   keywords: [
