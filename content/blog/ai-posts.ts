@@ -3526,7 +3526,7 @@ The last one is the one people underrate. A lead that arrives with a transcript 
 
 ## What makes an AI chatbot answer true?
 
-An AI chatbot's answer is true only when it comes from your live systems and not from a copy of your website, and that is the whole job. You will hear that an assistant is trained on your data. Ask what that sentence means, because it can describe two quite different things.
+An AI chatbot's answer about something that changes, such as a time or a price, is true only when it comes from your live systems, and getting that right is the whole job. You will hear that an assistant is trained on your data. Ask what that sentence means, because it can describe two quite different things.
 
 The first meaning is that the assistant was shown your website. Somebody pointed a crawler at your pages, and the text got chopped up and stored. When a visitor asks a question, the system finds the paragraphs that look most similar and asks a language model to write an answer out of them. That works for what your website already says. It is a better search box, and a better search box is genuinely worth having.
 
