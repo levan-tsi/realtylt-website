@@ -689,7 +689,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
     "what-does-an-ai-scheduling-assistant-not-do": "What it will not do",
     "is-an-ai-scheduling-assistant-worth-it-for-your-business": "Worth automating?",
     "who-an-ai-scheduling-assistant-fits-and-who-it-does-not": "Who it fits",
-    "what-should-an-owner-do-first-with-an-ai-scheduling-assistant": "Your first weeks",
+    "what-to-do-first-with-an-ai-scheduling-assistant": "Your first weeks",
     "common-questions-answered-honestly": "Common questions",
     "what-to-do-about-scheduling-that-needs-a-yes-from-outside": "What to do",
   },

@@ -83,6 +83,6 @@ export const SCHEDULING_QUIZ: QuizQuestion[] = [
       "Ask other businesses for access to their calendars",
     ],
     answer: 2,
-    why: 'One appointment type, never the whole calendar; see "What should an owner do first with an AI scheduling assistant?".',
+    why: 'One appointment type, never the whole calendar; see "What to do first with an AI scheduling assistant".',
   },
 ];

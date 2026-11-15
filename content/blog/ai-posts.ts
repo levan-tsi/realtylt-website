@@ -1491,7 +1491,7 @@ An invented example: a dental office lists eleven appointments for the next two 
 
 [[scene:funnel]]
 
-## What should an owner do first with an AI scheduling assistant?
+## What to do first with an AI scheduling assistant
 
 The first step is one appointment type, never the whole calendar. Here is the order, week by week.
 
