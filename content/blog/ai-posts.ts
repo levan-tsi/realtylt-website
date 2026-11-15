@@ -4372,7 +4372,7 @@ After the first month, a suggested starting plan is to open the run history once
 
 Workflow automation does not fix a bad process. If the manual version of the job loses inquiries, the automated version can lose them faster, at three in the morning, with a log entry saying it ran. Wiring makes a process the same every time, and that is only an improvement when the process was right.
 
-It does not remove judgement where judgement is needed. Where a person would have paused, the right behaviour is to stop and ask rather than guess. A chain with no such step, such as a field copied between two systems, needs no person in the middle, which is part of why it makes a good first build.
+It does not remove judgement where judgement is needed. Where a person would have paused, the right behaviour is to stop and ask rather than guess. A chain with no such step, such as a field copied into a record nobody acts on, needs no person in the middle, which is part of why it makes a good first build. A copied field that feeds a system people act on still gets a person's check, as the bakery example above shows.
 
 It is mostly not artificial intelligence, whatever it gets sold as. Most hops in the rebuilt chain are a field moving from one place to another, and they are more reliable for it. A model earns its place at the one or two steps that need interpretation; one put in front of a step that was really an if statement adds unpredictability nobody needed.
 
