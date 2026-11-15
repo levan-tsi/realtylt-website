@@ -685,7 +685,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
     "what-an-ai-scheduling-assistant-can-honestly-do-across-calendars-it-does-not-own": "What it does",
     "why-is-an-unheld-slot-worse-than-no-slot-at-all": "The false yes",
     "how-do-you-test-an-ai-scheduling-assistant-before-you-buy-it": "Test one yourself",
-    "what-decides-the-cost-and-time-of-an-ai-scheduling-assistant": "Cost and time",
+    "what-does-it-take-to-run-an-ai-scheduling-assistant": "What it takes",
     "what-does-an-ai-scheduling-assistant-not-do": "What it will not do",
     "is-an-ai-scheduling-assistant-worth-it-for-your-business": "Worth automating?",
     "who-an-ai-scheduling-assistant-fits-and-who-it-does-not": "Who it fits",

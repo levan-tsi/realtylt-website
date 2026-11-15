@@ -72,7 +72,7 @@ export const SCHEDULING_QUIZ: QuizQuestion[] = [
     q: "Which of these is a decision, not a click?",
     choices: ["Sending the request", "Sending the chase", "How long to hold your calendar waiting for an answer", "Releasing a dead slot"],
     answer: 2,
-    why: 'Sending, chasing, blocking and releasing are clicks; the hold is a decision; see "What decides the cost and time of an AI scheduling assistant?".',
+    why: 'Sending, chasing, blocking and releasing are clicks; the hold is a decision; see "What does it take to run an AI scheduling assistant?".',
   },
   {
     q: "What is the first step of the roadmap?",

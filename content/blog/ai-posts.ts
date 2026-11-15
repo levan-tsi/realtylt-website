@@ -1393,9 +1393,9 @@ Ask how you find out that an invitation was never delivered. The standard has a 
 
 An invented example: an owner types "maybe thurs" as the reply during a demonstration and watches the tool mark it accepted; that one answer settles the purchase. These four questions, written out, belong in every demonstration.
 
-## What decides the cost and time of an AI scheduling assistant?
+## What does it take to run an AI scheduling assistant?
 
-We print no price on this page. What decides the size of the job is how many kinds of people you have to reach and how each of them likes to be reached, more than the software.
+What decides the size of the job is how many kinds of people you have to reach and how each of them likes to be reached, more than the software.
 
 An invented example: one contractor arranges visits with the same few building managers by text, and every one replies the same day. Another deals with a rotating cast: a manager who reads only email, a management company with a portal, two owners who want a phone call. Those are different projects, and the difference is in the reaching.
 
