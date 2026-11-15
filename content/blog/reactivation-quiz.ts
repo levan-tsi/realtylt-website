@@ -54,7 +54,7 @@ export const REACTIVATION_QUIZ: QuizQuestion[] = [
       "Whatever the carrier decides",
     ],
     answer: 0,
-    why: 'The statute allows actual loss or five hundred dollars for each violation, whichever is greater, and up to three times that for a willful or knowing violation; see "What can go wrong if the rules are missed?".',
+    why: 'The statute allows actual loss or five hundred dollars for each violation, whichever is greater, and up to three times that for a willful or knowing violation; see "What can go wrong when you follow up with old leads?".',
   },
   {
     q: "What does the worth-it test say about a list where no record has a date or a source?",
@@ -65,13 +65,13 @@ export const REACTIVATION_QUIZ: QuizQuestion[] = [
       "Call everyone at night",
     ],
     answer: 1,
-    why: 'A list with no dates and sources is left alone until the records are cleaned; see "Is it worth automating at all?".',
+    why: 'A list with no dates and sources is left alone until the records are cleaned; see "Is it worth automating follow-up with old leads?".',
   },
   {
     q: "What is the first job of a reactivation run?",
     choices: ["Writing the opener", "Sending the first batch", "A count of the records by date, source and consent", "Booking the calendar"],
     answer: 2,
-    why: 'The first job is a count, not a campaign; see "What does it take to run?".',
+    why: 'The first job is a count, not a campaign; see "What does it take to follow up with old leads this way?".',
   },
   {
     q: "In the invented heating company example, how many of the 1,400 records were customers who bought within the last eighteen months?",
@@ -88,6 +88,6 @@ export const REACTIVATION_QUIZ: QuizQuestion[] = [
       "Ask a vendor for a price",
     ],
     answer: 0,
-    why: 'Week one is one record opened, with its date, source and consent written down; see "What to do first".',
+    why: 'Week one is one record opened, with its date, source and consent written down; see "What should you do first to follow up with old leads?".',
   },
 ];

@@ -3860,7 +3860,7 @@ What you get: a written count of who may be contacted and by which channel, open
 
 ## Which old leads and past customers may you contact?
 
-It depends on what each record says, and the rules have dates in them. These are the federal rules as written on the day we read them, November 14, 2026, quoted from the regulation and the statute, not from a summary. A lawyer reads your own records against them. State law can add rules this page does not cover.
+Whether you may contact an old lead depends on what each record says, and the rules have dates in them. These are the federal rules as written on the day we read them, November 14, 2026, quoted from the regulation and the statute, not from a summary. A lawyer reads your own records against them. State law can add rules this page does not cover.
 
 Three checks come first. They are not a full legal review, and a record can pass all three and still need a lawyer's reading.
 
@@ -3900,7 +3900,7 @@ Business texting from an ordinary ten-digit number is called 10DLC, ten digit lo
 
 [[scene:list-calculator]]
 
-## What can go wrong if the rules are missed?
+## What can go wrong when you follow up with old leads?
 
 The sources name two kinds of exposure, and neither is a reason for fear. Both are a reason to check before the first message, not after the first complaint.
 
@@ -3910,13 +3910,13 @@ The second is the carriers' own rules. Registration of a business texting campai
 
 Both are checked in the same place: before the first message goes out, not after.
 
-## What does it take to run?
+## What does it take to follow up with old leads this way?
 
 The first job is a count, not a campaign. We read the records for a date and a source, read the forms for what consent they hold, and decide which records go to a person's call, which to a letter or an email and which to a text. That decides the size of the first run.
 
 After the count, the work is steady and small: openers written with you and approved word for word, the replies read, the stops recorded, and a person taking each booking from there. What it takes from you is access to the list, the facts about where each name came from and the time to read the answers.
 
-## Is it worth automating at all?
+## Is it worth automating follow-up with old leads?
 
 For a list with real dates on it and a repeat cycle, yes. For a short list or a list with no source on any record, no. These are the same tests we use in an assessment, applied to this job.
 
@@ -3932,7 +3932,7 @@ A tool you already have may do the job. A short list can be worked by a person w
 
 The verdict, in plain words. Leave a list with no dates and sources alone until the records are cleaned. Work a short, dated list by hand. Consider a system only for a long, dated list, with a person approving the contact list and every message.
 
-## What should you ask before anybody texts your list?
+## What should you ask before anybody texts your old leads?
 
 Four questions separate someone who has done this carefully from someone who wants your export. None of them needs technical knowledge.
 
@@ -3950,9 +3950,9 @@ Ask about the sending number and the registration. Who holds the number, who can
 
 [[scene:teardown]]
 
-## What it does not do, and should not pretend to
+## What does following up with old leads not do, and not pretend to do?
 
-It does not manufacture intent. A list will hold plenty of nos, and a no is an expected answer, not a failure. What changes is that somebody finally asked, so a contact whose situation has moved can say so. Anyone quoting you a conversion rate on a list they have not seen is quoting a guess, and this page prints none.
+Following up with old leads does not manufacture intent. A list will hold plenty of nos, and a no is an expected answer, not a failure. What changes is that somebody finally asked, so a contact whose situation has moved can say so. Anyone quoting you a conversion rate on a list they have not seen is quoting a guess, and this page prints none.
 
 It does not fix a list with no consent behind it. If the records carry no date and no source, the first project is a cleanup, not a campaign.
 
@@ -3964,13 +3964,13 @@ It does not close. It finds the conversation. Everything after somebody says yes
 
 [[scene:revival-path]]
 
-## Where does it go wrong?
+## Where does a follow-up to old leads go wrong?
 
 [[scene:failure-modes]]
 
-## Who this fits, and who it does not
+## Who this fits when you follow up with old leads, and who it does not
 
-It fits a business with a list of dated past customers or inquiries and a reason for them to hear from you again: a heating company's tune-ups, a landscaper's spring cleanup, a salon's lapsed regulars, an accounting office's former clients, a gym's tour-no-buy list, a real estate office's old sellers and buyers.
+Following up with old leads fits a business with a list of dated past customers or inquiries and a reason for them to hear from you again. Examples are a heating company's tune-ups, a landscaper's spring cleanup, a salon's lapsed regulars, an accounting office's former clients, a gym's tour-no-buy list, a real estate office's old sellers and buyers.
 
 It fits poorly where records carry no date or source, where the list is a few dozen names, where nobody will read the replies, or where the relationship is the business. We do not run it for patient lists, because a health practice carries privacy rules this page does not cover.
 
@@ -3978,7 +3978,7 @@ If it is a poor fit, the first step is still free: open one record and see what 
 
 [[scene:fits]]
 
-## What to do first
+## What should you do first to follow up with old leads?
 
 Start with one record, not a campaign, and end with a decision written down. This is a suggested schedule, not a deadline.
 
@@ -3994,7 +3994,7 @@ In weeks three and four, read your own answer to the worth-it test above. Then d
 
 ### How do I follow up with old leads?
 
-Once, about what they asked or bought, at a sensible hour, in your own words and with a real question. First check the record's date and source and the channel it allows, then send, then record every answer, including no.
+To follow up with an old lead, write once, about what they asked or bought, at a sensible hour, in your own words and with a real question. First check the record's date and source and the channel it allows, then send, then record every answer, including no.
 
 ### How do I win back past customers?
 
@@ -4002,19 +4002,19 @@ Ask them about something they actually bought, at the time of year it matters, a
 
 ### Do old leads actually convert?
 
-This page cites no independent measurement of cold database response rates, so it prints no rate and makes no claim about how many convert. The job is to find the contacts whose circumstances have changed. Your own records and a first small run will tell you more than an average will.
+No independent measurement of cold database response rates is cited here, so this page prints no rate and makes no claim about how many old leads convert. The job is to find the contacts whose circumstances have changed. Your own records and a first small run will tell you more than an average will.
 
 ### Is it annoying to text people who went quiet years ago?
 
-It can be, and a personalised opener does not establish permission. Check eligibility, the applicable restrictions and the opt-out first. If you send, an honest opener refers to what the person asked about and takes the first no.
+Texting an old lead who went quiet can be annoying, and a personalised opener does not establish permission. Check eligibility, the applicable restrictions and the opt-out first. If you send, an honest opener refers to what the person asked about and takes the first no.
 
 ### Am I allowed to text leads from 2023?
 
-It depends on what the record says. The established business relationship runs eighteen months from a purchase and three months from an inquiry under 47 CFR 64.1200(f)(5), so a 2023 form fill is outside both. An automated text is a separate question that depends on written consent, and the actual form and its disclosure are read against the regulation. A stop has to be honored within ten business days at the outside. Have a lawyer read your own records.
+Whether you may text a lead from 2023 depends on what the record says. The established business relationship runs eighteen months from a purchase and three months from an inquiry under 47 CFR 64.1200(f)(5), so a 2023 form fill is outside both. An automated text is a separate question that depends on written consent, and the actual form and its disclosure are read against the regulation. A stop has to be honored within ten business days at the outside. Have a lawyer read your own records.
 
 ### What does reactivated mean in real estate?
 
-In this post it means an old lead or past client who was quiet and has replied or booked again. It is how we use the word, not a legal term.
+In this post, reactivated means an old lead or past client who was quiet and has replied or booked again. It is how we use the word, not a legal term.
 
 ### What does tour no buy mean?
 
@@ -4022,15 +4022,15 @@ In a gym or studio, a tour-no-buy is a person who toured and did not join. It is
 
 ### Can I do this myself with a mail merge?
 
-Yes, for a short list, and often you should. A mail merge sends one message. What takes time is the second and third exchange, held when the person happens to reply, and the checking of each record first.
+Yes, you can follow up with old leads yourself with a mail merge for a short list, and often you should. A mail merge sends one message. What takes time is the second and third exchange, held when the person happens to reply, and the checking of each record first.
 
 ### What happens to the people who say no?
 
-They are recorded with the date, the source and the words they used, and the campaign does not contact them again. A no with a reason is the most useful output of the exercise, and it is a record of what a person said, not a guess about their future.
+People who say no are recorded with the date, the source and the words they used, and the campaign does not contact them again. A no with a reason is the most useful output of the exercise, and it is a record of what a person said, not a guess about their future.
 
 [[scene:quiz]]
 
-## What to do about it
+## What should you do about your old leads?
 
 One record opened tells you which of the two projects on this page you are looking at, a campaign or a cleanup: what the date is, what the source is and whether anything says how that person agreed to hear from you. It needs nobody, us included.
 
