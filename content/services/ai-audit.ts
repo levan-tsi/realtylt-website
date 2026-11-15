@@ -21,8 +21,8 @@ export const aiAudit: Service = {
   tier: "core",
 
   eyebrow: "AI Assessment · Start here",
-  title: "An AI readiness assessment: see where AI pays off first",
-  lede: "An owner knows AI could help and has no idea where to point it first. In one hour with you, or you and your manager, we map how the business really runs. Then we write the plan: what to build and in what order, how long each piece takes, the precautions, and which system does which job. It is the low-risk way to start when you know AI can help but not where.",
+  title: "An AI consultant for a small business: see where AI pays off first",
+  lede: "An AI readiness assessment is a one-hour review of how a small business really runs, done with the owner by an AI consultant, to find where AI is worth building first and where it is not. An owner knows AI could help and has no idea where to point it first. In one hour with you, or you and your manager, we map how the business really runs. Then we write the plan: what to build and in what order, how long each piece takes, the precautions, and which system does which job. It is the low-risk way to start when you know AI can help but not where.",
   specs: ["one hour with the owner", "an order, with reasons", "a written plan", "what stays with a person"],
   why: "Knowing AI could help is one problem. Knowing where to point it is a different one, and only the second gets anything built. An assessment turns an open question into a short list, with the reason for each spot beside it. It also gives you a second list: the things you have decided not to build. Some firms call this an AI audit.",
   keywords: [
@@ -34,9 +34,9 @@ export const aiAudit: Service = {
   ],
 
   seo: {
-    title: "AI readiness assessment for small business: where AI pays off",
+    title: "AI consultant for small business: an AI readiness assessment",
     description:
-      "An AI readiness assessment for a small business: one hour with the owner, then a written plan of what to build first, in what order, and what to leave alone.",
+      "An AI consultant for a small business starts with an AI readiness assessment: one hour with the owner, then a written plan of what to build first and what to leave alone.",
   },
 
   /** Somebody else's measurement, and the one that resets an owner's sense of being behind.
@@ -52,7 +52,7 @@ export const aiAudit: Service = {
 
   figure: {
     kind: "records",
-    caption: "What the shortlist looks like when it lands",
+    caption: "What does the shortlist from an AI readiness assessment look like?",
     headers: { before: "What the business does by hand today", after: "What the three questions said" },
     rows: [
       {
@@ -80,7 +80,7 @@ export const aiAudit: Service = {
   },
 
   whatItIs: [
-    "It is a one-hour call with the owner, or the owner and the manager, about how the business actually runs. We walk one real job end to end. We write down every step, every tool and every hour that goes into it. Most owners have never seen that written out, and it is always longer than they think.",
+    "An AI readiness assessment is a one-hour call with the owner, or the owner and the manager, about how the business actually runs. We walk one real job end to end. We write down every step, every tool and every hour that goes into it. Most owners have never seen that written out, and it is always longer than they think.",
     "Then we write the plan, and it is shorter than what came in. Candidates get removed for stated reasons. What survives comes back in an order: what we would build, how, how long each piece takes, what precautions to take, and which system does which job. The list of what was removed comes back too, because those reasons are the part the owner will use again next year. If you ask us to build it and run it, the assessment is included in that work. If you build it yourself, the plan is your map.",
     "It fits an owner whose team repeats the same work every week: a contractor answering calls and chasing quotes, a dental or accounting office whose front desk is always full, a salon, spa or gym juggling bookings and reviews, a real estate office with more inquiries than people to answer them. No AI knowledge is needed. The questions are about the business.",
     "Deciding not to build something is a real result, not a failed assessment. NIST, the US standards agency, published an AI Risk Management Framework (version 1.0, January 2023, which NIST says it is revising), and the framework asks whether development should proceed at all. A plan that says leave this one with a person has done its job.",
@@ -140,7 +140,7 @@ export const aiAudit: Service = {
   ],
 
   limits: [
-    "It does not decide anything for you. The output is a shorter list and a plan. What the business actually changes stays the owner's call.",
+    "An AI readiness assessment does not decide anything for you. The output is a shorter list and a plan. What the business actually changes stays the owner's call.",
     "It cannot see what nobody will say out loud. The account is only as honest as the description of how the work really happens. That includes the parts everyone quietly works around.",
     "It does not produce a saving on paper. Every hour on the list is an hour somebody still has to choose to spend on something else.",
     "It does not put a price on each candidate. What a build costs depends entirely on which one. A number attached to a candidate before anybody has looked at the systems is a guess with a decimal point in it.",
@@ -151,31 +151,31 @@ export const aiAudit: Service = {
   faqs: [
     {
       q: "What is an AI readiness assessment?",
-      a: "It is a one-hour review, with the owner, of how the business actually operates. It is done to find where AI or automation is worth building and, just as importantly, where it is not. What comes back is a written plan: a shortlist in an order with the reason for each position attached, what we would build and how, how long each piece takes, the precautions, and the list of candidates that were removed and why.",
+      a: "An AI readiness assessment is a one-hour review, with the owner, of how the business actually operates. It is done to find where AI or automation is worth building and, just as importantly, where it is not. What comes back is a written plan: a shortlist in an order with the reason for each position attached, what we would build and how, how long each piece takes, the precautions, and the list of candidates that were removed and why.",
     },
     {
       q: "How do I use AI in my business?",
-      a: "Start with one job, not with a tool. Write down how that job runs today, every step and every tool, then ask three questions of each step: does it happen often enough that a failure gets noticed within a week, could the rule be written down for a new hire, and where would a wrong answer land. What survives all three is a candidate; the rest stays with a person. The assessment is that test, run with the owner in one hour, with the plan written down.",
+      a: "To use AI in a business, start with one job, not with a tool. Write down how that job runs today, every step and every tool, then ask three questions of each step: does it happen often enough that a failure gets noticed within a week, could the rule be written down for a new hire, and where would a wrong answer land. What survives all three is a candidate; the rest stays with a person. The assessment is that test, run with the owner in one hour, with the plan written down.",
     },
     {
       q: "Where should a small business start with AI?",
-      a: "With whatever survives three questions and has the most contained failure, which is usually something unglamorous. There is no universal answer, and that is deliberate. In the 2018 Annual Business Survey, a Census Bureau sample of over 850,000 firms where answering is required by law, only 10.3 percent of firms used any advanced business technology at all. Asked a different question, the Census Bureau put AI use at 19.8 percent of US businesses as of May 3, 2026; by the Census count, most were not using AI. How many firms use it depends on the question asked, and neither count is enough for anybody to know what works in general.",
+      a: "A small business should start with AI on whatever survives three questions and has the most contained failure, which is usually something unglamorous. There is no universal answer, and that is deliberate. In the 2018 Annual Business Survey, a Census Bureau sample of over 850,000 firms where answering is required by law, only 10.3 percent of firms used any advanced business technology at all. Asked a different question, the Census Bureau put AI use at 19.8 percent of US businesses as of May 3, 2026; by the Census count, most were not using AI. How many firms use it depends on the question asked, and neither count is enough for anybody to know what works in general.",
     },
     {
       q: "How do you decide what not to automate?",
-      a: "Three tests, in order. It happens too rarely for anybody to notice it breaking. That is how a quarterly job fails in March and gets discovered in June. The rule behind it is not actually settled, which usually shows up as three people describing it three different ways. Or a wrong answer would reach a customer before a person saw it. Any one of those is enough on its own.",
+      a: "Deciding what not to automate takes three tests, in order. It happens too rarely for anybody to notice it breaking. That is how a quarterly job fails in March and gets discovered in June. The rule behind it is not actually settled, which usually shows up as three people describing it three different ways. Or a wrong answer would reach a customer before a person saw it. Any one of those is enough on its own.",
     },
     {
       q: "What do I actually get at the end?",
-      a: "A written plan. It maps how the work runs today, including the parts nobody had written down, and puts the shortlist in an order with the reason for each position beside it. It says what we would build, how, how long each piece takes, what precautions to take and which system does which job. It lists the candidates that were removed and why, which is the part to use again next year. If you ask us to build it and run it, the assessment is included in that work; if not, the plan is yours to build from.",
+      a: "At the end of an AI readiness assessment the owner gets a written plan. It maps how the work runs today, including the parts nobody had written down, and puts the shortlist in an order with the reason for each position beside it. It says what we would build, how, how long each piece takes, what precautions to take and which system does which job. It lists the candidates that were removed and why, which is the part to use again next year. If you ask us to build it and run it, the assessment is included in that work; if not, the plan is yours to build from.",
     },
     {
       q: "Do I need to know anything about AI beforehand?",
-      a: "No. The assessment is about the business, not about the technology. The owner describes how the work happens, and choosing the tools is our job.",
+      a: "No, an owner needs no AI knowledge before an AI readiness assessment. The assessment is about the business, not about the technology. The owner describes how the work happens, and choosing the tools is our job.",
     },
     {
       q: "Is an AI assessment the same as an AI audit?",
-      a: "Mostly, yes: some firms call it an AI audit. The difference here is the output. It is not a score or a report card. It is a short, ordered plan with the reasons written beside each line, and a second list of what not to build, because a decision not to build is a legitimate result.",
+      a: "An AI assessment is mostly the same thing as an AI audit: some firms call it that. The difference here is the output. It is not a score or a report card. It is a short, ordered plan with the reasons written beside each line, and a second list of what not to build, because a decision not to build is a legitimate result.",
     },
   ],
 
