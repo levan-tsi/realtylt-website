@@ -13,7 +13,7 @@ export const CHAT_QUIZ: QuizQuestion[] = [
     q: "In the Harvard Business Review audit of 2,241 US companies sent a web test lead, what share never responded?",
     choices: ["37 percent", "23 percent", "16 percent", "42 percent"],
     answer: 1,
-    why: 'The audit found that 23 percent of the companies never responded at all; see "The number everyone quotes, and where it actually comes from".',
+    why: 'The audit found that 23 percent of the companies never responded at all; see "The speed claim in AI chatbot sales pitches, and where it comes from".',
   },
   {
     q: "What does the 2011 response-speed chart count?",
@@ -24,7 +24,7 @@ export const CHAT_QUIZ: QuizQuestion[] = [
       "Visits to the website",
     ],
     answer: 2,
-    why: 'It counts the conversation, a lower bar than closing and a higher one than an inbox reply; see "The number everyone quotes, and where it actually comes from".',
+    why: 'It counts the conversation, a lower bar than closing and a higher one than an inbox reply; see "The speed claim in AI chatbot sales pitches, and where it comes from".',
   },
   {
     q: "A visitor asks something the assistant cannot know. What is the right behaviour?",
@@ -35,7 +35,7 @@ export const CHAT_QUIZ: QuizQuestion[] = [
       "Say it cannot confirm that, and offer a person",
     ],
     answer: 3,
-    why: 'When a lookup returns nothing, the assistant says it does not know and offers a person instead; see "What makes an answer true, which is the whole job".',
+    why: 'When a lookup returns nothing, the assistant says it does not know and offers a person instead; see "What makes an AI chatbot answer true?".',
   },
   {
     q: "In the 2024 airline chatbot decision, who was responsible for what the chatbot said?",
@@ -46,7 +46,7 @@ export const CHAT_QUIZ: QuizQuestion[] = [
       "The company, because the chatbot is part of its website",
     ],
     answer: 3,
-    why: 'The tribunal held that a chatbot is still part of the website and the company answers for all the information on it; see "The part nobody selling you a chat widget mentions".',
+    why: 'The tribunal held that a chatbot is still part of the website and the company answers for all the information on it; see "What should you check before an AI chatbot goes on your website?".',
   },
   {
     q: "Under California's bot disclosure law, what keeps a person from liability?",
@@ -57,7 +57,7 @@ export const CHAT_QUIZ: QuizQuestion[] = [
       "Asking the visitor to agree first",
     ],
     answer: 0,
-    why: 'A person using a bot is not liable if they disclose that it is a bot, in a way that is clear and conspicuous; see "The part nobody selling you a chat widget mentions".',
+    why: 'A person using a bot is not liable if they disclose that it is a bot, in a way that is clear and conspicuous; see "What should you check before an AI chatbot goes on your website?".',
   },
   {
     q: "What does the third question of the worth-it test ask?",
@@ -68,7 +68,7 @@ export const CHAT_QUIZ: QuizQuestion[] = [
       "Whether competitors have one",
     ],
     answer: 1,
-    why: 'Every conversation is stored and someone reads the week\'s transcripts; see "Is it worth automating".',
+    why: 'Every conversation is stored and someone reads the week\'s transcripts; see "Is an AI chatbot worth it for a small business?".',
   },
   {
     q: "A salon gets 6 website questions a week and answers each in 4 minutes. What is the verdict?",
@@ -79,13 +79,13 @@ export const CHAT_QUIZ: QuizQuestion[] = [
       "Buy two tools",
     ],
     answer: 1,
-    why: '6 x 4 = 24 minutes a week is a leave-it-alone answer; see "Is it worth automating".',
+    why: '6 x 4 = 24 minutes a week is a leave-it-alone answer; see "Is an AI chatbot worth it for a small business?".',
   },
   {
     q: "How much time a week do we suggest for reading the conversations?",
     choices: ["Twenty minutes", "None", "Two hours", "Five minutes"],
     answer: 0,
-    why: 'We suggest twenty minutes a week, in your own name, for as long as it runs; see "What it takes to run".',
+    why: 'We suggest twenty minutes a week, in your own name, for as long as it runs; see "What does it take to run an AI chatbot?".',
   },
   {
     q: "What happens in week 1 of the roadmap?",
@@ -96,7 +96,7 @@ export const CHAT_QUIZ: QuizQuestion[] = [
       "The last thirty website messages are read and the page of answers is written",
     ],
     answer: 3,
-    why: 'Week 1 reads the messages and writes the page of answers a new hire would need; see "What to do first".',
+    why: 'Week 1 reads the messages and writes the page of answers a new hire would need; see "What should an owner do first about an AI chatbot?".',
   },
   {
     q: "Which is a real reason to leave the assistant switched off?",
@@ -107,6 +107,6 @@ export const CHAT_QUIZ: QuizQuestion[] = [
       "The widget has the wrong colour",
     ],
     answer: 0,
-    why: 'A wrong answer nobody reads is a wrong answer that can be given again; see "Who this fits, and who it does not".',
+    why: 'A wrong answer nobody reads is a wrong answer that can be given again; see "Which businesses an AI chatbot fits, and which it does not".',
   },
 ];

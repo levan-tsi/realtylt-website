@@ -379,7 +379,7 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       columns: 3,
       items: SELF_CHECKS,
     },
-    /** Placed straight after "How to test one before you buy it", which is the most generous
+    /** Placed straight after "How do you test an AI chatbot before you buy it?", which is the most generous
      * section in the piece: four questions the reader can put to any vendor, us included. The
      * offer is to run those same five questions for them. Nothing new is being sold here. */
     offer: {
@@ -495,17 +495,17 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
    * document, so a heading renamed here degrades to its full text instead of leaving a dead
    * row, and _scratch-toc.mjs fails on a key that matches no heading. */
   headingLabels: {
-    "the-number-everyone-quotes-and-where-it-actually-comes-from": "The number",
-    "what-an-ai-chat-assistant-actually-does": "What it does",
-    "what-makes-an-answer-true-which-is-the-whole-job": "True answers",
-    "the-part-nobody-selling-you-a-chat-widget-mentions": "The fine print",
-    "what-it-takes-to-run": "What it takes",
-    "how-to-test-one-before-you-buy-it": "How to test one",
-    "is-it-worth-automating": "Worth automating?",
-    "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
-    "who-this-fits-and-who-it-does-not": "Who it fits",
-    "what-to-do-first": "Your first weeks",
-    "common-questions-answered-honestly": "Common questions",
-    "what-to-do-about-it": "What to do",
+    "the-speed-claim-in-ai-chatbot-sales-pitches-and-where-it-comes-from": "The number",
+    "what-does-an-ai-chatbot-actually-do-on-a-small-business-website": "What it does",
+    "what-makes-an-ai-chatbot-answer-true": "True answers",
+    "what-should-you-check-before-an-ai-chatbot-goes-on-your-website": "The fine print",
+    "what-does-it-take-to-run-an-ai-chatbot": "What it takes",
+    "how-do-you-test-an-ai-chatbot-before-you-buy-it": "How to test one",
+    "is-an-ai-chatbot-worth-it-for-a-small-business": "Worth automating?",
+    "what-should-an-ai-chatbot-never-do": "What it will not do",
+    "which-businesses-an-ai-chatbot-fits-and-which-it-does-not": "Who it fits",
+    "what-should-an-owner-do-first-about-an-ai-chatbot": "Your first weeks",
+    "common-questions-about-ai-chatbots-answered-honestly": "Common questions",
+    "what-to-do-next-about-an-ai-chatbot": "What to do",
   },
 };

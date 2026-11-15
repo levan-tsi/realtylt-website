@@ -81,28 +81,28 @@ describe("flagshipToc", () => {
     // raised to the standard on 2026-08-02.
     expect(flagshipToc(outline, AI_CHAT_FLAGSHIP)).toEqual([
       { id: "scene-reel", label: "Watch it", scene: true },
-      { id: "the-number-everyone-quotes-and-where-it-actually-comes-from", label: "The number" },
+      { id: "the-speed-claim-in-ai-chatbot-sales-pitches-and-where-it-comes-from", label: "The number" },
       { id: "scene-response-gap", label: "The gap", scene: true },
       { id: "scene-leads-calculator", label: "Your numbers", scene: true },
-      { id: "what-an-ai-chat-assistant-actually-does", label: "What it does" },
+      { id: "what-does-an-ai-chatbot-actually-do-on-a-small-business-website", label: "What it does" },
       { id: "scene-four-moves", label: "Four moves", scene: true },
-      { id: "what-makes-an-answer-true-which-is-the-whole-job", label: "True answers" },
-      { id: "the-part-nobody-selling-you-a-chat-widget-mentions", label: "The fine print" },
+      { id: "what-makes-an-ai-chatbot-answer-true", label: "True answers" },
+      { id: "what-should-you-check-before-an-ai-chatbot-goes-on-your-website", label: "The fine print" },
       // Round 29 (2026-11-14): the refresh re-aimed at local owners added the teaching shape, the
       // quiz and the sources; "What it costs" became "What it takes to run".
-      { id: "what-it-takes-to-run", label: "What it takes" },
-      { id: "how-to-test-one-before-you-buy-it", label: "How to test one" },
-      { id: "is-it-worth-automating", label: "Worth automating?" },
-      { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
+      { id: "what-does-it-take-to-run-an-ai-chatbot", label: "What it takes" },
+      { id: "how-do-you-test-an-ai-chatbot-before-you-buy-it", label: "How to test one" },
+      { id: "is-an-ai-chatbot-worth-it-for-a-small-business", label: "Worth automating?" },
+      { id: "what-should-an-ai-chatbot-never-do", label: "What it will not do" },
       { id: "scene-teardown", label: "The teardown", scene: true },
-      { id: "who-this-fits-and-who-it-does-not", label: "Who it fits" },
-      { id: "what-to-do-first", label: "Your first weeks" },
+      { id: "which-businesses-an-ai-chatbot-fits-and-which-it-does-not", label: "Who it fits" },
+      { id: "what-should-an-owner-do-first-about-an-ai-chatbot", label: "Your first weeks" },
       { id: "scene-roadmap", label: "The roadmap", scene: true },
-      { id: "common-questions-answered-honestly", label: "Common questions" },
+      { id: "common-questions-about-ai-chatbots-answered-honestly", label: "Common questions" },
       { id: "scene-quiz", label: "Quiz", scene: true },
-      { id: "where-it-goes-wrong", label: "Where it goes wrong" },
+      { id: "where-does-an-ai-chatbot-go-wrong", label: "Where does an AI chatbot go wrong?" },
       { id: "scene-system-diagram", label: "What it connects to", scene: true },
-      { id: "what-to-do-about-it", label: "What to do" },
+      { id: "what-to-do-next-about-an-ai-chatbot", label: "What to do" },
       { id: "sources", label: "Sources" },
     ]);
   });
@@ -284,10 +284,10 @@ describe("flagshipToc", () => {
   });
 
   it("falls back to the heading's own text when no short label is given", () => {
-    expect(AI_CHAT_FLAGSHIP.headingLabels).not.toHaveProperty("where-it-goes-wrong");
+    expect(AI_CHAT_FLAGSHIP.headingLabels).not.toHaveProperty("where-does-an-ai-chatbot-go-wrong");
     expect(flagshipToc(outline, AI_CHAT_FLAGSHIP)).toContainEqual({
-      id: "where-it-goes-wrong",
-      label: "Where it goes wrong",
+      id: "where-does-an-ai-chatbot-go-wrong",
+      label: "Where does an AI chatbot go wrong?",
     });
   });
 

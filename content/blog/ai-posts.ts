@@ -3490,9 +3490,9 @@ That gap, between when people ask and when a business answers, is what this page
 
 [[scene:reel]]
 
-## The number everyone quotes, and where it actually comes from
+## The speed claim in AI chatbot sales pitches, and where it comes from
 
-One figure gets repeated on sales slides: that seventy eight percent of customers buy from whoever answers first. You have probably seen it more than once.
+One figure about reply speed gets repeated on sales slides for AI chatbots: that seventy eight percent of customers buy from whoever answers first. You have probably seen it more than once.
 
 We went looking for the study behind it, because a claim doing that much work should have a document under it. We found no source for it: no report, no stated sample and no method that we could open. None of that proves the figure is wrong. It does mean we cannot tell you whether it is right, and a number nobody can check is a slogan wearing a percentage sign.
 
@@ -3512,9 +3512,9 @@ The sum below is arithmetic, not a forecast. An invented example: an HVAC compan
 
 [[scene:leads-calculator]]
 
-## What an AI chat assistant actually does
+## What does an AI chatbot actually do on a small business website?
 
-Strip away the marketing and it is a text conversation on your own website, answered by a language model, and connected to the systems that make the answer true. For a small business that means your approved answers, your calendar and a place to send the conversation. For a real estate office it can also mean the live listings.
+Strip away the marketing and an AI chatbot is a text conversation on your own website, answered by a language model, and connected to the systems that make the answer true. For a small business that means your approved answers, your calendar and a place to send the conversation. For a real estate office it can also mean the live listings.
 
 The version we run does four things:
 
@@ -3524,9 +3524,9 @@ The last one is the one people underrate. A lead that arrives with a transcript 
 
 [[scene:plate]]
 
-## What makes an answer true, which is the whole job
+## What makes an AI chatbot answer true?
 
-You will hear that an assistant is trained on your data. Ask what that sentence means, because it can describe two quite different things.
+An AI chatbot's answer is true only when it comes from your live systems and not from a copy of your website, and that is the whole job. You will hear that an assistant is trained on your data. Ask what that sentence means, because it can describe two quite different things.
 
 The first meaning is that the assistant was shown your website. Somebody pointed a crawler at your pages, and the text got chopped up and stored. When a visitor asks a question, the system finds the paragraphs that look most similar and asks a language model to write an answer out of them. That works for what your website already says. It is a better search box, and a better search box is genuinely worth having.
 
@@ -3538,9 +3538,9 @@ That difference matters in any trade where the facts change faster than the web 
 
 There is a second half to it, and it is the harder half. It is what happens when the system does not have the answer. The fix is not a cleverer model. It is a rule that when a lookup returns nothing, the assistant says it does not know and offers a person instead, rather than writing something that only sounds right. That behaviour has to be built and it has to be tested. When you are testing one, ask it something it cannot possibly know and watch what it does. That answer tells you more than an hour of demo.
 
-## The part nobody selling you a chat widget mentions
+## What should you check before an AI chatbot goes on your website?
 
-Four things are worth checking before you agree to anything, because they are yours to live with afterwards. None of this is legal advice.
+Four things are worth checking before an AI chatbot goes on your website, because they are yours to live with afterwards. None of this is legal advice.
 
 **What it says is what your business said.** In 2024 a Canadian tribunal decided a case against an airline whose website chatbot had given a customer wrong information about bereavement fares. The airline argued the chatbot was a separate entity responsible for its own actions. According to the law firm McCarthy Tétrault's summary, the tribunal rejected that, called it "a remarkable submission", and held that a chatbot is still just part of the website and the company is responsible for all the information on it, whether it comes from a static page or a chatbot. It is a Canadian tribunal's decision, not New York law. It is still the clearest picture of what a customer, and a judge, will assume: the answer on your site is your answer. That is why the assistant answers only from what you approved, and why a price, a diagnosis or a promise goes to a person.
 
@@ -3556,9 +3556,9 @@ None of the four needs a meeting or a budget to look into. Here is how to check 
 
 [[scene:self-checks]]
 
-## What it takes to run
+## What does it take to run an AI chatbot?
 
-We print no price on this page. What a chat assistant takes from the owner is mostly three things, and only one of them is software.
+What an AI chatbot takes from the owner is mostly three things, and only one of them is software. We print no price on this page.
 
 The first is what it is allowed to look at. An assistant answering out of your approved answers is the smaller job. An assistant that reads a live calendar, or live listings for a real estate office, has to be connected to the system that holds them. That is a data project with its own rules, its own refresh behaviour and its own failure modes. The second is what happens after the conversation ends. A transcript that lands in an inbox is worth a fraction of a transcript that lands on the right contact record in the CRM you already use, with the appointment on the calendar. That plumbing is often the larger half of the build. It is the half people forget to ask about, because it is invisible in a demo.
 
@@ -3570,9 +3570,9 @@ What an owner provides is short: the answers it may give, the calendar with the 
 
 What a person still approves: the page of what it may answer and every change to it, any quote for a particular job, any discount, any promise, and the first reply to every lead it hands over.
 
-## How to test one before you buy it
+## How do you test an AI chatbot before you buy it?
 
-Take this to any vendor, including us. Five questions, and you can ask all of them inside a demo window without anybody's permission.
+Five questions test an AI chatbot before you buy it, and you can ask all of them inside a demo window without anybody's permission. Take them to any vendor, including us.
 
 Ask it something it cannot know. Make up a street and ask what a repair on it would cost. What you want back is an admission that it has no way to confirm that, and an offer of a person. If it produces a number, then you have just watched it invent one.
 
@@ -3586,9 +3586,9 @@ Then close the laptop and open your phone. Load the page on mobile data rather t
 
 [[scene:offer]]
 
-## Is it worth automating
+## Is an AI chatbot worth it for a small business?
 
-A chat assistant is worth it when questions arrive often enough that a missed one is noticed within a week, and when a person will read what it says. These are the screening questions of our AI assessment, our own method rather than a published standard, and three of them keep the idea or cross it off:
+An AI chatbot is worth it when questions arrive often enough that a missed one is noticed within a week, and when a person will read what it says. These are the screening questions of our AI assessment, our own method rather than a published standard, and three of them keep the idea or cross it off:
 
 - Does the job happen often enough that a failure shows within a week? Visitors ask something on most days, and a slow reply costs you a visit you can name.
 - Can the rule be written down for a new hire? Your hours, your service area, what a first visit involves and what you never quote over the phone fit on one page.
@@ -3602,9 +3602,9 @@ An invented example: a salon gets 6 website questions a week, and an owner who a
 
 The three questions are run on your own last thirty website messages before anyone looks at a tool.
 
-## What it does not do, and should not pretend to
+## What should an AI chatbot never do?
 
-Here is the plain version.
+An AI chatbot has four limits, and here is the plain version.
 
 It does not close. It does not read a room, it does not know when a customer is stretching the truth about their timeline, and it has no instinct for what is really going on behind a question. Those are the reasons you have a business.
 
@@ -3618,9 +3618,9 @@ And it does not pretend to be a person. Ours says in its first line that it is a
 
 [[scene:teardown]]
 
-## Who this fits, and who it does not
+## Which businesses an AI chatbot fits, and which it does not
 
-A chat assistant fits a business where questions arrive when nobody can answer them: evenings, weekends, or a front desk that is always with somebody. That is a home services company, a dental, accounting or insurance office, a salon, spa or gym, and a real estate office with listings to search.
+An AI chatbot fits a business where questions arrive when nobody can answer them: evenings, weekends, or a front desk that is always with somebody. That is a home services company, a dental, accounting or insurance office, a salon, spa or gym, and a real estate office with listings to search.
 
 Three kinds of business do something else. A business that gets a handful of website visits a week needs a clear contact form and a kept promise, not a chat window. A business where a person already answers every inquiry within minutes has no gap to close. And a business where nobody will read the weekly transcripts should leave it switched off, because a wrong answer nobody reads is a wrong answer that can be given again.
 
@@ -3630,13 +3630,13 @@ Most businesses fall into one of these groups, and the group decides the next st
 
 [[scene:fits]]
 
-## What to do first
+## What should an owner do first about an AI chatbot?
 
-What to do first is one job, taken a week at a time, ending with a decision written down.
+The first step with an AI chatbot is one job, taken a week at a time, ending with a decision written down.
 
 - Week 1: read the last thirty messages that came through your website and mark the time each arrived and what was asked. Write the page of answers you would give a new hire: hours, service area, what a first visit involves, what you never quote.
-- Week 2: put the five questions from "How to test one before you buy it" to whatever answers on your site now, or to a vendor's demo, and write down what each said.
-- Weeks 3 and 4: run the test in "Is it worth automating". If it passes, approve the page of answers and the first line that says it is an assistant, and read every conversation for a month. If it fails, keep the contact form and write that decision down.
+- Week 2: put the five questions from "How do you test an AI chatbot before you buy it?" to whatever answers on your site now, or to a vendor's demo, and write down what each said.
+- Weeks 3 and 4: run the test in "Is an AI chatbot worth it for a small business?". If it passes, approve the page of answers and the first line that says it is an assistant, and read every conversation for a month. If it fails, keep the contact form and write that decision down.
 
 This is also how our [AI readiness assessment](/services/ai-readiness-assessment) starts. In its interview we ask for one job written in two minutes under input, do, output and your check, then handed to a colleague who does not know it, noting where they stall. Each job is then scored for impact and risk from 1 to 5, with four checks: it binds the business, it reaches a customer, it feeds another system, it can damage trust. The owner leaves with each job marked to automate, to keep a person on, or to leave alone.
 
@@ -3644,7 +3644,7 @@ An invented example: a heating company's owner writes the answer to "do you come
 
 [[scene:roadmap]]
 
-## Common questions, answered honestly
+## Common questions about AI chatbots, answered honestly
 
 ### What is an AI chatbot for a small business website?
 
@@ -3652,11 +3652,11 @@ An AI chatbot for a small business website is a text conversation on your own si
 
 ### Do I need an AI chatbot on my website?
 
-You need one when questions reach your website at hours when nobody can answer them, and not before. If the website gets a few visits a week, or a person already answers every inquiry within minutes, a clear contact form and a promise of when you reply, kept every time, does the job. The test in "Is it worth automating" decides it with your own numbers. According to the Census Bureau's Business Trends and Outlook Survey, less than 20 percent of firms with four or fewer employees reported using AI, so choosing not to is a normal answer.
+You need one when questions reach your website at hours when nobody can answer them, and not before. If the website gets a few visits a week, or a person already answers every inquiry within minutes, a clear contact form and a promise of when you reply, kept every time, does the job. The test in "Is an AI chatbot worth it for a small business?" decides it with your own numbers. According to the Census Bureau's Business Trends and Outlook Survey, less than 20 percent of firms with four or fewer employees reported using AI, so choosing not to is a normal answer.
 
 ### How much does an AI chatbot cost for a small business?
 
-We print no price on this page. Hosted chat tools publish their own, so compare what each includes: whether it reads a live calendar or only your website text, where the conversations go, and who reads them each week. What it takes from the owner is set out in "What it takes to run".
+We print no price on this page. Hosted chat tools publish their own, so compare what each includes: whether it reads a live calendar or only your website text, where the conversations go, and who reads them each week. What it takes from the owner is set out in "What does it take to run an AI chatbot?".
 
 ### What is the difference between live chat and an AI chat assistant?
 
@@ -3696,17 +3696,17 @@ Yes. It is a small piece of code that goes into the site the business already ha
 
 [[scene:quiz]]
 
-## Where it goes wrong
+## Where does an AI chatbot go wrong?
 
-Three ways it fails, each avoidable:
+An AI chatbot fails in three ways, each avoidable:
 
 [[scene:failure-modes]]
 
 [[scene:system-diagram]]
 
-## What to do about it
+## What to do next about an AI chatbot
 
-Ours is on [the RealtyLT AI page](/ai#chat): asked something hard, it either answers or says it cannot and offers a call, and both of those are the correct behaviour. The build itself, and what happens to a lead in the minutes after the conversation ends, is written out on the [AI chat assistant page](/services/ai-chat-assistant).
+Our own AI chatbot is on [the RealtyLT AI page](/ai#chat): asked something hard, it either answers or says it cannot and offers a call, and both of those are the correct behaviour. The build itself, and what happens to a lead in the minutes after the conversation ends, is written out on the [AI chat assistant page](/services/ai-chat-assistant).
 
 The free half of this needs nobody, us included: your own site opened on a phone at night, the way the homeowner in the invented example did, with her question asked, the taps counted, and a note of whether it ever answers or just asks for your email address.
 
