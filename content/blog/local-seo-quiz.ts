@@ -82,7 +82,7 @@ export const LOCAL_SEO_QUIZ: QuizQuestion[] = [
     q: "When eBay stopped paying for ads on its own name, how much of the click traffic did it keep?",
     choices: ["5.6 percent", "0.529 percent", "99.5 percent", "63 percent"],
     answer: 2,
-    why: 'Only 0.529 percent of the click traffic was lost, so 99.5 percent was retained; see "What does it cost to rent the same attention?".',
+    why: 'Only 0.529 percent of the click traffic was lost, so 99.5 percent was retained; see "What do ads add compared with ranking in Google Maps?".',
   },
   {
     q: "What does the worth-it test say to do with a profile for one location?",
@@ -93,6 +93,6 @@ export const LOCAL_SEO_QUIZ: QuizQuestion[] = [
       "Leave the profile alone for a year",
     ],
     answer: 0,
-    why: 'Do the profile by hand once, automate the review request and the report, and approve what goes out in your name; see "Is it worth doing this yourself, or having it done?".',
+    why: 'Do the profile by hand once, automate the review request and the report, and approve what goes out in your name; see "Is it worth ranking in Google Maps yourself, or having it done?".',
   },
 ];

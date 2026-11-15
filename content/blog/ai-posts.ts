@@ -2959,9 +2959,9 @@ The calculator below runs the same ladder with your numbers. It has no row for w
 
 [[scene:pull-quote]]
 
-## What does it cost to rent the same attention?
+## What do ads add compared with ranking in Google Maps?
 
-The obvious alternative is to buy the position, and the honest comparison is not that ads are bad. It is that only a test shows what the ads add. One organisation ran the experiment properly and got an answer that surprised everyone.
+Paid ads are the obvious alternative to ranking in Google Maps, and the honest comparison is not that ads are bad. It is that only a test shows what the ads add. One organisation ran the experiment properly and got an answer that surprised everyone.
 
 In March 2012 eBay stopped bidding on search queries containing its own name on two search engines. It kept buying exactly the same terms on a third, and that third is the control, which is the whole point. Three economists, two of them employed by eBay's research lab when the work was done, wrote it up in a [National Bureau of Economic Research working paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf) in May 2014.
 
@@ -2971,9 +2971,9 @@ Be careful with this. It is eBay, a name tens of millions of people type, and th
 
 [[scene:paid-search]]
 
-## Is it worth doing this yourself, or having it done?
+## Is it worth ranking in Google Maps yourself, or having it done?
 
-For one location, doing the first pass yourself is worth it, and having it kept current is worth it where the profile would otherwise be forgotten. These are the same tests we use in an assessment, applied to this job.
+For one location, doing the first pass on your Google profile yourself is worth it, and having it kept current is worth it where the profile would otherwise be forgotten. These are the same tests we use in an assessment, applied to this job.
 
 First, does the job happen often enough that a failure is noticed within a week? A profile does not fail loudly. Hours go stale and a review sits unanswered with no warning, so the answer is no, which is the argument for putting it on a calendar or a system rather than on memory.
 
@@ -2987,13 +2987,15 @@ And a tool you already have: Google's own profile editor is free, and Google say
 
 The verdict, in plain words. Leave the ranking itself alone, because Google says no one can buy it. Do the profile by hand once. Automate the part that decays: the review request on the day the job ends, the monthly report and the reminder to check the hours before a holiday. Anything that goes out in your name, a reply to a review included, a person approves first.
 
-## What it takes to run, and how long it takes
+## What does it take, and how long, to rank in Google Maps?
 
-The first month is mostly repair, and repair takes as long as the profile is wrong. In an invented example, one profile two thirds filled in is a short job, while three profiles that disagree with each other, a phone number that changed and a service area drawn around a wish are a longer one, and most of the time goes on finding out what is true rather than typing it in.
+The first month of Google Maps work is mostly repair, and repair takes as long as the profile is wrong. In an invented example, one profile two thirds filled in is a short job, while three profiles that disagree with each other, a phone number that changed and a service area drawn around a wish are a longer one, and most of the time goes on finding out what is true rather than typing it in.
 
 After that it is a rhythm, not a project: how many places have to stay current, and how much of the review asking you want handled rather than remembered. What it takes from you is access, the facts and the asking. We need manager access to the profile, which stays in the business's name, the real service area, hours and services, photographs of real work, and customers who are asked.
 
 The two halves move at different speeds. Fixing a profile corrects the record people read when they open it, which is different from a ranking. Position has no promised date, and nobody offers one, us included, for the reason printed at the top of Google's own page.
+
+The profile work this page describes is what our [local SEO](/services/local-seo) service covers, with a person approving everything published in the business's name.
 
 One cost never appears on a quote and decides the outcome: reviews arrive because someone asks, every time, including after the jobs that went sideways. If nobody in the business will do that, the plan is missing one of the two inputs Google names.
 
@@ -3017,7 +3019,7 @@ And it does not stay done. Everything above decays in the direction of being wro
 
 [[scene:wasted]]
 
-## Who this fits, and who it does not
+## Who does ranking in Google Maps fit, and who does it not?
 
 It fits a business that customers find by searching nearby and that finishes work for a named person: a plumber, roofer or HVAC contractor, a dental, accounting or insurance office, a salon, spa or gym, a real estate office. It matters most where people search for the service and not for your name, which is how a new customer who has never heard of you searches.
 
@@ -3027,9 +3029,9 @@ It is a poor fit if nobody will answer the phone the profile advertises, or if j
 
 [[scene:fits]]
 
-## How do you find out where you stand in ten minutes?
+## How do you check where you rank in Google Maps in ten minutes?
 
-All of this is checkable tonight, for nothing, and the checking is more useful than any report anyone will sell you.
+Where your business ranks in Google Maps is checkable tonight, for nothing, and the checking is more useful than any report anyone will sell you.
 
 Open a browser you are not signed into, on a phone that is not yours if you can borrow one. Search the phrase a stranger would use for your service in the town you want to work in. Not your name. Write down the three businesses that come back. Do it again standing somewhere else in your market and write down the three that come back there. The difference between the two lists is distance doing its work.
 
@@ -3039,9 +3041,9 @@ Then go through the profile as an inspector, not the owner. Is the main category
 
 Finally count the reviews and count the jobs you finished last year, and put the two numbers side by side. The gap is the number of jobs with no review, which is where the asking starts.
 
-## What to do first
+## What should you do first to rank in Google Maps?
 
-Start with one profile and one week at a time, and end with a decision written down. This is a suggested schedule, not a deadline.
+To rank in Google Maps, start with one profile and one week at a time, and end with a decision written down. This is a suggested schedule, not a deadline.
 
 In week one, run the ten-minute check above and fix the three things it finds: the main category, the hours and the name. Write down the event that means a job is finished, because that is the moment you will ask for a review.
 
@@ -3099,7 +3101,7 @@ No, and the sentence to quote back is Google's own: there is no way to request o
 
 [[scene:quiz]]
 
-## What to do about it
+## What should you do about your Google Maps ranking?
 
 The check needs nobody, us included. It is your own profile and a borrowed phone, run the way the man in the basement ran his search: the three names that come back, how little he had to choose between them, and whether the profile beside them is finished, current and honest.
 
