@@ -3577,9 +3577,9 @@ In this invented example, the owner missed a chance to speak with a customer who
 
 [[scene:reel]]
 
-## What a missed call actually costs
+## What does a missed call cost a small business?
 
-We could not find a published study of how fast small businesses answer their phones, in any trade. The closest careful work we found is from 2011; when we looked for something newer on November 3, 2026, we found only figures published by companies that sell phone tools.
+A missed call costs a small business the chance to speak with a customer who was ready to book, and we could not put a figure on that cost. We could not find a published study of how fast small businesses answer their phones, in any trade. The closest careful work we found is from 2011; when we looked for something newer on November 3, 2026, we found only figures published by companies that sell phone tools.
 
 In 2011, [Harvard Business Review](https://hbr.org/2011/03/the-short-life-of-online-sales-leads) reported an audit of 2,241 US companies. The researchers submitted a test inquiry through each company's own website and timed how long the reply took.
 
@@ -3599,7 +3599,7 @@ An invented example: a roofer calls back every missed call first thing the next 
 
 A useful first step costs nothing: open your phone's call log and mark every missed call from last week that left no voicemail and got no call back. That gives you a list of calls to investigate, not a measured loss. Some will be spam, repeat calls from the same person, or people who were never customers, and sorting them is part of the exercise.
 
-## Why nobody leaves the voicemail
+## Why do callers hang up instead of leaving a voicemail?
 
 An invented example: a caller with three other businesses' numbers on the screen reaches your voicemail, decides not to wait for a call back, and rings the next one.
 
@@ -3613,7 +3613,7 @@ An invented example: a salon owner sees a few missed calls from unknown numbers 
 
 Counting last week's missed calls that left a voicemail, against the total, shows how much of the problem this post is about applies to you.
 
-## What an AI voice agent for small business does
+## What does an AI receptionist for small business do?
 
 An AI voice agent for small business is a voice on the phone that can hold a short conversation, connected to the systems that make its answers true: your services and the area you cover, your calendar and your customer records.
 
@@ -3627,9 +3627,9 @@ An invented example: a contractor rings back and already knows the caller wants 
 
 Before you talk to anyone about an agent, write down the questions callers ask you most; those are the answers it must give from your own information.
 
-## The same agent, pointed the other way
+## Can an AI voice agent make calls as well as answer them?
 
-Everything above is about the call you did not take. The other half is the inquiry that arrives without a call.
+An AI voice agent can also place calls; everything above is about the call you did not take. The other half is the inquiry that arrives without a call.
 
 Some inquiries never come by phone. They arrive by a form at nine at night, from a portal or from an ad, and then wait in a list for someone to notice them. The usual answer is a follow-up task, which gets done tomorrow, or on Thursday, or not at all.
 
@@ -3643,7 +3643,7 @@ An invented example: a cleaning company's web form comes in at nine at night. Be
 
 Before you point an agent at any list, write one line beside each name saying how and when that person consented to be called; a name with no line comes off the list.
 
-## The one thing that decides whether it works
+## What decides whether an AI voice agent works on the phone?
 
 Text chat forgives a pause. A typing indicator is a promise that something is coming, and two seconds of it costs nothing.
 
@@ -3669,9 +3669,9 @@ An invented example: a caller asks a gym's agent "Do you work Saturdays" and get
 
 When you try any phone agent, cut it off mid-sentence and ask it a four-word question. Note whether it stops, how long it leaves before answering, and whether the answer is short. Then check the rest of the list: that what it says is accurate, that it says it is an AI assistant, that it respects consent, that it books the right time, and that it hands over to a person when it should.
 
-## What it does not do, and should not pretend to
+## What should an AI receptionist never do?
 
-The limits come first, before anyone buys anything.
+The limits of an AI receptionist come first, before anyone buys anything.
 
 It does not close. A first call carries more than words: the pause before an answer, a second voice in the background, cheerfulness that is covering something. A transcript may leave out tone, pauses and background context, and a model reading it cannot recover what was never written down.
 
@@ -3687,7 +3687,7 @@ An invented example: a caller asks a landscaper's agent whether the price includ
 
 The list of things your agent must never answer on its own, such as a price, a legal position or a fact it cannot check, belongs in its setup before it takes a single call.
 
-## The legal part nobody sells you
+## What are the legal rules for AI voice calls and call recording?
 
 None of this is legal advice, and all of it moves. The point is to know the questions exist and to take them to your own attorney. The New York and California statutes below were read on November 11, 2026 in a publisher's copy marked current as of January 1, 2026, and California's AB 2905 on November 3, 2026 in the Assembly committee's analysis; the official state pages refused our automated reader, so we name them as the citations and recommend reading them there.
 
@@ -3709,9 +3709,9 @@ If you plan any outbound calling, have your own attorney review the script and t
 
 [[scene:call-path]]
 
-## Where it goes wrong
+## Where does an AI voice agent go wrong?
 
-Three ways a phone agent that works technically still loses you the call, each a setup or follow-through problem:
+An AI voice agent goes wrong in three ways: a phone agent that works technically still loses you the call, each a setup or follow-through problem:
 
 1. **It is set up to answer everything.** An agent that never hands off ends up standing between a serious caller and you. The setting that matters most is the point at which it stops talking and books.
 2. **Nobody told it what it may not say.** With no limit on price, condition or anything legal, it fills the silence fluently, and you hear about it from the client rather than from the log.
@@ -3725,7 +3725,7 @@ For the trial, a named person, usually the owner, reads every call, decides what
 
 ## Who an AI voice agent fits, and who it does not
 
-It fits owners whose calls come in while they cannot pick up: trades on job sites, a dental or accounting office whose front desk is with someone, salons, spas and gyms with their hands busy, real estate agents at showings, and anyone whose callers ring in the evening or at the weekend. It fits best where a caller's first questions repeat and the next step is a booked time.
+An AI voice agent fits owners whose calls come in while they cannot pick up: trades on job sites, a dental or accounting office whose front desk is with someone, salons, spas and gyms with their hands busy, real estate agents at showings, and anyone whose callers ring in the evening or at the weekend. It fits best where a caller's first questions repeat and the next step is a booked time.
 
 It does not fit an office where a person already answers almost every call and after-hours calls are rare. It fits poorly where nearly every caller is a past client or a referral who expects you by name, or where the first call is usually a hard or private conversation.
 
@@ -3735,7 +3735,7 @@ An invented example: a home inspector who works only from referrals and calls ev
 
 [[scene:fits]]
 
-## Is it worth automating
+## Is an AI receptionist worth it for a small business?
 
 Whether it is worth automating is a test you run on one job, and "leave it alone" is a real answer. The job here is answering a call you cannot take. These are the screening questions of our AI assessment, our own method rather than a published standard; the post on [what to automate first and what to leave alone](/blog/ai-assessment-small-business-what-not-to-automate) sets it out in full.
 
@@ -3753,7 +3753,7 @@ An invented example: the manager of an accounting office writes up "answering a 
 
 Running the two-minute test on answering a missed call, and marking where your colleague stalls, is the first piece of work.
 
-## What to do first
+## What should an owner do first before buying an AI voice agent?
 
 What to do first is one job at a time, on a suggested trial schedule rather than a fixed one.
 
@@ -3765,11 +3765,11 @@ An invented example: a heating and cooling company starts with weekend calls onl
 
 [[scene:roadmap]]
 
-## Common questions
+## Common questions about an AI receptionist
 
 ### What is an AI voice agent for a small business?
 
-A phone voice that answers the calls you cannot take, holds a short conversation from your own information and calendar, says it is an AI assistant and books you to call back. It suits any small business whose callers ask the same first questions: a contractor, a salon, a dental office, a real estate office.
+An AI voice agent for a small business is a phone voice that answers the calls you cannot take, holds a short conversation from your own information and calendar, says it is an AI assistant and books you to call back. It suits any small business whose callers ask the same first questions: a contractor, a salon, a dental office, a real estate office.
 
 ### Will callers know they are talking to an AI?
 
@@ -3777,7 +3777,7 @@ Yes. The agents we set up say they are an AI assistant in their first sentence, 
 
 ### What happens when it cannot answer something?
 
-It says so and books a call with you instead of guessing. It does not invent a price, a legal position, or a fact about a job.
+When an AI voice agent cannot answer something, it says so and books a call with you instead of guessing. It does not invent a price, a legal position, or a fact about a job.
 
 ### Does it take over the front desk?
 
@@ -3785,15 +3785,15 @@ No. It takes the repeatable first contact off the desk: answering calls nobody c
 
 ### Does it work with my calendar and my CRM?
 
-It can, when it is connected to a calendar and a customer system it supports and has the permissions to read and write them. Connected that way, it offers times from your live availability and writes the notes and the outcome back. The [appointment booking](/services/ai-appointment-booking) side uses the same connections. Check the booked times in the trial like everything else.
+An AI voice agent can work with your calendar and your CRM when it is connected to a calendar and a customer system it supports and has the permissions to read and write them. Connected that way, it offers times from your live availability and writes the notes and the outcome back. The [appointment booking](/services/ai-appointment-booking) side uses the same connections. Check the booked times in the trial like everything else.
 
 ### Is it legal to have an AI make outbound calls?
 
-It can be, when the checks for that call are met. Under the TCPA an AI voice counts as an artificial voice, so the called person's prior express consent is needed unless an exemption applies, and telemarketing also has to respect do-not-call rules and calling hours. The call's purpose, the person called and the states involved all matter, so have your attorney review the setup before the first outbound call.
+An outbound call by an AI voice can be legal when the checks for that call are met. Under the TCPA an AI voice counts as an artificial voice, so the called person's prior express consent is needed unless an exemption applies, and telemarketing also has to respect do-not-call rules and calling hours. The call's purpose, the person called and the states involved all matter, so have your attorney review the setup before the first outbound call.
 
 [[scene:quiz]]
 
-## What to do about it
+## How to check your own missed calls this week
 
 The simplest check needs nobody, us included. It is a call to your own number on a Sunday evening, from a phone your office has not saved, sat through the whole way a stranger would sit through it: the rings counted, the greeting heard all the way to the beep. What you hear on that call is the first thing someone with water coming through the ceiling, or a toothache, hears from your business.
 

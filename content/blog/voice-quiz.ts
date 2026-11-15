@@ -24,7 +24,7 @@ export const VOICE_QUIZ: QuizQuestion[] = [
       "A booked appointment",
     ],
     answer: 2,
-    why: 'The study defined a qualified lead as a meaningful conversation with a key decision maker; see "What a missed call actually costs".',
+    why: 'The study defined a qualified lead as a meaningful conversation with a key decision maker; see "What does a missed call cost a small business?".',
   },
   {
     q: "What does a missed call with no message usually leave you?",
@@ -35,7 +35,7 @@ export const VOICE_QUIZ: QuizQuestion[] = [
       "A recording of what they wanted",
     ],
     answer: 1,
-    why: 'The call log keeps the number and the time, not the purpose; see "Why nobody leaves the voicemail".',
+    why: 'The call log keeps the number and the time, not the purpose; see "Why do callers hang up instead of leaving a voicemail?".',
   },
   {
     q: "What should the agent do when asked something it cannot verify?",
@@ -46,13 +46,13 @@ export const VOICE_QUIZ: QuizQuestion[] = [
       "Hang up politely",
     ],
     answer: 2,
-    why: 'It says it does not know and puts a call on your calendar; see "What it does not do, and should not pretend to".',
+    why: 'It says it does not know and puts a call on your calendar; see "What should an AI receptionist never do?".',
   },
   {
     q: "In the 2009 study of ten languages, about how long was the average gap before an answer?",
     choices: ["About two tenths of a second", "About two seconds", "About five seconds", "About half a minute"],
     answer: 0,
-    why: 'About two tenths of a second, measured face to face, not on the phone; see "The one thing that decides whether it works".',
+    why: 'About two tenths of a second, measured face to face, not on the phone; see "What decides whether an AI voice agent works on the phone?".',
   },
   {
     q: "What did the FCC's ruling of February 2024 confirm?",
@@ -63,7 +63,7 @@ export const VOICE_QUIZ: QuizQuestion[] = [
       "AI-generated voices count as artificial voices under the TCPA, so prior express consent is needed",
     ],
     answer: 3,
-    why: 'The ruling brought AI voices under the TCPA\'s artificial-voice rules; see "The legal part nobody sells you".',
+    why: 'The ruling brought AI voices under the TCPA\'s artificial-voice rules; see "What are the legal rules for AI voice calls and call recording?".',
   },
   {
     q: "Under New York's definition of wiretapping, whose consent can be enough to record a call?",
@@ -74,7 +74,7 @@ export const VOICE_QUIZ: QuizQuestion[] = [
       "Every party's, in every state",
     ],
     answer: 1,
-    why: 'The New York definition turns on the consent of the sender or the receiver, and California requires all parties; see "The legal part nobody sells you".',
+    why: 'The New York definition turns on the consent of the sender or the receiver, and California requires all parties; see "What are the legal rules for AI voice calls and call recording?".',
   },
   {
     q: "Which decisions become defaults the agent reads on every call?",
@@ -85,7 +85,7 @@ export const VOICE_QUIZ: QuizQuestion[] = [
       "None: the agent improvises",
     ],
     answer: 0,
-    why: 'An unsettled judgement, a sensitive decision or an exception stays with a person; see "Is it worth automating".',
+    why: 'An unsettled judgement, a sensitive decision or an exception stays with a person; see "Is an AI receptionist worth it for a small business?".',
   },
   {
     q: "Answering a caller reaches a customer. What does that set in our scoring?",
@@ -96,7 +96,7 @@ export const VOICE_QUIZ: QuizQuestion[] = [
       "An automatic impact of 5",
     ],
     answer: 2,
-    why: 'One yes on the four checks means the risk is at least 3; see "Is it worth automating".',
+    why: 'One yes on the four checks means the risk is at least 3; see "Is an AI receptionist worth it for a small business?".',
   },
   {
     q: "Before an agent dials a new form inquiry, what has to be checked?",
@@ -107,7 +107,7 @@ export const VOICE_QUIZ: QuizQuestion[] = [
       "The consent for that kind of call and the calling hours where the person lives",
     ],
     answer: 3,
-    why: 'If either check fails, a person calls instead; see "The same agent, pointed the other way".',
+    why: 'If either check fails, a person calls instead; see "Can an AI voice agent make calls as well as answer them?".',
   },
   {
     q: "What is the first thing to do this week?",
@@ -118,6 +118,6 @@ export const VOICE_QUIZ: QuizQuestion[] = [
       "Rewrite the website",
     ],
     answer: 1,
-    why: 'Hear what a stranger hears before anything else; see "What to do first".',
+    why: 'Hear what a stranger hears before anything else; see "What should an owner do first before buying an AI voice agent?".',
   },
 ];

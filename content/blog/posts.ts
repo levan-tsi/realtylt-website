@@ -546,8 +546,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-voice-agent-missed-calls-real-estate",
     cluster: "answering",
-    title: "AI voice agent for small business: answering the calls an owner misses",
-    seoTitle: "AI Voice Agent for Small Business: Answer Missed Calls",
+    title: "AI voice agent for small business: an AI receptionist for the calls an owner misses",
+    seoTitle: "AI Voice Agent for Small Business: An AI Receptionist for Missed Calls",
     date: "2026-07-30",
     /** A real revision, not a freshness fiction: the all-party-consent paragraph asserted a
      * count of states that had not been checked against the statutes, and now says only what
@@ -584,7 +584,7 @@ export const POSTS: BlogPost[] = ([
     excerpt:
       "An AI voice agent for small business, in plain words: what it does when nobody can pick up, what it must never do, the federal and state rules for AI voices and call recording, a test of whether it is worth it, and a plan for this week.",
     seoDescription:
-      "An AI voice agent for small business: what it does with the calls an owner misses, what it must never do, the rules for AI voices, and whether it is worth it.",
+      "An AI receptionist for small business is an AI voice agent that answers missed calls: what it does, what it must never do, the rules, and whether it is worth it.",
     cover: "/images/hero/millerton-night.jpg",
     body: [],
     placeholder: false,
