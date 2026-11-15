@@ -3005,7 +3005,7 @@ One cost never appears on a quote and decides the outcome: reviews arrive becaus
 
 ## What it does not do, and should not pretend to
 
-It does not buy a position. This is a quotation, not a disclaimer: Google's page says there is no way to request or pay for a better local ranking.
+Work on a Google profile does not buy a position. This is a quotation, not a disclaimer: Google's page says there is no way to request or pay for a better local ranking.
 
 It does not move you closer to anybody. Distance is one of the three published inputs and a physical fact. A business on the eastern edge of a county loses searches on the western edge to someone who is simply standing there.
 
@@ -3021,7 +3021,7 @@ And it does not stay done. Everything above decays in the direction of being wro
 
 ## Who does ranking in Google Maps fit, and who does it not?
 
-It fits a business that customers find by searching nearby and that finishes work for a named person: a plumber, roofer or HVAC contractor, a dental, accounting or insurance office, a salon, spa or gym, a real estate office. It matters most where people search for the service and not for your name, which is how a new customer who has never heard of you searches.
+Ranking in Google Maps fits a business that customers find by searching nearby and that finishes work for a named person. Examples are a plumber, roofer or HVAC contractor, a dental, accounting or insurance office, a salon, spa or gym, a real estate office. It matters most where people search for the service and not for your name, which is how a new customer who has never heard of you searches.
 
 It fits poorly where the business is an address on a form. Google says a rented mailing address from which you do not operate is a virtual office and is not eligible for a Business Profile, and a desk in a co-working space needs signage, customers received during business hours and staff on site. Nothing on this page repairs that.
 
@@ -3073,7 +3073,7 @@ Because reviews are only part of one of the three inputs. A searcher who is clos
 
 ### What does it mean to optimize your Google profile?
 
-It is the work of making the profile complete, correct and current so Google can match it to what people search for: the main category, the other categories if they are accurate, the service area or address, the hours, the services, the photographs and the replies to reviews. Google's guidelines say to choose the fewest categories that describe your core business, and not to use categories solely as keywords.
+Optimizing your Google profile is the work of making the profile complete, correct and current so Google can match it to what people search for: the main category, the other categories if they are accurate, the service area or address, the hours, the services, the photographs and the replies to reviews. Google's guidelines say to choose the fewest categories that describe your core business, and not to use categories solely as keywords.
 
 ### Can a plumber who works from home show a home address?
 
@@ -3093,7 +3093,7 @@ In the map results, distance works against you, because it is one of the three p
 
 ### Do citations and directory listings still matter?
 
-They matter for being correct and they are not what Google's ranking page names. That page lists links from other websites and reviews under prominence and does not mention directory consistency. In the Whitespark survey, citation consistency ranks well below the category, distance and reviews.
+Citations and directory listings matter for being correct, and they are not what Google's ranking page names. That page lists links from other websites and reviews under prominence and does not mention directory consistency. In the Whitespark survey, citation consistency ranks well below the category, distance and reviews.
 
 ### Can anybody guarantee me a position?
 
