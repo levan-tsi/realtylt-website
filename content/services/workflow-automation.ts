@@ -22,9 +22,9 @@ export const workflowAutomation: Service = {
 
   eyebrow: "Automation · Connect your tools",
   title: "Workflow automation: the busywork runs itself",
-  lede: "A quote goes out on Tuesday and nobody remembers to follow it up until the customer has hired someone else. We connect the apps the business already uses so the steps between them happen on their own: a form comes in, a quote is sent, an invoice is paid, and the next task starts without anyone retyping. Where a step needs judgment, it stops and asks a person.",
+  lede: "AI automation services for a small business connect the apps it already uses so the steps between them happen on their own: a form comes in, a quote is sent, an invoice is paid, and the next task starts without anyone retyping. Where a step needs judgment, it stops and asks a person. Without it, a quote goes out on Tuesday and nobody remembers to follow it up until the customer has hired someone else.",
   specs: ["connects the tools you use", "follows up on every quote", "stops and asks a person", "runs end to end"],
-  why: "Every office loses time to the same steps done by hand: moving a detail from one app to the next, chasing the next task, retyping what a system already knows. When that chain runs itself, the time comes back, and so do the follow-ups that used to slip through.",
+  why: "Workflow automation matters because every office loses time to the same steps done by hand: moving a detail from one app to the next, chasing the next task, retyping what a system already knows. When that chain runs itself, the time comes back, and so do the follow-ups that used to slip through.",
   keywords: [
     "workflow automation for small business",
     "how to automate repetitive tasks",
@@ -33,15 +33,19 @@ export const workflowAutomation: Service = {
     "ai workflow automation for small business",
   ],
 
+  sources: [
+    { text: "Mark, Gonzalez and Harris, \"No Task Left Behind?\", CHI 2005, University of California, Irvine", href: "https://www.ics.uci.edu/~gmark/CHI2005.pdf" },
+  ],
+
   seo: {
-    title: "Workflow automation for small business: quotes, forms, follow-up",
+    title: "AI automation services for small business: quotes and follow-up",
     description:
       "Workflow automation for a small business: the apps you already use connected, so quotes get followed up, forms land in the right place and the next task starts itself.",
   },
 
   figure: {
     kind: "flow",
-    caption: "One quote, followed up without anyone chasing it",
+    caption: "Workflow automation at work: one quote, followed up without anyone chasing it",
     trigger: "A roofing quote is sent on Tuesday at 4:10pm",
     nodes: [
       { label: "Logged", note: "The quote, the customer and the amount are written to the CRM, once." },
@@ -54,7 +58,7 @@ export const workflowAutomation: Service = {
   },
 
   whatItIs: [
-    "It is the connection between the tools a business already pays for. The CRM, the calendar, the email, the website forms, the quoting and invoicing app and the documents all hold pieces of the same job. The gap between them is where the time goes: copying a number from one tab to another, remembering to send the thing, retyping what a system already knows.",
+    "Workflow automation is the connection between the tools a business already pays for. The CRM, the calendar, the email, the website forms, the quoting and invoicing app and the documents all hold pieces of the same job. The gap between them is where the time goes: copying a number from one tab to another, remembering to send the thing, retyping what a system already knows.",
     "We connect those tools so that a new inquiry, a sent quote, a paid invoice or a signed form starts everything that should follow it, end to end, at any hour. Where a step needs a decision rather than a copied field, an AI can make a small, checkable one, such as which person a request belongs to. Where it needs a person, the chain stops and asks.",
     "The cost of a manual step is not the ninety seconds of typing. In a 2005 field study at the University of California, Irvine, researchers timed 24 information workers at their desks. When interrupted work was picked up again the same day, getting back to it took an average of 25 minutes and 26 seconds. Those were office workers in one study, so read it as what interruption does to concentrated work, not as a number about any one business. The point stands either way: a step that fires by itself does not pull anyone out of anything.",
     "It fits any office that repeats the same steps every week: a contractor sending quotes, a dental office handling new-patient forms, an accounting office collecting documents in tax season, a salon or spa turning bookings into reminders and review requests, a real estate office tracking contract dates.",
@@ -128,7 +132,7 @@ export const workflowAutomation: Service = {
   /** Lifted from this service's own flagship post (content/blog/ai-posts.ts). The third entry
    * argues against the word "AI" on a page that sells AI, which is exactly why it stays. */
   limits: [
-    "It does not fix a bad process. If the manual version loses customers, the automated version loses them faster, at three in the morning, with a log entry saying it worked.",
+    "Workflow automation does not fix a bad process. If the manual version loses customers, the automated version loses them faster, at three in the morning, with a log entry saying it worked.",
     "It does not remove judgment. Every chain worth building has a step where a person would have paused, and the right behaviour at that step is to stop and ask rather than guess.",
     "It is mostly not artificial intelligence, whatever it gets sold as. Most of the steps are a detail moving from one place to another with no cleverness in them at all, and they are more reliable for it.",
     "It does not hand back a whole day. It hands back the small steps and removes a kind of mistake. That is a duller promise than the usual one, and it is the one that survives contact with a real business.",
@@ -138,35 +142,35 @@ export const workflowAutomation: Service = {
   faqs: [
     {
       q: "What is workflow automation?",
-      a: "It is connecting the software a business already uses so that finishing one step automatically starts the next. Instead of a person copying an inquiry from a form into a CRM, sending a reply and setting a reminder, the chain fires by itself the moment the form is submitted, and stops for a person where a decision is needed.",
+      a: "Workflow automation is connecting the software a business already uses so that finishing one step automatically starts the next. Instead of a person copying an inquiry from a form into a CRM, sending a reply and setting a reminder, the chain fires by itself the moment the form is submitted, and stops for a person where a decision is needed.",
     },
     {
       q: "How do I automate repetitive tasks in a small business?",
-      a: "Write down one real job from start to finish, every step and every tool, then pick the step that happens most often and needs the least judgment, and automate only that. Check it after a month by counting how often somebody still did it by hand. Starting with one chain rather than a platform is what keeps the first month cheap and honest.",
+      a: "To automate repetitive tasks in a small business, write down one real job from start to finish, every step and every tool, then pick the step that happens most often and needs the least judgment, and automate only that. Check it after a month by counting how often somebody still did it by hand. Starting with one chain rather than a platform is what keeps the first month cheap and honest.",
     },
     {
       q: "Which repetitive tasks should a small business automate first?",
-      a: "The boring, frequent ones whose failure is cheap and noticed: logging an inquiry, a follow-up on a sent quote, a reminder for documents still owed, an appointment confirmation. Leave anything that sets a price, judges a person or binds the business with a person, and automate the steps around it instead.",
+      a: "A small business should automate the boring, frequent tasks first, the ones whose failure is cheap and noticed: logging an inquiry, a follow-up on a sent quote, a reminder for documents still owed, an appointment confirmation. Leave anything that sets a price, judges a person or binds the business with a person, and automate the steps around it instead.",
     },
     {
       q: "Do I need to replace the software I already use?",
-      a: "No. That is the point of it. Automation sits between the tools the business already has and connects them. The CRM, the calendar, the inbox and the invoicing app stay exactly where they are.",
+      a: "No, a business does not need to replace the software it already uses. That is the point of it. Automation sits between the tools the business already has and connects them. The CRM, the calendar, the inbox and the invoicing app stay exactly where they are.",
     },
     {
       q: "Which automation tools do you use?",
-      a: "The ones that fit the job: an established automation platform for most chains, and custom code where a chain needs it or where the data has to stay in the business's own environment. The choice is made per workflow, by what it has to do and what it has to protect, not by a preference.",
+      a: "The automation tools we use are the ones that fit the job: an established automation platform for most chains, and custom code where a chain needs it or where the data has to stay in the business's own environment. The choice is made per workflow, by what it has to do and what it has to protect, not by a preference.",
     },
     {
       q: "What happens when an automation breaks?",
-      a: "It sends a message to a named person, logs what failed and why, and does not silently drop the work. Chains are versioned so a bad change can be rolled back, and steps that genuinely need judgment are built to stop and ask rather than guess.",
+      a: "When an automation breaks, it sends a message to a named person, logs what failed and why, and does not silently drop the work. Chains are versioned so a bad change can be rolled back, and steps that genuinely need judgment are built to stop and ask rather than guess.",
     },
     {
       q: "Is workflow automation worth it for a one-person business?",
-      a: "Often more, not less. A one-person business has nobody to absorb the busywork, so every manual step comes out of the only calendar there is. Start with a single chain at the top of the frequency list rather than with a platform, then judge it after a month against how many times the job was still done by hand.",
+      a: "Workflow automation is often worth more to a one-person business, not less. A one-person business has nobody to absorb the busywork, so every manual step comes out of the only calendar there is. Start with a single chain at the top of the frequency list rather than with a platform, then judge it after a month against how many times the job was still done by hand.",
     },
     {
       q: "How long does it take to automate a workflow?",
-      a: "A simple chain, such as intake and an instant reply, can be live within days once the tools are connected. Chains across several systems with real branching take longer, mostly because mapping what the business actually does today is the slow part, not the building.",
+      a: "A simple workflow automation, such as intake and an instant reply, can be live within days once the tools are connected. Chains across several systems with real branching take longer, mostly because mapping what the business actually does today is the slow part, not the building.",
     },
   ],
 
