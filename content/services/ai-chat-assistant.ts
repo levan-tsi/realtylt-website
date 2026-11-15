@@ -34,10 +34,10 @@ export const aiChatAssistant: Service = {
   tier: "flagship",
 
   eyebrow: "Website chat · Answers and bookings",
-  title: "A website chatbot that answers and books",
-  lede: "A customer lands on the website at 11:40 at night with one question, finds nobody to ask, and closes the tab. We put an AI chat assistant on the site that answers from the business's own information, takes the details, books a time from the real calendar and texts the confirmation. Anything it cannot check goes to a person, with the conversation attached. This is the one you can try right now.",
+  title: "An AI chatbot for your website that answers and books",
+  lede: "An AI chatbot setup for a small business website puts an AI chat assistant on the site that answers from the business's own information, takes the details, books a time from the real calendar and texts the confirmation. Without one, a customer lands on the website at 11:40 at night with one question, finds nobody to ask, and closes the tab. Anything it cannot check goes to a person, with the conversation attached. This is the one you can try right now.",
   specs: ["answers at any hour", "from your own information", "books on your calendar", "the chat goes to your CRM"],
-  why: "Harvard Business Review reported that firms trying to reach a lead within an hour were nearly seven times likelier to have a meaningful conversation with a decision maker than firms trying even an hour later. The assistant answers while the person is still on the page, asks the first questions and books a time. An inquiry that arrives at night is answered at night.",
+  why: "An AI chatbot matters because Harvard Business Review reported that firms trying to reach a lead within an hour were nearly seven times likelier to have a meaningful conversation with a decision maker than firms trying even an hour later. The assistant answers while the person is still on the page, asks the first questions and books a time. An inquiry that arrives at night is answered at night.",
   keywords: [
     "website chatbot",
     "ai chatbot for small business",
@@ -47,7 +47,7 @@ export const aiChatAssistant: Service = {
   ],
 
   seo: {
-    title: "AI chatbot for small business websites: answers and bookings",
+    title: "AI chatbot setup for small business: answers and bookings",
     description:
       "An AI chat assistant for a small business website: it answers from the business's own information, takes the details, books a time and hands off to a person.",
   },
@@ -83,7 +83,7 @@ export const aiChatAssistant: Service = {
   },
 
   whatItIs: [
-    "It is a text chat on the business's own website, answered by AI. It behaves like a well-briefed member of the team rather than a decision-tree bot. A visitor can ask whether the business covers their town, what a first visit involves, what the hours are or how soon someone can come, and get a straight answer to each in the same conversation.",
+    "An AI chatbot is a text chat on the business's own website, answered by AI. It behaves like a well-briefed member of the team rather than a decision-tree bot. A visitor can ask whether the business covers their town, what a first visit involves, what the hours are or how soon someone can come, and get a straight answer to each in the same conversation.",
     "It answers only from what the owner approved: the services, the service area, the hours, the published prices if the business publishes them, the questions customers usually ask. Anything outside that, such as a quote for a particular job, a diagnosis or a promise, is not guessed. It takes the details and books a person to answer.",
     "It is connected to the systems that make the answer real. Times come from the live calendar, so a booked time is a real one. When the visitor wants the details in hand, it texts them to the number the visitor gives. When the conversation needs a voice, it can hand over to a phone call. For a real estate office it can also search the live listings, so the homes it quotes are the ones on the market this minute.",
     "Everything the visitor says is kept. The name, the number, what they need, where and when, and the full conversation land in the CRM. So the follow-up starts from what the person actually said, instead of a name and an email address.",
@@ -149,7 +149,7 @@ export const aiChatAssistant: Service = {
   /** Lifted from this service's own flagship post, "What it does not do, and should not
    * pretend to", and re-aimed at local owners in round 28. */
   limits: [
-    "It does not close a sale. It does not read a room, and it has no instinct for what is really going on behind a question. That judgment stays with the people in the business, who now hear about every inquiry.",
+    "An AI chatbot does not close a sale. It does not read a room, and it has no instinct for what is really going on behind a question. That judgment stays with the people in the business, who now hear about every inquiry.",
     "It does not answer what it cannot verify. Asked whether a job will cost a certain amount, the honest answer is that nobody knows until somebody looks. So it says so, and books the visit or the call.",
     "It does not invent a price, a diagnosis, a listing or a legal opinion. Anything outside what the owner approved, or what it can check against the calendar or the listings, becomes a booked call rather than a confident wrong answer.",
     "It does not pretend to be a person. It introduces itself as an AI assistant in its first line, and we do not build one that claims to be a particular human being.",
@@ -159,35 +159,35 @@ export const aiChatAssistant: Service = {
   faqs: [
     {
       q: "How does a website chatbot work for a small business?",
-      a: "A chat window on the site, answered by AI from the information the owner approved: services, area, hours and the common questions. It asks what the visitor needs, offers a real open time from the calendar and books it, texts the confirmation, and writes the conversation to the CRM. Anything it cannot check goes to a person instead of being guessed.",
+      a: "A website chatbot is a chat window on the site, answered by AI from the information the owner approved: services, area, hours and the common questions. It asks what the visitor needs, offers a real open time from the calendar and books it, texts the confirmation, and writes the conversation to the CRM. Anything it cannot check goes to a person instead of being guessed.",
     },
     {
       q: "How fast does an AI assistant reply to a website lead?",
-      a: "In seconds, at any hour. The research worth quoting is Harvard Business Review's 2011 report on 1.25 million sales leads at 29 consumer and 13 business companies: firms that tried to make contact within an hour were nearly seven times as likely to qualify the lead as firms that tried even an hour later, where qualifying meant a meaningful conversation with somebody who could decide. That is cross-industry work rather than a study of one trade, so what carries over is the shape rather than the multiple.",
+      a: "An AI assistant replies to a website lead in seconds, at any hour. The research worth quoting is Harvard Business Review's 2011 report on 1.25 million sales leads at 29 consumer and 13 business companies: firms that tried to make contact within an hour were nearly seven times as likely to qualify the lead as firms that tried even an hour later, where qualifying meant a meaningful conversation with somebody who could decide. That is cross-industry work rather than a study of one trade, so what carries over is the shape rather than the multiple.",
     },
     {
       q: "Will visitors know they are talking to an AI?",
-      a: "Yes. The assistant says it is an AI assistant in its first line. What visitors care about is whether the answer is correct and immediate. When a question genuinely needs a person, it says so and books the call rather than pretending.",
+      a: "Yes, visitors know they are talking to an AI, because the assistant says it is an AI assistant in its first line. What visitors care about is whether the answer is correct and immediate. When a question genuinely needs a person, it says so and books the call rather than pretending.",
     },
     {
       q: "What happens when the AI does not know the answer?",
-      a: "It says it does not know, and it gets a person involved. It will not invent a price, a diagnosis, a listing or a legal opinion. Anything outside what the owner approved becomes a booked call or a message for the team, with the conversation attached. That is a better outcome than a confident wrong answer.",
+      a: "When the AI does not know the answer, it says it does not know, and it gets a person involved. It will not invent a price, a diagnosis, a listing or a legal opinion. Anything outside what the owner approved becomes a booked call or a message for the team, with the conversation attached. That is a better outcome than a confident wrong answer.",
     },
     {
       q: "Are AI chatbots worth it for a small business?",
-      a: "Where questions arrive when nobody can answer them, yes: evenings, weekends, or a front desk that is always with somebody. Where the website gets few visitors, or a person already answers every inquiry within minutes, the honest answer is no: a clear contact form and a promise of when someone will reply, kept every time, does the job.",
+      a: "An AI chatbot is worth it for a small business where questions arrive when nobody can answer them, which means evenings, weekends, or a front desk that is always with somebody. Where the website gets few visitors, or a person already answers every inquiry within minutes, the honest answer is no: a clear contact form and a promise of when someone will reply, kept every time, does the job.",
     },
     {
       q: "Can I add an AI chat assistant to my existing website?",
-      a: "Yes. It is a small piece of code that drops into the site the business already has, whether it came from a website builder or was built by hand, so the site does not need rebuilding. It connects to the calendar and the CRM the business already runs.",
+      a: "Yes, an AI chat assistant can be added to an existing website: it is a small piece of code that drops into the site the business already has, whether it came from a website builder or was built by hand, so the site does not need rebuilding. It connects to the calendar and the CRM the business already runs.",
     },
     {
       q: "Can an AI chatbot search real estate listings?",
-      a: "For a real estate office, yes. It searches the live listings feed during the conversation, so it answers with the homes that are active at that moment rather than a stale export, filtered by price, beds, baths and area as the search bar would be, and it can text the results to the visitor. It says nothing about a seller's terms; those go to the agent.",
+      a: "An AI chatbot can search real estate listings for a real estate office. It searches the live listings feed during the conversation, so it answers with the homes that are active at that moment rather than a stale export, filtered by price, beds, baths and area as the search bar would be, and it can text the results to the visitor. It says nothing about a seller's terms; those go to the agent.",
     },
     {
       q: "What does it do with the leads it captures?",
-      a: "It writes them to the CRM with the full conversation, the phone number, what the person needs, where and when. The follow-up starts from what they actually said, so the person who calls back is not starting from a blank contact form.",
+      a: "The AI chat assistant writes the leads it captures to the CRM with the full conversation, the phone number, what the person needs, where and when. The follow-up starts from what they actually said, so the person who calls back is not starting from a blank contact form.",
     },
   ],
 
