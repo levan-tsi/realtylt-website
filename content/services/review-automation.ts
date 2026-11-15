@@ -35,10 +35,10 @@ export const reviewAutomation: Service = {
   tier: "core",
 
   eyebrow: "Reputation · Review requests",
-  title: "Google review requests: ask every customer once, on the day",
-  lede: "The job went well, the customer meant to write a review, and then the week moved on. We set up a text that goes to every customer when the job ends, one tap from the business's Google review page. Everyone gets the same link, whatever they scored, because asking only the people expected to be kind is what Google's policy rules out. A low score also reaches the owner the same minute, so a problem gets a call that day instead of a surprise later.",
+  title: "Review automation software that asks every customer once, on the day",
+  lede: "Review automation software for a small business sends a text to every customer when the job ends, one tap from the business's Google review page. Otherwise the job goes well, the customer means to write a review, and then the week moves on. Everyone gets the same link, whatever they scored, because asking only the people expected to be kind is what Google's policy rules out. A low score also reaches the owner the same minute, so a problem gets a call that day instead of a surprise later.",
   specs: ["asks when the job ends", "one tap to Google", "the same link for everyone", "a low score reaches the owner"],
-  why: "People read reviews before they call, and the ones they read are the recent ones. This asks every customer while the work is fresh in their mind, every time, not only when somebody remembers. A steady trickle of honest reviews says more about a business today than a good year three years ago.",
+  why: "Google review automation matters because people read reviews before they call, and the ones they read are the recent ones. This asks every customer while the work is fresh in their mind, every time, not only when somebody remembers. A steady trickle of honest reviews says more about a business today than a good year three years ago.",
   keywords: [
     "how to get more google reviews",
     "how to get more google reviews for my business",
@@ -48,7 +48,7 @@ export const reviewAutomation: Service = {
   ],
 
   seo: {
-    title: "How to get more Google reviews: one request, on the day",
+    title: "Review automation software for small business: Google reviews",
     description:
       "We text every customer one tap to the Google review page when the job ends. The same link for everyone, no incentives, and a low score reaches the owner too.",
   },
@@ -75,7 +75,7 @@ export const reviewAutomation: Service = {
   },
 
   whatItIs: [
-    "It is the review request that otherwise never gets sent. Every owner knows to ask. Asking every time, on the busy weeks too, is the hard part, and an ask that comes after the customer has moved on is easy to ignore.",
+    "Google review automation is the review request that otherwise never gets sent. Every owner knows to ask. Asking every time, on the busy weeks too, is the hard part, and an ask that comes after the customer has moved on is easy to ignore.",
     "We set up a text that goes out when the job is marked done, which is the moment the ask works. It takes the customer one tap to the business's Google review page. Every customer gets that link, including the ones who were not thrilled, because only asking the people expected to be kind is review gating, and Google's policy names selectively soliciting positive reviews as something merchants may not do.",
     "What the score changes is what happens on the owner's side. A low answer sends a private message to the owner at the same time as the link goes out. So the thing that went wrong reaches the business the day it happened, while it can still be put right. That is better than a suppressed review, and it is also the only version of this that is allowed.",
     "It fits any business that finishes work for customers it can text: a plumber or a roofer after a job, a dental or accounting office after an appointment, a salon or spa after a visit, a real estate office after a closing. For an office that keeps health or financial records, the text names the business and never the treatment or the return.",
@@ -147,7 +147,7 @@ export const reviewAutomation: Service = {
   ],
 
   limits: [
-    "It does not choose who gets asked. Everyone does, whatever they scored. That is because selectively soliciting the people expected to be kind is the practice Google's policy rules out.",
+    "Google review automation does not choose who gets asked. Everyone does, whatever they scored. That is because selectively soliciting the people expected to be kind is the practice Google's policy rules out.",
     "It does not remove a review. A published review belongs to the customer. The only things that change it are the owner answering it and fixing what is behind it.",
     "It does not make anybody leave one. It is built to take the forgetting and the delay out of the ask; whether a customer writes is the customer's choice.",
     "It offers no discount, gift or prize for a review, and it does not ask for particular words or a staff member's name in one. Google's policy lists all of those under what merchants may not do.",
@@ -158,15 +158,15 @@ export const reviewAutomation: Service = {
   faqs: [
     {
       q: "How do I get more Google reviews?",
-      a: "Ask every customer, by text, at the moment the job finishes, and make it one tap to the review page. Volume and recency both matter. In BrightLocal's Local Consumer Review Survey 2026, run on a panel of 1,002 US adults, 47% said they would not use a business with fewer than 20 reviews, and 74% said they look for reviews written in the last three months. That is a survey by a company that sells review software, so treat it as what people say they do rather than a measurement of what they did.",
+      a: "To get more Google reviews, ask every customer, by text, at the moment the job finishes, and make it one tap to the review page. Volume and recency both matter. In BrightLocal's Local Consumer Review Survey 2026, run on a panel of 1,002 US adults, 47% said they would not use a business with fewer than 20 reviews, and 74% said they look for reviews written in the last three months. That is a survey by a company that sells review software, so treat it as what people say they do rather than a measurement of what they did.",
     },
     {
       q: "How do I get reviews without begging customers?",
-      a: "Ask once, at the right moment, with nothing attached. One short text when the job ends, one question and one link, and no follow-up chain. Nobody is asked twice for the same job, a reply of STOP ends the texts, and no discount or gift is offered, which Google's policy forbids anyway. One plain ask at the right hour reads as a business that cares how the job went.",
+      a: "To get reviews without begging customers, ask once, at the right moment, with nothing attached. One short text when the job ends, one question and one link, and no follow-up chain. Nobody is asked twice for the same job, a reply of STOP ends the texts, and no discount or gift is offered, which Google's policy forbids anyway. One plain ask at the right hour reads as a business that cares how the job went.",
     },
     {
       q: "Is it against Google's policy to automate review requests?",
-      a: "Asking every customer for an honest review is allowed, and automating the timing of that ask does not change it. What is not allowed is offering an incentive, asking for particular content, or only asking the people expected to leave a good one. Google's contribution policy lists, under what merchants may not do, discouraging or prohibiting negative reviews or selectively soliciting positive ones. So this sends the same link to everyone, whatever they scored. The score decides what reaches the owner privately, rather than who gets asked.",
+      a: "Automating review requests is not against Google's policy, because asking every customer for an honest review is allowed, and automating the timing of that ask does not change it. What is not allowed is offering an incentive, asking for particular content, or only asking the people expected to leave a good one. Google's contribution policy lists, under what merchants may not do, discouraging or prohibiting negative reviews or selectively soliciting positive ones. So this sends the same link to everyone, whatever they scored. The score decides what reaches the owner privately, rather than who gets asked.",
     },
     {
       q: "What is review gating?",
@@ -174,11 +174,11 @@ export const reviewAutomation: Service = {
     },
     {
       q: "What happens when someone is unhappy?",
-      a: "The owner is told straight away, with the score and what the customer wrote. The customer gets the review link like everybody else. The private message is what buys the chance to make it right the same day. Doing that well is worth more than a suppressed review, and a four with the owner's answer under it says more to the next customer than a page of fives.",
+      a: "When someone is unhappy, the owner is told straight away, with the score and what the customer wrote. The customer gets the review link like everybody else. The private message is what buys the chance to make it right the same day. Doing that well is worth more than a suppressed review, and a four with the owner's answer under it says more to the next customer than a page of fives.",
     },
     {
       q: "Can my Google reviews go on my own website?",
-      a: "Yes. Recent reviews can be pulled through to the business's site automatically. They are shown and labelled as a selection of recent reviews, rather than as the whole set. That wording matters. The FTC's rule on consumer reviews, 16 CFR 465.7, is about misrepresenting a review block as representing most or all of what customers submitted while quietly holding back the low ones. A labelled selection is honest. A reviews section that implies it is everything is not.",
+      a: "Yes, Google reviews can go on the business's own website. Recent reviews can be pulled through to the business's site automatically. They are shown and labelled as a selection of recent reviews, rather than as the whole set. That wording matters. The FTC's rule on consumer reviews, 16 CFR 465.7, is about misrepresenting a review block as representing most or all of what customers submitted while quietly holding back the low ones. A labelled selection is honest. A reviews section that implies it is everything is not.",
     },
   ],
 
