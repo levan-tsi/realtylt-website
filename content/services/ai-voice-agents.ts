@@ -20,7 +20,7 @@ export const aiVoiceAgents: Service = {
   tier: "flagship",
 
   eyebrow: "Voice · Answering and call-backs",
-  title: "An AI receptionist that answers the calls an owner misses",
+  title: "An AI receptionist for small business that answers the calls an owner misses",
   lede: "An AI receptionist for a small business is an AI voice agent that answers the calls the owner cannot take, says it is an AI assistant, answers from the information the owner approved and books the next step. The phone rings while the owner is on a roof, with a patient or halfway through a haircut, and the caller tries the next business on the list. Anything it cannot check goes to a person.",
   specs: ["answers when nobody can", "says it is an AI", "books on your calendar", "call notes to your CRM"],
   why: "An AI receptionist matters because a call nobody answers can go to the next business on the list. The agent picks up, takes down what the job is, where it is and how soon it is needed, and books the visit. The person who calls back has the notes in hand, and nobody on the team has to sit by the phone to make that happen.",
@@ -44,7 +44,7 @@ export const aiVoiceAgents: Service = {
   seo: {
     title: "AI receptionist for small business: answers missed calls",
     description:
-      "An AI voice agent that answers the calls a busy owner misses, says it is an AI assistant, books the visit and passes anything it cannot check to a person.",
+      "An AI receptionist for small business: it answers the calls an owner misses, says it is an AI, books the visit and passes what it cannot check to a person.",
   },
 
   figure: {
@@ -155,12 +155,16 @@ export const aiVoiceAgents: Service = {
 
   faqs: [
     {
-      q: "What is an AI voice agent for a small business?",
-      a: "An AI voice agent for a small business is a phone voice that answers the calls nobody at the business can take. It says it is an AI assistant, holds a short conversation from the information and calendar the owner approved, and books the next step. Anything it cannot check, such as a price, becomes a call back from a person, with the notes written.",
+      q: "What is an AI answering service for a small business?",
+      a: "An AI answering service for a small business is an AI voice agent: a phone voice that answers the calls nobody at the business can take. It says it is an AI assistant, holds a short conversation from the information and calendar the owner approved, and books the next step. Anything it cannot check, such as a price, becomes a call back from a person, with the notes written.",
     },
     {
       q: "Can an AI phone answering service work for a small business?",
       a: "An AI phone answering service works for a small business where calls come in while hands are busy: trades on job sites, offices whose front desk is with someone, salons, spas and gyms mid-appointment, a real estate office on showings. It is the wrong buy where a person already answers almost every call and calls after hours are rare. A voicemail greeting that names when someone will call back, kept every time, does that job for free.",
+    },
+    {
+      q: "How much does an AI receptionist cost?",
+      a: "The cost of an AI receptionist depends on the build: how many calls it answers, what it may do on them (answer, book, call back) and which systems it connects to. We quote only after looking at those, because a number before that is a guess.",
     },
     {
       q: "Will callers know they are talking to an AI?",
@@ -193,6 +197,10 @@ export const aiVoiceAgents: Service = {
     {
       q: "Is it legal to have an AI make outbound calls?",
       a: "Under the Telephone Consumer Protection Act, a call that uses an artificial voice needs the called person's prior express consent unless an emergency or an exemption applies, and in 2024 the Federal Communications Commission confirmed that an AI-generated voice counts as an artificial voice. Telemarketing calls also have to respect do-not-call requests and calling hours, 8 a.m. to 9 p.m. where the person is. The purpose of the call and the states involved matter, so the business's attorney reviews the setup before the first outbound call.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 
