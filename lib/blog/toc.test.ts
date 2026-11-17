@@ -54,10 +54,11 @@ describe("extractToc", () => {
     // than relaxing the number, so a heading going missing still fails this test.
     // Round 29 (2026-11-14): the refresh for local owners added "Is it worth automating", "Who
     // this fits, and who it does not", "What to do first" and "Sources" (14 top-level sections) and
-    // five questions (12 in all, the live post's MLS question kept).
+    // five questions (12 in all, the live post's MLS question kept). Round 33 (2026-11-17): one more question,
+    // where we are based (13 in all).
     expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth <= 2)).toHaveLength(14);
-    expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth === 3)).toHaveLength(12);
-    expect(extractToc(AI_CHAT_ASSISTANT_POST)).toHaveLength(26);
+    expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth === 3)).toHaveLength(13);
+    expect(extractToc(AI_CHAT_ASSISTANT_POST)).toHaveLength(27);
     // The workflow post was rebuilt as a flagship on 2026-08-01 and gained a "Common questions"
     // section: 9 top-level sections plus 6 questions. On 2026-08-25 it gained a tenth, "The
     // first month, and the two things to do in it", when the standard ratcheted to 19 sections
@@ -66,10 +67,11 @@ describe("extractToc", () => {
     // 2026-11-03 (round 24 refresh): three new sections (is it worth automating, who it fits, what
     // to do first) and a Sources section, 14 top-level. 2026-11-14 (round 29): "How to follow up on
     // every quote without chasing it" and "What the AI readiness assessment hands over" added (16
-    // top-level) and three owner questions (9 in all).
+    // top-level) and three owner questions (9 in all). Round 33 (2026-11-17): one more question, where we are
+    // based (10 in all).
     expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth <= 2)).toHaveLength(16);
-    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth === 3)).toHaveLength(9);
-    expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(25);
+    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth === 3)).toHaveLength(10);
+    expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(26);
     // ids are unique and non-empty
     for (const post of [AI_CHAT_ASSISTANT_POST, WORKFLOW_AUTOMATION_POST]) {
       const ids = extractToc(post).map((t) => t.id);
@@ -115,7 +117,7 @@ describe("extractFaqs", () => {
     // that quietly drops the definitional one fails here.
     const faqs = extractFaqs(AI_CHAT_ASSISTANT_POST);
     expect(faqs.map((f) => f.q)).toEqual([
-      "What is an AI chatbot for a small business website?",
+      "What is an AI website chatbot for a small business?",
       "Do I need an AI chatbot on my website?",
       "How much does an AI chatbot cost for a small business?",
       "What is the difference between live chat and an AI chat assistant?",
@@ -127,6 +129,7 @@ describe("extractFaqs", () => {
       "Do I have to tell people it is an AI?",
       "What happens when it gets something wrong?",
       "Can I add an AI chat assistant to my existing website?",
+      "Can we talk about a website chatbot on a call if my business is outside New York?",
     ]);
     expect(faqs.every((f) => f.a.length > 40)).toBe(true);
   });

@@ -520,7 +520,7 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
       eyebrow: "Ten questions",
       title: "What did you learn? Check it in two minutes",
       brand: "ai",
-      passLine: "You know the rules and the timing. The free AI quiz at the end of this page turns them into your own result.",
+      passLine: "You know the rules and the timing. If you would rather have the asking run for you, our Google review automation service is linked at the end of this page.",
       failLine: "Under half this time. Read the line you may not cross and the federal half again, then have another go.",
       questions: REVIEW_QUIZ,
     },

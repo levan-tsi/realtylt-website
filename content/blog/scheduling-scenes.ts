@@ -667,7 +667,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
       eyebrow: "Ten questions",
       title: "What did you learn? Check it in two minutes",
       brand: "ai",
-      passLine: "You know what confirmed means. The free AI quiz at the end of this page turns it into your own result.",
+      passLine: "You know what confirmed means. If you would rather have the asking and the chasing run for you, our AI scheduling service is linked at the end of this page.",
       failLine: "Under half this time. Read the two standards sections again, then have another go.",
       questions: SCHEDULING_QUIZ,
     },
@@ -676,6 +676,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
   /** Short rail labels for the prose headings. Ids and ORDER are derived from the document, so a
    * renamed heading degrades to its full text rather than leaving a dead row. */
   headingLabels: {
+    "what-should-an-appointment-confirmation-text-say-when-someone-else-must-agree": "The texts",
     "what-a-scheduling-problem-is-once-the-calendar-is-not-yours": "The real problem",
     "the-part-nobody-automates-is-the-part-that-is-other-people": "What broke",
     "who-must-say-yes-before-an-ai-scheduling-assistant-can-confirm": "Who agrees",

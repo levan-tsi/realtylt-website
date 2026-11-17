@@ -1281,7 +1281,7 @@ That last line is where the money is. The fix for it does not start with buying 
 
 [[scene:funnel]]`;
 
-export const AI_SCHEDULING_POST = `A job that needs someone else's yes can be booked on your calendar and still not be agreed by the people it depends on. We help local business owners set up an AI scheduling assistant that calls a time confirmed only after everyone who must agree has replied. Below is what such an assistant can and cannot do across calendars it does not own, four tests before buying one, whether the job is worth automating, and a three-week plan.
+export const AI_SCHEDULING_POST = `An appointment confirmation text should wait for every yes it needs, and this page gives three to copy. A job that needs someone else's yes can be booked on your calendar and still not be agreed by the people it depends on. We help local business owners set up an AI scheduling assistant that calls a time confirmed only after everyone who must agree has replied. Below is what such an assistant can and cannot do across calendars it does not own, four tests before buying one, whether the job is worth automating, and a three-week plan.
 
 An AI scheduling assistant is software that proposes times, tracks who has answered and holds your calendar while it waits; on calendars it does not own, it can ask, and only the other person's reply can confirm. This page is for owners whose appointments need people outside the business: a contractor working in someone else's building, a dental office booking an interpreter, a salon booking a visiting stylist, a real estate office arranging a showing on another agent's listing.
 
@@ -1292,6 +1292,16 @@ The request went out on Thursday afternoon. That evening the owner heard that Sa
 At twenty past nine on Saturday the manager replied: the tenant needs notice, and the super is off until one. The plumber was already in the van. The appointment had been booked, by one of the three people whose agreement it needed.
 
 [[scene:in-short]]
+
+## What should an appointment confirmation text say when someone else must agree?
+
+An appointment confirmation text, when someone else must agree, says only what has been agreed so far: a request while any yes is missing, a confirmed time once every yes is in, and a new question whenever the time moves. Three texts from the plumbing company's invented example show the order, and a person approves each one before it reaches the customer.
+
+1. While the building's manager and the tenant have not replied: "Your repair request for Saturday has gone to the building's manager and the tenant. We will confirm a time once both have agreed, and by Friday at six either way."
+2. Once both have said yes to eleven, the time the owner asked for: "Your repair is confirmed for Saturday at eleven. The building's manager and the tenant have both agreed to that time."
+3. If the time has to move: "Saturday at eleven no longer works for the building. Would two o'clock suit you? If it does, we will ask the manager and the tenant about two and confirm once all of you have agreed."
+
+The first names no time, so nothing has to be taken back. The second names who agreed, so the customer can see why the time will hold. The third treats the moved time as a new question, because every yes was given to eleven, as "Why does moving the time reset every yes in scheduling?" explains below.
 
 ## What a scheduling problem is, once the calendar is not yours
 
@@ -1363,7 +1373,7 @@ None of the eight, the good one included, says the person is coming. Delivered i
 
 An AI scheduling assistant can honestly do four things across calendars it does not own.
 
-It can propose without promising. The first message to your customer either names a time or says a request has gone in, and those two messages lead to very different Saturdays.
+It can propose without promising. The first message to your customer either names a time or says a request has gone in, and those two messages lead to very different Saturdays, as the first two texts at the top of this page show.
 
 It can hold your side properly. Your calendar is the one thing in the exchange your software controls, so a live proposal should block it and a dead one should release it. Blocking without releasing fills a diary with appointments that never happened.
 
@@ -1397,7 +1407,7 @@ An invented example: a salon tells a bridal party their trial is booked before t
 
 To test an AI scheduling assistant before you buy it, ask four questions; none of them is technical.
 
-Ask to see what the person on the other end receives before anyone has agreed. If that first message carries a bare time with no qualification, that is the product, and no later setting undoes it.
+Ask to see the first text or email the person on the other end receives before anyone has agreed. If that first message carries a bare time with no qualification, that is the product, and no later setting undoes it.
 
 Ask what happens to your calendar while a proposal is open, and then what happens when it dies. A system that blocks and never releases tells people you are busy on days you are free.
 
@@ -1497,6 +1507,10 @@ The person whose reply is missing, once, at a time set in your defaults; after t
 
 A closing is the same problem with more parties and a much higher cost of being wrong, and nothing here suggests automating it. What carries over is the discipline: know which people have confirmed in writing, and treat a moved date as a new question.
 
+### Can we talk about scheduling on a call if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere.
+
 [[scene:quiz]]
 
 ## What to do about scheduling that needs a yes from outside
@@ -1523,7 +1537,7 @@ An invented example: a home inspector picks inspections in occupied homes, write
 
 [[scene:roadmap]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [AI scheduling for small business](/services/ai-scheduling).
 
 ## Sources
 
@@ -2909,7 +2923,7 @@ Then take the two pages you already have that you are least sure about. Delete e
 
 [[scene:funnel]]`;
 
-export const LOCAL_SEO_POST = `We help local business owners work out how to rank in Google Maps: the profile to fix and keep current, the reviews to ask for every time, and a person approving everything that is published in the business's name. Below is how to rank in Google Maps using what Google itself publishes, what a panel of local search experts says matters most, a check you can run tonight, whether the work is worth doing yourself or having done, and what to do first this week.
+export const LOCAL_SEO_POST = `We help local business owners work out how to rank higher on Google Maps: the profile to fix and keep current, the reviews to ask for every time, and a person approving everything that is published in the business's name. Below is how to rank in Google Maps using what Google itself publishes, what a panel of local search experts says matters most, a check you can run tonight, whether the work is worth doing yourself or having done, and what to do first this week.
 
 This page is for owners of a business that people search for nearby: a plumber, a roofer or an HVAC contractor, a dental, accounting or insurance office, a salon, a spa or a gym, a real estate office.
 
@@ -2919,7 +2933,7 @@ A plumber two miles away has done good work for years and is not one of the thre
 
 [[scene:in-short]]
 
-## How do you rank in Google Maps?
+## How do you rank higher on Google Maps?
 
 Google ranks local results mainly on three things, relevance, distance and prominence, and it says there is no way to request or pay for a better position. Two of the three are work you can do. The third, distance, is a fact about where you and the searcher are standing.
 
@@ -3037,13 +3051,13 @@ The calculator below runs the same ladder with your numbers. It has no row for w
 
 ## What do ads add compared with ranking in Google Maps?
 
-Paid ads are the obvious alternative to ranking in Google Maps, and the honest comparison is not that ads are bad. It is that only a test shows what the ads add. One organisation ran the experiment properly and got an answer that surprised everyone.
+Paid ads are the obvious alternative to ranking in Google Maps, and the honest comparison is not that ads are bad. It is that only a test shows what the ads add. One organisation ran the experiment properly, with a control, and published the answer.
 
 In March 2012 eBay stopped bidding on search queries containing its own name on two search engines. It kept buying exactly the same terms on a third, and that third is the control, which is the whole point. Three economists, two of them employed by eBay's research lab when the work was done, wrote it up in a [National Bureau of Economic Research working paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf) in May 2014.
 
 The naive comparison, before and after, said click volume was 5.6 percent lower once the ads stopped. Measured against the platform where the ads kept running, only 0.529 percent of the click traffic was lost, so 99.5 percent was retained. The people were still coming, through the unpaid result under the advert instead of the advert. The paper then reports a return on investment of over 1,400 percent from ordinary methods with controls, and negative 63 percent from the experiment.
 
-Be careful with this. It is eBay, a name tens of millions of people type, and the ads were on queries containing that name. A person who types your company's name already knows you, which is exactly why the brand-keyword half does not transfer. What transfers is the shape of the mistake: the traffic that substitutes most cleanly for paid clicks is the traffic that was coming anyway, and a dashboard cannot show you that. This source is from 2014 and is kept for the argument.
+Be careful with this. It is eBay, a name far better known than any local business, and the ads were on queries containing that name. A person who types your company's name already knows you, which is exactly why the brand-keyword half does not transfer. What transfers is the shape of the mistake: the traffic that substitutes most cleanly for paid clicks is the traffic that was coming anyway, and a dashboard cannot show you that. This source is from 2014 and is kept for the argument.
 
 [[scene:paid-search]]
 
@@ -3137,7 +3151,7 @@ Google publishes the inputs, not the recipe: local results are mainly based on r
 
 ### How do I rank higher in Google Maps without spending a fortune on ads?
 
-Fix the profile, ask for reviews and read the report, which take an evening for a profile that is mostly right (longer for one that is badly wrong), a link and a monthly look, not an advertising budget. Google's page says there is no way to pay for a better local ranking, and the eBay experiment above found that most of the click traffic the ads were credited with arrived without them.
+Fix the profile, ask for reviews and read the report, which take an evening for a profile that is mostly right (longer for one that is badly wrong), a link and a monthly look, not an advertising budget. Google's page says there is no way to pay for a better local ranking, and the eBay experiment above found that, on searches for eBay's own name, most of the click traffic the ads were credited with arrived without them.
 
 ### How do I get my business on Google Maps?
 
@@ -3165,7 +3179,7 @@ A fixed profile is a corrected record, which is not the same as a changed positi
 
 ### Can I rank in a town my office is not in?
 
-In the map results, distance works against you, because it is one of the three published inputs. The other route is an ordinary page on your own website covering work you have really done in that town. A set of thin pages with the town name swapped is something Google's spam policy names.
+In the map results, distance works against you, because it is one of the three published inputs. The other route is an ordinary page on your own website covering work you have really done in that town. A set of thin pages with the town name swapped is what Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call doorway abuse: one of their own examples is "multiple domain names or pages targeted at specific regions or cities that funnel users to one page".
 
 ### Do citations and directory listings still matter?
 
@@ -3174,6 +3188,10 @@ Citations and directory listings matter for being correct, and they are not what
 ### Can anybody guarantee me a position?
 
 No, and the sentence to quote back is Google's own: there is no way to request or pay for a better local ranking. What you can do yourself is the work: a finished profile, a review request sent after each job and a monthly look at the report.
+
+### Can I talk to you about my profile if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere. The profile work itself is done through manager access to your profile, so it needs no visit.
 
 [[scene:quiz]]
 
@@ -3185,7 +3203,7 @@ If your name is in the three, the work is to stay there, which is duller and mor
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [local SEO services](/services/local-seo).
 
 ## Sources
 
@@ -3193,6 +3211,7 @@ Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result,
 - Google, Business Profile Help, "Guidelines for representing your business on Google", [the guidelines](https://support.google.com/business/answer/3038177), a live document. Read November 14, 2026.
 - Google, Business Profile Help, "Tips to get more reviews", [the page](https://support.google.com/business/answer/3474122), and "Add or claim your Business Profile", [the page](https://support.google.com/business/answer/2911778), live documents. Read November 14, 2026.
 - Google, Maps user contributed content policy, [the policy page](https://support.google.com/contributionpolicy/answer/7400114), a live document. Read November 14, 2026.
+- Google Search Central, spam policies for Google web search, [the policies](https://developers.google.com/search/docs/essentials/spam-policies), a live document. Read November 17, 2026.
 - Darren Shaw, Whitespark, Local Search Ranking Factors 2026, published November 6, 2025, [the report](https://whitespark.ca/local-search-ranking-factors/): a survey of 47 experts scoring 187 factors, opinion and not Google's rules. Read November 14, 2026.
 - BrightLocal, Local Consumer Review Survey 2026, 1,002 US adult consumers, [the survey](https://www.brightlocal.com/research/local-consumer-review-survey/), published by a company that sells review software. Read November 14, 2026.
 - Cornell University, Joachims, Granka, Pan, Hembrooke and Gay, the SIGIR 2005 paper on interpreting clickthrough data as implicit feedback, [the paper](https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf). Read November 14, 2026; kept for the argument, the one experiment in this post on how readers treat the order of a list.
@@ -3430,6 +3449,10 @@ Then it should say so and offer the nearest other times, and it should never off
 
 Not always, and the study is about attendance rather than revenue. An appointment two days out is more likely to happen, and it also gives someone less time to arrange the money, a partner or childcare. For some appointments those matter more than attendance does. The finding is not that everything should be tomorrow. It is that the fortnight you drifted into because it suited the calendar has a cost, and now you know roughly which direction it runs.
 
+### Can we talk about no-shows on a call if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere.
+
 [[scene:quiz]]
 
 ## What can you do about no-shows this week?
@@ -3440,7 +3463,7 @@ In the invented example the median was nine days, from the Monday call to the sl
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [AI appointment booking](/services/ai-appointment-booking).
 
 ## Sources
 
@@ -3719,6 +3742,10 @@ No, you do not have to put your Google reviews on your own website. If you do, t
 
 A business needs about twenty Google reviews. According to the 2026 vendor survey, 47 percent said they would not use a business with fewer than twenty, and only 9 percent would use one with five or fewer. Past twenty, the same survey's other figure matters: 74 percent of the panel only care about reviews written in the last three months. An invented example: thirty reviews with four this quarter reads as busy; two hundred with none since last year reads as a business that used to be busy.
 
+### Can we talk about reviews on a call if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere.
+
 [[scene:quiz]]
 
 ## What should you do about your Google reviews?
@@ -3731,7 +3758,7 @@ How reviews fit into a local map ranking is covered in [how to rank in Google Ma
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [Google review automation](/services/review-automation).
 
 ## Sources
 
@@ -3744,7 +3771,7 @@ Sources checked November 11, 2026.
 
 Written with an AI assistant and checked by Levan.`;
 
-export const AI_CHAT_ASSISTANT_POST = `We help local business owners decide whether an AI chatbot belongs on their website, and set one up that is built to answer from the owner's own information, offer times from the real calendar and hand anything it cannot check to a person. Below is how to test one, what it does and what it will not do, whether it is worth it for your kind of business, and what to do first this week.
+export const AI_CHAT_ASSISTANT_POST = `We help local business owners decide whether a website chatbot belongs on their site, and set up an AI chatbot that is built to answer from the owner's own information, offer times from the real calendar and hand anything it cannot check to a person. Below is how to test one, what it does and what it will not do, whether it is worth it for your kind of business, and what to do first this week.
 
 This page is for owners of a home services company, a dental, accounting or insurance office, a salon, spa or gym, or a real estate office: any business where a visitor lands on the website with a question and nobody is there to answer it.
 
@@ -3762,7 +3789,7 @@ That gap, between when people ask and when a business answers, is what this page
 
 ## The speed claim in AI chatbot sales pitches, and where it comes from
 
-One figure about reply speed gets repeated on sales slides for AI chatbots: that seventy eight percent of customers buy from whoever answers first. You have probably seen it more than once.
+One figure about reply speed circulates with AI chatbot pitches, and an earlier version of this very page rested on it: that seventy eight percent of customers buy from whoever answers first.
 
 We went looking for the study behind it, because a claim doing that much work should have a document under it. We found no source for it: no report, no stated sample and no method that we could open. None of that proves the figure is wrong. It does mean we cannot tell you whether it is right, and a number nobody can check is a slogan wearing a percentage sign.
 
@@ -3834,7 +3861,7 @@ The first is what it is allowed to look at. An assistant answering out of your a
 
 The third is the reading. Somebody has to go through what people actually asked, once a week at first, because the questions your visitors ask show what they want to know, and because that is how a wrong answer gets found.
 
-On timing, the build is rarely the slow part. Writing the page of answers and settling what the assistant may and may not say takes the thought. And the first month tells you more than the build does, because it shows what people really ask at eleven at night, which nobody could tell you in advance.
+On timing, the build is not the part that needs the most thought. Writing the page of answers and settling what the assistant may and may not say takes the thought. And the first month tells you more than the build does, because it shows what people really ask at eleven at night, which nobody could tell you in advance.
 
 What an owner provides is short: the answers it may give, the calendar with the times it may offer, a place for the conversations to land, and about twenty minutes a week to read them. We suggest twenty, in your own name, for as long as it runs. If nobody will do that, leave it switched off.
 
@@ -3916,9 +3943,9 @@ An invented example: a heating company's owner writes the answer to "do you come
 
 ## Common questions about AI chatbots, answered honestly
 
-### What is an AI chatbot for a small business website?
+### What is an AI website chatbot for a small business?
 
-An AI chatbot for a small business website is a text conversation on your own site, answered by a language model. The useful kind is connected to the systems that hold the real answers, such as your calendar, and the weaker kind only reads your website's text. A visitor types a question the way they would ask you. It answers in sentences rather than menus, and when it reaches the end of what it can confirm, it is built to book time with you instead. The part that makes it worth having is not that it talks. It is that it is awake at eleven at night and, when it is connected, it answers from something current.
+An AI website chatbot for a small business is a text conversation on your own site, answered by a language model. The useful kind is connected to the systems that hold the real answers, such as your calendar, and the weaker kind only reads your website's text. A visitor types a question the way they would ask you. It answers in sentences rather than menus, and when it reaches the end of what it can confirm, it is built to book time with you instead. The part that makes it worth having is not that it talks. It is that it is awake at eleven at night and, when it is connected, it answers from something current.
 
 ### Do I need an AI chatbot on my website?
 
@@ -3950,7 +3977,7 @@ A bad one will. A pop-up that demands a phone number before it has been useful i
 
 ### My customers want a human, not a bot
 
-They do, eventually. What they want late at night is to know whether you cover their town and whether someone can come tomorrow. An assistant that answers that and then books a visit with you is not standing between you and the customer. People do not object to being helped by software. They object to being trapped by it, and those are different products.
+They do, eventually. What they want late at night is to know whether you cover their town and whether someone can come tomorrow. An assistant that answers that and then books a visit with you is not standing between you and the customer. Software that helps a customer and software that traps one with no way through to a person are different products.
 
 ### Do I have to tell people it is an AI?
 
@@ -3962,7 +3989,11 @@ Somebody has to be reading, and the business owns the answer either way, as the 
 
 ### Can I add an AI chat assistant to my existing website?
 
-Yes. It is a small piece of code that goes into the site the business already has, whether it came from a website builder or was built by hand, so the site does not need rebuilding. It connects to the calendar and the CRM the business already runs.
+Yes. It is a small piece of code that goes into the site the business already has, whether it came from a website builder or was built by hand, so the site does not need rebuilding as long as it lets a piece of code be added. It connects to the calendar and the CRM the business already runs when they are systems it supports.
+
+### Can we talk about a website chatbot on a call if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere. The chatbot goes into the website the business already has, as the answer above says, so the work needs no visit.
 
 [[scene:quiz]]
 
@@ -3982,7 +4013,7 @@ The free half of this needs nobody, us included: your own site opened on a phone
 
 [[scene:funnel]]
 
-A free website: some businesses get a plain website built free, by application. A plain site has no chat or services pages; an AI chat assistant can be added later if the business wants one. Apply through the free AI quiz: realtylt.com/ai/assessment
+A free website: some businesses get a plain website built free, by application. A plain site has no chat or services pages; an AI chat assistant can be added later if the business wants one. Apply through the form on the [AI chatbot for small business](/services/ai-chat-assistant) page, and say in it that you are applying for the free website.
 
 ## Sources
 
@@ -3996,7 +4027,7 @@ Sources checked November 14, 2026.
 
 Written with an AI assistant and checked by Levan.`;
 
-export const AI_VOICE_AGENTS_POST = `When the phone rings while your hands are full, a caller who reaches voicemail may have booked someone else by the time you ring back. We help local business owners decide whether an AI voice agent for small business should answer those calls, and we set one up when it should. Below is what it does and what it must never do, the federal and state rules for AI voices and call recording, a test of whether it is worth it for your business, and a plan for this week.
+export const AI_VOICE_AGENTS_POST = `An AI voice agent for small business answers the calls you miss while your hands are full: a caller who reaches voicemail may have booked someone else by the time you ring back. We help local business owners decide whether one should answer those calls, and we set one up when it should. Below is what it does and what it must never do, the federal and state rules for AI voices and call recording, a test of whether it is worth it for your business, and a plan for this week.
 
 An AI voice agent is a phone voice that answers when you cannot, says at the start that it is an AI assistant, answers from your own information and books a call back for anything it cannot check. This page is written for owners whose phone rings while they are busy with the work itself: on a roof, under a sink, with a patient or a client in the chair.
 
@@ -4226,6 +4257,10 @@ An AI voice agent can work with your calendar and your CRM when it is connected 
 
 An outbound call by an AI voice can be legal when the checks for that call are met. Under the TCPA an AI voice counts as an artificial voice, so the called person's prior express consent is needed unless an exemption applies, and telemarketing also has to respect do-not-call rules and calling hours. The call's purpose, the person called and the states involved all matter, so have your attorney review the setup before the first outbound call.
 
+### Can we talk about an AI voice agent on a call if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere. The rules for AI voices and call recording depend on the states a call involves, as the legal section above says.
+
 [[scene:quiz]]
 
 ## How to check your own missed calls this week
@@ -4238,7 +4273,7 @@ An invented example: the owner of a small moving company rings his own line from
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about an [AI receptionist for small business](/services/ai-voice-agents).
 
 ## Sources
 
@@ -4254,7 +4289,7 @@ Sources checked November 11, 2026. None of this is legal advice.
 
 Written with an AI assistant and checked by Levan.`;
 
-export const DATABASE_REACTIVATION_POST = `We help local business owners work out how to follow up with old leads and past customers: which records they may contact, which message goes to whom, and what a person approves before anything is sent. Below is what database reactivation is, the three rule checks to run on your own records before a single message goes out, an invented worked example by channel, whether it is worth doing at all, and what to do first this week.
+export const DATABASE_REACTIVATION_POST = `We help local business owners plan lead follow-up for old leads and past customers: which records they may contact, which message goes to whom, and what a person approves before anything is sent. Below is what database reactivation is, the three rule checks to run on your own records before a single message goes out, an invented worked example by channel, whether it is worth doing at all, and what to do first this week.
 
 This page is for owners of a business with a list older than its memory: a heating, plumbing or roofing company, an accounting or insurance office, a salon, a spa or a gym, a real estate office. The rules quoted are the federal ones. Nothing here is legal advice.
 
@@ -4468,6 +4503,10 @@ Yes, you can follow up with old leads yourself with a mail merge for a short lis
 
 People who say no are recorded with the date, the source and the words they used, and the campaign does not contact them again. A no with a reason is the most useful output of the exercise, and it is a record of what a person said, not a guess about their future.
 
+### Can we talk about old leads on a call if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere. The rules quoted on this page are the federal ones.
+
 [[scene:quiz]]
 
 ## What should you do about your old leads?
@@ -4478,7 +4517,7 @@ The system is laid out on [the RealtyLT AI page](/ai#reactivation), and the [dat
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [database reactivation](/services/database-reactivation).
 
 ## Sources
 
@@ -4909,6 +4948,10 @@ How long workflow automation takes depends on the scope, so we give a time only 
 
 Workflow automation can be worth it for a one-person business, because every manual step comes out of the only calendar there is. Most small businesses are one-person businesses: according to the Small Business Administration's Office of Advocacy, 82.3 percent of the 36,207,130 small businesses in the United States have no employees. Start with one chain on the most frequent job that passes the screening questions, and judge it after a month against your baseline.
 
+### Can we talk about workflow automation on a call if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere.
+
 [[scene:quiz]]
 
 ## What can you do about workflow automation this week?
@@ -4923,12 +4966,12 @@ If you would rather somebody sat through that hour with you, that is the [AI ass
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [AI automation services](/services/workflow-automation).
 
 ## Sources
 
 - Gloria Mark, Victor M. Gonzalez and Justin Harris, "No Task Left Behind? Examining the Nature of Fragmented Work", Proceedings of CHI 2005, University of California, Irvine, 2005. Kept for the argument; no newer measurement was found. Read November 14, 2026.
-- An automation platform's help center, on error settings (the default pause at 95 percent in 7 days) and on run statuses. Read November 14, 2026.
+- An automation platform's help center, on error settings (the default pause at 95 percent in 7 days), [the error settings page](https://help.zapier.com/hc/en-us/articles/14167175792909-Decide-how-your-Zap-handles-errors-with-advanced-settings), and on run statuses, [the run status page](https://help.zapier.com/hc/en-us/articles/20505304170637-Review-run-statuses-in-Zap-workflows). Read November 14, 2026.
 - Harvard Business Review, The Short Life of Online Sales Leads, by James Oldroyd, Kristina McElheran and David Elkington, [on hbr.org](https://hbr.org/2011/03/the-short-life-of-online-sales-leads), 2011. Read November 14, 2026; kept for the argument.
 - US Small Business Administration, Office of Advocacy, Frequently Asked Questions About Small Business 2026, [the PDF](https://advocacy.sba.gov/wp-content/uploads/2026/02/FINAL_FAQsAboutSmallBusiness_2026_012826.pdf), February 2026. Read November 14, 2026.
 - Our own method: the screening questions, the scores, the four checks and the verdicts of the RealtyLT AI assessment.

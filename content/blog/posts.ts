@@ -274,10 +274,10 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-scheduling-real-estate-showing-confirmations",
     cluster: "appointments",
-    title: "AI scheduling assistant for appointments other people must confirm",
-    seoTitle: "AI Scheduling Assistant for Appointment Confirmations",
+    title: "Appointment confirmation texts when someone else must say yes",
+    seoTitle: "Appointment Confirmation Texts: Three Wordings to Copy",
     date: "2026-08-25",
-    updated: "2026-11-11",
+    updated: "2026-11-17",
     /** ROUND 28 (2026-11-11), re-aimed at local business owners (his order of 2026-11-11): the
      * title carries "ai scheduling assistant"; the story is a plumber's repair in a managed building
      * (the owner, the manager, the tenant); the examples a contractor, a cleaning firm, a dental
@@ -289,10 +289,15 @@ export const POSTS: BlogPost[] = ([
      * pass pointed the fine-tuning caveat at the right Microsoft Graph page and rewrote the
      * seo.description ending; see docs/parity/ROUND45-RELEVANCE-PASS.md and ROUND46. First real
      * revision. C3 stays red, no film, so the slug ships at 18/19. */
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the title and the first
+     * sentence lead with "appointment confirmation text" (100 to 1,000 searches a month; its first page is template lists), and
+     * a new first section shows three texts to copy, built only from the post's own invented example and its own rules. "AI
+     * scheduling assistant" (a personal calendar search) stays in the text. The closing goes to the service page while the quiz
+     * is not live; the FAQ says where we are based. Slug kept: the address is indexed. */
     excerpt:
-      "An AI scheduling assistant for appointments other people must confirm: what it can really do when the calendars it needs belong to other people, why the standards already have a word for an appointment nobody has agreed to, why moving the time throws every yes away, and four tests before buying one.",
+      "Appointment confirmation texts for jobs other people must agree to: three wordings to copy, what an AI scheduling assistant can really do when the calendars it needs belong to other people, why the standards already have a word for an appointment nobody has agreed to, why moving the time throws every yes away, and four tests before buying one.",
     seoDescription:
-      "An AI scheduling assistant for appointments other people must confirm: what it can do, why a moved time resets every yes, and four tests before buying one.",
+      "Appointment confirmation texts when someone else must say yes: three wordings to copy, why moving the time resets every yes, and four tests for an AI assistant.",
     cover: "/images/editorial/clock-not-in-use.jpg",
     body: [],
     placeholder: false,
@@ -432,10 +437,10 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "local-seo-real-estate-map-pack-google-business-profile",
     cluster: "visibility",
-    title: "How to rank in Google Maps: fix the profile, ask for reviews, accept the distance",
-    seoTitle: "How to Rank in Google Maps: Business Profile and Reviews",
+    title: "How to rank higher on Google Maps: fix the profile, ask for reviews, accept the distance",
+    seoTitle: "How to Rank Higher on Google Maps: Business Profile, Reviews",
     date: "2026-08-25",
-    updated: "2026-11-14",
+    updated: "2026-11-17",
     /** ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-11): the title is
      * the owners' phrase "how to rank in google maps"; the story a plumber and a basement; the
      * examples a plumber, a roofer, an HVAC contractor, a dental, accounting or insurance office, a salon,
@@ -447,10 +452,14 @@ export const POSTS: BlogPost[] = ([
      * pass restored the exception Google's own service-area guideline carries in its very next
      * sentence; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays red, no
      * film, so the slug ships at 18/19. */
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the title, the first
+     * sentence and the first question say "how to rank higher on Google Maps" (100 to 1,000 searches a month, four small agencies
+     * on its first page); round 30's "how to rank in Google Maps" stays in the text. The closing goes to the service page while
+     * the quiz is not live, and the FAQ says where we are based. Slug kept: the address is indexed. */
     excerpt:
-      "How to rank in Google Maps for a local business: what Google publishes about relevance, distance and prominence, what 47 local search experts rank first, the profile rules that get a listing suspended, and a ten-minute check you can run tonight.",
+      "How to rank higher on Google Maps for a local business: what Google publishes about relevance, distance and prominence, what 47 local search experts rank first, the profile rules that get a listing suspended, and a ten-minute check you can run tonight.",
     seoDescription:
-      "How to rank in Google Maps: what Google publishes, what local experts rank first, the profile rules and the reviews, for plumbers, salons, dental offices and more.",
+      "How to rank higher on Google Maps: what Google publishes, what local experts rank first, the profile rules and reviews, for plumbers, salons and dental offices.",
     cover: "/images/hero/hudson-olana.jpg",
     body: [],
     placeholder: false,
@@ -460,10 +469,10 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-appointment-booking-no-shows-real-estate",
     cluster: "appointments",
-    title: "How to reduce no-shows: AI appointment booking and reminders for a local business",
-    seoTitle: "How to Reduce No-Shows: AI Appointment Booking and Reminders",
+    title: "How to reduce no-shows: AI booking and reminders for a salon, dental office or contractor",
+    seoTitle: "How to Reduce No-Shows: AI Booking for Salons and Dentists",
     date: "2026-08-25",
-    updated: "2026-11-14",
+    updated: "2026-11-17",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27: the limitation
      * paragraph on the Hangzhou reminder trial asserted the participants had paid for their
      * appointments, which the paper does not say anywhere. See
@@ -481,10 +490,14 @@ export const POSTS: BlogPost[] = ([
      * questions, a quiz; "What it costs, and how long it takes" became "What it takes to run" (no
      * price); the closing line goes to the quiz (CTA-2 version B, plain text). Slug kept. See
      * docs/blog-r29/NOTES-booking.md. */
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the phrase stays "how to
+     * reduce no-shows"; its first page is medical sites, so the title and the description now name the trades (a salon, a
+     * dental office, a contractor). The page sat at position 3, so its headings and first answer are untouched (rule OS5). The
+     * closing goes to the service page while the quiz is not live; the FAQ says where we are based. Slug kept: it is indexed. */
     excerpt:
       "How to reduce no-shows when you take appointments: book inside the first conversation, keep the date close, and remind before the day. What 51,529 appointments say about booking too far ahead, what one reminder was worth in a randomised trial and in a 2026 review of ten, how to test an AI appointment booking tool, and whether it is worth it. For a roofer, a salon, a dental or accounting office, or a real estate office.",
     seoDescription:
-      "How to reduce no-shows: book in the first conversation, keep the date close, remind before the day. The evidence, how to test AI booking, and whether it is worth it.",
+      "How to reduce no-shows at a salon, dental office or contractor: book in the first conversation, keep the date close, remind before the day, and test AI booking.",
     cover: "/images/counties/rockland.jpg",
     body: [],
     placeholder: false,
@@ -497,7 +510,7 @@ export const POSTS: BlogPost[] = ([
     title: "How to get more Google reviews: ask every customer on the day the job ends",
     seoTitle: "How to Get More Google Reviews: Automated Review Requests",
     date: "2026-08-25",
-    updated: "2026-11-11",
+    updated: "2026-11-17",
     /** ROUND 28 (2026-11-11), re-aimed at local business owners (his order of 2026-11-11): the
      * title is the owners' phrase "how to get more google reviews"; the story two electricians; the
      * examples a painter, a bike shop, a plumber, a cleaning company, a gym, a salon, a dental and an
@@ -514,6 +527,10 @@ export const POSTS: BlogPost[] = ([
      *
      * The rule the superseded note recorded still stands and is worth keeping: set `updated`
      * when the article takes its first real revision, never to satisfy a gate. */
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the phrase stays "how to
+     * get more Google reviews" (100 to 1,000 searches a month). The page sat at position 4.5, so its title, headings and first
+     * answer are untouched (rule OS5). The closing goes to the service page while the quiz is not live; the FAQ says where we
+     * are based. Slug kept: the address is indexed. */
     excerpt:
       "How to get more Google reviews for a local business: ask every customer on the day the job ends, with the same link for all. Where Google's line between asking and gating falls, the federal rule for reviews on your own website, what one extra star was worth in a study that measured money, and what to do first.",
     seoDescription:
@@ -562,8 +579,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "database-reactivation-old-real-estate-leads",
     cluster: "records",
-    title: "How to follow up with old leads and win back past customers",
-    seoTitle: "How to Follow Up With Old Leads: Win Back Past Customers",
+    title: "Lead follow-up for old leads: how to win back past customers",
+    seoTitle: "Lead Follow-Up for Old Leads: Win Back Past Customers",
     /** Researched and drafted 07-30, finished and shipped 07-31. Both dates are real: this
      * session began on the 30th and the piece was rewritten and verified on the 31st. */
     date: "2026-07-30",
@@ -577,7 +594,7 @@ export const POSTS: BlogPost[] = ([
      * regulation actually attaches (the scene file had it right, the prose had dropped it); and
      * "three hundred conversations to find four people", a conversion rate this same post calls
      * made up two screens later. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-11-14",
+    updated: "2026-11-17",
     /** ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-11): the title is
      * the owners' phrase "how to follow up with old leads" (the keyword map's AC 2); the story a heating
      * company and a furnace tune-up; the examples a heating company, a gym's tour-no-buy list, an accounting
@@ -587,10 +604,15 @@ export const POSTS: BlogPost[] = ([
      * it fits, what to do first, the quiz). The reason the SEO agent blocked the 2026-11-05 draft (F5, a
      * dollar figure on a public piece, and 35 second-reader notes) is in docs/blog-r29/NOTES-reactivation.md.
      * Slug kept. */
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the title, the first
+     * sentence and the description lead with "lead follow-up" (100 to 1,000 searches a month, about tenfold in a year); round
+     * 30's "how to follow up with old leads" (no reported searches) stays in the headings, and "database reactivation", the
+     * search the page was shown for most, stays in the text and the description. The closing goes to the service page while the
+     * quiz is not live; the FAQ says where we are based. Slug kept: the address is indexed. */
     excerpt:
-      "How to follow up with old leads and past customers: what database reactivation is, the three federal rule checks to run on your own records before a message goes out, an invented worked example by channel, and whether it is worth doing at all.",
+      "Lead follow-up for old leads and past customers: what database reactivation is, the three federal rule checks to run on your own records before a message goes out, an invented worked example by channel, and whether it is worth doing at all.",
     seoDescription:
-      "How to follow up with old leads and win back past customers: the three federal rule checks, a worked example by channel, when it is worth it and what to do first.",
+      "Lead follow-up for old leads and past customers: database reactivation in plain words, the three federal rule checks, a worked example and what to do first.",
     cover: "/images/hero/valley-aerial.jpg",
     body: [],
     placeholder: false,
@@ -601,8 +623,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-voice-agent-missed-calls-real-estate",
     cluster: "answering",
-    title: "AI voice agent for small business: an AI receptionist for the calls an owner misses",
-    seoTitle: "AI Voice Agent for Small Business: An AI Receptionist for Missed Calls",
+    title: "AI voice agent for small business: answering the calls an owner misses",
+    seoTitle: "AI Voice Agent for Small Business: Answering Missed Calls",
     date: "2026-07-30",
     /** A real revision, not a freshness fiction: the all-party-consent paragraph asserted a
      * count of states that had not been checked against the statutes, and now says only what
@@ -635,11 +657,15 @@ export const POSTS: BlogPost[] = ([
      * a dental and an accounting office, a salon, a gym and a real estate office; the calculator
      * stops at conversations (no commission, no per-deal figure); the closing line goes to the
      * quiz; the sources re-read on 11-11. The slug is kept. See docs/blog-r28/NOTES-voice.md. */
-    updated: "2026-11-11",
+    updated: "2026-11-17",
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the title and the first
+     * sentence carry "AI voice agent for small business" (100 to 1,000 searches a month); "AI receptionist" left the title and
+     * the description for the service page, which owns it, and stays in the text. The title tag is 57 characters (it was 70). The
+     * closing goes to the service page while the quiz is not live; the FAQ says where we are based. Slug kept: it is indexed. */
     excerpt:
       "An AI voice agent for small business, in plain words: what it does when nobody can pick up, what it must never do, the federal and state rules for AI voices and call recording, a test of whether it is worth it, and a plan for this week.",
     seoDescription:
-      "An AI receptionist for small business is an AI voice agent that answers missed calls: what it does, what it must never do, the rules, and whether it is worth it.",
+      "An AI voice agent for small business answers missed calls: what it does, what it must not do, the rules for AI voices and recording, and whether it is worth it.",
     cover: "/images/hero/millerton-night.jpg",
     body: [],
     placeholder: false,
@@ -684,11 +710,15 @@ export const POSTS: BlogPost[] = ([
      * costs, and how long it takes" became "What it takes to run" (no price, no delivery time);
      * four owner questions; the Small Business Administration's 2026 FAQ added; the closing line goes
      * to the quiz (CTA-2 version B, plain text). Slug kept. See docs/blog-r29/NOTES-workflow.md. */
-    updated: "2026-11-14",
+    updated: "2026-11-17",
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the phrase stays "workflow
+     * automation for small business" (100 to 1,000 searches a month, about tenfold in a year); the description is cut to 159
+     * characters (it was 170) with the real estate and title offices kept, because the page is shown for "title company workflow
+     * automation". The closing goes to the service page while the quiz is not live; the FAQ says where we are based. Slug kept. */
     excerpt:
       "Workflow automation for small business in plain words: how to follow up every quote without chasing it, list the small jobs your team retypes between programs, score each for impact and risk, and catch the chains that fail quietly. For a roofer, a dental or accounting office, a salon, or a real estate or title office. With a four-week plan and a ten-question quiz.",
     seoDescription:
-      "Workflow automation for small business: follow up every quote, find the jobs worth wiring first and catch the chains that fail quietly. Real estate and title offices too.",
+      "Workflow automation for small business: follow up every quote, find the jobs worth wiring first, catch the chains that fail. Real estate and title offices too.",
     // Was /images/team-bg.jpg, which does not exist and never has: the raw asset 404s and the
     // optimizer therefore 400s, so this post's card on /blog and its own hero were both broken.
     // Accounting Finance (CC0, already in public/images/ATTRIBUTIONS.md) is the paperwork this
@@ -703,8 +733,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-chat-assistant-real-estate-website",
     cluster: "answering",
-    title: "AI chatbot for small business websites: the question that arrives at 11:40pm",
-    seoTitle: "AI Chatbot for Small Business Websites: How to Test One",
+    title: "Website chatbot for a small business: the question that arrives at 11:40pm",
+    seoTitle: "Website Chatbot for a Small Business: How to Test One",
     date: "2026-07-12",
     /** 08-02: the largest revision this post has had. It had been resting on an unsourced "78%"
      * and carried one citation, which the voice post also used, so it effectively had no source
@@ -730,11 +760,15 @@ export const POSTS: BlogPost[] = ([
      * fits, is it worth automating, what to do first, a Canadian tribunal's 2024 decision on who
      * owns a chatbot's answer, the Census Bureau's AI-use survey, a quiz. The closing is the free
      * website door (CTA-2 version D). Slug kept. See docs/blog-r29/NOTES-chat.md. */
-    updated: "2026-11-14",
+    updated: "2026-11-17",
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the title, the first
+     * sentence and the definitional question carry "website chatbot" (100 to 1,000 searches a month); the service page takes
+     * "AI chatbot for small business", so the two stop competing. The free-website door goes through the service page's form
+     * while the quiz is not live; the FAQ says where we are based. Slug kept: the address is indexed. */
     excerpt:
-      "A homeowner asked a heating company's website one question at twenty to midnight, and the answer came at nine. What an AI chatbot for a small business, or a real estate website, really does in that gap. Why the number this category is sold on cannot be sourced. Who owns what it says, whether it is worth it for your kind of business, and what to do first.",
+      "A homeowner asked a heating company's website one question at twenty to midnight, and the answer came at nine. What a website chatbot for a small business, or a real estate office, really does in that gap. Why the number this category is sold on cannot be sourced. Who owns what it says, whether it is worth it for your kind of business, and what to do first.",
     seoDescription:
-      "An AI chatbot for a small business or real estate website: what it answers at 11:40pm, what it hands to a person, how to test one, and whether it is worth it.",
+      "A website chatbot for a small business or real estate office: what an AI chatbot answers at 11:40pm, what it hands to a person, and how to test one.",
     cover: "/images/lifestyle/buying.jpg",
     body: [],
     placeholder: false,

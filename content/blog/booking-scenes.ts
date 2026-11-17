@@ -499,7 +499,7 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       eyebrow: "Ten questions",
       title: "What did you learn? Check it in two minutes",
       brand: "ai",
-      passLine: "You know what moves attendance and what does not. The free AI quiz at the end of this page turns that into your own result.",
+      passLine: "You know what moves attendance and what does not. If you would rather have the booking and the reminders run for you, our AI appointment booking service is linked at the end of this page.",
       failLine: "Under half this time. Read the lead time and the reminder sections again, then have another go.",
       questions: BOOKING_QUIZ,
     },
