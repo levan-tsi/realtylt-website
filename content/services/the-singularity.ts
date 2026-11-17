@@ -63,7 +63,7 @@ export const theSingularity: Service = {
   tier: "core",
 
   eyebrow: "The Singularity · the tipping point",
-  title: "The Singularity: the AI system that starts improving itself",
+  title: "The Singularity: the AI system for small business that starts improving itself",
   lede: "The Singularity is an AI agent system for a small business: one brain that builds and runs your other agents and improves itself. A chat on the website, a voice agent on the phone and a pile of automations each know a different version of the same customer. Scattered tools become one brain, and this is the moment that brain starts working on itself. It builds and runs your other agents. It writes and changes the software around them. It keeps what it learns in files it has to read before it starts anything. Every other tool you own peaked the day you installed it. This one writes down what it got wrong, and nothing it writes ships until the tests pass and you approve it.",
   specs: [
     "builds and runs your agents",
@@ -85,7 +85,7 @@ export const theSingularity: Service = {
   seo: {
     title: "The Singularity AI agent system for small business: one memory",
     description:
-      "A self-improving AI system for a small business: it builds and runs its agents, keeps what it learns in readable files, and improves its own code with approval.",
+      "The Singularity, an AI operating system for business, builds and runs its agents, keeps what it learns in readable files and improves its code with approval.",
   },
 
   figure: {
@@ -208,6 +208,10 @@ export const theSingularity: Service = {
     {
       q: "What happens if one of its changes makes things worse?",
       a: "A change from The Singularity that makes things worse gets undone, and the reason that is a short answer is that the loop is built backwards from it. Every change is one change rather than a batch. It is compared against what was live before it shipped. And the comparison and the approval are both written down. So a change that looks wrong a fortnight later can be spotted and reversed rather than argued about. That is the difference between a system that learns and a system that drifts.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 
