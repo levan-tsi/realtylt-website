@@ -21,7 +21,7 @@ export const workflowAutomation: Service = {
   tier: "core",
 
   eyebrow: "Automation · Connect your tools",
-  title: "Workflow automation: the busywork runs itself",
+  title: "AI automation services for small business: the busywork runs itself",
   lede: "AI automation services for a small business connect the apps it already uses so the steps between them happen on their own: a form comes in, a quote is sent, an invoice is paid, and the next task starts without anyone retyping. Where a step needs judgment, it stops and asks a person. Without it, a quote goes out on Tuesday and nobody remembers to follow it up until the customer has hired someone else.",
   specs: ["connects the tools you use", "follows up on every quote", "stops and asks a person", "runs end to end"],
   why: "Workflow automation matters because every office loses time to the same steps done by hand: moving a detail from one app to the next, chasing the next task, retyping what a system already knows. When that chain runs itself, the time comes back, and so do the follow-ups that used to slip through.",
@@ -40,7 +40,7 @@ export const workflowAutomation: Service = {
   seo: {
     title: "AI automation services for small business: quotes and follow-up",
     description:
-      "Workflow automation for a small business: the apps you already use connected, so quotes get followed up, forms land in the right place and the next task starts itself.",
+      "AI automation services for small business: the apps already in use connected, so quotes get followed up, forms land in the right place and the next task starts.",
   },
 
   figure: {
@@ -171,6 +171,14 @@ export const workflowAutomation: Service = {
     {
       q: "How long does it take to automate a workflow?",
       a: "A simple workflow automation, such as intake and an instant reply, can be live within days once the tools are connected. Chains across several systems with real branching take longer, mostly because mapping what the business actually does today is the slow part, not the building.",
+    },
+    {
+      q: "How much do AI automations cost?",
+      a: "The cost of AI automation for a small business depends on the chain: intake and an instant reply is a small build, and a chain across several systems with real branching is a larger one, mostly because mapping what the business does today is the slow part. We do not quote a price before that map exists, because a number before it is a guess.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 
