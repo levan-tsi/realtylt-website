@@ -35,8 +35,8 @@ export const reviewAutomation: Service = {
   tier: "core",
 
   eyebrow: "Reputation · Review requests",
-  title: "Review automation software that asks every customer once, on the day",
-  lede: "Review automation software for a small business sends a text to every customer when the job ends, one tap from the business's Google review page. Otherwise the job goes well, the customer means to write a review, and then the week moves on. Everyone gets the same link, whatever they scored, because asking only the people expected to be kind is what Google's policy rules out. A low score also reaches the owner the same minute, so a problem gets a call that day instead of a surprise later.",
+  title: "Google review automation for small business: every customer asked once, on the day",
+  lede: "Google review automation for small business sends a text to every customer when the job ends, one tap from the business's Google review page. Otherwise the job goes well, the customer means to write a review, and then the week moves on. Everyone gets the same link, whatever they scored, because asking only the people expected to be kind is what Google's policy rules out. A low score also reaches the owner the same minute, so a problem gets a call that day instead of a surprise later.",
   specs: ["asks when the job ends", "one tap to Google", "the same link for everyone", "a low score reaches the owner"],
   why: "Google review automation matters because people read reviews before they call, and the ones they read are the recent ones. This asks every customer while the work is fresh in their mind, every time, not only when somebody remembers. A steady trickle of honest reviews says more about a business today than a good year three years ago.",
   keywords: [
@@ -48,9 +48,9 @@ export const reviewAutomation: Service = {
   ],
 
   seo: {
-    title: "Review automation software for small business: Google reviews",
+    title: "Google review automation for small business: ask every customer",
     description:
-      "We text every customer one tap to the Google review page when the job ends. The same link for everyone, no incentives, and a low score reaches the owner too.",
+      "Google review automation for small business: every customer texted one tap to the review page when the job ends, the same link for all, and no incentives.",
   },
 
   stat: {
@@ -179,6 +179,10 @@ export const reviewAutomation: Service = {
     {
       q: "Can my Google reviews go on my own website?",
       a: "Yes, Google reviews can go on the business's own website. Recent reviews can be pulled through to the business's site automatically. They are shown and labelled as a selection of recent reviews, rather than as the whole set. That wording matters. The FTC's rule on consumer reviews, 16 CFR 465.7, is about misrepresenting a review block as representing most or all of what customers submitted while quietly holding back the low ones. A labelled selection is honest. A reviews section that implies it is everything is not.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 
