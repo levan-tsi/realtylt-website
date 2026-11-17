@@ -25,7 +25,7 @@ export const invoicingAndPayments: Service = {
   tier: "core",
 
   eyebrow: "Payments · Invoices and deposits",
-  title: "Automated invoicing: get paid on time without chasing",
+  title: "Automated invoicing for small business: get paid on time without chasing",
   lede: "Automated invoicing for a small business raises the invoice when the job is booked or done, asks for a deposit up front with a tap-to-pay link, and follows up politely on anything unpaid on a schedule the owner sets. Without it, the job is finished on Friday, the invoice goes out the following Thursday, and the reminder that should follow it never gets sent at all. After the last reminder, anything still open goes to a person with the history attached.",
   specs: ["invoices raised on the day", "deposit and tap-to-pay links", "polite reminders on schedule", "tracks who owes what"],
   why: "Automated invoicing matters because nobody enjoys sending the third reminder, which is why it does not get sent. Automate the invoice and the follow-up, and both happen on the day they were supposed to, worded the same way every time. The owner keeps the hard conversations and loses the awkward ones.",
@@ -40,7 +40,7 @@ export const invoicingAndPayments: Service = {
   seo: {
     title: "Automated invoicing and payment reminders for small business",
     description:
-      "Automated invoicing for a small business: invoices raised when the job happens, deposits by tap-to-pay link, polite reminders on a schedule, and a person for the rest.",
+      "Automated invoicing for small business: invoices sent when the job happens, deposits by tap-to-pay link, polite reminders on a schedule, a person for the rest.",
   },
 
   /** Round 28: a count, not a sum (the brand check refuses a dollar figure on an AI page). It is
@@ -177,6 +177,10 @@ export const invoicingAndPayments: Service = {
     {
       q: "Does it work with my accounting software?",
       a: "Automated invoicing connects to the invoicing and accounting tools the business already runs and does not replace them, so the record of who owes what stays in one place, and the matching happens against the real bank feed rather than against a list of what was sent.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 
