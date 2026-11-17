@@ -15,7 +15,7 @@ import { SITE } from "@/lib/site";
  * anyone loses a job (company/BRAND.md section 3). The close is the two free doors (CTA-2 version
  * E), the quiz line only while SITE.quizLive is true (round 33). */
 export const metadata: Metadata = {
-  title: "AI services and solutions for small business: calls and bookings",
+  title: "AI services and solutions for small business",
   description:
     "AI services and solutions for small business: an AI receptionist, chatbot, scheduling, reviews, follow-ups and paperwork, with a person approving what matters.",
   alternates: { canonical: `${SITE.url}/services` },
