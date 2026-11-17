@@ -198,7 +198,7 @@ export const POSTS: BlogPost[] = ([
     title: "What to automate with AI first in a small business, and what to leave alone",
     seoTitle: "What to automate with AI first: a small business AI audit",
     date: "2026-08-26",
-    updated: "2026-11-16",
+    updated: "2026-11-17",
     /** AGENTS ROUND 32 (2026-11-16), on the data: Google had never crawled this address, the only searches the page was
      * ever shown for said "audit", and the phrase the title aimed at ("how to use AI in my business") is held by Microsoft, Google
      * and IBM. The title, the first sentence and three headings now aim at "what to automate with AI first" (eight small sites hold
