@@ -190,8 +190,8 @@ export const aiChatAssistant: Service = {
       a: "The AI chat assistant writes the leads it captures to the CRM with the full conversation, the phone number, what the person needs, where and when. The follow-up starts from what they actually said, so the person who calls back is not starting from a blank contact form.",
     },
     {
-      q: "Where are you based, and can an owner outside New York get an AI chatbot?",
-      a: "We are based in New York State, and the call works for an owner anywhere. To start, tell us about the business in the form on this page, and we reply.",
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 
