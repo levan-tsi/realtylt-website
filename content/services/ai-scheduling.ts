@@ -29,7 +29,7 @@ export const aiScheduling: Service = {
   title: "AI scheduling for small business that books real open times",
   lede: "AI scheduling for small business offers real open times from the business's own calendar inside the chat or the call, holds the slot the moment it is taken, sends the confirmation and the reminders, and moves the time on request. Without it, a customer asks for a time and the answer waits until somebody is off the phone, by which point the customer has asked somewhere else. Where other people have to agree, it asks them and tracks who has actually said yes.",
   specs: ["your live calendar", "real open times only", "reminders sent for you", "who has said yes, tracked"],
-  why: "An AI scheduling assistant matters because the gap between “interested” and “on the calendar” is where a customer cools. Booking inside the same conversation closes that gap. Holding the slot the moment it is taken is built against one kind of double booking, the business's own time offered twice, while the hold is set up and working; and a time that needs other people is called confirmed only when they have said so.",
+  why: "AI scheduling matters because the gap between “interested” and “on the calendar” is where a customer cools. Booking inside the same conversation closes that gap. Holding the slot the moment it is taken is built against one kind of double booking, the business's own time offered twice, while the hold is set up and working; and a time that needs other people is called confirmed only when they have said so.",
   keywords: [
     "ai scheduling assistant for business",
     "ai calendar assistant",
@@ -71,7 +71,7 @@ export const aiScheduling: Service = {
   },
 
   whatItIs: [
-    "An AI scheduling assistant is the scheduling layer under the chat assistant and the voice agent. A conversation reaches the point where someone wants a time: an estimate visit, a cleaning, a consultation, a haircut, a showing. The assistant reads that, and books it there and then from the business's live calendar.",
+    "AI scheduling is the scheduling layer under the chat assistant and the voice agent. A conversation reaches the point where someone wants a time: an estimate visit, a cleaning, a consultation, a haircut, a showing. The assistant reads that, and books it there and then from the business's live calendar.",
     "It handles the rest of the appointment's life too. The confirmation. The reminders before the day. And the reschedule request that would otherwise cost the front desk two phone calls.",
     "Some appointments need people who are not the business. An accounting office meeting may need two partners and the client; a real estate showing on another office's listing needs that office to agree. There the same layer sends the request, records who has actually replied, holds the business's own side while it waits, and tells the customer once, when the time is real.",
     "It fits any business that books time with customers: a contractor's estimate visits, a dental or accounting office's appointments, a salon, spa or gym's sessions, a real estate office's showings. For a practice that keeps health records it books and reminds only: the reminder names the time and the place, never the treatment.",
@@ -147,7 +147,7 @@ export const aiScheduling: Service = {
   ],
 
   limits: [
-    "An AI scheduling assistant does not create time. It reads the live calendar and can only offer what is genuinely free. A full week books nothing.",
+    "AI scheduling does not create time. It reads the live calendar and can only offer what is genuinely free. A full week books nothing.",
     "It does not make anybody else reply. Some appointments need a partner, a client, an occupant or another office to agree. There, all it can do is ask, follow up once, and then hand it to a person.",
     "It cannot prevent every double booking. It can stop the business's own calendar being offered twice, because that is the calendar it reads and writes. It has no view of anybody else's diary and no authority over it.",
     "It does not know a rule nobody has told it. Notice periods, travel time between jobs and the hours a room is free are not written anywhere a machine can read, so they narrow what it offers only once somebody types them in.",

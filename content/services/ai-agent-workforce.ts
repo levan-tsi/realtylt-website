@@ -27,7 +27,7 @@ export const aiAgentWorkforce: Service = {
   title: "AI agents for small business: one for each job the team repeats",
   lede: "AI agents for small business are AI assistants that each take one job the team repeats. The same quote gets written from site notes every evening, the same inbox gets sorted every morning, the same paperwork gets chased every week, and the owner does all of it after hours. We brief each assistant for a single job and connect it to the tools that job needs. They draft and prepare; a named person on the team reads, approves and sends, and gets the evenings back.",
   specs: ["one assistant per job", "briefed in writing", "plugs into your tools", "drafts for a person to approve"],
-  why: "AI assistants matter because a small team cannot add a person for every task that repeats. It can hand each one to its own AI assistant that drafts the work, so the people spend their time on the reading, the deciding and the customers rather than on the typing.",
+  why: "AI agents matter because a small team cannot add a person for every task that repeats. It can hand each one to its own AI assistant that drafts the work, so the people spend their time on the reading, the deciding and the customers rather than on the typing.",
   keywords: [
     "ai assistant for small business",
     "ai agents for small business",
@@ -126,7 +126,7 @@ export const aiAgentWorkforce: Service = {
   ],
 
   limits: [
-    "An AI assistant does not think for anyone. An assistant does one job the way it was described, so a vague brief produces output that is fast, consistent and useless.",
+    "An AI agent does not think for anyone. An assistant does one job the way it was described, so a vague brief produces output that is fast, consistent and useless.",
     "It is not a hire. There is nobody to take responsibility, notice that the job has changed, or say the process itself is wrong. Those stay with the people in the business.",
     "It does not remove the review. Anything that reaches a customer is read by a person first. An assistant that drafts is worth more than one that sends.",
     "It does not fix a job nobody has written down. If the task lives only in someone's head and changes every time, describing it is the first piece of work, not building it.",
