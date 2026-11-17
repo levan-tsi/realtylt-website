@@ -22,7 +22,7 @@ export const aiAudit: Service = {
 
   eyebrow: "AI Assessment · Start here",
   title: "An AI consultant for a small business: see where AI pays off first",
-  lede: "An AI readiness assessment is a one-hour review of how a small business really runs, done with the owner by an AI consultant, to find where AI is worth building first and where it is not. An owner knows AI could help and has no idea where to point it first. In one hour with you, or you and your manager, we map how the business really runs. Then we write the plan: what to build and in what order, how long each piece takes, the precautions, and which system does which job. It is the low-risk way to start when you know AI can help but not where.",
+  lede: "An AI readiness assessment is a one-hour review of how a small business really runs, done with the owner by an AI consultant for small business, to find where AI is worth building first and where it is not. An owner knows AI could help and has no idea where to point it first. In one hour with you, or you and your manager, we map how the business really runs. Then we write the plan: what to build and in what order, how long each piece takes, the precautions, and which system does which job. It is the low-risk way to start when you know AI can help but not where.",
   specs: ["one hour with the owner", "an order, with reasons", "a written plan", "what stays with a person"],
   why: "Knowing AI could help is one problem. Knowing where to point it is a different one, and only the second gets anything built. An assessment turns an open question into a short list, with the reason for each spot beside it. It also gives you a second list: the things you have decided not to build. Some firms call this an AI audit.",
   keywords: [
@@ -36,7 +36,7 @@ export const aiAudit: Service = {
   seo: {
     title: "AI consultant for small business: an AI readiness assessment",
     description:
-      "An AI consultant for a small business starts with an AI readiness assessment: one hour with the owner, then a written plan of what to build first and what to leave alone.",
+      "An AI consultant for small business starts with an AI readiness assessment: one hour with the owner, then a written plan of what to build first and what not to.",
   },
 
   /** Somebody else's measurement, and the one that resets an owner's sense of being behind.
@@ -176,6 +176,10 @@ export const aiAudit: Service = {
     {
       q: "Is an AI assessment the same as an AI audit?",
       a: "An AI assessment is mostly the same thing as an AI audit: some firms call it that. The difference here is the output. It is not a score or a report card. It is a short, ordered plan with the reasons written beside each line, and a second list of what not to build, because a decision not to build is a legitimate result.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 
