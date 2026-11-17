@@ -4971,7 +4971,7 @@ Ask us about [AI automation services](/services/workflow-automation).
 ## Sources
 
 - Gloria Mark, Victor M. Gonzalez and Justin Harris, "No Task Left Behind? Examining the Nature of Fragmented Work", Proceedings of CHI 2005, University of California, Irvine, 2005. Kept for the argument; no newer measurement was found. Read November 14, 2026.
-- An automation platform's help center, on error settings (the default pause at 95 percent in 7 days) and on run statuses. Read November 14, 2026.
+- An automation platform's help center, on error settings (the default pause at 95 percent in 7 days), [the error settings page](https://help.zapier.com/hc/en-us/articles/14167175792909-Decide-how-your-Zap-handles-errors-with-advanced-settings), and on run statuses, [the run status page](https://help.zapier.com/hc/en-us/articles/20505304170637-Review-run-statuses-in-Zap-workflows). Read November 14, 2026.
 - Harvard Business Review, The Short Life of Online Sales Leads, by James Oldroyd, Kristina McElheran and David Elkington, [on hbr.org](https://hbr.org/2011/03/the-short-life-of-online-sales-leads), 2011. Read November 14, 2026; kept for the argument.
 - US Small Business Administration, Office of Advocacy, Frequently Asked Questions About Small Business 2026, [the PDF](https://advocacy.sba.gov/wp-content/uploads/2026/02/FINAL_FAQsAboutSmallBusiness_2026_012826.pdf), February 2026. Read November 14, 2026.
 - Our own method: the screening questions, the scores, the four checks and the verdicts of the RealtyLT AI assessment.
