@@ -4001,7 +4001,7 @@ Sources checked November 14, 2026.
 
 Written with an AI assistant and checked by Levan.`;
 
-export const AI_VOICE_AGENTS_POST = `When the phone rings while your hands are full, a caller who reaches voicemail may have booked someone else by the time you ring back. We help local business owners decide whether an AI voice agent for small business should answer those calls, and we set one up when it should. Below is what it does and what it must never do, the federal and state rules for AI voices and call recording, a test of whether it is worth it for your business, and a plan for this week.
+export const AI_VOICE_AGENTS_POST = `An AI voice agent for small business answers the calls you miss while your hands are full: a caller who reaches voicemail may have booked someone else by the time you ring back. We help local business owners decide whether one should answer those calls, and we set one up when it should. Below is what it does and what it must never do, the federal and state rules for AI voices and call recording, a test of whether it is worth it for your business, and a plan for this week.
 
 An AI voice agent is a phone voice that answers when you cannot, says at the start that it is an AI assistant, answers from your own information and books a call back for anything it cannot check. This page is written for owners whose phone rings while they are busy with the work itself: on a roof, under a sink, with a patient or a client in the chair.
 
@@ -4231,6 +4231,10 @@ An AI voice agent can work with your calendar and your CRM when it is connected 
 
 An outbound call by an AI voice can be legal when the checks for that call are met. Under the TCPA an AI voice counts as an artificial voice, so the called person's prior express consent is needed unless an exemption applies, and telemarketing also has to respect do-not-call rules and calling hours. The call's purpose, the person called and the states involved all matter, so have your attorney review the setup before the first outbound call.
 
+### Can I talk to you about an AI voice agent if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere. The rules for AI voices and call recording depend on the states a call involves, as the legal section above says.
+
 [[scene:quiz]]
 
 ## How to check your own missed calls this week
@@ -4243,7 +4247,7 @@ An invented example: the owner of a small moving company rings his own line from
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about an [AI receptionist for small business](/services/ai-voice-agents).
 
 ## Sources
 
