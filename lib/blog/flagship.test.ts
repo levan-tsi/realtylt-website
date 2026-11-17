@@ -116,24 +116,32 @@ describe("flagshipToc", () => {
   it("derives exactly the rail the review automation post shipped with", () => {
     const reviewOutline = parseOutline(REVIEW_AUTOMATION_POST);
     expect(flagshipToc(reviewOutline, REVIEW_FLAGSHIP)).toEqual([
-      { id: "the-number-this-is-usually-sold-on-and-why-it-is-not-in-here", label: "The number" },
+      { id: "why-is-the-claim-that-most-customers-read-reviews-not-used-here", label: "The number" },
       { id: "scene-thresholds", label: "What they need", scene: true },
-      { id: "what-a-stranger-actually-does-with-your-profile", label: "The scan" },
-      { id: "what-one-extra-star-was-worth-in-the-only-study-that-measured-money", label: "The one study" },
+      { id: "what-does-a-stranger-look-at-on-your-google-profile", label: "The scan" },
+      { id: "what-was-one-extra-star-worth-in-a-study-that-measured-money", label: "The study" },
       { id: "scene-yelp-lift", label: "The money", scene: true },
-      { id: "why-the-ask-does-not-happen", label: "Why nobody asks" },
-      { id: "what-review-automation-actually-does", label: "What it does" },
+      { id: "why-does-the-ask-for-a-google-review-not-happen", label: "Why nobody asks" },
+      { id: "what-does-review-automation-actually-do", label: "What it does" },
       { id: "scene-the-ask", label: "The four", scene: true },
-      { id: "the-line-you-may-not-cross-and-exactly-where-it-is", label: "The line" },
+      { id: "where-is-the-line-for-asking-customers-for-google-reviews", label: "The line" },
       { id: "scene-gating-line", label: "Both sides", scene: true },
-      { id: "the-federal-half-which-is-about-your-own-website", label: "Your own site" },
+      { id: "what-does-the-federal-review-rule-say-about-your-own-website", label: "Your own site" },
       { id: "scene-review-calculator", label: "Your numbers", scene: true },
-      { id: "what-to-do-when-the-review-is-genuinely-bad", label: "The bad one" },
-      { id: "how-to-test-one-before-you-buy-it", label: "How to test one" },
-      { id: "what-it-costs-and-how-long-it-takes", label: "Cost and time" },
-      { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
+      { id: "what-should-you-do-when-a-google-review-is-genuinely-bad", label: "The bad one" },
+      { id: "how-do-you-test-a-review-tool-before-you-buy-it", label: "How to test one" },
+      // Round 28 (2026-11-11): the refresh re-aimed at local owners added the teaching shape and the quiz;
+      // "What it costs" became "What it takes to run" (the second reader read the cost lines as our pricing).
+      { id: "is-it-worth-automating-google-review-requests", label: "Worth automating?" },
+      { id: "what-does-it-take-to-run-automated-review-requests", label: "What it takes" },
+      { id: "what-does-review-automation-not-do-and-should-not-pretend-to", label: "What it will not do" },
+      { id: "who-this-fits-and-who-it-does-not", label: "Who it fits" },
+      { id: "what-should-you-do-first-to-get-more-google-reviews", label: "Your first weeks" },
+      { id: "scene-roadmap", label: "The roadmap", scene: true },
       { id: "common-questions-answered-honestly", label: "Common questions" },
-      { id: "what-to-do-about-it", label: "What to do" },
+      { id: "scene-quiz", label: "Quiz", scene: true },
+      { id: "what-should-you-do-about-your-google-reviews", label: "What to do" },
+      { id: "sources", label: "Sources" },
     ]);
   });
 
