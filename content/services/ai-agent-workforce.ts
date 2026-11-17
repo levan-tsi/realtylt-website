@@ -20,12 +20,12 @@ export const aiAgentWorkforce: Service = {
   slug: "ai-agent-workforce",
   aiKey: "agents",
   name: "AI Agent Workforce",
-  noun: "an AI assistant",
+  noun: "an AI agent",
   tier: "core",
 
   eyebrow: "AI assistants · One per repeated job",
-  title: "AI assistants for the jobs a small team repeats",
-  lede: "AI assistants for a small business each take one job the team repeats. The same quote gets written from site notes every evening, the same inbox gets sorted every morning, the same paperwork gets chased every week, and the owner does all of it after hours. We brief each assistant for a single job and connect it to the tools that job needs. They draft and prepare; a named person on the team reads, approves and sends, and gets the evenings back.",
+  title: "AI agents for small business: one for each job the team repeats",
+  lede: "AI agents for small business are AI assistants that each take one job the team repeats. The same quote gets written from site notes every evening, the same inbox gets sorted every morning, the same paperwork gets chased every week, and the owner does all of it after hours. We brief each assistant for a single job and connect it to the tools that job needs. They draft and prepare; a named person on the team reads, approves and sends, and gets the evenings back.",
   specs: ["one assistant per job", "briefed in writing", "plugs into your tools", "drafts for a person to approve"],
   why: "AI assistants matter because a small team cannot add a person for every task that repeats. It can hand each one to its own AI assistant that drafts the work, so the people spend their time on the reading, the deciding and the customers rather than on the typing.",
   keywords: [
@@ -37,9 +37,9 @@ export const aiAgentWorkforce: Service = {
   ],
 
   seo: {
-    title: "AI assistants for small business: one per repeated job",
+    title: "AI agents for small business: one for each repeated job",
     description:
-      "AI assistants for a small business: each briefed for one job the team repeats, connected to its tools, drafting the work for a person on the team to approve.",
+      "AI agents for small business: each one briefed for one job the team repeats, connected to its tools, drafting the work for a person on the team to approve.",
   },
 
   /** ROUND D: the finding that decides how this should be built rather than a number that
@@ -157,6 +157,10 @@ export const aiAgentWorkforce: Service = {
     {
       q: "Will AI assistants take over my staff's jobs?",
       a: "No, AI assistants do not take over a staff's jobs. They take the first draft of the repeated written work, and every draft still goes to a person who reads, decides and sends. The team gets time back for the customers and the judgment calls, which is the part of the work only they can do.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 
