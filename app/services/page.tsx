@@ -15,13 +15,13 @@ import { SITE } from "@/lib/site";
  * anyone loses a job (company/BRAND.md section 3). The close is the two free doors (CTA-2 version
  * E), the quiz line only while SITE.quizLive is true (round 33). */
 export const metadata: Metadata = {
-  title: "AI services for small business: calls, bookings and paperwork",
+  title: "AI services and solutions for small business",
   description:
-    "AI services for small business: an AI receptionist, chatbot, scheduling, review requests, follow-ups and paperwork, with a person approving what matters.",
+    "AI services and solutions for small business: an AI receptionist, chatbot, scheduling, reviews, follow-ups and paperwork, with a person approving what matters.",
   alternates: { canonical: `${SITE.url}/services` },
   openGraph: {
     type: "website",
-    title: "AI services for small business, by RealtyLT AI",
+    title: "AI services and solutions for small business, by RealtyLT AI",
     description:
       "Calls answered, reviews asked for, bookings and follow-ups run and paperwork off the desk, on the tools a business already uses, with a person approving what matters.",
     url: `${SITE.url}/services`,
@@ -236,10 +236,10 @@ export default function ServicesIndexPage() {
               RealtyLT AI
             </p>
             <h1 id="services-title" className="t-h1 mt-3 max-w-2xl text-paper">
-              AI services for <strong>small business owners</strong>
+              AI services and solutions for <strong>small business owners</strong>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-paper/80">
-              AI services for a small business answer the phone, book the work, follow up and file
+              AI services and solutions for a small business answer the phone, book the work, follow up and file
               the paperwork while the owner is on the job: a roofer on a ladder, a dental office with
               a full front desk, a salon mid-appointment, a real estate office out on a showing. The
               phone still rings, the reviews still need asking for and the paperwork still piles up.
@@ -350,6 +350,9 @@ export default function ServicesIndexPage() {
               owner, the assessment maps how the business really runs, cuts the ideas that should not
               be built, and puts the rest in order with the reason for each spot beside it. Then we
               write the plan.
+            </p>
+            <p className="mx-auto mt-4 max-w-xl leading-relaxed text-paper/75">
+              We are based in New York State, and the call works for an owner anywhere.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button href="/services/ai-readiness-assessment" variant="light" size="lg">
