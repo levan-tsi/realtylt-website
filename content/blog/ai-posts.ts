@@ -524,7 +524,7 @@ If the middle list is long and the bottom line is empty, you have not found a bu
  * written plan after the call; the two routes (we build and run it with the assessment included, or
  * they build from the plan); why build-and-manage beats training someone. "Audit" became
  * "assessment" (one synonym clause kept in the FAQ). Notes: docs/blog-r17/NOTES.md. */
-export const AI_AUDIT_POST = `How to use AI in my business has a short answer: write down how one job really runs, cross off the ideas that should stay with a person, and build what is left one at a time, smallest risk first. This page takes one owner's list through that method, the one we use in an AI readiness assessment. By the end you can test any idea with three questions, put what survives in a safe order, and follow a week-by-week roadmap to a first measured trial.
+export const AI_AUDIT_POST = `The first thing a small business should automate with AI is a job that happens every week, follows a rule you could write down for a new hire, and fails where a person sees it before a customer does. Below, one owner's list of eleven ideas goes through that test, and you will see why the smallest worst day goes first and why the winner may need no AI at all. It is the method we use in an AI assessment, which some firms call an AI audit, and you can run it on your own business. By the end you can test any idea with three questions, put what survives in a safe order, and follow a week-by-week roadmap to a first measured trial.
 
 **Maria's plumbing company (invented).** Maria owns a plumbing company with four people: herself, Tom in the office and two plumbers on the road. She keeps hearing that businesses like hers are falling behind on AI, so one evening she writes down everything she would hand to it: eleven ideas. She does not know which to start with, or which would embarrass her in front of a customer. Maria, Tom and every figure about their company are made up; their list runs through this page as one worked example of a real method.
 
@@ -532,9 +532,9 @@ Everything on this page is free to use: the method, the eighteen questions we as
 
 [[scene:in-short]]
 
-## What an AI assessment for a small business is for
+## What an AI audit of a small business is for
 
-An AI assessment for a small business is for one result: your list handed back shorter, with a reason beside each removal that you can apply again on your own. In a small business every idea that gets built becomes a job someone has to own, and a build that skips the assessment risks automating the wrong job, or the right job on a rule nobody had settled. Every idea crossed off is one less build to pay for, own and watch.
+An AI audit of a small business, which we call an AI assessment, is for one result: your list handed back shorter, with a reason beside each removal that you can apply again on your own. In a small business every idea that gets built becomes a job someone has to own, and a build that skips the assessment risks automating the wrong job, or the right job on a rule nobody had settled. Every idea crossed off is one less build to pay for, own and watch.
 
 [[scene:deliverable]]
 
@@ -552,11 +552,11 @@ Three questions decide whether an idea for AI is worth automating at all, and ea
 
 ### One: it happens often enough that a failure gets noticed within a week
 
-A job that runs several times a week usually reports its own failure, because someone is waiting for the result. A job that runs four times a year can break in March and be found in June by an annoyed customer. Weekly or more is a yes; quarterly is almost always a no.
+A job that runs several times a week has someone waiting for its result, so a failed run is noticed within days. A job that runs four times a year can break in March and be found in June by an annoyed customer. Weekly or more is a yes when you can name the person who would miss a run; quarterly is a no.
 
 ### Two: the rule can be written down for a new hire
 
-When three people in an office describe the same decision three ways, nobody is wrong. The rule was never decided, and software built over the top freezes whichever version its builder heard. Ask the three separately, never in a meeting. Different answers mean deciding the rule comes before any build.
+When three people in an office describe the same decision three ways, nobody is wrong. The rule was never decided, and software built over the top freezes whichever version its builder heard. Ask the three separately, never in a meeting; if you work alone, write the rule down today and again next week without looking, and compare. Different answers mean deciding the rule comes before any build.
 
 ### Three: a wrong answer lands where a person sees it first
 
@@ -590,9 +590,9 @@ A small business should not automate three kinds of work with AI: any fact a cus
 
 [[scene:do-not]]
 
-The first kind is the tempting one. A model asked about a price will answer, and the risk is a wrong answer in the right format that nobody checks. The right build is smaller: it fetches the value from the record that governs it and says so when there is no record. It may report what a source says or say it does not know.
+A model asked about a price will answer, and the risk is a wrong answer in the right format that nobody checks. The right build is smaller: it fetches the value from the record that governs it and says so when there is no record. It may report what a source says or say it does not know.
 
-**Maria's plumbing company (invented).** Answering price questions was the idea Maria wanted most, and it is exactly what the third question is for. If she builds it one day, the system will read each price from her price list and, where the list is silent, say that Tom will confirm. It will never write a price of its own, and Tom still confirms a quote before it goes out.
+**Maria's plumbing company (invented).** Answering price questions was the idea Maria wanted most, and it is exactly what the third question is for. If she builds it one day, the system will read each price from her price list and, where the list is silent, say that Tom will confirm. It will never write a price of its own, Tom approves each reply before it is sent, and he still confirms a quote before it goes out.
 
 **Your turn.** Mark every idea on your list that states a fact to a customer, and ask where that fact is read from.
 
@@ -602,7 +602,7 @@ We started in real estate, where square footage, a tax figure or a permit reads 
 
 ## Who should stay on the job
 
-A person should stay on any job a customer sees. That is our rule, and the 2026 numbers show AI adding to people's work far more often than replacing it: among AI-using firms in the Census working paper, 44 percent said it added to tasks their workers already do. Headcount barely moved, with 2.3 percent of AI-using firms reporting an increase and 2.0 percent a decrease ([Bonney and others, CES 26-25](https://www2.census.gov/library/working-papers/2026/adrm/ces/CES-WP-26-25.pdf)).
+A person should stay on any job a customer sees. That is our rule, and it matches what firms report so far: among AI-using firms in the Census working paper, 44 percent said it added to tasks their workers already do. Headcount barely moved, with 2.3 percent of AI-using firms reporting an increase and 2.0 percent a decrease ([Bonney and others, CES 26-25](https://www2.census.gov/library/working-papers/2026/adrm/ces/CES-WP-26-25.pdf)).
 
 [[scene:the-person-stays]]
 
@@ -614,7 +614,7 @@ Four checks decide who runs a job. Does the result bind the business, such as a 
 
 [[scene:stay-on-job]]
 
-The one exception is a fixed message whose exact words you approved once, with only details read from the record filled in, such as the name, date and time of an appointment reminder. Check the record it reads from before you switch it on. Anything a model writes to a customer is approved every time.
+The one exception is a fixed message whose exact words you approved once, with only details read from the record filled in, such as the name, date and time of an appointment reminder. Check the record it reads from before you switch it on, and name who corrects that record when it is wrong. Anything a model writes to a customer is approved every time.
 
 **Maria's plumbing company (invented).** Quote follow-ups pass all three questions, and they reach customers. So the system drafts each one, Tom reads it and sends it, and the price is never written by the system.
 
@@ -622,9 +622,9 @@ The one exception is a fixed message whose exact words you approved once, with o
 
 [[scene:plate-garage]]
 
-## Why does ranking AI ideas by the average outcome get it wrong?
+## Which AI idea should a small business build first?
 
-Ranking AI ideas by the average outcome gets it wrong because an average blends two different things: most jobs come in close to plan, a few go badly wrong, and the blended number describes neither. With a short list, the natural move is to estimate what each idea is worth and start at the top. We sort by how contained the worst case is.
+A small business should build first the AI idea whose worst day is smallest, not the one with the biggest saving. Ranking by the average outcome gets it wrong because an average blends two different things: most jobs come in close to plan, a few go badly wrong, and the blended number describes neither. With a short list, the natural move is to estimate what each idea is worth and start at the top. We sort by how contained the worst case is.
 
 **Maria's plumbing company (invented).** The obvious first build is the typing Tom found. Tom times it: about ten minutes a retyping, twice a booking, 25 bookings a week. Copying the details automatically would take about eight hours a week of typing off him, less the minutes he spends checking each record. When it goes wrong, one bad entry that slips past Tom lands in the quote, the invoice and the books at once. The Friday list of open quotes saves about two hours, and when it goes wrong a quote is missing from the list until Maria checks it against her records: some rework, and no customer has seen anything. Ranked by the saving, the copying wins. Ranked by the worst day, the Friday list goes first and the copying second, once the office has seen one system earn its trust.
 
@@ -632,13 +632,13 @@ Ranking AI ideas by the average outcome gets it wrong because an average blends 
 
 ### The failure rate nobody can give you
 
-We found no 2026 public survey of how often a small business's automation fails. The most quoted project failure figure comes from a report sold by a private research firm whose data has never been opened to inspection. Two researchers at Vrije Universiteit Amsterdam applied its definitions to real project records and found they "result in meaningless figures" ([Eveleens and Verhoef, IEEE Software, 2010](https://www.cs.vu.nl/~x/chaos/chaos.pdf)): a project counted as late or over budget, never early or under. A number whose method nobody can check stays off this page. When anyone quotes you a failure rate or a saving, ask how it was measured.
+We found no 2026 public survey of how often a small business's automation fails. The most quoted project failure figure comes from a report sold by a private research firm whose data has never been opened to inspection. Two researchers at Vrije Universiteit Amsterdam applied its definitions to real project records and found they "result in meaningless figures" ([Eveleens and Verhoef, IEEE Software, 2010](https://www.cs.vu.nl/~x/chaos/chaos.pdf)): a project counted as late or over budget, never early or under. When anyone quotes you a failure rate or a saving, ask how it was measured.
 
 ### What the order gets sorted by
 
 First, containment: what happens when it is wrong, and who finds out. Second, whether the rule is settled, because software will not make a management decision. Third, and only third, the size of the saving, because the biggest saving is often the job with the most judgment in it.
 
-Our plan also scores each job from 1 to 5 for impact and for risk, each with its reason. Impact is the hours a week the job takes: under one hour is a 1, one up to two a 2, two up to five a 3, five up to ten a 4, ten or more a 5. Risk is what a wrong result costs: fixed in minutes inside the office is a 1 and some rework inside the office a 2; one yes on the four checks makes it at least a 3, two or more at least a 4, and a 5 binds the business and cannot be taken back. A job worth under two hours a week is left alone. On that scale Maria's Friday list (still the invented example) is impact 3 and risk 2: two hours of digging saved, and a wrong list costs some rework inside the office. Her copying job is impact 4 and risk 4, because it feeds the books and reaches customers, so Tom checks every record for as long as it runs.
+Our plan also scores each job from 1 to 5 for impact and for risk, each with its reason. Impact is the hours a week the job takes: under one hour is a 1, from one to under two a 2, from two to under five a 3, from five to under ten a 4, ten or more a 5. Risk is what a wrong result costs: fixed in minutes inside the office is a 1 and some rework inside the office a 2; one yes on the four checks makes it at least a 3, two or more at least a 4, and a 5 binds the business and cannot be taken back. A job that takes under two hours a week is left alone, unless switching it on costs nothing, as with the reminder Maria finds below. On that scale Maria's Friday list (still the invented example) is impact 3 and risk 2: the digging takes her about two and a half hours a week, and a wrong list costs some rework inside the office. Her copying job is impact 4, about eight hours a week of typing, and risk 4, because it feeds the books and reaches customers, so Tom checks every record for as long as it runs.
 
 ### Does every job on the list need AI?
 
@@ -646,9 +646,9 @@ Not every job on the list needs AI. A fixed step, such as copying a customer's d
 
 [[scene:audit-path]]
 
-## How do you run an AI assessment yourself?
+## How do you run an AI audit of your own business?
 
-To run an AI assessment yourself, start with one evening and five steps: list, ask, trace, cross off, then wait two weeks and read it again.
+To run an AI audit of your own business, start with one evening and five steps: list, ask, trace, cross off, then wait two weeks and read it again.
 
 1. Write every idea down without judging it, and beside each one how often the job happens.
 2. Ask the rule question to three people, separately.
@@ -662,19 +662,19 @@ To run an AI assessment yourself, start with one evening and five steps: list, a
 
 ## Your AI roadmap, week by week
 
-Nothing here needs us, and nothing costs money until an idea has passed every test. Where no job repeats yet, writing the process down comes first. This roadmap ends at a first measured trial; building beyond it is a separate job.
+Nothing here needs us, and the method costs only your time until an idea has passed every test. Where no job repeats yet, writing the process down comes first. This roadmap ends at a first measured trial; building beyond it is a separate job.
 
 1. **Week one.** Write down one job, answer the questions and run the one-evening test.
 2. **Weeks two and three.** Let the list sit, decide the unsettled rules with the people who do the work, and check whether a program you already pay for does any job on it.
 3. **Week four.** Pick the idea with the smallest worst day and name its approver.
-4. **Weeks five to eight.** Run a four-week trial with a person approving every result, and count the hours before and after. If it reaches a customer or binds the business, the person stays on it for good. If it does neither, and four weeks needed no corrections, it can run alone on your written say-so, with a log you can read and a named person who checks it every month. If it needs correcting most weeks, stop and settle the rule before touching the tool.
+4. **Weeks five to eight.** Before the first run, write five things on one page: where the result is read from, who approves it, how a missed run would be noticed, how to switch it off, and the hours the job takes today. Then run a four-week trial with a person approving every result, and count the hours again at the end. If it reaches a customer or binds the business, the person stays on it for good; the one exception is a fixed message whose words were approved once. If it does neither, and four weeks needed no corrections, it can run alone on your written say-so, with a log you can read and a named person who would notice a missed run within the week and reads the log every month. If it needs correcting most weeks, stop and settle the rule before touching the tool.
 5. **Every few months.** Read the list again.
 
 [[scene:roadmap]]
 
 **Maria's plumbing company (invented).** In weeks two and three Maria, Tom and the senior plumber settle the discount rule at last, so that idea can be tested again at the next read. Maria also finds that the invoicing program she already pays for can send payment reminders. A reminder is a fixed message, the one exception named above: she approves its words once, sends one to herself to check the amount and the timing, and switches it on. That idea needed no build.
 
-**Maria's plumbing company (invented).** In week four Maria picks the Friday list and names herself as its approver. It is small on purpose: every quote sent more than a week ago with no answer, read from the program the quotes live in, on one page in her inbox each Friday morning. No AI is needed for it. Before the trial she times her Friday digging at about two and a half hours. For four Fridays she checks every line against her records, which takes half an hour. By week eight she knows the list saves about two hours a week, measured rather than promised. Eleven ideas became seven: one was a switch she already owned, one runs and is measured, and the copying is next, with Tom checking every record.
+**Maria's plumbing company (invented).** In week four Maria picks the Friday list and names herself as its approver. It is small on purpose: every quote sent more than a week ago with no answer, read from the program the quotes live in, on one page in her inbox each Friday morning. No AI is needed for it. Before the trial she times her Friday digging at about two and a half hours. For four Fridays she checks the list against her own records in both directions, every line on it and every open quote it should hold, which takes half an hour. If no list arrives on a Friday morning, she knows the same day. By week eight she knows the list saves about two hours a week, measured rather than promised. Eleven ideas became seven: one was a switch she already owned, one runs and is measured, and the copying is next, with Tom checking every record.
 
 **Your turn.** Decide now what the found hours are for. A found hour has to be spent on purpose, or it gets absorbed.
 
@@ -766,7 +766,7 @@ An AI assessment does not decide for you or see what nobody will say, and it goe
 
 ## How small businesses use AI in 2026
 
-About one US business in five uses AI: the Census Bureau's Business Trends and Outlook Survey put AI use in any business function at 19.8 percent of US businesses as of May 3, 2026 ([Census Bureau, May 26, 2026](https://www.census.gov/library/stories/2026/05/ai-use-businesses.html)). The Federal Reserve's Small Business Credit Survey asked firms with 1 to 499 employees a wider question, whether the business or its employees use AI in some way, and 46 percent said yes, mostly for writing and marketing ([Federal Reserve Banks, March 3, 2026](https://www.clevelandfed.org/collections/press-releases/2026/pr-20260303-fed-survey-small-business-optimism-wanes-as-performance-metrics-hold-steady); 6,525 responses, fielded September 3 to November 14, 2025).
+About one US business in five uses AI: the Census Bureau's Business Trends and Outlook Survey put AI use in any business function at 19.8 percent of US businesses as of May 3, 2026 ([Census Bureau, May 26, 2026](https://www.census.gov/library/stories/2026/05/ai-use-businesses.html)). The Federal Reserve's Small Business Credit Survey asked firms with 1 to 499 employees a wider question, whether the business or its employees use AI in some way, and 46 percent said yes, mostly for writing and marketing ([Federal Reserve Banks, March 3, 2026](https://www.clevelandfed.org/collections/press-releases/2026/pr-20260303-fed-survey-small-business-optimism-wanes-as-performance-metrics-hold-steady); 6,525 responses, 5,248 of them to the optional AI questions, fielded September 3 to November 14, 2025).
 
 [[scene:who-uses-ai]]
 
@@ -784,7 +784,7 @@ The use is narrow. Among AI-using firms the working paper found sales and market
 
 ### Most small businesses have not started
 
-With four firms in five not using AI inside their work ([Census Bureau, May 26, 2026](https://www.census.gov/library/stories/2026/05/ai-use-businesses.html)), there is no settled playbook yet, so ask any confident advice, this page included, what it rests on. Of the firms with no plans, 65 percent said AI is not applicable to the business ([Bonney and others, CES 26-25](https://www2.census.gov/library/working-papers/2026/adrm/ces/CES-WP-26-25.pdf)). Count the retyping in your own business before you agree with them.
+With four firms in five not using AI inside their work ([Census Bureau, May 26, 2026](https://www.census.gov/library/stories/2026/05/ai-use-businesses.html)), few owners have a neighbour to copy, so ask any confident advice, this page included, what it rests on. Of the firms with no plans, 65 percent said AI is not applicable to the business ([Bonney and others, CES 26-25](https://www2.census.gov/library/working-papers/2026/adrm/ces/CES-WP-26-25.pdf)). Count the retyping in your own business before you agree with them.
 
 [[scene:why-not]]
 
@@ -794,9 +794,9 @@ With four firms in five not using AI inside their work ([Census Bureau, May 26, 
 
 To use AI in a small business, write one job down, list your ideas, cross them off with three questions, and build the survivor with the smallest worst day. The method costs nothing to run alone; the crossing off is harder alone, because every idea on your list is there for a reason you agree with.
 
-### What is an AI assessment for a small business?
+### What is an AI audit for a small business?
 
-An AI assessment for a small business is a structured look at how the business runs, to decide which repeated jobs AI takes first and which stay with a person; some firms call this an AI audit.
+An AI audit for a small business is a structured look at how the business runs, to decide which repeated jobs AI takes first and which stay with a person.
 
 ### What can I automate in my business first?
 
@@ -822,7 +822,7 @@ The method works for any small business with office work that repeats: a plumbin
 
 ## Next step: book an AI assessment
 
-The offer is the one-hour assessment: we go through your list with you, then send back a written plan of what we would build first, how, and what we would cross off. [Book a Consultation](/connect): (914) 875-2424, levan@realtylt.com.
+The offer is the one-hour assessment, because the crossing off is the hard part to do alone: we go through your list with you, then send back a written plan of what we would build first, how, and what we would cross off. On the call we pitch nothing, name no tools and promise no savings, and you correct our notes before the plan is written. [Book a Consultation](/connect): (914) 875-2424, levan@realtylt.com.
 
 By Levan Tsiklauri.
 
@@ -830,7 +830,7 @@ By Levan Tsiklauri.
 
 - U.S. Census Bureau, Adam Grundy, Cory Breaux and Dhanapati Khatiwoda, "Large Firms With at Least 20 Employees Biggest AI Users", America Counts story, May 26, 2026. Business Trends and Outlook Survey, data from December 14, 2025 to May 3, 2026. Read October 31, 2026.
 - Kathryn Bonney, Cory Breaux, Emin Dinlersoz, Lucia Foster, John Haltiwanger and Aditya Pande, "The Microstructure of AI Diffusion: Evidence from Firms, Business Functions, and Worker Tasks", U.S. Census Bureau, Center for Economic Studies working paper CES 26-25, April 2026. The 2026 AI supplement to the Business Trends and Outlook Survey, reference period November 2025 to January 2026; all shares firm-weighted. Read October 31, 2026.
-- Federal Reserve Banks, Small Business Credit Survey, 2026 Report on Employer Firms, press release of the Federal Reserve Bank of Cleveland, March 3, 2026. Fielded September 3 to November 14, 2025; 6,525 responses from firms with 1 to 499 employees. Read October 31, 2026.
+- Federal Reserve Banks, Small Business Credit Survey, 2026 Report on Employer Firms, press release of the Federal Reserve Bank of Cleveland, March 3, 2026. Fielded September 3 to November 14, 2025; 6,525 responses from firms with 1 to 499 employees, 5,248 of them to the optional questions on AI. Read October 31, 2026.
 - National Institute of Standards and Technology, Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1, January 2023, sections 1.2.2 and MANAGE 1.1 and 1.3; NIST's framework page, read October 31, 2026 (version 1.0 current, a revision in progress). An older source, kept for the argument: it is the framework in force.
 - J. Laurenz Eveleens and Chris Verhoef, "The Rise and Fall of the Chaos Report Figures", [IEEE Software, January/February 2010](https://www.cs.vu.nl/~x/chaos/chaos.pdf). An older source, kept for the argument: cited for how a failure rate was defined, not for any rate. Read October 31, 2026.
 - A search for a 2026 public survey measuring how often small-business automation fails returned none on October 29, 2026.

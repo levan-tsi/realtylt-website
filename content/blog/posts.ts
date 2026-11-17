@@ -195,11 +195,17 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-assessment-small-business-what-not-to-automate",
     cluster: "building",
-    title: "How to use AI in my business: what to automate first and what to leave alone",
-    seoTitle: "How to use AI in my business: what not to automate",
+    title: "What to automate with AI first in a small business, and what to leave alone",
+    seoTitle: "What to automate with AI first: a small business AI audit",
     date: "2026-08-26",
-    updated: "2026-11-15",
-    /** AGENTS ROUND 31 (2026-11-15), the owner's order that a post be one story that teaches and that
+    updated: "2026-11-16",
+    /** AGENTS ROUND 32 (2026-11-16), on the data: Google had never crawled this address, the only searches the page was
+     * ever shown for said "audit", and the phrase the title aimed at ("how to use AI in my business") is held by Microsoft, Google
+     * and IBM. The title, the first sentence and three headings now aim at "what to automate with AI first" (eight small sites hold
+     * its first page, no AI answer on top) and carry "AI audit"; nine logic gaps the blind reader kept finding are closed; no figure
+     * or link was lost. Set `updated` to the day it ships and ask Google to index it that day. Record: realtylt-agents
+     * company/agents/seo/runs/r32-best-agent/ (DATA.md first).
+     * AGENTS ROUND 31 (2026-11-15), the owner's order that a post be one story that teaches and that
      * the long video and its shorts are cut from: one invented plumbing company (Maria and Tom) now
      * runs through every method section, with its whole eleven-idea list shown; the method comes
      * before the survey figures; every figure has its source beside it; the answer is in the first
@@ -214,9 +220,9 @@ export const POSTS: BlogPost[] = ([
      * assessment" where the phrase matters, "AI audit" kept once as the synonym); the slug moved
      * from ai-audit-... with a permanent redirect in next.config.ts; the one-hour flow. */
     excerpt:
-      "How to use AI in your business, shown on one invented plumbing company's list: eleven ideas, three questions that cross four of them off, and a first build chosen by its worst day. The questions we ask in an assessment, so you can answer them yourself; how the assessment runs and what you get; a week-by-week roadmap you can follow alone; what 2026 government surveys show small firms really do with AI; a one-page sheet; and a ten-question quiz to check what stuck.",
+      "What a small business should automate with AI first, shown on one invented plumbing company's list: eleven ideas, three questions that cross four of them off, and a first build chosen by its worst day. The questions we ask in an assessment, so you can answer them yourself; how the assessment runs and what you get; a week-by-week roadmap you can follow alone; what 2026 government surveys show small firms really do with AI; a one-page sheet; and a ten-question quiz to check what stuck.",
     seoDescription:
-      "How to use AI in my business: an AI assessment for a small business in plain steps, 2026 Census data, three questions to cut your list, and what to automate first.",
+      "What should a small business automate with AI first? Three questions cut your list, the worst day picks the first build. An AI audit you can run yourself.",
     cover: "/images/editorial/front-desk-phone.jpg",
     body: [],
     placeholder: false,

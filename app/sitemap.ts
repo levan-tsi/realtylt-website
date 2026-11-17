@@ -12,6 +12,10 @@ import { SITE } from "@/lib/site";
 // (A CRM publish also revalidates /sitemap.xml through /api/revalidate.)
 export const revalidate = 3600;
 
+/** A post's last change is its `updated` date when it has one (round 32, 2026-11-16: the sitemap had told Google the assessment
+ *  post was unchanged since its first date after two rewrites). */
+export const postLastModified = (p: { date: string; updated?: string }) => new Date(p.updated ?? p.date);
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = SITE.url.replace(/\/$/, "");
   const now = new Date();
@@ -69,7 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${base}/blog/${p.slug}`,
       priority: 0.5,
       changeFrequency: "monthly",
-      lastModified: new Date(p.date),
+      lastModified: postLastModified(p),
     }));
 
   // Listing URLs only in fixture mode are stable enough to publish; the live feed

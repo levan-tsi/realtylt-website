@@ -1,4 +1,4 @@
-/** Scene copy for "How to use AI in my business" (slug ai-assessment-small-business-what-not-to-automate).
+/** Scene copy for "What to automate with AI first in a small business" (until round 32 "How to use AI in my business"; slug ai-assessment-small-business-what-not-to-automate).
  *
  * ROUND 15, 2026-10-31: REBUILT ON THE OWNER'S VERDICT. Round 14 shrank the post to 1,779 words and
  * eight scenes; he preferred the older, bigger version ("our old blogs are bigger, better and more
@@ -651,24 +651,24 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
             "Every project works with the right tool",
           ],
           answer: 1,
-          why: "From the section on the failure rate: a number whose method nobody can check stays off the page.",
+          why: "From the section on the failure rate: when anyone quotes a failure rate or a saving, ask how it was measured.",
         },
       ],
     },
   },
 
   headingLabels: {
-    "what-an-ai-assessment-for-a-small-business-is-for": "What an assessment is for",
+    "what-an-ai-audit-of-a-small-business-is-for": "What an audit is for",
     "where-to-start-with-ai-one-job-written-down": "One job written down",
     "how-small-businesses-use-ai-in-2026": "Who uses AI",
     "the-three-questions-is-it-worth-automating-at-all": "The three questions",
     "what-should-a-small-business-not-automate-with-ai": "What not to automate",
     "who-should-stay-on-the-job": "Who stays on the job",
-    "why-does-ranking-ai-ideas-by-the-average-outcome-get-it-wrong": "Rank by worst day",
+    "which-ai-idea-should-a-small-business-build-first": "Which idea goes first",
     "what-is-an-ai-readiness-assessment-and-how-does-it-run": "How the assessment runs",
     "the-questions-we-ask-in-an-assessment": "The questions we ask",
     "what-do-you-get-at-the-end-of-an-ai-assessment": "What you get",
-    "how-do-you-run-an-ai-assessment-yourself": "Run it yourself",
+    "how-do-you-run-an-ai-audit-of-your-own-business": "Run it yourself",
     "your-ai-roadmap-week-by-week": "Your roadmap",
     "common-questions-about-using-ai-in-a-small-business": "Common questions",
   },
