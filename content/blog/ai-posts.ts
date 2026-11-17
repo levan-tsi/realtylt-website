@@ -4948,6 +4948,10 @@ How long workflow automation takes depends on the scope, so we give a time only 
 
 Workflow automation can be worth it for a one-person business, because every manual step comes out of the only calendar there is. Most small businesses are one-person businesses: according to the Small Business Administration's Office of Advocacy, 82.3 percent of the 36,207,130 small businesses in the United States have no employees. Start with one chain on the most frequent job that passes the screening questions, and judge it after a month against your baseline.
 
+### Can I talk to you about workflow automation if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere.
+
 [[scene:quiz]]
 
 ## What can you do about workflow automation this week?
@@ -4962,7 +4966,7 @@ If you would rather somebody sat through that hour with you, that is the [AI ass
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [AI automation services](/services/workflow-automation).
 
 ## Sources
 

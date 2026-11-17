@@ -710,11 +710,15 @@ export const POSTS: BlogPost[] = ([
      * costs, and how long it takes" became "What it takes to run" (no price, no delivery time);
      * four owner questions; the Small Business Administration's 2026 FAQ added; the closing line goes
      * to the quiz (CTA-2 version B, plain text). Slug kept. See docs/blog-r29/NOTES-workflow.md. */
-    updated: "2026-11-14",
+    updated: "2026-11-17",
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the phrase stays "workflow
+     * automation for small business" (100 to 1,000 searches a month, about tenfold in a year); the description is cut to 159
+     * characters (it was 170) with the real estate and title offices kept, because the page is shown for "title company workflow
+     * automation". The closing goes to the service page while the quiz is not live; the FAQ says where we are based. Slug kept. */
     excerpt:
       "Workflow automation for small business in plain words: how to follow up every quote without chasing it, list the small jobs your team retypes between programs, score each for impact and risk, and catch the chains that fail quietly. For a roofer, a dental or accounting office, a salon, or a real estate or title office. With a four-week plan and a ten-question quiz.",
     seoDescription:
-      "Workflow automation for small business: follow up every quote, find the jobs worth wiring first and catch the chains that fail quietly. Real estate and title offices too.",
+      "Workflow automation for small business: follow up every quote, find the jobs worth wiring first, catch the chains that fail. Real estate and title offices too.",
     // Was /images/team-bg.jpg, which does not exist and never has: the raw asset 404s and the
     // optimizer therefore 400s, so this post's card on /blog and its own hero were both broken.
     // Accounting Finance (CC0, already in public/images/ATTRIBUTIONS.md) is the paperwork this

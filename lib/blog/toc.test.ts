@@ -67,10 +67,11 @@ describe("extractToc", () => {
     // 2026-11-03 (round 24 refresh): three new sections (is it worth automating, who it fits, what
     // to do first) and a Sources section, 14 top-level. 2026-11-14 (round 29): "How to follow up on
     // every quote without chasing it" and "What the AI readiness assessment hands over" added (16
-    // top-level) and three owner questions (9 in all).
+    // top-level) and three owner questions (9 in all). Round 33 (2026-11-17): one more question, where we are
+    // based (10 in all).
     expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth <= 2)).toHaveLength(16);
-    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth === 3)).toHaveLength(9);
-    expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(25);
+    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth === 3)).toHaveLength(10);
+    expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(26);
     // ids are unique and non-empty
     for (const post of [AI_CHAT_ASSISTANT_POST, WORKFLOW_AUTOMATION_POST]) {
       const ids = extractToc(post).map((t) => t.id);
