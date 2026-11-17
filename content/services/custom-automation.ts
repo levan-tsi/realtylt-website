@@ -37,7 +37,7 @@ export const customAutomation: Service = {
   seo: {
     title: "AI automation agency for small business: custom AI builds",
     description:
-      "An AI automation agency for small business: custom AI automation for the one slow step no app fixes, built from proven parts and handed over in writing.",
+      "An AI automation agency for small business: custom AI for the one slow step no app fixes, wired into the tools already in use and handed over in writing.",
   },
 
   /** A vendor's own published promise, and the shortest of the three the flagship draws: what a

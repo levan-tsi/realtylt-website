@@ -36,7 +36,7 @@ export const aiAudit: Service = {
   seo: {
     title: "AI consultant for small business: an AI readiness assessment",
     description:
-      "An AI consultant for small business starts with an AI readiness assessment: one hour with the owner, then a written plan of what to build first and what not to.",
+      "An AI consultant for small business: an AI readiness assessment, one hour with the owner, then a written plan of what to build first and what to leave alone.",
   },
 
   /** Somebody else's measurement, and the one that resets an owner's sense of being behind.

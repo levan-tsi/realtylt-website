@@ -41,7 +41,7 @@ export const localSeo: Service = {
   seo: {
     title: "Local SEO services for small business: Google profile, reviews",
     description:
-      "Local SEO services for small business: the Google profile fixed and kept current, the reviews and links Google names, and a real page for each town served.",
+      "Local SEO services for small business: the Google profile fixed and kept current, the reviews and links Google names, and a real page for each town and service.",
   },
 
   /** A number in 96-point type is the most quoted thing on the page, so it carries its

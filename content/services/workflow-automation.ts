@@ -40,7 +40,7 @@ export const workflowAutomation: Service = {
   seo: {
     title: "AI automation services for small business: quotes and follow-up",
     description:
-      "AI automation services for small business: the apps already in use connected, so quotes get followed up, forms land in the right place and the next task starts.",
+      "AI automation services for small business: the apps you already use connected, so quotes get followed up, forms land in place and the next task starts itself.",
   },
 
   figure: {

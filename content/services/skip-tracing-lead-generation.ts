@@ -43,7 +43,7 @@ export const skipTracingLeadGeneration: Service = {
   seo: {
     title: "Lead generation services for small business: lists, skip tracing",
     description:
-      "Lead generation services for small business: fresh lists of businesses on the map or property owners, each with a contact, its source and the do-not-call check.",
+      "Lead generation services for small business: fresh lists of businesses on the map or owners on chosen streets, with a contact, a source and a do-not-call check.",
   },
 
   /** Round 28: a rule, not a sum (the brand check refuses a dollar figure on an AI page). It is

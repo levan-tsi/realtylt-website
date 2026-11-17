@@ -50,7 +50,7 @@ export const reviewAutomation: Service = {
   seo: {
     title: "Google review automation for small business: ask every customer",
     description:
-      "Google review automation for small business: every customer texted one tap to the review page when the job ends, the same link for all, and no incentives.",
+      "Google review automation for small business: one text per job, one tap to the review page, the same link for all, no incentives, and low scores reach the owner.",
   },
 
   stat: {

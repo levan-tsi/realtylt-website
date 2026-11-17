@@ -41,7 +41,7 @@ export const aiScheduling: Service = {
   seo: {
     title: "AI scheduling for small business: books real open times",
     description:
-      "AI scheduling for small business: real open times offered from the business's calendar, the slot held, reminders sent and a record of who has said yes.",
+      "AI scheduling for small business: it offers real open times from the business's calendar, holds the slot, sends reminders and tracks who has actually said yes.",
   },
 
   /** SOURCED, added in round G, label made exact in round 28. From the published deployment of a
