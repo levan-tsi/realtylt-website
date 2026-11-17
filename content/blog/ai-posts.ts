@@ -3861,7 +3861,7 @@ The first is what it is allowed to look at. An assistant answering out of your a
 
 The third is the reading. Somebody has to go through what people actually asked, once a week at first, because the questions your visitors ask show what they want to know, and because that is how a wrong answer gets found.
 
-On timing, the build is rarely the slow part. Writing the page of answers and settling what the assistant may and may not say takes the thought. And the first month tells you more than the build does, because it shows what people really ask at eleven at night, which nobody could tell you in advance.
+On timing, the build is not the part that needs the most thought. Writing the page of answers and settling what the assistant may and may not say takes the thought. And the first month tells you more than the build does, because it shows what people really ask at eleven at night, which nobody could tell you in advance.
 
 What an owner provides is short: the answers it may give, the calendar with the times it may offer, a place for the conversations to land, and about twenty minutes a week to read them. We suggest twenty, in your own name, for as long as it runs. If nobody will do that, leave it switched off.
 
@@ -3977,7 +3977,7 @@ A bad one will. A pop-up that demands a phone number before it has been useful i
 
 ### My customers want a human, not a bot
 
-They do, eventually. What they want late at night is to know whether you cover their town and whether someone can come tomorrow. An assistant that answers that and then books a visit with you is not standing between you and the customer. People do not object to being helped by software. They object to being trapped by it, and those are different products.
+They do, eventually. What they want late at night is to know whether you cover their town and whether someone can come tomorrow. An assistant that answers that and then books a visit with you is not standing between you and the customer. Software that helps a customer and software that traps one with no way through to a person are different products.
 
 ### Do I have to tell people it is an AI?
 
@@ -3989,7 +3989,7 @@ Somebody has to be reading, and the business owns the answer either way, as the 
 
 ### Can I add an AI chat assistant to my existing website?
 
-Yes. It is a small piece of code that goes into the site the business already has, whether it came from a website builder or was built by hand, so the site does not need rebuilding. It connects to the calendar and the CRM the business already runs.
+Yes. It is a small piece of code that goes into the site the business already has, whether it came from a website builder or was built by hand, so the site does not need rebuilding as long as it lets a piece of code be added. It connects to the calendar and the CRM the business already runs when they are systems it supports.
 
 ### Can we talk about a website chatbot on a call if my business is outside New York?
 
