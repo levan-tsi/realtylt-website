@@ -82,6 +82,10 @@ export interface Service {
   aiKey: string;
   /** Short label for nav, cards, breadcrumbs. */
   name: string;
+  /** The service as a noun phrase that reads inside a sentence, with its article when it has
+   * one ("an AI receptionist", "workflow automation"). The shared section headings are built
+   * from it (lib/services/headings.ts). The `name` above is a label and does not. */
+  noun: string;
   tier: ServiceTier;
 
   /** COPY.sys — kicker above the H1. */
@@ -109,6 +113,11 @@ export interface Service {
    * comes from outside this business has no excuse. */
   stat?: { value: string; label: string; source?: { text: string; href: string } };
 
+  /** The primary sources of facts the page states and that have no `stat` to carry one (rule
+   * MD14: link out to the primary source of each fact). Rendered as a "Sources" line under the
+   * FAQ. Each entry was read and saved beside the page's record; never a page that was not read. */
+  sources?: { text: string; href: string }[];
+
   figure: Figure;
 
   /** "What it is" — plain-language prose. Two or three paragraphs. */
@@ -133,6 +142,17 @@ export interface Service {
   limits: string[];
 
   faqs: FaqItem[];
+
+  /** Who does what, said plainly (round 28, the owner's word of 2026-11-11: a service page
+   * shows "what actually will be done through the service"). `provides` = what the owner hands
+   * over before it runs; `approves` = what a person still decides once it runs. Rendered as two
+   * short lists at the foot of How it works. The business augments people: nothing here may
+   * hint that anyone loses a job. */
+  handoff?: { provides: string[]; approves: string[] };
+
+  /** Which free door the closing names (CTA-2 section 4, 2026-11-11): absent = both doors
+   * (version E); "assessment" = version C; "website" = version D. */
+  door?: "assessment" | "website";
 
   /** HeyGen / Higgsfield walkthrough. Absent until one is recorded; the VideoObject
    * JSON-LD and the video section both activate the moment this is filled in. */

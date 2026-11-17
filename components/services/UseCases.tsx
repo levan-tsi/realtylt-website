@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { Service } from "@/lib/services";
+import { serviceHeadings } from "@/lib/services/headings";
 
 /** Concrete situations, not benefits. Every card is a scene a working agent recognises,
  * which is also what makes them quotable when somebody asks an assistant "what would I
@@ -9,13 +10,14 @@ import type { Service } from "@/lib/services";
  * Bordered cards rather than a hairline-gap grid on purpose: services carry three or four
  * cases, and an odd count in a two-column gap grid leaves a visible empty cell. */
 export function UseCases({ service }: { service: Service }) {
+  const hd = serviceHeadings(service);
   return (
     <section id="use-cases" className="scroll-mt-24 bg-paper py-16 md:py-24" aria-labelledby="cases-heading">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <Reveal>
           <SectionHeading eyebrow="Use cases" as="h2">
             <span id="cases-heading">
-              Where it <strong>earns its keep</strong>
+              {hd.useCases.lead}{hd.useCases.strong && <strong>{hd.useCases.strong}</strong>}{hd.useCases.tail}
             </span>
           </SectionHeading>
         </Reveal>
