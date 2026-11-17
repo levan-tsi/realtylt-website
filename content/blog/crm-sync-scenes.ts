@@ -38,7 +38,7 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * Three lines, each checkable by somebody else in the primary document. The measurement, the
  * model, the mechanics, which is the order the article itself runs in. */
 export const IN_SHORT: string[] = [
-  "Duplicate contacts are not a discipline problem. Every route into your business creates a record. Each one is separately correct about the person in front of it. And nothing in the building has the job of noticing that two of them are the same woman.",
+  "Duplicate contacts in a CRM are not a discipline problem. Every route into a business creates a record. Each one is separately correct about the customer in front of it. And nothing in the building has the job of noticing that two of them are the same person.",
   "Deciding whether two records are one person is a studied problem with a published answer. The answer has three outcomes rather than two: a match, a nonmatch, and a middle band held for a person to look at. The thresholds either side of that band are set from the two error rates you are willing to accept. And you cannot set both of them to zero.",
   "Most of the damage a sync does is not a failure. It is a design decision nobody made out loud. Whether an update replaces the whole record or changes named fields. What happens when the same message arrives twice. And which side wins when both of them changed.",
 ];
@@ -58,7 +58,7 @@ export const TWO_OF_HER: GridItem[] = [
     // ten at night", neither of which is in the article: invented precision in a scene whose
     // whole argument is that the details on a record came from somewhere real.
     lead: "Created in March, by your website",
-    body: "Kathy Brown. A personal email address. A mobile number typed into a phone with one thumb, on a valuation form, late in the evening. Source: home valuation. No owner, because nobody had picked it up yet. Everything on it is exactly what she typed, which is what a form is for.",
+    body: "Kathy Brown. A personal email address. A mobile number typed into a phone with one thumb, on a quote form, late in the evening. Source: furnace quote request. No owner, because nobody had picked it up yet. Everything on it is exactly what she typed, which is what a form is for.",
   },
   {
     lead: "Created in June, by whoever answered",
@@ -69,8 +69,8 @@ export const TWO_OF_HER: GridItem[] = [
     body: "This is the part that changes what the fix has to be. There is no mistake in either record, and no training that would have prevented it. Both systems did the correct thing with the information they were given. The duplicate is not an error. It is the shape two correct systems make when neither can see the other.",
   },
   {
-    lead: "And only one of them knows she sold",
-    body: "The August listing and the September contract were entered against the June record, because that is the one the agent was working from. The March record still says she is thinking about it. The campaign that emailed her three days before closing was pointed at exactly the right segment. There is nothing in it that failed.",
+    lead: "And only one of them knows she bought",
+    body: "The August quote she signed and the September install were entered against the June record, because that is the one the office was working from. The March record still says she is thinking about it. The campaign that emailed her three days after the install was pointed at exactly the right segment. There is nothing in it that failed.",
   },
 ];
 
@@ -104,7 +104,7 @@ export const THREE_ANSWERS: GridItem[] = [
   },
   {
     lead: "In the middle: ask somebody",
-    body: "Enough agrees to be interesting, and not enough to be sure. The pair waits in a queue for a human being who looks at both and decides. Usually at a glance, because a person has context that is not in either row. This band is the price of the other two being right. And every product that advertises full automation has quietly abolished it.",
+    body: "Enough agrees to be interesting, and not enough to be sure. The pair waits in a queue for a human being who looks at both and decides. A person with context that is in neither row can decide at a glance. This band is the price of the other two being right. And every product that advertises full automation has quietly abolished it.",
   },
   {
     lead: "Below the line: leave them alone",
@@ -337,7 +337,7 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "routes",
           label: "Share who could have reached you more than one way",
-          hint: "Anyone who might have filled in a form and also rung, or come through a portal and also met you at an open house. Past clients and long term nurture contacts are usually the highest.",
+          hint: "Anyone who might have filled in a form and also rung, or booked online and also been typed in by hand at the office. Past customers who came back for a second job are the place to start.",
           min: 5,
           max: 100,
           step: 5,
@@ -361,7 +361,7 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "minutes",
           label: "Minutes to look at one pair and decide",
-          hint: "Usually seconds when you know the person and several minutes when you do not.",
+          hint: "Seconds when you know the person, and several minutes when you do not.",
           min: 1,
           max: 10,
           step: 1,
@@ -379,7 +379,7 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       ],
       headline: 2,
       resultLabel: "Pairs a computer should not settle on its own",
-      note: "The headline is the middle row rather than the hours. The hours are the easy half. The number that decides whether this project is an afternoon or a fortnight is how many pairs end up in front of a person. That is the number nobody quotes on. Sliders that multiply shares will produce a fraction of a pair, which is not a thing. Read two and a half as between two and three. What this refuses to do is tell you how many duplicates you actually have. Figures for that circulate widely, usually somewhere between ten and forty percent. The ones we followed led either to a company selling deduplication software quoting its own customers, or to an analyst rule of thumb with no report behind it. So both of the shares above are yours to supply. The second of them carries a hint pointing at the one measurement in this subject that does state a method. There is also no row for what a stale record costs in commission. There was never going to be one. The email that went to the wrong version of someone is real. Nobody can show you the sums that turn it into money.",
+      note: "The headline is the middle row rather than the hours. The hours are the easy half. The number that decides whether this project is an afternoon or a fortnight is how many pairs end up in front of a person. That is the number nobody quotes on. Sliders that multiply shares will produce a fraction of a pair, which is not a thing. Read two and a half as between two and three. What this refuses to do is tell you how many duplicates you actually have. Figures for that circulate widely, and none of those we found states a sample or a method. So both of the shares above are yours to supply. The second of them carries a hint pointing at the one measurement in this subject that does state a method. There is also no row for what a stale record costs in lost work. There was never going to be one. The email that went to the wrong version of someone is real. Nobody can show you the sums that turn it into money.",
       action: { label: "See how it is built", href: "/services/crm-sync" },
       secondary: { label: "Ask us what your fields do", href: "/connect" },
     },
@@ -441,33 +441,35 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       glow: true,
       ariaLabel: "What to do next",
       text: "Type your own surname into your own CRM and see how many of you there are. It takes one screen, and it settles an argument people have in meetings for months. If more than one of you comes back, you already know which version of everybody else your Tuesday email is talking to.",
-      actions: [
-        { label: "See it on the AI page", href: "/ai#crmsync", variant: "light" },
-        { label: "How it is built", href: "/services/crm-sync", variant: "outline-light" },
-      ],
+      /** ROUND 33 (2026-11-17): no buttons here. The post now ends on ONE link to its service page, in the
+       * line under this scene (rule WS66; the round's brief). The AI page link lives in the body, in the
+       * section on what a sync is made of. */
       footnote:
-        "There is no price here, because the cost tracks four things nobody can guess from an article. How many systems there are to join. Whether each of them has an interface a program can use. How many fields need mapping by hand. And whether the records already in there have to be reconciled first. The AI assessment is an hour, done with you, and the plan it leads to starts with a list of your fields.",
+        "There is no price here, because the cost tracks four things nobody can guess from an article. How many systems there are to join. Whether each of them has an interface a program can use. How many fields need mapping by hand. And whether the records already in there have to be reconciled first.",
     },
   },
 
   /** Short rail labels for the prose headings. Ids and ORDER are derived from the document, so a
    * renamed heading degrades to its full text rather than leaving a dead row. */
+  /** ROUND 33 (2026-11-17): the headings became the questions an owner types about duplicate contacts in a CRM;
+   * the labels moved with them, and one section was added (fixing the duplicates already there). */
   headingLabels: {
-    "why-there-are-two-of-her-and-it-is-not-carelessness": "Why two",
-    "what-the-same-person-means-to-a-computer": "The same person",
-    "a-name-is-not-an-identifier-and-this-is-how-far-from-one-it-is": "Names",
-    "somebody-solved-this-properly-and-the-answer-has-three-outcomes": "The model",
-    "the-third-answer-is-a-person-and-it-is-the-one-nobody-sells-you": "The third answer",
-    "what-a-sync-is-actually-made-of": "What a sync is",
-    "the-field-that-gets-erased": "The erased field",
-    "the-same-update-arriving-twice": "Arriving twice",
-    "when-both-sides-changed-at-once": "Both sides",
-    "which-side-is-right-and-why-somebody-has-to-say-it-out-loud": "Which side wins",
-    "what-the-identity-field-actually-is-in-your-crm": "The identity field",
-    "what-it-costs-and-how-long-it-takes": "Cost and time",
-    "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
-    "how-to-find-out-how-bad-yours-is-in-twenty-minutes": "How to check yours",
-    "common-questions-answered-honestly": "Common questions",
-    "what-to-do-about-it": "What to do",
+    "why-does-a-crm-end-up-with-duplicate-contacts": "Why two",
+    "how-does-a-computer-decide-two-contacts-are-the-same-person": "The same person",
+    "can-a-crm-match-duplicate-contacts-by-name-alone": "Names",
+    "what-is-the-published-method-for-matching-duplicate-records": "The model",
+    "why-does-matching-duplicate-contacts-need-a-person-in-the-middle": "The third answer",
+    "what-is-two-way-crm-sync-made-of": "What a sync is",
+    "why-does-a-crm-sync-erase-a-field": "The erased field",
+    "why-does-the-same-update-arrive-twice": "Arriving twice",
+    "what-happens-when-both-systems-change-a-contact-at-once": "Both sides",
+    "which-system-wins-when-two-contact-records-disagree": "Which side wins",
+    "which-field-decides-whether-a-contact-is-new-or-a-duplicate": "The identity field",
+    "how-do-you-check-a-crm-for-duplicate-contacts-in-twenty-minutes": "How to check yours",
+    "how-do-you-fix-duplicate-contacts-already-in-a-crm": "Fixing what is there",
+    "what-does-it-take-to-fix-duplicate-contacts-in-a-crm": "What it takes",
+    "what-does-a-crm-sync-not-fix": "What it will not do",
+    "common-questions-about-duplicate-contacts-and-crm-sync": "Common questions",
+    "what-to-do-first-about-duplicate-contacts-in-a-crm": "What to do",
   },
 };
