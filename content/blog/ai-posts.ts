@@ -3742,6 +3742,10 @@ No, you do not have to put your Google reviews on your own website. If you do, t
 
 A business needs about twenty Google reviews. According to the 2026 vendor survey, 47 percent said they would not use a business with fewer than twenty, and only 9 percent would use one with five or fewer. Past twenty, the same survey's other figure matters: 74 percent of the panel only care about reviews written in the last three months. An invented example: thirty reviews with four this quarter reads as busy; two hundred with none since last year reads as a business that used to be busy.
 
+### Can I talk to you about reviews if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere.
+
 [[scene:quiz]]
 
 ## What should you do about your Google reviews?
@@ -3754,7 +3758,7 @@ How reviews fit into a local map ranking is covered in [how to rank in Google Ma
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [Google review automation](/services/review-automation).
 
 ## Sources
 

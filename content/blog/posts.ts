@@ -510,7 +510,7 @@ export const POSTS: BlogPost[] = ([
     title: "How to get more Google reviews: ask every customer on the day the job ends",
     seoTitle: "How to Get More Google Reviews: Automated Review Requests",
     date: "2026-08-25",
-    updated: "2026-11-11",
+    updated: "2026-11-17",
     /** ROUND 28 (2026-11-11), re-aimed at local business owners (his order of 2026-11-11): the
      * title is the owners' phrase "how to get more google reviews"; the story two electricians; the
      * examples a painter, a bike shop, a plumber, a cleaning company, a gym, a salon, a dental and an
@@ -527,6 +527,10 @@ export const POSTS: BlogPost[] = ([
      *
      * The rule the superseded note recorded still stands and is worth keeping: set `updated`
      * when the article takes its first real revision, never to satisfy a gate. */
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the phrase stays "how to
+     * get more Google reviews" (100 to 1,000 searches a month). The page sat at position 4.5, so its title, headings and first
+     * answer are untouched (rule OS5). The closing goes to the service page while the quiz is not live; the FAQ says where we
+     * are based. Slug kept: the address is indexed. */
     excerpt:
       "How to get more Google reviews for a local business: ask every customer on the day the job ends, with the same link for all. Where Google's line between asking and gating falls, the federal rule for reviews on your own website, what one extra star was worth in a study that measured money, and what to do first.",
     seoDescription:
