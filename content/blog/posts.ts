@@ -344,18 +344,23 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "marketing-automation-real-estate-email-deliverability",
     cluster: "records",
-    title: "You sent it to fourteen hundred people. Five pressed one button.",
-    seoTitle: "Real Estate Marketing Automation and Email Deliverability",
+    title: "Why emails go to spam: email deliverability for a small business",
+    seoTitle: "Why emails go to spam: marketing email deliverability",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 twice: round 46 fixed
+    updated: "2026-11-17",
+    /** AGENTS ROUND 33 (2026-11-17), the owner's order to rewrite the older AI posts for business owners in the story manner of
+     * the assessment post: aimed at "why emails go to spam" with "email deliverability" in the H1 (PHRASES.md, round 33). One
+     * invented business runs through every method section; CAN-SPAM, Google's and Yahoo's sender rules and every figure, link and
+     * scene kept; the closing is one link to the service page. Record: realtylt-agents company/agents/seo/runs/r33-retarget/old2/.
+     *
+     * `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 twice: round 46 fixed
      * three misquotes and closed the cold open's loop, and round 47 moved the Yahoo gloss onto
      * that page's own word. See docs/parity/ROUND46-RELEVANCE-PASS.md and ROUND47. First real
      * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
-      "The market note went out to fourteen hundred people and nobody complained. Five of them pressed the other button. The next month's note reached fewer people, for reasons nothing in your software will ever show you. What marketing automation really decides on your behalf. The ceiling Google and Yahoo both publish. And why you cannot work out your own.",
+      "Why emails go to spam, shown on one invented heating and cooling company whose monthly note goes to fourteen hundred past customers and draws five spam complaints. What the CAN-SPAM Act requires and what it does not, the 0.3 percent ceiling Google and Yahoo both publish and why no sender can work out its own rate, what SPF, DKIM and DMARC really prove, what an open rate measures, and seven checks to run on your own sending in an afternoon.",
     seoDescription:
-      "What real estate marketing automation decides for you, what CAN-SPAM does and does not require, and the spam rate ceiling Google and Yahoo both publish.",
+      "Why emails go to spam: the 0.3 percent complaint ceiling Google and Yahoo publish, the SPF, DKIM and DMARC records, and an afternoon's check of your sending.",
     cover: "/images/editorial/notice-board.jpg",
     body: [],
     placeholder: false,
