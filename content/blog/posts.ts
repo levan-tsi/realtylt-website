@@ -464,10 +464,10 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-appointment-booking-no-shows-real-estate",
     cluster: "appointments",
-    title: "How to reduce no-shows: AI appointment booking and reminders for a local business",
-    seoTitle: "How to Reduce No-Shows: AI Appointment Booking and Reminders",
+    title: "How to reduce no-shows: AI booking and reminders for a salon, dental office or contractor",
+    seoTitle: "How to Reduce No-Shows: AI Booking for Salons and Dentists",
     date: "2026-08-25",
-    updated: "2026-11-14",
+    updated: "2026-11-17",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27: the limitation
      * paragraph on the Hangzhou reminder trial asserted the participants had paid for their
      * appointments, which the paper does not say anywhere. See
@@ -485,10 +485,14 @@ export const POSTS: BlogPost[] = ([
      * questions, a quiz; "What it costs, and how long it takes" became "What it takes to run" (no
      * price); the closing line goes to the quiz (CTA-2 version B, plain text). Slug kept. See
      * docs/blog-r29/NOTES-booking.md. */
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the phrase stays "how to
+     * reduce no-shows"; its first page is medical sites, so the title and the description now name the trades (a salon, a
+     * dental office, a contractor). The page sat at position 3, so its headings and first answer are untouched (rule OS5). The
+     * closing goes to the service page while the quiz is not live; the FAQ says where we are based. Slug kept: it is indexed. */
     excerpt:
       "How to reduce no-shows when you take appointments: book inside the first conversation, keep the date close, and remind before the day. What 51,529 appointments say about booking too far ahead, what one reminder was worth in a randomised trial and in a 2026 review of ten, how to test an AI appointment booking tool, and whether it is worth it. For a roofer, a salon, a dental or accounting office, or a real estate office.",
     seoDescription:
-      "How to reduce no-shows: book in the first conversation, keep the date close, remind before the day. The evidence, how to test AI booking, and whether it is worth it.",
+      "How to reduce no-shows at a salon, dental office or contractor: book in the first conversation, keep the date close, remind before the day, and test AI booking.",
     cover: "/images/counties/rockland.jpg",
     body: [],
     placeholder: false,

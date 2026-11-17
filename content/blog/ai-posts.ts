@@ -3435,6 +3435,10 @@ Then it should say so and offer the nearest other times, and it should never off
 
 Not always, and the study is about attendance rather than revenue. An appointment two days out is more likely to happen, and it also gives someone less time to arrange the money, a partner or childcare. For some appointments those matter more than attendance does. The finding is not that everything should be tomorrow. It is that the fortnight you drifted into because it suited the calendar has a cost, and now you know roughly which direction it runs.
 
+### Can I talk to you about no-shows if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere.
+
 [[scene:quiz]]
 
 ## What can you do about no-shows this week?
@@ -3445,7 +3449,7 @@ In the invented example the median was nine days, from the Monday call to the sl
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [AI appointment booking](/services/ai-appointment-booking).
 
 ## Sources
 
