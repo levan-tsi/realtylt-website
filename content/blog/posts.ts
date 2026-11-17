@@ -446,19 +446,31 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-appointment-booking-no-shows-real-estate",
     cluster: "appointments",
-    title: "You booked the showing for nine days out. Nobody came.",
-    seoTitle: "AI Appointment Booking and No-Shows in Real Estate",
+    title: "How to reduce no-shows: AI appointment booking and reminders for a local business",
+    seoTitle: "How to Reduce No-Shows: AI Appointment Booking and Reminders",
     date: "2026-08-25",
-    updated: "2026-09-18",
+    updated: "2026-11-14",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27: the limitation
      * paragraph on the Hangzhou reminder trial asserted the participants had paid for their
      * appointments, which the paper does not say anywhere. See
      * docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so the
-     * slug ships at 18/19. */
+     * slug ships at 18/19.
+     *
+     * ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-14): the
+     * title is the phrase the post already ranks third for, "how to reduce no shows" (28 days of
+     * Search Console: the phrase is the keyword map's, the page carries it in the title, the opener
+     * and a heading); the story an estimate visit and a landscaper; the examples a roofer, a
+     * salon, a piano tuner, a dental or accounting office, a real estate office as one of them;
+     * the 2026 review of ten randomised trials of reminders added (March 2026, 8,236 people), the
+     * 2015 clinic study and the 2008 trial kept for the argument with their years; new: how to
+     * reduce no-shows in three moves, is it worth automating, who it fits, what to do first, owner
+     * questions, a quiz; "What it costs, and how long it takes" became "What it takes to run" (no
+     * price); the closing line goes to the quiz (CTA-2 version B, plain text). Slug kept. See
+     * docs/blog-r29/NOTES-booking.md. */
     excerpt:
-      "You answered, you were pleasant, you agreed on a time that suited everyone, and nobody came. What AI appointment booking really does about the gap between the ask and the day. What 51,529 appointments say about booking too far ahead. And the one reminder with a randomised trial behind it.",
+      "How to reduce no-shows when you take appointments: book inside the first conversation, keep the date close, and remind before the day. What 51,529 appointments say about booking too far ahead, what one reminder was worth in a randomised trial and in a 2026 review of ten, how to test an AI appointment booking tool, and whether it is worth it. For a roofer, a salon, a dental or accounting office, or a real estate office.",
     seoDescription:
-      "What AI appointment booking does about no-shows, what 51,529 appointments say about lead time, and why a calendar invitation is not the same as a text message.",
+      "How to reduce no-shows: book in the first conversation, keep the date close, remind before the day. The evidence, how to test AI booking, and whether it is worth it.",
     cover: "/images/counties/rockland.jpg",
     body: [],
     placeholder: false,
@@ -591,8 +603,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "workflow-automation-real-estate-business",
     cluster: "building",
-    title: "The busywork tax: what workflow automation actually removes",
-    seoTitle: "Workflow Automation for a Real Estate Business, Explained",
+    title: "Workflow automation for small business: follow up every quote, then wire the next job",
+    seoTitle: "Workflow Automation for Small Business: Quotes and Follow-Up",
     date: "2026-07-13",
     /** A REAL revision, not a freshness fiction. Shipped 07-13 as a plain 1,200-word article; on
      * 08-01 it was rebuilt onto the flagship path with a cited field study, an original data
@@ -607,12 +619,29 @@ export const POSTS: BlogPost[] = ([
      * condition is now on all of them. A "three lies" card also derived an afternoon from forty
      * minutes, and a superlative claimed the study was the clearest anybody has published. Every
      * other figure re-verified in the CHI 2005 paper, on Zapier's two help pages and in n8n's
-     * error-handling docs. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-09-18",
+     * error-handling docs. See docs/parity/ROUND48-RELEVANCE-PASS.md.
+     *
+     * ROUND 24 (2026-11-03), the agents' refresh, which his click of 2026-11-11 approved on a
+     * preview page that was never merged (approval row 24, `pushed`): written for small businesses of
+     * any kind, the opener says what we do and what the reader learns, jobs scored for impact and
+     * risk before anything is built, a person approves anything a customer reads, four new sections
+     * (is it worth automating, who it fits, what to do first, the quiz), no platform name in
+     * visitor copy. 2,793 words to 4,393; 14 scenes to 20. See docs/blog-r24/NOTES.md.
+     *
+     * ROUND 29 (2026-11-14), built on that page and re-aimed at local business owners (his order of
+     * 2026-11-14): the title is the owners' phrase "workflow automation for small business" with the
+     * quote follow-up; a section on following up every quote (a roofer, with the arithmetic) and a
+     * scene for the same wiring in six kinds of business, a real estate or title office one of
+     * them (the Search Console phrases "title company workflow automation", "real estate workflow
+     * automation" stay served); a section on what the AI readiness assessment hands over; "What it
+     * costs, and how long it takes" became "What it takes to run" (no price, no delivery time);
+     * four owner questions; the Small Business Administration's 2026 FAQ added; the closing line goes
+     * to the quiz (CTA-2 version B, plain text). Slug kept. See docs/blog-r29/NOTES-workflow.md. */
+    updated: "2026-11-14",
     excerpt:
-      "The manual step takes ninety seconds. In the study that timed it, getting back to interrupted work averaged twenty five minutes when it resumed the same day. Here is what workflow automation really removes from a real estate business. How to find your own version of it in an hour. And the failure mode nobody warns you about.",
+      "Workflow automation for small business in plain words: how to follow up every quote without chasing it, list the small jobs your team retypes between programs, score each for impact and risk, and catch the chains that fail quietly. For a roofer, a dental or accounting office, a salon, or a real estate or title office. With a four-week plan and a ten-question quiz.",
     seoDescription:
-      "What workflow automation removes from a real estate business, how to find your list in an hour, and the quiet failure platforms document but nobody mentions.",
+      "Workflow automation for small business: follow up every quote, find the jobs worth wiring first and catch the chains that fail quietly. Real estate and title offices too.",
     // Was /images/team-bg.jpg, which does not exist and never has: the raw asset 404s and the
     // optimizer therefore 400s, so this post's card on /blog and its own hero were both broken.
     // Accounting Finance (CC0, already in public/images/ATTRIBUTIONS.md) is the paperwork this
@@ -627,8 +656,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-chat-assistant-real-estate-website",
     cluster: "answering",
-    title: "Your website answered that buyer at 11:40pm. Did you?",
-    seoTitle: "AI Chat Assistant for a Real Estate Website: How to Test One",
+    title: "AI chatbot for small business websites: the question that arrives at 11:40pm",
+    seoTitle: "AI Chatbot for Small Business Websites: How to Test One",
     date: "2026-07-12",
     /** 08-02: the largest revision this post has had. It had been resting on an unsourced "78%"
      * and carried one citation, which the voice post also used, so it effectively had no source
@@ -644,11 +673,21 @@ export const POSTS: BlogPost[] = ([
      * pair of claims was swept off /services/ai-chat-assistant. `updated` moves to 08-27 because
      * the served text changed, and the change is recorded here rather than dressed up as more
      * than it was. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-09-18",
+    /** ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-14): the title
+     * is the owners' phrase "ai chatbot for small business"; the story a furnace at twenty to
+     * midnight in Fishkill, the teardown the same conversation; the examples a heating company,
+     * a salon, a piano tuner, and a real estate office as one of them (the live listings, the
+     * contingent-offer film); the calculator stops at conversations a year (a commission figure
+     * is on the brand's never list); the unsourced ten million visitor line of the California
+     * law and the WCAG quotation are out until read in the orchestrator's browser; new: who it
+     * fits, is it worth automating, what to do first, a Canadian tribunal's 2024 decision on who
+     * owns a chatbot's answer, the Census Bureau's AI-use survey, a quiz. The closing is the free
+     * website door (CTA-2 version D). Slug kept. See docs/blog-r29/NOTES-chat.md. */
+    updated: "2026-11-14",
     excerpt:
-      "Someone read your listing at twenty to midnight with one question, and you answered at nine the next morning. What an AI chat assistant really does in that gap. Why the number this whole category is sold on cannot be sourced. And what to ask before you buy one.",
+      "A homeowner asked a heating company's website one question at twenty to midnight, and the answer came at nine. What an AI chatbot for a small business, or a real estate website, really does in that gap. Why the number this category is sold on cannot be sourced. Who owns what it says, whether it is worth it for your kind of business, and what to do first.",
     seoDescription:
-      "What an AI chat assistant does when a buyer messages your site at 11:40pm, why the 78% everyone quotes has no study behind it, and how to test one first.",
+      "An AI chatbot for a small business or real estate website: what it answers at 11:40pm, what it hands to a person, how to test one, and whether it is worth it.",
     cover: "/images/lifestyle/buying.jpg",
     body: [],
     placeholder: false,
