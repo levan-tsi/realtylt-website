@@ -432,18 +432,25 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "local-seo-real-estate-map-pack-google-business-profile",
     cluster: "visibility",
-    title: "Three businesses show up. Yours is not one of them.",
-    seoTitle: "Local SEO for Real Estate: Map Pack and Business Profile",
+    title: "How to rank in Google Maps: fix the profile, ask for reviews, accept the distance",
+    seoTitle: "How to Rank in Google Maps: Business Profile and Reviews",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
+    updated: "2026-11-14",
+    /** ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-11): the title is
+     * the owners' phrase "how to rank in google maps"; the story a plumber and a basement; the
+     * examples a plumber, a roofer, an HVAC contractor, a dental, accounting or insurance office, a salon,
+     * spa or gym and a real estate office as one of them; Google's help pages re-read 2026-11-14 and the
+     * 2026 expert survey added; the shape added (is it worth doing, who it fits, what to do first, the
+     * quiz); the closing line goes to the quiz. Slug kept. See docs/blog-r29/NOTES-local-seo.md.
+     *
+     * `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
      * pass restored the exception Google's own service-area guideline carries in its very next
      * sentence; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays red, no
      * film, so the slug ships at 18/19. */
     excerpt:
-      "Someone nearby searched for an agent this week and picked from three names on a phone. Google publishes what decides that list. One of the three inputs is a fact about you that nothing can change. And the rules for whether you may even have a profile name this industry by name.",
+      "How to rank in Google Maps for a local business: what Google publishes about relevance, distance and prominence, what 47 local search experts rank first, the profile rules that get a listing suspended, and a ten-minute check you can run tonight.",
     seoDescription:
-      "What Google publishes about local ranking, the profile rules that name real estate agents specifically, and what an experiment found about paid search traffic.",
+      "How to rank in Google Maps: what Google publishes, what local experts rank first, the profile rules and the reviews, for plumbers, salons, dental offices and more.",
     cover: "/images/hero/hudson-olana.jpg",
     body: [],
     placeholder: false,
@@ -547,8 +554,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "database-reactivation-old-real-estate-leads",
     cluster: "records",
-    title: "They said not right now. That was three years ago.",
-    seoTitle: "Database Reactivation: Old Real Estate Leads and the Rules",
+    title: "How to follow up with old leads and win back past customers",
+    seoTitle: "How to Follow Up With Old Leads: Win Back Past Customers",
     /** Researched and drafted 07-30, finished and shipped 07-31. Both dates are real: this
      * session began on the 30th and the piece was rewritten and verified on the 31st. */
     date: "2026-07-30",
@@ -562,11 +569,20 @@ export const POSTS: BlogPost[] = ([
      * regulation actually attaches (the scene file had it right, the prose had dropped it); and
      * "three hundred conversations to find four people", a conversion rate this same post calls
      * made up two screens later. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-09-18",
+    updated: "2026-11-14",
+    /** ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-11): the title is
+     * the owners' phrase "how to follow up with old leads" (the keyword map's AC 2); the story a heating
+     * company and a furnace tune-up; the examples a heating company, a gym's tour-no-buy list, an accounting
+     * office, a salon and a real estate office as one of them; the federal rules re-read 2026-11-14 and
+     * quoted from the regulation and the statute (no dollar figure in digits, no vendor named, the
+     * texting-vendor threshold and the FTC ceiling removed); the shape added (is it worth automating, who
+     * it fits, what to do first, the quiz). The reason the SEO agent blocked the 2026-11-05 draft (F5, a
+     * dollar figure on a public piece, and 35 second-reader notes) is in docs/blog-r29/NOTES-reactivation.md.
+     * Slug kept. */
     excerpt:
-      "Your CRM is full of people who told you not right now, and nobody has asked them since. Here is what an AI reactivation campaign really does with that list. The consent rules with dates in them that nobody selling you one mentions. And what it costs when it goes wrong.",
+      "How to follow up with old leads and past customers: what database reactivation is, the three federal rule checks to run on your own records before a message goes out, an invented worked example by channel, and whether it is worth doing at all.",
     seoDescription:
-      "What AI database reactivation does with old real estate leads, the federal consent and do-not-call rules with dates in them, and what getting it wrong costs.",
+      "How to follow up with old leads and win back past customers: the three federal rule checks, a worked example by channel, when it is worth it and what to do first.",
     cover: "/images/hero/valley-aerial.jpg",
     body: [],
     placeholder: false,

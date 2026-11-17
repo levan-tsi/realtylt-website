@@ -2909,125 +2909,171 @@ Then take the two pages you already have that you are least sure about. Delete e
 
 [[scene:funnel]]`;
 
-export const LOCAL_SEO_POST = `On a Tuesday in February a woman sat in her car outside a school with eleven minutes to fill. Her sister had sold a house badly the year before. That morning, in the way people really decide things, she had decided she was going to get this right. She typed four words into her phone.
+export const LOCAL_SEO_POST = `We help local business owners work out how to rank in Google Maps: the profile to fix and keep current, the reviews to ask for every time, and a person approving everything that is published in the business's name. Below is how to rank in Google Maps using what Google itself publishes, what a panel of local search experts says matters most, a check you can run tonight, whether the work is worth doing yourself or having done, and what to do first this week.
 
-Three businesses came back, with a small map above them and a row of stars under each name. She read them for about as long as it takes to read three names. She tapped the second one, and left a voicemail.
+This page is for owners of a business that people search for nearby: a plumber, a roofer or an HVAC contractor, a dental, accounting or insurance office, a salon, a spa or a gym, a real estate office.
 
-You were not on that screen. You have never known this happened, and there is nowhere you could go to find out. It is not a lost lead, because it never became a lead. Nothing arrived in the CRM because nothing was sent. The most ordinary way a stranger picks an agent produced no record of you at all.
+An invented example shows what is at stake. On a Tuesday in February a man in Fishkill stands in his basement with water around the heater. He types "plumber near me" into his phone. Three businesses come back under a small map, each with a row of stars. He reads three names, taps the second and calls.
 
-The part worth knowing is that the order she saw was neither an accident nor a secret. Google publishes what decides it. Almost nobody in this industry has read that paragraph. And one of the three things it names is a fact about you that no amount of money or effort will change.
+A plumber two miles away has done good work for years and is not one of the three. He will never know that this call happened. There is no lost lead in his records, because the lead never reached him. This page is about how that list of three gets made.
 
 [[scene:in-short]]
 
-## The search that already happened, and why you cannot see it
+## How do you rank in Google Maps?
 
-Every other way a client finds you leaves a trace. A referral comes with a name attached. A portal inquiry arrives with a timestamp. Even the person who does nothing at all with your open house has stood in a room you were in.
+Google ranks local results mainly on three things, relevance, distance and prominence, and it says there is no way to request or pay for a better position. Two of the three are work you can do. The third, distance, is a fact about where you and the searcher are standing.
 
-Local search leaves nothing. A person types a phrase into a phone. Three businesses appear. They choose one, and the two they did not choose are never told. There is no impression count on a search you lost. No notification. No weekly digest of the times your name was not in the list. This is the only meaningful channel in the business where the failures are completely silent. And silence is why it is so easy to believe nothing is happening.
+Google's page on [improving your local ranking](https://support.google.com/business/answer/7091) is short, public and free, and it says exactly that. It opens with a list of what to do: verify your business, keep your information up to date, respond to reviews and add photos. Then it states the limit: "There's no way to request or pay for a better local ranking on Google." It adds that Google keeps "the search algorithm details confidential to make the ranking system as fair as possible for everyone". An offer to place you is an offer of something Google says does not exist.
 
-Something is happening. What you can see of it is one screen. It is the Business Profile's own performance report. It tells you how many people rang from the listing, how many asked for directions, and how many tapped through to the website. It also tells you which searches surfaced you. It is not the whole picture and it is not a ranking report. It is the only truly first-party number in this entire subject. It is free. And in most small businesses nobody has opened it in a year.
+Then comes the sentence the whole industry is built on. "Local results are mainly based on relevance, distance, and popularity." Under it, the three subheadings read Relevance, Distance and Prominence, and the page does not define either word with a number.
 
-It is worth separating two things that get called the same name. There is the map pack, which is the short list of businesses with the map above it. And there is the ordinary run of blue links under that. They are ranked by different machinery, and they are won in different ways. This article is about the first one. It sits above everything else, and the person in the car never scrolled far enough to reach the second.
+- Relevance is "how well a Business Profile matches what someone is searching for." To improve it, Google says to provide complete and detailed business info.
+- Distance "refers to how far each business is from the customer who's searching." When the customer has not said where they are, Google uses what it knows about their location.
+- Prominence means how well known a business is. The page says it is based on information "like how many websites link to your business and how many reviews you have", and that more reviews and positive ratings can help your local ranking.
 
-## What Google actually publishes about this
-
-Most of what is written about local rankings is someone's inference from watching results move. The document under it is short, public and free. It is worth reading rather than reading about.
-
-Google's [page on improving your local ranking](https://support.google.com/business/answer/7091) opens the section on ranking with a warning rather than a technique. There is no way to request or pay for a better local ranking on Google, it says. And it says the algorithm details are kept confidential to make the ranking system as fair as possible for everyone. Anyone offering to place you is either selling something that does not exist, or selling something Google would suspend you for.
-
-Then comes the sentence the whole industry is built on top of. Local results, the page says, are mainly based on relevance, distance and popularity. Under that, the three subheadings read Relevance, Distance and Prominence. The third one has quietly changed names between the summary and the detail. That is a small thing. But it is the kind of small thing worth noticing on a page this heavily quoted. The word people repeat is prominence. The word in the sentence is popularity. And neither one is defined anywhere with a number.
-
-Relevance is described as how well a Business Profile matches what someone is searching for. The advice for improving it is to provide complete and detailed business information. Distance is how far each business is from the customer who is searching. When the customer has not said where they are, Google uses what it already knows about their location. Prominence is how well known a business is. The page says it is based on information like how many websites link to your business and how many reviews you have.
-
-That is the whole published model. Three inputs, no weights, no thresholds. And one sentence saying the details are deliberately withheld.
+That is the whole published model: three inputs, no weights, no thresholds. The one practical advice sentence under it is the least exciting one: businesses with complete and accurate information are more likely to show up in local search results.
 
 [[scene:ranking-factors]]
 
-## The input you cannot do anything about
+The one thing to apply: open your own profile tonight and read it against those four verbs, verify, update, respond and add photos. Whichever one you have not done is your first job.
 
-Distance is the one that changes how you should think about all of this. It is also the one nobody selling local search wants to dwell on.
+## What do local search experts say matters most?
 
-Your presence on the map has a shape. It is roughly centred on the address you verified. It fades as you move away from it. And it is competing against a different set of businesses in every direction. The person in the car was ranked against whoever was near that school. Fifteen minutes north, the same search produces a different three. One of them may well be someone you have beaten on service every time you have met them.
+Google publishes the three inputs and no weights, so a panel of practitioners has filled the gap with a survey. Whitespark's Local Search Ranking Factors report, published on November 6, 2025, asked 47 local search experts to score 187 factors, each from 0 to 5, for their effect on the map results. Its own caveat is on the page: none of the experts has special access to the internal workings of Google's local search algorithm. So read it as informed opinion, not as Google's rules.
 
-Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) put a number on the outer edge of this. It is the only number in the whole subject that is stated plainly. The boundaries of a profile's overall service area, the guidelines say, should not extend farther than about two hours of driving time from where the business is based. That is generous. The very next sentence softens it further, by allowing that larger areas may be appropriate for some businesses. So it is a boundary rather than a wall. What it is not is a marketing decision. A service area is a description of where you are.
+Because 47 experts each score from 0 to 5, 235 is the most any factor could score (47 x 5 = 235). The top of the 2026 list, according to the report, is below.
 
-So there is a limit built into this work, and it is honest to say it early. Local search will help you win the ground around you. It will not put you on the map in a town twenty-five minutes away where someone else's office actually sits. The thing being ranked is a business with an address, and the address is one of the three inputs. That is a real gap. The answer to it is a different surface entirely, which is an indexable page for each area you truly serve. That has its own rules, its own risks and its own article.
+[[scene:expert-factors]]
+
+Three things stand out for an owner.
+
+First, the list agrees with Google's page where it can. Distance is second on the list, with a score of 225. The main category you pick on your profile is first, with 227. A high Google rating, a count of Google reviews that carry text and the recency of reviews all sit in the top fifteen, according to the report, which fits Google's own words about reviews under prominence.
+
+Second, the experts rank the business name and the address high, and Google's rules limit both. The words in your profile's business name rank third in the report. Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) say the name should be your real-world name as used on your storefront, website and stationery, and that "including unnecessary information in your business name isn't permitted, and could result in the suspension of your Business Profile". Whether your address shows on the profile ranks seventh in the report, yet Google tells a service-area business to hide it: "if you're a plumber and run your business from your residential address, clear the address from your Business Profile." Follow Google's rule. A suspended profile ranks nowhere.
+
+Third, a citation is not on the short list. Consistency of your details across the major map services sits at 124 in the same report, well below the factors above it. Keeping your phone number right everywhere is still worth doing, because a wrong number is wrong for the person who rings it. It is not where the first week should go.
+
+The one thing to apply: check the main category on your profile today, because the report puts it first and Google's guidelines tell you to choose the fewest categories that describe your core business.
+
+## Which parts of the ranking can you not change?
+
+Distance is the one input that no work will move, and it changes how to think about all of this.
+
+Your presence on the map has a shape. It is roughly centred on the address you verified and fades as you move away from it, and it competes against a different set of businesses in every direction. The man in the basement was ranked against whoever was near him. Twenty minutes north, the same search can produce a different three, and one of them may be a contractor you have beaten on service every time you have met.
+
+Google's guidelines put a number on the outer edge. A service-area business's overall service area "shouldn't extend farther than about 2 hours of driving time from where your business is based", and the next sentence adds that for some businesses larger service areas may be appropriate. That is a boundary on what you can claim, not a plan. In an invented example, an HVAC contractor in Newburgh whose trucks cover Orange and Dutchess counties can describe that service area honestly. Describing it does not by itself put the profile at the top in a town where another contractor's office actually sits.
+
+So there is a limit built into this work, and it is honest to say it early. Local search work is aimed at the ground around your address, and distance counts against you in a town where someone else is based. An answer to that is a different surface, an ordinary page on your own website for each area you really serve, which has its own rules and its own risks.
 
 [[scene:plate]]
 
-## Why the top of a very short list is worth more than it should be
+## Why does the top of a short list matter so much?
 
-There is an assumption under everything written about ranking. It is that being first is worth more than being third. The sensible reason given is that people compare the options, and the first one is usually the best. It is worth knowing that someone tested that. And that it is only partly true.
+Being first on a list of three is worth more than the order alone deserves, and a Cornell experiment measured part of why.
 
-A group at Cornell put 22 people in front of Google with an eye tracker running. They also put a proxy between them and the search engine that could quietly rewrite the results page. Sixteen of them produced usable data. Some got Google's ordering untouched. Some got the top two results swapped. And some got the whole page reversed. Nobody was told. The paper records that when asked afterwards, none of the subjects had suspected any manipulation. A separate panel of judges then rated the results by how promising each one looked, without knowing what anyone had clicked.
+According to the paper, a group at Cornell put 22 people in front of Google with an eye tracker running, behind a proxy that could quietly rewrite the results page. Sixteen produced usable data. Some saw Google's ordering untouched. Some saw the top two results swapped, and some saw the page reversed. None of the subjects, asked afterwards, had suspected any manipulation. The paper, published in 2005, reports counts, because the counts are small.
 
-The [paper](https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf), published in 2005, reports the result as counts, because the counts are small. They are worth reading in that form. Take the readers who clicked exactly one of the top two links. Say the judges had rated the first one better. The click went to the top link nineteen times out of twenty, which is what you would hope. Now say the judges had rated the second one better. The click still went to the top link five times out of seven. And take the group where the pair had been secretly swapped, so the link on top was there for no reason at all. The click still went to the top link ten times out of seventeen.
+According to the paper's table, among readers who clicked exactly one of the top two links, 19 of 20 chose the top link when judges had rated it better. When judges had rated the second link better, 5 of 7 still clicked the top link. In the group where the top two had been secretly swapped, 10 of 17 clicked the top link even though the judges preferred the one below it. The authors conclude that users have substantial trust in the search engine's ability to estimate the relevance of a page.
 
-The authors call this a trust bias. Their conclusion is a single sentence: users have substantial trust in the search engine's ability to estimate the relevance of a page, which influences their clicking behaviour. Read that beside a list of three businesses on a phone. Some share of the first business's calls are arriving because it is first. That share is not earned in any sense a person would recognise as merit. It is an inheritance.
+Put that beside three businesses on a phone. If readers of a short list trust its order the same way, the first business is read first partly because it is first, and that is why the order of a short list is worth reading closely.
+
+Two limits. It was 16 usable subjects in a laboratory in 2005, on a page of ordinary web results, so these percentages are not a benchmark for a map result. This source is kept for the argument, because it is the experiment on how readers treat the order of a list that we could read in full.
 
 [[scene:trust-bias]]
 
-## What prominence is made of, and what it is not
+## How do reviews affect your ranking in Google Maps?
 
-Here the industry consensus and the document disagree with each other. There is no polite way to put it. And this website was on the wrong side of the disagreement until this article was written.
+Reviews are one of the two inputs Google names under prominence, and they are the one you control by asking.
 
-Ask anyone what moves the map pack and you will get three things. A complete profile. Consistent name, address and phone details everywhere you appear online. And recent reviews. The middle item is the one that funds an entire category of software. It is not in Google's document. What the document names under prominence is how many websites link to your business and how many reviews you have.
+Google's page says more reviews and positive ratings can help your local ranking. Its [page on getting more reviews](https://support.google.com/business/answer/3474122) says you can ask customers to visit a Google link or scan a QR code, and that you should reply to reviews. It also states a mixed record is not a weakness: a mix of positive and negative feedback often feels more trustworthy, according to the same page.
 
-That does not make directory tidying worthless. A phone number that is wrong in four places is wrong for the people who ring it, which is reason enough. And links and directory entries are not always separable. It does mean something else. A plan built mostly on submitting your details to ninety directories is a plan built on something the ranking document does not mention. Meanwhile the two things it does mention are the two that are hardest to buy. Someone else choosing to link to you. And clients choosing to write about you.
+The rule on how to ask matters as much as the asking. Offering incentives such as free or discounted goods or services in exchange for a review is, in Google's words, "strictly prohibited". Google's [contribution policy](https://support.google.com/contributionpolicy/answer/7400114) also lists, among what a business may not do, "selectively solicit positive reviews from customers", which means sending the link only to the customers you expect to be happy. The same link goes to everyone.
 
-That is an uncomfortable answer for a service page, and it is the true one. The prominence half of local search is mostly a consequence of being truly present somewhere. The work that produces it looks like sponsoring the thing your town does in September. Being the person a local reporter calls. And asking every single client for a review rather than the pleased ones. Software can keep all of that current. It cannot manufacture any of it.
+Reviews also work on the person reading them, not only on the algorithm. According to BrightLocal's Local Consumer Review Survey 2026, a panel of 1,002 US adults, 97% of consumers read reviews for local businesses, 74% only care about reviews written in the last three months, and 42% are unlikely to use a business that ignores its reviews entirely. BrightLocal sells review software and the panel reports what it says it does, so read these as direction, not as a measurement of what Google counts.
 
-## The profile rules that decide whether you can have one at all
+The ask is covered in full in [our page on getting more Google reviews](/blog/automated-google-review-requests-real-estate), including where the line between asking and gating falls.
 
-Before ranking is worth thinking about, there is a shorter question that most agents have never checked. It is whether the profile they have is one they are allowed to have.
+The one thing to apply: ask the next ten customers, every one of them, on the day the job ends, with the same link.
 
-The same guidelines document names this business explicitly. Doctors, dentists, lawyers, financial planners and insurance or real estate agents are all listed together as individual practitioners. That is the category that gets a profile of its own. In the next breath the guidelines say something else. Sales associates or lead generation agents for corporations are not individual practitioners, and are not eligible for a Business Profile at all. Where you sit between those two sentences is a question about how you actually work, rather than about what your card says.
+## What does Google allow in your profile?
 
-The rest of the rules are the sort that get broken by someone being clever. A practitioner is told not to hold several profiles to cover different specialisations. Say several public-facing practitioners share a location. Then the organisation gets its own profile. And the practitioner's profile should be titled with only the practitioner's name, not the brokerage's. A solo practitioner at a branded location is told it is best to share the organisation's profile rather than start a competing one. And an address has to be an address. A rented mailing address you do not operate from is a virtual office, and is not eligible. A desk in a co-working space needs signage, staff during business hours, and the ability to receive customers.
+Before ranking is worth thinking about, there is a shorter question most owners have never checked: whether the profile you have is one you are allowed to have.
 
-None of this is exotic, and all of it is enforced by suspension rather than by a warning letter. A profile that disappears takes its reviews and its position with it. And the appeal is a form.
+Google's guidelines are specific, and a profile that breaks them can be suspended. These four decide the most for a local business.
 
 [[scene:profile-rules]]
 
-## What local SEO actually does, week to week
+A salon, a gym or an office with a front door and a sign needs a real address that people can visit. A plumber or roofer who travels to customers gets one service-area profile, with the address hidden if it is a home. A real estate office is one example among several: the guidelines list real estate agents with doctors and lawyers as individual practitioners, which has its own rules about who may hold a profile. If you work that way, read that section of the guidelines before you create anything.
 
-Under the category name it is four unglamorous jobs. The AI part is not the clever part. It is the part that does not get bored.
+The one thing to apply: read your profile name out loud and compare it with your van, your sign and your invoices. If it holds a tagline, a phone number or a list of services that your sign does not hold, it is the first thing to fix.
 
-The first job is finishing the profile, which almost nobody has. Categories. Every service written out. The service area drawn honestly. The hours, including the strange ones. The address, the attributes, real photographs of a real place. For the relevance half, Google's own advice is simply to provide complete and detailed information. That is an unsatisfying instruction precisely because there is no trick in it.
+## What does a local profile need week to week?
 
-The second is keeping it true, which is where this decays. Businesses change quietly. A number moves. A service stops. An office is left. A holiday changes the hours. None of those events tell the profile about themselves. A profile is at its most accurate on the day someone fills it in, and gets worse every day after that.
+Under the category name it is four unglamorous jobs. The software part is not the clever part. It is the part that does not get bored.
 
-The third is feeding the two inputs the document actually names. That means a steady flow of reviews, and the slow build up of other people's pages mentioning yours. The fourth is reading the report. How many calls, how many direction requests, which searches, this month against last. That last one is the difference between a service you can judge and a service you have to trust.
+The first job is finishing the profile. The main category, the services written out, the service area drawn honestly, the hours, including the odd ones, and real photographs of real work. For relevance, Google's own advice is simply to provide complete and detailed information, which is an unsatisfying instruction precisely because there is no trick in it.
+
+The second is keeping it true, which is where it decays. Businesses change quietly: a number moves, a service stops, a holiday changes the hours. None of those events tell the profile about themselves. Google's guidelines allow special hours for particular days, like holidays. The experts in the Whitespark survey also rank "open at time of search" fifth, so a profile that shows you closed when you are working loses searches it should have won.
+
+The third is feeding the two inputs the document names: a steady flow of reviews, and other websites mentioning yours.
+
+The fourth is reading the report. How many calls, how many direction requests, which searches surfaced you, this month against last. That one is the difference between a service you can judge and a service you have to trust.
 
 [[scene:the-work]]
+
+## What is your Google profile already producing?
+
+You can put a number on the listing you already have before anybody optimises anything. Take the calls from your profile in a month, as shown on the profile's own performance screen, and follow them down.
+
+An invented example for a plumber in the Hudson Valley: the performance screen shows 9 calls a month. Over a year that is 9 x 12 = 108 calls. Half were somebody the plumber could help: 108 x 0.5 = 54 conversations. One in five of those became a job: 54 x 0.2 = about 11 jobs a year. The plumber multiplies that by an average job value, which is the plumber's own number.
+
+An invented example for a salon: 20 calls and booking taps a month is 240 a year. If two thirds are new clients who could be booked, that is 160. If one in four books, that is 40 new clients a year, and the salon's average first visit and return rate are the salon's own numbers.
+
+The calculator below runs the same ladder with your numbers. It has no row for what a better position would add, and that absence is the honest part: Google publishes no weights, so multiplying your calls by a ranking improvement would be arithmetic with a made-up number in the middle.
 
 [[scene:local-calculator]]
 
 [[scene:pull-quote]]
 
-## What renting the same attention costs
+## What do ads add compared with ranking in Google Maps?
 
-The obvious alternative to all of this is to buy the position. The honest comparison is not that ads are bad. It is that almost nobody has measured what their ads are adding. And the one organisation that ran the experiment properly got an answer that surprised everyone.
+Paid ads are the obvious alternative to ranking in Google Maps, and the honest comparison is not that ads are bad. It is that only a test shows what the ads add. One organisation ran the experiment properly and got an answer that surprised everyone.
 
-In March 2012 eBay stopped bidding on search queries containing its own name on two search engines. It kept buying exactly the same terms on a third. That third one is the control, which is the whole point. Without it you are comparing this month against last month, and calling seasonality a result. Three economists then wrote up what happened in a [working paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf) that was later published in Econometrica.
+In March 2012 eBay stopped bidding on search queries containing its own name on two search engines. It kept buying exactly the same terms on a third, and that third is the control, which is the whole point. Three economists, two of them employed by eBay's research lab when the work was done, wrote it up in a [National Bureau of Economic Research working paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf) in May 2014.
 
-The naive comparison, before and after, said click volume was 5.6% lower once the ads stopped. Measured against the platform where the ads kept running, only 0.529% of the click traffic was lost. So 99.5% of it was retained. The people were still coming. They were simply arriving through the unpaid result sitting directly under the advert, instead of through the advert.
+The naive comparison, before and after, said click volume was 5.6 percent lower once the ads stopped. Measured against the platform where the ads kept running, only 0.529 percent of the click traffic was lost, so 99.5 percent was retained. The people were still coming, through the unpaid result under the advert instead of the advert. The paper then reports a return on investment of over 1,400 percent from ordinary methods with controls, and negative 63 percent from the experiment.
 
-The paper then does the same thing to the return on investment, and this is the number worth carrying out of it. Using ordinary regression on the observational data, the return came out at over 4,100% without controls. With time and geographic controls, it came out at over 1,400%. Using the experiment, it came out at negative 63%. The confidence interval rejects the possibility of the channel yielding positive returns at all.
-
-Be careful with this. It is eBay, a name tens of millions of people type deliberately, and the queries were ones containing that name. Nobody is typing your name, which is exactly why the brand-keyword half does not transfer. What does transfer is the shape of the mistake. The traffic that substitutes most cleanly for paid clicks is the traffic that was coming anyway. And no amount of dashboard staring will reveal that. The dashboard is built from the observational data that produced the 4,100%.
+Be careful with this. It is eBay, a name tens of millions of people type, and the ads were on queries containing that name. A person who types your company's name already knows you, which is exactly why the brand-keyword half does not transfer. What transfers is the shape of the mistake: the traffic that substitutes most cleanly for paid clicks is the traffic that was coming anyway, and a dashboard cannot show you that. This source is from 2014 and is kept for the argument.
 
 [[scene:paid-search]]
 
-## What it costs, and how long it takes
+## Is it worth ranking in Google Maps yourself, or having it done?
 
-The first month is mostly repair, and repair is priced by how wrong things currently are. Take a single profile that is two thirds filled in, one address, one set of hours and a handful of reviews. That is a short piece of work. Now take three agents, an office profile and two practitioner profiles that disagree with each other. Add a phone number that changed in 2023, and a service area drawn around a wish. That is a longer one. Most of the time in it goes on finding out what is true, rather than on typing it in.
+For one location, doing the first pass on your Google profile yourself is worth it, and having it kept current is worth it where the profile would otherwise be forgotten. These are the same tests we use in an assessment, applied to this job.
 
-After that the cost is a monthly rhythm rather than a project. Two things drive it. How many surfaces have to stay current. And how much of the review asking you want handled rather than remembered. There is no software licence here that dwarfs the rest. The recurring number tracks attention.
+First, does the job happen often enough that a failure is noticed within a week? A profile does not fail loudly. Hours go stale and a review sits unanswered with no warning, so the answer is no, which is the argument for putting it on a calendar or a system rather than on memory.
 
-The honest answer on time is that the two halves move at different speeds. Fixing a profile changes what people see immediately, because the profile is a record rather than a ranking. An accurate record with real photographs and current hours converts better on the day it goes up. Position is slower. It is not promised by anybody, including us, for the reason printed at the top of Google's own page.
+Second, can the rule be written down for a new hire? Yes: this category, these services, these hours, one link to every customer, a reply within two days. A job with a writable rule is one a system can keep.
 
-There is one cost that never appears on a quote, and it is the one that decides the outcome. Reviews arrive because someone asks, every time, including on the deals that went sideways. If nobody in the business is willing to do that, the plan is missing one of the two inputs Google actually names. And no amount of profile maintenance replaces it.
+Third, where does a wrong answer land? In public, on a page strangers read before they call you. A wrong hour or a reply with the wrong tone is seen by a customer first. That is why a person approves every change and every reply before it is published, however it was drafted.
+
+Then the stop question: what breaks if we stop doing this? Nothing breaks on day one. The profile slowly drifts out of date, and the searches you never see are lost quietly.
+
+And a tool you already have: Google's own profile editor is free, and Google says you can add or claim a business at no charge. For one location with a handful of services, an evening for the first pass of a profile that is mostly right, longer for one that is badly wrong, and a monthly look at the report is the starting job, and paying for anything else is not worth it yet.
+
+The verdict, in plain words. Leave the ranking itself alone, because Google says no one can buy it. Do the profile by hand once. Automate the part that decays: the review request on the day the job ends, the monthly report and the reminder to check the hours before a holiday. Anything that goes out in your name, a reply to a review included, a person approves first.
+
+## What does it take, and how long, to rank in Google Maps?
+
+The first month of Google Maps work is mostly repair, and repair takes as long as the profile is wrong. In an invented example, one profile two thirds filled in is a short job, while three profiles that disagree with each other, a phone number that changed and a service area drawn around a wish are a longer one, and most of the time goes on finding out what is true rather than typing it in.
+
+After that it is a rhythm, not a project: how many places have to stay current, and how much of the review asking you want handled rather than remembered. What it takes from you is access, the facts and the asking. We need manager access to the profile, which stays in the business's name, the real service area, hours and services, photographs of real work, and customers who are asked.
+
+The two halves move at different speeds. Fixing a profile corrects the record people read when they open it, which is different from a ranking. Position has no promised date, and nobody offers one, us included, for the reason printed at the top of Google's own page.
+
+The profile work this page describes is what our [local SEO](/services/local-seo) service covers, with a person approving everything published in the business's name.
+
+One cost never appears on a quote and decides the outcome: reviews arrive because someone asks, every time, including after the jobs that went sideways. If nobody in the business will do that, the plan is missing one of the two inputs Google names.
 
 [[scene:offer]]
 
@@ -3035,73 +3081,126 @@ There is one cost that never appears on a quote, and it is the one that decides 
 
 ## What it does not do, and should not pretend to
 
-It does not buy a position. This is not a disclaimer, it is a quotation. Google's page says in bold that there is no way to request or pay for a better local ranking. Any proposal that includes a promised position is either untrue, or is describing something that will get the profile suspended.
+Work on a Google profile does not buy a position. This is a quotation, not a disclaimer: Google's page says there is no way to request or pay for a better local ranking.
 
-It does not move you closer to anybody. Distance is one of the three published inputs, and it is a physical fact. A business on the eastern edge of a county will lose searches on the western edge. It loses them to someone who is simply standing there. The correct response to that is a different tactic rather than a better profile.
+It does not move you closer to anybody. Distance is one of the three published inputs and a physical fact. A business on the eastern edge of a county loses searches on the western edge to someone who is simply standing there.
 
-It does not survive a business that will not ask for reviews. Reviews are one of two things named in the ranking document. They cannot be bought without breaking policy. And the asking has to be systematic to produce a recent history rather than a cluster from 2023.
+It does not survive a business that will not ask for reviews, and reviews cannot be bought without breaking Google's policy.
 
-It does not fix a business that is hard to reach. A profile is a promise about hours, a phone that gets answered, and an address a person can arrive at. Winning the search and then missing the call is an expensive way to fail. The guidelines are explicit that a practitioner should be contactable at the verified location during the hours stated.
+It does not fix a business that is hard to reach. A profile is a promise about hours, a phone that gets answered and an address a person can arrive at. Winning the search and then missing the call is an expensive way to fail.
 
-And it does not stay done. Everything above decays, quietly, in the direction of being wrong. A profile nobody maintains is a profile slowly becoming a liability rather than an asset.
+It does not write replies for you to send unread. A reply is public and speaks for the business, so a person reads it first.
+
+And it does not stay done. Everything above decays in the direction of being wrong, and a profile nobody maintains slowly becomes a liability.
 
 [[scene:wasted]]
 
-## How to find out where you actually stand, in ten minutes
+## Who does ranking in Google Maps fit, and who does it not?
 
-All of this is checkable tonight, for nothing. And the checking is more useful than any report anyone will sell you.
+Ranking in Google Maps fits a business that customers find by searching nearby and that finishes work for a named person. Examples are a plumber, roofer or HVAC contractor, a dental, accounting or insurance office, a salon, spa or gym, a real estate office. It matters most where people search for the service and not for your name, which is how a new customer who has never heard of you searches.
 
-Open a browser you are not signed into, on a phone that is not yours if you can borrow one. Search the phrase a stranger would use for your service in the town you want to work in. Not your name. Write down the three businesses that come back. Do it again standing somewhere else in your market. Write down the three that come back there. The difference between the two lists is distance doing its work. It is the single most useful thing you will learn all week.
+It fits poorly where the business is an address on a form. Google says a rented mailing address from which you do not operate is a virtual office and is not eligible for a Business Profile, and a desk in a co-working space needs signage, customers received during business hours and staff on site. Nothing on this page repairs that.
 
-Then open your own Business Profile and read the performance screen. Calls, direction requests, website taps, and the searches that surfaced you, this month against a year ago. If you have never seen it, the number will go one of two ways. It will be higher than you expected, which means something is already working. Or it will be close to nothing, which means the listing is not finished.
+It is a poor fit if nobody will answer the phone the profile advertises, or if jobs are so few that a single review each quarter is all there will ever be. In those cases, ask each customer by hand with one written line, answer the reviews already there and decide after a quarter.
 
-Then go through the profile as if you were an inspector rather than the owner. Is the primary category the one a stranger would choose. Are all of your services written out. Are the hours right this week. Is the address one you actually sit in. Is the most recent review from this quarter or from two years ago.
+[[scene:fits]]
 
-Finally, count the reviews and count the closings you had last year. Put the two numbers beside each other. Most agents in this business are asking a small fraction of their clients, usually the ones who were already delighted. The gap between those two numbers is the clearest picture of the prominence half you will ever get.
+## How do you check where you rank in Google Maps in ten minutes?
+
+Where your business ranks in Google Maps is checkable tonight, for nothing, and the checking is more useful than any report anyone will sell you.
+
+Open a browser you are not signed into, on a phone that is not yours if you can borrow one. Search the phrase a stranger would use for your service in the town you want to work in. Not your name. Write down the three businesses that come back. Do it again standing somewhere else in your market and write down the three that come back there. The difference between the two lists is distance doing its work.
+
+Then open your own Business Profile and read the performance screen: calls, direction requests, website taps and the searches that surfaced you, this month against a year ago. If you have never seen it, note the numbers and the date. Whatever they are, they are the baseline to compare against in a month.
+
+Then go through the profile as an inspector, not the owner. Is the main category the one a stranger would choose? Are all your services written out? Are the hours right this week? Is the address one you really operate from, or hidden if you work from home? Is the newest review from this quarter or from two years ago?
+
+Finally count the reviews and count the jobs you finished last year, and put the two numbers side by side. The gap is a rough estimate of how many jobs went without a review, on the assumption that each review came from a different job from last year, and it is where the asking starts.
+
+## What should you do first to rank in Google Maps?
+
+To rank in Google Maps, start with one profile and one week at a time, and end with a decision written down. This is a suggested schedule, not a deadline.
+
+In week one, run the ten-minute check above and fix the three things it finds: the main category, the hours and the name. Write down the event that means a job is finished, because that is the moment you will ask for a review.
+
+In week two, ask every customer for a review with the same link, and reply to the reviews already waiting. A person reads each reply before it is posted.
+
+In weeks three and four, open the performance screen again and compare it with week one. Then decide using the worth-it test above: keep doing it by hand, or put the review request and the monthly report on a system with a person approving what goes out. Write the decision and the date down.
+
+[[scene:roadmap]]
 
 ## Common questions, answered honestly
 
-### What is local SEO for a real estate agent, in plain terms?
+### How do I rank in Google Maps?
 
-It is the work of being the business that comes up when someone nearby searches for what you do. Most of it is not writing. It is a Google Business Profile that is complete, correctly categorised and actually true. It is a steady flow of recent reviews. It is other people's websites mentioning yours. And it is real pages for the places and services you cover. The AI part is maintenance rather than magic. It keeps the profile current. It keeps the review requests going out. And it watches what the profile's own report says. Those are the three things that stop happening the moment a human gets busy.
+Google publishes the inputs, not the recipe: local results are mainly based on relevance, distance and popularity, and Google says no one can request or pay for a better position. In practice that means a complete and accurate profile for relevance, a steady flow of real reviews and other websites linking to you for prominence, and acceptance that distance is fixed.
 
-### How is this different from getting my website to rank?
+### How do I rank higher in Google Maps without spending a fortune on ads?
 
-They are two different competitions, and they are decided by different things. The map pack ranks businesses. The inputs Google publishes for it are relevance, distance and popularity. One of those is where the searcher is standing. The blue links below it rank pages, and distance is not one of the inputs in the same way. In practice, your website can be excellent and you can still be missing from the short list at the top. And your profile can be perfect while your website is invisible for everything except your own name. Most agents need both. Finishing the listing is normally the smaller job of the two.
+Fix the profile, ask for reviews and read the report, which take an evening for a profile that is mostly right (longer for one that is badly wrong), a link and a monthly look, not an advertising budget. Google's page says there is no way to pay for a better local ranking, and the eBay experiment above found that most of the click traffic the ads were credited with arrived without them.
 
-### How do I get into the map pack?
+### How do I get my business on Google Maps?
 
-Nobody can tell you how. Google says out loud that it keeps the details confidential. It also says there is no way to request or pay for a place. What is known is the list of inputs it publishes. Finish the profile so relevance has something to work with. Accept that distance is fixed. And work on the two things named under prominence, which are reviews and other websites linking to yours. Anyone giving you a more specific recipe than that is describing their own inference, and should say so.
+Create or claim a Business Profile and verify it. Google says you can add or claim your business at no charge, and that once it is verified customers can find you on Search and Maps. Check first that your business is eligible: Google's guidelines rule out a virtual office and a bare mailing address.
 
-### How long does it take?
+### Why am I not higher on Google Maps with lots of five-star reviews?
 
-The accuracy half changes the day you do it. A finished profile with the right categories, real photographs and current hours is immediately more convincing to the person reading it, whatever it does to position. The position half is slow, and is not guaranteed by anybody. The honest framing is that you are not buying a date. You are removing the reasons you are currently not eligible for a place. Then you carry on being the sort of business that gathers reviews and mentions.
+Because reviews are only part of one of the three inputs. A searcher who is closer to another business is more likely to see that business first, and a profile with the wrong main category or missing details is less relevant to the search however good its reviews are. Check the category, the services and the hours first, then the recency of the reviews.
+
+### What does it mean to optimize your Google profile?
+
+Optimizing your Google profile is the work of making the profile complete, correct and current so Google can match it to what people search for: the main category, the other categories if they are accurate, the service area or address, the hours, the services, the photographs and the replies to reviews. Google's guidelines say to choose the fewest categories that describe your core business, and not to use categories solely as keywords.
+
+### Can a plumber who works from home show a home address?
+
+Google says to hide it. A service-area business should hide its address from customers, and Google's example is a plumber who runs the business from a residential address. The experts in the Whitespark survey rank a showing address highly, but a profile that breaks Google's rules can be suspended, which is worse.
+
+### Is local SEO worth it for a small business?
+
+For a business that customers find by searching nearby, the first pass is worth doing: it takes an evening for a profile that is mostly right, longer for one that is badly wrong, and costs no money. Whether to keep paying someone to maintain it depends on whether you will otherwise let it decay. The test above gives the answer for your own business.
+
+### How long does it take to rank in Google Maps?
+
+A fixed profile is a corrected record, which is not the same as a changed position. Position has no date attached, and nobody can promise one, because Google says it keeps the algorithm confidential. What you can do is remove the reasons you are not eligible for a place, and keep gathering real reviews.
 
 ### Can I rank in a town my office is not in?
 
-In the map pack, not really. The reason is the distance input rather than any failing on your part. The other route is a normal web page, on your own site, covering what you have truly done in that town. A page is judged by what is written on it. That is a separate piece of work carrying a separate risk. A set of thin pages with the town name swapped is something Google's spam policy names specifically. Our article on area pages covers it properly instead of glossing it here.
+In the map results, distance works against you, because it is one of the three published inputs. The other route is an ordinary page on your own website covering work you have really done in that town. A set of thin pages with the town name swapped is something Google's spam policy names.
 
 ### Do citations and directory listings still matter?
 
-They matter for being correct, and they are not what Google's ranking page names. That page lists links from other websites and reviews under prominence. It does not mention directory consistency at all. Keeping your details right everywhere is still worth doing. A wrong phone number is a wrong phone number, and some of those entries are links. What is not defensible is a plan whose main activity is submitting your details to a long list of directories, while the two published inputs go untouched.
-
-### Is this better than running Google ads?
-
-They do different jobs, and the honest comparison needs a measurement most people have never made. Ads deliver traffic the day you turn them on, and nothing the day you turn them off. A ranking arrives slowly and keeps working. What the eBay experiment shows is not that ads do not work. It is that the returns most businesses believe they are getting come from observational data that overstates them by an enormous factor. And the only way to find out what yours are worth is to turn them off in one place and leave them on in another.
+Citations and directory listings matter for being correct, and they are not what Google's ranking page names. That page lists links from other websites and reviews under prominence and does not mention directory consistency. In the Whitespark survey, citation consistency ranks well below the category, distance and reviews.
 
 ### Can anybody guarantee me a position?
 
-No, and the sentence to quote back is Google's own. There is no way to request or pay for a better local ranking on Google. What can be guaranteed is the work. A finished profile. A review request that actually goes out every time. The mentions that come from being present somewhere. And a report you can read every month. Position is the outcome of those. It is not a product anyone can sell you.
+No, and the sentence to quote back is Google's own: there is no way to request or pay for a better local ranking. What you can do yourself is the work: a finished profile, a review request sent after each job and a monthly look at the report.
 
-## What to do about it
+[[scene:quiz]]
 
-Go and be the woman in the car for ten minutes.
+## What should you do about your Google Maps ranking?
 
-Borrow a phone. Stand somewhere in your market that is not your office, and run the search a stranger would run. Look at the three names that come back, and at how little information she had to choose between them. Then open your own profile beside it. See whether the thing she would have read is finished, current and honest.
+The check needs nobody, us included. It is your own profile and a borrowed phone, run the way the man in the basement ran his search: the three names that come back, how little he had to choose between them, and whether the profile beside them is finished, current and honest.
 
-If your name is in the three, the work is to stay there, which is duller and more important than getting there. If it is not, you now know something you did not know this morning. It is not that you are worse than the second business she called. It is that a screen you have never opened is answering a question about you, over and over, to people you will never meet. And nobody has been checking the answer.
+If your name is in the three, the work is to stay there, which is duller and more important than getting there. If it is not, you now know something you did not know this morning: a screen you have never opened is answering a question about you, over and over, to people you will never meet.
 
-[[scene:funnel]]`;
+[[scene:funnel]]
+
+Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+
+## Sources
+
+- Google, Business Profile Help, "Tips to improve your local ranking on Google", [on support.google.com](https://support.google.com/business/answer/7091), a live document. Read November 14, 2026.
+- Google, Business Profile Help, "Guidelines for representing your business on Google", [the guidelines](https://support.google.com/business/answer/3038177), a live document. Read November 14, 2026.
+- Google, Business Profile Help, "Tips to get more reviews", [the page](https://support.google.com/business/answer/3474122), and "Add or claim your Business Profile", [the page](https://support.google.com/business/answer/2911778), live documents. Read November 14, 2026.
+- Google, Maps user contributed content policy, [the policy page](https://support.google.com/contributionpolicy/answer/7400114), a live document. Read November 14, 2026.
+- Darren Shaw, Whitespark, Local Search Ranking Factors 2026, published November 6, 2025, [the report](https://whitespark.ca/local-search-ranking-factors/): a survey of 47 experts scoring 187 factors, opinion and not Google's rules. Read November 14, 2026.
+- BrightLocal, Local Consumer Review Survey 2026, 1,002 US adult consumers, [the survey](https://www.brightlocal.com/research/local-consumer-review-survey/), published by a company that sells review software. Read November 14, 2026.
+- Cornell University, Joachims, Granka, Pan, Hembrooke and Gay, the SIGIR 2005 paper on interpreting clickthrough data as implicit feedback, [the paper](https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf). Read November 14, 2026; kept for the argument, the one experiment in this post on how readers treat the order of a list.
+- Tom Blake, Chris Nosko and Steven Tadelis, Consumer Heterogeneity and Paid Search Effectiveness: A Large Scale Field Experiment, NBER working paper 20171, May 2014, [the paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf). Read November 14, 2026; kept for the argument, the one experiment that measured what paid search adds.
+
+Sources checked November 14, 2026.
+
+Written with an AI assistant and checked by Levan.`;
 
 export const AI_APPOINTMENT_BOOKING_POST = `We help local business owners work out how to reduce no-shows: book an appointment inside the first conversation, keep the date close and send a reminder before the day. This guide shows how to reduce no-shows with AI appointment booking: what the research says about how far ahead a time is booked and what a reminder does, how to test a tool, whether it is worth automating, and what to do first this week.
 
@@ -3956,93 +4055,135 @@ The same argument at the other end of the day is on the [website chat side](/blo
 
 [[scene:funnel]]`;
 
-export const DATABASE_REACTIVATION_POST = `In the spring of 2023 someone filled in the home valuation form on your website. They wanted a number. You called twice. They said they were still thinking about it, and the thread went quiet the way most threads go quiet.
+export const DATABASE_REACTIVATION_POST = `We help local business owners work out how to follow up with old leads and past customers: which records they may contact, which message goes to whom, and what a person approves before anything is sent. Below is what database reactivation is, the three rule checks to run on your own records before a single message goes out, an invented worked example by channel, whether it is worth doing at all, and what to do first this week.
 
-They are still in your CRM. Their number still works. Nobody has dialed it since.
+This page is for owners of a business with a list older than its memory: a heating, plumbing or roofing company, an accounting or insurance office, a salon, a spa or a gym, a real estate office. The rules quoted are the federal ones. Nothing here is legal advice.
 
-Last year they sold that house. Someone else listed it.
+An invented example shows the problem. A heating company serviced a furnace on Maple Street last November, and the customer, Dana, never booked this year's tune-up. Her number still works, her address is on the record and nobody has asked her anything since the day the technician left.
 
-Nothing was neglected in that story, which is exactly what makes it expensive. No ball was dropped and nobody was lazy. It is that a person who said not right now needs following up three years later, in the one month it stopped being not right now. Following up like that is not a thing a human being is built to do.
+Nothing was neglected on purpose. No one dropped a ball. The record simply sits in a list of fourteen hundred names, and a list that long is not worked by hand on a busy Tuesday.
 
 [[scene:in-short]]
 
 [[scene:reel]]
 
-## What is actually sitting in that database
+## What is database reactivation?
 
-Everybody says the money is in the database. Almost nobody says what the money is made of, so here is the honest version.
+Database reactivation is the practice of contacting the past customers and old leads in your own records, once and with a reason, to find the ones whose situation has changed. In this post, reactivated means an old contact who was quiet and has replied, booked or said no with a reason.
 
-The National Association of REALTORS surveys recent buyers and sellers every year. Among a hundred other things, it asks how they found the agent they hired. The most recent generational cut of that survey is worth looking at properly, because the two biggest answers are not marketing.
+The point is that reactivation does not buy new traffic. It asks people who already know you, so the work is the asking and the limit is permission.
+
+The people on the list are not strangers and not friends. They raised a hand once, or bought once, at a moment when the answer turned out to be later. The reason to ask them again is that they already know you, and one survey of the real estate market points that way.
+
+The National Association of REALTORS published its 2026 Generational Trends report release on April 15, 2026. According to that release, 91% of buyers said they would use their real estate agent again or recommend them to others, and sellers typically stayed in their homes for 11 years before selling.
 
 [[scene:agent-source]]
 
-Two thirds of sellers hired somebody who was already known to them: referred by a friend, a neighbor or a relative, or an agent they had worked with before. Four percent found their agent on a website.
-
-Read the small bars too, because they are the honest half. Four percent of sellers hired an agent who had contacted them directly. Cold outreach is not what fills a listing calendar, and this piece is not going to pretend otherwise.
-
-What that leaves is an interesting middle. The people sitting in your CRM are not strangers, and they are not friends. They are the group that raised a hand once, at a moment when the answer turned out to be later. They already know your name. They contacted you first. And they are the only group anywhere near the top of that chart that you actually hold a list of.
+That is a survey of what buyers say, not a measurement of how well any outreach works, and it covers one industry. Read it as a reason the list is worth a question. It is not a forecast of what a campaign will return.
 
 [[scene:plate]]
 
-## Why nobody works it
+The one thing to apply: open your records and count how many contacts carry a date and a source. That count is your real list.
 
-Ask an agent when they last went through their old leads properly and you get a wince.
+## How do you follow up with old leads?
 
-It is not laziness, and it is not a discipline problem. It is that the work is genuinely awful. Hundreds of conversations to find the handful of people whose life has changed. Most of them go to voicemail. A few of them are annoyed. And the majority of the ones who do answer say no for the second time. The reward for doing it properly is getting to do it again next quarter.
+You follow up once, about something that is true of that person, at a sensible hour, and you take the first no. A good follow-up names what they bought or asked about, asks one real question and offers a real time. A bad one says that you are checking in.
 
-There is a quieter trap in it too. Human follow-up dies at the second attempt, because a third starts to feel like pestering. But the person who did not pick up at two on a Tuesday was driving, not deciding. And the difference between those two is invisible from your end. So the list gets a burst of attention in a slow month, produces nothing that week, and gets closed again.
+The work in the middle is the part that takes time. In an invented example, a gym keeps a list of people who toured and did not join, often called tour-no-buy, and an accounting office keeps a list of last tax season's inquiries who said they would call back. Each list has hundreds of names. Working one by hand means hundreds of conversations to find the handful whose situation has changed, and the reward for doing it properly is doing it again next quarter.
 
-Meanwhile the contacts in it keep aging in two directions at once. Some are drifting further out of reach. Some are quietly becoming ready. Nobody is watching which.
-
-## What database reactivation actually does
+What reactivation does is the same job, done with patience. These are the four moves.
 
 [[scene:four-moves]]
 
-The last one is the part that decides whether any of it was worth doing. An appointment that arrives with the reply attached is a different object from an appointment that arrives as a name and a time. You already know there is a house to sell, and you already know they said so themselves.
+The last move decides whether any of it was worth doing. An appointment that arrives with the reply attached is a different object from a name and a time. You already know what the person said, in their own words.
 
-## The part nobody selling you this will mention
+What you get: a written count of who may be contacted and by which channel, openers written with you, and the replies read and recorded. What you provide: the customer list with the date and source of each record where one exists, what your forms and invoices said about texts and calls, and what each customer bought or asked about. What a person still approves: the list it may contact, every opener and every follow-up word for word, and any booking that needs a price or an offer. What it does not do is on its own heading below.
 
-Reactivation is the one AI use case in real estate where the technology is the easy half and the rules are the hard half. Everything above this line is a build problem, and it is a solved one. Everything below it is the reason a large share of these campaigns should never have been sent at all.
+## Which old leads and past customers may you contact?
 
-I am not a lawyer, and none of what follows is legal advice. Read it instead as the list of things you are entitled to ask about before anybody sends a message with your name on it, ourselves included. There are three of them. They are all answerable from your own records in an afternoon. And a vendor who cannot answer all three has told you something important.
+Whether you may contact an old lead depends on what each record says, and the rules have dates in them. These are the federal rules as written on the day we read them, November 14, 2026, quoted from the regulation and the statute, not from a summary. A lawyer reads your own records against them. State law can add rules this page does not cover.
 
-**There is a clock on your old lead, and it is shorter than you think.** Federal rules exempt calls to somebody you have an established business relationship with from the national do-not-call registry. That exemption is defined with dates in it. Under [47 CFR 64.1200(f)(5)](https://www.law.cornell.edu/cfr/text/47/64.1200), the relationship runs from "the subscriber's purchase or transaction with the entity within the eighteen (18) months immediately preceding the date of the telephone call or on the basis of the subscriber's inquiry or application regarding products or services offered by the entity within the three months immediately preceding the date of the call". A closed deal buys you eighteen months. A form fill buys you three. Your 2023 lead ran out of both a long time ago. And if that number is on the registry, then warmth is not a defense.
-
-**An automated call or text is a separate question with a stricter answer.** The do-not-call registry is one rule. Using an autodialer or an artificial voice is another one entirely. And clearing the first does not clear the second. The same regulation, at paragraph (a)(2), bars a telemarketing call or text to a mobile number placed with "an automatic telephone dialing system or an artificial or prerecorded voice" unless you have the prior express written consent of the person you are calling. Written consent is defined narrowly: a signed agreement, with a clear and conspicuous disclosure that the person is authorizing automated calls, and a statement that agreeing is not a condition of buying anything. An electronic signature counts. A checkbox on an IDX registration page that said "by registering you agree to be contacted" almost certainly does not.
-
-**A no has to be easy, and it has to stick.** The rules were tightened here recently, and the current version is unusually specific. A person can revoke consent "by using any reasonable method". Stop, quit, end, revoke, opt out, cancel and unsubscribe are all listed as reasonable by definition. If somebody replies with different words, you have to treat that as an opt-out too whenever "a reasonable person would understand those words to have conveyed a request to revoke consent". And the request "must be honored within a reasonable time not to exceed ten business days from receipt". You cannot make people use one specific channel to get out.
+Three checks come first. They are not a full legal review, and a record can pass all three and still need a lawyer's reading.
 
 [[scene:consent-check]]
 
-Every one of those is checkable in an afternoon, and the answers live in your own systems: the form your leads filled in, the dates on the records, and whatever your CRM does with the word stop. If a vendor cannot tell you how their campaign handles all three, then the campaign is not ready to send.
+### How long does an old lead stay yours to call?
 
-Once you know how much of that list you are actually allowed to contact, the rest is a sum. And it is a sum nobody can do for you.
+The federal telemarketing rules separate people you have a relationship with from people you do not. According to 47 CFR 64.1200(f)(5), an established business relationship is a prior or existing relationship formed by a voluntary two-way communication, on the basis of the person's purchase or transaction "within the eighteen (18) months immediately preceding the date of the telephone call", or on the basis of an inquiry or application "within the three months immediately preceding the date of the call". It ends if either party has previously terminated it.
+
+A telephone solicitation, as the same regulation defines it in (f)(15), does not include a call or message to a person with whom the caller has an established business relationship. So the national do-not-call registry (c)(2) is about people outside that window. Within it, a seller-specific do-not-call request still ends the relationship for telemarketing, according to (f)(5)(i), even if the person keeps doing business with you.
+
+In an invented example, a heating company's furnace customer from last November is inside the eighteen months. A form fill from the spring of 2023 is outside both windows. Count the date on the record, not how promising the lead looked.
+
+An invented example of the count: the heating company holds 1,400 records. 520 are customers who bought within the last eighteen months, so a person may call them if they are not on the company's own do-not-call list. Of those 520, 210 signed a form that clearly authorizes automated texts, so those 210 can be texted by a system. The other 310 recent customers get a person's call or an email. The remaining 880 records are older than eighteen months, so they go to a cleanup or to an email or a letter first. Nobody has guessed a rate: the count is only arithmetic on the records (1,400 - 520 = 880, and 520 - 210 = 310).
+
+### When does an automated text or call need written consent?
+
+The registry is one rule, and using an autodialer or an artificial or prerecorded voice is another one. According to 47 CFR 64.1200(a)(2), a call that includes or introduces an advertisement or constitutes telemarketing, using an automatic telephone dialing system or an artificial or prerecorded voice, to a wireless number needs the prior express written consent of the called party. The regulation's paragraph (a)(10) on revoking consent refers to "calls or text messages made pursuant to paragraphs (a)(1) through (3)". Whether a particular software-sent text falls under a particular paragraph depends on the equipment, the purpose and the recipient, and that is a question for a lawyer.
+
+The regulation defines prior express written consent in (f)(9) as an agreement in writing bearing the person's signature, which includes an electronic signature, that clearly authorizes the seller to deliver advertisements or telemarketing messages using an autodialer or an artificial voice, and the number to which they are to be delivered. It has to include a clear and conspicuous disclosure that signing authorizes such calls and that the person is not required to sign as a condition of buying anything. Read the actual form your leads filled in, with its actual disclosure, against that wording. A sentence in a registration form saying you agree to be contacted has to be read against it, not assumed to match.
+
+### How does a stop request have to be handled?
+
+Under paragraph (a)(10), a called party may revoke consent "by using any reasonable method to clearly express a desire not to receive further calls or text messages". A reply of stop, quit, end, revoke, opt out, cancel or unsubscribe sent to an incoming text counts as a reasonable means per se. A reply in other words has to be treated as a revocation if a reasonable person would understand it to convey one. And a request "must be honored within a reasonable time not to exceed ten business days from receipt".
+
+That ten business days is the legal outer limit. Stopping further campaign messages to that number at once is a stricter practice, and it is the one we run. According to the FCC's order of January 6, 2026, DA 26-12, the rule requires callers to treat a request to revoke consent made in response to one type of informational message as applicable to all future robocalls and robotexts from that caller on unrelated matters, and the order extended the waiver of that requirement until January 31, 2027. So the rule on how far one stop reaches is still moving, which is a reason to treat any stop as covering everything you send that person.
+
+### What about calling hours and email?
+
+For live telephone solicitations to a residential subscriber, the regulation in (c)(1) bars calls before 8 a.m. or after 9 p.m., local time at the called party's location. That is the legal floor. Many businesses set a narrower window for their own reasons.
+
+Email has its own statute. According to the CAN-SPAM statute, 15 U.S.C. 7704, a commercial email must identify itself as an advertisement or solicitation, carry a clear notice of how to decline further messages and give a valid physical postal address of the sender, and the sender may not send a message that falls within a request to opt out more than 10 business days after receiving it. For many local businesses an email or a letter to past customers is a simpler first channel than a text, and the same discipline applies: a person approves the message and the list.
+
+### What is 10DLC registration?
+
+Business texting from an ordinary ten-digit number is called 10DLC, ten digit long code. According to the registry that runs it, US mobile network operators sanction it as a channel for non-consumer, application-to-person messaging, and ask the companies that send it to declare who is sending messages and what messaging is being sent. The Campaign Registry collects that brand and campaign information so the carriers can see the sender and the content. Registration is a carrier requirement for the channel, separate from the federal consent rules above, and passing one does not satisfy the other.
 
 [[scene:list-calculator]]
 
-## What it costs when it goes wrong
+## What can go wrong when you follow up with old leads?
 
-We do not publish a price for this, and I am not going to invent one here, because it depends entirely on the size and state of the list. What is worth publishing is the other side of the ledger. That is because it is a fixed number and almost nobody quotes it.
+The sources name two kinds of exposure, and neither is a reason for fear. Both are a reason to check before the first message, not after the first complaint.
 
-The Telephone Consumer Protection Act carries a private right of action. Under [47 U.S.C. 227(b)(3)](https://www.law.cornell.edu/uscode/text/47/227), a person can recover their actual loss "or to receive $500 in damages for each such violation, whichever is greater", and a court that finds the violation was willful or knowing may treble it. Per message. To treble a sum is to make it three times as big. There is a whole plaintiff's bar that does nothing else. And a list of thirty thousand contacts is a large multiplier attached to a small mistake.
+The first is a private lawsuit. According to 47 U.S.C. 227(b)(3), a person may bring an action to recover actual monetary loss from a violation or to receive five hundred dollars in damages for each violation, whichever is greater. If the court finds the violation willful or knowing, it may increase the award to not more than three times that amount. That is the statute's wording, and it is not a promise that any message creates a claim. It is the reason the list is checked before the campaign is written.
 
-While we are here: you will see agents quote a figure of sixteen thousand dollars per text, and it is the wrong number twice over. Sixteen thousand was the Federal Trade Commission's ceiling for an unfair or deceptive practice until the [June 2016 adjustment](https://www.federalregister.gov/documents/2016/06/30/2016-15302/adjustment-of-civil-monetary-penalty-amounts) raised it to forty thousand, and [16 CFR 1.98](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-A/part-1/subpart-L/section-1.98) now puts that ceiling at $53,088. It is also a penalty an agency assesses rather than the claim a person brings against you. The number in a private lawsuit is five hundred. And five hundred multiplied by a list is the one that should worry you.
+The second is the carriers' own rules. Registration of a business texting campaign is a carrier requirement for the channel, as the section above says, and what a carrier does with traffic that does not meet it is the carrier's decision. We did not find a published threshold, so this page prints none. Ask your provider in writing what happens to unregistered traffic.
 
-The second cost is less dramatic and far more likely, and it has a threshold you can actually look up. Send messages people did not want and some of them reply stop, which is their right and takes one word. Twilio, whose pipes a great many of these campaigns run through, publishes where that becomes a problem: an opt-out rate ["under 1% is considered healthy; over 3% may lead to carrier filtering"](https://www.twilio.com/docs/messaging/features/twilio-health-score-for-messaging). Filtering is not a bounce. Your messages to real clients simply stop arriving, silently, with no error. You find out a fortnight later when somebody mentions they never got your text about the inspection.
+Both are checked in the same place: before the first message goes out, not after.
 
-Both of those costs are avoidable, and both of them are avoided in the same place: before the first message goes out, not after the first complaint.
+## What does it take to follow up with old leads this way?
 
-## What to ask before you let anybody text that list
+The first job is a count, not a campaign. We read the records for a date and a source, read the forms for what consent they hold, and decide which records go to a person's call, which to a letter or an email and which to a text. That decides the size of the first run.
 
-Everything above is theory until you are sitting across from somebody who wants the export. Four questions separate the people who have done this properly from the people who are about to use your database as their sandbox. None of them require you to know anything technical.
+After the count, the work is steady and small: openers written with you and approved word for word, the replies read, the stops recorded, and a person taking each booking from there. What it takes from you is access to the list, the facts about where each name came from and the time to read the answers.
 
-Show me the consent evidence for one specific record. Pick a name yourself, at random, and ask what date that person gave permission, through what form, and where that date is stored. If the answer is a general assurance about the CRM rather than a date on a screen, then nothing has been checked and the first message is a guess.
+## Is it worth automating follow-up with old leads?
 
-What happens to a message that would land at nine at night. You want to hear a rule that is enforced by the system, not a promise about scheduling discipline. Ask what happens when somebody replies at 9:40pm, too, because the answer to that one is usually more revealing.
+For a list with real dates on it and a repeat cycle, yes. For a short list or a list with no source on any record, no. These are the same tests we use in an assessment, applied to this job.
 
-Show me a real opt-out, end to end. Have somebody send stop from a phone in the room, and then try to send that number another message. If the second message goes out, then the suppression list is decoration. This takes four minutes and almost nobody asks for it.
+First, does the job happen often enough that a failure is noticed within a week? A reactivation run is a few times a year, so a failure is not noticed within a week by default. That is a reason for a person to read every batch of replies.
 
-Whose number is it. If the campaign runs from a number the vendor owns, then the replies, the reputation attached to it and the ability to keep using it all belong to the vendor. And moving to anybody else means starting again. That is not a reason to say no. It is a reason to know before you sign rather than after.
+Second, can the rule be written for a new hire? Yes, once it is written: who may be contacted, by which channel, in which hours and with what wording. The first run is writing it down.
+
+Third, where does a wrong answer land? In a customer's pocket, with your name on it. That is why a person approves the list, the opener and every follow-up before it goes.
+
+The stop question: what breaks if we stop doing this? Nothing breaks. The list ages and the people whose situation changed are served by whoever was in front of them that week.
+
+A tool you already have may do the job. A short list can be worked by a person with the customer system you already pay for, or by a letter. Automation is worth considering only where the list is long, the records are dated and a person will read the replies.
+
+The verdict, in plain words. Leave a list with no dates and sources alone until the records are cleaned. Work a short, dated list by hand. Consider a system only for a long, dated list, with a person approving the contact list and every message.
+
+## What should you ask before anybody texts your old leads?
+
+Four questions separate someone who has done this carefully from someone who wants your export. None of them needs technical knowledge.
+
+Ask to see the consent evidence for one specific record. Pick a name yourself and ask what date that person gave permission, through what form, and where the date is stored. A general assurance about the CRM is not evidence.
+
+Ask what the system does with a message due at a time of night when the rule says no. You want a rule enforced by the system, not a promise about discipline.
+
+Ask for a real opt-out, from a phone in the room. Send stop, then try to send that number another message. Whether the second message goes out is the whole answer.
+
+Ask about the sending number and the registration. Who holds the number, who can export the replies, can the number be moved and who registered the campaign with the carriers? These are contract questions, and the answers belong in writing.
 
 [[scene:offer]]
 
@@ -4050,57 +4191,108 @@ Whose number is it. If the campaign runs from a number the vendor owns, then the
 
 [[scene:teardown]]
 
-## What it does not do, and should not pretend to
+## What does following up with old leads not do, and not pretend to do?
 
-It does not manufacture intent. Most of that list is going to say no again, because most of them meant it. What reactivation changes is two things. One is that somebody finally asked. The other is that the small number whose circumstances moved get found in the same week they moved, rather than eighteen months later. Anybody quoting you a conversion rate on a cold database before they have seen the database is quoting you a number they made up.
+Following up with old leads does not manufacture intent. A list will hold plenty of nos, and a no is an expected answer, not a failure. What changes is that somebody finally asked, so a contact whose situation has moved can say so. Anyone quoting you a conversion rate on a list they have not seen is quoting a guess, and this page prints none.
 
-It does not fix a list that has no consent behind it. If the records do not carry a date and a source, then the honest first project is not a campaign. It is a cleanup.
+It does not fix a list with no consent behind it. If the records carry no date and no source, the first project is a cleanup, not a campaign.
 
-It is not a subscription, and you should be suspicious of anybody who sells it as one. A database is finite. You work it once, you find the people whose situation changed, and then the same list is a year away from being worth working again. Vendors in this category run out of inventory and quietly pivot the client onto something else. The ones who are straight with you say so at the start. Reactivation is a harvest, not a lead source, and it does not replace generating new business.
+It is not a lead source. A list is finite. Working it again straight away tests the same people, so the second pass should be based on what the first pass learned: who replied, who opted out, who asked to be called later.
 
-It does not replace you calling the people who actually matter. Your past clients, the neighbor who sold with you in 2019, anybody whose relationship is the real asset: those calls are yours. A machine reintroducing itself to somebody who came to your daughter's christening is worse than no contact at all.
+It does not replace you calling the people who matter. Long-time customers, the neighbour who recommended you and anybody whose relationship is the real asset get a call from a person.
 
-It also does not survive being run twice in a row. The first pass takes the accumulated years off the list, and whatever it finds is genuinely there. The second pass, three months later, is fishing in a pond somebody already emptied. And the temptation at that point is to widen the definition of who counts as a lead until there is a list again. That is the moment a reactivation campaign quietly turns into cold outreach, with none of the consent behind it that made the first one defensible.
-
-And it does not close. It finds the conversation. Everything that happens after somebody says yes to a Thursday is the reason you have a job.
+It does not close. It finds the conversation. Everything after somebody says yes to a Thursday is the work your people do.
 
 [[scene:revival-path]]
 
-## Where it goes wrong
+## Where does a follow-up to old leads go wrong?
 
 [[scene:failure-modes]]
 
+## Who this fits when you follow up with old leads, and who it does not
+
+Following up with old leads fits a business with a list of dated past customers or inquiries and a reason for them to hear from you again. Examples are a heating company's tune-ups, a landscaper's spring cleanup, a salon's lapsed regulars, an accounting office's former clients, a gym's tour-no-buy list, a real estate office's old sellers and buyers.
+
+It fits poorly where records carry no date or source, where the list is a few dozen names, where nobody will read the replies, or where the relationship is the business. We do not run it for patient lists, because a health practice carries privacy rules this page does not cover.
+
+If it is a poor fit, the first step is still free: open one record and see what it says.
+
+[[scene:fits]]
+
+## What should you do first to follow up with old leads?
+
+Start with one record, not a campaign, and end with a decision written down. This is a suggested schedule, not a deadline.
+
+In week one, open your customer system, sort by oldest, and look at one record: is there a date, is there a source and is there anything that says how that person agreed to be contacted? Write down what you find.
+
+In week two, count the records by channel. How many have a purchase in the last eighteen months, how many hold signed consent for automated texts and how many have an email address and no stop on file. The count decides the channel for each group.
+
+In weeks three and four, read your own answer to the worth-it test above. Then decide: clean the records first, work a short list by hand, or have a system work a long dated one with a person approving every message. Write the decision and the date down.
+
+[[scene:roadmap]]
+
 ## Common questions, answered honestly
 
-### Do old real estate leads actually convert?
+### How do I follow up with old leads?
 
-Some of them do, and that is the whole business case rather than a sales line. A person who said not right now two years ago was giving you a timeline, and that timeline has since run out. The job is finding the small share whose circumstances changed. That is exactly the kind of patient, repetitive work software does well and people do not.
+To follow up with an old lead, write once, about what they asked or bought, at a sensible hour, in your own words and with a real question. First check the record's date and source and the channel it allows, then send, then record every answer, including no.
 
-### Is it not annoying to text people who went quiet years ago?
+### How do I win back past customers?
 
-It is, if the opener is generic. The difference between reactivation and a blast is whether the first message references what that specific person actually asked about, asks a real question, and takes no for an answer the first time. It also matters enormously that the person hears from you rather than from a stranger. That is why the consent and identification questions above are not paperwork. They are the reason the message lands as a follow-up instead of as spam.
+Ask them about something they actually bought, at the time of year it matters, and make it easy to say yes or no. A reminder to last year's furnace customers is a question. A newsletter to everyone is not one.
 
-### How does it decide who is worth calling?
+### Do old leads actually convert?
 
-It reads intent from what the person says back: whether the move is still on, whether the timeline shifted, whether there is now a house to sell. Everybody in scope gets an attempt. Only the ones showing real intent reach your calendar.
+No independent measurement of cold database response rates is cited here, so this page prints no rate and makes no claim about how many old leads convert. The job is to find the contacts whose circumstances have changed. Your own records and a first small run will tell you more than an average will.
 
-### Can I just do this myself with a mail merge?
+### Is it annoying to text people who went quiet years ago?
 
-You can, and for a list of two hundred you probably should. The reason it stops working is volume and follow-through, not sophistication. A merge sends one message. What actually produces appointments is the second and third exchange, held at the hour the person happens to reply, across a few thousand contacts, without anybody getting bored. That is the part that is hard to staff and easy to automate.
+Texting an old lead who went quiet can be annoying, and a personalised opener does not establish permission. Check eligibility, the applicable restrictions and the opt-out first. If you send, an honest opener refers to what the person asked about and takes the first no.
+
+### Am I allowed to text leads from 2023?
+
+Whether you may text a lead from 2023 depends on what the record says. The established business relationship runs eighteen months from a purchase and three months from an inquiry under 47 CFR 64.1200(f)(5), so a 2023 form fill is outside both. An automated text is a separate question that depends on written consent, and the actual form and its disclosure are read against the regulation. A stop has to be honored within ten business days at the outside. Have a lawyer read your own records.
+
+### What does reactivated mean in real estate?
+
+In this post, reactivated means an old lead or past client who was quiet and has replied or booked again. It is how we use the word, not a legal term.
+
+### What does tour no buy mean?
+
+In a gym or studio, a tour-no-buy is a person who toured and did not join. It is a list of old leads like any other, and the same checks apply before anyone contacts it.
+
+### Can I do this myself with a mail merge?
+
+Yes, you can follow up with old leads yourself with a mail merge for a short list, and often you should. A mail merge sends one message. What takes time is the second and third exchange, held when the person happens to reply, and the checking of each record first.
 
 ### What happens to the people who say no?
 
-They get recorded as a no, with whatever reason they gave, and they are not contacted again by the campaign. That is not only politeness. A no with a reason attached is the most useful thing the whole exercise produces, because it tells you which part of your list is genuinely dead and which part is just early.
+People who say no are recorded with the date, the source and the words they used, and the campaign does not contact them again. A no with a reason is the most useful output of the exercise, and it is a record of what a person said, not a guess about their future.
 
-## What to do about it
+[[scene:quiz]]
 
-Start with one record instead of with a campaign, and do it before you talk to a vendor. Open your CRM, sort by oldest, and find your own version of the person who asked what their house was worth in the spring of 2023. Then look at what you are actually holding: is there a date on the record, is there a source, and is there anything anywhere that says how that person agreed you could contact them. Four minutes on one record will tell you which of the two projects in this article you are really looking at, a campaign or a cleanup. And no consultant can tell you that faster than your own database can.
+## What should you do about your old leads?
 
-The system is laid out on [the RealtyLT AI page](/ai#reactivation). The [database reactivation page](/services/database-reactivation) sets out what it reads, what it sends, and what happens to a reply once somebody sends one.
+One record opened tells you which of the two projects on this page you are looking at, a campaign or a cleanup: what the date is, what the source is and whether anything says how that person agreed to hear from you. It needs nobody, us included.
 
-Two earlier moments in the same story are written out elsewhere. [The missed call at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate) is this problem before the lead ever goes cold. And [the buyer messaging your website at 11:40pm](/blog/ai-chat-assistant-real-estate-website) is where the record you just opened came from in the first place.
+The system is laid out on [the RealtyLT AI page](/ai#reactivation), and the [database reactivation page](/services/database-reactivation) sets out what it reads, what it sends and what happens to a reply.
 
-[[scene:funnel]]`;
+[[scene:funnel]]
+
+Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+
+## Sources
+
+- Federal Communications Commission rules, 47 CFR 64.1200, delivery restrictions (telephone solicitations, prior express written consent, revocation, established business relationship), [the regulation](https://www.law.cornell.edu/cfr/text/47/64.1200), in force on the read date. Read November 14, 2026.
+- United States Code, 47 U.S.C. 227, restrictions on the use of telephone equipment, paragraph (b)(3), [the statute](https://www.law.cornell.edu/uscode/text/47/227), in force on the read date. Read November 14, 2026.
+- Federal Communications Commission, order DA 26-12, January 6, 2026, extending the waiver of the cross-message part of 47 CFR 64.1200(a)(10) to January 31, 2027, [the order](https://docs.fcc.gov/public/attachments/DA-26-12A1.pdf). Read November 14, 2026.
+- United States Code, 15 U.S.C. 7704, CAN-SPAM, [the statute](https://www.law.cornell.edu/uscode/text/15/7704), in force on the read date. Read November 14, 2026.
+- The Campaign Registry, an introduction to 10DLC and the registry, [the introduction](https://www.campaignregistry.com/Assets%2FTCR-Intro_V4.pdf), a vendor-neutral industry document. Read November 14, 2026.
+- National Association of REALTORS, 2026 Generational Trends release of April 15, 2026, [the release](https://www.nar.realtor/newsroom/baby-boomers-remain-largest-share-of-home-buyers-as-first-time-buying-falls-to-record-low). Read November 14, 2026.
+
+Sources checked November 14, 2026.
+
+Written with an AI assistant and checked by Levan.`;
 
 export const LEAD_QUALIFICATION_POST = `Open your CRM tomorrow morning and you will see a list. It is sorted by when each name arrived, because arrival time is the only thing the software knows for certain about any of them.
 
