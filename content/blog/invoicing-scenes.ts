@@ -44,10 +44,12 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  *
  * Three lines, each checkable by somebody else in the primary document. What the article refuses,
  * the fact that reorganises the topic, and the number that is not what anybody expects. */
+/** ROUND 33 (2026-11-17): rewritten for an owner. The federal referral rule moved out of this block into the
+ * post's real estate section, the only place it applies; the bank-detail check took its place. */
 export const IN_SHORT: string[] = [
-  "The largest sum a brokerage gets in a year is not collected by chasing anybody. It comes out of a closing run by somebody else, on a date set by somebody else. This article does not tell you how that works in your state. No primary source states it generally, and a guess would be the least useful thing on the page.",
-  "Federal law does state plainly who you may pay and who may pay you. In a deal with a federally related mortgage loan on it, paying anybody for a referral is a criminal offence. A fine, a prison term and treble damages are attached. Treble damages means three times the charge. And there is one carve-out that matters to you. Payments between real estate brokers under cooperative brokerage and referral arrangements are expressly permitted.",
-  "And getting paid is not one event. It is three. Regulation CC lets a bank make an electronic payment available the business day after it arrives. It lets the bank make a local cheque available on the second business day. And for the part of a cheque above $6,725 on one banking day, that schedule does not apply at all.",
+  "An invoice reminder works on an invoice that exists. A fee that falls due because of an event in somebody else's office has no invoice until somebody asks whether the event happened. So the asking comes before the chasing, and it is the part a reminder tool leaves out.",
+  "Getting paid is not one event. It is three. Regulation CC lets a bank make an electronic payment available the business day after it arrives. It lets the bank make a local cheque available on the second business day. And for the part of a cheque deposit above 6,725 dollars on one banking day, that schedule does not apply at all.",
+  "A change of bank details that arrives by email is a request to change them, not a change. It is checked by phoning a number you already had before the message came, with a person on the other end. No software stands in for that call.",
 ];
 
 /** SCENE copy — what is actually an invoice in this business.
@@ -57,20 +59,20 @@ export const IN_SHORT: string[] = [
  * and deserves to be told immediately that this page is not about it. */
 export const WHAT_IS_AN_INVOICE: GridItem[] = [
   {
-    lead: "The commission, almost certainly not",
-    body: "A closing creates it. Whoever runs that closing pays it out, on a date fixed by the deal and not by you. How it works differs by state, by closing agent and by brokerage agreement. This page does not describe yours. Notice one thing only. What you are owed here is not a document you send and then chase. So a product built around sending and chasing is not aimed at it.",
+    lead: "Money paid out of somebody else's process, not an invoice",
+    body: "An insurer paying for a repair once its adjuster approves it, or, in a real estate office, the commission paid out at a closing. Somebody else runs that process, on a date they set. Notice one thing only. What you are owed here is not a document you send and then chase. So a product built around sending and chasing is not aimed at it.",
   },
   {
-    lead: "The referral fee, yes",
-    body: "You sent somebody to another brokerage. They closed it. A fee was agreed. That is a claim you have to make, to a business that has no automatic reason to tell you the day it happened. Federal law names this exact arrangement and permits it. A receivable is money other people owe you. That makes it one of the few plain ones in the whole trade. It is also one of the easiest to forget you have.",
+    lead: "A fee that falls due on somebody else's event, yes",
+    body: "You sent a customer to another business, and the work was done there. A fee was agreed. That is a claim you have to make, to a business that has no automatic reason to tell you the day it happened. A receivable is money other people owe you, and this is one of the plain ones. It is also one of the easiest to forget you have.",
   },
   {
-    lead: "Everything you charge a fee for, yes",
-    body: "Rental placements, property management, marketing work billed on its own, a service somebody hired you for. These are plain invoices with plain terms. They behave the way invoices behave everywhere else. That is why the general advice about invoicing applies to them, and only to them.",
+    lead: "Everything you bill for your own work, yes",
+    body: "Repair calls, project stages, a monthly service, anything somebody hired you for. These are plain invoices with plain terms. They behave the way invoices behave everywhere else. That is why the advice about reminders applies to them, and only to them.",
   },
   {
     lead: "The money that is not yours, separately",
-    body: "Anything you hold for somebody else is ruled by state law. That law covers separate accounts, and not mixing that money with your own. Those rules are not summarised here. They are specific to your state and to your licence. Ask your lawyer rather than a website. And treat any product that offers to sit between you and that account as a question rather than a feature.",
+    body: "Anything you hold for somebody else is ruled by law for that money: separate accounts, and not mixing it with your own. Those rules are not summarised here, because they are specific to your state and your trade. Ask your lawyer rather than a website. And treat any product that offers to sit between you and that account as a question rather than a feature.",
   },
 ];
 
@@ -112,15 +114,15 @@ export const AVAILABILITY = {
   bars: [
     { label: "An electronic payment, once the bank has the funds", value: 1, display: "1 business day" },
     { label: "A local cheque", value: 2, display: "2 business days" },
-    { label: "The part of a cheque above $6,725 in one day", value: 7, display: "up to 7" },
+    { label: "The part of a cheque above 6,725 dollars in one day", value: 7, display: "up to 7" },
   ],
   lit: 2,
   basis:
-    "Business days from deposit to the money being ready to withdraw, as permitted by Regulation CC. The first two are the deadlines the regulation sets outright. The third is the second business day plus an extension of up to five more business days. The same regulation allows that extension once the large deposit exception is used. That exception applies to the amount above $6,725 paid in by cheque on one banking day.",
+    "Business days from deposit to the money being ready to withdraw, as permitted by Regulation CC. The first two are the deadlines the regulation sets outright. The third is the second business day plus an extension of up to five more business days. The same regulation allows that extension once the large deposit exception is used. That exception applies to the amount above 6,725 dollars paid in by cheque on one banking day.",
   sourceText:
     "12 CFR 229.10(b), 229.12(b) and 229.13(b) and (h)(4), Regulation CC, availability of funds and collection of checks.",
   sourceHref: "https://www.law.cornell.edu/cfr/text/12/229.12",
-  note: "Read every bar as a ceiling rather than as a measurement. This is the latest a bank is permitted to make the money available. It is not what your bank does. Plenty of banks are faster than the regulation requires on plenty of deposits. One detail is worth carrying anyway, because it is the one that catches people out. An electronic payment's clock does not start when the sender presses send. The regulation says the payment is received when the receiving bank has both the funds in finally collected form and the information about which account to credit. So a transfer sent late on a Friday can be a Tuesday. And the subpart these rules sit in is titled availability of funds and disclosure of funds availability policies. The second half of that title is the useful one. Your bank has a written policy of its own inside these limits. That document, rather than this chart, is what governs your account.",
+  note: "Read every bar as a ceiling rather than as a measurement. This is the latest a bank is permitted to make the money available. It is not what your bank does, and a bank may be faster than the regulation requires. One detail is worth carrying anyway, because it is the one that catches people out. An electronic payment's clock does not start when the sender presses send. The regulation says the payment is received when the receiving bank has both the funds in finally collected form and the information about which account to credit. So a transfer sent late on a Friday can be a Tuesday. And the subpart these rules sit in is titled availability of funds and disclosure of funds availability policies. The second half of that title is the useful one. Your bank has a written policy of its own inside these limits. That document, rather than this chart, is what governs your account.",
 };
 
 /** SCENE copy — the same day rail. Cited data graphic TWO.
@@ -169,15 +171,15 @@ export const RAILS: GridItem[] = [
   },
   {
     lead: "ACH",
-    body: "The cheap rail. Nacha writes its rules, not any one bank. Most brokerages use it without ever asking what tier of it they are on. There is a same day version with a published per payment ceiling. There is also an ordinary version. On a Friday afternoon, the difference between them is several days of your money sitting somewhere else.",
+    body: "The cheap rail. Nacha writes its rules, not any one bank. A business can use it for years without asking which version of it it is on. There is a same day version with a published per payment ceiling. There is also an ordinary version. On a Friday afternoon, the difference between them is several days of your money sitting somewhere else.",
   },
   {
     lead: "A cheque",
-    body: "Still the default in a great deal of this trade. It is the only rail on this list where the amount changes the timing. The availability schedule stops applying to the part of a deposit above a stated dollar figure. A brokerage cheque is above that figure as a matter of course. So the regulation's ordinary two day promise is not the promise you are getting.",
+    body: "Still how some customers pay a large bill. It is the only rail on this list where the amount changes the timing. The availability schedule stops applying to the part of a deposit above a stated dollar figure, and a large final payment can be above it. So the regulation's ordinary two day promise is not always the promise you are getting.",
   },
   {
     lead: "A card",
-    body: "The handy rail for the small end. A deposit, an application fee, a management charge. It is the only one of the four whose fee is plainly a percentage. That is why it is the only one anybody is ever tempted to pass on to the customer. And so it is the only one with a New York statute attached to what you may do about that.",
+    body: "The handy rail for the small end. A deposit, a repair call, a small charge at the door. It is the only one of the four whose fee is plainly a percentage. That is why it is the only one anybody is ever tempted to pass on to the customer. And so it is the only one with a New York statute attached to what you may do about that.",
   },
 ];
 
@@ -221,7 +223,7 @@ export const KILL_CHAIN = {
     "Dollars in millions, from the 2024 figures for the Financial Fraud Kill Chain. That is the process the Bureau uses to ask a receiving bank to freeze a fraudulent transfer. The first bar is what was reported to it across 3,020 complaints. The second and third are the amounts frozen on domestic and on international requests. The Bureau publishes those two separately, and they are left separate here. The Bureau states a 66 percent success rate for the year.",
   sourceText: "Federal Bureau of Investigation, Internet Crime Complaint Center, 2024 Internet Crime Report.",
   sourceHref: "https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf",
-  note: "Two cautions, and one reason this is on the page at all. The first caution is that everything in this report is a complaint somebody filed rather than an audited figure. The report says so about its own data. The second is that a freeze is not a recovery. It stops money moving on while the rest is worked out. The reason it is here is the shape of the first bar against the other two. That shape is what happens to a payment once it has left. There is also no figure anywhere in that report, or anywhere in this article, for how much of this touches a brokerage in particular. The report does not count it that way. Its own real estate category is defined as something else entirely. So the property version of this crime sits inside the business email compromise total rather than beside it.",
+  note: "Two cautions, and one reason this is on the page at all. The first caution is that everything in this report is a complaint somebody filed rather than an audited figure. The report says so about its own data. The second is that a freeze is not a recovery. It stops money moving on while the rest is worked out. The reason it is here is the shape of the first bar against the other two. That shape is what happens to a payment once it has left. There is also no figure anywhere in that report, or anywhere in this article, for how much of this touches any one trade. The report does not count it that way. Its own real estate category is defined as something else entirely. So the property version of this crime sits inside the business email compromise total rather than beside it.",
 };
 
 /** SCENE copy — the staged exchange.
@@ -240,7 +242,7 @@ export const THE_CHASE = {
   heading: "The first Tuesday of the month.",
   layout: "bubbles" as const,
   note: "A staged illustration, not a real exchange. There is no company, person, amount or reference in it because none of them would be real. The sequence is the one the service page describes.",
-  themLabel: "The other brokerage",
+  themLabel: "The showroom",
   usLabel: "Your office",
   turnsHeading: "The exchange",
   eventsHeading: "What happened on your side",
@@ -248,9 +250,9 @@ export const THE_CHASE = {
     {
       who: "us" as const,
       at: "9:04 am",
-      text: "Morning. Checking in on the referral we sent over in February. Has it gone to contract or closed?",
+      text: "Morning. Checking in on the customer we sent over in February. Has the kitchen been installed yet?",
     },
-    { who: "them" as const, at: "2:41 pm", text: "closed in july! sorry, thought accounting had sorted you out" },
+    { who: "them" as const, at: "2:41 pm", text: "installed in july! sorry, thought accounting had sorted you out" },
     {
       who: "us" as const,
       at: "2:42 pm",
@@ -267,12 +269,13 @@ export const THE_CHASE = {
     {
       at: "2:41 pm",
       label: "The event is recorded, not the reply",
-      detail: "What goes into the system is that the deal closed, and when. That date is what the charge attaches to. The apology is not data.",
+      detail: "What goes into the system is that the kitchen was installed, and when. That date is what the charge attaches to. The apology is not data.",
     },
     {
       at: "2:42 pm",
       label: "The invoice is raised against the agreement",
       detail: "Not against a chat. The referral agreement is the document that makes this collectable, and the invoice quotes it. The person who ends up paying it was not part of this exchange.",
+      // ROUND 33 (2026-11-17): the exchange is the showroom of the post's invented plumbing company, not another brokerage.
     },
     {
       at: "3:10 pm",
@@ -446,7 +449,7 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "events",
           label: "Things you could raise a charge for in a year",
-          hint: "Closings, referrals you sent out, rental placements, management months, and anything else you charge a separate fee for. Count events rather than dollars.",
+          hint: "Jobs, project stages, referrals you sent out, monthly services, and anything else you charge a separate fee for. Count events rather than dollars.",
           min: 10,
           max: 400,
           step: 5,
@@ -458,7 +461,7 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "outside",
           label: "Share that happen somewhere other than your own office",
-          hint: "A closing run by a title company or a lawyer counts. A referral closed by another brokerage counts. A rental you placed yourself does not.",
+          hint: "A referral finished by another business counts. A payment that waits on an insurer's adjuster counts. A repair your own crew finished does not.",
           min: 10,
           max: 100,
           step: 5,
@@ -513,7 +516,7 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 2,
       resultLabel: "Chargeable events a year your office hears about late",
-      note: "The headline is the third row rather than the hours. The hours row is doing deliberate work underneath it. At the settings this opens with, the reconstruction adds up to a number of hours that would not survive a budget meeting. That is the point. The cost of this is not the time. It is that some of those events carried a fee and the fee was never raised. There is no way to work out from a spreadsheet which ones. Shares produce fractions, and half an event is not a thing, so read anything with a decimal in it as a rough count. Four things this refuses on purpose. There is no dollar value per event, because it depends entirely on which kind of event it was. There is no share of invoices that go unpaid, and the reason is narrower than it first looked. Figures for that do exist, and the best known of them does state a sample. The QuickBooks Small Business Late Payments Report describes itself as based on a 2025 survey of more than two thousand small businesses. It is published by a company that sells invoicing software. What none of them measures is WHY. That is the thing this page needed, and the thing the old version of this service page asserted. There is no recovery rate for a reminder sequence for the same reason, and none of it is about a brokerage. And there is no row for your commission, because this article does not claim to know how that arrives where you are.",
+      note: "The headline is the third row rather than the hours. The hours row is doing deliberate work underneath it. At the settings this opens with, the reconstruction adds up to a number of hours that would not survive a budget meeting. That is the point. The cost of this is not the time. It is that some of those events carried a fee and the fee was never raised. There is no way to work out from a spreadsheet which ones. Shares produce fractions, and half an event is not a thing, so read anything with a decimal in it as a rough count. Four things this refuses on purpose. There is no dollar value per event, because it depends entirely on which kind of event it was. There is no share of invoices that go unpaid, and the reason is narrower than it first looked. Figures for that do exist, and the best known of them does state a sample: it describes itself as based on a 2025 survey of more than two thousand small businesses, and it is published by a company that sells invoicing software. What none of them measures is WHY. That is the thing this page needed, and the thing the old version of this service page asserted. There is no recovery rate for a reminder sequence for the same reason. And there is no row for a commission paid at somebody else's closing, because this page does not claim to know how that arrives where you are.",
       action: { label: "See how it is built", href: "/services/invoicing-and-payments" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },
@@ -560,31 +563,33 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Write down every arrangement you are in right now where somebody else's event is what makes you money. Referrals you have sent out, deals somebody else is closing, work you have done that gets billed when a deal lands. Then write beside each one how you would find out that it happened. If the honest answer for any of them is that somebody would probably mention it, that is the one worth a phone call this week.",
-      actions: [
-        { label: "See it on the AI page", href: "/ai#pay", variant: "light" },
-        { label: "How it is built", href: "/services/invoicing-and-payments", variant: "outline-light" },
-      ],
+      text: "Write down every arrangement you are in right now where somebody else's event is what makes you money. Referrals you have sent out, work somebody else is finishing, payments that wait on somebody else's approval. Then write beside each one how you would find out that it happened. If the honest answer for any of them is that somebody would probably mention it, that is the one worth a phone call this week.",
+      /** ROUND 33 (2026-11-17): no buttons here. The post now ends on ONE link to its service page, in the
+       * line under this scene (rule WS66; the round's brief). The AI page link lives in the body. */
       footnote:
-        "There is no price here because the work divides in two, and only you know the split. The plain invoicing half is short and standard. The half that goes and asks other people's offices whether something has happened is built around who those offices are and how they answer. The AI assessment is an hour, done with you. For this topic it starts with the list of things you charge for rather than with any software.",
+        "There is no price here because the work divides in two, and only you know the split. The plain invoicing half is short and standard. The half that goes and asks other people's offices whether something has happened is built around who those offices are and how they answer.",
     },
   },
 
   /** Short rail labels for the prose headings. Ids and ORDER are derived from the document, so a
    * renamed heading degrades to its full text rather than leaving a dead row. */
+  /** ROUND 33 (2026-11-17): the post's headings became the questions an owner types; the labels follow the new ids. */
   headingLabels: {
-    "what-counts-as-an-invoice-in-a-brokerage-and-what-does-not": "What is an invoice",
-    "what-this-article-refuses-to-tell-you-about-your-commission": "What it refuses",
-    "the-law-that-decides-who-you-may-pay-and-who-may-pay-you": "Who you may pay",
-    "paid-is-three-different-days-and-only-one-of-them-is-yours": "Three days",
-    "what-each-rail-costs-and-what-you-are-allowed-to-pass-on": "The rails",
-    "the-payment-instruction-that-was-not-from-your-client": "The wrong account",
-    "what-a-payments-build-can-honestly-do-in-a-brokerage": "What it does",
-    "why-the-chasing-is-the-small-half": "The small half",
-    "how-to-test-one-before-you-buy-it": "Test one yourself",
-    "what-it-costs-and-how-long-it-takes": "Cost and time",
-    "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
-    "common-questions-answered-honestly": "Common questions",
-    "what-to-do-about-it": "What to do",
+    "what-counts-as-an-invoice-in-a-small-business-and-what-does-not": "What is an invoice",
+    "when-should-you-send-an-invoice-reminder": "When to remind",
+    "what-should-an-invoice-reminder-say": "What to say",
+    "why-cant-an-invoice-reminder-chase-money-you-never-invoiced": "The unraised fee",
+    "when-can-you-spend-a-payment-that-has-arrived": "Three days",
+    "which-ways-of-getting-paid-matter-and-can-you-pass-the-card-fee-on": "The rails",
+    "how-do-you-check-an-email-asking-you-to-change-bank-details": "The wrong account",
+    "what-can-automated-invoicing-do-for-a-small-business": "What it does",
+    "what-should-you-ask-before-you-buy-invoicing-software": "Before you buy",
+    "what-does-automated-invoicing-take-to-set-up-and-run": "Cost and time",
+    "what-does-automated-invoicing-not-do": "What it will not do",
+    "does-an-invoice-reminder-help-with-a-real-estate-commission": "A commission",
+    "who-may-a-real-estate-office-pay-or-be-paid-by-for-a-referral": "Who you may pay",
+    "common-questions-about-invoice-reminders-and-getting-paid": "Common questions",
+    "what-to-do-first-about-the-invoices-nobody-raised": "What to do",
+    sources: "Sources",
   },
 };

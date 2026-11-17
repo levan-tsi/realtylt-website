@@ -1071,215 +1071,286 @@ Then decide who watches. Not whether. Who.
 
 [[scene:funnel]]`;
 
-export const INVOICING_POST = `You sent a buyer to a brokerage two states away in February. It was a good referral. The deal between you was normal and legal. You both signed something.
+export const INVOICING_POST = `An invoice reminder should go out on a fixed schedule from the day the invoice is due, name the business, the invoice number, the amount and the due date, give one way to pay, and assume the customer forgot; after the second one, a person takes over. We build invoicing and reminders like that for small businesses, and this page gives you the method free, with the wording to copy. Below, one invented plumbing company sets up its reminders and then finds the money no reminder could chase: a fee earned in July and never invoiced, because the event that made it due happened in someone else's building. By the end you can write your own reminders and set their timing, list the charges that depend on someone else's event, know when a payment that has arrived can be withdrawn, and check a change of bank details before your money goes to the wrong account.
 
-Their deal closed in July.
+**Rosa's plumbing company (invented).** Rosa owns a plumbing company with five people: herself, Nina in the office and three plumbers on the road. Its money comes from four places: repair calls, invoiced the day the job is done and due on receipt; bathroom remodels, with a deposit up front and an invoice at each stage of the work; water damage repairs that a homeowner's insurer pays for once its adjuster approves the claim; and a referral agreement with a kitchen and bath showroom across the county, which pays Rosa a fee when a customer she sends there has a new kitchen installed. Rosa, Nina, the showroom and every figure about them are made up; their invoices run through this page as one worked example of a real method.
 
-Nothing happened at your end in July. Nothing happened in August. The reason matters, and it is not that anyone did wrong. The thing that made the money due happened in a building you have never seen. It sat in a file you cannot open. The one person who knew had a closing of their own to finish that day. Telling you was nobody's job. No invoice sat unpaid in anyone's system, because there was no invoice.
+**Rosa's plumbing company (invented).** In February Rosa sent a customer to the showroom for a new kitchen. It was a good referral, and the agreement between them was normal: they both signed it. The kitchen was installed in July. Nothing happened at Rosa's end in July, and nothing in August. The reason matters, and it is not that anyone did wrong. The event that made the fee due happened in a building Rosa has never been inside, in a file she cannot open, and the one person who knew had a week of installs to finish. Telling Rosa was nobody's job. No invoice sat unpaid in anyone's system, because there was no invoice.
 
-That is the shape of the money problem in this trade. It is close to the opposite of the problem most invoicing advice tries to fix. Most advice is about the last mile. Send it sooner. Chase it nicely. Step it up on a schedule. All of that is real, and this article gets to it. But in a brokerage the costly part comes four months earlier. Something you should have charged for happened in a place you were not looking.
+Reminders work on the last mile: send the invoice on the day, chase it nicely, step it up on a schedule. This page gives you the wording and the timing, and it puts the asking before the chasing, because a reminder can only follow an invoice that exists. When Rosa noticed in November, the costly part had happened four months earlier, when something she should have charged for happened in a place she was not looking. A real estate office meets the same gap as a referral fee owed by another brokerage when a deal closes there, an invented example in that trade; its commission, and the federal rule on referral fees, have their own sections below.
+
+Everything on this page is free to use: the reminder wording, the timing, and the questions to ask before you buy any invoicing software. What we sell is building it with you and keeping it running.
 
 [[scene:in-short]]
 
-## What counts as an invoice in a brokerage, and what does not
+## What counts as an invoice in a small business, and what does not?
 
-Before the usual advice can help, split your money into two piles. One pile acts like an invoice. The other does not. A lot of software is sold as if all of it did.
+In a small business an invoice is a charge you raise and send yourself, against the work or the agreement behind it, and a reminder sequence helps only once an invoice exists: a fee that falls due because of an event in someone else's office has no invoice until you learn of the event, and money paid out of someone else's process, or held for someone else, is not an invoice at all.
 
-Four kinds of money come into a business like this one. The lines between them are not fussy bookkeeping. Each kind arrives in its own way. Each kind fails in its own way. And a reminder sequence, which is a set of timed nudges, helps only two of them. Mix them up and you end up paying for software aimed at the wrong half of your own cash.
+Before the usual advice can help, split your money into piles. Each kind arrives in its own way, and each kind fails in its own way. A reminder sequence, which is a set of timed nudges, works on an invoice that exists. Mix the piles up and you end up paying for software aimed at the wrong half of your own cash.
 
 [[scene:what-is-an-invoice]]
 
-## What this article refuses to tell you about your commission
+**Rosa's plumbing company (invented).** Rosa sorts her money into the four piles, the whole list, each with what a reminder can do for it:
 
-Here is the refusal, said out loud and not buried. A business owner who opens a page about invoicing looks for their commission first.
+1. **Repair calls and remodel stages.** Plain invoices, raised by Nina against a signed estimate. Reminders help.
+2. **The showroom's referral fee.** It falls due when a kitchen is installed in someone else's building. A reminder can do nothing until someone asks whether the kitchen is in and raises the invoice.
+3. **Water damage repairs paid by a homeowner's insurer.** The money comes out of the insurer's own process, after its adjuster approves, on the insurer's schedule. Rosa tracks each claim and follows it up with the insurer when it runs late, under the claim's own terms; her reminders do not send it.
+4. **Money held for someone else.** Rosa holds none. If she did, the rules for that money, not her invoicing, would govern it.
 
-This article does not say how a commission is written up, asked for or paid out at a closing. That is not because it is small. It is because it changes from state to state. It changes with whether a lawyer is at the table. It changes with which closing agent runs the day, and with what your brokerage agreement says. The federal laws that govern a settlement are quoted further down this page. They cover the disclosure a buyer gets and the payments one business may make to another. None of them says how a brokerage gets paid its own commission. Any version we could have written would have been a fair-sounding guess. A fair-sounding guess about how your biggest payment arrives is worse than nothing.
+**Your turn.** Write your own money into the same four piles, and put a mark beside every kind that falls due because of something that happens outside your office.
 
-What can be shown is narrower, and more useful than a guess. The rest of this article is built on it. Federal law says clearly who you may pay, and who may pay you, in a deal with a mortgage on it. A federal rule says exactly when money that has reached your bank becomes money you can spend. And New York law says what you may add to a price when someone pays you by card. You can check all three. They are the same for everyone in this state. Each one changes how a brokerage should run.
+## When should you send an invoice reminder?
 
-## The law that decides who you may pay and who may pay you
+You should send an invoice reminder on a schedule written down in advance, every step counted from the day the invoice is due: a friendly reminder a few days after, a second about a week after, and at two weeks a person takes over. The point of a schedule is that the awkward second reminder is decided once, its day and its wording, rather than each time by whoever feels like sending it, and that the day a person takes over is written down too.
 
-The Real Estate Settlement Procedures Act is best known for the papers a buyer signs at a closing. Its eighth section is not about those papers at all. It is about payments between businesses. It is the law that decides which of your deals are plain business and which are a crime.
+The schedule we start from is our own, an illustration the owner then changes, and it is the one on our [automated invoicing](/services/invoicing-and-payments) page, written for an invoice that is due on the day the work is done: a friendly reminder on day 3, a second on day 7, and on day 14 the case goes to a person with the full history. That is a starting point, not a rule. If your terms give a customer thirty days, the same days count from the thirtieth. The schedule is set to stop when the invoice is marked paid, and a customer who replies that something is wrong is routed to a person.
 
-[12 U.S.C. 2607](https://www.law.cornell.edu/uscode/text/12/2607) has two bans. They are worth reading in the order the law puts them. Subsection (a) says that no person shall give and no person shall accept any fee, kickback, or thing of value pursuant to any agreement or understanding, oral or otherwise, that business incident to or a part of a real estate settlement service involving a federally related mortgage loan shall be referred to any person. In plain words, paying for a referral in that kind of deal is a crime unless the law's own list of exceptions covers it. That list is a few paragraphs down, and one item on it is about your trade. Subsection (b) covers splitting.
+Two more timing rules come before any software. Raise each invoice on the day its trigger happens, the job done, the stage finished or the deposit due, not at the end of the week, because an invoice that sits in the drafts for a week starts every reminder a week late. And send each reminder from the program that holds the invoice, so the amount in the message is the amount on the invoice.
 
-[[scene:pull-quote]]
+**Rosa's plumbing company (invented).** Nina used to send a first reminder when she remembered, and a second one hardly ever, because it felt like nagging a customer she would see again. Rosa writes the schedule down. Her repair invoices go out the day of the job and are due on receipt, so the days count from the job: the first reminder on day 3, the second on day 7, and on day 14 the invoice lands on Rosa's desk with everything that was sent and when.
 
-[[scene:plate]]
+**Your turn.** Write your own schedule on one line: when the invoice goes out, when the first and second reminders go, and on which day a person takes over.
 
-Two things in those sentences matter more than any summary of them.
+## What should an invoice reminder say?
 
-The first is the reach. Both bans apply to a deal involving a federally related mortgage loan. [12 U.S.C. 2602](https://www.law.cornell.edu/uscode/text/12/2602) defines that term. Broadly, it is a loan secured by a lien on residential property for one to four families where the lender is federally insured or regulated, or the loan is federally assisted, or it is intended to be sold to one of the named secondary market institutions. That reaches most everyday purchase mortgages. It does not reach a cash sale. Hold on to that difference. Do not guess either way.
+An invoice reminder should say the business's name, the invoice number, the amount as it appears on the invoice, the date it was due and one way to pay, in a sentence that assumes the customer forgot rather than refused. The second says the same thing a little more plainly. Anything sharper than that is a conversation for a person, not a template.
 
-The second is the list of exceptions. One item on it is why the story at the top of this page is legal and not a crime. Subsection (c)(3) permits payments pursuant to cooperative brokerage and referral arrangements or agreements between real estate agents and brokers. Congress named your trade by name. A referral fee from one brokerage to another is not what this law exists to stop. The same subsection also permits a bona fide salary or compensation or other payment for goods or facilities actually furnished or for services actually performed.
+Here are three wordings to copy. The first two are fixed messages: you approve their exact words once, and only the details are filled in from the invoice. The third is sent by a person.
 
-Put those together and you get a rule you can use with no lawyer in the room. Money that moves between licensed real estate brokers under a referral deal is something the law expects. Money that moves to anyone else has to buy something that was actually furnished or actually performed. The words "actually performed" do real work. The law does not care what the invoice says the payment was for.
+> **First reminder, on day 3.** Hi [first name], a quick reminder from [business]: invoice [number] for [amount] was due on [date]. You can pay it here: [link]. If it is already on its way, thank you, and please ignore this message.
 
-The penalties are real too. Subsection (d) provides for a fine of not more than $10,000 or imprisonment for not more than one year, or both. It also makes violators jointly and severally liable to the person charged for the settlement service in an amount equal to three times the amount of any charge paid for that service. Jointly and severally means each one can be made to pay the whole sum. Nothing in this article is legal advice. This is the exact paragraph to take to someone whose advice it is.
+> **Second reminder, on day 7.** Hi [first name], invoice [number] from [business] for [amount] was due on [date] and is now past due. The link to pay is here: [link]. If anything on the invoice looks wrong, reply to this message and we will put it right.
 
-One more piece of the same law is worth knowing. It explains why the money side of a deal feels unseen from a brokerage's desk. [12 U.S.C. 2603](https://www.law.cornell.edu/uscode/text/12/2603) requires the Bureau to publish a single integrated disclosure for mortgage loan transactions. It says that such forms shall conspicuously and clearly itemize all charges imposed upon the borrower and all charges imposed upon the seller in connection with the settlement. So the charges get listed. They get listed on a form someone else prepares, in a process someone else runs. That is a sensible setup. It also means the paper that proves what you are owed is not paper you made.
+> **From a person, at two weeks.** Hi [first name], it is [your name] at [business]. Invoice [number] for [amount], due on [date], is still unpaid, and I would rather sort it out with you than send another reminder. Can we talk today about when it will be paid?
 
-## Paid is three different days, and only one of them is yours
+Three things never go into an automated reminder: a late fee your terms do not include, a threat, and a new place to send the money. A reminder that asks for payment to a different account is the shape of the fraud further down this page, and it is worth telling your customers that yours do not.
 
-Ask anyone in a small business when they got paid. They will name the day the money showed up. There are really three days in that answer, and they can be a week apart.
+**Rosa's plumbing company (invented).** Rosa approves the first two wordings once, with her business name and the payment link in them, and Nina sends herself a test of each to check that the amount and the date come out right. The third stays with Rosa. Since it is the one a person sends, it can say whatever the conversation needs.
 
-There is the day the other side says they sent it. There is the day it reaches your bank. And there is the day your bank lets you use it. If you have people to pay on Friday, only that third day counts.
+**Your turn.** Copy the three wordings, fill in your business name, and read them aloud as the customer would hear them.
 
-That third day does not hang on your bank's mood. It is set by rule. [Regulation CC](https://www.law.cornell.edu/cfr/text/12/229.12) sets the outer limits, and the limits tell you more than the averages do.
+## Why can't an invoice reminder chase money you never invoiced?
 
-Take an electronic payment. That covers a wire, which is a direct bank transfer. It also covers an ACH credit, which is the cheaper bank transfer most businesses use. The rule at [229.10(b)](https://www.law.cornell.edu/cfr/text/12/229.10) is that the bank shall make the funds available for withdrawal not later than the business day after the banking day on which the bank received the payment. The word "received" has a meaning worth reading twice. The payment is received when the bank has both payment in actually and finally collected funds and the information on the account and amount to be credited. The clock starts when your bank has both halves. It does not start when someone at the other end pressed send.
+An invoice reminder cannot chase money you never invoiced because it works only on invoices that exist: a charge that was never raised has nothing in the system to remind anyone about.
 
-For a local cheque, 229.12(b) gives the second business day following the banking day of deposit. Then comes the exception a brokerage meets all the time.
+A reminder sequence is set to send each reminder on the day the schedule names, the awkward second one included, and to keep a timestamped record of each message. For repair calls, remodel stages and any work you bill directly, that is a real gain.
 
-[[scene:availability]]
-
-[229.13(b)](https://www.law.cornell.edu/cfr/text/12/229.13) says that the availability schedules do not apply to the aggregate amount of deposits by one or more cheques to the extent that the aggregate is in excess of $6,725 on any one banking day. In plain words, the normal schedule covers only the first $6,725 you pay in by cheque in one day. And 229.13(h) allows the bank, where an exception applies, to extend the schedule by a reasonable period. The same subsection then defines that as up to five business days for the class of cheque covered by 229.12(b).
-
-Look at the last cheque your business paid in. Was it above $6,725? If it was, the two day schedule never applied to all of it. The outer limit on the part above that figure is the second business day plus up to five more.
-
-There is nothing dark in that. A bank carries the risk on a cheque until it clears. The rule balances that risk against your right to reach your own money. The upshot is simple. A brokerage that pays people out of money it got by cheque lives on a schedule it did not set and may not have read.
-
-## What each rail costs, and what you are allowed to pass on
-
-Four rails carry the money in a small property business. A rail is just the route a payment travels on. The sender picks the rail. The one waiting for the money does not.
-
-[[scene:rails]]
-
-One rail has a rule that is special to this state, and it is the card. New York [General Business Law 518](https://www.nysenate.gov/legislation/laws/GBS/518), in the version in force since the 2024 amendment, requires that a seller imposing a surcharge on a customer who elects to use a credit card shall clearly and conspicuously post the total price for using a credit card, inclusive of the surcharge. A surcharge is an extra fee for paying by card. The law then adds the cap: any such surcharge may not exceed the amount of the surcharge charged to the business by the credit card company for such credit card use, and the final sales price inclusive of the surcharge shall not amount to a price greater than the posted price.
-
-Here are two plain readings of that. First, you may not round up. What the processor charges you is the most you may add. So a flat three percent, picked because it is a round number, is a problem if your real cost is lower. Second, the duty is about posting. The price a customer sees has to be the full price they will pay by card. The law also keeps two tier pricing legal. It defines that as posting two prices where the credit card price, inclusive of any surcharge, sits alongside the cash price. Each violation carries a civil penalty of up to five hundred dollars.
-
-The other rail worth a second look is ACH. The cap on what one same day payment can carry has moved twice. The second move is so recent that many habits are older than it.
-
-[[scene:same-day]]
-
-## The payment instruction that was not from your client
-
-This part of the article has the highest cost tied to it. It also has the least to do with software you would buy.
-
-The FBI's Internet Crime Complaint Center puts out a yearly report of what people reported to it. The [2024 edition](https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf) records 859,532 complaints and $16.6 billion in reported losses. Of those, 256,256 reported an actual loss. The report prints an average reported loss of $19,372. That average is taken across all 859,532 complaints, not only the ones that lost money. Know that before you repeat it. A diverted payment instruction falls under business email compromise. That is a scam where a crook poses by email as someone you trust. It accounts for 21,442 complaints and $2,770,151,146.
-
-One point about labels is easy to get wrong and worth getting right. It changes what the numbers mean. The report has a crime type called Real Estate. Its own glossary defines that as loss of funds from a real estate investment or fraud involving rental or timeshare property. A fake instruction to wire closing funds to the wrong account is not counted there. The report gives its own worked example of that exact case. In it, buyers received a spoofed email purporting to come from their agents asking them to wire funds to finalise the closing. A spoofed email is a fake made to look real. That example sits under business email compromise. So the honest summary is this. That category holds the property version of the crime and does not report it on its own. Anyone who quotes you a real estate specific figure from this report took it from the wrong table.
-
-[[scene:kill-chain]]
-
-The lesson for daily work is small, free and all about people. A change to payment instructions that arrives by email is not a change to payment instructions. It is a request to change them. You check it by phoning a number you already had before the message came. Never use a number in the message. That rule costs nothing. It is not a product. No software that this or any company sells can stand in for it.
-
-## What a payments build can honestly do in a brokerage
-
-Strip out all that is really about a plumber billing for a boiler. Four things are left, and only one of them is the reminder sequence.
-
-It can go and ask. This one is worth the most and gets built the least. It is a standing job that asks, on a schedule, whether the events that create your charges have happened yet. Referrals you sent out. Deals someone else is closing. Work that gets billed when something lands. Nobody at the other end has a reason to remember. The asking is cheap. It has no limit. It does not get embarrassed.
-
-It can raise the charge against the agreement and not against a chat. What makes a referral fee collectable is the paper you both signed. The invoice that quotes it will be paid by someone who was not part of the talk that led to it.
-
-It can chase, nicely and on a fixed schedule. This is the plain part, and it truly helps with the plain invoices. There is no shame in it being the boring half.
-
-And it can reconcile. To reconcile is to check what came in against what you asked for. That step turns all of the above from a record of what you asked for into a record of what you really have.
-
-[[scene:the-chase]]
-
-[[scene:money-path]]
-
-## Why the chasing is the small half
-
-It pays to be blunt here. This is where the category sells itself, and it is not where the money is.
-
-A reminder sequence works on invoices that exist. It sends them sooner than a person would. It sends the second and third messages that a person finds awkward. It keeps a timestamped record of both. For rental fees, management charges and any work you bill directly, that is a real gain. It costs almost nothing to set up.
-
-It does nothing at all about a charge that was never raised. It cannot. There is nothing in the system to remind anyone about. The unraised charge is hidden from every dashboard by its nature. It is hidden in a cruel way, too. Your accounts receivable report, which is the list of money people owe you, will look great. All that is in it is being handled well. What is missing is not late. It is absent.
+It does nothing at all about a charge that was never raised. The unraised charge is hidden from every dashboard by its nature, and hidden in a cruel way too. Your accounts receivable report, the list of money people owe you, will look healthy: everything in it is being handled well. What is missing is not late. It is absent.
 
 That gap decides what to ask a vendor first, and it is not how the reminders are worded. Ask what causes an invoice to exist at all. Then ask whether that cause is an event or a person remembering.
 
 [[scene:events-calculator]]
 
-## How to test one before you buy it
+**Rosa's plumbing company (invented).** Rosa's answer for the showroom fee was a person remembering, and nobody did. The fix is a standing job that asks. On the first Tuesday of November it sends the showroom a first message that reaches back to February: has any kitchen for a customer we referred been installed since then? After that it asks once a month: any installed since last month? The reply is the evidence of the event, the installation itself. The invoice is raised against the referral agreement that day, and only then do the reminders start. If the showroom does not answer, the job asks again the next month, and after two silences Rosa phones.
 
-Four questions, none of them technical.
+[[scene:the-chase]]
 
-Ask what creates an invoice. Watch for whether the answer is a person marking something complete. If it is, the automation starts after the hard part is over. The demo you are watching starts in the wrong place.
+**Your turn.** For every mark you made on your list of piles, write who would know the event had happened, and how often someone should ask them.
 
-Ask what happens when a payment comes in that matches nothing. A part payment. A payment with no reference. Two invoices paid in one transfer. Each of those is normal, not rare. The answer tells you whether anyone who built the product has ever sat down with a live bank statement.
+## When can you spend a payment that has arrived?
 
-Ask how it decides something was paid. If any part of the answer involves reading a message from the person who owes you, that is the wrong answer. Ask twice. The first answer is often about the bank feed, and the second one is about the email.
+A payment on an invoice that has arrived can be spent on the day your bank makes it available, and that day is set by a federal rule, not by when the other side pressed send: the business day after an electronic payment is received, the second business day for a local cheque, and later for the part of a large cheque deposit.
 
-Ask what it does about the money that is not yours. The right answer is that it does not touch it. A product that is keen to plug into a client account is a product to think slowly about.
+Ask anyone in a small business when they got paid and they will name the day the money showed up. There are really three days in that answer, and they can be a week apart: the day the other side says they sent it, the day it reaches your bank, and the day your bank lets you use it. If you have people to pay on Friday, only the third day counts.
+
+That third day does not hang on your bank's mood. It is set by rule. [Regulation CC](https://www.law.cornell.edu/cfr/text/12/229.12) sets the outer limits, and the limits tell you more than the averages do.
+
+Take an electronic payment. That covers a wire, which is a direct bank transfer, and an ACH credit, the cheaper bank transfer a business uses for routine payments. The rule at [229.10(b)](https://www.law.cornell.edu/cfr/text/12/229.10) is that the bank shall make the funds available for withdrawal not later than the business day after the banking day on which the bank received the payment. The word "received" has a meaning worth reading twice. The payment is received when the bank has both payment in actually and finally collected funds and the information on the account and amount to be credited. The clock starts when your bank has both halves. It does not start when someone at the other end pressed send.
+
+For a local cheque, 229.12(b) gives the second business day following the banking day of deposit. Available is not the same as final: the schedule says when you may withdraw the money, not that a cheque cannot still be returned unpaid. Then comes one of the exceptions in the same regulation, the one that catches a business paid by large cheques.
+
+[[scene:availability]]
+
+[229.13(b)](https://www.law.cornell.edu/cfr/text/12/229.13) says that the availability schedules do not apply to the aggregate amount of deposits by one or more cheques to the extent that the aggregate is in excess of 6,725 US dollars on any one banking day. In plain words, the normal schedule covers only the first 6,725 US dollars you pay in by cheque in one day. And 229.13(h) allows the bank, where an exception applies, to extend the schedule by a reasonable period, which the same section defines as up to five business days for the class of cheque covered by 229.12(b).
+
+A bank carries the risk on a cheque until it clears, and the rule balances that risk against your right to reach your own money. The upshot is simple: a business that pays people out of money it got by cheque lives on a schedule it did not set and may not have read.
+
+**Rosa's plumbing company (invented).** A remodel customer paid the final stage of a bathroom with one cheque on a Monday, for more than the 6,725-dollar line in the rule. Rosa had payroll on Friday. Assuming she deposited it before the bank's cut-off in an ordinary business week, the first part of the cheque had to be available by Wednesday at the latest, the second business day; the part above the line could be held up to five business days more, under the rule above. Nina now asks remodel customers to pay a large stage by bank transfer, and when a big cheque does come in, she checks the bank's written policy before payroll, not after.
+
+**Your turn.** Look at the last cheque your business paid in. If it was above the 6,725-dollar line in the regulation, the two-day schedule never applied to all of it: ask your bank for its funds availability policy in writing.
+
+## Which ways of getting paid matter, and can you pass the card fee on?
+
+Each way of getting an invoice paid, a wire, ACH, a cheque or a card, has its own timing and risk, and the customer picks it unless your terms say otherwise; in New York you may pass a card fee on only up to what the card company charges you, with the total card price posted where the customer sees it.
+
+Four routes carry the money in a small business. A route, or rail, is the way a payment travels: a wire, ACH, a cheque or a card. The sender picks the rail, unless the terms you agreed ask for one.
+
+[[scene:rails]]
+
+One rail has a rule that is special to this state, and it is the card. New York [General Business Law 518](https://www.nysenate.gov/legislation/laws/GBS/518), in the version in force since the 2024 amendment, requires that a seller imposing a surcharge on a customer who elects to use a credit card shall clearly and conspicuously post the total price for using a credit card, inclusive of the surcharge. A surcharge is an extra fee for paying by card. The law then adds the cap: any such surcharge may not exceed the amount of the surcharge charged to the business by the credit card company for such credit card use, and the final sales price inclusive of the surcharge shall not amount to a price greater than the posted price.
+
+Here are two plain readings of that. First, you may not round up. What the processor charges you is the most you may add, so a flat three percent, picked because it is a round number, is a problem if your real cost is lower. Second, the duty is about posting: the price a customer sees has to be the full price they will pay by card. The law also keeps two tier pricing legal, which it defines as posting two prices where the credit card price, inclusive of any surcharge, sits alongside the cash price. Each violation carries a civil penalty of up to five hundred dollars.
+
+**Rosa's plumbing company (invented).** Rosa's plumbers take cards at the door, and she had been thinking of adding a flat three percent. Her processor's statement shows she pays less than that on the cards her customers use, so a flat three percent would be more than the law allows. She posts two prices instead, cash and card, on the estimate the customer signs, with the card price higher by no more than her processor charges her.
+
+The other rail worth a second look is ACH. The cap on what one same day payment can carry has moved twice on Nacha's own timeline, to a hundred thousand dollars in 2020 and to a million in 2022, and the second move is recent enough that some habits are older than it.
+
+[[scene:same-day]]
+
+**Your turn.** Find your card processor's last statement and write down what you really pay per card payment before you decide anything about a surcharge.
+
+## How do you check an email asking you to change bank details?
+
+You check an email asking you to change the bank details for an invoice payment by phoning the sender on a number you already had before the message arrived, and confirming the change with a person; a change of payment instructions that arrives by email is a request to change them, not a change.
+
+The FBI's Internet Crime Complaint Center puts out a yearly report of what people reported to it. The [2024 edition](https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf) records 859,532 complaints and 16.6 billion dollars in reported losses. Of those, 256,256 reported an actual loss. The report prints an average reported loss of 19,372 US dollars, taken across all 859,532 complaints, not only the ones that lost money: know that before you repeat it. A diverted payment instruction falls under business email compromise, a scam where a crook poses by email as someone you trust. In the report it accounts for 21,442 complaints and 2,770,151,146 US dollars in reported losses.
+
+[[scene:kill-chain]]
+
+**Rosa's plumbing company (invented).** In October an email arrived that looked like it came from the plumbing supply house Rosa buys from. Its bank details had changed, it said, and the next payment should go to a new account. Nina did not reply to it. She phoned the supply house on the number printed on last month's paper invoice. They had sent no such email.
+
+The lesson for daily work is small, free and all about people. Check by phoning a number you already had before the message came, never a number in the message, never one in the signature, and never one you found by searching for the company that afternoon. It is not a product, and no software that this or any company sells can stand in for it.
+
+**Your turn.** Write the rule on one line where whoever pays your bills will see it: a change of bank details is confirmed by phone, on a number we already had, with a person.
+
+## What can automated invoicing do for a small business?
+
+Automated invoicing can do four things for a small business: ask whether the events that create your charges have happened, raise each charge against the agreement behind it, chase on a fixed schedule, and reconcile what arrived against what was asked for. Only one of the four is the reminder sequence.
+
+It can go and ask. This is the one a reminder tool leaves out. It is a standing job that asks, on a schedule, whether the events that create your charges have happened yet: referrals you sent out, work someone else is finishing, anything that gets billed when something lands elsewhere. Nobody at the other end has a reason to remember. A standing job asks on the date it is set for, with nobody having to remember to.
+
+It can raise the charge against the agreement and not against a chat. What makes a referral fee collectable is the paper you both signed. The person who pays an invoice that quotes it may not have been part of the talk that led to it.
+
+It can chase, nicely and on a fixed schedule. This is the plain part, and it truly helps with the plain invoices.
+
+And it can reconcile. To reconcile is to check what came in against what you asked for, and that step turns all of the above from a record of what you asked for into a record of what you really have.
+
+[[scene:money-path]]
+
+The same wiring is the subject of [workflow automation for small business](/blog/workflow-automation-real-estate-business), and the customer record it all hangs on is the subject of [duplicate contacts in a CRM](/blog/crm-sync-real-estate-duplicate-contact-records). Payment reminders also turn up as one owner's idea in [what to automate with AI first](/blog/ai-assessment-small-business-what-not-to-automate), where they needed no build at all, only a switch in the invoicing program she already paid for.
+
+**Rosa's plumbing company (invented).** By February, three months after the first message to the showroom, every pile on Rosa's list has an owner. The repair calls and remodel stages go out on the day, and the reminders on days 3 and 7 go without anyone deciding to send them; on day 14 an invoice reaches Rosa with its history. The first Tuesday message to the showroom found the July kitchen and one more installed in September, and both fees were invoiced against the agreement the same day. The insurer's payments are tracked against each claim, and Rosa follows up the late ones with the insurer herself. Large stages are paid by transfer, card customers see two prices, and the supply house's real number is taped above Nina's desk. Every Friday Nina matches what arrived in the bank against what was asked for. In January one customer paid two repair invoices in one transfer with no reference; Nina found two open invoices that added up to the total, then confirmed with the customer that those were the two he had paid before she marked them. What she cannot match goes to Rosa.
 
 [[scene:offer]]
 
+## What should you ask before you buy invoicing software?
+
+Before you buy invoicing software, ask four questions, none of them technical: what creates an invoice, what happens to a payment that matches nothing, how it decides something was paid, and what it does about money that is not yours.
+
+Ask what creates an invoice. Watch for whether the answer is a person marking something complete. If it is, the automation starts after the hard part is over, and the demo you are watching starts in the wrong place.
+
+Ask what happens when a payment comes in that matches nothing: a part payment, a payment with no reference, two invoices paid in one transfer. Each of those can turn up on a live bank statement, and the answer tells you whether anyone who built the product has sat down with one.
+
+Ask how it decides something was paid. If any part of the answer involves reading a message from the person who owes you, that is the wrong answer. Ask twice: the first answer may be about the bank feed, and the second about the email.
+
+Ask what it does about the money that is not yours. The right answer is that it does not touch it. A product that is keen to plug into an account holding someone else's money is a product to think slowly about.
+
 [[scene:plate-two]]
 
-## What it costs, and how long it takes
+## What does automated invoicing take to set up and run?
 
-This one splits cleanly into two halves with very different prices. The halves get sold as one thing.
+Automated invoicing takes two very different pieces of work that get sold as one: the plain invoicing and reminders, which is short, and the asking, whose size is set by who you have to ask and how they answer.
 
-The plain invoicing half is short and cheap. Your accounting package likely sends invoices and reminders already. The work is to connect it to whatever creates the charge, and to agree the wording and the timings. That is days, not weeks. A fair share of it is deciding, not building.
+The plain invoicing half is short. Your accounting program may already send invoices and reminders. The work is to connect it to whatever creates the charge, and to agree the wording and the timings, and a fair share of it is deciding, not building.
 
-The other half is the asking. Its price is set wholly by who you have to ask and how they answer. A handful of brokerages you deal with all the time, all of whom reply to a text, is one project. Two management companies with portals, a lawyer's office that works by email and a title company that answers the phone is a different one. The price sits in reaching them, not in the logic of it.
+The other half is the asking. Its size is set wholly by who you have to ask and how they answer. One showroom that replies to a text is one project. Two property managers with portals, an insurer that works by email and a builder who answers only the phone is a different one. The work sits in reaching them, not in the logic of it.
 
-The running cost is small on this topic because the volume is low. These are not high frequency messages. A business raises and chases a small number of charges a month, not hundreds. The ongoing bill reflects that.
+What keeps running on this topic is small because the volume is small: a business raises and chases its own charges, not a stream of messages a minute.
 
-The part with a real ongoing cost is the reconciliation. The cost is attention, not money. Someone has to look at the exceptions the matching could not solve. If nobody is named for that job, it will not be done. Then all the work above it becomes decoration.
+The part that keeps asking for something is the reconciliation, and what it asks for is a person's attention. Someone has to look at the exceptions the matching could not solve. If nobody is named for that job, nobody answers for it, and then all the work above it becomes decoration.
 
-## What it does not do, and should not pretend to
+## What does automated invoicing not do?
 
-It does not collect a debt. After the sequence has run, a business that will not pay is a talk and maybe a lawyer. The value of the automation at that point is the record of what was sent and when.
+Automated invoicing does not collect a debt on an unpaid invoice, know that an outside event happened, make a payment arrive sooner than its rail allows, touch money that is not yours, or tell you whether a payment instruction is real.
 
-It does not tell you that an event happened. It can ask, again and again, and cheaply. Asking is not the same as knowing. Anyone can decline to answer, and some people will.
+It does not collect a debt. After the sequence has run, a customer who will not pay is a conversation and maybe a lawyer. The value of the automation at that point is the record of what was sent and when.
+
+It does not know that an event happened. It can ask, again and again, but asking is not the same as knowing. Anyone can decline to answer, and some people will.
 
 It does not make a payment arrive sooner than the rail allows. When funds are ready is set by rule, and by your bank's own policy inside that rule. No amount of software moves a cheque through the system faster.
 
-It does not touch money that is not yours. Client money is governed by rules specific to your state and your licence. This article leaves them out on purpose.
+It does not touch money that is not yours. Money held for someone else is governed by rules specific to your state and your trade, and this page leaves them out on purpose.
 
 And it does not know whether a payment instruction is real. That is a human check with a telephone in it. Treating it as a software feature is how the costly version of this goes wrong.
 
 [[scene:wasted]]
 
-## Common questions, answered honestly
+## Does an invoice reminder help with a real estate commission?
 
-### What does invoicing automation actually do for a brokerage?
+An invoice reminder is the wrong tool for a real estate commission, and this page does not say how a commission is written up, asked for or paid out at a closing: that is the real estate trade's own process, run by someone else at the closing table.
 
-Two separate things that get sold as one. The first is plain. It sends invoices for the work you bill directly. It sends the reminders on a schedule, so the awkward second and third ones really go. It keeps a record. The second is the one worth paying for here. It is a standing job that asks other people's offices whether the events you get paid on have happened yet. That way a charge gets raised while everyone still remembers the deal.
+That is not because it is small. It is because it changes from state to state. It changes with whether a lawyer is at the table, with which closing agent runs the day, and with what the brokerage agreement says. The federal laws that govern a settlement, quoted in the next section, cover the disclosure a buyer gets and the payments one business may make to another; none of them says how a brokerage gets paid its own commission. Any version we could have written would have been a fair-sounding guess, and a fair-sounding guess about how a business's biggest payment arrives is worse than nothing.
 
-### Does this handle my commission?
+What a real estate office can automate around it is narrower and more useful. It can track that the deal closed, and it can do commission reconciliation: check what arrived from the closing against what the agreement said was due. The referral fee one brokerage owes another is a plain invoice once someone asks whether the deal closed, which is Rosa's showroom fee in another trade, and the real estate invoice processing is the same four steps above.
 
-This article does not claim to. Any product that claims to should be asked to explain exactly how, in your state, with your closing agent. A commission comes out of a closing that someone else runs, on a date the deal sets. That is a different thing from an invoice you send and follow up. What automation can do around it is track that the deal happened. It can also reconcile what arrived against what you expected.
+## Who may a real estate office pay, or be paid by, for a referral?
 
-### Can I charge clients a card fee?
+Under the real estate trade's own federal rule, the Real Estate Settlement Procedures Act, a real estate office may invoice or pay a referral fee to another real estate firm under a cooperative brokerage or referral arrangement, and anyone else only for goods actually furnished or services actually performed, in deals with a federally related mortgage loan; whether a given payment qualifies is a question for a lawyer.
 
-In New York you may, within a rule. The law makes you post the total price with the surcharge in it, clearly and conspicuously. It caps the surcharge at what the card company really charged your business for that card use. A flat percentage picked because it is a round number can top your real cost. The same law keeps two tier pricing legal, which is posting a cash price and a card price side by side. Each violation carries a civil penalty of up to five hundred dollars.
+The Real Estate Settlement Procedures Act is best known for the papers a buyer signs at a closing. Its eighth section is not about those papers at all. It is about payments between businesses, and it is the law that decides which of a real estate office's arrangements are plain business and which are a crime.
+
+[12 U.S.C. 2607](https://www.law.cornell.edu/uscode/text/12/2607) has two bans, and they are worth reading in the order the law puts them. Subsection (a) says that no person shall give and no person shall accept any fee, kickback, or thing of value pursuant to any agreement or understanding, oral or otherwise, that business incident to or a part of a real estate settlement service involving a federally related mortgage loan shall be referred to any person. In plain words, paying for a referral in that kind of deal is a crime unless the law's own list of exceptions covers it. That list is a few paragraphs down, and one item on it is about the real estate trade. Subsection (b) covers splitting.
+
+[[scene:pull-quote]]
+
+[[scene:plate]]
+
+The first thing in those sentences is the reach. Both bans apply to a deal involving a federally related mortgage loan. [12 U.S.C. 2602](https://www.law.cornell.edu/uscode/text/12/2602) defines that term. Broadly, it is a loan secured by a lien on residential property for one to four families where the lender is federally insured or regulated, or the loan is federally assisted, or it is intended to be sold to one of the named secondary market institutions. That covers a purchase mortgage from such a lender. It does not reach a cash sale. Hold on to that difference, and do not guess either way.
+
+The second is the list of exceptions. One item on it is why a referral fee between two real estate offices is legal and not a crime. Subsection (c)(3) permits payments made under cooperative brokerage and referral arrangements among real estate licensees. A referral fee from one real estate firm to another is not what this law exists to stop. Paragraph (c)(2) of the same section permits the payment to any person of a bona fide salary or compensation or other payment for goods or facilities actually furnished or for services actually performed.
+
+Put those together and you get the shape of the rule, not a ruling on any one payment. Money that moves between licensed real estate firms under a referral deal is something the law expects. Money that moves to anyone else has to buy something that was actually furnished or actually performed, and whether a given payment does is a question for a lawyer who knows the deal and the state's own licensing rules. The words "actually performed" do real work: the law does not care what the invoice says the payment was for.
+
+Subsection (d) of the same statute provides for a fine of not more than 10,000 US dollars or imprisonment for not more than one year, or both. It also makes violators jointly and severally liable to the person charged for the settlement service in an amount equal to three times the amount of any charge paid for that service. Jointly and severally means each one can be made to pay the whole sum. Nothing on this page is legal advice; this is the exact paragraph to take to someone whose advice it is.
+
+One more piece of the same law explains why the money side of a deal feels unseen from a real estate office's desk. [12 U.S.C. 2603](https://www.law.cornell.edu/uscode/text/12/2603) requires the Bureau to publish a single integrated disclosure for mortgage loan transactions. It says that such forms shall conspicuously and clearly itemize all charges imposed upon the borrower and all charges imposed upon the seller in connection with the settlement. So the charges get listed, on a form someone else prepares, in a process someone else runs. That is a sensible setup. It also means the paper that proves what the office is owed is not paper it made.
+
+## Common questions about invoice reminders and getting paid
+
+### How many invoice reminders should you send?
+
+Two automatic invoice reminders are enough before a person takes over: a friendly one a few days after the due date and a plainer one about a week after, then a person at two weeks with the full history. A third automated message adds little that a person cannot do better.
+
+### Does this handle a real estate commission?
+
+Invoicing automation does not handle a real estate commission, and any product that claims to should be asked to explain exactly how, in your state, with your closing agent. What it can do around a commission is track that the deal happened and reconcile what arrived against what was expected.
+
+### Can I charge customers a card fee in New York?
+
+A New York business may charge a card fee within the rule in General Business Law section 518: the total card price is posted clearly, the surcharge is no more than the card company charges the business, and posting a cash price and a card price side by side stays legal. Each violation carries a civil penalty of up to five hundred dollars.
 
 ### Why did the money arrive on Monday and clear on Thursday?
 
-Because when you can use money is ruled on apart from when it arrives. For an electronic payment, the outer limit is the business day after your bank has both the funds and the instructions. For a cheque it is the second business day. But that schedule stops applying to the amount above $6,725 paid in on one banking day. Where the bank uses that exception, it may stretch the schedule by up to five more business days. Your bank's own policy sits inside those limits. It is worth asking for in writing.
+Money that arrives on Monday can clear later because when you can use it is ruled on apart from when it arrives: for an electronic payment the outer limit is the business day after your bank has both the funds and the instructions, and for a local cheque the second business day. That schedule stops applying to the amount above 6,725 US dollars paid in by cheque on one banking day, and for that part the bank may stretch it by up to five more business days ([12 CFR 229.13](https://www.law.cornell.edu/cfr/text/12/229.13)).
 
 ### Should I be paying people by ACH instead of by cheque?
 
-Ask your bank three questions before you decide. Do they offer same day origination, which means sending a same day payment, on your account? What is the daily cut-off time? What does each payment cost? The rail itself has carried up to a million dollars per payment since 2022 under Nacha's rules. Nacha is the body that runs ACH. That is enough for almost anything a brokerage sends out. Whether you can get that limit, and at what price, is up to your bank and not the network.
+Before paying people by ACH instead of by cheque, ask your bank three questions: does it offer same day origination, meaning sending a same day payment, on your account; what is the daily cut-off time; and what does each payment cost? The rail itself has carried up to a million dollars per payment since 2022 under the rules of Nacha, the body that runs ACH, and whether you can use that limit, and at what price, is up to your bank, not the network.
 
 ### Somebody emailed asking us to update their bank details. What now?
 
-Phone them on a number you already had before that email existed. Confirm it with a person. Not the number in the message. Not a number in the signature. Not a number you found by searching for the company this afternoon. This is the one check that matters. It works whether or not you ever automate anything.
+When someone emails asking you to update their bank details, phone them on a number you already had before that email existed and confirm it with a person: not the number in the message, not one in the signature, and not one you found by searching this afternoon.
 
-### Is it worth this for a one or two person brokerage?
+### Is automated invoicing worth it for a one or two person business?
 
-The reminder half, likely not. At that size you know every invoice you have out, and sending it yourself takes minutes. The asking half is worth it at any size. It does not grow with how big you are. It grows with how many arrangements you are a party to. That number has nothing to do with headcount.
+Automated invoicing is worth it for a one or two person business in its asking half, and the reminder half may not be: at that size you know every invoice you have out, and sending a reminder yourself takes minutes. The asking does not grow with how big you are; it grows with how many arrangements you are a party to, and that number has nothing to do with headcount.
 
-### What is the first thing to fix?
+### Do you work with businesses outside New York?
 
-The list. Before any software, write down every arrangement where someone else's event is what pays you. Next to each one, write how you would find out that the event happened. Making that list needs no budget at all. It takes an afternoon.
+We are based in New York State, and the call works for an owner anywhere. The card fee rule on this page is New York's; the federal rule on when money is available applies in every state, and the bank-detail check is good practice anywhere.
 
-## What to do about it
+## What to do first about the invoices nobody raised
 
-Take twenty minutes and one sheet of paper.
+The first thing to fix is the list, and it takes twenty minutes and one sheet of paper.
 
-Down the left, write every kind of money that comes into the business. Not the amounts, the kinds. Commission, referral fees you are owed, referral fees you owe, rentals, management, anything billed on its own.
+Down the left, write every kind of money that comes into the business. Not the amounts, the kinds: repair work, deposits, stage payments, referral fees you are owed, referral fees you owe, anything billed on its own, and for a real estate office the commission.
 
-Down the right, write how you find out that each one has come due. Some will say a system tells us. Some will say the closing happens and we know. And at least one will say, if you are honest about it, that somebody usually mentions it.
+Down the right, write how you find out that each one has come due. Some will say a system tells us. Some will say we do the work, so we know. And one may say, if you are honest about it, that somebody would probably mention it.
 
 That last line is where the money is. The fix for it does not start with buying anything. It starts with deciding whose job it is to ask, and how often.
 
-[[scene:funnel]]`;
+[[scene:funnel]]
+
+Start with the page on [automated invoicing for small business](/services/invoicing-and-payments): what it raises, what it sends, and what a person still decides.
+
+## Sources
+
+- 12 U.S.C. 2602, 2603 and 2607, the Real Estate Settlement Procedures Act, on Cornell Law School's Legal Information Institute: [2602](https://www.law.cornell.edu/uscode/text/12/2602), [2603](https://www.law.cornell.edu/uscode/text/12/2603), [2607](https://www.law.cornell.edu/uscode/text/12/2607). The statute in force.
+- 12 CFR 229, Regulation CC, availability of funds and collection of checks, sections [229.10](https://www.law.cornell.edu/cfr/text/12/229.10), [229.12](https://www.law.cornell.edu/cfr/text/12/229.12) and [229.13](https://www.law.cornell.edu/cfr/text/12/229.13). The regulation in force.
+- New York General Business Law section [518](https://www.nysenate.gov/legislation/laws/GBS/518), on credit card surcharges, as amended. The law in force.
+- The [2024 Internet Crime Report](https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf) of the Federal Bureau of Investigation's Internet Crime Complaint Center. An older source, kept for the argument: its figures are 2024's, the newest edition this page was written from.
+- Nacha, the rules body of the ACH network, Same Day ACH, its timeline of per payment limits (the chart above names it).`;
 
 export const AI_SCHEDULING_POST = `A job that needs someone else's yes can be booked on your calendar and still not be agreed by the people it depends on. We help local business owners set up an AI scheduling assistant that calls a time confirmed only after everyone who must agree has replied. Below is what such an assistant can and cannot do across calendars it does not own, four tests before buying one, whether the job is worth automating, and a three-week plan.
 

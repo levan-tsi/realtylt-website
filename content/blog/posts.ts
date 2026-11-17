@@ -253,18 +253,25 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "invoicing-and-payments-real-estate-brokerage",
     cluster: "back-office",
-    title: "The referral closed in July. Nobody here raised an invoice.",
-    seoTitle: "Invoicing and Payments in a Real Estate Brokerage, and RESPA",
+    title: "Invoice reminders: when to send one, what it should say, and the fee nobody invoiced",
+    seoTitle: "Invoice reminders and payments for trades and real estate",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
+    updated: "2026-11-17",
+    /** AGENTS ROUND 33 (2026-11-17), rewritten for business owners in the story manner of the assessment post: one
+     * invented plumbing company (Rosa, Nina, a showroom referral fee nobody invoiced) runs through every method
+     * section; the phrase "invoice reminder" is in the title, the H1 and the first sentence, with the timing and three
+     * wordings to copy; the real estate trade keeps its two sections (the commission, and the federal referral rule
+     * marked as that trade's rule), so the searches Google showed this page for keep their words. Address unchanged.
+     * No figure, link or scene lost. Record: realtylt-agents company/agents/seo/runs/r33-retarget/old1/.
+     *
+     * `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
      * pass fixed which denominator the IC3 average loss hangs on; see
      * docs/parity/ROUND45-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so the
      * slug ships at 18/19. */
     excerpt:
-      "There was no invoice sitting unpaid in anyone's system, because there was no invoice. What really behaves like a receivable in a brokerage, and what does not. The federal statute that decides who you may pay and be paid by. Why the money that arrived on Monday is not yours until Thursday. And the one control that stops a diverted payment.",
+      "When to send an invoice reminder and what it should say, with three wordings to copy, shown on one invented plumbing company. Then the money no reminder can chase: a referral fee earned in July and never invoiced. When a payment that has arrived can be withdrawn, what New York lets you add for a card, the bank-detail email to phone about, and, for a real estate office, the federal rule on referral fees.",
     seoDescription:
-      "What behaves like a receivable in a brokerage, what RESPA says about referral fees, and why money that arrived on Monday may not be yours until Thursday.",
+      "When to send an invoice reminder and what it should say, with three wordings to copy, plus the fee nobody invoiced and when a payment can be withdrawn.",
     cover: "/images/editorial/register-keys.jpg",
     body: [],
     placeholder: false,
