@@ -1298,8 +1298,8 @@ At twenty past nine on Saturday the manager replied: the tenant needs notice, an
 An appointment confirmation text, when someone else must agree, says only what has been agreed so far: a request while any yes is missing, a confirmed time once every yes is in, and a new question whenever the time moves. Three texts from the plumbing company's invented example show the order, and a person approves each one before it reaches the customer.
 
 1. While the building's manager and the tenant have not replied: "Your repair request for Saturday has gone to the building's manager and the tenant. We will confirm a time once both have agreed, and by Friday at six either way."
-2. Once both have said yes: "Your repair is confirmed for Saturday at eleven. The building's manager and the tenant have both agreed to that time."
-3. If the time has to move: "Saturday at eleven no longer works for the building. We are asking the manager and the tenant about two o'clock instead, and we will confirm once both have agreed."
+2. Once both have said yes to eleven, the time the owner asked for: "Your repair is confirmed for Saturday at eleven. The building's manager and the tenant have both agreed to that time."
+3. If the time has to move: "Saturday at eleven no longer works for the building. Would two o'clock suit you? If it does, we will ask the manager and the tenant about two and confirm once all of you have agreed."
 
 The first names no time, so nothing has to be taken back. The second names who agreed, so the customer can see why the time will hold. The third treats the moved time as a new question, because every yes was given to eleven, as "Why does moving the time reset every yes in scheduling?" explains below.
 
@@ -1507,7 +1507,7 @@ The person whose reply is missing, once, at a time set in your defaults; after t
 
 A closing is the same problem with more parties and a much higher cost of being wrong, and nothing here suggests automating it. What carries over is the discipline: know which people have confirmed in writing, and treat a moved date as a new question.
 
-### Can I talk to you about scheduling if my business is outside New York?
+### Can we talk about scheduling on a call if my business is outside New York?
 
 We are based in New York State, and the call works for an owner anywhere.
 
@@ -3449,7 +3449,7 @@ Then it should say so and offer the nearest other times, and it should never off
 
 Not always, and the study is about attendance rather than revenue. An appointment two days out is more likely to happen, and it also gives someone less time to arrange the money, a partner or childcare. For some appointments those matter more than attendance does. The finding is not that everything should be tomorrow. It is that the fortnight you drifted into because it suited the calendar has a cost, and now you know roughly which direction it runs.
 
-### Can I talk to you about no-shows if my business is outside New York?
+### Can we talk about no-shows on a call if my business is outside New York?
 
 We are based in New York State, and the call works for an owner anywhere.
 
@@ -3742,7 +3742,7 @@ No, you do not have to put your Google reviews on your own website. If you do, t
 
 A business needs about twenty Google reviews. According to the 2026 vendor survey, 47 percent said they would not use a business with fewer than twenty, and only 9 percent would use one with five or fewer. Past twenty, the same survey's other figure matters: 74 percent of the panel only care about reviews written in the last three months. An invented example: thirty reviews with four this quarter reads as busy; two hundred with none since last year reads as a business that used to be busy.
 
-### Can I talk to you about reviews if my business is outside New York?
+### Can we talk about reviews on a call if my business is outside New York?
 
 We are based in New York State, and the call works for an owner anywhere.
 
@@ -3991,7 +3991,7 @@ Somebody has to be reading, and the business owns the answer either way, as the 
 
 Yes. It is a small piece of code that goes into the site the business already has, whether it came from a website builder or was built by hand, so the site does not need rebuilding. It connects to the calendar and the CRM the business already runs.
 
-### Can I talk to you about a website chatbot if my business is outside New York?
+### Can we talk about a website chatbot on a call if my business is outside New York?
 
 We are based in New York State, and the call works for an owner anywhere. The chatbot goes into the website the business already has, as the answer above says, so the work needs no visit.
 
@@ -4013,7 +4013,7 @@ The free half of this needs nobody, us included: your own site opened on a phone
 
 [[scene:funnel]]
 
-A free website: some businesses get a plain website built free, by application. A plain site has no chat or services pages; an AI chat assistant can be added later if the business wants one. Apply through the form on the [AI chatbot for small business](/services/ai-chat-assistant) page.
+A free website: some businesses get a plain website built free, by application. A plain site has no chat or services pages; an AI chat assistant can be added later if the business wants one. Apply through the form on the [AI chatbot for small business](/services/ai-chat-assistant) page, and say in it that you are applying for the free website.
 
 ## Sources
 
@@ -4257,7 +4257,7 @@ An AI voice agent can work with your calendar and your CRM when it is connected 
 
 An outbound call by an AI voice can be legal when the checks for that call are met. Under the TCPA an AI voice counts as an artificial voice, so the called person's prior express consent is needed unless an exemption applies, and telemarketing also has to respect do-not-call rules and calling hours. The call's purpose, the person called and the states involved all matter, so have your attorney review the setup before the first outbound call.
 
-### Can I talk to you about an AI voice agent if my business is outside New York?
+### Can we talk about an AI voice agent on a call if my business is outside New York?
 
 We are based in New York State, and the call works for an owner anywhere. The rules for AI voices and call recording depend on the states a call involves, as the legal section above says.
 
@@ -4503,7 +4503,7 @@ Yes, you can follow up with old leads yourself with a mail merge for a short lis
 
 People who say no are recorded with the date, the source and the words they used, and the campaign does not contact them again. A no with a reason is the most useful output of the exercise, and it is a record of what a person said, not a guess about their future.
 
-### Can I talk to you about old leads if my business is outside New York?
+### Can we talk about old leads on a call if my business is outside New York?
 
 We are based in New York State, and the call works for an owner anywhere. The rules quoted on this page are the federal ones.
 
@@ -4948,7 +4948,7 @@ How long workflow automation takes depends on the scope, so we give a time only 
 
 Workflow automation can be worth it for a one-person business, because every manual step comes out of the only calendar there is. Most small businesses are one-person businesses: according to the Small Business Administration's Office of Advocacy, 82.3 percent of the 36,207,130 small businesses in the United States have no employees. Start with one chain on the most frequent job that passes the screening questions, and judge it after a month against your baseline.
 
-### Can I talk to you about workflow automation if my business is outside New York?
+### Can we talk about workflow automation on a call if my business is outside New York?
 
 We are based in New York State, and the call works for an owner anywhere.
 

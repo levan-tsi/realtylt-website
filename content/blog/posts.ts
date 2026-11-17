@@ -275,7 +275,7 @@ export const POSTS: BlogPost[] = ([
     slug: "ai-scheduling-real-estate-showing-confirmations",
     cluster: "appointments",
     title: "Appointment confirmation texts when someone else must say yes",
-    seoTitle: "Appointment Confirmation Texts When Others Must Say Yes",
+    seoTitle: "Appointment Confirmation Texts: Three Wordings to Copy",
     date: "2026-08-25",
     updated: "2026-11-17",
     /** ROUND 28 (2026-11-11), re-aimed at local business owners (his order of 2026-11-11): the

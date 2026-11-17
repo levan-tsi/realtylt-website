@@ -129,7 +129,7 @@ describe("extractFaqs", () => {
       "Do I have to tell people it is an AI?",
       "What happens when it gets something wrong?",
       "Can I add an AI chat assistant to my existing website?",
-      "Can I talk to you about a website chatbot if my business is outside New York?",
+      "Can we talk about a website chatbot on a call if my business is outside New York?",
     ]);
     expect(faqs.every((f) => f.a.length > 40)).toBe(true);
   });
