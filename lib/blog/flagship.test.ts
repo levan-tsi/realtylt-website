@@ -238,29 +238,33 @@ describe("flagshipToc", () => {
    * exists to catch, and it can only be caught by writing down what shipped. */
   it("derives exactly the rail the CRM sync post shipped with", () => {
     const crmOutline = parseOutline(CRM_SYNC_POST);
+    // Round 33 (2026-11-17): the headings became the questions an owner types, a section on fixing the duplicates already
+    // there was added, the calculator moved into it, and the post gained a Sources list.
     expect(flagshipToc(crmOutline, CRM_SYNC_FLAGSHIP)).toEqual([
-      { id: "why-there-are-two-of-her-and-it-is-not-carelessness", label: "Why two" },
+      { id: "why-does-a-crm-end-up-with-duplicate-contacts", label: "Why two" },
       { id: "scene-two-of-her", label: "The two records", scene: true },
-      { id: "what-the-same-person-means-to-a-computer", label: "The same person" },
+      { id: "how-does-a-computer-decide-two-contacts-are-the-same-person", label: "The same person" },
+      { id: "can-a-crm-match-duplicate-contacts-by-name-alone", label: "Names" },
       { id: "scene-surnames", label: "The surname", scene: true },
-      { id: "a-name-is-not-an-identifier-and-this-is-how-far-from-one-it-is", label: "Names" },
-      { id: "somebody-solved-this-properly-and-the-answer-has-three-outcomes", label: "The model" },
+      { id: "what-is-the-published-method-for-matching-duplicate-records", label: "The model" },
       { id: "scene-three-answers", label: "Three answers", scene: true },
-      { id: "the-third-answer-is-a-person-and-it-is-the-one-nobody-sells-you", label: "The third answer" },
+      { id: "why-does-matching-duplicate-contacts-need-a-person-in-the-middle", label: "The third answer" },
       { id: "scene-census-clerks", label: "What is left", scene: true },
-      { id: "what-a-sync-is-actually-made-of", label: "What a sync is" },
+      { id: "what-is-two-way-crm-sync-made-of", label: "What a sync is" },
       { id: "scene-sync-path", label: "The path", scene: true },
-      { id: "the-field-that-gets-erased", label: "The erased field" },
-      { id: "the-same-update-arriving-twice", label: "Arriving twice" },
-      { id: "when-both-sides-changed-at-once", label: "Both sides" },
+      { id: "why-does-a-crm-sync-erase-a-field", label: "The erased field" },
+      { id: "why-does-the-same-update-arrive-twice", label: "Arriving twice" },
+      { id: "what-happens-when-both-systems-change-a-contact-at-once", label: "Both sides" },
+      { id: "which-system-wins-when-two-contact-records-disagree", label: "Which side wins" },
+      { id: "which-field-decides-whether-a-contact-is-new-or-a-duplicate", label: "The identity field" },
+      { id: "how-do-you-check-a-crm-for-duplicate-contacts-in-twenty-minutes", label: "How to check yours" },
+      { id: "how-do-you-fix-duplicate-contacts-already-in-a-crm", label: "Fixing what is there" },
       { id: "scene-crm-calculator", label: "Your numbers", scene: true },
-      { id: "which-side-is-right-and-why-somebody-has-to-say-it-out-loud", label: "Which side wins" },
-      { id: "what-the-identity-field-actually-is-in-your-crm", label: "The identity field" },
-      { id: "what-it-costs-and-how-long-it-takes", label: "Cost and time" },
-      { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
-      { id: "how-to-find-out-how-bad-yours-is-in-twenty-minutes", label: "How to check yours" },
-      { id: "common-questions-answered-honestly", label: "Common questions" },
-      { id: "what-to-do-about-it", label: "What to do" },
+      { id: "what-does-it-take-to-fix-duplicate-contacts-in-a-crm", label: "What it takes" },
+      { id: "what-does-a-crm-sync-not-fix", label: "What it will not do" },
+      { id: "common-questions-about-duplicate-contacts-and-crm-sync", label: "Common questions" },
+      { id: "what-to-do-first-about-duplicate-contacts-in-a-crm", label: "What to do" },
+      { id: "sources", label: "Sources" },
     ]);
   });
 

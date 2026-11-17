@@ -389,19 +389,26 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "crm-sync-real-estate-duplicate-contact-records",
     cluster: "records",
-    title: "She is in your CRM twice. Only one of them knows she sold.",
-    seoTitle: "CRM Sync for Real Estate: Fixing Duplicate Contact Records",
+    title: "Duplicate contacts in a CRM: why a small business gets them and how to fix them",
+    seoTitle: "Duplicate contacts in a CRM: the cause and how to fix it",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` SET IN ROUND 48. Published 2026-08-25, revised 2026-08-27: the sync-path
+    updated: "2026-11-17",
+    /** AGENTS ROUND 33 (2026-11-17), rewritten for business owners in the story manner of the assessment post: one
+     * invented heating and cooling company (Dana, Luis, Kathy and Katherine Brown) runs through every method section;
+     * the headings are the questions an owner types; the phrase "duplicate contacts in a CRM" is in the title, the H1
+     * and the first sentence (the word CRM kept: without it the phrase is phone address-book help); a real estate
+     * office stays one named trade, so the searches Google showed this page for keep their words. Address unchanged
+     * (indexed). No figure, link or scene lost. Record: realtylt-agents company/agents/seo/runs/r33-retarget/old1/.
+     *
+     * `updated` SET IN ROUND 48. Published 2026-08-25, revised 2026-08-27: the sync-path
      * diagram heading still read "one record that is true", the unqualified claim round 47
      * removed twice from /services/crm-sync. It now reads as the diagram's own lede does, that
      * both systems agree on the record. See docs/parity/ROUND48-RELEVANCE-PASS.md. First real
      * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
-      "Two contact records, one woman, and an automated email asking whether she is still thinking of selling three days before her closing. What a two-way CRM sync really decides on your behalf. Why the published model for matching records has three answers rather than two. And the one field in your setup that every duplicate you have ever had came from.",
+      "One invented heating and cooling company finds a customer in its CRM twice, three days after an email asked her whether she was still thinking of buying. Why duplicate contacts are never carelessness. Why the published method for matching records has three answers, not two. The four ways a sync quietly damages a record. And a twenty-minute check you can run on your own CRM today.",
     seoDescription:
-      "What two-way CRM sync does about duplicate contacts, why record matching has three outcomes, not two, and the four ways a sync quietly damages a record.",
+      "Why duplicate contacts pile up in a CRM, why record matching has three outcomes, what a two-way sync must decide, and a twenty-minute check of your own.",
     cover: "/images/listings/house-11.jpg",
     body: [],
     placeholder: false,
