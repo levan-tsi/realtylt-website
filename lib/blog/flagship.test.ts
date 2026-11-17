@@ -184,7 +184,7 @@ describe("flagshipToc", () => {
     expect(flagshipToc(localOutline, LOCAL_SEO_FLAGSHIP)).toEqual([
       // Round 29 (2026-11-14): the refresh re-aimed at local owners (plain question headings, the experts' list,
       // the worth-it test, who it fits, what to do first, the quiz and the sources).
-      { id: "how-do-you-rank-in-google-maps", label: "How to rank" },
+      { id: "how-do-you-rank-higher-on-google-maps", label: "How to rank" },
       { id: "scene-ranking-factors", label: "The three", scene: true },
       { id: "what-do-local-search-experts-say-matters-most", label: "The experts" },
       { id: "which-parts-of-the-ranking-can-you-not-change", label: "Distance" },

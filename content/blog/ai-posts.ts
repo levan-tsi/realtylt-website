@@ -2909,7 +2909,7 @@ Then take the two pages you already have that you are least sure about. Delete e
 
 [[scene:funnel]]`;
 
-export const LOCAL_SEO_POST = `We help local business owners work out how to rank in Google Maps: the profile to fix and keep current, the reviews to ask for every time, and a person approving everything that is published in the business's name. Below is how to rank in Google Maps using what Google itself publishes, what a panel of local search experts says matters most, a check you can run tonight, whether the work is worth doing yourself or having done, and what to do first this week.
+export const LOCAL_SEO_POST = `We help local business owners work out how to rank higher on Google Maps: the profile to fix and keep current, the reviews to ask for every time, and a person approving everything that is published in the business's name. Below is how to rank in Google Maps using what Google itself publishes, what a panel of local search experts says matters most, a check you can run tonight, whether the work is worth doing yourself or having done, and what to do first this week.
 
 This page is for owners of a business that people search for nearby: a plumber, a roofer or an HVAC contractor, a dental, accounting or insurance office, a salon, a spa or a gym, a real estate office.
 
@@ -2919,7 +2919,7 @@ A plumber two miles away has done good work for years and is not one of the thre
 
 [[scene:in-short]]
 
-## How do you rank in Google Maps?
+## How do you rank higher on Google Maps?
 
 Google ranks local results mainly on three things, relevance, distance and prominence, and it says there is no way to request or pay for a better position. Two of the three are work you can do. The third, distance, is a fact about where you and the searcher are standing.
 
@@ -3037,13 +3037,13 @@ The calculator below runs the same ladder with your numbers. It has no row for w
 
 ## What do ads add compared with ranking in Google Maps?
 
-Paid ads are the obvious alternative to ranking in Google Maps, and the honest comparison is not that ads are bad. It is that only a test shows what the ads add. One organisation ran the experiment properly and got an answer that surprised everyone.
+Paid ads are the obvious alternative to ranking in Google Maps, and the honest comparison is not that ads are bad. It is that only a test shows what the ads add. One organisation ran the experiment properly, with a control, and published the answer.
 
 In March 2012 eBay stopped bidding on search queries containing its own name on two search engines. It kept buying exactly the same terms on a third, and that third is the control, which is the whole point. Three economists, two of them employed by eBay's research lab when the work was done, wrote it up in a [National Bureau of Economic Research working paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf) in May 2014.
 
 The naive comparison, before and after, said click volume was 5.6 percent lower once the ads stopped. Measured against the platform where the ads kept running, only 0.529 percent of the click traffic was lost, so 99.5 percent was retained. The people were still coming, through the unpaid result under the advert instead of the advert. The paper then reports a return on investment of over 1,400 percent from ordinary methods with controls, and negative 63 percent from the experiment.
 
-Be careful with this. It is eBay, a name tens of millions of people type, and the ads were on queries containing that name. A person who types your company's name already knows you, which is exactly why the brand-keyword half does not transfer. What transfers is the shape of the mistake: the traffic that substitutes most cleanly for paid clicks is the traffic that was coming anyway, and a dashboard cannot show you that. This source is from 2014 and is kept for the argument.
+Be careful with this. It is eBay, a name far better known than any local business, and the ads were on queries containing that name. A person who types your company's name already knows you, which is exactly why the brand-keyword half does not transfer. What transfers is the shape of the mistake: the traffic that substitutes most cleanly for paid clicks is the traffic that was coming anyway, and a dashboard cannot show you that. This source is from 2014 and is kept for the argument.
 
 [[scene:paid-search]]
 
@@ -3137,7 +3137,7 @@ Google publishes the inputs, not the recipe: local results are mainly based on r
 
 ### How do I rank higher in Google Maps without spending a fortune on ads?
 
-Fix the profile, ask for reviews and read the report, which take an evening for a profile that is mostly right (longer for one that is badly wrong), a link and a monthly look, not an advertising budget. Google's page says there is no way to pay for a better local ranking, and the eBay experiment above found that most of the click traffic the ads were credited with arrived without them.
+Fix the profile, ask for reviews and read the report, which take an evening for a profile that is mostly right (longer for one that is badly wrong), a link and a monthly look, not an advertising budget. Google's page says there is no way to pay for a better local ranking, and the eBay experiment above found that, on searches for eBay's own name, most of the click traffic the ads were credited with arrived without them.
 
 ### How do I get my business on Google Maps?
 
@@ -3165,7 +3165,7 @@ A fixed profile is a corrected record, which is not the same as a changed positi
 
 ### Can I rank in a town my office is not in?
 
-In the map results, distance works against you, because it is one of the three published inputs. The other route is an ordinary page on your own website covering work you have really done in that town. A set of thin pages with the town name swapped is something Google's spam policy names.
+In the map results, distance works against you, because it is one of the three published inputs. The other route is an ordinary page on your own website covering work you have really done in that town. A set of thin pages with the town name swapped is what Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call doorway abuse: one of their own examples is "multiple domain names or pages targeted at specific regions or cities that funnel users to one page".
 
 ### Do citations and directory listings still matter?
 
@@ -3174,6 +3174,10 @@ Citations and directory listings matter for being correct, and they are not what
 ### Can anybody guarantee me a position?
 
 No, and the sentence to quote back is Google's own: there is no way to request or pay for a better local ranking. What you can do yourself is the work: a finished profile, a review request sent after each job and a monthly look at the report.
+
+### Can I talk to you about my profile if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere. The profile work itself is done through manager access to your profile, so it needs no visit.
 
 [[scene:quiz]]
 
@@ -3185,7 +3189,7 @@ If your name is in the three, the work is to stay there, which is duller and mor
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [local SEO services](/services/local-seo).
 
 ## Sources
 
@@ -3193,6 +3197,7 @@ Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result,
 - Google, Business Profile Help, "Guidelines for representing your business on Google", [the guidelines](https://support.google.com/business/answer/3038177), a live document. Read November 14, 2026.
 - Google, Business Profile Help, "Tips to get more reviews", [the page](https://support.google.com/business/answer/3474122), and "Add or claim your Business Profile", [the page](https://support.google.com/business/answer/2911778), live documents. Read November 14, 2026.
 - Google, Maps user contributed content policy, [the policy page](https://support.google.com/contributionpolicy/answer/7400114), a live document. Read November 14, 2026.
+- Google Search Central, spam policies for Google web search, [the policies](https://developers.google.com/search/docs/essentials/spam-policies), a live document. Read November 17, 2026.
 - Darren Shaw, Whitespark, Local Search Ranking Factors 2026, published November 6, 2025, [the report](https://whitespark.ca/local-search-ranking-factors/): a survey of 47 experts scoring 187 factors, opinion and not Google's rules. Read November 14, 2026.
 - BrightLocal, Local Consumer Review Survey 2026, 1,002 US adult consumers, [the survey](https://www.brightlocal.com/research/local-consumer-review-survey/), published by a company that sells review software. Read November 14, 2026.
 - Cornell University, Joachims, Granka, Pan, Hembrooke and Gay, the SIGIR 2005 paper on interpreting clickthrough data as implicit feedback, [the paper](https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf). Read November 14, 2026; kept for the argument, the one experiment in this post on how readers treat the order of a list.

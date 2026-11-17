@@ -383,7 +383,7 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       eyebrow: "Ten questions",
       title: "What did you learn? Check it in two minutes",
       brand: "ai",
-      passLine: "You know what Google publishes and what you can change. The free AI quiz at the end of this page turns it into your own result.",
+      passLine: "You know what Google publishes and what you can change. If you would rather have the profile kept for you, our local SEO service is linked at the end of this page.",
       failLine: "Under half this time. Read the three inputs and the profile rules again, then have another go.",
       questions: LOCAL_SEO_QUIZ,
     },
@@ -582,7 +582,7 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
   /** Short rail labels for the prose headings. Ids and ORDER are derived from the document, so a
    * renamed heading degrades to its full text rather than leaving a dead row. */
   headingLabels: {
-    "how-do-you-rank-in-google-maps": "How to rank",
+    "how-do-you-rank-higher-on-google-maps": "How to rank",
     "what-do-local-search-experts-say-matters-most": "The experts",
     "which-parts-of-the-ranking-can-you-not-change": "Distance",
     "why-does-the-top-of-a-short-list-matter-so-much": "The top slot",

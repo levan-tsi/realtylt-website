@@ -432,10 +432,10 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "local-seo-real-estate-map-pack-google-business-profile",
     cluster: "visibility",
-    title: "How to rank in Google Maps: fix the profile, ask for reviews, accept the distance",
-    seoTitle: "How to Rank in Google Maps: Business Profile and Reviews",
+    title: "How to rank higher on Google Maps: fix the profile, ask for reviews, accept the distance",
+    seoTitle: "How to Rank Higher on Google Maps: Business Profile, Reviews",
     date: "2026-08-25",
-    updated: "2026-11-14",
+    updated: "2026-11-17",
     /** ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-11): the title is
      * the owners' phrase "how to rank in google maps"; the story a plumber and a basement; the
      * examples a plumber, a roofer, an HVAC contractor, a dental, accounting or insurance office, a salon,
@@ -447,10 +447,14 @@ export const POSTS: BlogPost[] = ([
      * pass restored the exception Google's own service-area guideline carries in its very next
      * sentence; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays red, no
      * film, so the slug ships at 18/19. */
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the title, the first
+     * sentence and the first question say "how to rank higher on Google Maps" (100 to 1,000 searches a month, four small agencies
+     * on its first page); round 30's "how to rank in Google Maps" stays in the text. The closing goes to the service page while
+     * the quiz is not live, and the FAQ says where we are based. Slug kept: the address is indexed. */
     excerpt:
-      "How to rank in Google Maps for a local business: what Google publishes about relevance, distance and prominence, what 47 local search experts rank first, the profile rules that get a listing suspended, and a ten-minute check you can run tonight.",
+      "How to rank higher on Google Maps for a local business: what Google publishes about relevance, distance and prominence, what 47 local search experts rank first, the profile rules that get a listing suspended, and a ten-minute check you can run tonight.",
     seoDescription:
-      "How to rank in Google Maps: what Google publishes, what local experts rank first, the profile rules and the reviews, for plumbers, salons, dental offices and more.",
+      "How to rank higher on Google Maps: what Google publishes, what local experts rank first, the profile rules and reviews, for plumbers, salons and dental offices.",
     cover: "/images/hero/hudson-olana.jpg",
     body: [],
     placeholder: false,

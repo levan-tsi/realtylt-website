@@ -19,7 +19,7 @@ export const LOCAL_SEO_QUIZ: QuizQuestion[] = [
       "It can be bought through a review service",
     ],
     answer: 1,
-    why: 'Google says there is no way to request or pay for a better local ranking; see "How do you rank in Google Maps?".',
+    why: 'Google says there is no way to request or pay for a better local ranking; see "How do you rank higher on Google Maps?".',
   },
   {
     q: "Which three inputs does Google say local results are mainly based on?",
@@ -30,7 +30,7 @@ export const LOCAL_SEO_QUIZ: QuizQuestion[] = [
       "Reviews, photos and posts",
     ],
     answer: 0,
-    why: 'The page names relevance, distance and popularity, and publishes no weights; see "How do you rank in Google Maps?".',
+    why: 'The page names relevance, distance and popularity, and publishes no weights; see "How do you rank higher on Google Maps?".',
   },
   {
     q: "Which of the three inputs can no amount of work change?",
