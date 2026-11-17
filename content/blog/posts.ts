@@ -711,8 +711,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-chat-assistant-real-estate-website",
     cluster: "answering",
-    title: "AI chatbot for small business websites: the question that arrives at 11:40pm",
-    seoTitle: "AI Chatbot for Small Business Websites: How to Test One",
+    title: "Website chatbot for a small business: the question that arrives at 11:40pm",
+    seoTitle: "Website Chatbot for a Small Business: How to Test One",
     date: "2026-07-12",
     /** 08-02: the largest revision this post has had. It had been resting on an unsourced "78%"
      * and carried one citation, which the voice post also used, so it effectively had no source
@@ -738,11 +738,15 @@ export const POSTS: BlogPost[] = ([
      * fits, is it worth automating, what to do first, a Canadian tribunal's 2024 decision on who
      * owns a chatbot's answer, the Census Bureau's AI-use survey, a quiz. The closing is the free
      * website door (CTA-2 version D). Slug kept. See docs/blog-r29/NOTES-chat.md. */
-    updated: "2026-11-14",
+    updated: "2026-11-17",
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the title, the first
+     * sentence and the definitional question carry "website chatbot" (100 to 1,000 searches a month); the service page takes
+     * "AI chatbot for small business", so the two stop competing. The free-website door goes through the service page's form
+     * while the quiz is not live; the FAQ says where we are based. Slug kept: the address is indexed. */
     excerpt:
-      "A homeowner asked a heating company's website one question at twenty to midnight, and the answer came at nine. What an AI chatbot for a small business, or a real estate website, really does in that gap. Why the number this category is sold on cannot be sourced. Who owns what it says, whether it is worth it for your kind of business, and what to do first.",
+      "A homeowner asked a heating company's website one question at twenty to midnight, and the answer came at nine. What a website chatbot for a small business, or a real estate office, really does in that gap. Why the number this category is sold on cannot be sourced. Who owns what it says, whether it is worth it for your kind of business, and what to do first.",
     seoDescription:
-      "An AI chatbot for a small business or real estate website: what it answers at 11:40pm, what it hands to a person, how to test one, and whether it is worth it.",
+      "A website chatbot for a small business or real estate office: what an AI chatbot answers at 11:40pm, what it hands to a person, and how to test one.",
     cover: "/images/lifestyle/buying.jpg",
     body: [],
     placeholder: false,

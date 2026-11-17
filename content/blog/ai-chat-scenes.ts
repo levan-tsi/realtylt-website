@@ -485,7 +485,7 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       eyebrow: "Ten questions",
       title: "What did you learn? Check it in two minutes",
       brand: "ai",
-      passLine: "You know what to test and when to leave it alone. The free AI quiz at the end of this page turns that into your own result.",
+      passLine: "You know what to test and when to leave it alone. If you would rather have one built and watched for you, our AI chatbot service is linked at the end of this page.",
       failLine: "Under half this time. Read what makes an answer true and the worth-it test again, then have another go.",
       questions: CHAT_QUIZ,
     },

@@ -3749,7 +3749,7 @@ Sources checked November 11, 2026.
 
 Written with an AI assistant and checked by Levan.`;
 
-export const AI_CHAT_ASSISTANT_POST = `We help local business owners decide whether an AI chatbot belongs on their website, and set one up that is built to answer from the owner's own information, offer times from the real calendar and hand anything it cannot check to a person. Below is how to test one, what it does and what it will not do, whether it is worth it for your kind of business, and what to do first this week.
+export const AI_CHAT_ASSISTANT_POST = `We help local business owners decide whether a website chatbot belongs on their site, and set up an AI chatbot that is built to answer from the owner's own information, offer times from the real calendar and hand anything it cannot check to a person. Below is how to test one, what it does and what it will not do, whether it is worth it for your kind of business, and what to do first this week.
 
 This page is for owners of a home services company, a dental, accounting or insurance office, a salon, spa or gym, or a real estate office: any business where a visitor lands on the website with a question and nobody is there to answer it.
 
@@ -3921,9 +3921,9 @@ An invented example: a heating company's owner writes the answer to "do you come
 
 ## Common questions about AI chatbots, answered honestly
 
-### What is an AI chatbot for a small business website?
+### What is an AI website chatbot for a small business?
 
-An AI chatbot for a small business website is a text conversation on your own site, answered by a language model. The useful kind is connected to the systems that hold the real answers, such as your calendar, and the weaker kind only reads your website's text. A visitor types a question the way they would ask you. It answers in sentences rather than menus, and when it reaches the end of what it can confirm, it is built to book time with you instead. The part that makes it worth having is not that it talks. It is that it is awake at eleven at night and, when it is connected, it answers from something current.
+An AI website chatbot for a small business is a text conversation on your own site, answered by a language model. The useful kind is connected to the systems that hold the real answers, such as your calendar, and the weaker kind only reads your website's text. A visitor types a question the way they would ask you. It answers in sentences rather than menus, and when it reaches the end of what it can confirm, it is built to book time with you instead. The part that makes it worth having is not that it talks. It is that it is awake at eleven at night and, when it is connected, it answers from something current.
 
 ### Do I need an AI chatbot on my website?
 
@@ -3969,6 +3969,10 @@ Somebody has to be reading, and the business owns the answer either way, as the 
 
 Yes. It is a small piece of code that goes into the site the business already has, whether it came from a website builder or was built by hand, so the site does not need rebuilding. It connects to the calendar and the CRM the business already runs.
 
+### Can I talk to you about a website chatbot if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere. The chatbot goes into the website the business already has, as the answer above says, so the work needs no visit.
+
 [[scene:quiz]]
 
 ## Where does an AI chatbot go wrong?
@@ -3987,7 +3991,7 @@ The free half of this needs nobody, us included: your own site opened on a phone
 
 [[scene:funnel]]
 
-A free website: some businesses get a plain website built free, by application. A plain site has no chat or services pages; an AI chat assistant can be added later if the business wants one. Apply through the free AI quiz: realtylt.com/ai/assessment
+A free website: some businesses get a plain website built free, by application. A plain site has no chat or services pages; an AI chat assistant can be added later if the business wants one. Apply through the form on the [AI chatbot for small business](/services/ai-chat-assistant) page.
 
 ## Sources
 
