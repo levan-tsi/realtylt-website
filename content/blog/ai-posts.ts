@@ -4289,7 +4289,7 @@ Sources checked November 11, 2026. None of this is legal advice.
 
 Written with an AI assistant and checked by Levan.`;
 
-export const DATABASE_REACTIVATION_POST = `We help local business owners work out how to follow up with old leads and past customers: which records they may contact, which message goes to whom, and what a person approves before anything is sent. Below is what database reactivation is, the three rule checks to run on your own records before a single message goes out, an invented worked example by channel, whether it is worth doing at all, and what to do first this week.
+export const DATABASE_REACTIVATION_POST = `We help local business owners plan lead follow-up for old leads and past customers: which records they may contact, which message goes to whom, and what a person approves before anything is sent. Below is what database reactivation is, the three rule checks to run on your own records before a single message goes out, an invented worked example by channel, whether it is worth doing at all, and what to do first this week.
 
 This page is for owners of a business with a list older than its memory: a heating, plumbing or roofing company, an accounting or insurance office, a salon, a spa or a gym, a real estate office. The rules quoted are the federal ones. Nothing here is legal advice.
 
@@ -4503,6 +4503,10 @@ Yes, you can follow up with old leads yourself with a mail merge for a short lis
 
 People who say no are recorded with the date, the source and the words they used, and the campaign does not contact them again. A no with a reason is the most useful output of the exercise, and it is a record of what a person said, not a guess about their future.
 
+### Can I talk to you about old leads if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere. The rules quoted on this page are the federal ones.
+
 [[scene:quiz]]
 
 ## What should you do about your old leads?
@@ -4513,7 +4517,7 @@ The system is laid out on [the RealtyLT AI page](/ai#reactivation), and the [dat
 
 [[scene:funnel]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [database reactivation](/services/database-reactivation).
 
 ## Sources
 

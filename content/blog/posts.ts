@@ -579,8 +579,8 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "database-reactivation-old-real-estate-leads",
     cluster: "records",
-    title: "How to follow up with old leads and win back past customers",
-    seoTitle: "How to Follow Up With Old Leads: Win Back Past Customers",
+    title: "Lead follow-up for old leads: how to win back past customers",
+    seoTitle: "Lead Follow-Up for Old Leads: Win Back Past Customers",
     /** Researched and drafted 07-30, finished and shipped 07-31. Both dates are real: this
      * session began on the 30th and the piece was rewritten and verified on the 31st. */
     date: "2026-07-30",
@@ -594,7 +594,7 @@ export const POSTS: BlogPost[] = ([
      * regulation actually attaches (the scene file had it right, the prose had dropped it); and
      * "three hundred conversations to find four people", a conversion rate this same post calls
      * made up two screens later. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-11-14",
+    updated: "2026-11-17",
     /** ROUND 29 (2026-11-14), re-aimed at local business owners (his order of 2026-11-11): the title is
      * the owners' phrase "how to follow up with old leads" (the keyword map's AC 2); the story a heating
      * company and a furnace tune-up; the examples a heating company, a gym's tour-no-buy list, an accounting
@@ -604,10 +604,15 @@ export const POSTS: BlogPost[] = ([
      * it fits, what to do first, the quiz). The reason the SEO agent blocked the 2026-11-05 draft (F5, a
      * dollar figure on a public piece, and 35 second-reader notes) is in docs/blog-r29/NOTES-reactivation.md.
      * Slug kept. */
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the title, the first
+     * sentence and the description lead with "lead follow-up" (100 to 1,000 searches a month, about tenfold in a year); round
+     * 30's "how to follow up with old leads" (no reported searches) stays in the headings, and "database reactivation", the
+     * search the page was shown for most, stays in the text and the description. The closing goes to the service page while the
+     * quiz is not live; the FAQ says where we are based. Slug kept: the address is indexed. */
     excerpt:
-      "How to follow up with old leads and past customers: what database reactivation is, the three federal rule checks to run on your own records before a message goes out, an invented worked example by channel, and whether it is worth doing at all.",
+      "Lead follow-up for old leads and past customers: what database reactivation is, the three federal rule checks to run on your own records before a message goes out, an invented worked example by channel, and whether it is worth doing at all.",
     seoDescription:
-      "How to follow up with old leads and win back past customers: the three federal rule checks, a worked example by channel, when it is worth it and what to do first.",
+      "Lead follow-up for old leads and past customers: database reactivation in plain words, the three federal rule checks, a worked example and what to do first.",
     cover: "/images/hero/valley-aerial.jpg",
     body: [],
     placeholder: false,

@@ -489,7 +489,7 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
       eyebrow: "Ten questions",
       title: "What did you learn? Check it in two minutes",
       brand: "ai",
-      passLine: "You know the checks that come before a message. The free AI quiz at the end of this page turns them into your own result.",
+      passLine: "You know the checks that come before a message. If you would rather have the follow-up run for you, our database reactivation service is linked at the end of this page.",
       failLine: "Under half this time. Read the three checks and the stop rules again, then have another go.",
       questions: REACTIVATION_QUIZ,
     },
