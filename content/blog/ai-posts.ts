@@ -3789,7 +3789,7 @@ That gap, between when people ask and when a business answers, is what this page
 
 ## The speed claim in AI chatbot sales pitches, and where it comes from
 
-One figure about reply speed gets repeated on sales slides for AI chatbots: that seventy eight percent of customers buy from whoever answers first. You have probably seen it more than once.
+One figure about reply speed circulates with AI chatbot pitches, and an earlier version of this very page rested on it: that seventy eight percent of customers buy from whoever answers first.
 
 We went looking for the study behind it, because a claim doing that much work should have a document under it. We found no source for it: no report, no stated sample and no method that we could open. None of that proves the figure is wrong. It does mean we cannot tell you whether it is right, and a number nobody can check is a slogan wearing a percentage sign.
 
