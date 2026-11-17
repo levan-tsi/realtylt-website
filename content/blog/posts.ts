@@ -580,7 +580,7 @@ export const POSTS: BlogPost[] = ([
     slug: "database-reactivation-old-real-estate-leads",
     cluster: "records",
     title: "Lead follow-up for old leads: how to win back past customers",
-    seoTitle: "Lead Follow-Up for Old Leads: Win Back Past Customers",
+    seoTitle: "Lead Follow-Up for Old Leads: Reactivate Past Customers",
     /** Researched and drafted 07-30, finished and shipped 07-31. Both dates are real: this
      * session began on the 30th and the piece was rewritten and verified on the 31st. */
     date: "2026-07-30",
@@ -734,7 +734,7 @@ export const POSTS: BlogPost[] = ([
     slug: "ai-chat-assistant-real-estate-website",
     cluster: "answering",
     title: "Website chatbot for a small business: the question that arrives at 11:40pm",
-    seoTitle: "Website Chatbot for a Small Business: How to Test One",
+    seoTitle: "Website Chatbot for a Small Business: An AI Chat Assistant",
     date: "2026-07-12",
     /** 08-02: the largest revision this post has had. It had been resting on an unsourced "78%"
      * and carried one citation, which the voice post also used, so it effectively had no source
