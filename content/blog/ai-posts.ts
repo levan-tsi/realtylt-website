@@ -1373,7 +1373,7 @@ None of the eight, the good one included, says the person is coming. Delivered i
 
 An AI scheduling assistant can honestly do four things across calendars it does not own.
 
-It can propose without promising. The first message to your customer either names a time or says a request has gone in, and those two messages lead to very different Saturdays.
+It can propose without promising. The first message to your customer either names a time or says a request has gone in, and those two messages lead to very different Saturdays, as the first two texts at the top of this page show.
 
 It can hold your side properly. Your calendar is the one thing in the exchange your software controls, so a live proposal should block it and a dead one should release it. Blocking without releasing fills a diary with appointments that never happened.
 
@@ -1407,7 +1407,7 @@ An invented example: a salon tells a bridal party their trial is booked before t
 
 To test an AI scheduling assistant before you buy it, ask four questions; none of them is technical.
 
-Ask to see what the person on the other end receives before anyone has agreed. If that first message carries a bare time with no qualification, that is the product, and no later setting undoes it.
+Ask to see the first text or email the person on the other end receives before anyone has agreed. If that first message carries a bare time with no qualification, that is the product, and no later setting undoes it.
 
 Ask what happens to your calendar while a proposal is open, and then what happens when it dies. A system that blocks and never releases tells people you are busy on days you are free.
 
