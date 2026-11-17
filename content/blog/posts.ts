@@ -411,18 +411,24 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "geo-landing-pages-real-estate-doorway-pages",
     cluster: "visibility",
-    title: "Nine town pages. The only thing that changed was the town.",
-    seoTitle: "GEO Landing Pages for Real Estate vs Doorway Pages",
+    title: "Doorway pages: where a real town page ends and a doorway begins",
+    seoTitle: "Doorway pages vs landing pages: where the line falls",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
+    updated: "2026-11-17",
+    /** AGENTS ROUND 33 (2026-11-17), the owner's order to rewrite the older AI posts for business owners in the story manner of
+     * the assessment post: aimed at "doorway pages" (PHRASES.md, round 33; the page was shown for "doorway pages vs landing
+     * pages", which the search title keeps). One invented electrical company (Nadia, Carl, nine towns) runs through every method
+     * section; the fair housing rules stay as a section marked for a real estate team; every figure, link and scene kept; the
+     * closing is one link to the service page. Record: realtylt-agents company/agents/seo/runs/r33-retarget/old2/.
+     *
+     * `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
      * pass restored the clause 24 CFR 100.70 actually hangs on to both places this post
      * summarises it; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays
      * red, no film, so the slug ships at 18/19. */
     excerpt:
-      "A page for every town you serve is the oldest tactic in local marketing. Google's spam policy names it twice, once in an example that is about generative AI specifically. Where the line between a real area page and a doorway really falls. How cheap sameness is to measure. And the fair housing rule nobody selling this will mention.",
+      "Doorway pages, shown on one invented electrical company with nine towns on its list and eight generated town pages that differ only in the town's name. Where a landing page ends and a doorway begins in Google's spam policy, why writing with AI is not the fault, how cheap sameness is to measure, four checks for every town page, and, for a real estate team, the fair housing rules on advertising an area.",
     seoDescription:
-      "What Google's spam policy says about location pages, what separates a real area page from a doorway, and the fair housing rules on advertising an area.",
+      "Doorway pages vs landing pages for a business serving several towns: what Google's spam policy names, and four checks to run on every town page.",
     cover: "/images/counties/orange.jpg",
     body: [],
     placeholder: false,

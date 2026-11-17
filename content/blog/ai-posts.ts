@@ -2711,203 +2711,283 @@ Katherine is one person. Your database is entitled to know that.
 
 [[scene:funnel]]`;
 
-export const GEO_LANDING_PAGES_POST = `You serve nine towns and you rank in one of them, which is the one your office sits in. Someone points out that you could have a page for each of the other eight by Friday. They are right. A machine will write eight pages about eight towns in the time it takes to make coffee.
+export const GEO_LANDING_PAGES_POST = `Doorway pages are town pages built to catch a search and pass the reader on, and a town page becomes one when it answers nothing on its own and would read the same with the town's name deleted. This page gives you, free, the method we use when we build town pages for small businesses that serve several towns, so that each page stays on the right side of the line Google's spam policy draws. Below, one invented electrical company with nine towns on its list shows why a generated page for every town is the wrong first build, and why the honest list is shorter than the first one. The method works the same for a heating company, a dental office or a real estate team, and you can run it on your own.
 
-So the pages get made. Then, a few weeks later, you open two of them side by side to check something. And you read them properly for the first time.
+**Nadia's electrical company (invented).** Nadia owns an electrical company with five people: herself, Carl in the office and three electricians on the road. The office is in one town and the vans go to nine. Her website comes up in searches for the town the office sits in, and for none of the other eight. Someone points out that she could have a page for each of the other eight by Friday, and they are right: a machine will write eight pages about eight towns in the time it takes to make coffee. Nadia, Carl, their towns and every figure about the company are made up; their list runs through this page as one worked example of a real method.
 
-Page four and page five have the same four paragraphs in the same order. The same sentence about the character of the housing stock. The same promise about local expertise. The same three questions and the same three answers underneath them. The only thing that changed between the two is the name of the town. And it changed six times.
+**Nadia's electrical company (invented).** So the pages get made. A few weeks later Carl opens two of them side by side to check something, and reads them properly for the first time. Page four and page five have the same four paragraphs in the same order. The same sentence about the age of the houses. The same promise about local expertise. The same three questions and the same three answers underneath them. Each ends on the same button to the same quote form. The only thing that changed between the two is the name of the town, and it changed six times.
 
-Nobody did anything wrong here. Every one of those pages is grammatical, on brand and technically correct. And a person who lives in either of those towns would put the page down after two sentences. A search engine is going to reach the same conclusion by a different route.
+Nobody meant to do anything wrong. Every one of those pages is grammatical, on brand and correct. A person who lives in either town would learn nothing about it from either page, and Google's spam policy has a name for what the eight pages are, as the next sections show.
+
+Everything on this page is free to use: the line Google's policy draws, the twenty-minute test and the way to cut the list of towns. What we sell is building the pages with you and going back to them every year.
 
 [[scene:in-short]]
 
-## Why a page and not a profile
+## Doorway pages vs landing pages: what is the difference?
 
-It is worth being clear about what this is for. The obvious alternative is free, and most agents should do that one first.
+The difference between doorway pages and landing pages is where the reader ends up: a landing page for a town answers the search it was found for, on its own, and a doorway page catches the search and passes the reader on to a page that does the answering. A landing page is any page a search lands someone on, so the word says nothing about quality. A doorway page is a landing page that fails at its one job.
 
-At the top of a local search sits a short list of businesses. It is the one with the map above it. It ranks businesses rather than pages. One of the three inputs Google publishes for it is how far the searcher is standing from your front door. That is a physical fact about your office, and no amount of work moves it. So there is a hard edge to it. Past a certain distance you are competing against someone who is simply closer, and they win.
+The test that separates them is a question a reader can answer in ten seconds: if I stopped here, would I have what I searched for? A person who types an electrician and a town wants to know whether this company works there, on what kind of job, how soon, and how to book. A town page that answers that is a landing page. A town page whose only content is that the company is proud to serve the town, with a button to the general quote form, is doing what the doorway entry describes, however well it is written. The shared form is not the fault: every town page can end on the same form. The fault is that nothing comes before it.
 
-A page has no such input. An ordinary indexable page about the work you do in a particular place competes on what is written on it. This is why one page per area is the oldest tactic in local marketing, and why every agency in the world offers it. It is also the reason this article exists. The tactic has a well-known failure mode with a name. And the name is in Google's published policy rather than in someone's blog post.
+**Nadia's electrical company (invented).** Carl reads page four as a stranger would. It names the town in its heading, says the company is proud to serve it, repeats the company's list of services and sends the reader to the general quote form, the same one all eight pages send them to. Nothing on it answers a question about that town. It caught a search and passed the reader on, and so did the other seven.
 
-There is a second reason worth naming, and it is newer. A growing share of these questions never reach a list of links at all. Someone asks an assistant which agents work in a particular town, and gets a paragraph back. What gets quoted in that paragraph is text that answers a question directly, on a page that is truly about the thing. The same writing that makes an area page worth reading is the writing that makes it quotable. That is convenient. It is also the only part of this whole subject where the two audiences want exactly the same thing.
+**Your turn.** Open one of your own town pages and ask whether a reader who stopped there would have what they searched for.
 
-## What Google's spam policy actually names
+## Why build town pages when a business has a Google Business Profile?
 
-Most of what is written about location pages cites a Google policy that has since been rewritten. The current [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) name this tactic in two separate entries. The second one did not exist when most of the advice you will find was published.
+A business builds town pages because the list of businesses at the top of a local search, the one with the map above it, weighs how far the searcher is from the business, while an ordinary page in the results below it is not tied to where the office sits, so a page can reach towns the profile cannot. The profile is free, and we would fix it first.
 
-The first is doorway abuse. The policy defines it as sites or pages created to rank for specific, similar search queries, which lead users to intermediate pages that are not as useful as the final destination. Among its own examples is having multiple domain names or pages targeted at specific regions or cities that funnel users to one page. Read the mechanism rather than the label. The thing being described is a page that catches a query and passes the person along to somewhere else. The offence is the handover.
+That list ranks businesses rather than pages. One of the three inputs Google publishes for it is distance: how far the searcher is standing from your front door. Our post on [how to rank higher on Google Maps](/blog/local-seo-real-estate-map-pack-google-business-profile) sets out the three in Google's own words. Distance is a physical fact about your office, and no work on the profile moves it. So there is a hard edge. Past a certain distance you are competing against someone who is simply closer.
+
+An ordinary indexable page about the work you do in a particular place is not tied to your front door in that way; it competes, among other things, on what is written on it. That is the whole reason a page for each town is worth building. The tactic also has a failure mode with a name, and the name is in Google's published policy rather than in someone's blog post.
+
+There is a second reason, and it is newer. A person can now ask an AI assistant which electricians work in a particular town and get a paragraph back instead of a list of links. We cannot see how an assistant chooses what to quote, and we do not claim to. What a page can do is give it sentences it could lift whole, a question answered directly on a page that is truly about the town, and that is the same writing that makes a town page worth reading. It is the one part of this whole subject where the reader and the machine want exactly the same thing.
+
+**Nadia's electrical company (invented).** Nadia searches for an electrician from a customer's driveway in each of the nine towns. Her company is in the map list in the office's own town and in the town next door. In the other seven, three electricians who are closer come up instead. A profile cannot change where her office is, so the other seven towns are the job for pages.
+
+**Your turn.** Search your trade and each town on your list, and write down whether you appear in the map list.
+
+## What does Google's spam policy say about doorway pages?
+
+Google's spam policy names doorway pages under doorway abuse, and a second entry, scaled content abuse, names many pages generated to manipulate rankings, which is what a list of towns turned into one template becomes. The current [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) are one public page, and a town page has to pass both entries.
+
+The first is doorway abuse. The policy defines it as sites or pages created to rank for specific, similar search queries, which lead users to intermediate pages that are not as useful as the final destination. Among its own examples is having multiple domain names or pages targeted at specific regions or cities that funnel users to one page. Another is creating substantially similar pages that are closer to search results than a clearly defined, browseable hierarchy. Read the mechanism rather than the label. The thing being described is a page that catches a query and passes the person along to somewhere else. The offence is the handover.
 
 The second is scaled content abuse. It is defined as many pages generated for the primary purpose of manipulating search rankings and not helping users. Its examples include creating many pages where the content makes little or no sense to a reader but contains search keywords. They also include stitching or combining content from different web pages without adding value. Here the offence is not the number of pages. It is what is on them at that number.
 
-Both entries are worth reading in full. Between them they put four questions to anyone who is about to build a set of these.
+Between them they put four questions to any owner who is about to build a set of town pages. They are our reading of the two entries, not Google's own checklist.
 
 [[scene:two-names]]
 
-## The example that is about the thing we sell
+**Nadia's electrical company (invented).** Carl puts the four questions to the eight generated pages. Where does each page send the reader? To the general quote form. What is on it at that number? The same four paragraphs, eight times. Who read it before it went live? Nobody who had been to any of the towns. And is anyone telling Nadia not to have town pages? No: the policy describes pages like these eight, not the idea of having a page for each town.
 
-There is a sentence in the scaled content entry that anyone selling this service should be made to read out loud. The first illustration Google gives is using generative AI tools or other similar tools to generate many pages without adding value for users.
+**Your turn.** Put the same four questions to your own town pages and write each answer beside the page's name.
 
-That is not a description of a hypothetical bad actor. It is a description of the cheap version of this exact product. And there is a version of ours that would fit it perfectly. Hand over a list of towns, generate a page for each, publish. If someone offers you that, the policy has already named it. The fact that the pages were written by a good model rather than a bad one changes nothing. The phrase in the policy is not about how the words were produced. It is about whether anything was added.
+## Is it against Google's rules to write town pages with AI?
 
-Google has said the same thing in plainer language elsewhere. Its guidance on helpful content is explicit that using automation is not the problem in itself. The questions it tells creators to ask themselves are about the output rather than the tool. That is the honest position, and it is also ours. A draft written in ninety seconds is fine. A page published in ninety seconds is not. The difference between them is a person who knows the place reading it before it goes live.
+Writing town pages with AI is not against Google's rules in itself; what the spam policy names is using generative AI tools to generate many pages without adding value for users. That is the first example the scaled content entry gives, and anyone selling location pages should be made to read it out loud.
+
+That is not a description of a hypothetical bad actor. It is a description of the cheap version of this exact service. And there is a version of ours that would fit it perfectly. Hand over a list of towns, generate a page for each, publish. If someone offers you that, the policy has already named it. The fact that the pages were written by a good model rather than a bad one changes nothing. The phrase in the policy is not about how the words were produced. It is about whether anything was added.
+
+Google has said the same thing in its [guidance on creating helpful content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content): "If you use automation, including AI-generation, to produce content for the primary purpose of manipulating search rankings, that's a violation of our spam policies." The test is the purpose and the output, not the tool, and that is our position too. A draft written in ninety seconds is fine. A page published in ninety seconds is not. The least that has to happen between them is a person who knows the place reading it and changing it before it goes live; that alone does not make a page useful, but without it nothing was added.
 
 [[scene:plate]]
 
-## What separates a real area page from a doorway
+**Nadia's electrical company (invented).** The eight pages were drafted by a machine, and that was never the fault. The fault was that they went live the same afternoon, before Nadia or any of her electricians had read a line. Nothing was added between the draft and the publication.
 
-Google publishes a self-assessment for exactly this question, and almost nobody in this category has read it. Its [guidance on creating helpful content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) is a list of questions to ask about your own work. Three of them land directly on area pages.
+**Your turn.** For each town page you have, write the name of the person who read it before it went live, and whether they have worked in that town.
 
-The first asks whether the content clearly demonstrates first-hand expertise and a depth of knowledge. The example Google gives inside the brackets is expertise that comes from having actually used a product or service, or visiting a place. Visiting a place. It is the whole test, sitting in a parenthesis. And it cannot be written around. What is being asked for is not a style of prose. It is a fact about whether you have been there.
+## What separates a real location page from a doorway page?
 
-The second is a pair of warning signs. One is whether you are producing lots of content on many different topics in the hope that some of it might perform well. The other is whether you are using extensive automation to produce content on many topics. Answer yes to either, and the document's own conclusion is that you are making search-engine-first content. Note what the suggested remedy is not. It is not better writing.
+A real location page carries first-hand knowledge of the place, the kind Google's own guidance gives as its example of expertise: "having actually used a product or service, or visiting a place". Google publishes a self-assessment for exactly this question in its guidance on helpful content: a list of questions to ask about your own work. Three of them land directly on town pages.
 
-The third quietly explains why every thin location page in this industry looks the same. The list asks whether you are writing to a particular word count because you have heard Google has a preferred one. Then it answers itself in a bracket: no, we do not. Somewhere a long time ago a number got into circulation, and the whole category has been padding to reach it since.
+The first asks whether the content clearly demonstrates first-hand expertise and a depth of knowledge. The example Google gives inside the brackets is expertise that comes from having actually used a product or service, or visiting a place. Visiting a place. For a town page it is the clearest test in the whole document, sitting in a parenthesis. And it cannot be written around. What is being asked for is not a style of prose. It is a fact about whether you have been there.
+
+The second is a pair of warning signs. One is whether you are producing lots of content on many different topics in the hope that some of it might perform well. The other is whether you are using extensive automation to produce content on many topics. The guidance calls answering yes to some or all of those questions "a warning sign that you should reevaluate how you're creating content". Note what the warning does not ask for. It does not ask for better writing.
+
+The third is about length. The list asks whether you are writing to a particular word count because you have heard Google has a preferred one. Then it answers itself in a bracket: no, we do not. A target length is what makes a page about a town you know and a page about a town you have never seen come out the same size.
 
 [[scene:the-test]]
 
-## Repetition is measurable, and somebody measured it
+**Nadia's electrical company (invented).** Nadia takes the first question literally. Carl pulls two years of job records, and for each of the nine towns Nadia tries to name a street where her company has worked, without a map. This is her whole list, an invented example, with the verdict for each town:
 
-There is a temptation to treat all of this as a matter of taste. As if the difference between a real page and a doorway were something only a human editor could feel. It is not. Sameness is one of the cheapest properties in the world for a machine to measure. And there is a paper that shows how cheap.
+1. **Alder Falls, the office's own town.** Hundreds of jobs; the existing page stays and gets the same checks.
+2. **Birch Point.** Old houses with panels from the 1950s, and a street she can name on every side of the river. A real page.
+3. **Cedar Hill.** A new subdivision where her company wired forty houses for car chargers. A real page.
+4. **Dover Mills.** Three restaurant kitchens on the main street and their emergency calls. A real page.
+5. **Elm Ridge.** Steady work every month, and a customer there who has called for twelve years. A real page.
+6. **Fox Hollow.** Six jobs in two years, all for neighbours of Elm Ridge customers. A short page that says what it is: a company that works there now and then, with the six jobs listed.
+7. **Glen Harbor.** Two jobs, both more than three years ago. Off the list for now.
+8. **Hart Valley.** No jobs; Nadia would like to work there. Off the list.
+9. **Iron Bridge.** No jobs, and fifty minutes away across the county line. Off the list.
+
+Nine towns became six pages: the one she had, four real new ones and one honest short one. Three towns came off, and the generated pages for them came down.
+
+**Your turn.** Write your own list, and beside each town name one street where you have worked, from memory.
+
+## Can Google tell when town pages are the same page?
+
+Any program can tell when two town pages are the same page, because comparing two texts is one of the cheapest things a computer does; how Google itself measures sameness is not published. There is a temptation to treat all of this as a matter of taste, as if the difference between a real page and a doorway were something only a human editor could feel. It is not. And there is a paper that shows how cheap a related measurement is, repetition inside one page.
 
 In 2006 four researchers took a crawl of 105 million pages. Three of them were at Microsoft Research and one was at UCLA. They drew a uniform random sample of 17,168 English pages out of it. Then they classified every one of them by hand as spam or not spam. That sample is the foundation of everything else in the [paper](https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf). Of those pages, 2,364 were judged to be spam, which is 13.8%.
 
 Then they went looking for properties that predicted it. One of those properties is the interesting one here. They compressed every page and measured the compression ratio. The reasoning is simple. A page which says the same thing repeatedly compresses better than a page that does not. Among pages that compressed to a quarter of their size or better, 70% were judged spam.
 
-The honest limits are large, and worth stating before anyone quotes this at a client. This is the web of two decades ago. Spam is what four researchers judged it to be. The measurement is about repetition inside one page. A set of near-identical town pages is repetition across pages, which is a different measurement, and nobody has published a figure for it. And a perfectly good page with a large navigation, a footer and a repeated call to action compresses well too. That is exactly why the authors test ten different content heuristics, and treat this as one of them rather than as a rule.
+The honest limits are large, and worth stating before anyone quotes this to a customer. This is the web of two decades ago. Spam is what four researchers judged it to be. The measurement is about repetition inside one page. A set of near-identical town pages is repetition across pages, which is a different measurement, and we found no published figure for it. And a perfectly good page with a large navigation, a footer and a repeated call to action compresses well too. That is exactly why the authors test ten different content heuristics, and treat this as one of them rather than as a rule. The paper says nothing about how Google measures sameness today; it shows only that the measurement is cheap.
 
-What survives all of that is the cheapness. You do not need a language model to notice that eight pages are the same page. You need a compression library and a few seconds.
+What survives all of that is the cheapness. The paper's measurement is about one page, and comparing eight pages with each other is simpler still: it needs no language model, only a few lines of code and a few seconds.
 
 [[scene:redundancy]]
 
-## What actually goes on a page that is about somewhere
+**Nadia's electrical company (invented).** Carl does not need the compression library. He reads the first paragraph of page four out loud, then the first paragraph of page five. By the third sentence he can say the rest of the second one from memory.
 
-The useful question is not what to avoid. It is what a page has on it that a template cannot produce. The answer is short enough to be uncomfortable, because everything on the list has to come from you.
+**Your turn.** Read the first paragraph of two of your town pages out loud, one after the other.
 
-It has the work you really did there. A closing on a named street. A rental you managed. A listing that sat and then did not. A buyer who wanted one thing and bought another. Specific, checkable, and about a real transaction rather than about your general enthusiasm for the area. This is the material that does not exist for a town you have never worked in. Which is why the honest version of this project starts with a list of areas that is shorter than the one you wanted.
+## What goes on a town page that is really about the town?
 
-It has the questions people really ask about that place, answered in the first sentence rather than in the fourth paragraph. What the taxes are like compared to the next town. Whether the trains are any good. Which streets flood. What the difference is between the village and the town of the same name. In this valley that is a real question with a real answer, and one that catches people out.
+A town page that is really about the town carries four things a template cannot produce: the work you did there, the questions people there ask, something only a person who has been there would know, and a way to get in touch that belongs to you. The list is short enough to be uncomfortable, because everything on it has to come from you.
 
-It has something a person who lives there would recognise. Not scenery. The thing everyone who lives there knows and nobody writes down. Where the traffic really backs up. Which side of the road the good light is on in the afternoon. What happens to the main street in the third week of September.
+It has the work you really did there. A job on a named street. A kitchen you rewired. A panel you replaced after an inspection. A customer who wanted one thing and needed another. Specific, checkable, and about real work rather than about your general enthusiasm for the area. This is the material that does not exist for a town you have never worked in. Which is why the honest version of this project starts with a list of towns that is shorter than the one you wanted.
+
+It has the questions people really ask about that place, answered in the first sentence rather than in the fourth paragraph. Whether the older houses there need a permit for a panel change. Which streets lose power first in a storm. How long it takes a van to get there on a weekday morning. What the difference is between the village and the town of the same name, where a place has both and the line catches people out.
+
+It has something a person who lives there would recognise. Not scenery. The thing everyone who lives there knows and nobody writes down. Where the traffic really backs up. Which side of the road floods. What happens to the main street in the third week of September.
 
 And it has one way to get in touch that belongs to you. A form on your own page, rather than a link into someone else's directory. So the person who read all of that arrives in your records, rather than in a list you rent back later.
 
 [[scene:page-path]]
 
+**Nadia's electrical company (invented).** The generated Birch Point page opened: "Looking for a trusted electrician in Birch Point? Our licensed team proudly serves Birch Point and the surrounding area." The new one opens on the question people there ask most often on the phone, by Carl's count of the last month's calls, and answers it in the next sentence: "A car charger in a Birch Point house with its original 1950s panel starts with a check of that panel; of the three we looked at on River Road last spring, two needed a new one." Below that sit three jobs on named streets with the month they were done, the inspector's office the town uses, and how long a van takes to get there from the office. Nadia read every line, and changed four of them.
+
+**Your turn.** For one town on your list, write the three questions customers there ask on the phone, and answer each in one sentence.
+
 [[scene:geo-calculator]]
 
-## The part that is regulated, and it is not the search engine
+## Do fair housing rules apply to a real estate team's town pages?
 
-Everything above is a commercial question. This section is not. And it is the one nobody selling area pages will raise with you.
+Fair housing rules do apply to a real estate team's town pages: an area page about homes for sale is an advertisement about a community, and the regulations under the Fair Housing Act cover both what it says and where it is placed. This section is for a real estate team only. The two rules it quotes cover statements made with respect to the sale or rental of a dwelling, so they are written for a business that sells or rents homes, and they are older than any of this technology. We are not lawyers, and this is no legal advice: it is what the rules' own words say, with the precautions we take.
 
-An area page is an advertisement. It is an advertisement about a community rather than about a house. The regulations under the Fair Housing Act are specific about both halves of that, and they are older than any of this technology.
+The rule on advertising is [24 CFR 100.75](https://www.law.cornell.edu/cfr/text/24/100.75). Its second paragraph is broad. The prohibitions apply to all written or oral notices or statements by a person engaged in the sale or rental of a dwelling. And written notices and statements are defined to include any applications, flyers, brochures, deeds, signs, banners, posters, billboards or any documents used with respect to the sale or rental of a dwelling. There is no list of technologies in that sentence, and there does not need to be one. A page on a real estate team's website is a document used with respect to the sale of dwellings.
 
-The rule on advertising is [24 CFR 100.75](https://www.law.cornell.edu/cfr/text/24/100.75). Its second paragraph is broader than most people expect. The prohibitions apply to all written or oral notices or statements by a person engaged in the sale or rental of a dwelling. And written notices and statements are defined to include any applications, flyers, brochures, deeds, signs, banners, posters, billboards or any documents used with respect to the sale or rental of a dwelling. There is no list of technologies in that sentence, and there does not need to be one. A page on your website is a document used with respect to the sale of dwellings.
-
-Then comes the paragraph that is precisely about this service. Among the practices the rule names as prohibited is selecting media or locations for advertising the sale or rental of dwellings which deny particular segments of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. Read that beside a decision about which eight towns get a page and which four do not. Nobody is suggesting that choosing where to advertise is unlawful. What the rule says is that the choice is a regulated act. That is a different and more uncomfortable statement. It means the reason for the list has to be a business reason you could say out loud.
+Then comes the paragraph that is precisely about this service. Among the practices the rule names as prohibited is selecting media or locations for advertising the sale or rental of dwellings which deny particular segments of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. Read that beside a decision about which eight towns get a page and which four do not. Nobody is suggesting that choosing where to advertise is unlawful. What the rule says is that the choice is a regulated act. That is a different and more uncomfortable statement. It means the reason for the list has to be a business reason the team could say out loud.
 
 The second rule is about what the page says. [24 CFR 100.70](https://www.law.cornell.edu/cfr/text/24/100.70) covers what are generally referred to as unlawful steering practices. Two of its examples are written as if someone had an area page open. It names discouraging any person from inspecting, purchasing or renting a dwelling because of the race, colour, religion, sex, handicap, familial status or national origin of persons in a community, neighbourhood or development. And it names discouraging the purchase or rental of a dwelling because of race, colour, religion, sex, handicap, familial status or national origin, by exaggerating drawbacks or failing to inform any person of desirable features of a dwelling or of a community, neighbourhood or development.
 
-Sit with the second one, because it is not the one people expect. Failing to inform. Both examples hang on that same clause about why. So uneven pages are not unlawful on their own, and nobody should tell you they are. What they are is the record someone would read the why off. Take a set of pages where four towns get eight hundred enthusiastic words and two towns get two hundred flat ones. That describes some communities as more desirable than others. And it did that through effort, rather than through a sentence anyone wrote. Which is why the shape of the set is worth looking at before someone else does.
+Sit with the second one, because it is not the one people expect. Failing to inform. Both examples hang on that same clause about why. So uneven pages are not unlawful on their own, and nobody should tell a team they are. What they are is the record someone would read the why off. Take an invented set of pages where four towns get eight hundred enthusiastic words and two towns get two hundred flat ones. That describes some communities as more desirable than others. And it did that through effort, rather than through a sentence anyone wrote. Which is why the shape of the set is worth looking at before someone else does.
 
 [[scene:complaints]]
 
+## What may a real estate team's town page say?
+
+A real estate team's town page is safest when it writes about the housing and the transaction and not about who lives there or who a place would suit. That line is a precaution we draw from the steering rule's examples, more cautious than the rule's own words, and it is easier to hold than the regulation makes it sound. It comes down to what the sentence is about.
+
+Write about the housing and the transaction. Prices, taxes, inventory, how long things sit, what the commute costs in time. What surveys have turned up on older properties the team sold in that part of the county. What the team has really sold there. Every one of those is a fact about property. It is checkable. And it is what someone reading a real estate team's area page came for.
+
+Do not write about the people. This is the whole precaution, and it is simpler than the alternatives people reach for. Descriptions of who lives somewhere. Who a place is suited to. What kind of family would be comfortable. Which community a neighbourhood belongs to. None of that is about the housing. All of it is about the residents. And it is the exact territory the steering rule covers.
+
+Two habits deserve naming, because they are common enough to read as neutral. School ratings pasted onto every page are a statement about desirability made with someone else's numbers. Crime data is the same shape and worse. If a reader wants either, they can get both from the primary source in less time than it takes to write a paragraph. The honest move is to say where to look, rather than to characterise a community.
+
+And treat the areas evenly. Not identically, because identical is the failure this whole page is about. Evenly means comparable effort, comparable honesty about the drawbacks, and comparable enthusiasm where it is earned. The rule about failing to inform is a rule about the shape of the whole set, rather than about any one page in it. And the shape of the set is a thing only the team can see.
+
+**Nadia's electrical company (invented).** These housing rules do not govern Nadia's pages, which advertise electrical work rather than homes. The habit still costs her nothing: her pages describe jobs, wiring and streets, never the people who live in a town.
+
+**Your turn.** If you run a real estate team, put your area pages in a row and compare their length and their tone before anyone else does.
+
+## How do you test whether a town page is a doorway page?
+
+To test whether a town page is a doorway page, run four checks that need no tool: delete the town's name, read two pages aloud, count the checkable facts, and hand the page to someone who lives there. The first three can be done in one sitting; the fourth waits for a person. They are our own screening checks, not Google's test: a page that fails them is worth rewriting, and a page that passes still has to be useful.
+
+1. **Delete the town's name** from the page, everywhere it appears, and read what is left. If you cannot tell which town it was about, you have your answer. So does everyone else. This is the single most useful check on this page, and the quickest.
+2. **Open two of your pages side by side.** Read the first paragraph of each out loud, one after the other. Sameness is much easier to hear than to see, which is why proofreading them one at a time never catches it.
+3. **Count the checkable facts on the page.** A street, a date, a job, a number, a name of something that exists. Then count the sentences that could have been written by someone who has never been there. Our rule of thumb, not a published threshold: a page where the second number is larger than the first is a page you have not written yet.
+4. **Hand it to someone who lives there and watch their face.** Not for approval. For recognition. The moment worth waiting for is the small one where they say that is true. Or better, where they correct you. A correction means the page was specific enough to be wrong, and specific enough to be wrong is the whole bar.
+
+**Nadia's electrical company (invented).** Carl runs the four checks on the eight generated pages first. With the town's name deleted, none of the eight can be told apart. Each has no checkable fact and every sentence could have been written from anywhere. Then he runs them on the five new pages. All five can be told apart with the names deleted. Each carries between six and eleven checkable facts by his count. The test with a person goes to an electrician who lives in Birch Point. He corrects one street name, and Carl fixes it the same day.
+
+**Your turn.** Run the first check on your two weakest town pages tonight.
+
+## How many town pages should a small business have?
+
+A small business should have as many town pages as it has something true to say about, and in the invented example on this page that was six of nine. Google's policy names no number of pages at which a set becomes spam, and no number that makes it safe. The only numbers an owner can honestly supply are three: how many towns are on the list, how many of them you have really worked in, and how long one real page takes you.
+
+**Nadia's electrical company (invented).** Eight weeks after Carl opened page four and page five side by side, the list of nine has an answer for every town. Alder Falls keeps its page. Birch Point, Cedar Hill, Dover Mills and Elm Ridge have pages that pass all four checks. Fox Hollow has a short page that says how much work the company does there and lists the six jobs. Glen Harbor, Hart Valley and Iron Bridge have no page, and the generated pages that named them are gone. The writing took about four hours a page by Carl's log, about three of them Nadia talking while he typed. Nobody can say yet what the pages will bring, and Nadia did not build them on a promise that they would: she built the six she could fill, and every enquiry from a town page now arrives with the town's name on it, so in a year she will know.
+
+**Your turn.** Decide now which number you will read in a year: the enquiries from each town page, counted by town.
+
 [[scene:pull-quote]]
 
-## What an area page may and may not say
-
-The practical line is easier to hold than the regulation makes it sound. It comes down to what the sentence is about.
-
-Write about the housing and the transaction. Prices, taxes, inventory, how long things sit, what the commute costs in time. What a survey usually turns up on older properties in that part of the county. What you have really sold there. Every one of those is a fact about property. It is checkable. And it is what someone reading an agent's area page came for.
-
-Do not write about the people. This is the whole line, and it is simpler than the alternatives people reach for. Descriptions of who lives somewhere. Who a place is suited to. What kind of family would be comfortable. Which community a neighbourhood belongs to. None of that is about the housing. All of it is about the residents. And it is the exact territory the steering rule covers.
-
-Two habits deserve naming, because they are so common they read as neutral. School ratings pasted onto every page are a proxy that correlates strongly with things the Act protects. If you publish them, you have made a statement about desirability using someone else's numbers. Crime data is the same shape and worse, because the summaries are usually unsourced. If a reader wants either, they can get both from the primary source in less time than it takes you to write a paragraph. The honest move is to say where to look, rather than to characterise a community.
-
-And treat the areas evenly. Not identically, because identical is the failure this whole article is about. Evenly means comparable effort, comparable honesty about the drawbacks, and comparable enthusiasm where it is earned. The rule about failing to inform is a rule about the shape of the whole set, rather than about any one page in it. And the shape of the set is a thing only you can see.
-
-## What it costs, and how long it takes
-
-The software is not the line that matters here. What the bill tracks is how much of the material has to be extracted from you. You are the only place it exists.
-
-Take an agent with a tidy record of what they have closed, where, and for whom. That is a fast project. The facts are already written down, and the work is turning them into pages that answer questions. An agent whose knowledge of six towns lives entirely in their head is a slower one. Most of that time is a conversation rather than a keyboard. That conversation is worth having whether or not any pages come out of it, which is the second-best argument for doing this at all.
-
-There is a smaller ongoing cost that everyone forgets to budget for, which is going back. The proof on these pages ages. The closing was three years ago. The listing sold. The tax figure moved. The shop you mentioned closed. Most of them need a short sitting once a year, and the ones that earn their keep need more than that. A set of area pages nobody revisits becomes a public record of when you stopped paying attention.
-
-The one thing we will not quote is a traffic estimate. It is worth saying why, rather than leaving a gap. Nobody publishes the number of people searching for your service in your own town with a stated method. The figures that circulate come from tools that estimate them and do not show their working. Every article in this category leans on those numbers. This one refuses them, which makes it less impressive and more useful.
-
-[[scene:plate-two]]
+If you would rather go through your own list of towns with a second pair of eyes, that is where we start: the next sections say what the work takes and what it will not do.
 
 [[scene:offer]]
 
-## What it does not do, and should not pretend to
+## How much work are location pages, and how long do they take?
 
-It does not rank a place you do not work. There is nothing true to put on that page. Both a reader and a search engine notice. And the pages you cannot fill are the ones that make the whole set look like a template.
+The work in location pages is set by how much of the material has to be drawn out of you, not by the software, because you are the only place it exists.
 
-It does not put you into an AI answer on request. Nobody controls what an assistant quotes, and anyone who says otherwise is describing an experiment rather than a product. Writing a page that answers questions directly makes it quotable. That is the only lever there is, and it is not a guarantee.
+Take two invented owners. The first has a tidy record of jobs: what, where, when, and for whom. That is a fast project. The facts are already written down, and the work is turning them into pages that answer questions. The second, whose knowledge of six towns lives entirely in their head, is a slower one. That time goes into a conversation rather than a keyboard, and the conversation is worth having whether or not any pages come out of it.
 
-It does not replace the rest of local search. A page for each area is one surface. The Business Profile, the reviews and the mentions on other people's websites are another. They are decided by different machinery, and the profile is usually the cheaper thing to fix first.
+There is a smaller ongoing job that is easy to forget, which is going back. The proof on these pages ages. The job was three years ago. The figure moved. The shop you mentioned closed. Each page needs a short sitting once a year, and the ones that bring in work need more than that. A set of town pages nobody revisits becomes a public record of when you stopped paying attention.
 
-It does not survive being left alone. Every fact on these pages has a date attached, whether or not you print one. The difference between a page that earns attention for years and a page that quietly embarrasses you is someone going back to it.
+The one thing we will not quote is a traffic estimate, and it is worth saying why rather than leaving a gap. Nobody can show their working for how many visits a page about one town will bring, and a figure without its working is a promise.
 
-And it does not make the list of towns longer than it is. This is the one people find hardest, because the whole appeal of the tactic is scale. The number of areas you can write honestly about is a fact about your career so far. No tool changes it.
+[[scene:plate-two]]
+
+## What can town pages not do?
+
+Town pages cannot make a page worth reading where a business has nothing true to say, cannot put it into an AI answer on request, and cannot replace the rest of local search.
+
+They do not make a page worth reading where the business has nothing true to say. A page for a town it has never worked in has little to put on it, as the question about such towns below says. Both a reader and a search engine notice. And the pages you cannot fill are the ones that make the whole set look like a template.
+
+They do not put you into an AI answer on request. Nobody controls what an assistant quotes, and anyone who says otherwise is describing an experiment rather than a product. Writing a page that answers questions directly makes it quotable. That is the only lever there is, and it is not a guarantee.
+
+They do not replace the rest of local search. A page for each town is one surface. The Business Profile, the reviews and the mentions on other people's websites are another; our post on [how to get more Google reviews](/blog/automated-google-review-requests-real-estate) covers the second. They are decided by different machinery, and we would fix the profile first, because it costs only time.
+
+They do not survive being left alone. Every fact on these pages has a date attached, whether or not you print one. The difference between a page that earns attention for years and a page that quietly embarrasses you is someone going back to it.
+
+And they do not make the list of towns longer than it is. The number of towns you can write honestly about is a fact about your work so far. No tool changes it.
 
 [[scene:wasted]]
 
-## How to test whether a page is about anywhere, in twenty minutes
+## Common questions about doorway pages and location pages
 
-Four checks. All of them are free, none of them need a tool, and any page in this industry can be run through them tonight.
+### What are location pages?
 
-Delete the town name from the page, everywhere it appears, and read what is left. If you cannot tell which town it was about, you have your answer. So does everyone else. This is the single most useful thing in this article, and it takes ninety seconds per page.
+Location pages are ordinary pages on a business's own website, one for each place it works, each written so that someone searching for the service in that place finds a page that is truly about it, rather than a page listing every town the business covers.
 
-Open two of your pages side by side. Read the first paragraph of each out loud, one after the other. Sameness is much easier to hear than to see, which is why proofreading them one at a time never catches it.
+### What are GEO landing pages or service area pages, in plain terms?
 
-Count the checkable facts on the page. A street, a price, a date, a number, a name of something that exists. Then count the sentences that could have been written by someone who has never been there. A page where the second number is larger than the first is a page you have not written yet.
+GEO landing pages and service area pages are other names for location pages; on this site we also use the letters GEO for generative engine optimisation, writing pages an AI assistant could quote when it answers a question. In practice the two want the same thing: direct answers to real questions, on a page that has something on it only someone who works there would know.
 
-Then hand it to someone who lives there and watch their face. Not for approval. For recognition. The moment worth waiting for is the small one where they say that is true. Or better, where they correct you. A correction means the page was specific enough to be wrong, and specific enough to be wrong is the whole bar.
+### How are town pages different from local SEO?
 
-## Common questions, answered honestly
-
-### What are GEO or area landing pages, in plain terms?
-
-They are ordinary pages on your own website, one for each place you work. Each is written so that someone searching for your service in that place finds a page that is truly about it, rather than a page listing every town you cover. GEO now carries a second meaning as well, generative engine optimisation. That is the practice of writing pages an AI assistant can quote when it answers a question. In practice the two want the same thing. Direct answers to real questions, on a page that has something on it only someone who works there would know.
-
-### How is this different from local SEO?
-
-They compete on different surfaces and are decided by different things. Local SEO is about your Business Profile, and the short list of businesses at the top of a nearby search. Google publishes three inputs for that list, and one of them is how far away the searcher is. Area pages are ordinary web pages competing on what is written on them. That is why they can reach places your profile cannot. Most businesses should finish the profile first. It is cheaper, it is faster, and it does not carry the risk described in the rest of this article.
+Town pages are one part of local SEO, the wider work of being found nearby, and they differ from its other part, your Business Profile, in what ranks them: the short list of businesses at the top of a nearby search weighs distance from the searcher, one of the inputs Google publishes, while town pages are ordinary web pages in the results below, not tied to where your office sits, which is why they can reach places your profile cannot. We would finish the profile first, because it costs only time and carries none of the risk described on this page.
 
 ### Are location pages considered doorway pages by Google?
 
-They are if they behave like doorways. The policy defines doorway abuse as pages created to rank for specific, similar queries which lead users to intermediate pages that are not as useful as the final destination. It names pages targeted at specific regions or cities that funnel users to one page. A page that answers the question it was found for, on its own, is not doing that. A page whose only purpose is to catch the query and push the reader somewhere else is, whatever it looks like.
+Location pages are considered doorway pages by Google only if they behave like doorways: if they catch a search and push the reader somewhere else, or repeat each other with the town's name changed. A location page that answers the question it was found for, on its own, is not doing what the policy describes.
 
-### Is it against the rules to use AI to write them?
+### Is it against the rules to use AI to write town pages?
 
-Not in itself, and Google says so directly in its guidance on helpful content. That guidance frames automation as a question about the output rather than about the tool. What is named in the spam policy is using generative AI tools to generate many pages without adding value for users. The distinction is whether anything was added between the draft and the publication. In practice that means a person who knows the place read it and changed it. A page nobody read is the case the policy is describing.
-
-### How many pages should I have?
-
-As many as you have something true to say about, which is almost always fewer than the list you started with. There is no threshold at which a set of pages becomes spam, and no number that makes it safe. The calculator above is deliberately built on the only two things anyone can honestly supply. How many areas are on your list. And how many of them you have really worked in.
+Using AI to write town pages is not against Google's rules in itself; the spam policy names using generative AI tools to generate many pages without adding value for users. In practice the value added starts with a person who knows the place reading each draft and changing it before it goes live.
 
 ### Can I write a page for a town I want to work in but have not yet?
 
-You can. It will be the weakest page in the set. And it is worth being deliberate about it rather than pretending otherwise. If you do, write it as what it is. A page about that market from someone who works one town over, with the facts you can genuinely stand behind and no invented familiarity. That is a defensible page. A page claiming years of local expertise you do not have is not. It is the kind of claim a person who lives there will spot in a sentence.
+You can write a page for a town you have not worked in yet, and it will be the weakest page in the set. If you do, write it as what it is: a page about that town from a business that works one town over, with the facts you can stand behind and no invented familiarity. A page claiming years of local experience you do not have is the kind of claim a person who lives there can spot in a sentence.
 
-### What about fair housing? Is any of this risky?
+### What about fair housing, for a real estate team?
 
-The advertising rules apply to a web page exactly as they apply to a flyer. The regulation is explicit that written statements include any documents used with respect to the sale of a dwelling. Two things follow. Write about the housing and the transaction, not about who lives somewhere or who a place would suit. And treat your areas evenly. The rules name two practices here. One is selecting where to advertise in a way that denies parts of the market information. The other is discouraging someone by failing to inform them of the desirable features of a neighbourhood. Both of those turn on whether the reason was one of the characteristics the Act protects. So an uneven set of pages is not unlawful by itself. It is the thing the reason would be read off, and it is invisible from inside any single page.
+For a real estate team, the advertising rules apply to a web page exactly as they apply to a flyer, and the safe precaution is to write about the housing and the transaction, not about who lives somewhere or who a place would suit, and to give every area comparable effort. The two regulations, 24 CFR 100.75 and 100.70, are quoted in the section on fair housing above; they cover businesses that sell or rent homes.
 
-### Will this get me quoted in ChatGPT or an AI answer?
+### Will town pages get my business quoted in an AI answer?
 
-Sometimes, and nobody can promise it. What gets quoted is a passage that answers a question directly, in plain language, on a page an assistant can read. That means a real question as a heading, and the answer in the sentence underneath it. Not three paragraphs of positioning followed by the fact. It is worth doing because the same format is the one that works for a human being in a hurry. So nothing here asks you to write worse in order to be quoted more.
+Town pages can get a business quoted in an AI answer sometimes, and nobody can promise it; we cannot see how an assistant chooses, and we do not claim to. What a page can do is offer sentences an assistant could lift whole: a real question as a heading, and the answer in plain language in the sentence underneath it. The same format works for a person in a hurry, so nothing here asks you to write worse in order to be quoted more.
 
-## What to do about it
+### Can we talk about location pages on a call if my business is outside New York?
 
-Take the list of areas you want pages for. Put a mark next to every one where you can name a street you have worked on. Not a town you have driven through. A street.
+We are based in New York State, and the call works for an owner anywhere.
 
-That shorter list is the project. It is probably half of what you wrote down, and it beats the long version outright. Every page on it can carry something checkable. And every page you left off would have been the one that made a reader stop trusting the rest.
+## What to do first about doorway pages on your own site
 
-Then take the two pages you already have that you are least sure about. Delete every mention of the town from both, and read what remains. If the two documents are now the same document, you have learned the whole of this article in four minutes. You have also found the first two pages worth rewriting.
+The first thing to do about doorway pages on your own site is to cut the list of towns before anything is written. Take the list of towns you want pages for. Put a mark next to every one where you can name a street you have worked on. Not a town you have driven through. A street.
 
-[[scene:funnel]]`;
+That shorter list is the project. In Nadia's invented case it was six of nine, and it beats the long version outright. Every page on it can carry something checkable. And every page you left off would have been the one that made a reader stop trusting the rest.
+
+Then take the two pages you already have that you are least sure about. Delete every mention of the town from both, and read what remains. If the two documents are now the same document, you have learned the whole of this page. You have also found the first two pages worth rewriting.
+
+[[scene:funnel]]
+
+Start with the page on [location pages for local SEO](/services/geo-landing-pages): what we build, what you approve, and what it will not do.
+
+## Sources
+
+- Google Search Central, "Spam policies for Google web search", [developers.google.com](https://developers.google.com/search/docs/essentials/spam-policies): doorway abuse and scaled content abuse, with their examples. A live document with no date on the page; read November 11, 2026 and again November 17, 2026.
+- Google Search Central, "Creating helpful, reliable, people-first content", [developers.google.com](https://developers.google.com/search/docs/fundamentals/creating-helpful-content): the self-assessment questions and the sentence on automation. A live document; read November 11, 2026.
+- Alexandros Ntoulas, Marc Najork, Mark Manasse and Dennis Fetterly, "Detecting Spam Web Pages through Content Analysis", WWW 2006, pages 83 to 92, [the conference paper](https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf). An older source, kept for the argument: cited for how cheap the measurement of repetition is, not as a figure about town pages. Read November 11, 2026.
+- 24 CFR 100.75, Discriminatory advertisements, statements and notices, [law.cornell.edu](https://www.law.cornell.edu/cfr/text/24/100.75). Regulation in force, read November 11, 2026.
+- 24 CFR 100.70, Other prohibited sale and rental conduct, [law.cornell.edu](https://www.law.cornell.edu/cfr/text/24/100.70). Regulation in force, read November 11, 2026.
+- National Fair Housing Alliance, the 2025 Fair Housing Trends Report, which counts the complaints received in 2024, [nationalfairhousing.org](https://nationalfairhousing.org/wp-content/uploads/2025/11/2025-NFHA-Fair-Housing-Trends-Report.pdf): the chart in the fair housing section.
+
+Written with an AI assistant and checked by Levan.`;
 
 export const LOCAL_SEO_POST = `We help local business owners work out how to rank in Google Maps: the profile to fix and keep current, the reviews to ask for every time, and a person approving everything that is published in the business's name. Below is how to rank in Google Maps using what Google itself publishes, what a panel of local search experts says matters most, a check you can run tonight, whether the work is worth doing yourself or having done, and what to do first this week.
 
