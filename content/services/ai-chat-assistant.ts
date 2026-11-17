@@ -34,22 +34,22 @@ export const aiChatAssistant: Service = {
   tier: "flagship",
 
   eyebrow: "Website chat · Answers and bookings",
-  title: "An AI chatbot for your website that answers and books",
-  lede: "An AI chatbot setup for a small business website puts an AI chat assistant on the site that answers from the business's own information, takes the details, books a time from the real calendar and texts the confirmation. Without one, a customer lands on the website at 11:40 at night with one question, finds nobody to ask, and closes the tab. Anything it cannot check goes to a person, with the conversation attached. This is the one you can try right now.",
+  title: "An AI chatbot for small business websites that answers and books",
+  lede: "An AI chatbot for small business is a chat assistant on the website that answers from the business's own information, takes the details, books a time from the real calendar and texts the confirmation. Without one, a customer lands on the website at 11:40 at night with one question, finds nobody to ask, and closes the tab. Anything it cannot check goes to a person, with the conversation attached. This is the one you can try right now.",
   specs: ["answers at any hour", "from your own information", "books on your calendar", "the chat goes to your CRM"],
   why: "An AI chatbot matters because Harvard Business Review reported that firms trying to reach a lead within an hour were nearly seven times likelier to have a meaningful conversation with a decision maker than firms trying even an hour later. The assistant answers while the person is still on the page, asks the first questions and books a time. An inquiry that arrives at night is answered at night.",
   keywords: [
-    "website chatbot",
     "ai chatbot for small business",
+    "website chatbot",
     "ai customer service chatbot",
     "chatbot for lead generation",
     "ai chatbot for real estate",
   ],
 
   seo: {
-    title: "AI chatbot setup for small business: answers and bookings",
+    title: "AI chatbot for small business: answers and bookings",
     description:
-      "An AI chat assistant for a small business website: it answers from the business's own information, takes the details, books a time and hands off to a person.",
+      "An AI chatbot for small business websites, set up for the owner: it answers from the business's own information, books a time and hands off to a person.",
   },
 
   /** The source was never missing from the page, only from the field (ROUND I). */
@@ -188,6 +188,10 @@ export const aiChatAssistant: Service = {
     {
       q: "What does it do with the leads it captures?",
       a: "The AI chat assistant writes the leads it captures to the CRM with the full conversation, the phone number, what the person needs, where and when. The follow-up starts from what they actually said, so the person who calls back is not starting from a blank contact form.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 

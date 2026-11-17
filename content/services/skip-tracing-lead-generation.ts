@@ -28,11 +28,12 @@ export const skipTracingLeadGeneration: Service = {
   tier: "flagship",
 
   eyebrow: "Prospecting · Lists and skip tracing",
-  title: "Lead lists built fresh for the area a business works",
-  lede: "Lead generation for a small business starts with a fresh list built for the exact area and kind of customer it wants: businesses on the map for a company that sells to offices, or property owners on chosen streets for one that works on homes. Bought lead lists are old, shared with everyone who paid, and full of numbers that no longer work. Each row gets a contact where the record has one, its source and date, and a do-not-call check, and a person decides how it is worked.",
+  title: "Lead generation services for small business: lead lists built fresh for the area",
+  lede: "Lead generation services for a small business start with a fresh list built for the exact area and kind of customer it wants: businesses on the map for a company that sells to offices, or property owners on chosen streets for one that works on homes. Bought lead lists are old, shared with everyone who paid, and full of numbers that no longer work. Each row gets a contact where the record has one, its source and date, and a do-not-call check, and a person decides how it is worked.",
   specs: ["built for your area", "owner and business lookups", "source and date on every row", "do-not-call checked"],
   why: "Lead generation starts with prospecting, which means reaching out to find new customers, and it runs on lists. Bought lists cost a lot and go stale fast. This builds a fresh list of the businesses or owners themselves, whenever it is needed, for the area being worked, on the day it is worked, with the rules about how each row may be contacted written beside it.",
   keywords: [
+    "lead generation services for small business",
     "lead generation for small business",
     "how to build a lead list",
     "skip tracing",
@@ -41,9 +42,9 @@ export const skipTracingLeadGeneration: Service = {
   ],
 
   seo: {
-    title: "Lead generation for small business: fresh lists, skip tracing",
+    title: "Lead generation services for small business: skip tracing",
     description:
-      "Fresh lead lists for a small business: businesses on the map or owners on chosen streets, each with a contact, its source and date, and the do-not-call check done.",
+      "Lead generation services for small business: fresh lists of businesses on the map or owners on chosen streets, with a contact, a source and a do-not-call check.",
   },
 
   /** Round 28: a rule, not a sum (the brand check refuses a dollar figure on an AI page). It is
@@ -205,6 +206,10 @@ export const skipTracingLeadGeneration: Service = {
     {
       q: "How many records can it process?",
       a: "The pipeline runs the same path for ten rows or ten thousand. The practical limit is the lookup budget and how many people the team can actually reach out to well, not the pipeline.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 

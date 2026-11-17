@@ -19,14 +19,14 @@ export const crmSync: Service = {
   slug: "crm-sync",
   aiKey: "crmsync",
   name: "Two-Way CRM Sync",
-  noun: "two-way CRM sync",
+  noun: "CRM integration",
   tier: "more",
 
   eyebrow: "Sync · Two-way CRM",
-  title: "CRM sync: the customer record stays current without retyping",
-  lede: "Two-way CRM sync for a small business connects the apps it already uses to its CRM in both directions: every call, text, booking and job is written to the customer's record as it happens, and a change in the CRM flows back out to the systems that act on it. Without it, the booking is in one app, the invoice in another, the call notes on somebody's phone, and the CRM shows a customer who has not been touched in a month.",
+  title: "CRM integration for small business: the customer record stays current",
+  lede: "CRM integration for a small business, done as two-way CRM sync, connects the apps it already uses to its CRM in both directions: every call, text, booking and job is written to the customer's record as it happens, and a change in the CRM flows back out to the systems that act on it. Without it, the booking is in one app, the invoice in another, the call notes on somebody's phone, and the CRM shows a customer who has not been touched in a month.",
   specs: ["works with the CRM you use", "two-way sync", "one person, one record", "no double entry"],
-  why: "Two-way CRM sync matters because a stale record is not a filing problem. It is the reason an automated message goes to somebody who already booked, or already paid, last week. With two-way sync, the record in front of the team is the one the other systems act on, and every touch is written to it as it happens.",
+  why: "CRM integration matters because a stale record is not a filing problem. It is the reason an automated message goes to somebody who already booked, or already paid, last week. With two-way sync, the record in front of the team is the one the other systems act on, and every touch is written to it as it happens.",
   keywords: [
     "crm integration for small business",
     "two way crm sync",
@@ -36,9 +36,9 @@ export const crmSync: Service = {
   ],
 
   seo: {
-    title: "Two-way CRM sync for small business: no double entry",
+    title: "CRM integration for small business: no double entry",
     description:
-      "CRM sync for a small business: every call, text, booking and job writes back to the customer record, changes flow the other way, and duplicates go to a person.",
+      "CRM integration for small business: every call, text, booking and job writes back to the customer record, changes flow back out, and duplicates go to a person.",
   },
 
   /** ROUND D: the one measurement in this subject with a published method behind it, with the
@@ -67,7 +67,7 @@ export const crmSync: Service = {
   },
 
   whatItIs: [
-    "Two-way CRM sync is the connection between the CRM and everything that actually happens. Calls, texts, bookings, jobs, invoices and website conversations all produce information that belongs on the customer's record. Most of it never gets there, because putting it there is somebody's manual job.",
+    "CRM integration, done as two-way CRM sync, is the connection between the CRM and everything that actually happens. Calls, texts, bookings, jobs, invoices and website conversations all produce information that belongs on the customer's record. Most of it never gets there, because putting it there is somebody's manual job.",
     "Two-way sync means it lands automatically, and that changes made in the CRM flow back out to the systems that need them. So the record the team is looking at is the one the automations are acting on, not a copy of how things were last month.",
     "It fits any business that runs on more than one app: a contractor with a job app, a CRM and an accounting tool; an accounting office with a client portal and a practice tool; a salon or gym with a booking app and a CRM; a real estate office with a CRM and a transaction tool. Before anything is connected, we write down which app is the record of truth for each kind of fact.",
   ],
@@ -134,7 +134,7 @@ export const crmSync: Service = {
   ],
 
   limits: [
-    "It does not clean the data already in there. Sync keeps both sides in step. Years of half-finished records are a separate job, and data enrichment is the service for it.",
+    "CRM integration does not clean the data already in there. Sync keeps both sides in step. Years of half-finished records are a separate job, and data enrichment is the service for it.",
     "It does not decide which side is right. Conflict rules get agreed when it is built. The rule that suits the team has to be chosen rather than assumed.",
     "It does not open an app that will not open. Most CRMs and business apps expose a connection for this, and the sync is built to each one rather than limited to a fixed list. But a closed platform stays closed.",
     "It does not make anybody use the CRM. If the team is still working out of a notebook, an up-to-date record is worth nothing.",
@@ -161,6 +161,10 @@ export const crmSync: Service = {
     {
       q: "How do I stop duplicate contacts in my CRM?",
       a: "To stop duplicate contacts in a CRM, decide which field identifies a person, usually the mobile number or the email, make every app match on it before creating a record, and send the uncertain pairs to a person rather than merging them automatically. Then clean the duplicates already there once, as a separate job, and the sync keeps new ones from piling up.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 

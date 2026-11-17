@@ -27,6 +27,7 @@ export const customAutomation: Service = {
   specs: ["built around your workflow", "made from proven parts", "runs on your tools", "handed over in writing"],
   why: "Custom AI automation matters because every team has one slow spot that no store-bought tool fixes. Custom automation removes the step done by hand that quietly limits what the business can take on. From the day it works, it is a thing the business owns: it runs, somebody understands it, and it stands on software that belongs to other companies, which is why it is handed over in writing.",
   keywords: [
+    "ai automation agency for small business",
     "custom automation for small business",
     "custom ai automation",
     "automate business processes",
@@ -35,9 +36,9 @@ export const customAutomation: Service = {
   ],
 
   seo: {
-    title: "Custom AI automation for small business: built around the work",
+    title: "AI automation agency for small business: custom AI builds",
     description:
-      "Custom automation for a small business: the one slow step no app fixes, built from proven parts, wired into the tools already in use, and handed over in writing.",
+      "An AI automation agency for small business: custom AI for the one slow step no app fixes, wired into the tools already in use and handed over in writing.",
   },
 
   /** A vendor's own published promise, and the shortest of the three the flagship draws: what a
@@ -147,8 +148,16 @@ export const customAutomation: Service = {
       a: "A small business can automate anything repetitive with a rule behind it, and a good deal that has a judgment behind it, since a model can make many kinds of judgment now. Inbound and outbound conversations, data enrichment, lead qualification, scheduling, CRM sync and document processing are all standard. Being able to describe the task to a competent new hire is the first test, and it is not the last: it also has to happen often enough that somebody would notice it breaking, and a wrong answer has to land somewhere that is not in front of a customer.",
     },
     {
+      q: "What does an AI automation agency do?",
+      a: "An AI automation agency builds the automation for a business instead of selling it a tool. Here that means custom AI automation for the one slow step no app on the market fixes: built from proven parts, wired into the tools the business already uses, and handed over in writing under logins that belong to the business.",
+    },
+    {
       q: "Why build custom rather than buy an off-the-shelf product?",
       a: "Custom automation beats an off-the-shelf product because an off-the-shelf product solves the average version of a problem, and the step limiting a particular business is usually not average. Where a product fits, buy the product; we will say so. Where it does not, a custom chain runs the business's own logic, on an established automation platform or custom code, and can be hosted so the data stays in the business's own environment.",
+    },
+    {
+      q: "Is an AI automation agency worth it?",
+      a: "An AI automation agency is worth it for a small business when one slow step, specific to how that business works, holds it back and no product on the market fixes it. Where a product already fits, buying the product is the better answer, and we will say so.",
     },
     {
       q: "How do you decide what to build first?",
@@ -165,6 +174,10 @@ export const customAutomation: Service = {
     {
       q: "Who owns the build when it is finished?",
       a: "The business owns a custom automation build when it is finished. It runs under logins and an environment that belong to the business, and it comes with a written description of what it does, so another builder, or the business's own staff, could pick it up. That is the difference between owning a build and renting one.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 

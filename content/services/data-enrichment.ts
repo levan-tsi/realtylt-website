@@ -22,11 +22,12 @@ export const dataEnrichment: Service = {
   tier: "more",
 
   eyebrow: "Enrichment · Append and check",
-  title: "Data enrichment: from half a contact to a usable record",
+  title: "CRM data enrichment for small business: from half a contact to a usable record",
   lede: "Data enrichment for a small business is a pass that fills in what is missing from trusted data sources, checks what is already there, collapses the duplicates and marks every new value with where it came from and when. The customer list has a first name and an email for one person, a phone that stopped working for another, and the same customer three times. What came back is never mixed silently into what the business already knew.",
   specs: ["fills in missing contact details", "phone and email checks", "duplicates collapsed", "source and date on every value"],
   why: "Data enrichment matters because a customer nobody can reach is a customer nobody can serve. Enrichment fills the gaps in records the business already owns, and writes down where each value came from and when, so every row says how much to trust it.",
   keywords: [
+    "data enrichment for small business",
     "data enrichment",
     "contact data enrichment for small business",
     "crm data cleanup",
@@ -35,7 +36,7 @@ export const dataEnrichment: Service = {
   ],
 
   seo: {
-    title: "Data enrichment for small business: contacts filled and checked",
+    title: "Data enrichment for small business: contacts filled, checked",
     description:
       "Data enrichment for a small business: missing phones and emails filled in, numbers checked, duplicates collapsed, and the source and date kept on every value.",
   },
@@ -166,6 +167,10 @@ export const dataEnrichment: Service = {
     {
       q: "How do I clean up my CRM data?",
       a: "To clean up CRM data, start with the part of the list worth working, not all of it. Collapse the duplicates first, then check the numbers and emails, then fill what is missing, keeping the source and date on every new value. Send every disagreement with an existing value to a person. Then keep it clean going forward with one identity field that every app matches on.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 

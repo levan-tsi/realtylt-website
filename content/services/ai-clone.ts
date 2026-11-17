@@ -26,6 +26,7 @@ export const aiClone: Service = {
   specs: ["a licensed avatar platform", "a licensed voice engine", "only your own scripts", "every video labelled AI"],
   why: "An AI video avatar and voice clone matters because an owner can only be on one call, one video, one visit at a time. A digital twin can be in many places at once. It multiplies the two things customers really buy from a small business, the owner's face and voice, so personal attention stops being the thing that slows the business down.",
   keywords: [
+    "ai video avatar and voice clone",
     "ai avatar for business",
     "ai clone of yourself",
     "ai video avatar for small business",
@@ -36,7 +37,7 @@ export const aiClone: Service = {
   seo: {
     title: "AI video avatar and voice clone for small business owners",
     description:
-      "An AI video avatar and voice clone of the owner, with written consent, working from the business's own scripts, every video labelled AI and approved by a person.",
+      "An AI video avatar and voice clone of the owner, with written consent, working from the business's scripts, each video labelled AI and approved by a person.",
   },
 
   /** The number that decides how the disclosure question has to be answered, and it is somebody
@@ -155,6 +156,10 @@ export const aiClone: Service = {
     {
       q: "Who owns the avatar and the voice?",
       a: "Who owns an AI avatar and voice has two answers, worth keeping apart. The technology is licensed, not owned: the video runs on a licensed avatar platform and the voice on a licensed voice engine, and those models belong to the companies that built them. What belongs to the owner is the likeness, the recording it was built from, the scripts and the finished videos. Those are used only on the business's own content, never licensed on to anybody else, and deleted on request.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 

@@ -22,11 +22,12 @@ export const documentProcessing: Service = {
   tier: "more",
 
   eyebrow: "Documents · Read and file",
-  title: "Document processing: paperwork read, dates on the calendar",
+  title: "AI document processing for small business: paperwork read, dates on the calendar",
   lede: "AI document processing for a small business reads the paperwork as it arrives, pulls out the terms, the dates and the names, flags what is missing, and files the details in the business's folders, its CRM and its calendar. A signed estimate, a change order, a lease or a contract arrives as a PDF or a phone photo, and somebody types the same names and dates into three places, if they get to it. Anything it is not sure about goes to a person.",
   specs: ["reads contracts and forms", "key dates to the calendar", "missing fields flagged", "filed to your CRM"],
   why: "AI document processing matters because paperwork is slow, and it is easy to get wrong, and every job, lease or deal pays that tax. Pulling the key dates and terms out on the way in means a deadline is flagged the day the document lands, not the week it runs out.",
   keywords: [
+    "ai document processing for small business",
     "document processing automation for small business",
     "ai document processing",
     "contract data extraction",
@@ -80,7 +81,7 @@ export const documentProcessing: Service = {
   whatItIs: [
     "AI document processing reads the paperwork. A signed estimate, a change order, a lease, an engagement letter or a purchase contract goes in. The terms, the key dates and the parties come out as structured data, rather than as a PDF somebody has to open and squint at.",
     "It also says what is wrong: the missing signature, the field left blank, the date that contradicts another date. Then it files everything into the CRM and the job or client folder, and puts the deadlines on the calendar.",
-    "It fits any business that runs on signed paper: a contractor's estimates, change orders and insurance certificates, a property manager's leases and renewals, an accounting office's engagement letters and intake forms, a real estate office's contracts and their deadlines. For an office that handles tax or health documents, the documents stay in the business's own systems and access is limited to the people who already see them.",
+    "It fits any business that runs on signed paper: a contractor's estimates, change orders and insurance certificates, a property manager's leases and renewals, an accounting office's engagement letters and intake forms, a real estate office's contracts, seller disclosures and their deadlines. For an office that handles tax or health documents, the documents stay in the business's own systems and access is limited to the people who already see them.",
   ],
 
   howItWorks: [
@@ -177,6 +178,10 @@ export const documentProcessing: Service = {
     {
       q: "Does it take over the office manager's job?",
       a: "No, AI document processing does not take over the office manager's job. It removes the re-keying and the deadline tracking, which is the mechanical part of the job and the part where mistakes happen. The judgment, the chasing and the customer relationship stay with the person, who now has more time for them.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 

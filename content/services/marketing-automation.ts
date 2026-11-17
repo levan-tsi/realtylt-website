@@ -23,11 +23,12 @@ export const marketingAutomation: Service = {
   tier: "core",
 
   eyebrow: "Marketing · Email and text that react",
-  title: "Email and text marketing that reacts to customers",
-  lede: "Email and text marketing automation for a small business reacts to what each customer actually does: a question, an opened estimate, a click on a seasonal offer. Somebody asked about a patio in March, got one reply, and heard nothing until a generic newsletter in July. The next message goes out on its own, the quiet ones hear less rather than more, and the owner is told the moment someone looks ready.",
+  title: "Marketing automation for small business: email and text that react to customers",
+  lede: "Marketing automation for a small business, by email and text, reacts to what each customer actually does: a question, an opened estimate, a click on a seasonal offer. Somebody asked about a patio in March, got one reply, and heard nothing until a generic newsletter in July. The next message goes out on its own, the quiet ones hear less rather than more, and the owner is told the moment someone looks ready.",
   specs: ["email and text that react", "set off by what people do", "backs off on silence", "sent so it arrives"],
   why: "Marketing automation matters because a customer who is months from deciding hears from a lot of businesses in between, and most of it is generic and easy to forget. Messages set off by what a customer does are how a business stays useful across that wait, and nobody has to remember to send them.",
   keywords: [
+    "marketing automation for small business",
     "email marketing automation for small business",
     "marketing automation for small businesses",
     "what is email marketing automation",
@@ -36,9 +37,9 @@ export const marketingAutomation: Service = {
   ],
 
   seo: {
-    title: "Email and text marketing automation for small business",
+    title: "Marketing automation for small business: email and text",
     description:
-      "Email and text marketing automation for a small business: each message set off by what a customer did, quiet ones contacted less, and sent so it reaches the inbox.",
+      "Marketing automation for small business by email and text: each message set off by what a customer did, quiet ones contacted less, sent to reach the inbox.",
   },
 
   /** ROUND E. The one number in this subject that both major mailbox providers publish in the
@@ -177,6 +178,10 @@ export const marketingAutomation: Service = {
     {
       q: "Why did my open rate drop?",
       a: "An open rate can drop because fewer people opened the email, and possibly for two reasons that have nothing to do with the writing. An open is only recorded when a mail client fetches a tracking image, so clients that block or reroute remote images bend the count, and the mix of clients on a list changes over time. Separately, if more of the mail is being filtered, fewer people are offered the chance to open it at all.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 

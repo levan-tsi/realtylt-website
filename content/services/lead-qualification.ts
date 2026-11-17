@@ -18,11 +18,12 @@ export const leadQualification: Service = {
   tier: "more",
 
   eyebrow: "Qualification · Score and route",
-  title: "Lead scoring that puts the ready customers first",
-  lede: "Lead scoring and qualification for a small business ranks the list by who to call now. Thirty quote requests came in this week and they all look the same in the inbox: a name, a number, “please call”. We set up lead scoring with AI that reads what each person actually said, how soon they need it, what the job is and whether it fits, and ranks the list by who to call now. Everyone still gets an answer. The score only changes the order.",
+  title: "AI lead qualification and lead scoring for small business: ready customers first",
+  lede: "AI lead qualification and lead scoring for a small business rank the list by who to call now. Thirty quote requests came in this week and they all look the same in the inbox: a name, a number, “please call”. We set up lead scoring with AI that reads what each person actually said, how soon they need it, what the job is and whether it fits, and ranks the list by who to call now. Everyone still gets an answer. The score only changes the order.",
   specs: ["reads what they said", "scores need, fit and timing", "routes to the right person", "every score shows its reason"],
   why: "Lead qualification matters because treating every lead the same spends the best hours of the day on people who were only pricing. Sorting leads this way is called qualification. It puts the customers who are ready to go ahead at the top of the list, and every other lead still gets its answer, just later in the day or on a slower track.",
   keywords: [
+    "ai lead qualification and lead scoring for small business",
     "lead scoring",
     "how to qualify leads",
     "lead qualification process",
@@ -36,9 +37,9 @@ export const leadQualification: Service = {
   ],
 
   seo: {
-    title: "Lead scoring and qualification for small business: with AI",
+    title: "AI lead qualification and lead scoring for small business",
     description:
-      "AI lead scoring for a small business: every inquiry ranked on need, fit and timing from what the person said, routed to the right person, and never ignored.",
+      "AI lead qualification and lead scoring for small business: every inquiry ranked on need, fit and timing, routed to the right person, and never ignored.",
   },
 
   figure: {
@@ -162,8 +163,8 @@ export const leadQualification: Service = {
       a: "Lead scoring is ranking leads by how soon they are likely to go ahead, so the team's time goes first to the ones that are ready. Without it, every inquiry in the CRM looks identical and the order of the day is set by whatever arrived first.",
     },
     {
-      q: "Does a low score mean the lead is dropped?",
-      a: "No, a low score does not mean the lead is dropped. It means the lead goes to a slower follow-up instead of the morning call list. Many leads are not ready today and are ready later, and the point of scoring is to stop those two groups getting the same treatment. A low score changes when somebody calls. It never changes what that person can ask or be told.",
+      q: "Does a low score mean the lead is dropped from AI lead follow-up?",
+      a: "No, a low score does not mean the lead is dropped from AI lead follow-up. It means the lead goes to a slower follow-up instead of the morning call list. Many leads are not ready today and are ready later, and the point of scoring is to stop those two groups getting the same treatment. A low score changes when somebody calls. It never changes what that person can ask or be told.",
     },
     {
       q: "Can the score be wrong?",
@@ -176,6 +177,10 @@ export const leadQualification: Service = {
     {
       q: "Is it legal to score and route leads with software?",
       a: "On whether it is legal to score and route leads with software, scoring the team's own time is not the risk. The risk is scoring on anything that stands in for who a person is rather than what they said, and then delivering a different level of service on the back of it. For a real estate office, the Fair Housing Act, at 42 U.S.C. 3604, makes no exception for a routing rule, and Article 10 of the NAR Code of Ethics covers sexual orientation and gender identity, which the federal statute does not. Keep the inputs to the plans people describe, keep every score traceable to their own words, and never let the ranking change what anybody is allowed to see or ask. None of this is legal advice.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 

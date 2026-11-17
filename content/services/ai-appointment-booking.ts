@@ -27,6 +27,7 @@ export const aiAppointmentBooking: Service = {
   specs: ["reply and book in one go", "real open times only", "confirmation and reminder", "easy to move, hard to forget"],
   why: "AI appointment booking matters because an inquiry waiting on a callback is one somebody else can answer. A time agreed months away is one that is missed far more often. So book inside the first conversation, keep the date close, and remind before the day. Those are the cheap moves that turn more inquiries into work that actually happens.",
   keywords: [
+    "ai appointment booking",
     "how to reduce no shows",
     "appointment booking system",
     "appointment reminder text",
@@ -35,9 +36,9 @@ export const aiAppointmentBooking: Service = {
   ],
 
   seo: {
-    title: "AI appointment booking system for small business: fewer no-shows",
+    title: "AI appointment booking for small business: fewer no-shows",
     description:
-      "AI appointment booking for a local business: it replies in seconds, offers real open times, books in the first conversation and sends the reminder that cuts no-shows.",
+      "AI appointment booking for small business: replies in seconds, real open times offered, booked in the first conversation, and a reminder that cuts no-shows.",
   },
 
   /** The one number in the band, at the size it was measured: a single text reminder, 72 hours
@@ -166,6 +167,10 @@ export const aiAppointmentBooking: Service = {
     {
       q: "Can it book on the phone as well as by text?",
       a: "Yes, AI appointment booking works on the phone as well as by text: the same booking runs behind the AI voice agent, so a caller can be booked mid-conversation exactly as a website visitor can, with the same rules and the same reminder.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 

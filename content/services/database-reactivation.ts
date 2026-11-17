@@ -166,6 +166,10 @@ export const databaseReactivation: Service = {
       q: "How does it decide who is worth calling?",
       a: "Database reactivation decides who is worth calling by reading intent from what the person actually says: whether the need is still there, whether the timing moved, whether something changed. Everyone permitted gets one attempt. Only the ones showing real intent reach the calendar, and a person takes it from there.",
     },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
+    },
   ],
 
   /** Own post FIRST. Two cards, because RelatedPosts is a two-column grid and an odd count leaves

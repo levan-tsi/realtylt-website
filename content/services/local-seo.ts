@@ -26,11 +26,12 @@ export const localSeo: Service = {
   tier: "more",
 
   eyebrow: "Local SEO · Get found nearby",
-  title: "Local SEO for small business: the profile, the reviews, the pages",
-  lede: "Local SEO for a small business decides who shows up when somebody nearby searches “plumber near me”: three businesses show up on the map, and the one with the half-finished profile is not one of them. We fix and keep current the business's Google profile, its details wherever they appear, the reviews that come in and a real page for each place and service it covers, so it competes for those three spots on the searches local customers actually type.",
+  title: "Local SEO services for small business: the profile, the reviews, the pages",
+  lede: "Local SEO services for a small business work on what decides who shows up when somebody nearby searches for a plumber: three businesses show up on the map, and the one with the half-finished profile is not one of them. We fix and keep current the business's Google profile, its details wherever they appear (the listings called citations), the reviews that come in and a real page for each place and service it covers, so it competes for those three spots on the searches local customers actually type.",
   specs: ["Google Business Profile", "map and local ranking", "details kept current", "a page per town and service"],
   why: "Local SEO matters because a nearby search shows three businesses above everything else. Google publishes what decides that order: relevance, distance and popularity. Two of the three are work a business can do, and that work keeps adding up after a budget stops, which a paid click never does.",
   keywords: [
+    "local seo services for small business",
     "how to rank in google maps",
     "google business profile optimization",
     "local seo for small business",
@@ -39,9 +40,9 @@ export const localSeo: Service = {
   ],
 
   seo: {
-    title: "Local SEO service for small business: Google profile, reviews",
+    title: "Local SEO services for small business: Google profile",
     description:
-      "Local SEO for a small business: the Google profile fixed and kept current, reviews and links that Google names, and a real page for each town and service covered.",
+      "Local SEO services for small business: the Google profile fixed and kept current, the reviews and links Google names, and a real page for each town and service.",
   },
 
   /** A number in 96-point type is the most quoted thing on the page, so it carries its
@@ -59,7 +60,7 @@ export const localSeo: Service = {
   figure: {
     kind: "flow",
     caption: "What actually moves a business up the map",
-    trigger: "Somebody nearby searches “plumber near me”",
+    trigger: "Somebody nearby searches for a plumber",
     nodes: [
       { label: "The profile", note: "Categories, service area, hours and photos, correct and current." },
       { label: "The links", note: "Other people's websites mentioning the business, which Google's page names under prominence." },
@@ -160,6 +161,10 @@ export const localSeo: Service = {
     {
       q: "Can I show up in a town my office is not in?",
       a: "A business cannot really show up on the map in a town its office is not in. Distance is one of the three inputs, and Google's own guidelines say a profile's service area should not reach farther than about two hours of driving from where the business is based, while allowing that some businesses will need more. The other route is an ordinary page on the business's own website about the work genuinely done in that town. A page is judged on what is written on it rather than on where the office sits. That is a different piece of work with a different risk attached, and it has its own article.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 

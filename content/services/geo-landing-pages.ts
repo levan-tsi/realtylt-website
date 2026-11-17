@@ -24,22 +24,23 @@ export const geoLandingPages: Service = {
   tier: "more",
 
   eyebrow: "Local and GEO pages · Get found nearby",
-  title: "Service area pages: a real page for every town served",
-  lede: "Service area pages for a local business give each town and service it genuinely covers a real page, in its own look: what it does there, the jobs done there, the questions people there ask, and a way to book. A plumber who works in nine towns and has one page that lists all nine in a sentence is found in none of them. Each page is written to be found in Google and quoted in AI answers, and a person who knows the place reads it before it goes live.",
+  title: "Location pages for local SEO: a real page for every town served",
+  lede: "Location pages for local SEO, also called service area pages, give each town and service a local business genuinely covers a real page, in its own look: what it does there, the jobs done there, the questions people there ask, and a way to book. A plumber who works in nine towns and has one page that lists all nine in a sentence is found in none of them. Each page is written to be found in Google and quoted in AI answers, and a person who knows the place reads it before it goes live.",
   specs: ["one page per town served", "built to be found locally", "written to be quoted by AI", "the inquiry lands on your site"],
-  why: "Service area pages matter because people search for a service by where they are: they type “near me”, or their town by name. A page for each area the business really covers meets them where they are looking, in Google and in AI answers, and the inquiry lands on the business's own website rather than on a directory's.",
+  why: "Location pages, or service area pages, matter because people search for a service by where they are, or type their town by name. A page for each area the business really covers meets them where they are looking, in Google and in AI answers, and the inquiry lands on the business's own website rather than on a directory's.",
   keywords: [
+    "location pages for local seo",
     "service area pages",
     "local landing pages for business",
     "geo landing pages",
-    "near me seo pages",
+    "location pages seo",
     "ai search visibility local business",
   ],
 
   seo: {
-    title: "Service area pages for local business: one real page per town",
+    title: "Location pages for local SEO: a real page for each town",
     description:
-      "Service area pages for a local business: a real page for every town it serves, written to be found in Google and quoted in AI answers. Not thin doorway pages.",
+      "Location pages for local SEO: a real page for every town a business serves, written to be found in Google and quoted in AI answers. Not thin doorway pages.",
   },
 
   /** A number in 96-point type is the most quoted thing on the page, so it carries its
@@ -166,6 +167,10 @@ export const geoLandingPages: Service = {
     {
       q: "How do I get my business quoted in AI answers?",
       a: "To get a business quoted in AI answers, answer the question directly, in plain language, on a real page that an assistant can read. Structured data helps a machine understand the page, and a clear question-and-answer format is what gets quoted. Vague marketing copy does not get cited, because there is nothing in it to quote. Nobody can promise the citation itself.",
+    },
+    {
+      q: "Where are you based, and do you work with owners outside New York?",
+      a: "We are based in New York State, and the call works for an owner anywhere. Tell us about the business in the form on this page, and we reply.",
     },
   ],
 
