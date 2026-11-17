@@ -370,11 +370,16 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-agent-workforce-real-estate-assistants",
     cluster: "building",
-    title: "Four assistants ran overnight. Nobody read what they did.",
-    seoTitle: "An AI Agent Workforce in Real Estate: What Supervision Costs",
+    title: "AI employees: what they do for a small business, and what supervising them costs",
+    seoTitle: "AI employees, agents and assistants: what supervision costs",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` was ABSENT until 2026-09-18, on purpose: rounds 46 and 47 changed only the scene
+    updated: "2026-11-17",
+    /** AGENTS ROUND 33 (2026-11-17), the owner's order to rewrite the older AI posts for business owners in the story manner of
+     * the assessment post: aimed at "AI employees" (PHRASES.md, round 33): what they do and what supervising them costs. One
+     * invented business runs through every method section; every figure, link and scene kept; the closing is one link to the
+     * service page. Record: realtylt-agents company/agents/seo/runs/r33-retarget/old2/.
+     *
+     * `updated` was ABSENT until 2026-09-18, on purpose: rounds 46 and 47 changed only the scene
      * file's provenance docstring for this topic, which is a comment rather than copy, and a
      * date equal to the published date is a gate being fed ("set it when the article takes its
      * first real revision, never to satisfy a gate"). The final round's readability pass IS that
@@ -382,9 +387,9 @@ export const POSTS: BlogPost[] = ([
      * link, number and quote held by scripts/rewrite-invariants.mjs), on a later day than it was
      * published. The absent film (C3) is still a true red on this slug. */
     excerpt:
-      "Nine good mornings, and on the tenth an assistant confirmed a showing you had already moved. What an AI agent workforce really is. Why an assistant that is right most of the time is a different product from one that is right every time. Where multi-agent systems really fail. And who is accountable when one of them is wrong.",
+      "AI employees, shown on one invented roofing company that runs four AI assistants overnight until one confirms an inspection the owner had already moved. Why an assistant that is right once is a different product from one that is right every time, where multi-agent systems really fail, why the written brief matters more than the model, who answers for the work, and five checks to run on one assistant before you run four.",
     seoDescription:
-      "What an AI agent workforce does, why being right every time matters more than one success rate, where multi-agent systems fail, and what supervision costs.",
+      "What AI employees do for a small business, why right once is not right every time, where multi-agent systems fail, and what supervising them really costs.",
     cover: "/images/hero/hero-cand-bear-mountain.jpg",
     body: [],
     placeholder: false,
