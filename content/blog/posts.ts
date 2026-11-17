@@ -274,10 +274,10 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-scheduling-real-estate-showing-confirmations",
     cluster: "appointments",
-    title: "AI scheduling assistant for appointments other people must confirm",
-    seoTitle: "AI Scheduling Assistant for Appointment Confirmations",
+    title: "Appointment confirmation texts when someone else must say yes",
+    seoTitle: "Appointment Confirmation Texts When Others Must Say Yes",
     date: "2026-08-25",
-    updated: "2026-11-11",
+    updated: "2026-11-17",
     /** ROUND 28 (2026-11-11), re-aimed at local business owners (his order of 2026-11-11): the
      * title carries "ai scheduling assistant"; the story is a plumber's repair in a managed building
      * (the owner, the manager, the tenant); the examples a contractor, a cleaning firm, a dental
@@ -289,10 +289,15 @@ export const POSTS: BlogPost[] = ([
      * pass pointed the fine-tuning caveat at the right Microsoft Graph page and rewrote the
      * seo.description ending; see docs/parity/ROUND45-RELEVANCE-PASS.md and ROUND46. First real
      * revision. C3 stays red, no film, so the slug ships at 18/19. */
+    /** ROUND 33 (2026-11-17), the retarget on Google's data (company/agents/seo/runs/r33-retarget): the title and the first
+     * sentence lead with "appointment confirmation text" (100 to 1,000 searches a month; its first page is template lists), and
+     * a new first section shows three texts to copy, built only from the post's own invented example and its own rules. "AI
+     * scheduling assistant" (a personal calendar search) stays in the text. The closing goes to the service page while the quiz
+     * is not live; the FAQ says where we are based. Slug kept: the address is indexed. */
     excerpt:
-      "An AI scheduling assistant for appointments other people must confirm: what it can really do when the calendars it needs belong to other people, why the standards already have a word for an appointment nobody has agreed to, why moving the time throws every yes away, and four tests before buying one.",
+      "Appointment confirmation texts for jobs other people must agree to: three wordings to copy, what an AI scheduling assistant can really do when the calendars it needs belong to other people, why the standards already have a word for an appointment nobody has agreed to, why moving the time throws every yes away, and four tests before buying one.",
     seoDescription:
-      "An AI scheduling assistant for appointments other people must confirm: what it can do, why a moved time resets every yes, and four tests before buying one.",
+      "Appointment confirmation texts when someone else must say yes: three wordings to copy, why moving the time resets every yes, and four tests for an AI assistant.",
     cover: "/images/editorial/clock-not-in-use.jpg",
     body: [],
     placeholder: false,

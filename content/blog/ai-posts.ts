@@ -1281,7 +1281,7 @@ That last line is where the money is. The fix for it does not start with buying 
 
 [[scene:funnel]]`;
 
-export const AI_SCHEDULING_POST = `A job that needs someone else's yes can be booked on your calendar and still not be agreed by the people it depends on. We help local business owners set up an AI scheduling assistant that calls a time confirmed only after everyone who must agree has replied. Below is what such an assistant can and cannot do across calendars it does not own, four tests before buying one, whether the job is worth automating, and a three-week plan.
+export const AI_SCHEDULING_POST = `An appointment confirmation text should wait for every yes it needs, and this page gives three to copy. A job that needs someone else's yes can be booked on your calendar and still not be agreed by the people it depends on. We help local business owners set up an AI scheduling assistant that calls a time confirmed only after everyone who must agree has replied. Below is what such an assistant can and cannot do across calendars it does not own, four tests before buying one, whether the job is worth automating, and a three-week plan.
 
 An AI scheduling assistant is software that proposes times, tracks who has answered and holds your calendar while it waits; on calendars it does not own, it can ask, and only the other person's reply can confirm. This page is for owners whose appointments need people outside the business: a contractor working in someone else's building, a dental office booking an interpreter, a salon booking a visiting stylist, a real estate office arranging a showing on another agent's listing.
 
@@ -1292,6 +1292,16 @@ The request went out on Thursday afternoon. That evening the owner heard that Sa
 At twenty past nine on Saturday the manager replied: the tenant needs notice, and the super is off until one. The plumber was already in the van. The appointment had been booked, by one of the three people whose agreement it needed.
 
 [[scene:in-short]]
+
+## What should an appointment confirmation text say when someone else must agree?
+
+An appointment confirmation text, when someone else must agree, says only what has been agreed so far: a request while any yes is missing, a confirmed time once every yes is in, and a new question whenever the time moves. Three texts from the plumbing company's invented example show the order, and a person approves each one before it reaches the customer.
+
+1. While the building's manager and the tenant have not replied: "Your repair request for Saturday has gone to the building's manager and the tenant. We will confirm a time once both have agreed, and by Friday at six either way."
+2. Once both have said yes: "Your repair is confirmed for Saturday at eleven. The building's manager and the tenant have both agreed to that time."
+3. If the time has to move: "Saturday at eleven no longer works for the building. We are asking the manager and the tenant about two o'clock instead, and we will confirm once both have agreed."
+
+The first names no time, so nothing has to be taken back. The second names who agreed, so the customer can see why the time will hold. The third treats the moved time as a new question, because every yes was given to eleven, as "Why does moving the time reset every yes in scheduling?" explains below.
 
 ## What a scheduling problem is, once the calendar is not yours
 
@@ -1497,6 +1507,10 @@ The person whose reply is missing, once, at a time set in your defaults; after t
 
 A closing is the same problem with more parties and a much higher cost of being wrong, and nothing here suggests automating it. What carries over is the discipline: know which people have confirmed in writing, and treat a moved date as a new question.
 
+### Can I talk to you about scheduling if my business is outside New York?
+
+We are based in New York State, and the call works for an owner anywhere.
+
 [[scene:quiz]]
 
 ## What to do about scheduling that needs a yes from outside
@@ -1523,7 +1537,7 @@ An invented example: a home inspector picks inspections in occupied homes, write
 
 [[scene:roadmap]]
 
-Take the free AI quiz: realtylt.com/ai/assessment. It ends with your own result, with the working shown.
+Ask us about [AI scheduling for small business](/services/ai-scheduling).
 
 ## Sources
 
