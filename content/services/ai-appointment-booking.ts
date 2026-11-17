@@ -27,6 +27,7 @@ export const aiAppointmentBooking: Service = {
   specs: ["reply and book in one go", "real open times only", "confirmation and reminder", "easy to move, hard to forget"],
   why: "AI appointment booking matters because an inquiry waiting on a callback is one somebody else can answer. A time agreed months away is one that is missed far more often. So book inside the first conversation, keep the date close, and remind before the day. Those are the cheap moves that turn more inquiries into work that actually happens.",
   keywords: [
+    "ai appointment booking",
     "how to reduce no shows",
     "appointment booking system",
     "appointment reminder text",

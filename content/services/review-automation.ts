@@ -40,6 +40,7 @@ export const reviewAutomation: Service = {
   specs: ["asks when the job ends", "one tap to Google", "the same link for everyone", "a low score reaches the owner"],
   why: "Google review automation matters because people read reviews before they call, and the ones they read are the recent ones. This asks every customer while the work is fresh in their mind, every time, not only when somebody remembers. A steady trickle of honest reviews says more about a business today than a good year three years ago.",
   keywords: [
+    "google review automation for small business",
     "how to get more google reviews",
     "how to get more google reviews for my business",
     "automated review requests",
@@ -48,7 +49,7 @@ export const reviewAutomation: Service = {
   ],
 
   seo: {
-    title: "Google review automation for small business: ask every customer",
+    title: "Google review automation for small business: one text a job",
     description:
       "Google review automation for small business: one text per job, one tap to the review page, the same link for all, no incentives, and low scores reach the owner.",
   },

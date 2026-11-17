@@ -29,6 +29,7 @@ export const geoLandingPages: Service = {
   specs: ["one page per town served", "built to be found locally", "written to be quoted by AI", "the inquiry lands on your site"],
   why: "Location pages, or service area pages, matter because people search for a service by where they are, or type their town by name. A page for each area the business really covers meets them where they are looking, in Google and in AI answers, and the inquiry lands on the business's own website rather than on a directory's.",
   keywords: [
+    "location pages for local seo",
     "service area pages",
     "local landing pages for business",
     "geo landing pages",

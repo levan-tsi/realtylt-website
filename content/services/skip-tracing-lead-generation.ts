@@ -33,6 +33,7 @@ export const skipTracingLeadGeneration: Service = {
   specs: ["built for your area", "owner and business lookups", "source and date on every row", "do-not-call checked"],
   why: "Lead generation starts with prospecting, which means reaching out to find new customers, and it runs on lists. Bought lists cost a lot and go stale fast. This builds a fresh list of the businesses or owners themselves, whenever it is needed, for the area being worked, on the day it is worked, with the rules about how each row may be contacted written beside it.",
   keywords: [
+    "lead generation services for small business",
     "lead generation for small business",
     "how to build a lead list",
     "skip tracing",
@@ -41,7 +42,7 @@ export const skipTracingLeadGeneration: Service = {
   ],
 
   seo: {
-    title: "Lead generation services for small business: lists, skip tracing",
+    title: "Lead generation services for small business: skip tracing",
     description:
       "Lead generation services for small business: fresh lists of businesses on the map or owners on chosen streets, with a contact, a source and a do-not-call check.",
   },

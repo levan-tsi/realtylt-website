@@ -36,7 +36,7 @@ export const crmSync: Service = {
   ],
 
   seo: {
-    title: "CRM integration for small business: two-way sync, no double entry",
+    title: "CRM integration for small business: no double entry",
     description:
       "CRM integration for small business: every call, text, booking and job writes back to the customer record, changes flow back out, and duplicates go to a person.",
   },

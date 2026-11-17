@@ -26,6 +26,7 @@ export const aiClone: Service = {
   specs: ["a licensed avatar platform", "a licensed voice engine", "only your own scripts", "every video labelled AI"],
   why: "An AI video avatar and voice clone matters because an owner can only be on one call, one video, one visit at a time. A digital twin can be in many places at once. It multiplies the two things customers really buy from a small business, the owner's face and voice, so personal attention stops being the thing that slows the business down.",
   keywords: [
+    "ai video avatar and voice clone",
     "ai avatar for business",
     "ai clone of yourself",
     "ai video avatar for small business",

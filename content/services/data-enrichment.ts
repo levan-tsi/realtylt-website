@@ -27,6 +27,7 @@ export const dataEnrichment: Service = {
   specs: ["fills in missing contact details", "phone and email checks", "duplicates collapsed", "source and date on every value"],
   why: "Data enrichment matters because a customer nobody can reach is a customer nobody can serve. Enrichment fills the gaps in records the business already owns, and writes down where each value came from and when, so every row says how much to trust it.",
   keywords: [
+    "data enrichment for small business",
     "data enrichment",
     "contact data enrichment for small business",
     "crm data cleanup",
@@ -35,7 +36,7 @@ export const dataEnrichment: Service = {
   ],
 
   seo: {
-    title: "Data enrichment for small business: contacts filled and checked",
+    title: "Data enrichment for small business: contacts filled, checked",
     description:
       "Data enrichment for a small business: missing phones and emails filled in, numbers checked, duplicates collapsed, and the source and date kept on every value.",
   },

@@ -26,6 +26,7 @@ export const aiAudit: Service = {
   specs: ["one hour with the owner", "an order, with reasons", "a written plan", "what stays with a person"],
   why: "Knowing AI could help is one problem. Knowing where to point it is a different one, and only the second gets anything built. An assessment turns an open question into a short list, with the reason for each spot beside it. It also gives you a second list: the things you have decided not to build. Some firms call this an AI audit.",
   keywords: [
+    "ai consultant for small business",
     "ai readiness assessment",
     "how to use ai in my business",
     "ai assessment for small business",

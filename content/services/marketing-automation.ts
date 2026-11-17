@@ -28,6 +28,7 @@ export const marketingAutomation: Service = {
   specs: ["email and text that react", "set off by what people do", "backs off on silence", "sent so it arrives"],
   why: "Marketing automation matters because a customer who is months from deciding hears from a lot of businesses in between, and most of it is generic and easy to forget. Messages set off by what a customer does are how a business stays useful across that wait, and nobody has to remember to send them.",
   keywords: [
+    "marketing automation for small business",
     "email marketing automation for small business",
     "marketing automation for small businesses",
     "what is email marketing automation",
@@ -36,7 +37,7 @@ export const marketingAutomation: Service = {
   ],
 
   seo: {
-    title: "Marketing automation for small business: email and text follow-up",
+    title: "Marketing automation for small business: email and text",
     description:
       "Marketing automation for small business by email and text: each message set off by what a customer did, quiet ones contacted less, sent to reach the inbox.",
   },

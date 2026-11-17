@@ -27,6 +27,7 @@ export const documentProcessing: Service = {
   specs: ["reads contracts and forms", "key dates to the calendar", "missing fields flagged", "filed to your CRM"],
   why: "AI document processing matters because paperwork is slow, and it is easy to get wrong, and every job, lease or deal pays that tax. Pulling the key dates and terms out on the way in means a deadline is flagged the day the document lands, not the week it runs out.",
   keywords: [
+    "ai document processing for small business",
     "document processing automation for small business",
     "ai document processing",
     "contract data extraction",

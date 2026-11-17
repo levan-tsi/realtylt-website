@@ -23,6 +23,7 @@ export const leadQualification: Service = {
   specs: ["reads what they said", "scores need, fit and timing", "routes to the right person", "every score shows its reason"],
   why: "Lead qualification matters because treating every lead the same spends the best hours of the day on people who were only pricing. Sorting leads this way is called qualification. It puts the customers who are ready to go ahead at the top of the list, and every other lead still gets its answer, just later in the day or on a slower track.",
   keywords: [
+    "ai lead qualification and lead scoring for small business",
     "lead scoring",
     "how to qualify leads",
     "lead qualification process",

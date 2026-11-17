@@ -26,6 +26,7 @@ export const workflowAutomation: Service = {
   specs: ["connects the tools you use", "follows up on every quote", "stops and asks a person", "runs end to end"],
   why: "Workflow automation matters because every office loses time to the same steps done by hand: moving a detail from one app to the next, chasing the next task, retyping what a system already knows. When that chain runs itself, the time comes back, and so do the follow-ups that used to slip through.",
   keywords: [
+    "ai automation services for small business",
     "workflow automation for small business",
     "how to automate repetitive tasks",
     "business process automation",
@@ -38,7 +39,7 @@ export const workflowAutomation: Service = {
   ],
 
   seo: {
-    title: "AI automation services for small business: quotes and follow-up",
+    title: "AI automation services for small business: quotes, follow-up",
     description:
       "AI automation services for small business: the apps you already use connected, so quotes get followed up, forms land in place and the next task starts itself.",
   },

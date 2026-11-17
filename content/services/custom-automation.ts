@@ -27,6 +27,7 @@ export const customAutomation: Service = {
   specs: ["built around your workflow", "made from proven parts", "runs on your tools", "handed over in writing"],
   why: "Custom AI automation matters because every team has one slow spot that no store-bought tool fixes. Custom automation removes the step done by hand that quietly limits what the business can take on. From the day it works, it is a thing the business owns: it runs, somebody understands it, and it stands on software that belongs to other companies, which is why it is handed over in writing.",
   keywords: [
+    "ai automation agency for small business",
     "custom automation for small business",
     "custom ai automation",
     "automate business processes",

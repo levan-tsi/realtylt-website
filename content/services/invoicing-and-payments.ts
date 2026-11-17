@@ -30,6 +30,7 @@ export const invoicingAndPayments: Service = {
   specs: ["invoices raised on the day", "deposit and tap-to-pay links", "polite reminders on schedule", "tracks who owes what"],
   why: "Automated invoicing matters because nobody enjoys sending the third reminder, which is why it does not get sent. Automate the invoice and the follow-up, and both happen on the day they were supposed to, worded the same way every time. The owner keeps the hard conversations and loses the awkward ones.",
   keywords: [
+    "automated invoicing for small business",
     "automated invoicing software",
     "invoice payment reminders",
     "how to get clients to pay on time",

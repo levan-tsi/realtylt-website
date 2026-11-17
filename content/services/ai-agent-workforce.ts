@@ -29,8 +29,8 @@ export const aiAgentWorkforce: Service = {
   specs: ["one assistant per job", "briefed in writing", "plugs into your tools", "drafts for a person to approve"],
   why: "AI agents matter because a small team cannot add a person for every task that repeats. It can hand each one to its own AI assistant that drafts the work, so the people spend their time on the reading, the deciding and the customers rather than on the typing.",
   keywords: [
-    "ai assistant for small business",
     "ai agents for small business",
+    "ai assistant for small business",
     "personal ai assistant for business owners",
     "ai agents for real estate",
     "automate repetitive office tasks",

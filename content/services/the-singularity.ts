@@ -75,6 +75,7 @@ export const theSingularity: Service = {
   ],
   why: "The Singularity matters because most tools are worth the most on the day you install them, then they age. This system keeps its own memory. It writes down the corrections you give it. It can change the software it runs on. So it is worth more a year in than on day one. Everything else you buy gets older. This gets better.",
   keywords: [
+    "ai agent system for small business",
     "ai agent orchestration for small business",
     "self improving ai system",
     "ai that writes and ships code",
@@ -83,7 +84,7 @@ export const theSingularity: Service = {
   ],
 
   seo: {
-    title: "The Singularity AI agent system for small business: one memory",
+    title: "The Singularity AI agent system for small business",
     description:
       "The Singularity, an AI operating system for business, builds and runs its agents, keeps what it learns in readable files and improves its code with approval.",
   },

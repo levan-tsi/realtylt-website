@@ -39,8 +39,8 @@ export const aiChatAssistant: Service = {
   specs: ["answers at any hour", "from your own information", "books on your calendar", "the chat goes to your CRM"],
   why: "An AI chatbot matters because Harvard Business Review reported that firms trying to reach a lead within an hour were nearly seven times likelier to have a meaningful conversation with a decision maker than firms trying even an hour later. The assistant answers while the person is still on the page, asks the first questions and books a time. An inquiry that arrives at night is answered at night.",
   keywords: [
-    "website chatbot",
     "ai chatbot for small business",
+    "website chatbot",
     "ai customer service chatbot",
     "chatbot for lead generation",
     "ai chatbot for real estate",

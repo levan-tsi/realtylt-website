@@ -31,6 +31,7 @@ export const aiScheduling: Service = {
   specs: ["your live calendar", "real open times only", "reminders sent for you", "who has said yes, tracked"],
   why: "AI scheduling matters because the gap between “interested” and “on the calendar” is where a customer cools. Booking inside the same conversation closes that gap. Holding the slot the moment it is taken is built against one kind of double booking, the business's own time offered twice, while the hold is set up and working; and a time that needs other people is called confirmed only when they have said so.",
   keywords: [
+    "ai scheduling for small business",
     "ai scheduling assistant for business",
     "ai calendar assistant",
     "what is a scheduling assistant",

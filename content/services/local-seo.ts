@@ -31,6 +31,7 @@ export const localSeo: Service = {
   specs: ["Google Business Profile", "map and local ranking", "details kept current", "a page per town and service"],
   why: "Local SEO matters because a nearby search shows three businesses above everything else. Google publishes what decides that order: relevance, distance and popularity. Two of the three are work a business can do, and that work keeps adding up after a budget stops, which a paid click never does.",
   keywords: [
+    "local seo services for small business",
     "how to rank in google maps",
     "google business profile optimization",
     "local seo for small business",
@@ -39,7 +40,7 @@ export const localSeo: Service = {
   ],
 
   seo: {
-    title: "Local SEO services for small business: Google profile, reviews",
+    title: "Local SEO services for small business: Google profile",
     description:
       "Local SEO services for small business: the Google profile fixed and kept current, the reviews and links Google names, and a real page for each town and service.",
   },

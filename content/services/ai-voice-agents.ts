@@ -25,8 +25,8 @@ export const aiVoiceAgents: Service = {
   specs: ["answers when nobody can", "says it is an AI", "books on your calendar", "call notes to your CRM"],
   why: "An AI receptionist matters because a call nobody answers can go to the next business on the list. The agent picks up, takes down what the job is, where it is and how soon it is needed, and books the visit. The person who calls back has the notes in hand, and nobody on the team has to sit by the phone to make that happen.",
   keywords: [
-    "ai voice agent",
     "ai receptionist for small business",
+    "ai voice agent",
     "ai answering service",
     "ai phone answering service for small business",
     "ai voice agent for real estate",
