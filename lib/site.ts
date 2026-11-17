@@ -29,6 +29,13 @@ export const SITE = {
   /** The general inbox shown beside the phone in the header (owner's order 2026-09-22). Proven to
    * deliver into levan@realtylt.com the same day (test token RLT-0922-A7 landed in his inbox). */
   infoEmail: "info@realtylt.com",
+  /** The free AI quiz. NOT LIVE on 2026-11-17: realtylt.com/ai/quiz and /ai/assessment both answered
+   * 404 in a browser that day. While `quizLive` is false no page prints the quiz or its address and
+   * the form is the working way in (agents round 33; the owner's word of 2026-11-17 to deploy the
+   * service pages now). The day the quiz opens: set it true, and the closing of every service page
+   * and of /services shows the quiz as a link again. */
+  quizLive: false as boolean,
+  quizPath: "/ai/quiz",
   disclaimer: "Each office is independently owned and operated.",
   /** The STABLE landing path, not a dated file path. The old link
    *  (`/system/files/documents/2025/04/fairhousingnotice.pdf`) 404'd on 2026-08-02: NY DOS moved

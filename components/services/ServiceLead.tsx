@@ -8,8 +8,9 @@ import type { Service } from "@/lib/services";
  * pack has them (realtylt-agents company/plans/ai-week1/CTA-2, section 4; versions C, D and
  * E). Line 1 and the address line are fixed; line 2 is the one variable.
  *
- * The quiz address is written as TEXT, not a link, until it answers (CTA-2 section 0: the
- * quiz is not live). The posts do the same. When it opens, the address becomes the button.
+ * The quiz is shown only when `SITE.quizLive` is true (agents round 33, 2026-11-17: the quiz
+ * address answered 404, and a page must not print an address that does not open). Until then
+ * the closing names the form alone. When the quiz opens, the flag turns the line on as a link.
  *
  * The form stays as the working way in today. It reuses the one LeadForm and the one
  * /api/lead pipeline; `source` lands in the CRM as /services/<slug>. */
@@ -33,13 +34,26 @@ export function ServiceLead({ service }: { service: Service }) {
             {door.lead} <strong>{door.strong}</strong>
           </h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-paper/85">{door.reason}</p>
-          <p className="mt-6 max-w-md leading-relaxed text-paper/75">
-            Apply through the free AI quiz:{" "}
-            <span className="whitespace-nowrap font-bold text-paper">realtylt.com/ai/assessment</span>
-          </p>
-          <p className="mt-3 max-w-md leading-relaxed text-paper/75">
-            The quiz is free. Or tell us about the business in the form, and we reply.
-          </p>
+          {SITE.quizLive ? (
+            <>
+              <p className="mt-6 max-w-md leading-relaxed text-paper/75">
+                Apply through the free AI quiz:{" "}
+                <a
+                  href={SITE.quizPath}
+                  className="whitespace-nowrap border-b border-paper/40 font-bold text-paper transition-colors hover:border-paper"
+                >
+                  realtylt.com{SITE.quizPath}
+                </a>
+              </p>
+              <p className="mt-3 max-w-md leading-relaxed text-paper/75">
+                The quiz is free. Or tell us about the business in the form, and we reply.
+              </p>
+            </>
+          ) : (
+            <p className="mt-6 max-w-md leading-relaxed text-paper/75">
+              To apply, tell us about the business in the form, and we reply.
+            </p>
+          )}
 
           <div className="mt-9 flex items-center gap-5 border-t border-paper/15 pt-8">
             <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full">

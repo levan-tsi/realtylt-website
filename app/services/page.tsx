@@ -13,7 +13,7 @@ import { SITE } from "@/lib/site";
  * owner wants done, not by the old flagship/core/more tiers (which stay in the content files, for
  * the /ai hub). "Twenty things that used to need a person" is gone: the brand never hints that
  * anyone loses a job (company/BRAND.md section 3). The close is the two free doors (CTA-2 version
- * E), the quiz address as text until it answers. */
+ * E), the quiz line only while SITE.quizLive is true (round 33). */
 export const metadata: Metadata = {
   title: "AI services for small business: calls, bookings and paperwork",
   description:
@@ -319,8 +319,8 @@ export default function ServicesIndexPage() {
         </section>
       ))}
 
-      {/* ── Close: the two free doors (CTA-2 section 4, version E). The quiz address is text, not a
-          link, until it answers (CTA-2 section 0). */}
+      {/* ── Close: the two free doors (CTA-2 section 4, version E). The quiz line shows only while
+          SITE.quizLive is true (round 33: the address answered 404 on 2026-11-17). */}
       <section className="daylight sec-sm bg-ink text-paper" aria-labelledby="close-heading">
         <div className="mx-auto flex max-w-4xl flex-col items-center px-4 text-center lg:px-8">
           <Reveal>
@@ -330,10 +330,21 @@ export default function ServicesIndexPage() {
             <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-paper/85">
               Five free assessments and five free websites, by application.
             </p>
-            <p className="mx-auto mt-4 max-w-xl leading-relaxed text-paper/75">
-              Apply through the free AI quiz:{" "}
-              <span className="whitespace-nowrap font-bold text-paper">realtylt.com/ai/assessment</span>
-            </p>
+            {SITE.quizLive ? (
+              <p className="mx-auto mt-4 max-w-xl leading-relaxed text-paper/75">
+                Apply through the free AI quiz:{" "}
+                <a
+                  href={SITE.quizPath}
+                  className="whitespace-nowrap border-b border-paper/40 font-bold text-paper transition-colors hover:border-paper"
+                >
+                  realtylt.com{SITE.quizPath}
+                </a>
+              </p>
+            ) : (
+              <p className="mx-auto mt-4 max-w-xl leading-relaxed text-paper/75">
+                To apply, use the form on any service page.
+              </p>
+            )}
             <p className="mx-auto mt-5 max-w-xl leading-relaxed text-paper/75">
               Not knowing which service comes first is the normal place to be. In one hour with the
               owner, the assessment maps how the business really runs, cuts the ideas that should not
