@@ -2350,17 +2350,17 @@ Start with the page on [marketing automation for small business](/services/marke
 
 Written with an AI assistant and checked by Levan.`;
 
-export const AI_AGENT_WORKFORCE_POST = `AI employees are AI assistants set up to do one repeated job each, such as drafting replies or chasing paperwork, and the cost a small business should budget for first is the supervision, because a wrong answer from one reads exactly like its right ones. This page gives you, free, the method we use when we build AI assistants for a small business: how to test one before you run four, and how to supervise them once they run. Below, one invented roofing company runs four AI assistants overnight, and you will see why the obvious next step, a fifth assistant, is the wrong one, and why the written brief and the morning read decide whether any of it works. The method works the same for a plumbing company, a dental office, an accounting office or a real estate team.
+export const AI_AGENT_WORKFORCE_POST = `AI employees are AI assistants set up to do one repeated job each, such as drafting replies or chasing paperwork, and the cost a small business should budget for first is the supervision, because a wrong answer from one reads exactly like its right ones. This page gives you, free, the method we use when we build AI assistants for a small business: how to test one before you run four, and how to supervise them once they run. Below, one invented roofing company runs four AI assistants overnight, and you will see why the obvious answer to a wrong draft, a better model, is not the fix, and why the written brief and the morning read decide whether any of it works. The method works the same for a plumbing company, a dental office, an accounting office or a real estate team.
 
 **Paul's roofing company (invented).** Paul owns a roofing company with eight people: himself, Gina in the office and two crews. Last spring he set up four AI assistants, each on one job: one drafts replies to the overnight email, one turns the crew's measurements into a draft quote, one chases unsigned contracts and permit paperwork, and one sends a review request when a job closes. Paul, Gina, their customers and every figure about the company are made up; their four assistants run through this page as one worked example of a real method.
 
-**Paul's roofing company (invented).** The inbox assistant drafted Paul's morning replies for two weeks, and he approved them from his phone before seven. Nine working days, nine sets of drafts, and every one of them was fine. Around day four he stopped reading them properly. That is not laziness. It is what anyone does with something that has been right nine times.
+**Paul's roofing company (invented).** The inbox assistant drafted Paul's morning replies for two weeks, and he approved them from his phone before seven. Nine working days, nine sets of drafts, and every one of them was fine. Around day four he stopped reading them properly and went on approving them. That is not laziness. It is what anyone does with something that has been right every time so far.
 
 **Paul's roofing company (invented).** On the tenth morning it confirmed a Thursday roof inspection to a homeowner. Paul had moved that inspection to Friday the evening before, in a text message, from the truck. The assistant read the calendar. The calendar said Thursday, because the calendar was where the inspection had been before he moved it. Paul approved the whole batch at 6:40am, and the reply went out in his voice, from his address. It was polite and well written and completely wrong.
 
 Nothing broke. The assistant was not confused and it did not make anything up. It read what it could reach, did the job it was given, and produced a piece of work whose tone was exactly like the nine that were correct. That last part is the whole subject of this page, because it is the reason nobody caught it.
 
-Everything on this page is free to use: the test for one assistant, the questions to put to anyone selling you AI employees, and the calculator. What we sell is building the assistants with you, writing their briefs and setting up the review.
+Everything on this page is free to use: the test for one assistant, the questions to put to anyone selling you AI employees, and the calculator. What we sell is building the assistants with you: drawing each brief out of you and writing it down, and setting up the review.
 
 [[scene:in-short]]
 
@@ -2388,11 +2388,11 @@ A real estate team meets the same pitch with its own jobs: an AI assistant for a
 
 ## Is an AI assistant that is right once right every time?
 
-An AI assistant that is right once is not an assistant that is right every time, and the gap between the two is much larger than it feels: the best public measurement of it found a leading agent solving over sixty percent of tasks on one attempt and under twenty five percent when all eight attempts had to be right. That measurement is the difference that reorders the whole subject.
+An AI assistant that is right once is not an assistant that is right every time, and the gap between the two is much larger than it feels: the best public measurement of it found a leading agent solving over sixty percent of tasks on one attempt and under twenty five percent when all eight attempts had to be right.
 
 In June 2024 a team at Sierra published a benchmark called [tau-bench](https://arxiv.org/abs/2406.12045). It is not a quiz. It puts a language agent into a made-up business. That business has a real database, a set of tools that can change the database, and a written policy the agent has to follow. A second language model then plays a customer who wants something. There are two of these businesses. The retail one has five hundred customers, a thousand orders and a hundred and fifteen tasks. The airline one has three hundred flights, two thousand reservations and fifty tasks. At the end of each conversation the benchmark compares the real state of the database against the one correct outcome. Not the transcript. Not the tone. What ended up in the system.
 
-The authors also put forward a measurement nobody had been using, and it is the important part. Everybody had been reporting whether an agent succeeds at a task. They asked how often an agent succeeds at the same task every single time it is tried. They named it pass hat k, and they defined it as the chance that all k independent attempts are successful, averaged across tasks.
+The authors also proposed a measurement of their own, and it is the important part. Besides asking whether an agent succeeds at a task, they asked how often an agent succeeds at the same task every single time it is tried. They named it pass hat k, and they defined it as the chance that all k independent attempts are successful, averaged across tasks.
 
 Read that against your own morning. You do not need an assistant that can draft a good reply. You need one that drafts a good reply on Monday and Tuesday and Wednesday and the Thursday you were in the truck.
 
@@ -2404,11 +2404,11 @@ Read that against your own morning. You do not need an assistant that can draft 
 
 When an AI assistant does the same job again and again, the share of tasks it gets right every time falls fast: in the [tau-bench paper](https://arxiv.org/abs/2406.12045) the best model solved more than sixty percent of the retail tasks on a single attempt, and when the same tasks were run eight times each and all eight had to be right, the figure dropped below twenty five percent.
 
-Sit with the shape of that rather than the numbers, because the numbers are from June 2024 and the models have moved on since. Something that succeeds on most mornings succeeds on every morning far less often than that. And the gap widens the more mornings you ask about. That is not a fault anybody put there. It is what happens when you multiply a chance by itself. It is also the reason a demo is such a poor guide to a purchase. A demo is one attempt. A business is a hundred attempts in a row.
+Sit with the shape of that rather than the numbers, because the numbers are from June 2024 and say nothing about how the models sold today would score. Something that succeeds on most mornings succeeds on every morning far less often than that. And the gap widens the more mornings you ask about. That is not a fault anybody put there. It is what happens when you multiply a chance by itself. It is also the reason a demo is such a poor guide to a purchase. A demo is one attempt. A business is a hundred attempts in a row.
 
 The same source is worth reading for one more reason: it looked at what the failures were. Of thirty six failed runs it examined by hand, the largest group was the agent calling the right kind of tool with the wrong values in it. Not a refusal. Not an error message. Not an apology. The correct action, done with confidence, on the wrong record.
 
-**Paul's roofing company (invented).** That is what happened at 6:40 on the tenth morning. The assistant used the right tool, the calendar, and sent the right kind of reply, a confirmation. The value in it, Thursday, was wrong.
+**Paul's roofing company (invented).** The tenth morning had a different cause and the same look. The assistant used the right tool, the calendar, and sent the right kind of reply, a confirmation. The value in it, Thursday, was wrong because the calendar was out of date, not because the assistant misread it. From the output alone, the two failures cannot be told apart.
 
 **Your turn.** Look at the last mistake any assistant of yours made and ask whether it was the wrong action or the right action with a wrong value in it.
 
@@ -2422,9 +2422,9 @@ Fourteen distinct failure modes, in three groups. Their headline number is worth
 
 [[scene:where-fail]]
 
-The chart is the finding. The largest group is not the model being stupid. It is system design. That group covers the job being described badly, the agent repeating a step it had already done, and the agent not knowing when it was finished. Their most common single mode, at 15.7 percent of everything in the source, is step repetition. The second is the agent's stated reasoning not matching the action it then took. The third is not recognising the conditions under which it should stop.
+The largest group is not the model being stupid. It is system design. That group covers the job being described badly, the agent repeating a step it had already done, and the agent not knowing when it was finished. Their most common single mode, at 15.7 percent of everything in the source, is step repetition. The second is the agent's stated reasoning not matching the action it then took. The third is not recognising the conditions under which it should stop.
 
-A better model is not the obvious fix for any of those; clearer instructions and checks are. The paper's own note on this is the practical one. It reports that the systems in its sample with explicit verification steps built into them showed fewer failures overall.
+A better model is not the obvious fix for any of those; clearer instructions and checks are. The paper reports that the systems in its sample with explicit verification steps built into them showed fewer failures overall.
 
 **Paul's roofing company (invented).** None of Paul's four assistants is a research framework, and the chart is not a forecast for them. What it tells him is where to look first when one goes wrong: at the brief and the checks, before the model.
 
@@ -2432,13 +2432,13 @@ A better model is not the obvious fix for any of those; clearer instructions and
 
 ## Why is the written brief the most important part of an AI employee?
 
-The written brief is the most important part of an AI employee because, in the experiment that measured it, two thirds of what an agent could do on specific business rules came from its written instructions rather than from the model. The tau-bench authors ran that experiment, and for anyone about to pay for any of this it is the result in either paper that matters most.
+The written brief is the most important part of an AI employee because, in the experiment that measured it, taking the written rules out of an agent's instructions cut its score on specific business rules by about two thirds, with the model unchanged. The tau-bench authors ran that experiment, and for anyone about to pay for any of this it is the result in either paper that matters most.
 
 They took the written policy out of the agent's instructions and ran everything again ([tau-bench](https://arxiv.org/abs/2406.12045), the ablation table). In the simple task set, where the rules are close to common sense, the score fell from 61.2 to 56.8 percent, which is barely anything. In the complicated task set, where the rules are specific and arbitrary in the way real business rules are, it fell from 33.2 to 10.8 percent.
 
 [[scene:rules-removed]]
 
-Take the second pair seriously. Two thirds of what that agent could do came from a written document, not from the model. Which means the thing you are buying, when you buy an assistant, is the document. It holds the description of the job, the rules, the exceptions, and the things that must never happen. The model is a part anybody can buy. The brief is yours. It is specific to your business, and nobody else can write it.
+Take the second pair seriously. With the written rules taken out and the model unchanged, the agent lost about two thirds of its score. Which means a large part of what you are buying, when you buy an assistant, is the document. It holds the description of the job, the rules, the exceptions, and the things that must never happen. The model is a part anybody can buy. The brief is yours. It is specific to your business, and nobody else can write it without you.
 
 This is also why the honest version of the sales process is slower than the exciting one. "Tell us the job and we will build the assistant" sounds like a five minute conversation. It is not, because a job that has never been written down keeps its exceptions in somebody's head, and finding them is the first hour's work.
 
@@ -2466,11 +2466,11 @@ The practical rule that falls out of this is dull, and it is worth more than any
 
 ## Where does the money go when you run several AI assistants?
 
-When you run several AI assistants, almost all of the running cost goes on reading, not writing: in the [tau-bench paper](https://arxiv.org/abs/2406.12045), of what the agent cost per task, the input took 95.9 percent and everything the agent wrote took 4.1 percent. The paper measured cost directly, which is rare.
+When you run several AI assistants, almost all of the running cost goes on reading, not writing: in the [tau-bench paper](https://arxiv.org/abs/2406.12045), of what the agent cost per task, the input took 95.9 percent and everything the agent wrote took 4.1 percent.
 
-For each task their best setup handled, the agent cost 38 cents and the simulated customer on the other side cost 23 cents, in that source. That is not your price list, and it should not be read as one. The share underneath it is the number that carries over.
+For each task their best setup handled, the agent cost 38 cents and the simulated customer on the other side cost 23 cents, in that source. That is not your price list, and it should not be read as one. The share underneath it was measured on one setup, and other models, caching and tools will move it. What carries over is the reason for it.
 
-In plain terms, nearly the whole running cost of an assistant is it re-reading its own instructions, the descriptions of its tools and the conversation so far. It does that over and over, before every single thing it says. It is not being paid to write. It is being paid to remember.
+In plain terms, nearly the whole running cost in that setup was the agent re-reading its own instructions, the descriptions of its tools and the conversation so far. It does that over and over, before every single thing it says. It is not being paid to write. It is being paid to remember.
 
 That has three consequences you can act on. A longer brief costs money every time the assistant runs, so the discipline is a brief that is complete rather than a brief that is long. An assistant that is given access to ten tools it never uses is paying to read the descriptions of ten tools it never uses. And an assistant handling a long conversation costs more with every turn, which is why a job that ends is cheaper than a job that lingers.
 
@@ -2480,7 +2480,7 @@ That has three consequences you can act on. A longer brief costs money every tim
 
 ## Is an AI employee cheaper than a person?
 
-Whether an AI employee is cheaper than a person is the wrong comparison, because the two do not stand in for each other: a wage buys someone who can be held responsible, notices when the job has changed and answers an upset caller, and an assistant does none of those. Pages about this eventually reach for a salary, and ours did too, so here is where one is published with its method.
+Whether an AI employee is cheaper than a person is the wrong comparison, because the two do not stand in for each other: a wage buys someone who can be held responsible and who notices on their own when the job has changed, and an assistant does neither. Pages about this eventually reach for a salary, and ours did too, so here is where one is published with its method.
 
 The United States Bureau of Labor Statistics publishes the median annual wage for [secretaries and administrative assistants](https://www.bls.gov/ooh/office-and-administrative-support/secretaries-and-administrative-assistants.htm), and the same figure for [real estate sales agents](https://www.bls.gov/ooh/sales/real-estate-brokers-and-sales-agents.htm) and for all occupations. Median means what the Bureau says it means, and its own words are worth quoting, because half of the sums in this field depend on people not knowing them: the median wage is the wage at which half the workers in an occupation earned more than that amount and half earned less. This page does not print the figures: they date from May 2024, and the source is one click away.
 
@@ -2502,11 +2502,11 @@ The business whose name is on the work is responsible when an AI employee is wro
 
 ### Who answers for an AI assistant's work in a real estate office?
 
-In a real estate office the licensed agent answers for an AI assistant's work, and real estate is unusual in having written down already what happens when work is handed to somebody else, because handing out licensed work is a regulated activity in New York. Two parts of [the Department of State's own Real Estate License Law booklet](https://dos.ny.gov/real-estate-license-law) are worth reading, because neither is about artificial intelligence and both are about the licensee. This section applies to a real estate team only; we have not read the rules of other licensed trades for this page.
+In a real estate office the work an AI assistant does goes out in the licensed agent's name, and real estate is unusual in having written down already what happens when work is handed to somebody else, because handing out licensed work is a regulated activity in New York. Two parts of [the Department of State's own Real Estate License Law booklet](https://dos.ny.gov/real-estate-license-law) are worth reading, because neither is about artificial intelligence and both are about the licensee. This section applies to a real estate team in New York only; we have not read the rules of other licensed trades or other states for this page, and it is not legal advice.
 
 Section 442-c deals with what a salesperson's misconduct means for the licensee who supervises them. That licensee is not automatically on the hook for what an associate did. But there are two ways they become so, and the second is the one to read twice. They are exposed where they had actual knowledge of the violation, or where they retain the benefits, profits or proceeds of a transaction wrongfully negotiated by their salesperson or employee after notice of the misconduct. Keeping what the conduct earned is the thing that attaches you to the conduct.
 
-Then read Section 440-a, which is the requirement to be licensed at all. It lists who may hold a licence. The list runs: a person, a co-partnership, a limited liability company, a corporation. That list is a list of parties that can be disciplined, sued and struck off. A piece of software is not on it, and nothing here is a prediction about future law. It is a description of the present one, and the description is this. When an assistant working for an agent says something to a client, there is exactly one licensed party in the conversation, and it is the agent.
+Then read Section 440-a, which is the requirement to be licensed at all. It lists who may hold a licence. The list runs: a person, a co-partnership, a limited liability company, a corporation. That list is a list of parties that can be disciplined, sued and struck off. A piece of software is not on it, and nothing here is a prediction about future law. It is a description of the present one, and the description is this. When an assistant working for an agent says something to a client, the only licensed party in the conversation is the agent. That is not a full answer on liability, which is a question for a lawyer; it is the reason the agent reads what goes out in their name.
 
 ## What does supervising AI employees look like?
 
@@ -2516,36 +2516,36 @@ Section 175.21 of New York's real estate regulations defines what supervising a 
 
 Nobody is claiming that provision governs an inbox assistant, or any business outside real estate. What it does is describe a standard one trade already applies to work done in someone's name by somebody who is not them. Regular. Frequent. Consistent. Written down.
 
-Set that beside four assistants running overnight with nobody reading the output after day four, and you have the honest list of what running this well requires. Not a dashboard. A habit, with a time in the diary, and a record of what was produced.
+Set that beside four assistants running overnight with their drafts approved unread after day four, and you have the honest list of what running this well requires. Not a dashboard. A habit, with a time in the diary, and a record of what was produced.
 
-**Paul's roofing company (invented).** Paul's habit is now fixed: from 6:30 to 6:45 every morning he reads every draft reply against its brief, and on Friday Gina reads a sample of the week's quotes against the crew's measurements. Both write one line in a shared log: what they read, what they changed.
+**Paul's roofing company (invented).** Paul's habit is now fixed: from 6:30 to 6:45 every morning he reads every draft reply against its brief. Gina checks every draft quote against the crew's measurements before it goes and reads every reminder as she sends it, and on Friday she reads a sample of the week's sent quotes against what the crews found on the roof. Both write one line in a shared log: what they read, what they changed.
 
 [[scene:plate-two]]
 
 ## How do you test one AI assistant before you run four?
 
-To test one AI assistant before you run four, take one repeated job and run five checks over a couple of weeks: write the brief, compare the assistant with work you already did, run the same task ten times, break it on purpose, and put a weekly reading slot in your diary. It costs you nothing but attention, and it will tell you more than any demo.
+To test one AI assistant before you run four, take one repeated job and run five checks over a couple of weeks: write the brief, compare the assistant with work you already did, run the same cases ten times each, break it on purpose, and put the review and a weekly audit in your diary. It costs you nothing but attention, and it will tell you more than any demo.
 
-1. **Write the brief before you look at any software.** Pick the dullest job you have that repeats, and include the exceptions. If you cannot write it, you have learned the most useful thing available today: the job cannot yet be handed to anybody at all, software or human.
+1. **Write the brief before you look at any software.** Pick the dullest job you have that repeats. A brief has five parts: the job in one sentence, what the assistant may read, what a right result looks like, the exceptions, and what it must never do. If you cannot write it, you have learned the most useful thing available today: the job cannot yet be handed to anybody at all, software or human.
 2. **Run it against work you have already done.** Take ten pieces of last month's output that you produced by hand, give the assistant the same inputs, and compare. This is the only honest accuracy test, because you already know the right answer and you are not grading it on how confident it sounds.
-3. **Run the same task ten times and count how many times all ten are right.** Not the average. All ten. That is the pass hat k measurement from the research above, done by hand, and it is the number that tells you whether you will still be reading the output in week six.
-4. **Break it on purpose.** Give it an input with a contradiction in it, or a case the brief does not cover, and find out whether it stops and asks or whether it decides. An assistant that decides in the unclear cases rather than stopping will go on deciding, and one of those decisions will reach somebody outside your office before you have seen it.
-5. **Put a time in your diary.** Fifteen minutes, the same slot every week, to read a sample of what it produced and check it against what you asked for. If you cannot find that slot for one assistant, you have your answer about four.
+3. **Run the same cases ten times each and count the ones that were right all ten times.** Take five cases from step two, decide before you start what a right answer is for each, and run each one ten times. A case counts only if all ten runs are right; the number to keep is how many of the five pass. That is the pass hat k measurement from the research above, done by hand on a small sample, so read it as a warning light rather than a rate.
+4. **Break it on purpose.** Give it an input with a contradiction in it, or a case the brief does not cover, and find out whether it stops and asks or whether it decides. An assistant that decides in the unclear cases rather than stopping will go on deciding, and without a review in front of it, one of those decisions can reach somebody outside your office before you have seen it.
+5. **Put a time in your diary.** Two kinds of reading, kept apart. Before anything it writes reaches a customer, a person reads it: that is the review. Then fifteen minutes, the same slot every week, to read a sample of what went out against what you asked for: that is the audit, and it is where you look for what the review let through. If you cannot find those slots for one assistant, you have your answer about four.
 
 **Paul's roofing company (invented).** Paul runs the five checks on each of his four assistants, one at a time, over six weeks. This is his whole list, an invented example, with the verdict for each:
 
-1. **Inbox replies.** Right on ten past emails of ten; the break test, an email asking to move an appointment, produced a confirmation instead of a question. Brief rewritten; stays, as drafts Paul reads every morning.
-2. **Draft quotes from measurements.** Seven of ten past quotes matched Gina's; three missed a second layer of old shingles that the crew had noted in words, not numbers. Brief rewritten with that exception; ten of ten on the second run; stays, with Gina checking every quote before it goes.
-3. **Contract and permit chasing.** Ten of ten, and it stopped and asked on the break test. Stays; it drafts the reminders and Gina sends them.
-4. **Review requests.** It read the inbox assistant's summary, not the invoices, and failed the comparison with past work twice in ten. Switched off, and replaced by a plain rule in the invoicing program that sends one fixed request when an invoice is paid. No AI needed.
+1. **Inbox replies.** Right on ten past emails of ten, and five of five cases right on all ten runs; the break test, an email asking to move an appointment, produced a confirmation instead of a question. Brief rewritten; stays, as drafts Paul reads every morning.
+2. **Draft quotes from measurements.** Seven of ten past quotes matched Gina's; three missed a second layer of old shingles that the crew had noted in words, not numbers. Brief rewritten with that exception; ten of ten on the second comparison and five of five on the repeat runs; stays, with Gina checking every quote before it goes.
+3. **Contract and permit chasing.** Ten of ten, five of five on the repeat runs, and it stopped and asked on the break test. Stays; it drafts the reminders and Gina sends them.
+4. **Review requests.** It read the inbox assistant's summary, not the invoices, and failed the comparison with past work twice in ten, so it never reached the repeat runs. Switched off, and replaced by a plain rule in the invoicing program that sends one fixed request when an invoice is paid. No AI needed.
 
 **Your turn.** Pick one assistant, or one job you are thinking of handing over, and run the first check this week.
 
 ## How many AI employees can one owner supervise?
 
-One owner can supervise as many AI employees as they really read, and in the invented example on this page that was three, at about fifteen minutes a morning. The calculator on this page works out the same number for your own business: the hours a year spent reading what the assistants produce.
+One owner can supervise as many AI employees as they really read, and in the invented example on this page that was three: about fifteen minutes a morning for the owner, with the office's checks of quotes and reminders on top. The calculator on this page works out the same number for your own business: the hours a year spent reading what the assistants produce.
 
-**Paul's roofing company (invented).** Six weeks after the tenth morning, Paul runs three assistants instead of four, and the fourth job runs on a plain rule. Every draft reply is read before it goes; every quote is checked by Gina. Their shared log, by Gina's count, holds two wrong replies caught in the morning read and none that reached a customer. The reading takes Paul about fifteen minutes a day and Gina about an hour on Fridays. Nobody can promise the next six weeks will look the same, and Paul did not keep the three on that promise. He kept them because he now knows what each one costs him in reading, and the log will tell him if that changes.
+**Paul's roofing company (invented).** Six weeks after the tenth morning, Paul runs three assistants instead of four, and the fourth job runs on a plain rule. Every draft reply is read before it goes; every quote is checked by Gina. Their shared log, by Gina's count, holds two wrong replies caught in the morning read and none that reached a customer. The reading takes Paul about fifteen minutes a morning. Gina's checks of each quote and reminder are part of sending them, and her Friday audit takes about an hour. Nobody can promise the next six weeks will look the same, and Paul did not keep the three on that promise. He kept them because he now knows what each one costs him in reading, and the log will tell him if that changes.
 
 **Your turn.** Decide now which number you will read every month: the wrong drafts caught in the review, and the ones that got past it.
 
@@ -2561,23 +2561,23 @@ The first is the brief, and it is the slow part. Writing down a job properly, ex
 
 The second is access. An assistant that can read your calendar and your CRM can do far more than one that cannot. The work is connecting it safely. That means the right permissions, nothing wider than the job needs, and a way to switch it off.
 
-The third is the running cost. You pay for use rather than for a seat. It tracks how much the assistant has to read rather than how much it writes. It is small per task, and it has no ceiling if nobody watches it.
+The third is the running cost. The way we build assistants, it is paid for use rather than per seat. It tracks how much the assistant has to read rather than how much it writes. It is small per task, and nothing caps it unless somebody sets a limit and watches it.
 
-What this page will not print is a per-model price, and the reason is not that the numbers are hidden. They are published and readable. The reason is that they are quoted per million tokens, a token being a small piece of text, and that price means nothing until somebody knows how many tokens your job takes. They also change several times a year. And which model sits behind an assistant is a build decision that can be changed without anything visible happening at your end. A figure typed into an article would be stale before the article was. What can be said is the shape: the machine cost of one task in the research above was in cents, it is driven by the length of the instructions rather than the length of the answer, and the honest budget line is the review time rather than the machine time.
+What this page will not print is a per-model price, and the reason is not that the numbers are hidden. They are published and readable. The reason is that they are quoted per million tokens, a token being a small piece of text, and that price means nothing until somebody knows how many tokens your job takes. They also change. And which model sits behind an assistant is a build decision that can be changed without anything visible happening at your end. A figure typed into an article would be stale before the article was. What can be said is the shape: the machine cost of one task in the research above was in cents, it was driven mostly by how much the agent read rather than the length of the answer, and the honest budget line is the review time rather than the machine time.
 
 ## What can AI employees not do?
 
-AI employees cannot take responsibility, cannot notice that a job has changed, and cannot do a job nobody has written down. Each of those is a limit of the method, and each is worth knowing before anything is built.
+AI employees cannot take responsibility, do not notice on their own that a job has changed, and cannot do well a job nobody has written down.
 
-They do not take responsibility. An assistant cannot be told off. It cannot learn from being told off in any way that lasts, unless somebody edits the brief. And it cannot be the person a customer complains to. Every consequence lands on a person in the business, and that person is you.
+They do not take responsibility. An assistant cannot be told off. In the assistants this page describes, a correction lasts only when somebody puts it into the brief or the system the assistant runs on, because those are what it works from. And it cannot be the person a customer complains to. Every consequence lands on a person in the business, and that person is you.
 
-They do not notice that the job has changed. This is the quietest failure of the four. A person who has been drafting your follow-up emails for a year will eventually say that something has moved, and that the second paragraph now reads badly. An assistant will produce that second paragraph forever, with perfect consistency, until somebody rewrites the brief.
+They do not notice that the job has changed. This is the quietest failure of the four. A person who has been drafting your follow-up emails for a year will eventually say that something has moved, and that the second paragraph now reads badly. An assistant built the way this page describes will go on producing that second paragraph until somebody changes the brief it works from.
 
 They do not do a job nobody has written down. A vague brief does not produce vague output, which would at least be a visible signal. It produces confident, smooth, believable output that is quietly not what you wanted, and you find out later from a customer.
 
-They do not remove the reading. Anything that reaches a customer should be read by a person first. An assistant that drafts is worth more than one that sends. And the review is not a temporary safety measure for the first month. It is the job now.
+They do not remove the reading. Anything an assistant writes for a customer should be read by a person first; a fixed message sent by a plain rule, written once and read once, is a different case. An assistant that drafts is worth more than one that sends. And the review is not a temporary safety measure for the first month. It is the job now.
 
-And they do not scale the way the word workforce suggests. Four separate assistants are four times the review. Four assistants feeding each other are four times the review, plus a category of failure that only exists because they are connected: the published taxonomy has six named modes inside it.
+And they do not scale the way the word workforce suggests. Four separate assistants are roughly four times the review. Four assistants feeding each other are roughly four times the review, plus a category of failure that only exists because they are connected: the published taxonomy has six named modes inside it.
 
 [[scene:wasted]]
 
@@ -2593,7 +2593,7 @@ AI employees differ from workflow automation in where the judgement sits: workfl
 
 ### How is this different from just using a chat assistant?
 
-An AI employee differs from a general chat assistant in three ways, and the second matters most: a general chat session starts empty and cannot reach your systems; an assistant carries a written brief for one job, which the benchmark above suggests is where much of its usable ability comes from; and it runs on a trigger rather than waiting for you to remember it.
+An AI employee differs from a general chat assistant in three ways, and the second matters most: a general chat session starts without a brief for your job and reaches your systems only if someone connects it; an assistant carries a written brief for one job, which the benchmark above suggests is where much of its usable ability comes from; and it runs on a trigger rather than waiting for you to remember it.
 
 ### How many assistants can I actually run at once?
 
@@ -2601,7 +2601,7 @@ The number of assistants you can run at once is set by how many streams of outpu
 
 ### Do I need technical skills?
 
-You do not need technical skills to run AI employees; the skill you need is describing a job precisely, including what should happen in the cases that are not the normal case. That part cannot be handed to anybody else, because the exceptions live in your head.
+You do not need technical skills to run AI employees; the skill you need is describing a job precisely, including what should happen in the cases that are not the normal case. That part cannot be handed over entirely, because the exceptions live in your head: someone can ask the questions and write it down, but the answers are yours.
 
 ### What happens when one of them is wrong?
 
@@ -2623,7 +2623,7 @@ We are based in New York State, and the call works for an owner anywhere.
 
 The first thing to do about AI employees, before anybody sells you one, is to read yesterday's output: not the summary of it, the pieces themselves, one after the other, with the brief open beside you. It is the only way to find out whether you have four assistants or four unread inboxes.
 
-Then write one brief for one job, properly. In the benchmark above, two thirds of what the agent could do on the complicated task set came from that kind of document. It is the part nobody else can write, and you can write it today for nothing.
+Then write one brief for one job, properly. In the benchmark above, taking that kind of document away cost the agent about two thirds of its score on the complicated task set. It is the part nobody else can write without you, and you can write it today for nothing.
 
 Nine good mornings are not a track record. They are nine mornings.
 
@@ -2633,7 +2633,7 @@ Start with the page on [AI agents for small business](/services/ai-agent-workfor
 
 ## Sources
 
-- Shunyu Yao, Noah Shinn, Pedram Razavi and Karthik Narasimhan, "tau-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains", arXiv:2406.12045, June 2024, [arxiv.org](https://arxiv.org/abs/2406.12045). An older source, kept for the argument: cited for the measurement and the shape of the results; its models have all been replaced.
+- Shunyu Yao, Noah Shinn, Pedram Razavi and Karthik Narasimhan, "tau-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains", arXiv:2406.12045, June 2024, [arxiv.org](https://arxiv.org/abs/2406.12045). An older source, kept for the argument: cited for the measurement and the shape of the results, not for how any model sold today would score.
 - "Why Do Multi-Agent LLM Systems Fail?", by Mert Cemri and twelve co-authors at UC Berkeley, arXiv:2503.13657, 2025, [arxiv.org](https://arxiv.org/abs/2503.13657). Read November 11, 2026.
 - U.S. Bureau of Labor Statistics, Occupational Outlook Handbook, secretaries and administrative assistants, and real estate sales agents, [bls.gov](https://www.bls.gov/ooh/office-and-administrative-support/secretaries-and-administrative-assistants.htm): the definition of the median wage and the 2024 to 2034 projection. An older source, kept for the argument: its wages date from May 2024.
 - New York Department of State, Real Estate License Law booklet, sections 440-a and 442-c, and 19 NYCRR 175.21, [dos.ny.gov](https://dos.ny.gov/real-estate-license-law). Law and regulation in force, cited for a real estate team only.
