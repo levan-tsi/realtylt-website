@@ -356,18 +356,23 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "marketing-automation-real-estate-email-deliverability",
     cluster: "records",
-    title: "You sent it to fourteen hundred people. Five pressed one button.",
-    seoTitle: "Real Estate Marketing Automation and Email Deliverability",
+    title: "Why emails go to spam: email deliverability for a small business",
+    seoTitle: "Why emails go to spam: marketing email deliverability",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 twice: round 46 fixed
+    updated: "2026-11-17",
+    /** AGENTS ROUND 33 (2026-11-17), the owner's order to rewrite the older AI posts for business owners in the story manner of
+     * the assessment post: aimed at "why emails go to spam" with "email deliverability" in the H1 (PHRASES.md, round 33). One
+     * invented business runs through every method section; CAN-SPAM, Google's and Yahoo's sender rules and every figure, link and
+     * scene kept; the closing is one link to the service page. Record: realtylt-agents company/agents/seo/runs/r33-retarget/old2/.
+     *
+     * `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 twice: round 46 fixed
      * three misquotes and closed the cold open's loop, and round 47 moved the Yahoo gloss onto
      * that page's own word. See docs/parity/ROUND46-RELEVANCE-PASS.md and ROUND47. First real
      * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
-      "The market note went out to fourteen hundred people and nobody complained. Five of them pressed the other button. The next month's note reached fewer people, for reasons nothing in your software will ever show you. What marketing automation really decides on your behalf. The ceiling Google and Yahoo both publish. And why you cannot work out your own.",
+      "Why emails go to spam, shown on one invented heating and cooling company whose monthly note goes to fourteen hundred past customers and draws five spam complaints. What the CAN-SPAM Act requires and what it does not, the 0.3 percent ceiling Google and Yahoo both publish and why no sender can work out its own rate, what SPF, DKIM and DMARC really prove, what an open rate measures, and seven checks to run on your own sending in an afternoon.",
     seoDescription:
-      "What real estate marketing automation decides for you, what CAN-SPAM does and does not require, and the spam rate ceiling Google and Yahoo both publish.",
+      "Why emails go to spam: the 0.3 percent complaint ceiling Google and Yahoo publish, the SPF, DKIM and DMARC records, and an afternoon's check of your sending.",
     cover: "/images/editorial/notice-board.jpg",
     body: [],
     placeholder: false,
@@ -377,11 +382,16 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "ai-agent-workforce-real-estate-assistants",
     cluster: "building",
-    title: "Four assistants ran overnight. Nobody read what they did.",
-    seoTitle: "An AI Agent Workforce in Real Estate: What Supervision Costs",
+    title: "AI employees: what they do for a small business, and what supervising them costs",
+    seoTitle: "AI employees, agents and assistants: what supervision costs",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` was ABSENT until 2026-09-18, on purpose: rounds 46 and 47 changed only the scene
+    updated: "2026-11-17",
+    /** AGENTS ROUND 33 (2026-11-17), the owner's order to rewrite the older AI posts for business owners in the story manner of
+     * the assessment post: aimed at "AI employees" (PHRASES.md, round 33): what they do and what supervising them costs. One
+     * invented business runs through every method section; every figure, link and scene kept; the closing is one link to the
+     * service page. Record: realtylt-agents company/agents/seo/runs/r33-retarget/old2/.
+     *
+     * `updated` was ABSENT until 2026-09-18, on purpose: rounds 46 and 47 changed only the scene
      * file's provenance docstring for this topic, which is a comment rather than copy, and a
      * date equal to the published date is a gate being fed ("set it when the article takes its
      * first real revision, never to satisfy a gate"). The final round's readability pass IS that
@@ -389,9 +399,9 @@ export const POSTS: BlogPost[] = ([
      * link, number and quote held by scripts/rewrite-invariants.mjs), on a later day than it was
      * published. The absent film (C3) is still a true red on this slug. */
     excerpt:
-      "Nine good mornings, and on the tenth an assistant confirmed a showing you had already moved. What an AI agent workforce really is. Why an assistant that is right most of the time is a different product from one that is right every time. Where multi-agent systems really fail. And who is accountable when one of them is wrong.",
+      "AI employees, shown on one invented roofing company that runs four AI assistants overnight until one confirms an inspection the owner had already moved. Why an assistant that is right once is a different product from one that is right every time, where multi-agent systems really fail, why the written brief matters more than the model, who answers for the work, and five checks to run on one assistant before you run four.",
     seoDescription:
-      "What an AI agent workforce does, why being right every time matters more than one success rate, where multi-agent systems fail, and what supervision costs.",
+      "What AI employees do for a small business, why right once is not right every time, where multi-agent systems fail, and what supervising them really costs.",
     cover: "/images/hero/hero-cand-bear-mountain.jpg",
     body: [],
     placeholder: false,
@@ -430,18 +440,24 @@ export const POSTS: BlogPost[] = ([
   {
     slug: "geo-landing-pages-real-estate-doorway-pages",
     cluster: "visibility",
-    title: "Nine town pages. The only thing that changed was the town.",
-    seoTitle: "GEO Landing Pages for Real Estate vs Doorway Pages",
+    title: "Doorway pages: where a real town page ends and a doorway begins",
+    seoTitle: "Doorway pages vs landing pages: where the line falls",
     date: "2026-08-25",
-    updated: "2026-09-18",
-    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
+    updated: "2026-11-17",
+    /** AGENTS ROUND 33 (2026-11-17), the owner's order to rewrite the older AI posts for business owners in the story manner of
+     * the assessment post: aimed at "doorway pages" (PHRASES.md, round 33; the page was shown for "doorway pages vs landing
+     * pages", which the search title keeps). One invented electrical company (Nadia, Carl, nine towns) runs through every method
+     * section; the fair housing rules stay as a section marked for a real estate team; every figure, link and scene kept; the
+     * closing is one link to the service page. Record: realtylt-agents company/agents/seo/runs/r33-retarget/old2/.
+     *
+     * `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
      * pass restored the clause 24 CFR 100.70 actually hangs on to both places this post
      * summarises it; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays
      * red, no film, so the slug ships at 18/19. */
     excerpt:
-      "A page for every town you serve is the oldest tactic in local marketing. Google's spam policy names it twice, once in an example that is about generative AI specifically. Where the line between a real area page and a doorway really falls. How cheap sameness is to measure. And the fair housing rule nobody selling this will mention.",
+      "Doorway pages, shown on one invented electrical company with nine towns on its list and eight generated town pages that differ only in the town's name. Where a landing page ends and a doorway begins in Google's spam policy, why writing with AI is not the fault, how cheap sameness is to measure, four checks for every town page, and, for a real estate team, the fair housing rules on advertising an area.",
     seoDescription:
-      "What Google's spam policy says about location pages, what separates a real area page from a doorway, and the fair housing rules on advertising an area.",
+      "Doorway pages vs landing pages for a business serving several towns: what Google's spam policy names, and four checks to run on every town page.",
     cover: "/images/counties/orange.jpg",
     body: [],
     placeholder: false,

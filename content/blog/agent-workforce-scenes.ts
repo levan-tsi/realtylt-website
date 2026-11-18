@@ -40,8 +40,8 @@ import type { FlagshipContent, ConversationEvent, ConversationTurn, GridItem } f
  * failure, accountability, which is the order the article itself runs in. */
 export const IN_SHORT: string[] = [
   "An assistant that is right most mornings is not an assistant that is right every morning. The gap between those two is much larger than it feels. The benchmark that measures it found a leading agent solving over 60 percent of tasks on one attempt, and under 25 percent when all eight attempts had to be right.",
-  "Most multi-agent failures are not the model being stupid. In 1,642 annotated runs across seven frameworks, 44.2 percent of what went wrong came from how the system and the instructions were specified. The single commonest mode was an agent repeating a step it had already completed.",
-  "Nothing you hand to an assistant changes who is accountable for it. New York's licensing law lists the parties that may hold a real estate licence, and they are all people and companies. The provision on a broker's responsibility turns on what the broker knew and what the broker kept.",
+  "The largest group of multi-agent failures is not the model. In 1,642 annotated runs across seven frameworks, 44.2 percent of what went wrong came from how the system and the instructions were specified. The single commonest mode was an agent repeating a step it had already completed.",
+  "Nothing you hand to an assistant changes who is accountable for it: the business whose name is on the work. For a real estate team, New York's licensing law lists the parties that may hold a licence, and they are all people and companies; its provision on a supervising licensee's responsibility turns on what they knew and what they kept.",
 ];
 
 /** SCENE copy — the tenth morning, staged.
@@ -55,10 +55,10 @@ export const IN_SHORT: string[] = [
  * This scene says what the assistant actually read, in what order, and shows that at no point
  * did anything report a problem, which the body deliberately does not spell out. */
 export const TENTH_TURNS: ConversationTurn[] = [
-  { who: "them", at: "Wed 5:12pm", text: "Confirming we are on for the walkthrough. What time works Thursday?" },
-  { who: "us", at: "Wed 9:40pm", text: "You, by text, from the car: Thursday is out, let us do Friday morning instead." },
-  { who: "them", at: "Thu 6:31am", text: "Just checking, are we all set? My clients are driving up." },
-  { who: "us", at: "Thu 6:40am", text: "Sent in your name: Confirmed for today at 11. Looking forward to meeting them." },
+  { who: "them", at: "Wed 5:12pm", text: "Confirming the roof inspection. What time works Thursday?" },
+  { who: "us", at: "Wed 9:40pm", text: "You, by text, from the truck: Thursday is out, let us do Friday morning instead." },
+  { who: "them", at: "Thu 6:31am", text: "Just checking, are we all set? I took the morning off." },
+  { who: "us", at: "Thu 6:40am", text: "Sent in your name: Confirmed for today at 11. See you then." },
 ];
 
 export const TENTH_EVENTS: ConversationEvent[] = [
@@ -166,7 +166,7 @@ export const WHERE_FAIL = {
   sourceText:
     "Mert Cemri and twelve co-authors, UC Berkeley, Why Do Multi-Agent LLM Systems Fail?, arXiv:2503.13657, 2025.",
   sourceHref: "https://arxiv.org/abs/2503.13657",
-  note: "These are research frameworks running research tasks, mostly programming and mathematics, and not four assistants in a brokerage. Two limits matter. The bars are shares of the failures that happened, not a probability that anything will fail. So a system with very few failures and a system with very many can produce the same chart. And the taxonomy was applied at scale by a language model calibrated against the human annotations rather than by the humans themselves. The authors state that plainly. What carries over is the ranking rather than the percentages. The largest category is how the system and its instructions were specified. That is the half a buyer controls and the half nobody quotes on.",
+  note: "These are research frameworks running research tasks, mostly programming and mathematics, and not four assistants in a small business. Two limits matter. The bars are shares of the failures that happened, not a probability that anything will fail. So a system with very few failures and a system with very many can produce the same chart. And the taxonomy was applied at scale by a language model calibrated against the human annotations rather than by the humans themselves. The authors state that plainly. What carries over is the ranking rather than the percentages. The largest category is how the system and its instructions were specified. That is the half a buyer controls.",
 };
 
 /** SCENE copy — what happens when the written rules are taken away. Cited data graphic TWO.
@@ -281,7 +281,7 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       eyebrow: "The run that reported success",
       heading: "Everything it read was true an hour earlier.",
       note: "Staged for illustration. No real client, no real address and no real transcript. This is the shape of the failure, written out so the two tracks can be read side by side.",
-      themLabel: "The buyer's agent",
+      themLabel: "The homeowner",
       usLabel: "Your side",
       // NOT "The thread". Found by looking: the column carries four bubbles and one of them is
       // the text message from the car, which is the whole point of the scene precisely because
@@ -410,7 +410,7 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       ],
       headline: 5,
       resultLabel: "Hours a year reading what they produced",
-      note: "This is the only calculator on this website that works out what the service costs you rather than what it saves you. That is on purpose. The saving is the part everybody already estimates, and the reviewing is the part nobody does. There is no hours-saved row, because it would be a guess. Nobody has published a measurement of how long an assistant's draft takes a person to check in this industry, so every input above is yours. There is also no row comparing this with a salary, and there was never going to be one. The published median wage for an administrative assistant is a real number, and it is quoted further down this page. But it buys accountability and judgement and somebody who notices that the job has changed. Dividing it by anything here would be arithmetic on two things that are not the same purchase.",
+      note: "This is the only calculator on this website that works out what the service costs you rather than what it saves you. That is on purpose. The saving is the part sellers estimate, and the reviewing is the part this calculator does. There is no hours-saved row, because it would be a guess. We found no published measurement of how long an assistant's draft takes a person to check, so every input above is yours. There is also no row comparing this with a salary, and there was never going to be one. The published median wage for an administrative assistant is a real number, and the page links to it further down. But it buys accountability and judgement and somebody who notices that the job has changed. Dividing it by anything here would be arithmetic on two things that are not the same purchase.",
       action: { label: "See how it is built", href: "/services/ai-agent-workforce" },
       secondary: { label: "Talk one job through with us", href: "/connect" },
     },
@@ -465,10 +465,6 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       glow: true,
       ariaLabel: "What to do next",
       text: "Take one job you keep redoing and write the brief for it this week, before anybody sells you anything. Include what should happen in the cases that are not the normal case. If you cannot finish it, you have learned the most valuable thing available today, which is that nobody at all can take that job on yet.",
-      actions: [
-        { label: "See it on the AI page", href: "/ai#agents", variant: "light" },
-        { label: "How it is built", href: "/services/ai-agent-workforce", variant: "outline-light" },
-      ],
       footnote:
         "There is no price here, because three separate things drive it and only one of them is software. The first is the hour or two of writing each brief properly. The second is the work of giving an assistant safe access to the systems its job needs. The third is a running cost that tracks how much it has to read rather than how much it writes. The AI assessment is an hour, done with you, and the plan it leads to starts with one job written down properly.",
     },
@@ -477,20 +473,21 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
   /** Short rail labels for the prose headings. Ids and ORDER are derived from the document, so a
    * renamed heading degrades to its full text rather than leaving a dead row. */
   headingLabels: {
-    "what-an-agent-workforce-actually-is-and-what-it-is-not": "What it is",
-    "right-once-and-right-every-time-are-different-products": "Right every time",
-    "what-happens-when-you-run-the-same-job-twenty-times": "Running it again",
-    "where-these-systems-actually-go-wrong-and-it-is-mostly-not-the-model": "Where it fails",
-    "the-brief-is-the-product": "The brief",
-    "why-the-second-assistant-costs-more-than-the-first": "The second one",
-    "where-the-money-actually-goes-when-you-run-several": "Where money goes",
-    "what-a-person-costs-and-why-you-cannot-divide-by-it": "What a person costs",
-    "who-is-responsible-when-an-assistant-is-wrong": "Who is responsible",
-    "what-supervision-looks-like-when-the-thing-you-are-supervising-is-software": "Supervision",
-    "what-it-costs-and-how-long-it-takes": "Cost and time",
-    "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
-    "how-to-test-one-assistant-before-you-run-four": "How to test one",
-    "common-questions-answered-honestly": "Common questions",
-    "what-to-do-about-it": "What to do",
+    "what-are-ai-employees-and-what-are-they-not": "What they are",
+    "is-an-ai-assistant-that-is-right-once-right-every-time": "Right every time",
+    "what-happens-when-an-ai-assistant-does-the-same-job-again-and-again": "Running it again",
+    "where-do-multi-agent-ai-systems-go-wrong": "Where it fails",
+    "why-is-the-written-brief-the-most-important-part-of-an-ai-employee": "The brief",
+    "why-does-the-second-ai-assistant-cost-more-than-the-first": "The second one",
+    "where-does-the-money-go-when-you-run-several-ai-assistants": "Where money goes",
+    "is-an-ai-employee-cheaper-than-a-person": "What a person costs",
+    "who-is-responsible-when-an-ai-employee-is-wrong": "Who is responsible",
+    "what-does-supervising-ai-employees-look-like": "Supervision",
+    "how-do-you-test-one-ai-assistant-before-you-run-four": "How to test one",
+    "how-many-ai-employees-can-one-owner-supervise": "How many to run",
+    "what-do-ai-employees-cost-and-how-long-does-the-setup-take": "Cost and time",
+    "what-can-ai-employees-not-do": "What they will not do",
+    "common-questions-about-ai-employees": "Common questions",
+    "what-to-do-first-about-ai-employees": "What to do",
   },
 };

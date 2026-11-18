@@ -41,7 +41,7 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
 export const IN_SHORT: string[] = [
   "Google's spam policies name this tactic twice. Doorway abuse covers pages targeted at specific regions or cities that funnel users to one page. Scaled content abuse covers using generative AI tools to generate many pages without adding value for users. Neither entry says a page per area is forbidden. Both say what makes one worthless.",
   "A page that repeats itself is machine readable. In a sample of 17,168 web pages classified by hand, 13.8% were judged spam overall. Among the pages that compressed to a quarter of their size or better, 70% were.",
-  "An area page is an advertisement about a community. That is regulated separately from anything Google does. The fair housing rules name two practices. One is selecting locations for advertising that deny parts of the market information about housing opportunities. The other is discouraging someone by exaggerating drawbacks, or failing to inform them of a neighbourhood's desirable features. Both prohibitions hang on the same clause: because of race, colour, religion, sex, handicap, familial status or national origin.",
+  "For a real estate team only: an area page about homes for sale is an advertisement about a community, and that is regulated separately from anything Google does. The fair housing rules name two practices. One is selecting locations for advertising that deny parts of the market information about housing opportunities. The other is discouraging someone by exaggerating drawbacks, or failing to inform them of a neighbourhood's desirable features. Both prohibitions hang on the same clause: because of race, colour, religion, sex, handicap, familial status or national origin.",
 ];
 
 /** SCENE copy — the two policy names.
@@ -78,7 +78,7 @@ export const TWO_NAMES: GridItem[] = [
   },
   {
     lead: "What is on it at that number?",
-    body: "The other entry is about volume without substance. The volume by itself is not the part being named. Twenty pages each carrying a closing, a street and a real answer are twenty pages. Twenty pages carrying the same four paragraphs are one page with twenty addresses. Changing the adjectives does not change which of those you have.",
+    body: "The other entry is about volume without substance. The volume by itself is not the part being named. Twenty pages each carrying a job done there, a street and a real answer are twenty pages. Twenty pages carrying the same four paragraphs are one page with twenty addresses. Changing the adjectives does not change which of those you have.",
   },
   {
     lead: "Who read it before it went live?",
@@ -119,7 +119,7 @@ export const THE_TEST: GridItem[] = [
   },
   {
     lead: "Are you making a lot of pages and hoping.",
-    body: "Two of the warning-sign questions bite here. One asks whether you are producing lots of content on many topics in the hope some of it performs. The other asks whether you are using extensive automation to produce content on many topics. Answering yes to either is the document's own description of search-engine-first content. And the fix it suggests is not better writing. It is fewer pages.",
+    body: "Two of the warning-sign questions bite here. One asks whether you are producing lots of content on many topics in the hope some of it performs. The other asks whether you are using extensive automation to produce content on many topics. The document calls a yes a warning sign that you should reevaluate how you are creating content. Better writing does not change that answer. Fewer pages can.",
   },
   {
     lead: "Are you writing to a length.",
@@ -194,7 +194,7 @@ export const REDUNDANCY = {
  * is exactly why nobody writing twenty town pages has ever thought about it, and the regulation
  * applies at the same strength either way. */
 export const COMPLAINTS = {
-  eyebrow: "The evidence",
+  eyebrow: "For a real estate team",
   /** THE EXCLUSION IS IN THE TITLE, not only in the basis line. Found by looking: with rental
    * off the chart, the 815 harassment bar fills its track, and a full-width bar reads as most of
    * everything. It is not: rental is 27,007 of the 32,321. A reader who takes only the chart
@@ -224,7 +224,7 @@ export const COMPLAINTS = {
 export const WASTED: GridItem[] = [
   {
     lead: "They are built for the towns you wish you worked in.",
-    body: "The list of areas nearly always starts as a list of ambitions. The pages for the places you have never worked are the ones with nothing on them. Those are the ones that read as filler. And those are the ones that make the whole set look like a template. The pages you can actually fill are usually the ones you thought were too obvious to bother with.",
+    body: "A list of towns can start as a list of ambitions. The pages for the places you have never worked are the ones with nothing on them. Those are the ones that read as filler. And those are the ones that make the whole set look like a template. The pages you can fill are the towns where the work already is, even the ones that seemed too obvious to bother with.",
   },
   {
     lead: "They are written to a length instead of to a question.",
@@ -232,7 +232,7 @@ export const WASTED: GridItem[] = [
   },
   {
     lead: "Nobody ever goes back to them.",
-    body: "The proof on an area page has a date on it, whether or not the date is printed. The closing you cite, the street you name, the price you mention and the school you describe all age. A page whose most recent fact is four years old tells every reader exactly how long it has been since you worked there.",
+    body: "The proof on an area page has a date on it, whether or not the date is printed. The job you cite, the street you name, the figure you mention and the shop you describe all age. A page whose most recent fact is four years old tells every reader exactly how long it has been since you worked there.",
   },
 ];
 
@@ -358,7 +358,7 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "worked",
           label: "Share where you have actually done the work",
-          hint: "A closing, a listing, a rental, a client you still speak to. Somewhere you could name a street without checking a map.",
+          hint: "A job done there, a customer you still speak to. Somewhere you could name a street without checking a map.",
           min: 5,
           max: 100,
           step: 5,
@@ -386,7 +386,7 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
       ],
       headline: 1,
       resultLabel: "Pages that would actually be about somewhere",
-      note: "When the middle row lands between two whole numbers, read it as between two whole numbers rather than as a fraction of a page. Five and a half means five you are sure of, and one you are arguing with yourself about. This is the shortest calculator on this website, and there is a reason for the length. There are only three numbers in this subject that anyone can honestly supply, and all three of them are yours. There is no row for what a page is worth, and there was never going to be one. Nobody publishes the search volume for a service in your own town with a stated method. Google publishes no model of how much traffic a page receives. And the only figures circulating in this category come from tools that estimate them and do not say how. The number this does produce is the one that decides whether the whole exercise is a marketing asset or a folder of filler. It is almost always smaller than the number in the first meeting.",
+      note: "When the middle row lands between two whole numbers, read it as between two whole numbers rather than as a fraction of a page. Five and a half means five you are sure of, and one you are arguing with yourself about. This is the shortest calculator on this website, and there is a reason for the length. There are only three numbers in this subject that anyone can honestly supply, and all three of them are yours. There is no row for what a page is worth, and there was never going to be one: nobody can show their working for how many visits a page about one town will bring. The number this does produce is the one that decides whether the whole exercise is a marketing asset or a folder of filler. In the invented example in the article it was six of nine.",
       action: { label: "See how it is built", href: "/services/geo-landing-pages" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },
@@ -442,11 +442,7 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Open the two pages you are least sure about. Read them out loud, one after the other, to someone who lives in one of those towns. You will know inside a paragraph. The only thing a set of area pages can be built out of is the work you have already done. The honest version of this project starts by finding out how much of that there is.",
-      actions: [
-        { label: "See it on the AI page", href: "/ai#geopages", variant: "light" },
-        { label: "How it is built", href: "/services/geo-landing-pages", variant: "outline-light" },
-      ],
+      text: "Open the two pages you are least sure about. Read them out loud, one after the other, to someone who lives in one of those towns. You will know inside a paragraph. The only thing a set of town pages can be built out of is the work you have already done. The honest version of this project starts by finding out how much of that there is.",
       footnote:
         "There is no price here because the cost tracks the one thing that is yours rather than ours. How many areas you can genuinely fill. And how much of the material for them has to be gathered from you, rather than written. The AI assessment is an hour, done with you. The plan it leads to starts with an honest list of areas.",
     },
@@ -455,18 +451,20 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
   /** Short rail labels for the prose headings. Ids and ORDER are derived from the document, so a
    * renamed heading degrades to its full text rather than leaving a dead row. */
   headingLabels: {
-    "why-a-page-and-not-a-profile": "Why a page",
-    "what-googles-spam-policy-actually-names": "The policy",
-    "the-example-that-is-about-the-thing-we-sell": "About us",
-    "what-separates-a-real-area-page-from-a-doorway": "The line",
-    "repetition-is-measurable-and-somebody-measured-it": "Sameness",
-    "what-actually-goes-on-a-page-that-is-about-somewhere": "What goes on it",
-    "the-part-that-is-regulated-and-it-is-not-the-search-engine": "The regulation",
-    "what-an-area-page-may-and-may-not-say": "May and may not",
-    "what-it-costs-and-how-long-it-takes": "Cost and time",
-    "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
-    "how-to-test-whether-a-page-is-about-anywhere-in-twenty-minutes": "How to test one",
-    "common-questions-answered-honestly": "Common questions",
-    "what-to-do-about-it": "What to do",
+    "doorway-pages-vs-landing-pages-what-is-the-difference": "Doorway or landing",
+    "why-build-town-pages-when-a-business-has-a-google-business-profile": "Why a page",
+    "what-does-googles-spam-policy-say-about-doorway-pages": "The policy",
+    "is-it-against-googles-rules-to-write-town-pages-with-ai": "Writing with AI",
+    "what-separates-a-real-location-page-from-a-doorway-page": "The line",
+    "can-google-tell-when-town-pages-are-the-same-page": "Sameness",
+    "what-goes-on-a-town-page-that-is-really-about-the-town": "What goes on it",
+    "do-fair-housing-rules-apply-to-a-real-estate-teams-town-pages": "Fair housing",
+    "what-may-a-real-estate-teams-town-page-say": "May and may not",
+    "how-do-you-test-whether-a-town-page-is-a-doorway-page": "How to test one",
+    "how-many-town-pages-should-a-small-business-have": "How many pages",
+    "how-much-work-are-location-pages-and-how-long-do-they-take": "Work and time",
+    "what-can-town-pages-not-do": "What they will not do",
+    "common-questions-about-doorway-pages-and-location-pages": "Common questions",
+    "what-to-do-first-about-doorway-pages-on-your-own-site": "What to do",
   },
 };

@@ -2114,467 +2114,616 @@ The paperwork is not going to get cleaner. The rules about what its dates mean a
 
 [[scene:funnel]]`;
 
-export const MARKETING_AUTOMATION_POST = `The market note went out on a Tuesday morning to fourteen hundred people. It was a decent piece of work. Median price in three towns. What had actually closed against what had been asked. And two sentences at the bottom in your own voice, about the inspection that had fallen through on Elm.
+export const MARKETING_AUTOMATION_POST = `Why emails go to spam has a published answer: the mailbox provider decides they are unwanted or cannot tell who sent them, and Google and Yahoo publish what they require of every sender, chief among it a sending domain that proves who it is and a spam complaint rate below 0.3 percent. This page gives you, free, the method we use when we set up email marketing for a small business: the rules in their own words, the arithmetic of that ceiling and an afternoon's audit of your own sending. Below, one invented heating and cooling company sends its monthly note to fourteen hundred past customers, and you will see why the obvious fixes, a better subject line or a new sending tool, are the wrong first move, and why the cheapest lever on email deliverability is a shorter list. The method works the same for a plumbing company, a dental office, a salon or a real estate team.
 
-Nobody complained. Five people pressed one button. Pressing a button is a different thing from complaining. It is different because it takes under a second, it makes no conversation, and you never hear about it.
+**Tony's heating and cooling company (invented).** Tony owns a heating and cooling company with six people: himself, Beth in the office and four technicians. Once a month Beth sends a note to everyone who has ever booked a job: fourteen hundred people. Tony, Beth, their customers and every figure about the company are made up; their sending runs through this page as one worked example of a real method.
 
-The following month's note went to the same fourteen hundred people. Your software reported that it had been sent to fourteen hundred people. That is what your software can see. Some number smaller than fourteen hundred received it. A smaller number than that ever saw it in the place where a person actually reads things.
+**Tony's heating and cooling company (invented).** The October note went out on a Tuesday morning. It was a decent piece of work: when to change a furnace filter, what a tune-up checks, and two sentences at the bottom in Tony's own voice about a cracked heat exchanger one of his technicians had found the week before. Nobody wrote back to complain. Five people pressed one button, the one that reports a message as spam. Pressing that button is a complaint of a kind that takes under a second, starts no conversation, and never reaches Tony.
 
-You did not find out. There is nothing to find out with. This article is about the gap between what you sent and what was read. Almost nothing written about marketing automation is about that gap at all.
+**Tony's heating and cooling company (invented).** The November note went to the same fourteen hundred people. The sending tool reported that it had been sent to fourteen hundred people, which is what the sending tool can see. Some number smaller than fourteen hundred received it. A smaller number than that ever saw it in the place where a person reads things. Nobody at the company looked: the five complaints sat in a column of the sending tool's report that nobody read, and nothing in that report could show the notes that never reached an inbox. When the replies thinned out, Beth's first idea was a livelier subject line; her second was a new sending tool.
+
+Everything on this page is free to use: the seven checks, the rules quoted from the documents that set them, and the calculator. What we sell is setting up the sending and the audience rules with you, and making sure somebody owns them afterwards.
 
 [[scene:in-short]]
 
 [[scene:not-the-others]]
 
-## What marketing automation actually is, once you take the busywork out of it
+## What is marketing automation, once the busywork is taken out?
 
-Three articles on this site sit next door to this one. Between them they have taken most of the obvious ground. That is useful, because what is left is the part that actually decides whether any of this works.
+Marketing automation, put plainly, is a standing instruction about people you are not currently talking to: a rule written once about who hears from you, what they hear and when, which then runs for years without anyone looking at it. It is not a task that runs itself, and not a message you decide to send. Three other pages on this site cover the nearby ground, the busywork, the old list and the review request, and the cards above say where each one stops.
 
-Marketing automation, put plainly, is a standing instruction about people you are not currently talking to. Not a task that runs itself. Not a message you decide to send. It is a rule you wrote once about who should hear from you, what they should hear, and when. It then runs for years without anyone looking at it.
-
-That is worth saying slowly, because it changes what the risks are. A workflow that copies a name into a second system either works or does not. You find out on the day. A rule about who deserves a message from you keeps running while the people it describes change. You find out never.
+That changes what the risks are. A workflow that copies a name into a second system either works or does not, and you find out on the day. A rule about who deserves a message from you keeps running while the people it describes change, and you can go years without finding out.
 
 [[scene:four-decisions]]
 
-The fourth card is the whole article. The first three are decisions you make. The fourth is a decision made about you, by an organisation that will not tell you the result. It is made on the basis of the first three.
+The fourth card is the whole of this page. The first three are decisions you make. The fourth is a decision made about you, by an organisation that will not tell you the result, and it is made on the basis of the first three.
 
-## The law that governs your email does not require permission
+**Tony's heating and cooling company (invented).** Tony's audience rule was written the week the sending tool was set up, four years ago: everyone who has ever booked a job. It has no exit. The customer who moved out of the area, the landlord who sold the building and the man who asked Beth to stop sending him the notes are all still in it.
 
-Start with the legal position. Most people have it backwards, and the correction is truly useful.
+**Your turn.** Open your largest audience and write down, in one sentence, the rule that puts a person into it and the rule that takes them out.
 
-Almost everyone assumes American email marketing law works like a consent regime. They assume you may not email someone unless they agreed. That is the European position. It is not the American one. The [CAN-SPAM Act at 15 U.S.C. 7704](https://www.law.cornell.edu/uscode/text/15/7704) sets conditions on the message rather than on the relationship. There is no clause anywhere in it requiring prior permission to send a commercial message.
+## Do you need permission to email customers in the United States?
 
-What it does require is worth knowing exactly. Three of the four requirements are things a normal marketing tool does not do for you on its own.
+A business does not need prior permission to send a commercial email under the federal CAN-SPAM Act, which sets conditions on the message rather than on the relationship; the permission that matters in practice is the mailbox providers' demand, set out further down this page.
 
-The message must contain "a functioning return electronic mail address or other Internet-based mechanism, clearly and conspicuously displayed". A recipient can use it to ask not to receive future messages. That mechanism must remain "capable of receiving such messages or communications for no less than 30 days after the transmission of the original message". So an unsubscribe link that dies when a campaign is archived is not a technicality. It is the thing the statute names.
+It is easy to assume American email marketing law works like a consent regime, in which you may not email someone unless they agreed. The federal statute does not work that way. The [CAN-SPAM Act at 15 U.S.C. 7704](https://www.law.cornell.edu/uscode/text/15/7704) sets conditions on the message rather than on the relationship. There is no clause in it requiring prior permission to send a commercial message.
 
-Once someone uses it, [section 7704(a)(4)](https://www.law.cornell.edu/uscode/text/15/7704) gives you a deadline. It becomes unlawful for the sender to send them a further commercial message in the scope of that request "more than 10 business days after the receipt of such request". Ten business days is roughly a fortnight. It is generous by the standards of anything else in this area. That is exactly why people trip over it. A fortnight is long enough for a sequence someone is already inside to fire once more.
+What it does require is worth knowing exactly, because a sending tool does not do all of it for you on its own.
 
-And [section 7704(a)(5)](https://www.law.cornell.edu/uscode/text/15/7704) requires three things in the message itself. One is "clear and conspicuous identification that the message is an advertisement or solicitation". One is clear notice of the opportunity to decline further messages. One is "a valid physical postal address of the sender". A real street address, in the footer, of a real place.
+The message must contain "a functioning return electronic mail address or other Internet-based mechanism, clearly and conspicuously displayed". A recipient can use it to ask not to receive future messages. That mechanism must remain "capable of receiving such messages or communications for no less than 30 days after the transmission of the original message". So an unsubscribe link that dies when a campaign is archived is not a technicality.
+
+Once someone uses it, [section 7704(a)(4)](https://www.law.cornell.edu/uscode/text/15/7704) gives you a deadline. It becomes unlawful for the sender to send them a further commercial message in the scope of that request "more than 10 business days after the receipt of such request". Ten business days is roughly a fortnight. That sounds generous, and it is exactly why senders trip over it: a fortnight is long enough for a sequence someone is already inside to fire once more.
+
+And [section 7704(a)(5)](https://www.law.cornell.edu/uscode/text/15/7704) requires three things in the message itself. One is "clear and conspicuous identification that the message is an advertisement or solicitation". One is clear notice of the opportunity to decline further messages. One is "a valid physical postal address of the sender", in the footer, where mail reaches you. The first of the three does not apply when the recipient has given prior affirmative consent to receive the message; the other two always do.
 
 There is a rule underneath the statute that is more practical than the statute. It is the one to check your own tools against. Under [16 CFR 316.5](https://www.law.cornell.edu/cfr/text/16/316.5), neither a sender nor anyone acting for them "may require that any recipient pay any fee, provide any information other than the recipient's electronic mail address and opt-out preferences, or take any other steps except sending a reply electronic mail message or visiting a single Internet Web page" in order to opt out or to have that opt out honoured.
 
-Read that against the last preference centre you were sent to. A single web page. No login. No survey about why you are leaving. No account.
+Read that against the last preference centre you were sent to. A single web page. No login. No required survey about why you are leaving. No account.
 
-## Whether your market note is an advertisement is decided by its subject line
+**Tony's heating and cooling company (invented).** Beth checks the October note against the statute. The unsubscribe link works. The footer carries the office phone number and no postal address, and the address goes in that afternoon.
 
-There is one more piece of the rule that matters in particular to the way real estate agents write. It is not the part anyone quotes.
+**Your turn.** Open your last marketing email and find the postal address and the unsubscribe link without scrolling past them.
 
-The duties above attach to a "commercial electronic mail message". The natural instinct is to think a market update is not one. It contains data. It is useful. It is not selling anything. But the FTC's rule at [16 CFR 316.3](https://www.law.cornell.edu/cfr/text/16/316.3) sets out how the primary purpose of a mixed message is decided. The test is not what you intended.
+## Is a newsletter an advertisement under CAN-SPAM?
 
-Where a message carries both promotional content and other content, the primary purpose is deemed commercial in either of two cases. The first is if "a recipient reasonably interpreting the subject line of the electronic mail message would likely conclude that the message contains the commercial advertisement or promotion of a commercial product or service". The second is if the transactional or relationship content does not appear "in whole or in substantial part, at the beginning of the body of the message".
+Whether a newsletter counts as an advertisement under CAN-SPAM is decided by how a reasonable recipient would read its subject line and its body, not by what you intended. The duties above attach to a "commercial electronic mail message", and the natural instinct is to think a useful newsletter is not one: it contains advice, and it is not selling anything. But the FTC's rule at [16 CFR 316.3](https://www.law.cornell.edu/cfr/text/16/316.3) sets out how the primary purpose of a mixed message is decided.
 
-The subject line. A stranger's reading of it. That is the test.
+The rule has two paragraphs for a mixed message. Where promotion sits beside transactional or relationship content, such as a receipt or a booking confirmation, the message is deemed commercial if a reader would take the subject line as promotion, or if the transactional content does not appear "in whole or in substantial part, at the beginning of the body of the message". A newsletter of advice falls under the other paragraph, for promotion beside content that is not transactional. There, too, the first test is the subject line: whether "a recipient reasonably interpreting the subject line of the electronic mail message would likely conclude that the message contains the commercial advertisement or promotion of a commercial product or service". The second is whether a recipient "reasonably interpreting the body of the message would likely conclude that the primary purpose" of the message is promotion, judged by factors such as where the promotion sits, how much of the message it takes and how type and colour highlight it.
 
-So a truly useful market note with a subject line about the market is one thing. The same note with a subject line about booking a valuation is another. The difference is decided by someone who has never met you. What follows from that is simple, and it is not a burden. Put the physical address and the unsubscribe in everything. Stop trying to work out which of your emails count.
+The subject line, read by a stranger, is the first test, and the body is read the same way.
+
+So a useful newsletter with a subject line about furnace filters is one thing. The same newsletter with a subject line about booking a tune-up is another. The difference is decided by someone who has never met you. What follows from that is simple, and it is not a burden. Put the postal address and the unsubscribe in everything, and stop trying to work out which of your emails count.
+
+**Tony's heating and cooling company (invented).** The October subject line was "Book your fall tune-up before the first cold night". A stranger would read that as a promotion, so the note was an advertisement, whatever the filter advice inside it was.
+
+**Your turn.** Read your last three subject lines as a stranger would, and mark each one an advertisement or not.
+
+### In a real estate office, specifically
+
+A real estate team's monthly market note is the same case. Take an invented one: a note with the median price in three towns, what closed against what was asked, and two sentences about an inspection that fell through is useful, and real estate marketing automation sends one to every past client. With a subject line about the market, it may be read as information; with a subject line about booking a home valuation, a stranger would read it as a promotion. Put the postal address and the unsubscribe in every note, and the question stops mattering.
 
 [[scene:plate]]
 
-## The companies that actually decide whether your mail arrives
+## Who decides whether an email goes to spam?
 
-Now the part that actually governs your business, and it is not a law at all.
+The mailbox provider decides whether an email goes to spam: the company that runs the recipient's inbox, such as Google for a Gmail address or Yahoo for a Yahoo one, judges each message after your sending tool has handed it over. Two of them, Google and Yahoo, publish the rules they apply to incoming mail, in plain English on a public page.
 
-Between your sending tool and the person you are writing to sits a mailbox provider. Two of them, Google and Yahoo, publish the rules they apply to incoming mail. The rules are in plain English on a public page. That is more than most parties to your business do. They have no agreement with you. You are not their customer. There is no appeal. You can count what share of your own list sits behind those two in an afternoon. It is worth counting before you decide how much of this applies to you.
+Unless you are their customer, you have no agreement with them. What governs the relationship from your side is a document on a help site: the rules they publish, which the next sections read.
 
-You have no way to appeal, no support line, and no notice. The whole relationship is one way. It is governed by a document on a help site. The document is not long.
+You can count what share of your own list sits behind those two in an afternoon. It is worth counting before you decide how much of this applies to you.
 
 [[scene:email-path]]
 
-## The requirement everybody files under bulk sending, and where it actually sits
+**Tony's heating and cooling company (invented).** Beth sorts the fourteen hundred addresses by what comes after the @ sign. In this invented example about eight hundred end in a Gmail address and about two hundred in a Yahoo one, so roughly seven of every ten notes are judged by one of the two published rule books.
 
-Google's page for [email sender guidelines](https://support.google.com/a/answer/81126) splits into two lists. That split is the single most misreported thing in this entire subject. There is a section headed "Requirements for all senders". There is a separate one for senders of "5,000 or more messages per day".
+**Your turn.** Sort your own list by the part after the @ sign and count the two largest groups.
 
-The whole thing is widely called the bulk sender requirements. If that is the phrase you have heard, the natural conclusion is that a small business is exempt from all of it. Go and look at which list the important items are actually in. Under "Requirements for all senders": set up SPF or DKIM authentication for your sending domains, ensure valid forward and reverse DNS records, use a TLS connection, format messages according to RFC 5322, and "keep spam rates reported in Postmaster Tools below 0.3%".
+## Do Google's sender rules apply to a small business?
 
-The 0.3 percent is in the all senders list. A one person brokerage sending twice a month is inside it.
+Google's sender rules do apply to a small business, because the requirements that matter most for a small sender sit in the list headed "Requirements for all senders", not in the list for senders of "5,000 or more messages per day". Google's page for [email sender guidelines](https://support.google.com/a/answer/81126) splits into those two lists, and it is worth reading which items are in which.
 
-The larger list adds the things that truly are about volume. SPF and DKIM together rather than either. A published DMARC policy. Alignment between the domain in your From header and the authenticated domain. And one-click unsubscribe. Yahoo's [sender best practices](https://senders.yahooinc.com/best-practices/) states the same requirements in its own words. It spells out two details Google's page does not: "honor unsubscribes within 2 days", and an unsubscribe process that is obvious, visible and "doesn't require users to log in".
+If you have heard the whole thing called the bulk sender requirements, the natural conclusion is that a small business is exempt from all of it. Look at which list the important items are in. Under "Requirements for all senders": set up SPF or DKIM authentication for your sending domains, ensure valid forward and reverse DNS records, use a TLS connection, format messages according to RFC 5322, and "keep spam rates reported in Postmaster Tools below 0.3%".
+
+The 0.3 percent is in the all senders list. A one person office sending twice a month is inside it.
+
+The larger list adds the things that are about volume. SPF and DKIM together rather than either. A published DMARC policy. Alignment between the domain in your From header and the authenticated domain. And one-click unsubscribe. Yahoo's [sender best practices](https://senders.yahooinc.com/best-practices/) states the same requirements in its own words. It spells out two details Google's page does not: "honor unsubscribes within 2 days", and an unsubscribe process that is obvious, visible and "doesn't require users to log in".
 
 [[scene:deadlines]]
 
-The regulator is not the binding constraint here, and it has not been for some time. One more line from Google's own page is worth sitting with. Notice who is giving it: not a party whose revenue rises with the size of your list. "Consider unsubscribing recipients who don't open or read your messages."
+On the unsubscribe, the mailbox provider's rule is stricter than the regulator's: two days against ten business days. And one more line from Google's own page is worth sitting with, because it is the mailbox provider itself speaking: "Consider unsubscribing recipients who don't open or read your messages."
 
-## What SPF, DKIM and DMARC assert, in their own words
+**Tony's heating and cooling company (invented).** Tony had assumed the rules were for big senders. Fourteen hundred notes a month is far below five thousand a day, and every item in the all senders list still applies to him.
 
-Those three acronyms are sold as a deliverability package. Every provider will offer to set them up for you, which is worth paying for. What is worth understanding is what each one actually claims. Their own specifications are unusually clear about it. The clarity is not flattering to the way they are marketed.
+**Your turn.** Read the all senders list on Google's page, and put a mark beside each item you can confirm for your own domain today.
+
+## What do SPF, DKIM and DMARC do for email deliverability?
+
+SPF, DKIM and DMARC prove who sent an email, and none of them makes a mailbox provider treat the email better: they remove a reason to reject it. They are sold as a deliverability package, and setting them up is worth doing. What is worth understanding is what each one claims, and their own specifications are clear about it.
 
 SPF is [RFC 7208](https://www.rfc-editor.org/rfc/rfc7208.txt), and its abstract says what it is for. Existing protocols "place no restriction on what a sending host can use as the MAIL FROM of a message". SPF is the mechanism by which a domain owner "can explicitly authorize the hosts that are allowed to use their domain names, and a receiving host can check such authorization". It authorises machines. It says nothing about the message.
 
 DKIM is [RFC 6376](https://www.rfc-editor.org/rfc/rfc6376.txt), and it "permits a person, role, or organization that owns the signing domain to claim some responsibility for a message by associating the domain with the message". Claim responsibility. Not vouch for, not certify, not recommend. It is a signature. A signature on a bad letter is still a signature.
 
-DMARC is [RFC 7489](https://www.rfc-editor.org/rfc/rfc7489.txt). It ties the two together and tells a receiver what to do when neither passes. Its abstract contains one sentence that ought to be printed on every deliverability invoice ever issued.
+DMARC is [RFC 7489](https://www.rfc-editor.org/rfc/rfc7489.txt). It ties the two to the domain in your From line: a message passes when SPF or DKIM passes for a domain aligned with that one, and the owner's published policy tells a receiver what to do when it does not. Its abstract contains one sentence that belongs beside every offer to fix your deliverability.
 
 [[scene:pull-quote]]
 
 That is the specification saying, in its own summary, that doing all of this correctly buys you nothing in the way of better treatment. What it buys is the absence of a penalty. It also lets a receiver tell the difference between you and someone forging your domain.
 
-Which means all three of these are needed and none of them is the work. They establish who is speaking. Whether what you said was wanted is a completely separate judgement, made afterwards, on evidence you supply every time you send.
+Which means setting them up is worth doing at any size and none of them is the work. They establish who is speaking. Whether what you said was wanted is a separate judgement, made afterwards, on evidence you supply every time you send.
 
-## What one-click unsubscribe actually is, and why it protects you
+**Tony's heating and cooling company (invented).** Beth looks up the domain's records. The notes pass DKIM, but they are signed by the sending tool's own domain rather than Tony's, and Tony's domain publishes no DMARC policy. At fourteen hundred notes a month that meets both providers' lists for every sender, which ask for SPF or DKIM; alignment and DMARC sit in the larger lists. Beth sets them up anyway, so that the domain in the From line is the one that vouches for the note.
 
-One-click unsubscribe is the thing in the bulk sender list that sounds like a favour to the recipient. It is worth understanding, because it is not one. It is the mechanism that protects your reputation from the people who want to leave.
+**Your turn.** Ask whoever set up your sending which domain signs your messages, and whether it is the one in your From line.
 
-It has its own specification, [RFC 8058](https://www.rfc-editor.org/rfc/rfc8058.txt). The reasoning is written down in the introduction rather than left to be worked out. The problem it solves is technical. Anti-spam software often fetches every link in a message's headers on its own. So a plain unsubscribe link in a header could be set off by a machine rather than a person. Senders answered by putting a confirmation page behind it, and "that makes the unsubscription process more complex than a single click".
+## What is one-click unsubscribe, and why does it protect the sender?
 
-Then the specification explains why that mattered, and this is the sentence to take away:
+One-click unsubscribe is an exit a recipient can use without a confirmation page, and it protects the sender because a person who cannot leave easily can still press the button that reports the message as spam. It sounds like a favour to the recipient. It is the mechanism that protects your reputation from the people who want to leave.
+
+It has its own specification, [RFC 8058](https://www.rfc-editor.org/rfc/rfc8058.txt). The reasoning is written down in the introduction rather than left to be worked out. The problem it solves is technical, as its introduction explains: anti-spam software often fetches every link in a message's headers on its own, so a plain unsubscribe link in a header could be set off by a machine rather than a person. Senders answered by putting a confirmation page behind it, and "that makes the unsubscription process more complex than a single click".
+
+Then the specification explains why that mattered, and this is the passage to take away:
 
 > Operators of broadcast marketing lists tend to be primarily concerned about deliverability of their mail... Hence, the mailers want to make it as easy as possible for recipients to unsubscribe; if an unsubscription process is too difficult, the recipient's alternative is to report mail from the sender as junk until the mail no longer appears in the recipient's inbox.
 
-That is an internet standards document stating the business case for an easy exit, on the sender's behalf. Every extra step between someone deciding to leave and being gone gives them another option. That option is the button that costs you three tenths of a percent.
+That is an internet standards document stating the business case for an easy exit, on the sender's behalf. Every extra step between someone deciding to leave and being gone gives them another option. That option is the button that counts against the three tenths of a percent.
 
 There is one detail with a practical result. Section 4 of the same document requires that the message carry a valid DKIM signature covering the unsubscribe headers. Without it, it says, "the mail receiver SHOULD NOT offer a one-click unsubscribe for that message". So the authentication work in the section above is not a separate project from the unsubscribe work. Get the signature wrong and the safest exit route is quietly not offered to your recipients at all.
 
-## Three tenths of one percent, and why you cannot work out your own
+**Tony's heating and cooling company (invented).** Beth sends herself a note and tries to leave through the link in the footer. It opens a page that requires her to sign in to manage her preferences. Under 16 CFR 316.5 that is a step the rule does not allow, and under RFC 8058's own reasoning it is a step that turns a polite leaver into a complaint. The one-click exit in the message's headers is a separate mechanism, so she asks the sending tool's support whether the notes carry it.
 
-Here is the number, and here is the reason you cannot check yourself against it.
+**Your turn.** Send yourself your last campaign and try to unsubscribe. Count the pages.
 
-Both providers publish the same ceiling. Yahoo states it in as many words: "Keep your spam rate below 0.3%". Google puts it in the all senders list. On a list of a thousand people that is three complaints. Not three unsubscribes, which are a healthy sign and cost you nothing. Three people pressing the button that says this should not be here. Five of them, on a list of fourteen hundred, is the market note at the top of this page.
+## What spam rate sends emails to spam?
+
+The spam rate Google and Yahoo both publish as the ceiling is 0.3 percent: a sender is asked to stay below three complaints for every thousand messages, and cannot work out its own rate against it, because each provider counts only its own complaints against the mail it delivered to an inbox. Yahoo's [sender best practices](https://senders.yahooinc.com/best-practices/) state it in as many words: "Keep your spam rate below 0.3%". Google puts it in the all senders list.
+
+On a thousand delivered messages, three complaints is the line itself, not an allowance. Not three unsubscribes, which are a healthy sign. Three people pressing the button that says this should not be here.
+
+**Tony's heating and cooling company (invented).** Beth cannot work out either provider's rate from her five complaints: each provider counts its own, against the mail it delivered. What she can say is that five on fourteen hundred notes is already more than three in a thousand, before a single note that never reached an inbox is taken out of the count.
 
 [[scene:complaint-calculator]]
 
-Now the honest part, and it is the reason the calculator above works out a ceiling rather than a rate.
+Now the honest part, and it is the reason no calculator can give you your own rate, only the ceiling in your own numbers.
 
 Yahoo states how the figure is derived: "Spam rate is calculated in our system based on mail delivered to the inbox". The same line tells senders to keep that in mind when referring to it. Read it carefully. The denominator, which is the bottom of the fraction, is not what you sent. It is what they delivered to an inbox. Mail that was rejected or filtered before arriving is not in the bottom of that fraction.
 
-That has an uncomfortable result. As your reputation falls, more of your mail is filtered. That shrinks the denominator. A smaller denominator raises the rate worked out from the complaints you still receive. The measurement moves against you at exactly the moment you would want it to hold still. And there is no version of the sums you can do at your own end that reproduces it.
+That has an uncomfortable result. As your reputation falls, more of your mail is filtered. That shrinks the denominator. A smaller denominator raises the rate worked out from the complaints you still receive. The measurement moves against you at exactly the moment you would want it to hold still, and there is no version of the sums you can do at your own end that reproduces it.
 
-Google publishes yours to you through Postmaster Tools. It is free. It takes about ten minutes to set up if you control your sending domain's DNS. That is the most useful thing in this article in practice. For a sender without an enterprise deliverability contract, it is also the only measurement of their own reputation available to them anywhere. That makes it worth ten minutes, whatever else you take from this.
+Google publishes a sender's own rate to that sender through Postmaster Tools, which is free and needs one record added to your sending domain's DNS. It is the most useful single step on this page in practice, and the one place we know of where a small sender can see Google's own reading of its spam rate.
 
-## What an open actually measures
+**Your turn.** Find out whether anyone in your business can add a record to your sending domain's DNS, and write down their name.
 
-The other half of the reporting problem is the number everybody does look at.
+## What does an email open rate measure?
 
-An open is not an event. Nobody tells your software that a message was read. Here is what happens. The message contains a small image hosted on the sender's server. If the recipient's mail client fetches that image, the fetch is recorded and reported to you as an open. That mechanism has two well known failure modes in opposite directions. Clients that block remote images never register an open for a message someone read carefully. Clients that fetch images on their own register one for a message someone deleted from the preview pane.
+An email open rate measures how often a mail client fetched a small tracking image, not how often a person read the message. Nobody tells your software that a message was read. The message contains a small image hosted on the sender's server, the kind of tracking the paper below studies. If the recipient's mail client fetches that image, the fetch is recorded and reported to you as an open.
 
-That much is widely understood. What is less widely understood is what else is in there, and there is a measurement of it.
+That mechanism has two failure modes in opposite directions. Clients that block remote images never register an open for a message someone read carefully. Clients that fetch images on their own register one for a message someone deleted from the preview pane.
 
 [[scene:tracking]]
 
-Read the chart with the note under it, because the authors are careful about what they are and are not claiming. What survives the caveats is the mechanism rather than the rate. A commercial email is a page, and that page loads resources from other companies. How many of those a sender put there deliberately is exactly what the researchers could not resolve. They listed it as an open question at the end of their own paper. When a sender sets up a campaign with a mailing list manager, is the tracking disclosed to the sender at all.
+Read the chart with the note under it, because the authors are careful about what they are and are not claiming. What survives the caveats is the mechanism rather than the rate. A commercial email is a page, and that page loads resources from other companies. How many of those a sender put there deliberately is exactly what the researchers could not resolve. They listed it as an open question at the end of their own paper: when a sender sets up a campaign with a mailing list manager, is the tracking disclosed to the sender at all.
 
-Be careful about what that does and does not license you to say. The same paper reports that most of the address leaks it found, 62 percent by its own heuristics, were intentional on the sender's part. So this is not a story in which senders are uniformly innocent. What it is is a strong argument for finding out which case you are in. That takes ten minutes rather than a project. Send yourself a campaign. Open it in a browser with the developer tools showing. Read the list of domains the message contacts. It is your list, going to those companies, with your name on it. Right now you probably do not know whether it is three or thirty.
+Be careful about what that does and does not license you to say. The same paper reports that most of the address leaks it found, 62 percent by its own heuristics, were intentional on the sender's part. So this is not a story in which senders are uniformly innocent. What it is is a strong argument for finding out which case you are in, and that takes minutes rather than a project. Send yourself a campaign. Open it in a browser with the developer tools showing. Read the list of domains the message contacts. Each is a company your recipients' mail programs will contact when they open your note, with your name on it.
+
+**Tony's heating and cooling company (invented).** Tony's open rate had fallen from one month to the next, and he had read it as a verdict on his writing. It was also what a filtered message looks like from the inside: a note that never reached an inbox cannot be opened.
+
+**Your turn.** Open your last campaign with the developer tools showing and write down the domains it contacts.
 
 [[scene:plate-two]]
 
-## Why the second campaign is harder than the first
+## Why can later email campaigns land in spam when the first did not?
 
-There is a mechanism running underneath all of this. It explains why people's experience of marketing automation gets worse rather than better. It is not fatigue, and it is not the copy going stale.
+Later email campaigns can land in spam when the first did not because the mailbox provider judges each send partly on how people reacted to the ones before it, so every send adds to a record the next one is graded against. Yahoo's page says it plainly: "Sending email to users who are not reading them, or who report them as spam, will harm your delivery metrics and reputation." It is not fatigue, and it is not the copy going stale.
 
-Everything in the sections above builds up in one direction. The judgement a mailbox provider makes about your next message is formed from how people reacted to your last one. So the first send to a list that has never heard from you is the easiest one you will ever do. Every send after it is graded against a record you are writing as you go.
-
-Three results follow, and none of them are obvious from inside a dashboard.
+So every send to a list is graded partly against a record you are writing as you go. Three results follow, and none of them are visible from inside a dashboard.
 
 The first is that mistakes are paid for later and somewhere else. A badly aimed send in March does not cost you March. It costs you part of the delivery of the April message, to the people who were pleased to hear from you. Nothing in your reporting will connect the two events.
 
-The second is that adding people to a list is not free even when they never respond. Every address that did not want the message is a source of the evidence that grades you. The ones who never open anything are the ones most likely to press the wrong button in the end.
+The second is that adding people to a list is not free even when they never respond. Every address that did not want the message is a source of the evidence that grades you. Google's own page tells senders to consider unsubscribing recipients who don't open or read their messages, and Yahoo's says the same of users who are not reading.
 
-The third is the one that changes behaviour, and it is why the close of this article is what it is. The cheapest lever available to you is not better writing, a better subject line or a better tool. It is a shorter list. A shorter list of people who want the message improves the one input you actually control. And it improves it on every future send rather than on this one.
+The third is the one that changes behaviour, and it is why the close of this page is what it is. The cheapest lever available to you is not better writing, a better subject line or a better tool. It is a shorter list. Taking off the people who did not want the message changes the one input you control, and the change carries into every later send, not only this one.
 
-## What it costs and how long it takes
+**Tony's heating and cooling company (invented).** This is where Beth's two first ideas fail. A livelier subject line changes what a stranger reads; it does not change who receives the note. A new sending tool starts on a domain whose record is already written. The list is the input that moves.
 
-There is no price on this page. The reason is that the costly part of this one is not software at all.
+**Your turn.** Count the people in your largest audience who have not booked, replied or bought in three years.
 
-Three things are being paid for. The sending platform is a subscription priced per contact by whoever you use. It is the smallest number in the project by a distance. Then the set-up: audiences, triggers, delays, suppression rules, and the joins to wherever your contact data actually lives. Then the item nobody quotes. That is getting your sending domain into a state where two things are true. The three records above are correct, and the address in your From line is aligned with them.
+## How do you check why your emails go to spam, in an afternoon?
 
-That third part is where the time goes when it goes badly. If your domain's DNS is somewhere you control and nobody has set up anything unusual, it is an afternoon. If your mail has in the past gone out from three different tools under two different subdomains set up by people who have left, it becomes a long dig. The honest order is to finish it before writing a single campaign rather than after.
+To check why your emails go to spam, run seven checks in an afternoon, in this order: the domain's records, the From line, Postmaster Tools, the unsubscribe, the tracking, the audience and the count of sends. None of the checks needs a consultant to run, though fixing what they find may need whoever manages your domain.
 
-The other real cost is a person. Audiences rot, and they rot quietly. So someone has to own the rules and look at them on a schedule. That is not a big job, and it is nobody's job by default. That is how a segment defined once outlives everyone's memory of what it was for.
+1. **Find out what your domain publishes about itself.** Your SPF, DKIM and DMARC records are public DNS entries. Anyone can read them, including you. If nobody in your business knows whether they exist, that is the finding. It is the one to fix first, because everything else depends on it.
+2. **Check the From line against them.** Google's list for senders of 5,000 or more messages a day and Yahoo's requirements for bulk senders ask for the domain in your From header to be aligned with the domain that authenticated the message. If your mail says it is from you but is signed by your mailing tool's own domain, it would fail that requirement at that size, and it is easier to fix before you get there.
+3. **Set up Google Postmaster Tools.** Google's own sender guidelines point every sender to it: the spam rate they ask you to keep below 0.3 percent is the rate "reported in Postmaster Tools". It is free, and it needs a DNS record. It is where Google shows a sender its own spam rate, as Google works it out. If it shows no data yet, that is not a clean bill of health.
+4. **Send yourself a campaign and try to unsubscribe from it.** Count the pages. If it requires you to log in, requires a reason, or takes more than one page, it does not meet the rule at [16 CFR 316.5](https://www.law.cornell.edu/cfr/text/16/316.5). It is also turning people who would have left politely into people who press the other button. This tests the link in the footer; ask whoever set up your sending whether the one-click exit is in the headers too.
+5. **Open the same message with developer tools on.** Look at the list of domains it contacts. Decide whether you are comfortable with it. There is no right answer here, and there is certainly a wrong one, which is not knowing.
+6. **Open your largest audience and scroll to the bottom of it.** Read the last twenty names. If you recognise someone who moved away, someone who told you to stop, or someone who is now a competitor, your audience rule has no exit condition.
+7. **Count your sends over the last ninety days.** Not campaigns. Messages that left the building, including every automated one. Count it before you guess it, because it is the input you control most directly.
 
-Before spending anything, run the audit below. It is free, and it takes an afternoon. It settles the only question that decides the shape of the project. Is your domain already in good order, or has it been quietly piling up settings for six years?
+**Tony's heating and cooling company (invented).** This is Beth's whole afternoon, an invented example, with what each check found:
 
-## What it does not do, and should not pretend to
+1. **The domain's records.** DKIM passing under the sending tool's domain; no DMARC policy. Not required at Tony's size; set up anyway.
+2. **The From line.** Not aligned with the signing domain. Not required at Tony's size; fixed with the first.
+3. **Postmaster Tools.** Not set up; nobody had heard of it. Set up the same day.
+4. **The unsubscribe.** A sign-in page behind the footer link. A finding.
+5. **The tracking.** The note contacted four outside domains, two of which Beth could name. Noted, and asked about.
+6. **The audience.** The last twenty names included a man who had asked Beth to stop sending him the notes. A finding.
+7. **The count of sends.** Three notes a month, not one: the October newsletter, a tune-up reminder sequence and a review request nobody remembered switching on.
 
-It does not create demand. Every mechanism described here assumes someone who already has a reason to hear from you. A cadence does not turn a person who is not moving into a person who is. Pointing one at people who never asked is a different activity with a different set of risks.
+**Your turn.** Run the seven checks on your own sending this week, and write one line beside each.
+
+## What happened when Tony's list got shorter?
+
+Tony's sending changed on what the checks found, and the largest change was the list: fourteen hundred people became about nine hundred, the customers who had booked a job in the last three years or asked to stay on. In this invented example the work took two afternoons of Beth's time and one call with whoever managed the domain.
+
+**Tony's heating and cooling company (invented).** DMARC was published and the notes were signed with Tony's own domain, so the From line and the signature now agree. The unsubscribe became one page with one button. The man who asked to stop getting the notes was removed, with everyone who had not booked in three years, and the forgotten review sequence was switched off. The December note went to about nine hundred people with a subject line about furnace filters, and the sending tool's report showed one complaint against October's five. Several things changed at once, so that count cannot say which change mattered, and nobody can promise what the next note will do. Tony did not cut the list on a promise. He cut it because every name on it is now someone who might want the note, and in a year he will have twelve months of complaint counts that someone actually read.
+
+**Your turn.** Decide now which number you will read every month: complaints per send, from your sending tool's report and, once it shows data, from Postmaster Tools.
+
+If you would rather someone read your sending records with you, that is where we start: the next sections say what the work takes and what it will not do.
+
+[[scene:offer]]
+
+## What does email marketing automation take, and how long does it take?
+
+Email marketing automation takes three pieces of work: the sending platform, the set-up of audiences and triggers, and getting your sending domain into order, and the third is where the time goes when it goes badly.
+
+The sending platform is a subscription from whoever you use. Then the set-up: audiences, triggers, delays, suppression rules, and the joins to wherever your contact data lives. Then the item that is easy to leave out: getting your sending domain into a state where two things are true. The three records above are correct, and the address in your From line is aligned with them.
+
+If your domain's DNS is somewhere you control and nobody has set up anything unusual, it is an afternoon. If your mail has gone out from three different tools under two different subdomains set up by people who have left, it becomes a long dig. The honest order is to finish it before writing a single campaign rather than after.
+
+The other real need is a person. Audiences rot, and they rot quietly. So someone has to own the rules and look at them on a schedule. That is not a big job, and it is nobody's job by default. That is how a segment defined once outlives everyone's memory of what it was for.
+
+Before spending anything, run the seven checks above. They settle the only question that decides the shape of the project: is your domain already in good order, or has it been quietly piling up settings for six years?
+
+## What can marketing automation not do?
+
+Marketing automation cannot create demand, cannot get your mail delivered, and cannot tell you whether anyone read anything.
+
+It does not create demand. Every mechanism described here assumes someone who already has a reason to hear from you. A cadence does not turn a person who is not looking into a person who is. Pointing one at people who never asked is a different activity with a different set of risks.
 
 It does not get your mail delivered. Authentication removes a reason to reject you. Delivery is a judgement made by someone else, on the basis of how the people you sent to reacted last time. The only lever you have on it is who you send to and how often.
 
 It does not tell you whether anyone read anything. Opens are a proxy with known failure modes in both directions. Clicks are a proxy for interest in one link. Neither is a measurement of attention. A dashboard built out of them can look healthy while the mail is being filtered.
 
-It does not fix a message that should not be sent. Behaviour triggers change when something arrives, not whether it should. A poorly judged email delivered at the perfect moment is a poorly judged email that arrives faster. Getting the timing right does not buy forgiveness for the content.
+It does not fix a message that should not be sent. Behaviour triggers change when something arrives, not whether it should. A poorly judged email delivered at the perfect moment is a poorly judged email that arrives faster.
 
-It does not survive being aimed at everyone. This is the limit that costs the most and the one people resist, because a bigger list looks like a bigger asset. Every send to someone who did not want it is evidence handed to a filtering system. It is scored against your domain. The damage lands on the next message you send to the people who did want it.
+It does not survive being aimed at everyone. A bigger list looks like a bigger asset, which is why this limit is the hardest to accept. Every send to someone who did not want it is evidence handed to a filtering system. It is scored against your domain. The damage lands on the next message you send to the people who did want it.
 
 [[scene:wasted]]
 
-[[scene:offer]]
+## Common questions about email deliverability and marketing automation
 
-## How to audit your own sending in an afternoon
+### Why are my emails going to spam?
 
-Nothing here needs a consultant, and none of it needs access to anything you do not already have.
+Your emails are going to spam when the mailbox provider cannot confirm your domain sent them or when too many recipients report them: check your SPF, DKIM and DMARC records and your From line first, then your list.
 
-1. **Find out what your domain publishes about itself.** Your SPF, DKIM and DMARC records are public DNS entries. Anyone can read them, including you. If nobody in your business knows whether they exist, that is the finding. It is the one to fix first, because everything else depends on it.
+### What is marketing automation for a small business, in plain terms?
 
-2. **Check the From line against them.** Both providers require the domain in your From header to be aligned with the domain that authenticated the message. If your mail says it is from you but is signed by your mailing tool's own domain, you are failing a published requirement that you can see.
-
-3. **Set up Google Postmaster Tools.** It is free, and it needs a DNS record. It will show you the one number in this article you cannot get any other way. That is your own spam rate, as Google works it out.
-
-4. **Send yourself a campaign and try to unsubscribe from it.** Time it. Count the pages. If it asks you to log in, asks you why, or takes more than one page, it does not meet the rule at 16 CFR 316.5. It is also quietly turning people who would have left politely into people who press the other button.
-
-5. **Open the same message with developer tools on.** Look at the list of domains it contacts. Decide whether you are comfortable with it. There is no right answer here, and there is certainly a wrong one, which is not knowing.
-
-6. **Open your largest audience and scroll to the bottom of it.** Read the last twenty names. If you recognise someone who bought through you, someone who told you they were staying put, or someone who is now a competitor, your audience rule has no exit condition. It has not had one for a while.
-
-7. **Count your sends over the last ninety days.** Not campaigns. Messages that left the building, including every automated one. Count it before you guess it. It is the input with the largest effect on everything above. It is the one people carry the vaguest idea of.
-
-## Common questions, answered honestly
-
-### What is real estate marketing automation, in plain terms?
-
-It is a standing instruction about people you are not currently talking to. It is a rule, written once, about who hears from you, what they hear and when. The software part is a scheduler and a mail sender. The part that decides whether it works is the audience rule, because that rule keeps running for years against a database of people whose circumstances keep changing.
+Marketing automation for a small business is a standing instruction about people you are not currently talking to: a rule, written once, about who hears from you, what they hear and when. The software part is a scheduler and a mail sender; the part that decides whether it works is the audience rule, because it keeps running for years against people whose circumstances keep changing.
 
 ### Do I need permission to email somebody in the United States?
 
-Not under the federal statute, which is the thing that surprises people. CAN-SPAM sets rules for the message. It must identify itself as an advertisement. It must carry a real postal address. It must offer a working exit that lasts at least thirty days, with the opt out honoured within ten business days. Permission is required in practice for a different reason. Mailbox providers judge you on how the people you email react. Mail to people who did not ask is what generates the reactions that get you filtered.
+You do not need permission to email somebody under the federal CAN-SPAM Act, which sets rules for the message: it must identify itself as an advertisement unless the recipient gave prior affirmative consent, carry a valid physical postal address and offer a working exit that lasts at least thirty days, with the opt out honoured within ten business days. Permission matters in practice for a different reason: mail to people who did not ask is what generates the complaints that get you filtered.
 
 ### How is this different from workflow automation?
 
-Workflow automation is about work. A step someone used to do by hand now happens on its own. You find out on the day if it breaks. This is about judgement at scale: who deserves a message, what it says, when it lands. They are usually built with the same tools, and they fail in completely different ways. That is why [the workflow article](/blog/workflow-automation-real-estate-business) is a separate read rather than a section of this one.
+Marketing automation differs from workflow automation in what fails: workflow automation is about work, a step someone used to do by hand that now happens on its own, and you find out on the day if it breaks; marketing automation is about judgement at scale, who deserves a message, what it says, when it lands. That is why [the workflow article](/blog/workflow-automation-real-estate-business) is a separate read rather than a section of this one.
 
 ### Is this the same as reactivating an old database?
 
-No, and the difference is the consent question. Reactivating a list of people who contacted you years ago and went quiet raises questions about permission that has gone stale. Those rules have dates in them. [That article](/blog/database-reactivation-old-real-estate-leads) covers them properly. This one assumes current permission. It asks a harder question about what you do with it week after week.
+Reactivating an old database is not the same thing, and the difference is the consent question: going back to people who contacted you years ago raises questions about permission that has gone stale, and those rules have dates in them. [That article](/blog/database-reactivation-old-real-estate-leads) covers them; this one is about the people already on your list and what you send them.
 
-### Will automated marketing annoy my leads?
+### Will automated marketing annoy my customers?
 
-Some of them, and the number that matters is much smaller than the number who are annoyed. Both major providers publish the same ceiling for how often people may report you as spam: three tenths of one percent. On a list of a thousand that is three people. Unsubscribes are not the problem and are a sign of a healthy list. The button next to it is the problem. Sending people things they do not care about is what makes them press it.
+Automated marketing will annoy some customers, and the number that matters is the ones who press the spam button, not the ones who unsubscribe: both Google and Yahoo publish the same ceiling of three tenths of one percent, fewer than three complaints in a thousand delivered messages. Sending people things they do not care about is what makes them press it.
 
 ### Why did my open rate drop?
 
-Possibly because fewer people opened it, and possibly for two reasons that have nothing to do with your writing. An open is recorded when a mail client fetches a tracking image. So clients that block or reroute remote images bend the count in both directions. And the mix of clients on your list changes over time. Separately, if more of your mail is being filtered, fewer people are being given the chance to open it at all. Your spam rate in Postmaster Tools is a better health signal than your open rate. Unlike the open rate, it is measured by the party whose opinion decides whether your mail arrives.
+An open rate can drop because fewer people opened the email, or for two reasons that have nothing to do with your writing: mail clients that block or fetch remote images bend the count in both directions, and mail that is filtered never reaches anyone who could open it. Your spam rate in Postmaster Tools is a better health signal, because it is measured by the party whose opinion decides whether your mail arrives.
 
 ### How often should I send?
 
-There is no published number for this that is worth quoting. Any article that gives you one has made it up. What can be defended is the direction. Every send is evidence handed to a filtering system, so the cost of one more message is not zero even when nobody replies. Send to fewer people more carefully, and the frequency question mostly answers itself.
+How often to send has no published number worth quoting, and we found none with a method behind it. What can be defended is the direction: every send is evidence handed to a filtering system, so send to fewer people more carefully, and the frequency question becomes a smaller one.
 
 ### What is the one thing to fix first?
 
-Whatever your sending domain currently publishes about itself. Not the copy, not the cadence, not the segments. If your authentication is wrong, or your From line is not aligned with it, you are failing a requirement that both major providers have published in plain English. And every improvement you make above that layer is being applied to mail that may not arrive.
+The one thing to fix first is what your sending domain publishes about itself: if your mail passes neither SPF nor DKIM, you are failing a requirement both providers publish for every sender, and every improvement above that layer is applied to mail that may not arrive. An aligned From line and a DMARC policy come next: required in the larger senders' lists, and worth setting up at any size.
 
-## What to do about it
+### Can we talk about email deliverability on a call if my business is outside New York?
 
-The uncomfortable idea in this article is that the most effective thing available to you is to send less.
+We are based in New York State, and the call works for an owner anywhere.
 
-That runs against how this category is sold. A platform priced per contact has no reason to suggest a smaller list. A dashboard built on sends and opens will always reward more of both. But the mechanism is not in dispute. It is published by the people who run it. Whether you can reach the people who want to hear from you depends on how the people who did not want to hear from you reacted. There is no other input you control.
+## What to do first about emails going to spam
 
-[[scene:funnel]]`;
+The first thing to do about emails going to spam is to read what your domain publishes about itself, and the second is to send less, to fewer people, more carefully.
 
-export const AI_AGENT_WORKFORCE_POST = `The inbox assistant had drafted your morning replies for two weeks. Nine working days, nine sets of drafts, and every one of them was fine. Around day four you stopped reading them properly. That is not laziness. It is what anyone does with something that has been right nine times.
+That runs against how this category is sold. A platform priced per contact has no reason to suggest a smaller list. A dashboard built on sends and opens will always reward more of both. But the mechanism is not in dispute: it is published by the companies that run it. Whether you can reach the people who want to hear from you depends partly on how the people who did not want to hear from you reacted, and who is on the list is the input you control most directly.
 
-On the tenth morning it confirmed a Thursday walkthrough to a buyer's agent. You had moved that walkthrough to Friday the evening before, in a text message, from the car. The assistant read the calendar. The calendar said Thursday, because the calendar was where the walkthrough had been before you moved it.
+[[scene:funnel]]
 
-The draft went out at 6:40am, in your voice, from your address. It was polite and well written and completely wrong.
+Start with the page on [marketing automation for small business](/services/marketing-automation): what we set up, what you approve, and what it will not do.
 
-Nothing broke. The assistant was not confused and it did not make anything up. It read what it could reach. It did the job it was given. And it produced a piece of work whose tone was exactly like the nine that were correct. That last part is the whole subject of this article. That is because it is the reason nobody caught it.
+## Sources
+
+- 15 U.S.C. 7704, the CAN-SPAM Act's requirements for commercial electronic mail, [law.cornell.edu](https://www.law.cornell.edu/uscode/text/15/7704). Statute in force, read November 11, 2026.
+- 16 CFR 316.3 (primary purpose) and 16 CFR 316.5 (no fee or extra steps to opt out), the FTC's CAN-SPAM rule, [law.cornell.edu](https://www.law.cornell.edu/cfr/text/16/316.3). Regulation in force, read August 25, 2026.
+- Google, Email sender guidelines, [support.google.com](https://support.google.com/a/answer/81126): the requirements for all senders and for senders of 5,000 or more messages a day, and Postmaster Tools, which the page itself names as where a sender's spam rate is reported. A live help page; read November 11, 2026 and again November 17, 2026.
+- Yahoo, Sender best practices, [senders.yahooinc.com](https://senders.yahooinc.com/best-practices/): the 0.3 percent ceiling, how the rate is calculated, the two-day unsubscribe. A live page; read November 11, 2026.
+- RFC 7208 (SPF, 2014), RFC 6376 (DKIM, 2011), RFC 7489 (DMARC, 2015) and RFC 8058 (one-click unsubscribe, 2017), [rfc-editor.org](https://www.rfc-editor.org/rfc/rfc8058.txt). Older sources, kept for the argument: they define the mechanisms named here.
+- "I never signed up for this! Privacy implications of email tracking", by Steven Englehardt, Jeffrey Han and Arvind Narayanan, in the Proceedings on Privacy Enhancing Technologies, 2018, [petsymposium.org](https://petsymposium.org/popets/2018/popets-2018-0006.pdf). An older source, kept for the argument: cited for the mechanism, not for today's rates.
+
+Written with an AI assistant and checked by Levan.`;
+
+export const AI_AGENT_WORKFORCE_POST = `AI employees are AI assistants set up to do one repeated job each, such as drafting replies or chasing paperwork, and the cost a small business should budget for first is the supervision, because a wrong answer from one reads exactly like its right ones. This page gives you, free, the method we use when we build AI assistants for a small business: how to test one before you run four, and how to supervise them once they run. Below, one invented roofing company runs four AI assistants overnight, and you will see why the obvious answer to a wrong draft, a better model, is not the fix, and why the written brief and the morning read decide whether any of it works. The method works the same for a plumbing company, a dental office, an accounting office or a real estate team.
+
+**Paul's roofing company (invented).** Paul owns a roofing company with eight people: himself, Gina in the office and two crews. Last spring he set up four AI assistants, each on one job: one drafts replies to the overnight email, one turns the crew's measurements into a draft quote, one chases unsigned contracts and permit paperwork, and one sends a review request when a job closes. Paul, Gina, their customers and every figure about the company are made up; their four assistants run through this page as one worked example of a real method.
+
+**Paul's roofing company (invented).** The inbox assistant drafted Paul's morning replies for two weeks, and he approved them from his phone before seven. Nine working days, nine sets of drafts, and every one of them was fine. Around day four he stopped reading them properly and went on approving them. That is not laziness. It is what anyone does with something that has been right every time so far.
+
+**Paul's roofing company (invented).** On the tenth morning it confirmed a Thursday roof inspection to a homeowner. Paul had moved that inspection to Friday the evening before, in a text message, from the truck. The assistant read the calendar. The calendar said Thursday, because the calendar was where the inspection had been before he moved it. Paul approved the whole batch at 6:40am, and the reply went out in his voice, from his address. It was polite and well written and completely wrong.
+
+Nothing broke. The assistant was not confused and it did not make anything up. It read what it could reach, did the job it was given, and produced a piece of work whose tone was exactly like the nine that were correct. That last part is the whole subject of this page, because it is the reason nobody caught it.
+
+Everything on this page is free to use: the test for one assistant, the questions to put to anyone selling you AI employees, and the calculator. What we sell is building the assistants with you: drawing each brief out of you and writing it down, and setting up the review.
 
 [[scene:in-short]]
 
 [[scene:tenth-morning]]
 
-## What an agent workforce actually is, and what it is not
+## What are AI employees, and what are they not?
 
-The pitch is easy to say, and it is broadly true. Instead of one general chatbot you have to brief every time, you set up several assistants. Each one is pointed at a single recurring job. Each one can reach the systems that job needs. One reads the overnight email and drafts replies. One pulls comps and builds the deck for tomorrow's listing appointment. One watches every open file for the signature nobody chased. They run at the same time. They do not stop at five o'clock. And adding another one is a settings change rather than a hire.
+AI employees are AI assistants, each set up for one repeated job and connected to the systems that job needs, and they are not employees: they cannot be held responsible, and the work they take off a desk turns into reading what they produce. Sellers call them AI employees, AI agents or an AI agent workforce; this page calls the thing itself an AI assistant.
 
-What that pitch leaves out is the second half of the sentence. That half holds all the money and all the risk. You have not removed work. You have changed what kind of work it is. Producing has become reviewing. And reviewing four streams of output is a real job, with real hours in it, done by you, in the morning, before anything else.
+The pitch is easy to say, and it is broadly true. Instead of one general chat window you have to brief every time, you set up several assistants. Each one is pointed at a single repeated job. Each one can reach the systems that job needs. They run at the same time. They do not stop at five o'clock. And adding another one is a settings change rather than a hire.
 
-That is not an argument against doing this. It is an argument for knowing what you are buying. It is also the thing every page about this, including our own, has been vague about in the past.
+What that pitch leaves out is the second half of the sentence, and that half holds the money and the risk. You have not removed work. You have changed what kind of work it is. Producing has become reviewing. And reviewing four streams of output is a real job, with real hours in it, done by you, in the morning, before anything else.
+
+That is not an argument against doing this. It is an argument for knowing what you are buying. It is also the thing pages about this, our own earlier ones included, have been vague about.
 
 [[scene:not-a-chatbot]]
 
-## Right once and right every time are different products
+**Paul's roofing company (invented).** Paul bought the pitch, and he was not wrong to: each of his four assistants does a job that used to take Gina's mornings. What nobody priced was the reading. Four assistants meant four streams of drafts, and the only person who could tell a right quote from a wrong one was the person whose name was on it.
 
-Here is the difference that reorders the whole subject. It comes from the best public measurement of this that exists.
+**Your turn.** List the jobs in your business that repeat every week, and mark the ones you could describe to a new hire on their first day without stopping to think.
 
-In June 2024 a team at Sierra published a benchmark called tau-bench. It is not a quiz. It puts a language agent into a made-up business. That business has a real database, a set of tools that can change the database, and a written policy the agent has to follow. A second language model then plays a customer who wants something. There are two of these businesses. The retail one has five hundred customers, a thousand orders and a hundred and fifteen tasks. The airline one has three hundred flights, two thousand reservations and fifty tasks. At the end of each conversation the benchmark compares the real state of the database against the one correct outcome. Not the transcript. Not the tone. What ended up in the system.
+### In a real estate office, specifically
 
-The authors also put forward a measurement nobody had been using. It is the important part. Everybody had been reporting whether an agent succeeds at a task. They asked something else. They asked how often an agent succeeds at the same task every single time it is tried. They named it pass hat k, and they defined it as the chance that all k independent attempts are successful, averaged across tasks.
+A real estate team meets the same pitch with its own jobs: an AI assistant for a Realtor that reads the overnight email and drafts replies, one that pulls comparable sales and builds the deck for tomorrow's listing appointment, and one that watches every open file for the signature nobody chased. The method on this page is the same, and the one difference is the law on who answers for work done in a licensed agent's name, set out further down.
 
-Read that against your own morning. You do not need an assistant that can draft a good reply. You need one that drafts a good reply on Monday and Tuesday and Wednesday and the Thursday you were in the car.
+## Is an AI assistant that is right once right every time?
 
-## What happens when you run the same job twenty times
+An AI assistant that is right once is not an assistant that is right every time, and the gap between the two is much larger than it feels: the best public measurement of it found a leading agent solving over sixty percent of tasks on one attempt and under twenty five percent when all eight attempts had to be right.
 
-The best model in that paper solved more than sixty percent of the retail tasks on a single attempt. Now run the same tasks eight times each, and require all eight to be right. The paper reports that the figure drops below twenty five percent.
+In June 2024 a team at Sierra published a benchmark called [tau-bench](https://arxiv.org/abs/2406.12045). It is not a quiz. It puts a language agent into a made-up business. That business has a real database, a set of tools that can change the database, and a written policy the agent has to follow. A second language model then plays a customer who wants something. There are two of these businesses. The retail one has five hundred customers, a thousand orders and a hundred and fifteen tasks. The airline one has three hundred flights, two thousand reservations and fifty tasks. At the end of each conversation the benchmark compares the real state of the database against the one correct outcome. Not the transcript. Not the tone. What ended up in the system.
 
-Sit with the shape of that rather than the numbers. That is because the numbers are from June 2024, and the models have moved on since. Something that succeeds most of the time on any given morning succeeds every morning far less often than most of the time. And the gap widens the more mornings you ask about. That is not a fault anybody put there. It is what happens when you multiply a chance by itself. It is also the reason a demo is such a poor guide to a purchase. A demo is one attempt. A business is a hundred attempts in a row.
+The authors also proposed a measurement of their own, and it is the important part. Besides asking whether an agent succeeds at a task, they asked how often an agent succeeds at the same task every single time it is tried. They named it pass hat k, and they defined it as the chance that all k independent attempts are successful, averaged across tasks.
 
-The same paper is worth reading for one more reason. It looked at what the failures actually were. Of thirty six failed runs it examined by hand, the largest group was the agent calling the right kind of tool with the wrong values in it. Not a refusal. Not an error message. Not an apology. The correct action, done with confidence, on the wrong record. Which is what happened at 6:40 on the tenth morning.
+Read that against your own morning. You do not need an assistant that can draft a good reply. You need one that drafts a good reply on Monday and Tuesday and Wednesday and the Thursday you were in the truck.
 
-## Where these systems actually go wrong, and it is mostly not the model
+**Paul's roofing company (invented).** Paul's inbox assistant had been right on nine mornings of nine. That felt like a record. It was a sample of nine, and the tenth was the first morning on which the calendar and the truth disagreed.
 
-The other paper worth your time is newer. It is about exactly the thing the service page is selling, which is several agents working at once.
+**Your turn.** For one assistant you run or are offered, ask how often it is right on the same job every time, not on one try.
 
-A group at UC Berkeley collected 1,642 annotated execution traces from seven different multi-agent frameworks. A trace is the record of one whole run. They built a taxonomy of what went wrong, which is a named list of the kinds of failure, by having six human experts read a hundred and fifty traces closely. Then they checked that the taxonomy was reliable. They had independent annotators apply it, and they measured how often those annotators agreed. Their agreement measure came out at 0.88, which is high. It matters, because a taxonomy nobody applies the same way twice is an opinion rather than a finding.
+## What happens when an AI assistant does the same job again and again?
 
-Fourteen distinct failure modes, in three groups. Their headline number is worth knowing before anybody quotes you one. Across the seven systems they measured a failure rate between 41 percent and 86.7 percent.
+When an AI assistant does the same job again and again, the share of tasks it gets right every time falls fast: in the [tau-bench paper](https://arxiv.org/abs/2406.12045) the best model solved more than sixty percent of the retail tasks on a single attempt, and when the same tasks were run eight times each and all eight had to be right, the figure dropped below twenty five percent.
+
+Sit with the shape of that rather than the numbers, because the numbers are from June 2024 and say nothing about how the models sold today would score. Something that succeeds on most mornings succeeds on every morning far less often than that. And the gap widens the more mornings you ask about. That is not a fault anybody put there. It is what happens when you multiply a chance by itself. It is also the reason a demo is such a poor guide to a purchase. A demo is one attempt. A business is a hundred attempts in a row.
+
+The same source is worth reading for one more reason: it looked at what the failures were. Of thirty six failed runs it examined by hand, the largest group was the agent calling the right kind of tool with the wrong values in it. Not a refusal. Not an error message. Not an apology. The correct action, done with confidence, on the wrong record.
+
+**Paul's roofing company (invented).** The tenth morning had a different cause and the same look. The assistant used the right tool, the calendar, and sent the right kind of reply, a confirmation. The value in it, Thursday, was wrong because the calendar was out of date, not because the assistant misread it. From the output alone, the two failures cannot be told apart.
+
+**Your turn.** Look at the last mistake any assistant of yours made and ask whether it was the wrong action or the right action with a wrong value in it.
+
+## Where do multi-agent AI systems go wrong?
+
+Multi-agent AI systems go wrong mainly in how they are designed and instructed, not in the model: in a study of 1,642 annotated runs across seven frameworks, the largest group of failures, 44.2 percent, came from system design and specification. This is the paper worth your time on the thing the service is selling, which is several agents working at once.
+
+A group at UC Berkeley collected 1,642 annotated execution traces from seven different multi-agent frameworks ([Cemri and others, 2025](https://arxiv.org/abs/2503.13657)). A trace is the record of one whole run. They built a taxonomy of what went wrong, which is a named list of the kinds of failure, by having six human experts read a hundred and fifty traces closely. Then they checked that the taxonomy was reliable. They had independent annotators apply it, and they measured how often those annotators agreed. Their agreement measure came out at 0.88, which is high. It matters, because a taxonomy nobody applies the same way twice is an opinion rather than a finding.
+
+Fourteen distinct failure modes, in three groups. Their headline number is worth knowing before anybody quotes you one: across the seven systems in that source they measured a failure rate between 41 percent and 86.7 percent.
 
 [[scene:where-fail]]
 
-The chart is the finding. The largest group is not the model being stupid. It is system design. That group covers the job being described badly, the agent repeating a step it had already done, and the agent not knowing when it was finished. Their most common single mode, at 15.7 percent of everything, is step repetition. The second is the agent's stated reasoning not matching the action it then took. The third is not recognising the conditions under which it should stop.
+The largest group is not the model being stupid. It is system design. That group covers the job being described badly, the agent repeating a step it had already done, and the agent not knowing when it was finished. Their most common single mode, at 15.7 percent of everything in the source, is step repetition. The second is the agent's stated reasoning not matching the action it then took. The third is not recognising the conditions under which it should stop.
 
-None of those are fixed by a better model. All of them are fixed by somebody thinking harder about the instructions and the checks. The paper's own note on this is the practical one. It reports that the systems in its sample with explicit verification steps built into them showed fewer failures overall.
+A better model is not the obvious fix for any of those; clearer instructions and checks are. The paper reports that the systems in its sample with explicit verification steps built into them showed fewer failures overall.
 
-## The brief is the product
+**Paul's roofing company (invented).** None of Paul's four assistants is a research framework, and the chart is not a forecast for them. What it tells him is where to look first when one goes wrong: at the brief and the checks, before the model.
 
-The tau-bench authors ran one more experiment that almost nobody talks about. For a reader about to pay for any of this, it is the result in either paper that matters most.
+**Your turn.** For each assistant you run, write down who checks its output and when, and mark any that nobody checks.
 
-They took the written policy out of the agent's instructions and ran everything again. In the simple task set, where the rules are close to common sense, the score fell from 61.2 to 56.8 percent, which is barely anything. In the complicated task set, where the rules are specific and arbitrary in the way real business rules are, it fell from 33.2 to 10.8 percent.
+## Why is the written brief the most important part of an AI employee?
+
+The written brief is the most important part of an AI employee because, in the experiment that measured it, taking the written rules out of an agent's instructions cut its score on specific business rules by about two thirds, with the model unchanged. The tau-bench authors ran that experiment, and for anyone about to pay for any of this it is the result in either paper that matters most.
+
+They took the written policy out of the agent's instructions and ran everything again ([tau-bench](https://arxiv.org/abs/2406.12045), the ablation table). In the simple task set, where the rules are close to common sense, the score fell from 61.2 to 56.8 percent, which is barely anything. In the complicated task set, where the rules are specific and arbitrary in the way real business rules are, it fell from 33.2 to 10.8 percent.
 
 [[scene:rules-removed]]
 
-Take the second pair seriously. Two thirds of what that agent could do came from a written document, not from the model. Which means the thing you are actually buying, when you buy an assistant, is the document. It holds the description of the job, the rules, the exceptions, and the things that must never happen. The model is a standard part anybody can buy, and it improves every few months without you doing anything. The brief is yours. It is specific to your business. Nobody else can write it.
+Take the second pair seriously. With the written rules taken out and the model unchanged, the agent lost about two thirds of its score. Which means a large part of what you are buying, when you buy an assistant, is the document. It holds the description of the job, the rules, the exceptions, and the things that must never happen. The model is a part anybody can buy. The brief is yours. It is specific to your business, and nobody else can write it without you.
 
-This is also why the honest version of the sales process is slower than the exciting one. "Tell us the job and we will build the assistant" sounds like a five minute conversation. It is a two hour one. That is because most recurring jobs have never been written down, and the first hour goes on finding the exceptions that live only in somebody's head.
+This is also why the honest version of the sales process is slower than the exciting one. "Tell us the job and we will build the assistant" sounds like a five minute conversation. It is not, because a job that has never been written down keeps its exceptions in somebody's head, and finding them is the first hour's work.
+
+**Paul's roofing company (invented).** The inbox assistant's brief said: confirm known appointments, and escalate anything ambiguous. Nothing about the tenth morning looked ambiguous from inside the email and the calendar; the change lived in a text message the assistant could not see. Paul adds one line: any appointment for today or tomorrow is drafted as a question to him, never as a confirmation.
+
+**Your turn.** Write the brief for one repeated job, with its exceptions, before you look at any software.
 
 [[scene:plate]]
 
-## Why the second assistant costs more than the first
+## Why does the second AI assistant cost more than the first?
 
-Everything above is about one assistant. Running several is not the same thing repeated. The difference is worth being clear about, because it is the difference the word "workforce" hides.
+The second AI assistant costs more than the first when its work depends on the first, because a handover between two assistants is where an error stops being visible. Running several is not the same thing repeated, and that is the difference the word "workforce" hides.
 
-Two assistants that never touch each other are truly just two assistants. The cost is roughly double the cost of one. That describes a lot of useful setups, and there is nothing wrong with it.
+Two assistants that never touch each other are just two assistants. The review is roughly double the review of one. That can be a useful setup, and there is nothing wrong with it.
 
-But the moment one assistant's output becomes another assistant's input, you have built a system. The Berkeley taxonomy has a whole category for what goes wrong there. It covers information one agent held and did not pass on. It covers an agent carrying on with an assumption instead of asking. And it covers an agent quietly drifting off the task it was given. Almost a third of everything they classified sat in that group. A handover between two pieces of software is not free. It is exactly the place where an error stops being visible, because the second agent receives a confident summary rather than the thing itself.
+But the moment one assistant's output becomes another assistant's input, you have built a system. The Berkeley taxonomy has a whole category for what goes wrong there. It covers information one agent held and did not pass on. It covers an agent carrying on with an assumption instead of asking. And it covers an agent quietly drifting off the task it was given. Almost a third of everything they classified, 32.3 percent in that source, sat in that group. A handover between two pieces of software is exactly the place where an error stops being visible, because the second agent receives a confident summary rather than the thing itself.
 
 The practical rule that falls out of this is dull, and it is worth more than any feature list. Keep the assistants separate unless there is a specific reason not to. And where one has to feed another, make the handover something a person can read.
 
+**Paul's roofing company (invented).** Paul's review assistant took its list of finished jobs from the inbox assistant's daily summary, not from the invoices. When a summary left a job out, no review request went; when it listed a job that had been postponed, a request went to a homeowner whose roof was still half off. Nobody saw either, because nobody read the summary.
+
+**Your turn.** Draw a line between any two of your assistants where one reads what the other wrote, and name the person who reads that handover.
+
 [[scene:agent-path]]
 
-## Where the money actually goes when you run several
+## Where does the money go when you run several AI assistants?
 
-The cost of running an agent is not what you would guess. The tau-bench paper measured it, which almost nobody does.
+When you run several AI assistants, almost all of the running cost goes on reading, not writing: in the [tau-bench paper](https://arxiv.org/abs/2406.12045), of what the agent cost per task, the input took 95.9 percent and everything the agent wrote took 4.1 percent.
 
-For each task their best setup handled, the agent cost 38 cents. The simulated customer on the other side cost 23 cents. That is not your price list, and it should not be read as one. The number underneath it is the one that carries over. Of what the agent cost, the input took 95.9 percent, and everything the agent actually wrote took 4.1 percent.
+For each task their best setup handled, the agent cost 38 cents and the simulated customer on the other side cost 23 cents, in that source. That is not your price list, and it should not be read as one. The share underneath it was measured on one setup, and other models, caching and tools will move it. What carries over is the reason for it.
 
-In plain terms, almost the entire running cost of an assistant is it re-reading its own instructions, the descriptions of its tools and the conversation so far. It does that over and over, before every single thing it says. It is not being paid to write. It is being paid to remember.
+In plain terms, nearly the whole running cost in that setup was the agent re-reading its own instructions, the descriptions of its tools and the conversation so far. It does that over and over, before every single thing it says. It is not being paid to write. It is being paid to remember.
 
-That has three consequences you can act on. A longer brief costs money every time the assistant runs. So the discipline is a brief that is complete rather than a brief that is long. An assistant that is given access to ten tools it never uses is paying to read the descriptions of ten tools it never uses. And an assistant handling a long conversation costs more with every turn. That is why a job that ends is cheaper than a job that lingers.
+That has three consequences you can act on. A longer brief costs money every time the assistant runs, so the discipline is a brief that is complete rather than a brief that is long. An assistant that is given access to ten tools it never uses is paying to read the descriptions of ten tools it never uses. And an assistant handling a long conversation costs more with every turn, which is why a job that ends is cheaper than a job that lingers.
 
 [[scene:agent-calculator]]
 
 [[scene:pull-quote]]
 
-## What a person costs, and why you cannot divide by it
+## Is an AI employee cheaper than a person?
 
-Every page about this eventually reaches for a salary, and ours did too. So here is a real one, from the only source for it that publishes its method.
+Whether an AI employee is cheaper than a person is the wrong comparison, because the two do not stand in for each other: a wage buys someone who can be held responsible and who notices on their own when the job has changed, and an assistant does neither. Pages about this eventually reach for a salary, and ours did too, so here is where one is published with its method.
 
-The United States Bureau of Labor Statistics reports that the median annual wage for [secretaries and administrative assistants was $47,460 in May 2024](https://www.bls.gov/ooh/office-and-administrative-support/secretaries-and-administrative-assistants.htm), which is $22.82 an hour. Median means what the Bureau says it means, and the Bureau's own words are worth quoting. That is because half of the sums in this field depend on people not knowing them. The median wage is the wage at which half the workers in an occupation earned more than that amount and half earned less. For context, [the median for real estate sales agents](https://www.bls.gov/ooh/sales/real-estate-brokers-and-sales-agents.htm) was $56,320 over the same period, and the median for all occupations was $49,500.
+The United States Bureau of Labor Statistics publishes the median annual wage for [secretaries and administrative assistants](https://www.bls.gov/ooh/office-and-administrative-support/secretaries-and-administrative-assistants.htm), and the same figure for [real estate sales agents](https://www.bls.gov/ooh/sales/real-estate-brokers-and-sales-agents.htm) and for all occupations. Median means what the Bureau says it means, and its own words are worth quoting, because half of the sums in this field depend on people not knowing them: the median wage is the wage at which half the workers in an occupation earned more than that amount and half earned less. This page does not print the figures: they date from May 2024, and the source is one click away.
 
-Now the part where the arithmetic stops. That $47,460 buys something with qualities an assistant does not have. It answers the phone when the caller is upset. It notices that the job it was given last March is no longer the job that needs doing. It can be told once. It can be held responsible. And it is a whole person rather than a set of tasks. So taking four tasks out of that job does not take four quarters off the salary.
+Now the part where the arithmetic stops. That wage buys something with qualities an assistant does not have. It answers the phone when the caller is upset. It notices that the job it was given last March is no longer the job that needs doing. It can be told once. It can be held responsible. And it is a whole person rather than a set of tasks. So taking four tasks out of that job does not take four quarters off the wage.
 
-There is also a number in the same table that nobody selling this will mention. The Bureau's projection for that occupation between 2024 and 2034 is zero percent growth. That is a change of minus 12,400 jobs out of roughly three and a half million. Not a collapse. More or less flat, in the published forecast of the agency whose job is forecasting it.
+There is also a number in the same source that a seller of AI employees has no reason to mention. The Bureau's projection for that occupation between 2024 and 2034 is zero percent growth: a change of minus 12,400 jobs out of roughly three and a half million. Not a collapse. More or less flat, in the published forecast of the agency whose job is forecasting it.
 
-So this page will not divide one of those numbers by the other. The honest comparison is not assistant against employee, because they do not stand in for each other. It is your morning with the assistants against your morning without them. That is a question about your own time and not about anybody's salary. It is the question the calculator above is asking.
+So this page will not divide one of those numbers by the other. The honest comparison is not assistant against employee. It is your morning with the assistants against your morning without them, which is a question about your own time and not about anybody's salary.
 
-## Who is responsible when an assistant is wrong
+**Paul's roofing company (invented).** Paul's four assistants did not replace Gina; they moved her mornings from typing quotes to checking them. The question Paul can answer is how long the checking takes, and that is the number he went on to measure.
 
-The email that went out at 6:40 was signed with your name. Everything else follows from that.
+## Who is responsible when an AI employee is wrong?
 
-This trade is unusual. It has already written down what happens when work is handed to somebody else. That is because handing out licensed work is already a regulated activity in New York. Two parts of [the Department of State's own Real Estate License Law booklet](https://dos.ny.gov/real-estate-license-law) are worth reading, because neither is about artificial intelligence and both are about you.
+The business whose name is on the work is responsible when an AI employee is wrong: the email that went out at 6:40 in the invented example above was signed with Paul's name, and an assistant cannot be told off, sued or struck off. Everything else follows from that.
 
-Section 442-c deals with what a salesperson's misconduct means for the broker. A broker is not automatically on the hook for what an associate did. But there are two ways a broker becomes so, and the second is the one to read twice. A broker is exposed where they had actual knowledge of the violation, or where they retain the benefits, profits or proceeds of a transaction wrongfully negotiated by their salesperson or employee after notice of the misconduct. Keeping what the conduct earned is the thing that attaches you to the conduct.
+**Paul's roofing company (invented).** Paul rings the homeowner himself, apologises for the confusion, and confirms Friday. Nobody asks whether software wrote the first reply. The reply came from him.
 
-Then read Section 440-a, which is the requirement to be licensed at all. It lists who may hold a licence. The list runs: a person, a co-partnership, a limited liability company, a corporation. That list is a list of parties that can be disciplined, sued and struck off. A piece of software is not on it, and nothing here is a prediction about future law. It is a description of the present one, and the description is this. When an assistant working for you says something to a client, there is exactly one licensed party in the conversation, and it is you.
+**Your turn.** For each assistant, write down whose name is on what it sends.
 
-## What supervision looks like when the thing you are supervising is software
+### Who answers for an AI assistant's work in a real estate office?
 
-There is a second document worth borrowing. This one is borrowed openly as a comparison rather than applied as a rule. It is about supervising people, and it says nothing whatever about software.
+In a real estate office the work an AI assistant does goes out in the licensed agent's name, and real estate is unusual in having written down already what happens when work is handed to somebody else, because handing out licensed work is a regulated activity in New York. Two parts of [the Department of State's own Real Estate License Law booklet](https://dos.ny.gov/real-estate-license-law) are worth reading, because neither is about artificial intelligence and both are about the licensee. This section applies to a real estate team in New York only; we have not read the rules of other licensed trades or other states for this page, and it is not legal advice.
 
-Section 175.21 of the Secretary of State's regulations defines what supervising a salesperson actually consists of. It does not leave that to judgement. It writes it down as regular, frequent and consistent personal guidance, instruction, oversight and superintendence, with respect to the brokerage business and all matters relating to it. The next paragraph requires written records of what the salesperson actually did.
+Section 442-c deals with what a salesperson's misconduct means for the licensee who supervises them. That licensee is not automatically on the hook for what an associate did. But there are two ways they become so, and the second is the one to read twice. They are exposed where they had actual knowledge of the violation, or where they retain the benefits, profits or proceeds of a transaction wrongfully negotiated by their salesperson or employee after notice of the misconduct. Keeping what the conduct earned is the thing that attaches you to the conduct.
 
-Nobody is claiming that provision governs an inbox assistant. What it does is describe the standard this trade already applies to work done in your name by somebody who is not you. And the document that describes it was written by your regulator. Regular. Frequent. Consistent. Written down.
+Then read Section 440-a, which is the requirement to be licensed at all. It lists who may hold a licence. The list runs: a person, a co-partnership, a limited liability company, a corporation. That list is a list of parties that can be disciplined, sued and struck off. A piece of software is not on it, and nothing here is a prediction about future law. It is a description of the present one, and the description is this. When an assistant working for an agent says something to a client, the only licensed party in the conversation is the agent. That is not a full answer on liability, which is a question for a lawyer; it is the reason the agent reads what goes out in their name.
 
-Set that beside four assistants running overnight with nobody reading the output after day four, and you have the honest list of what running this well requires. Not a dashboard. A habit, with a time in the diary, and a record of what was produced.
+## What does supervising AI employees look like?
+
+Supervising AI employees looks like supervising people in one respect: it is regular, frequent and consistent, it has a time in the diary, and it leaves a written record of what was produced and checked. There is a document worth borrowing for that, borrowed openly as a comparison rather than applied as a rule. It is about supervising people, and it says nothing whatever about software.
+
+Section 175.21 of New York's real estate regulations defines what supervising a salesperson consists of. It does not leave that to judgement. It writes it down as regular, frequent and consistent personal guidance, instruction, oversight and superintendence over the business and everything relating to it. The next paragraph requires written records of what the salesperson did.
+
+Nobody is claiming that provision governs an inbox assistant, or any business outside real estate. What it does is describe a standard one trade already applies to work done in someone's name by somebody who is not them. Regular. Frequent. Consistent. Written down.
+
+Set that beside four assistants running overnight with their drafts approved unread after day four, and you have the honest list of what running this well requires. Not a dashboard. A habit, with a time in the diary, and a record of what was produced.
+
+**Paul's roofing company (invented).** Paul's habit is now fixed: from 6:30 to 6:45 every morning he reads every draft reply against its brief. Gina checks every draft quote against the crew's measurements before it goes and reads every reminder as she sends it, and on Friday she reads a sample of the week's sent quotes against what the crews found on the roof. Both write one line in a shared log: what they read, what they changed.
 
 [[scene:plate-two]]
 
+## How do you test one AI assistant before you run four?
+
+To test one AI assistant before you run four, take one repeated job and run five checks over a couple of weeks: write the brief, compare the assistant with work you already did, run the same cases ten times each, break it on purpose, and put the review and a weekly audit in your diary. It costs you nothing but attention, and it will tell you more than any demo.
+
+1. **Write the brief before you look at any software.** Pick the dullest job you have that repeats. A brief has five parts: the job in one sentence, what the assistant may read, what a right result looks like, the exceptions, and what it must never do. If you cannot write it, you have learned the most useful thing available today: the job cannot yet be handed to anybody at all, software or human.
+2. **Run it against work you have already done.** Take ten pieces of last month's output that you produced by hand, give the assistant the same inputs, and compare. This is the only honest accuracy test, because you already know the right answer and you are not grading it on how confident it sounds.
+3. **Run the same cases ten times each and count the ones that were right all ten times.** Take five cases from step two, decide before you start what a right answer is for each, and run each one ten times. A case counts only if all ten runs are right; the number to keep is how many of the five pass. That is the pass hat k measurement from the research above, done by hand on a small sample, so read it as a warning light rather than a rate.
+4. **Break it on purpose.** Give it an input with a contradiction in it, or a case the brief does not cover, and find out whether it stops and asks or whether it decides. An assistant that decides in the unclear cases rather than stopping will go on deciding, and without a review in front of it, one of those decisions can reach somebody outside your office before you have seen it.
+5. **Put a time in your diary.** Two kinds of reading, kept apart. Before anything it writes reaches a customer, a person reads it: that is the review. Then fifteen minutes, the same slot every week, to read a sample of what went out against what you asked for: that is the audit, and it is where you look for what the review let through. If you cannot find those slots for one assistant, you have your answer about four.
+
+**Paul's roofing company (invented).** Paul runs the five checks on each of his four assistants, one at a time, over six weeks. This is his whole list, an invented example, with the verdict for each:
+
+1. **Inbox replies.** Right on ten past emails of ten, and five of five cases right on all ten runs; the break test, an email asking to move an appointment, produced a confirmation instead of a question. Brief rewritten; stays, as drafts Paul reads every morning.
+2. **Draft quotes from measurements.** Seven of ten past quotes matched Gina's; three missed a second layer of old shingles that the crew had noted in words, not numbers. Brief rewritten with that exception; ten of ten on the second comparison and five of five on the repeat runs; stays, with Gina checking every quote before it goes.
+3. **Contract and permit chasing.** Ten of ten, five of five on the repeat runs, and it stopped and asked on the break test. Stays; it drafts the reminders and Gina sends them.
+4. **Review requests.** It read the inbox assistant's summary, not the invoices, and failed the comparison with past work twice in ten, so it never reached the repeat runs. Switched off, and replaced by a plain rule in the invoicing program that sends one fixed request when an invoice is paid. No AI needed.
+
+**Your turn.** Pick one assistant, or one job you are thinking of handing over, and run the first check this week.
+
+## How many AI employees can one owner supervise?
+
+One owner can supervise as many AI employees as they really read, and in the invented example on this page that was three: about fifteen minutes a morning for the owner, with the office's checks of quotes and reminders on top. The calculator on this page works out the same number for your own business: the hours a year spent reading what the assistants produce.
+
+**Paul's roofing company (invented).** Six weeks after the tenth morning, Paul runs three assistants instead of four, and the fourth job runs on a plain rule. Every draft reply is read before it goes; every quote is checked by Gina. Their shared log, by Gina's count, holds two wrong replies caught in the morning read and none that reached a customer. The reading takes Paul about fifteen minutes a morning. Gina's checks of each quote and reminder are part of sending them, and her Friday audit takes about an hour. Nobody can promise the next six weeks will look the same, and Paul did not keep the three on that promise. He kept them because he now knows what each one costs him in reading, and the log will tell him if that changes.
+
+**Your turn.** Decide now which number you will read every month: the wrong drafts caught in the review, and the ones that got past it.
+
+If you would rather go through your own repeated jobs with someone who has built these, that is where we start: the next sections say what the work takes and what it will not do.
+
 [[scene:offer]]
 
-## What it costs, and how long it takes
+## What do AI employees cost, and how long does the setup take?
 
-Nobody can quote this from an article. That is because three separate things drive the cost, and only one of them is the software.
+AI employees cost three separate things, and only one of them is the software: the time to write each brief properly, the work of connecting each assistant safely to the systems its job needs, and a running cost that tracks how much it reads. Nobody can quote this from an article, because the first two depend on your jobs and your systems.
 
 The first is the brief, and it is the slow part. Writing down a job properly, exceptions included, is a sitting rather than a message. It goes faster when a second person keeps pushing back on the first version you offer. The tau-bench run with the rules taken away is the argument for spending that time rather than skipping it.
 
-The second is access. An assistant that can read your calendar and your CRM is worth several times one that cannot. The work is connecting it safely. That means the right permissions, nothing wider than the job needs, and a way to switch it off.
+The second is access. An assistant that can read your calendar and your CRM can do far more than one that cannot. The work is connecting it safely. That means the right permissions, nothing wider than the job needs, and a way to switch it off.
 
-The third is the running cost. You pay for use rather than for a seat. It tracks how much the assistant has to read rather than how much it writes. And it is truly small per task, and truly without a ceiling if nobody watches it.
+The third is the running cost. It tracks how much the assistant has to read rather than how much it writes. In the research above it came to cents per task, and nothing caps it unless somebody sets a limit and watches it.
 
-What this page will not print is a per-model price, and the reason is not that the numbers are hidden. They are published, they are readable, and you can look them up in a minute. The reason is that they are quoted per million tokens. A token is a small piece of text. That price means nothing until somebody knows how many tokens your job takes. It is also that they change several times a year. And it is that which model sits behind an assistant is a build decision. That decision can be changed without anything visible happening at your end. A figure typed into an article would be stale before the article was. It would not have answered the question you asked. What can be said is the shape. The cost per piece of work is in cents rather than dollars. It is driven by the length of the instructions rather than the length of the answer. And the honest budget line is the review time above it rather than the machine time.
+What this page will not print is a per-model price, and the reason is not that the numbers are hidden. They are published and readable. The reason is that they are quoted per million tokens, a token being a small piece of text, and that price means nothing until somebody knows how many tokens your job takes. They also change. And which model sits behind an assistant is a build decision that can be changed without anything visible happening at your end. A figure typed into an article would be stale before the article was. What can be said is the shape: the machine cost of one task in the research above was in cents, it was driven mostly by how much the agent read rather than the length of the answer, and the honest budget line is the review time rather than the machine time.
 
-## What it does not do, and should not pretend to
+## What can AI employees not do?
 
-It does not take responsibility. An assistant cannot be told off. It cannot learn from being told off in any way that lasts, unless somebody edits the brief. And it cannot be the person a client complains to. Every consequence lands on a licensed human being, and that human being is you.
+AI employees cannot take responsibility, do not notice on their own that a job has changed, and cannot do well a job nobody has written down.
 
-It does not notice that the job has changed. This is the quietest failure of the four. A person who has been drafting your listing emails for a year will eventually say that the market has moved, and that the second paragraph now reads badly. An assistant will produce that second paragraph forever, with perfect consistency, until somebody rewrites the brief.
+They do not take responsibility. An assistant cannot be told off. In the assistants this page describes, a correction lasts only when somebody puts it into the brief or the system the assistant runs on, because those are what it works from. And it cannot be the person a customer complains to. Every consequence lands on a person in the business, and that person is you.
 
-It does not do a job nobody has written down. A vague brief does not produce vague output, which would at least be a visible signal. It produces confident, smooth, believable output that is quietly not what you wanted. You find out three weeks later from a client.
+They do not notice that the job has changed. This is the quietest failure of the four. A person who has been drafting your follow-up emails for a year will eventually say that something has moved, and that the second paragraph now reads badly. An assistant built the way this page describes will go on producing that second paragraph until somebody changes the brief it works from.
 
-It does not remove the reading. Anything that reaches a client should be read by a person first. An assistant that drafts is worth more than one that sends. And the review is not a temporary safety measure for the first month. It is the job now.
+They do not do a job nobody has written down. A vague brief does not produce vague output, which would at least be a visible signal. It produces confident, smooth, believable output that is quietly not what you wanted, and you find out later from a customer.
 
-And it does not scale the way the word workforce suggests. Four separate assistants are four times the review. Four assistants feeding each other are four times the review, plus a category of failure that only exists because they are connected. The published taxonomy has six named modes inside it.
+They do not remove the reading. Anything an assistant writes for a customer should be read by a person first; a fixed message sent by a plain rule, written once and read once, is a different case. An assistant that drafts is worth more than one that sends. And the review is not a temporary safety measure for the first month. It is the job now.
+
+And they do not scale the way the word workforce suggests. Four separate assistants are roughly four times the review. Four assistants feeding each other are roughly four times the review, plus a category of failure that only exists because they are connected: the published taxonomy has six named modes inside it.
 
 [[scene:wasted]]
 
-## How to test one assistant before you run four
-
-Do this with one assistant, on one job, before anybody builds you a set of them. It runs over a couple of weeks. It costs you nothing but attention. And it will tell you more than any demo.
-
-Pick the dullest job you have that repeats, and write the brief before you look at any software. Include the exceptions. If you cannot write it, you have learned the most useful thing available today, which is that the job cannot yet be handed to anybody at all, software or human.
-
-Then run it against work you have already done. Take ten pieces of last month's output that you produced by hand. Give the assistant the same inputs, and compare. This is the only honest accuracy test, because you already know the right answer and you are not grading it on how confident it sounds.
-
-Then run the same task ten times and count how many times all ten are right. Not the average. All ten. That is the pass hat k measurement from the research above, done by hand. It is the single number that predicts whether you will still be reading the output in week six.
-
-Then break it on purpose. Give it an input with a contradiction in it, or a case the brief does not cover, and find out whether it stops and asks or whether it decides. An assistant that decides in the unclear cases rather than stopping will go on deciding. And one of those decisions reaches somebody outside your office before you have seen it.
-
-Last, put a time in your diary. Fifteen minutes, the same slot every week, to read a sample of what it produced and check it against what you asked for. If you cannot find that slot for one assistant, you have your answer about four.
-
-## Common questions, answered honestly
+## Common questions about AI employees
 
 ### What is an AI agent workforce, in plain terms?
 
-It is a set of AI assistants. Each one is set up for one recurring job, and each one is connected to the systems that job needs. Rather than one general chatbot you brief from scratch every session, you have several that already know your business and their own task. They run at the same time, on a schedule or a trigger, without you opening anything.
+An AI agent workforce is a set of AI assistants, each set up for one repeated job and connected to the systems that job needs. Rather than one general chat window you brief from scratch every session, you have several that already know your business and their own task, running at the same time on a schedule or a trigger.
 
 ### How is this different from workflow automation?
 
-Workflow automation joins up the software you already pay for, so the end of one step is what begins the next. Most of the steps in a good automation carry no judgement in them at all. An agent is what you reach for when a step really needs a decision made from what is going on around it. Both are often assembled from the same parts. And putting an agent where a simple rule would have done makes the result harder to predict, which nobody asked for.
+AI employees differ from workflow automation in where the judgement sits: workflow automation joins up the software you already pay for, so the end of one step begins the next, and a good automation carries no judgement at all; an agent is what you reach for when a step needs a decision made from what is going on around it. Putting an agent where a simple rule would have done makes the result harder to predict, as Paul's review requests showed. [The workflow article](/blog/workflow-automation-real-estate-business) covers the plain-rule side.
 
-### How is this different from just using ChatGPT?
+### How is this different from just using a chat assistant?
 
-Three things, and the second is the one that matters most. A general chat session starts empty and cannot reach your systems. An assistant carries a written brief for one job, which the research above suggests is where most of its usable ability comes from. And it runs on a trigger rather than waiting for you to remember it, which is the difference between a tool and a member of staff.
+An AI employee differs from a general chat assistant in three ways, and the second matters most: a general chat session starts without a brief for your job and reaches your systems only if someone connects it; an assistant carries a written brief for one job, which the benchmark above suggests is where much of its usable ability comes from; and it runs on a trigger rather than waiting for you to remember it.
 
 ### How many assistants can I actually run at once?
 
-In theory, as many as you have jobs for, because they do not queue behind each other. In practice the limit is not the software. It is how many streams of output one person can review before the reviewing stops happening. It is a number worth working out rather than assuming. The calculator above is there to let you find yours before you commit to it.
+The number of assistants you can run at once is set by how many streams of output one person can review before the reviewing stops happening, not by the software, which runs them side by side. It is a number worth working out rather than assuming, before you commit to it.
 
 ### Do I need technical skills?
 
-No, and the skill you do need is not a technical one. You need to be able to describe a job precisely, including what should happen in the cases that are not the normal case. That is a writing and thinking exercise rather than a software one. It is also the part that cannot be handed to anybody else, because the exceptions live in your head.
+You do not need technical skills to run AI employees; the skill you need is describing a job precisely, including what should happen in the cases that are not the normal case. That part cannot be handed over entirely, because the exceptions live in your head: someone can ask the questions and write it down, but the answers are yours.
 
 ### What happens when one of them is wrong?
 
-It produces something wrong that reads exactly like everything it produced when it was right. That is why the answer has to be built in rather than a matter of paying attention. A build that is serious about this stops and asks rather than guessing on anything unclear. It keeps a readable record of what it did and why. It drafts rather than sends anything that goes to a client. And it has a review step somebody actually performs.
-
-### Is it cheaper than hiring somebody?
-
-That is the wrong comparison, and we are not going to make it. The published median wage for an administrative assistant buys somebody who can be held responsible, somebody with judgement, and somebody who notices when the job changes. An assistant provides none of those. The real comparison is your own week with and without, including the review time. That is what the calculator above works out.
+When an AI employee is wrong, it produces something that reads exactly like everything it produced when it was right, which is why the answer has to be built in rather than left to attention: it stops and asks on anything unclear, keeps a readable record of what it did, drafts rather than sends anything that goes to a customer, and has a review step somebody performs.
 
 ### How do I know it is working after the first month?
 
-Not from a dashboard. Count how many pieces of its output you actually read last week, and be honest about it. That is because the review is the control, and a review nobody performs is not one. Then take a sample and check it against the brief rather than against your impression. And every quarter, re-read the brief itself and ask whether it still describes the job you have now.
+You know an AI employee is working after the first month by counting how many pieces of its output you read last week, honestly, because a review nobody performs is not a review. Then check a sample against the brief rather than against your impression, and every quarter re-read the brief itself and ask whether it still describes the job.
 
-## What to do about it
+### Which jobs should I hand to an AI assistant first?
 
-Go and read yesterday's output. Not the summary of it. The actual pieces, all of them, one after the other, with the brief open beside you. It takes twenty minutes. It is the only way to find out whether you have four assistants or four unread inboxes.
+The first jobs to hand to an AI assistant are the dull, repeated ones you can write a brief for, where a person reads the output before a customer does. Several of those jobs are written up on their own on this site: [answering the website at midnight](/blog/ai-chat-assistant-real-estate-website), [picking up the phone at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate), the invented call that post opens on, and [the wiring between the tools that makes any of it possible](/blog/workflow-automation-real-estate-business). The assistants we build are listed on [the RealtyLT AI page](/ai#agents), and working out which of your jobs can truly be handed over is what an [AI assessment](/services/ai-readiness-assessment) does.
 
-Then write one brief for one job, properly, before anybody sells you anything. The research says most of what an assistant can do for you comes out of that document. The document is the part nobody else can write. And you can write it today for nothing.
+### Can we talk about AI employees on a call if my business is outside New York?
 
-The assistants are listed on [the RealtyLT AI page](/ai#agents). What each one is pointed at is set out on the [AI agent workforce page](/services/ai-agent-workforce). Working out which of your recurring jobs can truly be handed over is what the [AI assessment](/services/ai-readiness-assessment) does. We take one real job with you, and the plan says which one to build first.
+We are based in New York State, and the call works for an owner anywhere.
 
-Each of those jobs is written up on its own. There is [answering the website at midnight](/blog/ai-chat-assistant-real-estate-website), [picking up the phone at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate), and [the wiring between the tools that makes any of it possible](/blog/workflow-automation-real-estate-business).
+## What to do first about AI employees
+
+The first thing to do about AI employees, before anybody sells you one, is to read yesterday's output: not the summary of it, the pieces themselves, one after the other, with the brief open beside you. It is the only way to find out whether you have four assistants or four unread inboxes.
+
+Then write one brief for one job, properly. In the benchmark above, taking that kind of document away cost the agent about two thirds of its score on the complicated task set. It is the part nobody else can write without you, and you can write it today for nothing.
 
 Nine good mornings are not a track record. They are nine mornings.
 
-[[scene:funnel]]`;
+[[scene:funnel]]
+
+Start with the page on [AI agents for small business](/services/ai-agent-workforce): what we build, what you approve, and what it will not do.
+
+## Sources
+
+- Shunyu Yao, Noah Shinn, Pedram Razavi and Karthik Narasimhan, "tau-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains", arXiv:2406.12045, June 2024, [arxiv.org](https://arxiv.org/abs/2406.12045). An older source, kept for the argument: cited for the measurement and the shape of the results, not for how any model sold today would score.
+- "Why Do Multi-Agent LLM Systems Fail?", by Mert Cemri and twelve co-authors at UC Berkeley, arXiv:2503.13657, 2025, [arxiv.org](https://arxiv.org/abs/2503.13657). Read November 11, 2026.
+- U.S. Bureau of Labor Statistics, Occupational Outlook Handbook, secretaries and administrative assistants, and real estate sales agents, [bls.gov](https://www.bls.gov/ooh/office-and-administrative-support/secretaries-and-administrative-assistants.htm): the definition of the median wage and the 2024 to 2034 projection. An older source, kept for the argument: its wages date from May 2024.
+- New York Department of State, Real Estate License Law booklet, sections 440-a and 442-c, and 19 NYCRR 175.21, [dos.ny.gov](https://dos.ny.gov/real-estate-license-law). Law and regulation in force, cited for a real estate team only.
+
+Written with an AI assistant and checked by Levan.`;
 
 export const CRM_SYNC_POST = `Duplicate contacts in a CRM come from typos, from repeated imports and, the kind careful typing never stops, from two systems that are each right about the same customer. This page gives you, free, the fix we build for small businesses: a rule about identity, a written rule for which side wins, and one person who settles the doubtful pairs before anything is merged. Below, one invented heating and cooling company finds a customer in its CRM twice, and you will see why the two obvious fixes, more careful typing and a tool that merges everything on its own, are the wrong first build. It is the method we use when we build a two-way CRM sync for a small business, from a heating company to a real estate team, and you can run the first half of it on your own. By the end you will know how to check your own CRM for duplicates, which questions decide whether a sync damages your records, and how to set up a review queue a person can keep.
 
@@ -2884,203 +3033,283 @@ Start with the page on [CRM integration for small business](/services/crm-sync):
 - RFC 5789, PATCH Method for HTTP, 2010, [rfc-editor.org](https://www.rfc-editor.org/rfc/rfc5789.html). An older source, kept for the argument: it defines the partial update.
 - HubSpot, developer documentation for the contacts endpoints, [developers.hubspot.com](https://developers.hubspot.com/docs/guides/api/crm/objects/contacts): the identity property, partial updates with email, and what survives a merge. Live documentation.`;
 
-export const GEO_LANDING_PAGES_POST = `You serve nine towns and you rank in one of them, which is the one your office sits in. Someone points out that you could have a page for each of the other eight by Friday. They are right. A machine will write eight pages about eight towns in the time it takes to make coffee.
+export const GEO_LANDING_PAGES_POST = `Doorway pages are town pages built to catch a search and pass the reader on, and a town page becomes one when it answers nothing on its own and would read the same with the town's name deleted. This page gives you, free, the method we use when we build town pages for small businesses that serve several towns, so that each page stays on the right side of the line Google's spam policy draws. Below, one invented electrical company with nine towns on its list shows why a generated page for every town is the wrong first build, and why the honest list is shorter than the first one. The method works the same for a heating company, a dental office or a real estate team, and you can run it on your own.
 
-So the pages get made. Then, a few weeks later, you open two of them side by side to check something. And you read them properly for the first time.
+**Nadia's electrical company (invented).** Nadia owns an electrical company with five people: herself, Carl in the office and three electricians on the road. The office is in one town and the vans go to nine. Her website comes up in searches for the town the office sits in, and for none of the other eight. Someone points out that she could have a page for each of the other eight by Friday, and they are right: a machine will write eight pages about eight towns in the time it takes to make coffee. Nadia, Carl, their towns and every figure about the company are made up; their list runs through this page as one worked example of a real method.
 
-Page four and page five have the same four paragraphs in the same order. The same sentence about the character of the housing stock. The same promise about local expertise. The same three questions and the same three answers underneath them. The only thing that changed between the two is the name of the town. And it changed six times.
+**Nadia's electrical company (invented).** So the pages get made. A few weeks later Carl opens two of them side by side to check something, and reads them properly for the first time. Page four and page five have the same four paragraphs in the same order. The same sentence about the age of the houses. The same promise about local expertise. The same three questions and the same three answers underneath them. Each ends on the same button to the same quote form. The only thing that changed between the two is the name of the town, and it changed six times.
 
-Nobody did anything wrong here. Every one of those pages is grammatical, on brand and technically correct. And a person who lives in either of those towns would put the page down after two sentences. A search engine is going to reach the same conclusion by a different route.
+Nobody meant to do anything wrong. Every one of those pages is grammatical, on brand and correct. A person who lives in either town would learn nothing about it from either page, and Google's spam policy has a name for what the eight pages are, as the next sections show.
+
+Everything on this page is free to use: the line Google's policy draws, the twenty-minute test and the way to cut the list of towns. What we sell is building the pages with you and going back to them every year.
 
 [[scene:in-short]]
 
-## Why a page and not a profile
+## Doorway pages vs landing pages: what is the difference?
 
-It is worth being clear about what this is for. The obvious alternative is free, and most agents should do that one first.
+The difference between doorway pages and landing pages is where the reader ends up: a landing page for a town answers the search it was found for, on its own, and a doorway page catches the search and passes the reader on to a page that does the answering. A landing page is any page a search lands someone on, so the word says nothing about quality. A doorway page is a landing page that fails at its one job.
 
-At the top of a local search sits a short list of businesses. It is the one with the map above it. It ranks businesses rather than pages. One of the three inputs Google publishes for it is how far the searcher is standing from your front door. That is a physical fact about your office, and no amount of work moves it. So there is a hard edge to it. Past a certain distance you are competing against someone who is simply closer, and they win.
+The test that separates them is a question a reader can answer in ten seconds: if I stopped here, would I have what I searched for? A person who types an electrician and a town wants to know whether this company works there, on what kind of job, how soon, and how to book. A town page that answers that is a landing page. A town page whose only content is that the company is proud to serve the town, with a button to the general quote form, is doing what the doorway entry describes, however well it is written. The shared form is not the fault: every town page can end on the same form. The fault is that nothing comes before it.
 
-A page has no such input. An ordinary indexable page about the work you do in a particular place competes on what is written on it. This is why one page per area is the oldest tactic in local marketing, and why every agency in the world offers it. It is also the reason this article exists. The tactic has a well-known failure mode with a name. And the name is in Google's published policy rather than in someone's blog post.
+**Nadia's electrical company (invented).** Carl reads page four as a stranger would. It names the town in its heading, says the company is proud to serve it, repeats the company's list of services and sends the reader to the general quote form, the same one all eight pages send them to. Nothing on it answers a question about that town. It caught a search and passed the reader on, and so did the other seven.
 
-There is a second reason worth naming, and it is newer. A growing share of these questions never reach a list of links at all. Someone asks an assistant which agents work in a particular town, and gets a paragraph back. What gets quoted in that paragraph is text that answers a question directly, on a page that is truly about the thing. The same writing that makes an area page worth reading is the writing that makes it quotable. That is convenient. It is also the only part of this whole subject where the two audiences want exactly the same thing.
+**Your turn.** Open one of your own town pages and ask whether a reader who stopped there would have what they searched for.
 
-## What Google's spam policy actually names
+## Why build town pages when a business has a Google Business Profile?
 
-Most of what is written about location pages cites a Google policy that has since been rewritten. The current [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) name this tactic in two separate entries. The second one did not exist when most of the advice you will find was published.
+A business builds town pages because the list of businesses at the top of a local search, the one with the map above it, weighs how far the searcher is from the business, while an ordinary page in the results below it is not tied to where the office sits, so a page can reach towns the profile cannot. The profile is free, and we would fix it first.
 
-The first is doorway abuse. The policy defines it as sites or pages created to rank for specific, similar search queries, which lead users to intermediate pages that are not as useful as the final destination. Among its own examples is having multiple domain names or pages targeted at specific regions or cities that funnel users to one page. Read the mechanism rather than the label. The thing being described is a page that catches a query and passes the person along to somewhere else. The offence is the handover.
+That list ranks businesses rather than pages. One of the three inputs Google publishes for it is distance: how far the searcher is standing from your front door. Our post on [how to rank higher on Google Maps](/blog/local-seo-real-estate-map-pack-google-business-profile) sets out the three in Google's own words. Distance is a physical fact about your office, and no work on the profile moves it. So there is a hard edge. Past a certain distance you are competing against someone who is simply closer.
+
+An ordinary indexable page about the work you do in a particular place is not tied to your front door in that way; it competes, among other things, on what is written on it. That is the whole reason a page for each town is worth building. The tactic also has a failure mode with a name, and the name is in Google's published policy rather than in someone's blog post.
+
+There is a second reason, and it is newer. A person can now ask an AI assistant which electricians work in a particular town and get a paragraph back instead of a list of links. We cannot see how an assistant chooses what to quote, and we do not claim to. What a page can do is give it sentences it could lift whole, a question answered directly on a page that is truly about the town, and that is the same writing that makes a town page worth reading. It is the one part of this whole subject where the reader and the machine want exactly the same thing.
+
+**Nadia's electrical company (invented).** Nadia searches for an electrician from a customer's driveway in each of the nine towns. Her company is in the map list in the office's own town and in the town next door. In the other seven, three electricians who are closer come up instead. A profile cannot change where her office is, so the other seven towns are the job for pages.
+
+**Your turn.** Search your trade and each town on your list, and write down whether you appear in the map list.
+
+## What does Google's spam policy say about doorway pages?
+
+Google's spam policy names doorway pages under doorway abuse, and a second entry, scaled content abuse, names many pages generated to manipulate rankings, which is what a list of towns turned into one template becomes. The current [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) are one public page, and a town page has to pass both entries.
+
+The first is doorway abuse. The policy defines it as sites or pages created to rank for specific, similar search queries, which lead users to intermediate pages that are not as useful as the final destination. Among its own examples is having multiple domain names or pages targeted at specific regions or cities that funnel users to one page. Another is creating substantially similar pages that are closer to search results than a clearly defined, browseable hierarchy. Read the mechanism rather than the label. The thing being described is a page that catches a query and passes the person along to somewhere else. The offence is the handover.
 
 The second is scaled content abuse. It is defined as many pages generated for the primary purpose of manipulating search rankings and not helping users. Its examples include creating many pages where the content makes little or no sense to a reader but contains search keywords. They also include stitching or combining content from different web pages without adding value. Here the offence is not the number of pages. It is what is on them at that number.
 
-Both entries are worth reading in full. Between them they put four questions to anyone who is about to build a set of these.
+Between them they put four questions to any owner who is about to build a set of town pages. They are our reading of the two entries, not Google's own checklist.
 
 [[scene:two-names]]
 
-## The example that is about the thing we sell
+**Nadia's electrical company (invented).** Carl puts the four questions to the eight generated pages. Where does each page send the reader? To the general quote form. What is on it at that number? The same four paragraphs, eight times. Who read it before it went live? Nobody who had been to any of the towns. And is anyone telling Nadia not to have town pages? No: the policy describes pages like these eight, not the idea of having a page for each town.
 
-There is a sentence in the scaled content entry that anyone selling this service should be made to read out loud. The first illustration Google gives is using generative AI tools or other similar tools to generate many pages without adding value for users.
+**Your turn.** Put the same four questions to your own town pages and write each answer beside the page's name.
 
-That is not a description of a hypothetical bad actor. It is a description of the cheap version of this exact product. And there is a version of ours that would fit it perfectly. Hand over a list of towns, generate a page for each, publish. If someone offers you that, the policy has already named it. The fact that the pages were written by a good model rather than a bad one changes nothing. The phrase in the policy is not about how the words were produced. It is about whether anything was added.
+## Is it against Google's rules to write town pages with AI?
 
-Google has said the same thing in plainer language elsewhere. Its guidance on helpful content is explicit that using automation is not the problem in itself. The questions it tells creators to ask themselves are about the output rather than the tool. That is the honest position, and it is also ours. A draft written in ninety seconds is fine. A page published in ninety seconds is not. The difference between them is a person who knows the place reading it before it goes live.
+Writing town pages with AI is not against Google's rules in itself; what the spam policy names is using generative AI tools to generate many pages without adding value for users. That is the first example the scaled content entry gives, and anyone selling location pages should be made to read it out loud.
+
+That is not a description of a hypothetical bad actor. It is a description of the cheap version of this exact service. And there is a version of ours that would fit it perfectly. Hand over a list of towns, generate a page for each, publish. If someone offers you that, the policy has already named it. The fact that the pages were written by a good model rather than a bad one changes nothing. The phrase in the policy is not about how the words were produced. It is about whether anything was added.
+
+Google has said the same thing in its [guidance on creating helpful content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content): "If you use automation, including AI-generation, to produce content for the primary purpose of manipulating search rankings, that's a violation of our spam policies." The test is the purpose and the output, not the tool, and that is our position too. A draft written in ninety seconds is fine. A page published in ninety seconds is not. The least that has to happen between them is a person who knows the place reading it and changing it before it goes live; that alone does not make a page useful, but without it nothing was added.
 
 [[scene:plate]]
 
-## What separates a real area page from a doorway
+**Nadia's electrical company (invented).** The eight pages were drafted by a machine, and that was never the fault. The fault was that they went live the same afternoon, before Nadia or any of her electricians had read a line. Nothing was added between the draft and the publication.
 
-Google publishes a self-assessment for exactly this question, and almost nobody in this category has read it. Its [guidance on creating helpful content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) is a list of questions to ask about your own work. Three of them land directly on area pages.
+**Your turn.** For each town page you have, write the name of the person who read it before it went live, and whether they have worked in that town.
 
-The first asks whether the content clearly demonstrates first-hand expertise and a depth of knowledge. The example Google gives inside the brackets is expertise that comes from having actually used a product or service, or visiting a place. Visiting a place. It is the whole test, sitting in a parenthesis. And it cannot be written around. What is being asked for is not a style of prose. It is a fact about whether you have been there.
+## What separates a real location page from a doorway page?
 
-The second is a pair of warning signs. One is whether you are producing lots of content on many different topics in the hope that some of it might perform well. The other is whether you are using extensive automation to produce content on many topics. Answer yes to either, and the document's own conclusion is that you are making search-engine-first content. Note what the suggested remedy is not. It is not better writing.
+A real location page carries first-hand knowledge of the place, the kind Google's own guidance gives as its example of expertise: "having actually used a product or service, or visiting a place". Google publishes a self-assessment for exactly this question in its guidance on helpful content: a list of questions to ask about your own work. Three of them land directly on town pages.
 
-The third quietly explains why every thin location page in this industry looks the same. The list asks whether you are writing to a particular word count because you have heard Google has a preferred one. Then it answers itself in a bracket: no, we do not. Somewhere a long time ago a number got into circulation, and the whole category has been padding to reach it since.
+The first asks whether the content clearly demonstrates first-hand expertise and a depth of knowledge. The example Google gives inside the brackets is expertise that comes from having actually used a product or service, or visiting a place. Visiting a place. For a town page it is the clearest test in the whole document, sitting in a parenthesis. And it cannot be written around. What is being asked for is not a style of prose. It is a fact about whether you have been there.
+
+The second is a pair of warning signs. One is whether you are producing lots of content on many different topics in the hope that some of it might perform well. The other is whether you are using extensive automation to produce content on many topics. The guidance calls answering yes to some or all of those questions "a warning sign that you should reevaluate how you're creating content". Note what the warning does not ask for. It does not ask for better writing.
+
+The third is about length. The list asks whether you are writing to a particular word count because you have heard Google has a preferred one. Then it answers itself in a bracket: no, we do not. A target length is what makes a page about a town you know and a page about a town you have never seen come out the same size.
 
 [[scene:the-test]]
 
-## Repetition is measurable, and somebody measured it
+**Nadia's electrical company (invented).** Nadia takes the first question literally. Carl pulls two years of job records, and for each of the nine towns Nadia tries to name a street where her company has worked, without a map. This is her whole list, an invented example, with the verdict for each town:
 
-There is a temptation to treat all of this as a matter of taste. As if the difference between a real page and a doorway were something only a human editor could feel. It is not. Sameness is one of the cheapest properties in the world for a machine to measure. And there is a paper that shows how cheap.
+1. **Alder Falls, the office's own town.** Hundreds of jobs; the existing page stays and gets the same checks.
+2. **Birch Point.** Old houses with panels from the 1950s, and a street she can name on every side of the river. A real page.
+3. **Cedar Hill.** A new subdivision where her company wired forty houses for car chargers. A real page.
+4. **Dover Mills.** Three restaurant kitchens on the main street and their emergency calls. A real page.
+5. **Elm Ridge.** Steady work every month, and a customer there who has called for twelve years. A real page.
+6. **Fox Hollow.** Six jobs in two years, all for neighbours of Elm Ridge customers. A short page that says what it is: a company that works there now and then, with the six jobs listed.
+7. **Glen Harbor.** Two jobs, both more than three years ago. Off the list for now.
+8. **Hart Valley.** No jobs; Nadia would like to work there. Off the list.
+9. **Iron Bridge.** No jobs, and fifty minutes away across the county line. Off the list.
+
+Nine towns became six pages: the one she had, four real new ones and one honest short one. Three towns came off, and the generated pages for them came down.
+
+**Your turn.** Write your own list, and beside each town name one street where you have worked, from memory.
+
+## Can Google tell when town pages are the same page?
+
+How Google tells when town pages are the same page is not published, but sameness can be measured by a program: the paper below measured one kind of it, repetition inside a single page, by compressing each page. There is a temptation to treat all of this as a matter of taste, as if the difference between a real page and a doorway were something only a human editor could feel. It is not.
 
 In 2006 four researchers took a crawl of 105 million pages. Three of them were at Microsoft Research and one was at UCLA. They drew a uniform random sample of 17,168 English pages out of it. Then they classified every one of them by hand as spam or not spam. That sample is the foundation of everything else in the [paper](https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf). Of those pages, 2,364 were judged to be spam, which is 13.8%.
 
 Then they went looking for properties that predicted it. One of those properties is the interesting one here. They compressed every page and measured the compression ratio. The reasoning is simple. A page which says the same thing repeatedly compresses better than a page that does not. Among pages that compressed to a quarter of their size or better, 70% were judged spam.
 
-The honest limits are large, and worth stating before anyone quotes this at a client. This is the web of two decades ago. Spam is what four researchers judged it to be. The measurement is about repetition inside one page. A set of near-identical town pages is repetition across pages, which is a different measurement, and nobody has published a figure for it. And a perfectly good page with a large navigation, a footer and a repeated call to action compresses well too. That is exactly why the authors test ten different content heuristics, and treat this as one of them rather than as a rule.
+The honest limits are large, and worth stating before anyone quotes this to a customer. This is the web of two decades ago. Spam is what four researchers judged it to be. The measurement is about repetition inside one page. A set of near-identical town pages is repetition across pages, which is a different measurement, and we found no published figure for it. And a perfectly good page with a large navigation, a footer and a repeated call to action compresses well too. That is exactly why the authors test ten different content heuristics, and treat this as one of them rather than as a rule. The paper says nothing about how Google measures sameness today; it shows only that one kind of sameness can be measured by a program.
 
-What survives all of that is the cheapness. You do not need a language model to notice that eight pages are the same page. You need a compression library and a few seconds.
+What survives all of that is the point that matters to an owner: sameness is something a program can measure, not only something an editor feels. The paper measured it inside one page; it did not compare pages with each other.
 
 [[scene:redundancy]]
 
-## What actually goes on a page that is about somewhere
+**Nadia's electrical company (invented).** Carl does not need the compression library. He reads the first paragraph of page four out loud, then the first paragraph of page five. By the third sentence he can say the rest of the second one from memory.
 
-The useful question is not what to avoid. It is what a page has on it that a template cannot produce. The answer is short enough to be uncomfortable, because everything on the list has to come from you.
+**Your turn.** Read the first paragraph of two of your town pages out loud, one after the other.
 
-It has the work you really did there. A closing on a named street. A rental you managed. A listing that sat and then did not. A buyer who wanted one thing and bought another. Specific, checkable, and about a real transaction rather than about your general enthusiasm for the area. This is the material that does not exist for a town you have never worked in. Which is why the honest version of this project starts with a list of areas that is shorter than the one you wanted.
+## What goes on a town page that is really about the town?
 
-It has the questions people really ask about that place, answered in the first sentence rather than in the fourth paragraph. What the taxes are like compared to the next town. Whether the trains are any good. Which streets flood. What the difference is between the village and the town of the same name. In this valley that is a real question with a real answer, and one that catches people out.
+A town page that is really about the town carries four things a template cannot produce: the work you did there, the questions people there ask, something only a person who has been there would know, and a way to get in touch that belongs to you. The list is short enough to be uncomfortable, because everything on it has to come from you.
 
-It has something a person who lives there would recognise. Not scenery. The thing everyone who lives there knows and nobody writes down. Where the traffic really backs up. Which side of the road the good light is on in the afternoon. What happens to the main street in the third week of September.
+It has the work you really did there. A job on a named street. A kitchen you rewired. A panel you replaced after an inspection. A customer who wanted one thing and needed another. Specific, checkable, and about real work rather than about your general enthusiasm for the area. This is the material that does not exist for a town you have never worked in. Which is why the honest version of this project starts with a list of towns that is shorter than the one you wanted.
+
+It has the questions people really ask about that place, answered in the first sentence rather than in the fourth paragraph. Whether the older houses there need a permit for a panel change. Which streets lose power first in a storm. How long it takes a van to get there on a weekday morning. What the difference is between the village and the town of the same name, where a place has both and the line catches people out.
+
+It has something a person who lives there would recognise. Not scenery. The thing everyone who lives there knows and nobody writes down. Where the traffic really backs up. Which side of the road floods. What happens to the main street in the third week of September.
 
 And it has one way to get in touch that belongs to you. A form on your own page, rather than a link into someone else's directory. So the person who read all of that arrives in your records, rather than in a list you rent back later.
 
 [[scene:page-path]]
 
+**Nadia's electrical company (invented).** The generated Birch Point page opened: "Looking for a trusted electrician in Birch Point? Our licensed team proudly serves Birch Point and the surrounding area." The new one opens on the question people there ask most often on the phone, by Carl's count of the last month's calls, and answers it in the next sentence: "A car charger in a Birch Point house with its original 1950s panel starts with a check of that panel; of the three we looked at on River Road last spring, two needed a new one." Below that sit three jobs on named streets with the month they were done, the inspector's office the town uses, and how long a van takes to get there from the office. Nadia read every line, and changed four of them.
+
+**Your turn.** For one town on your list, write the three questions customers there ask on the phone, and answer each in one sentence.
+
 [[scene:geo-calculator]]
 
-## The part that is regulated, and it is not the search engine
+## Do fair housing rules apply to a real estate team's town pages?
 
-Everything above is a commercial question. This section is not. And it is the one nobody selling area pages will raise with you.
+Fair housing rules do apply to a real estate team's town pages: an area page about homes for sale is an advertisement about a community, and the regulations under the Fair Housing Act cover both what it says and where it is placed. This section is for a real estate team only. The two rules it quotes cover statements made with respect to the sale or rental of a dwelling, so they are written for a business that sells or rents homes, and they are older than any of this technology. We are not lawyers, and this is no legal advice: it is what the rules' own words say, with the precautions we take.
 
-An area page is an advertisement. It is an advertisement about a community rather than about a house. The regulations under the Fair Housing Act are specific about both halves of that, and they are older than any of this technology.
+The rule on advertising is [24 CFR 100.75](https://www.law.cornell.edu/cfr/text/24/100.75). Its second paragraph is broad. The prohibitions apply to all written or oral notices or statements by a person engaged in the sale or rental of a dwelling. And written notices and statements are defined to include any applications, flyers, brochures, deeds, signs, banners, posters, billboards or any documents used with respect to the sale or rental of a dwelling. There is no list of technologies in that sentence, and there does not need to be one. A page on a real estate team's website is a document used with respect to the sale of dwellings.
 
-The rule on advertising is [24 CFR 100.75](https://www.law.cornell.edu/cfr/text/24/100.75). Its second paragraph is broader than most people expect. The prohibitions apply to all written or oral notices or statements by a person engaged in the sale or rental of a dwelling. And written notices and statements are defined to include any applications, flyers, brochures, deeds, signs, banners, posters, billboards or any documents used with respect to the sale or rental of a dwelling. There is no list of technologies in that sentence, and there does not need to be one. A page on your website is a document used with respect to the sale of dwellings.
-
-Then comes the paragraph that is precisely about this service. Among the practices the rule names as prohibited is selecting media or locations for advertising the sale or rental of dwellings which deny particular segments of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. Read that beside a decision about which eight towns get a page and which four do not. Nobody is suggesting that choosing where to advertise is unlawful. What the rule says is that the choice is a regulated act. That is a different and more uncomfortable statement. It means the reason for the list has to be a business reason you could say out loud.
+Then comes the paragraph that is precisely about this service. Among the practices the rule names as prohibited is selecting media or locations for advertising the sale or rental of dwellings which deny particular segments of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. Read that beside a decision about which eight towns get a page and which four do not. Nobody is suggesting that choosing where to advertise is unlawful. What the rule says is that the choice is a regulated act. That is a different and more uncomfortable statement. It means the reason for the list has to be a business reason the team could say out loud.
 
 The second rule is about what the page says. [24 CFR 100.70](https://www.law.cornell.edu/cfr/text/24/100.70) covers what are generally referred to as unlawful steering practices. Two of its examples are written as if someone had an area page open. It names discouraging any person from inspecting, purchasing or renting a dwelling because of the race, colour, religion, sex, handicap, familial status or national origin of persons in a community, neighbourhood or development. And it names discouraging the purchase or rental of a dwelling because of race, colour, religion, sex, handicap, familial status or national origin, by exaggerating drawbacks or failing to inform any person of desirable features of a dwelling or of a community, neighbourhood or development.
 
-Sit with the second one, because it is not the one people expect. Failing to inform. Both examples hang on that same clause about why. So uneven pages are not unlawful on their own, and nobody should tell you they are. What they are is the record someone would read the why off. Take a set of pages where four towns get eight hundred enthusiastic words and two towns get two hundred flat ones. That describes some communities as more desirable than others. And it did that through effort, rather than through a sentence anyone wrote. Which is why the shape of the set is worth looking at before someone else does.
+Sit with the second one, because it is not the one people expect. Failing to inform. Both examples hang on that same clause about why. So uneven pages are not unlawful on their own, and nobody should tell a team they are. What they are is the record someone would read the why off. Take an invented set of pages where four towns get eight hundred enthusiastic words and two towns get two hundred flat ones. That describes some communities as more desirable than others. And it did that through effort, rather than through a sentence anyone wrote. Which is why the shape of the set is worth looking at before someone else does.
 
 [[scene:complaints]]
 
+## What may a real estate team's town page say?
+
+A real estate team's town page is safest when it writes about the housing and the transaction and not about who lives there or who a place would suit. That line is a precaution we draw from the steering rule's examples, more cautious than the rule's own words, and it is easier to hold than the regulation makes it sound. It comes down to what the sentence is about.
+
+Write about the housing and the transaction. Prices, taxes, inventory, how long things sit, what the commute costs in time. What surveys have turned up on older properties the team sold in that part of the county. What the team has really sold there. Every one of those is a fact about property. It is checkable. And it is what someone reading a real estate team's area page came for.
+
+Do not write about the people. This is the whole precaution, and it is simpler than the alternatives people reach for. Descriptions of who lives somewhere. Who a place is suited to. What kind of family would be comfortable. Which community a neighbourhood belongs to. None of that is about the housing. All of it is about the residents. And it is the exact territory the steering rule covers.
+
+Two habits deserve naming, because they are common enough to read as neutral. School ratings pasted onto every page are a statement about desirability made with someone else's numbers. Crime data is the same shape and worse. If a reader wants either, they can get both from the primary source in less time than it takes to write a paragraph. The honest move is to say where to look, rather than to characterise a community.
+
+And treat the areas evenly. Not identically, because identical is the failure this whole page is about. Evenly means comparable effort, comparable honesty about the drawbacks, and comparable enthusiasm where it is earned. The rule about failing to inform is a rule about the shape of the whole set, rather than about any one page in it. And the shape of the set is a thing only the team can see.
+
+**Nadia's electrical company (invented).** These housing rules do not govern Nadia's pages, which advertise electrical work rather than homes. The habit still costs her nothing: her pages describe jobs, wiring and streets, never the people who live in a town.
+
+**Your turn.** If you run a real estate team, put your area pages in a row and compare their length and their tone before anyone else does.
+
+## How do you test whether a town page is a doorway page?
+
+To test whether a town page is a doorway page, run four checks that need no tool: delete the town's name, read two pages aloud, count the checkable facts, and hand the page to someone who lives there. The first three can be done in one sitting; the fourth waits for a person. They are our own screening checks, not Google's test: a page that fails them is worth rewriting, and a page that passes still has to be useful.
+
+1. **Delete the town's name** from the page, everywhere it appears, and read what is left. If you cannot tell which town it was about, you have your answer. So does everyone else. This is the single most useful check on this page, and the quickest.
+2. **Open two of your pages side by side.** Read the first paragraph of each out loud, one after the other. Sameness is much easier to hear than to see, and reading one page at a time does not show that two pages are the same; it takes putting them side by side.
+3. **Count the checkable facts on the page.** A street, a date, a job, a number, a name of something that exists. Then count the sentences that could have been written by someone who has never been there. Our rule of thumb, not a published threshold: a page where the second number is larger than the first is a page you have not written yet.
+4. **Hand it to someone who lives there and watch their face.** Not for approval. For recognition. The moment worth waiting for is the small one where they say that is true. Or better, where they correct you. A correction means the page was specific enough to be wrong, and specific enough to be wrong is the whole bar.
+
+**Nadia's electrical company (invented).** Carl runs the four checks on the eight generated pages first. With the town's name deleted, none of the eight can be told apart. Each has no checkable fact and every sentence could have been written from anywhere. Then he runs them on the five new pages. All five can be told apart with the names deleted. Each carries between six and eleven checkable facts by his count. The test with a person goes to an electrician who lives in Birch Point. He corrects one street name, and Carl fixes it the same day.
+
+**Your turn.** Run the first check on your two weakest town pages tonight.
+
+## How many town pages should a small business have?
+
+A small business should have as many town pages as it has something true to say about, and in the invented example on this page that was six of nine. Google's policy names no number of pages at which a set becomes spam, and no number that makes it safe. The only numbers an owner can honestly supply are three: how many towns are on the list, how many of them you have really worked in, and how long one real page takes you.
+
+**Nadia's electrical company (invented).** Eight weeks after Carl opened page four and page five side by side, the list of nine has an answer for every town. Alder Falls keeps its page. Birch Point, Cedar Hill, Dover Mills and Elm Ridge have pages that pass all four checks. Fox Hollow has a short page that says how much work the company does there and lists the six jobs. Glen Harbor, Hart Valley and Iron Bridge have no page, and the generated pages that named them are gone. The writing took about four hours a page by Carl's log, about three of them Nadia talking while he typed. Nobody can say yet what the pages will bring, and Nadia did not build them on a promise that they would: she built the six she could fill, and every enquiry from a town page now arrives with the town's name on it, so in a year she will know.
+
+**Your turn.** Decide now which number you will read in a year: the enquiries from each town page, counted by town.
+
 [[scene:pull-quote]]
 
-## What an area page may and may not say
-
-The practical line is easier to hold than the regulation makes it sound. It comes down to what the sentence is about.
-
-Write about the housing and the transaction. Prices, taxes, inventory, how long things sit, what the commute costs in time. What a survey usually turns up on older properties in that part of the county. What you have really sold there. Every one of those is a fact about property. It is checkable. And it is what someone reading an agent's area page came for.
-
-Do not write about the people. This is the whole line, and it is simpler than the alternatives people reach for. Descriptions of who lives somewhere. Who a place is suited to. What kind of family would be comfortable. Which community a neighbourhood belongs to. None of that is about the housing. All of it is about the residents. And it is the exact territory the steering rule covers.
-
-Two habits deserve naming, because they are so common they read as neutral. School ratings pasted onto every page are a proxy that correlates strongly with things the Act protects. If you publish them, you have made a statement about desirability using someone else's numbers. Crime data is the same shape and worse, because the summaries are usually unsourced. If a reader wants either, they can get both from the primary source in less time than it takes you to write a paragraph. The honest move is to say where to look, rather than to characterise a community.
-
-And treat the areas evenly. Not identically, because identical is the failure this whole article is about. Evenly means comparable effort, comparable honesty about the drawbacks, and comparable enthusiasm where it is earned. The rule about failing to inform is a rule about the shape of the whole set, rather than about any one page in it. And the shape of the set is a thing only you can see.
-
-## What it costs, and how long it takes
-
-The software is not the line that matters here. What the bill tracks is how much of the material has to be extracted from you. You are the only place it exists.
-
-Take an agent with a tidy record of what they have closed, where, and for whom. That is a fast project. The facts are already written down, and the work is turning them into pages that answer questions. An agent whose knowledge of six towns lives entirely in their head is a slower one. Most of that time is a conversation rather than a keyboard. That conversation is worth having whether or not any pages come out of it, which is the second-best argument for doing this at all.
-
-There is a smaller ongoing cost that everyone forgets to budget for, which is going back. The proof on these pages ages. The closing was three years ago. The listing sold. The tax figure moved. The shop you mentioned closed. Most of them need a short sitting once a year, and the ones that earn their keep need more than that. A set of area pages nobody revisits becomes a public record of when you stopped paying attention.
-
-The one thing we will not quote is a traffic estimate. It is worth saying why, rather than leaving a gap. Nobody publishes the number of people searching for your service in your own town with a stated method. The figures that circulate come from tools that estimate them and do not show their working. Every article in this category leans on those numbers. This one refuses them, which makes it less impressive and more useful.
-
-[[scene:plate-two]]
+If you would rather go through your own list of towns with a second pair of eyes, that is where we start: the next sections say what the work takes and what it will not do.
 
 [[scene:offer]]
 
-## What it does not do, and should not pretend to
+## How much work are location pages, and how long do they take?
 
-It does not rank a place you do not work. There is nothing true to put on that page. Both a reader and a search engine notice. And the pages you cannot fill are the ones that make the whole set look like a template.
+The work in location pages is set by how much of the material has to be drawn out of you, not by the software, because you are the only place it exists.
 
-It does not put you into an AI answer on request. Nobody controls what an assistant quotes, and anyone who says otherwise is describing an experiment rather than a product. Writing a page that answers questions directly makes it quotable. That is the only lever there is, and it is not a guarantee.
+Take two invented owners. The first has a tidy record of jobs: what, where, when, and for whom. That is a fast project. The facts are already written down, and the work is turning them into pages that answer questions. The second, whose knowledge of six towns lives entirely in their head, is a slower one. That time goes into a conversation rather than a keyboard, and the conversation is worth having whether or not any pages come out of it.
 
-It does not replace the rest of local search. A page for each area is one surface. The Business Profile, the reviews and the mentions on other people's websites are another. They are decided by different machinery, and the profile is usually the cheaper thing to fix first.
+There is a smaller ongoing job that is easy to forget, which is going back. The proof on these pages ages. The job was three years ago. The figure moved. The shop you mentioned closed. Each page needs a short sitting once a year, and the ones that bring in work need more than that. A set of town pages nobody revisits becomes a public record of when you stopped paying attention.
 
-It does not survive being left alone. Every fact on these pages has a date attached, whether or not you print one. The difference between a page that earns attention for years and a page that quietly embarrasses you is someone going back to it.
+The one thing we will not quote is a traffic estimate, and it is worth saying why rather than leaving a gap. Nobody can show their working for how many visits a page about one town will bring, and a figure without its working is a promise.
 
-And it does not make the list of towns longer than it is. This is the one people find hardest, because the whole appeal of the tactic is scale. The number of areas you can write honestly about is a fact about your career so far. No tool changes it.
+[[scene:plate-two]]
+
+## What can town pages not do?
+
+Town pages cannot make a page worth reading where a business has nothing true to say, cannot put it into an AI answer on request, and cannot replace the rest of local search.
+
+They do not make a page worth reading where the business has nothing true to say. A page for a town it has never worked in has little to put on it, as the question about such towns below says. Both a reader and a search engine notice. And the pages you cannot fill are the ones that make the whole set look like a template.
+
+They do not put you into an AI answer on request. Nobody controls what an assistant quotes, and anyone who says otherwise is describing an experiment rather than a product. Writing a page that answers questions directly makes it quotable. That is the only lever there is, and it is not a guarantee.
+
+They do not replace the rest of local search. A page for each town is one surface. The Business Profile, the reviews and the mentions on other people's websites are another; our post on [how to get more Google reviews](/blog/automated-google-review-requests-real-estate) covers the second. They are decided by different machinery, and we would fix the profile first, because it costs only time.
+
+They do not survive being left alone. Every fact on these pages has a date attached, whether or not you print one. The difference between a page that earns attention for years and a page that quietly embarrasses you is someone going back to it.
+
+And they do not make the list of towns longer than it is. The number of towns you can write honestly about is a fact about your work so far. No tool changes it.
 
 [[scene:wasted]]
 
-## How to test whether a page is about anywhere, in twenty minutes
+## Common questions about doorway pages and location pages
 
-Four checks. All of them are free, none of them need a tool, and any page in this industry can be run through them tonight.
+### What are location pages?
 
-Delete the town name from the page, everywhere it appears, and read what is left. If you cannot tell which town it was about, you have your answer. So does everyone else. This is the single most useful thing in this article, and it takes ninety seconds per page.
+Location pages are ordinary pages on a business's own website, one for each place it works, each written so that someone searching for the service in that place finds a page that is truly about it, rather than a page listing every town the business covers.
 
-Open two of your pages side by side. Read the first paragraph of each out loud, one after the other. Sameness is much easier to hear than to see, which is why proofreading them one at a time never catches it.
+### What are GEO landing pages or service area pages, in plain terms?
 
-Count the checkable facts on the page. A street, a price, a date, a number, a name of something that exists. Then count the sentences that could have been written by someone who has never been there. A page where the second number is larger than the first is a page you have not written yet.
+GEO landing pages and service area pages are other names for location pages; on this site we also use the letters GEO for generative engine optimisation, writing pages an AI assistant could quote when it answers a question. In practice the two want the same thing: direct answers to real questions, on a page that has something on it only someone who works there would know.
 
-Then hand it to someone who lives there and watch their face. Not for approval. For recognition. The moment worth waiting for is the small one where they say that is true. Or better, where they correct you. A correction means the page was specific enough to be wrong, and specific enough to be wrong is the whole bar.
+### How are town pages different from local SEO?
 
-## Common questions, answered honestly
-
-### What are GEO or area landing pages, in plain terms?
-
-They are ordinary pages on your own website, one for each place you work. Each is written so that someone searching for your service in that place finds a page that is truly about it, rather than a page listing every town you cover. GEO now carries a second meaning as well, generative engine optimisation. That is the practice of writing pages an AI assistant can quote when it answers a question. In practice the two want the same thing. Direct answers to real questions, on a page that has something on it only someone who works there would know.
-
-### How is this different from local SEO?
-
-They compete on different surfaces and are decided by different things. Local SEO is about your Business Profile, and the short list of businesses at the top of a nearby search. Google publishes three inputs for that list, and one of them is how far away the searcher is. Area pages are ordinary web pages competing on what is written on them. That is why they can reach places your profile cannot. Most businesses should finish the profile first. It is cheaper, it is faster, and it does not carry the risk described in the rest of this article.
+Town pages are one part of local SEO, the wider work of being found nearby, and they differ from its other part, your Business Profile, in what ranks them: the short list of businesses at the top of a nearby search weighs distance from the searcher, one of the inputs Google publishes, while town pages are ordinary web pages in the results below, not tied to where your office sits, which is why they can reach places your profile cannot. We would finish the profile first, because it costs only time and carries none of the risk described on this page.
 
 ### Are location pages considered doorway pages by Google?
 
-They are if they behave like doorways. The policy defines doorway abuse as pages created to rank for specific, similar queries which lead users to intermediate pages that are not as useful as the final destination. It names pages targeted at specific regions or cities that funnel users to one page. A page that answers the question it was found for, on its own, is not doing that. A page whose only purpose is to catch the query and push the reader somewhere else is, whatever it looks like.
+Location pages are considered doorway pages by Google only if they behave like doorways: if they catch a search and push the reader somewhere else, or repeat each other with the town's name changed. A location page that answers the question it was found for, on its own, is not doing what the policy describes.
 
-### Is it against the rules to use AI to write them?
+### Is it against the rules to use AI to write town pages?
 
-Not in itself, and Google says so directly in its guidance on helpful content. That guidance frames automation as a question about the output rather than about the tool. What is named in the spam policy is using generative AI tools to generate many pages without adding value for users. The distinction is whether anything was added between the draft and the publication. In practice that means a person who knows the place read it and changed it. A page nobody read is the case the policy is describing.
-
-### How many pages should I have?
-
-As many as you have something true to say about, which is almost always fewer than the list you started with. There is no threshold at which a set of pages becomes spam, and no number that makes it safe. The calculator above is deliberately built on the only two things anyone can honestly supply. How many areas are on your list. And how many of them you have really worked in.
+Using AI to write town pages is not against Google's rules in itself; the spam policy names using generative AI tools to generate many pages without adding value for users. In practice the value added starts with a person who knows the place reading each draft and changing it before it goes live.
 
 ### Can I write a page for a town I want to work in but have not yet?
 
-You can. It will be the weakest page in the set. And it is worth being deliberate about it rather than pretending otherwise. If you do, write it as what it is. A page about that market from someone who works one town over, with the facts you can genuinely stand behind and no invented familiarity. That is a defensible page. A page claiming years of local expertise you do not have is not. It is the kind of claim a person who lives there will spot in a sentence.
+You can write a page for a town you have not worked in yet, and it will be the weakest page in the set. If you do, write it as what it is: a page about that town from a business that works one town over, with the facts you can stand behind and no invented familiarity. A page claiming years of local experience you do not have is the kind of claim a person who lives there can spot in a sentence.
 
-### What about fair housing? Is any of this risky?
+### What about fair housing, for a real estate team?
 
-The advertising rules apply to a web page exactly as they apply to a flyer. The regulation is explicit that written statements include any documents used with respect to the sale of a dwelling. Two things follow. Write about the housing and the transaction, not about who lives somewhere or who a place would suit. And treat your areas evenly. The rules name two practices here. One is selecting where to advertise in a way that denies parts of the market information. The other is discouraging someone by failing to inform them of the desirable features of a neighbourhood. Both of those turn on whether the reason was one of the characteristics the Act protects. So an uneven set of pages is not unlawful by itself. It is the thing the reason would be read off, and it is invisible from inside any single page.
+For a real estate team, the advertising rules apply to a web page exactly as they apply to a flyer, and the safe precaution is to write about the housing and the transaction, not about who lives somewhere or who a place would suit, and to give every area comparable effort. The two regulations, 24 CFR 100.75 and 100.70, are quoted in the section on fair housing above; they cover businesses that sell or rent homes.
 
-### Will this get me quoted in ChatGPT or an AI answer?
+### Will town pages get my business quoted in an AI answer?
 
-Sometimes, and nobody can promise it. What gets quoted is a passage that answers a question directly, in plain language, on a page an assistant can read. That means a real question as a heading, and the answer in the sentence underneath it. Not three paragraphs of positioning followed by the fact. It is worth doing because the same format is the one that works for a human being in a hurry. So nothing here asks you to write worse in order to be quoted more.
+Town pages can get a business quoted in an AI answer sometimes, and nobody can promise it; we cannot see how an assistant chooses, and we do not claim to. What a page can do is offer sentences an assistant could lift whole: a real question as a heading, and the answer in plain language in the sentence underneath it. The same format works for a person in a hurry, so nothing here asks you to write worse in order to be quoted more.
 
-## What to do about it
+### Can we talk about location pages on a call if my business is outside New York?
 
-Take the list of areas you want pages for. Put a mark next to every one where you can name a street you have worked on. Not a town you have driven through. A street.
+We are based in New York State, and the call works for an owner anywhere.
 
-That shorter list is the project. It is probably half of what you wrote down, and it beats the long version outright. Every page on it can carry something checkable. And every page you left off would have been the one that made a reader stop trusting the rest.
+## What to do first about doorway pages on your own site
 
-Then take the two pages you already have that you are least sure about. Delete every mention of the town from both, and read what remains. If the two documents are now the same document, you have learned the whole of this article in four minutes. You have also found the first two pages worth rewriting.
+The first thing to do about doorway pages on your own site is to cut the list of towns before anything is written. Take the list of towns you want pages for. Put a mark next to every one where you can name a street you have worked on. Not a town you have driven through. A street.
 
-[[scene:funnel]]`;
+That shorter list is the project. In Nadia's invented case it was six of nine, and it beats the long version outright. Every page on it can carry something checkable. And every page you left off would have been the one that made a reader stop trusting the rest.
+
+Then take the two pages you already have that you are least sure about. Delete every mention of the town from both, and read what remains. If the two documents are now the same document, you have learned the whole of this page. You have also found the first two pages worth rewriting.
+
+[[scene:funnel]]
+
+Start with the page on [location pages for local SEO](/services/geo-landing-pages): what we build, what you approve, and what it will not do.
+
+## Sources
+
+- Google Search Central, "Spam policies for Google web search", [developers.google.com](https://developers.google.com/search/docs/essentials/spam-policies): doorway abuse and scaled content abuse, with their examples. A live document with no date on the page; read November 11, 2026 and again November 17, 2026.
+- Google Search Central, "Creating helpful, reliable, people-first content", [developers.google.com](https://developers.google.com/search/docs/fundamentals/creating-helpful-content): the self-assessment questions and the sentence on automation. A live document; read November 11, 2026.
+- Alexandros Ntoulas, Marc Najork, Mark Manasse and Dennis Fetterly, "Detecting Spam Web Pages through Content Analysis", WWW 2006, pages 83 to 92, [the conference paper](https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf). An older source, kept for the argument: cited for how cheap the measurement of repetition is, not as a figure about town pages. Read November 11, 2026.
+- 24 CFR 100.75, Discriminatory advertisements, statements and notices, [law.cornell.edu](https://www.law.cornell.edu/cfr/text/24/100.75). Regulation in force, read November 11, 2026.
+- 24 CFR 100.70, Other prohibited sale and rental conduct, [law.cornell.edu](https://www.law.cornell.edu/cfr/text/24/100.70). Regulation in force, read November 11, 2026.
+- National Fair Housing Alliance, the 2025 Fair Housing Trends Report, which counts the complaints received in 2024, [nationalfairhousing.org](https://nationalfairhousing.org/wp-content/uploads/2025/11/2025-NFHA-Fair-Housing-Trends-Report.pdf): the chart in the fair housing section.
+
+Written with an AI assistant and checked by Levan.`;
 
 export const LOCAL_SEO_POST = `We help local business owners work out how to rank higher on Google Maps: the profile to fix and keep current, the reviews to ask for every time, and a person approving everything that is published in the business's name. Below is how to rank in Google Maps using what Google itself publishes, what a panel of local search experts says matters most, a check you can run tonight, whether the work is worth doing yourself or having done, and what to do first this week.
 

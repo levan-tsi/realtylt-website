@@ -44,7 +44,7 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * not required, the ceiling that is, and the measurement that is not one. */
 export const IN_SHORT: string[] = [
   "The federal statute that governs commercial email does not require anybody's permission to send it. It requires that the message says what it is. It must carry a physical address. And it must offer an exit that keeps working for at least thirty days. Permission is not the law's demand. It is the mailbox providers' demand, and they are stricter.",
-  "Google and Yahoo both publish the same ceiling for how often people may report you: three tenths of one percent. On Google's page it sits in the requirements for all senders rather than in the bulk section. So a one person office is inside it. On a list of a thousand, three complaints is the whole allowance.",
+  "Google and Yahoo both publish the same ceiling for how often people may report you: three tenths of one percent. On Google's page it sits in the requirements for all senders rather than in the bulk section. So a one person office is inside it. Three complaints in a thousand delivered messages is the line itself.",
   "The number you cannot work out is your own. Yahoo states that the rate is calculated in their system on mail delivered to the inbox. That is a denominator no sender can see. What you can do is send less, to fewer people, more carefully. That is the entire craft.",
 ];
 
@@ -76,15 +76,15 @@ export const NOT_THE_OTHERS: GridItem[] = [
 export const FOUR_DECISIONS: GridItem[] = [
   {
     lead: "Who it goes to",
-    body: "The audience is a query, and a query written once runs forever against a database that keeps changing. The person who bought last spring is still matching the buyer segment, because nobody wrote the rule that takes them out of it. When a campaign embarrasses someone, it is far more often because of who it reached than because of what it said. And the audience is the half nobody opens again.",
+    body: "The audience is a query, and a query written once runs forever against a database that keeps changing. The customer whose furnace was replaced last spring still matches the needs-a-new-furnace segment, because nobody wrote the rule that takes them out of it. When a campaign embarrasses someone, look first at who it reached, and only then at what it said. And the audience is the half nobody opens again.",
   },
   {
     lead: "What it says",
-    body: "The only part anybody edits, and the part that carries the least risk when it is wrong. A dull message to the right person on the right morning is forgettable. A brilliant message to someone who bought through you in March reads as evidence that you do not know who they are. Being forgotten is a far cheaper outcome than that.",
+    body: "The only part anybody edits, and the part that carries the least risk when it is wrong. A dull message to the right person on the right morning is forgettable. A brilliant message to a customer whose job you finished in March reads as evidence that you do not know who they are. Being forgotten is a far cheaper outcome than that.",
   },
   {
     lead: "When it arrives",
-    body: "Behaviour triggers move this from a calendar to a reaction. That is a real improvement, and it is also where the strangeness comes from. Someone looks at three listings on a Sunday evening. What arrives on Monday tells them exactly how closely they are being watched. How long to wait is a design decision, and it is a decision whether or not anyone makes it on purpose.",
+    body: "Behaviour triggers move this from a calendar to a reaction. That is a real improvement, and it is also where the strangeness comes from. Someone looks at the page about new boilers on a Sunday evening. What arrives on Monday tells them exactly how closely they are being watched. How long to wait is a design decision, and it is a decision whether or not anyone makes it on purpose.",
   },
   {
     lead: "Whether it arrives at all",
@@ -188,7 +188,7 @@ export const DEADLINES = {
 export const WASTED: GridItem[] = [
   {
     lead: "A segment nobody ever leaves",
-    body: "Someone defines the buyer audience on the day it is built. Nobody ever writes the rule that removes a person from it. Two years later it contains everyone who has ever filled in anything, including the family whose closing you attended. Every campaign is then aimed at a group that has quietly stopped meaning anything. The reporting will look fine, because the reporting counts sends.",
+    body: "Someone defines the past customers audience on the day it is built. Nobody ever writes the rule that removes a person from it. Two years later it contains everyone who has ever filled in anything, including the family who moved out of the area last year. Every campaign is then aimed at a group that has quietly stopped meaning anything. The reporting will look fine, because the reporting counts sends.",
   },
   {
     lead: "A sender address nobody owns",
@@ -287,7 +287,7 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "From something happening to somebody reading it.",
-      lede: "Six hops, and your software stops at the third. The last three are the ones that decide whether any of the first three mattered. They are done by companies you have no agreement with. The only one of them you can influence is the fourth. Everything written about marketing automation is about the first two hops.",
+      lede: "Six hops, and your software stops at the third. The last three are the ones that decide whether any of the first three mattered. They are done by companies you have no agreement with. The only one of them you can influence is the fourth. The first two hops are the ones a sending tool shows you.",
       steps: EMAIL_PATH,
       altPrefix:
         "The path from a trigger in your own software to a message being read, through the audience, the send, the authentication signature and somebody else's filtering judgement",
@@ -405,7 +405,7 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       ],
       headline: 2,
       resultLabel: "Complaints in one send that reach the published ceiling",
-      note: "The headline is the third row rather than the yearly figure. It is there because a single send is the unit a person actually decides about, and because the number is small enough to be startling. Shares of people produce fractions, and half a complaint is not a thing. Read two and a half as between two and three. Three things this deliberately refuses. It will not work out your actual spam rate, and it cannot. Yahoo states the rate is calculated in their system on mail that was delivered to the inbox, which is a denominator no sender can see. So what you have here is a ceiling in your own units rather than a measurement of you. There is no open rate and no click rate anywhere in this chain. The section above shows what an open actually counts, and it is not attention. And there is no row for what a damaged sending reputation costs in money. Nobody has published a figure for that with a method under it. This article is not going to be the first to make one up.",
+      note: "The headline is the third row rather than the yearly figure. It is there because a single send is the unit a person actually decides about, and because the number is small enough to be startling. Shares of people produce fractions, and half a complaint is not a thing. Read two and a half as between two and three. Three things this deliberately refuses. It will not work out your actual spam rate, and it cannot. Yahoo states the rate is calculated in their system on mail that was delivered to the inbox, which is a denominator no sender can see. So what you have here is a ceiling in your own units rather than a measurement of you. There is no open rate and no click rate anywhere in this chain. The section above shows what an open actually counts, and it is not attention. And there is no row for what a damaged sending reputation costs in money. We found no published figure for that with a method under it, and this article is not going to be the first to make one up.",
       action: { label: "See how it is built", href: "/services/marketing-automation" },
       secondary: { label: "Ask us to look at your sending", href: "/connect" },
     },
@@ -436,11 +436,7 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Open the last campaign you sent. Read it as the person third from the bottom of the list, the one who bought through you two years ago and has not heard from you since except in a segment. If it does not survive that, the fix is not a better subject line. It is a smaller list. A smaller list is the one change in this entire subject that costs nothing and works immediately.",
-      actions: [
-        { label: "See it on the AI page", href: "/ai#marketing", variant: "light" },
-        { label: "How it is built", href: "/services/marketing-automation", variant: "outline-light" },
-      ],
+      text: "Open the last campaign you sent. Read it as the person third from the bottom of the list, the customer whose job you finished two years ago and who has not heard from you since except in a segment. If it does not survive that, the fix is not a better subject line. It is a smaller list. A smaller list is the one change in this entire subject that costs nothing.",
       footnote:
         "There is no price on this page, because the cost tracks four things nobody can guess from an article. How many channels you want joined. Whether your sending domain and its authentication already exist or have to be set up. How much of your contact data can be trusted enough to segment on. And whether anybody in the business will own the audience rules afterwards. The AI assessment is an hour, done with you, and it starts by reading what your domain currently publishes about itself.",
     },
@@ -449,20 +445,21 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
   /** Short rail labels for the prose headings. Ids and ORDER are derived from the document, so a
    * renamed heading degrades to its full text rather than leaving a dead row. */
   headingLabels: {
-    "what-marketing-automation-actually-is-once-you-take-the-busywork-out-of-it": "What it is",
-    "the-law-that-governs-your-email-does-not-require-permission": "The law",
-    "whether-your-market-note-is-an-advertisement-is-decided-by-its-subject-line": "The subject line",
-    "the-companies-that-actually-decide-whether-your-mail-arrives": "Who decides",
-    "the-requirement-everybody-files-under-bulk-sending-and-where-it-actually-sits": "The two lists",
-    "what-spf-dkim-and-dmarc-assert-in-their-own-words": "The three records",
-    "what-one-click-unsubscribe-actually-is-and-why-it-protects-you": "One-click exit",
-    "three-tenths-of-one-percent-and-why-you-cannot-work-out-your-own": "The ceiling",
-    "what-an-open-actually-measures": "What an open is",
-    "why-the-second-campaign-is-harder-than-the-first": "Why it compounds",
-    "what-it-costs-and-how-long-it-takes": "Cost and time",
-    "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
-    "how-to-audit-your-own-sending-in-an-afternoon": "Audit your sending",
-    "common-questions-answered-honestly": "Common questions",
-    "what-to-do-about-it": "What to do",
+    "what-is-marketing-automation-once-the-busywork-is-taken-out": "What it is",
+    "do-you-need-permission-to-email-customers-in-the-united-states": "The law",
+    "is-a-newsletter-an-advertisement-under-can-spam": "The subject line",
+    "who-decides-whether-an-email-goes-to-spam": "Who decides",
+    "do-googles-sender-rules-apply-to-a-small-business": "The two lists",
+    "what-do-spf-dkim-and-dmarc-do-for-email-deliverability": "The three records",
+    "what-is-one-click-unsubscribe-and-why-does-it-protect-the-sender": "One-click exit",
+    "what-spam-rate-sends-emails-to-spam": "The ceiling",
+    "what-does-an-email-open-rate-measure": "What an open is",
+    "why-can-later-email-campaigns-land-in-spam-when-the-first-did-not": "Why it compounds",
+    "how-do-you-check-why-your-emails-go-to-spam-in-an-afternoon": "Check your sending",
+    "what-happened-when-tonys-list-got-shorter": "The shorter list",
+    "what-does-email-marketing-automation-take-and-how-long-does-it-take": "Work and time",
+    "what-can-marketing-automation-not-do": "What it will not do",
+    "common-questions-about-email-deliverability-and-marketing-automation": "Common questions",
+    "what-to-do-first-about-emails-going-to-spam": "What to do",
   },
 };
