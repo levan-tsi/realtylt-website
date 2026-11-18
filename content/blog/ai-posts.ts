@@ -2095,7 +2095,7 @@ So a useful newsletter with a subject line about furnace filters is one thing. T
 
 ### In a real estate office, specifically
 
-A real estate team's monthly market note is the same case. A note with the median price in three towns, what closed against what was asked, and two sentences about an inspection that fell through is useful, and real estate marketing automation sends one to every past client. With a subject line about the market, it may be read as information; with a subject line about booking a home valuation, a stranger would read it as a promotion. Put the postal address and the unsubscribe in every note, and the question stops mattering.
+A real estate team's monthly market note is the same case. Take an invented one: a note with the median price in three towns, what closed against what was asked, and two sentences about an inspection that fell through is useful, and real estate marketing automation sends one to every past client. With a subject line about the market, it may be read as information; with a subject line about booking a home valuation, a stranger would read it as a promotion. Put the postal address and the unsubscribe in every note, and the question stops mattering.
 
 [[scene:plate]]
 
@@ -2103,7 +2103,7 @@ A real estate team's monthly market note is the same case. A note with the media
 
 The mailbox provider decides whether an email goes to spam: the company that runs the recipient's inbox, such as Google for a Gmail address or Yahoo for a Yahoo one, judges each message after your sending tool has handed it over. Two of them, Google and Yahoo, publish the rules they apply to incoming mail, in plain English on a public page.
 
-They have no agreement with you. You are not their customer. There is no appeal, no support line and no notice. The whole relationship is one way, and it is governed by a document on a help site.
+Unless you are their customer, you have no agreement with them. What governs the relationship from your side is a document on a help site: the rules they publish, which the next sections read.
 
 You can count what share of your own list sits behind those two in an afternoon. It is worth counting before you decide how much of this applies to you.
 
@@ -2145,7 +2145,7 @@ DMARC is [RFC 7489](https://www.rfc-editor.org/rfc/rfc7489.txt). It ties the two
 
 That is the specification saying, in its own summary, that doing all of this correctly buys you nothing in the way of better treatment. What it buys is the absence of a penalty. It also lets a receiver tell the difference between you and someone forging your domain.
 
-Which means all three of these are needed and none of them is the work. They establish who is speaking. Whether what you said was wanted is a separate judgement, made afterwards, on evidence you supply every time you send.
+Which means setting them up is worth doing at any size and none of them is the work. They establish who is speaking. Whether what you said was wanted is a separate judgement, made afterwards, on evidence you supply every time you send.
 
 **Tony's heating and cooling company (invented).** Beth looks up the domain's records. The notes pass DKIM, but they are signed by the sending tool's own domain rather than Tony's, and Tony's domain publishes no DMARC policy. At fourteen hundred notes a month that meets both providers' lists for every sender, which ask for SPF or DKIM; alignment and DMARC sit in the larger lists. Beth sets them up anyway, so that the domain in the From line is the one that vouches for the note.
 
@@ -2217,7 +2217,7 @@ The first is that mistakes are paid for later and somewhere else. A badly aimed 
 
 The second is that adding people to a list is not free even when they never respond. Every address that did not want the message is a source of the evidence that grades you. Google's own page tells senders to consider unsubscribing recipients who don't open or read their messages, and Yahoo's says the same of users who are not reading.
 
-The third is the one that changes behaviour, and it is why the close of this page is what it is. The cheapest lever available to you is not better writing, a better subject line or a better tool. It is a shorter list. A shorter list of people who want the message improves the one input you control, and it improves it on every future send rather than on this one.
+The third is the one that changes behaviour, and it is why the close of this page is what it is. The cheapest lever available to you is not better writing, a better subject line or a better tool. It is a shorter list. Taking off the people who did not want the message changes the one input you control, and the change carries into every later send, not only this one.
 
 **Tony's heating and cooling company (invented).** This is where Beth's two first ideas fail. A livelier subject line changes what a stranger reads; it does not change who receives the note. A new sending tool starts on a domain whose record is already written. The list is the input that moves.
 
@@ -2229,7 +2229,7 @@ To check why your emails go to spam, run seven checks in an afternoon, in this o
 
 1. **Find out what your domain publishes about itself.** Your SPF, DKIM and DMARC records are public DNS entries. Anyone can read them, including you. If nobody in your business knows whether they exist, that is the finding. It is the one to fix first, because everything else depends on it.
 2. **Check the From line against them.** Google's list for senders of 5,000 or more messages a day and Yahoo's requirements for bulk senders ask for the domain in your From header to be aligned with the domain that authenticated the message. If your mail says it is from you but is signed by your mailing tool's own domain, it would fail that requirement at that size, and it is easier to fix before you get there.
-3. **Set up Google Postmaster Tools.** It is free, and it needs a DNS record. It is where Google shows a sender its own spam rate, as Google works it out. If it shows no data yet, that is not a clean bill of health.
+3. **Set up Google Postmaster Tools.** Google's own sender guidelines point every sender to it: the spam rate they ask you to keep below 0.3 percent is the rate "reported in Postmaster Tools". It is free, and it needs a DNS record. It is where Google shows a sender its own spam rate, as Google works it out. If it shows no data yet, that is not a clean bill of health.
 4. **Send yourself a campaign and try to unsubscribe from it.** Count the pages. If it requires you to log in, requires a reason, or takes more than one page, it does not meet the rule at [16 CFR 316.5](https://www.law.cornell.edu/cfr/text/16/316.5). It is also turning people who would have left politely into people who press the other button. This tests the link in the footer; ask whoever set up your sending whether the one-click exit is in the headers too.
 5. **Open the same message with developer tools on.** Look at the list of domains it contacts. Decide whether you are comfortable with it. There is no right answer here, and there is certainly a wrong one, which is not knowing.
 6. **Open your largest audience and scroll to the bottom of it.** Read the last twenty names. If you recognise someone who moved away, someone who told you to stop, or someone who is now a competitor, your audience rule has no exit condition.
@@ -2299,7 +2299,7 @@ Marketing automation for a small business is a standing instruction about people
 
 ### Do I need permission to email somebody in the United States?
 
-You do not need permission to email somebody under the federal CAN-SPAM Act, which sets rules for the message: it must identify itself as an advertisement, carry a real postal address and offer a working exit that lasts at least thirty days, with the opt out honoured within ten business days. Permission matters in practice for a different reason: mail to people who did not ask is what generates the complaints that get you filtered.
+You do not need permission to email somebody under the federal CAN-SPAM Act, which sets rules for the message: it must identify itself as an advertisement unless the recipient gave prior affirmative consent, carry a valid physical postal address and offer a working exit that lasts at least thirty days, with the opt out honoured within ten business days. Permission matters in practice for a different reason: mail to people who did not ask is what generates the complaints that get you filtered.
 
 ### How is this different from workflow automation?
 
@@ -2323,7 +2323,7 @@ How often to send has no published number worth quoting, and we found none with 
 
 ### What is the one thing to fix first?
 
-The one thing to fix first is what your sending domain publishes about itself: if your authentication is wrong, or your From line is not aligned with it, you are failing a requirement both providers have published, and every improvement above that layer is applied to mail that may not arrive.
+The one thing to fix first is what your sending domain publishes about itself: if your mail passes neither SPF nor DKIM, you are failing a requirement both providers publish for every sender, and every improvement above that layer is applied to mail that may not arrive. An aligned From line and a DMARC policy come next: required in the larger senders' lists, and worth setting up at any size.
 
 ### Can we talk about email deliverability on a call if my business is outside New York?
 
@@ -2343,7 +2343,7 @@ Start with the page on [marketing automation for small business](/services/marke
 
 - 15 U.S.C. 7704, the CAN-SPAM Act's requirements for commercial electronic mail, [law.cornell.edu](https://www.law.cornell.edu/uscode/text/15/7704). Statute in force, read November 11, 2026.
 - 16 CFR 316.3 (primary purpose) and 16 CFR 316.5 (no fee or extra steps to opt out), the FTC's CAN-SPAM rule, [law.cornell.edu](https://www.law.cornell.edu/cfr/text/16/316.3). Regulation in force, read August 25, 2026.
-- Google, Email sender guidelines, [support.google.com](https://support.google.com/a/answer/81126): the requirements for all senders and for senders of 5,000 or more messages a day. A live help page; read November 11, 2026.
+- Google, Email sender guidelines, [support.google.com](https://support.google.com/a/answer/81126): the requirements for all senders and for senders of 5,000 or more messages a day, and Postmaster Tools, which the page itself names as where a sender's spam rate is reported. A live help page; read November 11, 2026 and again November 17, 2026.
 - Yahoo, Sender best practices, [senders.yahooinc.com](https://senders.yahooinc.com/best-practices/): the 0.3 percent ceiling, how the rate is calculated, the two-day unsubscribe. A live page; read November 11, 2026.
 - RFC 7208 (SPF, 2014), RFC 6376 (DKIM, 2011), RFC 7489 (DMARC, 2015) and RFC 8058 (one-click unsubscribe, 2017), [rfc-editor.org](https://www.rfc-editor.org/rfc/rfc8058.txt). Older sources, kept for the argument: they define the mechanisms named here.
 - "I never signed up for this! Privacy implications of email tracking", by Steven Englehardt, Jeffrey Han and Arvind Narayanan, in the Proceedings on Privacy Enhancing Technologies, 2018, [petsymposium.org](https://petsymposium.org/popets/2018/popets-2018-0006.pdf). An older source, kept for the argument: cited for the mechanism, not for today's rates.
