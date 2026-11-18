@@ -2561,7 +2561,7 @@ The first is the brief, and it is the slow part. Writing down a job properly, ex
 
 The second is access. An assistant that can read your calendar and your CRM can do far more than one that cannot. The work is connecting it safely. That means the right permissions, nothing wider than the job needs, and a way to switch it off.
 
-The third is the running cost. The way we build assistants, it is paid for use rather than per seat. It tracks how much the assistant has to read rather than how much it writes. It is small per task, and nothing caps it unless somebody sets a limit and watches it.
+The third is the running cost. It tracks how much the assistant has to read rather than how much it writes. In the research above it came to cents per task, and nothing caps it unless somebody sets a limit and watches it.
 
 What this page will not print is a per-model price, and the reason is not that the numbers are hidden. They are published and readable. The reason is that they are quoted per million tokens, a token being a small piece of text, and that price means nothing until somebody knows how many tokens your job takes. They also change. And which model sits behind an assistant is a build decision that can be changed without anything visible happening at your end. A figure typed into an article would be stale before the article was. What can be said is the shape: the machine cost of one task in the research above was in cents, it was driven mostly by how much the agent read rather than the length of the answer, and the honest budget line is the review time rather than the machine time.
 
