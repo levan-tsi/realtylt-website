@@ -3,6 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import config from "@/next.config";
 import {
+  AI_PATH_TAILS,
   MOVED_FILES,
   MOVED_POST_SLUGS,
   MOVED_SERVICE_SLUGS,
@@ -122,16 +123,17 @@ describe("the AI business's addresses redirect to excelsiormind.com", () => {
     }
   });
 
-  it("covers the whole map: the hub, 21 services, 20 posts, 3 older addresses, /ai, its sub-paths, 1 file", async () => {
+  it("covers the whole map: the hub, 21 services, 20 posts, 3 older addresses, /ai, 5 /ai tails, its sub-paths, 1 file", async () => {
     expect(MOVED_SERVICE_SLUGS).toHaveLength(21);
     expect(MOVED_POST_SLUGS).toHaveLength(20);
     expect(RETIRED_PATHS).toHaveLength(3);
+    expect(AI_PATH_TAILS).toHaveLength(5);
     expect(MOVED_FILES).toHaveLength(1);
     expect(new Set([...MOVED_SERVICE_SLUGS]).size).toBe(21);
     expect(new Set([...MOVED_POST_SLUGS]).size).toBe(20);
-    // 1 hub + 21 + 20 + 3 + /ai + the /ai sub-path rule + the PDF = 48 rules.
-    expect(movedPagePaths().length + 1 + MOVED_FILES.length).toBe(48);
-    expect(aiBusinessRedirects()).toHaveLength(48);
+    // 1 hub + 21 + 20 + 3 + /ai + 5 tails + the /ai sub-path rule + the PDF = 53 rules.
+    expect(movedPagePaths().length + AI_PATH_TAILS.length + 1 + MOVED_FILES.length).toBe(53);
+    expect(aiBusinessRedirects()).toHaveLength(53);
   });
 
   it("sends each moved page to the same path on the new site, in one hop", async () => {
@@ -147,8 +149,25 @@ describe("the AI business's addresses redirect to excelsiormind.com", () => {
     expect((await firstMatch("/ai"))?.destination).toBe(`${NEW_SITE}/`);
   });
 
-  it("sends anything deeper under /ai to the new site's root namespace", async () => {
-    const hit = await firstMatch("/ai/quiz");
+  /** Their same path there is not a page (the thank-you page sits under /assets/, index.html is
+   * the root, the quiz and the assessment start are not live), so each takes one hop to a page. */
+  it.each([
+    ["/ai/thanks.html", "/assets/thanks.html"],
+    ["/ai/index.html", "/"],
+    ["/ai/quiz", "/connect"],
+    ["/ai/quiz/start", "/connect"],
+    ["/ai/quiz/a/b", "/connect"],
+    ["/ai/assessment", "/connect"],
+  ])("sends %s to %s on the new site in one hop, ahead of the generic /ai rule", async (from, to) => {
+    const rs = await rules();
+    const hit = await firstMatch(from);
+    expect(hit?.destination).toBe(`${NEW_SITE}${to}`);
+    expect(hit?.statusCode).toBe(301);
+    expect(rs.indexOf(hit!)).toBeLessThan(rs.findIndex((r) => r.source === "/ai/:path*"));
+  });
+
+  it("sends anything else under /ai to the new site's root namespace", async () => {
+    const hit = await firstMatch("/ai/styles.css");
     expect(hit?.source).toBe("/ai/:path*");
     expect(hit?.destination).toBe(`${NEW_SITE}/:path*`);
     expect(hit?.statusCode).toBe(301);

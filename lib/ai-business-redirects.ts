@@ -94,6 +94,19 @@ export const RETIRED_PATHS: readonly (readonly [from: string, to: string])[] = [
   ["/blog/skip-tracing-real-estate-legal-owner-phone-numbers", "/blog"],
 ];
 
+/** Addresses under /ai whose same path on the new site is not a page, each sent in ONE hop to one
+ * that is, and served BEFORE the generic /ai/:path* rule (Next takes the first match):
+ *  - the journey's thank-you page lives under /assets/ there;
+ *  - /ai/index.html is the journey itself, the new site's root;
+ *  - the free quiz and the assessment start are not live there; the way in is the contact page. */
+export const AI_PATH_TAILS: readonly (readonly [from: string, to: string])[] = [
+  ["/ai/thanks.html", "/assets/thanks.html"],
+  ["/ai/index.html", "/"],
+  ["/ai/quiz", "/connect"],
+  ["/ai/quiz/:path*", "/connect"],
+  ["/ai/assessment", "/connect"],
+];
+
 export interface MovedRedirect {
   source: string;
   destination: string;
@@ -123,7 +136,10 @@ export function aiBusinessRedirects(): MovedRedirect[] {
   const to = (p: string) => `${NEW_SITE}${p}`;
   return [
     ...movedPagePaths().map(([from, dest]): MovedRedirect => ({ source: from, destination: to(dest), statusCode: 301 })),
-    // Anything deeper under /ai (/ai/quiz and the like) maps onto the new site's root namespace.
+    // The /ai addresses whose same path there is not a page, first, then the generic rule.
+    ...AI_PATH_TAILS.map(([from, dest]): MovedRedirect => ({ source: from, destination: to(dest), statusCode: 301 })),
+    // Anything else under /ai (/ai/styles.css, /ai/assets/... and the like) maps onto the new
+    // site's root namespace.
     { source: "/ai/:path*", destination: `${NEW_SITE}/:path*`, statusCode: 301 },
     ...MOVED_FILES.map((f): MovedRedirect => ({ source: f, destination: to(f), statusCode: 301 })),
   ];
