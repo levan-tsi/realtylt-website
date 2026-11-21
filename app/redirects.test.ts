@@ -8,6 +8,7 @@ import {
   MOVED_SERVICE_SLUGS,
   NEW_SITE,
   RETIRED_PATHS,
+  WITHDRAWN_FILES,
   aiBusinessRedirects,
   movedPagePaths,
 } from "@/lib/ai-business-redirects";
@@ -121,15 +122,16 @@ describe("the AI business's addresses redirect to excelsiormind.com", () => {
     }
   });
 
-  it("covers the whole map: the hub, 21 services, 20 posts, 3 older addresses, /ai, its sub-paths, 11 files", async () => {
+  it("covers the whole map: the hub, 21 services, 20 posts, 3 older addresses, /ai, its sub-paths, 1 file", async () => {
     expect(MOVED_SERVICE_SLUGS).toHaveLength(21);
     expect(MOVED_POST_SLUGS).toHaveLength(20);
     expect(RETIRED_PATHS).toHaveLength(3);
-    expect(MOVED_FILES).toHaveLength(11);
+    expect(MOVED_FILES).toHaveLength(1);
     expect(new Set([...MOVED_SERVICE_SLUGS]).size).toBe(21);
     expect(new Set([...MOVED_POST_SLUGS]).size).toBe(20);
-    // 1 hub + 21 + 20 + 3 + /ai + the /ai sub-path rule + 11 files = 58 rows of the inventory's map.
-    expect(movedPagePaths().length + 1 + MOVED_FILES.length).toBe(58);
+    // 1 hub + 21 + 20 + 3 + /ai + the /ai sub-path rule + the PDF = 48 rules.
+    expect(movedPagePaths().length + 1 + MOVED_FILES.length).toBe(48);
+    expect(aiBusinessRedirects()).toHaveLength(48);
   });
 
   it("sends each moved page to the same path on the new site, in one hop", async () => {
@@ -154,12 +156,22 @@ describe("the AI business's addresses redirect to excelsiormind.com", () => {
     expect(await firstMatch("/air-conditioning")).toBeUndefined();
   });
 
-  it("sends the moved films, posters and PDF to the same path", async () => {
+  it("sends the moved PDF to the same path", async () => {
     for (const f of MOVED_FILES) {
       const hit = await firstMatch(f);
       expect(hit?.destination, f).toBe(`${NEW_SITE}${f}`);
       expect(hit?.statusCode, f).toBe(301);
       // The file itself is gone from public/: the redirect is the only answer.
+      expect(fs.existsSync(path.join(process.cwd(), "public", f)), `${f} still in public/`).toBe(false);
+    }
+  });
+
+  /** The new site does not publish the films (they carry this site's name in the picture), so a
+   * redirect would be a permanent redirect to a 404. They answer 404 here instead. */
+  it("the withdrawn films and posters are neither served nor redirected", async () => {
+    expect(WITHDRAWN_FILES).toHaveLength(10);
+    for (const f of WITHDRAWN_FILES) {
+      expect(await firstMatch(f), `${f} is redirected`).toBeUndefined();
       expect(fs.existsSync(path.join(process.cwd(), "public", f)), `${f} still in public/`).toBe(false);
     }
   });

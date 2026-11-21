@@ -63,9 +63,14 @@ export const MOVED_POST_SLUGS = [
   "ai-chat-assistant-real-estate-website",
 ] as const;
 
-/** Files the moved pages published: the five films and posters (VideoObject contentUrl and
- * thumbnailUrl) and the PDF two of the posts linked. */
-export const MOVED_FILES = [
+/** The file the moved pages published that the new site serves at the same path: the PDF two of
+ * the posts link. */
+export const MOVED_FILES = ["/downloads/three-question-sheet.pdf"] as const;
+
+/** WITHDRAWN, NOT MOVED: the five films and their posters. The films carry this site's name in
+ * the picture, so the new site does not publish them, and a redirect there would be a permanent
+ * redirect to a 404. They are gone from public/ and answer 404 here, which is the true answer. */
+export const WITHDRAWN_FILES = [
   "/video/film-1140pm.mp4",
   "/video/film-942pm.mp4",
   "/video/film-qualify.mp4",
@@ -76,7 +81,6 @@ export const MOVED_FILES = [
   "/video/film-qualify-poster.jpg",
   "/video/film-reactivation-poster.jpg",
   "/video/film-workflow-poster.jpg",
-  "/downloads/three-question-sheet.pdf",
 ] as const;
 
 /** Older addresses that already redirected to a moved page, each sent to its FINAL address on the
