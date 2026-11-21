@@ -1,7 +1,7 @@
 /* Extract and validate the JSON-LD on an article page.
  * Usage: node scripts/check-jsonld.mjs <url> */
 
-const url = process.argv[2] || "http://localhost:3002/blog/workflow-automation-real-estate-business";
+const url = process.argv[2] || "http://localhost:3002/blog/seller-disclosure-requirements-new-york";
 const html = await (await fetch(url)).text();
 
 const blocks = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((m) => {

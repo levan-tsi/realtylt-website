@@ -114,7 +114,7 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
   // Restoring by SELECTOR rather than by remembering document.activeElement is deliberate —
   // the trigger unmounts as the sheet opens, so by the time this effect runs the active element
   // is already <body> and the remembered node would be a dead end. (Same trap, same fix, as
-  // components/services/ServiceToc.tsx.)
+  // the services ToC had before those pages left this site on 2026-11-20.)
   useEffect(() => {
     if (!open) return;
     const prevOverflow = document.body.style.overflow;
@@ -318,8 +318,7 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
              * inventing a third one.
              *
              * components/blog/ArticleToc.tsx had the identical bug and is fixed with it.
-             * components/services/ServiceToc.tsx still has it, and belongs to another session:
-             * see docs/blog-flagship/SERVICES-CRITIQUE.md. */
+             * The services ToC had it too; it left this site with those pages on 2026-11-20. */
             className="fixed inset-0 z-[1000000]"
             role="dialog"
             aria-modal="true"

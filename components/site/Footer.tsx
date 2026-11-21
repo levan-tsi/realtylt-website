@@ -106,29 +106,16 @@ export function Footer() {
             {/* night:hover:text-ink: at blue hour stone is haze, so the day's hover dimmed these
                 links while every other link on the night page brightens (round 53 check). */}
             <ul className="grid grid-cols-2 gap-x-8 gap-y-2.5 text-sm font-light">
-              {FOOTER_NAV.map((item) =>
-                "external" in item && item.external ? (
-                  // /ai is served by an external rewrite, not an RSC route — a plain anchor
-                  // avoids a 404 from Next's link prefetch.
-                  <li key={item.href}>
-                    <a
-                      href={item.href}
-                      className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone night:hover:text-ink"
-                    >
-                      <NightLabel text={item.label} />
-                    </a>
-                  </li>
-                ) : (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone night:hover:text-ink"
-                    >
-                      <NightLabel text={item.label} />
-                    </Link>
-                  </li>
-                ),
-              )}
+              {FOOTER_NAV.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone night:hover:text-ink"
+                  >
+                    <NightLabel text={item.label} />
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>

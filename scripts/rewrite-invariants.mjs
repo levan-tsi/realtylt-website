@@ -144,9 +144,10 @@ async function page(p) {
 
 async function collectSurfaces() {
   const hrefs = new Set(["/"]);
-  for (const index of ["/blog", "/services"]) {
+  // /services left with the AI business on 2026-11-20 (it redirects off-site now).
+  for (const index of ["/blog"]) {
     const html = await page(index);
-    for (const m of html.matchAll(/href="(\/(?:blog|services)\/[a-z0-9-]+)"/g)) hrefs.add(m[1]);
+    for (const m of html.matchAll(/href="(\/blog\/[a-z0-9-]+)"/g)) hrefs.add(m[1]);
   }
   return [...hrefs];
 }

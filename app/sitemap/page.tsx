@@ -6,14 +6,14 @@ import { sentenceCase } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Site Map",
   description:
-    "Every public page on realtylt.com in one place: search, buying, selling, top areas, AI services, the blog, and our legal and fair housing pages.",
+    "Every public page on realtylt.com in one place: search, buying, selling, top areas, the blog, and our legal and fair housing pages.",
 };
 
 // Same cadence as sitemap.xml — a CRM blog publish shows up here within the hour.
 export const revalidate = 3600;
 
-/** One row. Internal links go through <Link>; `external` covers the /ai rewrite (no RSC
- * payload to prefetch), the NY DOS notice, and /sitemap.xml — the router owns none of them. */
+/** One row. Internal links go through <Link>; `external` covers the NY DOS notice and
+ * /sitemap.xml — the router owns neither. */
 function Row({ link, plain = false }: { link: DirectoryLink; plain?: boolean }) {
   // Padding lives on the anchor, not the li: a label-only row's link was 19px tall,
   // under the 24px tap-target floor (the probe caught all 31 noteless rows).

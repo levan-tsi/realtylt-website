@@ -29,13 +29,6 @@ export const SITE = {
   /** The general inbox shown beside the phone in the header (owner's order 2026-09-22). Proven to
    * deliver into levan@realtylt.com the same day (test token RLT-0922-A7 landed in his inbox). */
   infoEmail: "info@realtylt.com",
-  /** The free AI quiz. NOT LIVE on 2026-11-17: realtylt.com/ai/quiz and /ai/assessment both answered
-   * 404 in a browser that day. While `quizLive` is false no page prints the quiz or its address and
-   * the form is the working way in (agents round 33; the owner's word of 2026-11-17 to deploy the
-   * service pages now). The day the quiz opens: set it true, and the closing of every service page
-   * and of /services shows the quiz as a link again. */
-  quizLive: false as boolean,
-  quizPath: "/ai/quiz",
   disclaimer: "Each office is independently owned and operated.",
   /** The STABLE landing path, not a dated file path. The old link
    *  (`/system/files/documents/2025/04/fairhousingnotice.pdf`) 404'd on 2026-08-02: NY DOS moved
@@ -148,12 +141,8 @@ export const NAV = [
   { label: "Home value", href: "/home-value" },
   { label: "Who we are", href: "/who-we-are" },
   { label: "Blog", href: "/blog" },
-  // The owner, 2026-08-28: "add AI before connect on top menu bar and give it purple outline or
-  // our logo R blue so people notice". The logo-R blue (porchlight), outlined: the anti-slop
-  // palette bans purple as a primary and the R-blue is already the brand mark. `external`
-  // because /ai is served by a rewrite to the AI page's own deployment, not an RSC route (a
-  // <Link> prefetch there 404s); `accent` is what the header reads to draw the outline.
-  { label: "AI", href: "/ai", external: true, accent: true },
+  // No AI item since 2026-11-20: the AI business moved to its own site, and the brief keeps
+  // realtylt.com's nav and footer free of any link to it (lib/nav-no-ai-business.test.ts).
   { label: "Connect", href: "/connect" },
 ] as const;
 
@@ -164,16 +153,13 @@ export const FOOTER_NAV = [
   { label: "Selling", href: "/selling" },
   { label: "Financing", href: "/financing" },
   { label: "Home Value", href: "/home-value" },
-  // Same orphan rule as /services below: the 2026-08-27 E2E found /plan linked ONLY from
-  // /sitemap — a payment-first buyer tool no visitor could reach.
+  // Orphan rule: the 2026-08-27 E2E found /plan linked ONLY from /sitemap — a payment-first
+  // buyer tool no visitor could reach. Without a crawlable internal link a page is an orphan no
+  // matter what the sitemap says.
   { label: "Plan Your Purchase", href: "/plan" },
   { label: "Who We Are", href: "/who-we-are" },
   { label: "Reviews", href: "/reviews" },
   { label: "Connect", href: "/connect" },
-  // The indexable per-service surface (app/services). Without a crawlable internal link
-  // the twenty service pages are orphans no matter what the sitemap says.
-  { label: "AI Services", href: "/services" },
-  { label: "RealtyLT AI", href: "/ai", external: true },
 ] as const;
 
 /** Interest-reason dropdown — exact options from brief §7. */

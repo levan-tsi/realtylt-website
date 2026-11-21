@@ -13,8 +13,9 @@
  */
 import { describe, expect, it } from "vitest";
 import { POSTS } from "@/content/blog/posts";
+import { MOVED_POST_SLUGS } from "@/lib/ai-business-redirects";
 import { staticToArticle } from "./index";
-import { isConsumer, relatedArticles } from "./related";
+import { relatedArticles } from "./related";
 import type { Article } from "./types";
 
 const ALL: Article[] = POSTS.map(staticToArticle);
@@ -41,37 +42,21 @@ describe("relatedArticles", () => {
     }
   });
 
-  /** THE DEFECT ITSELF. A consumer post handed three B2B automation essays was the concrete
-   * thing the checker found; this is the assertion that would have caught it. */
-  it("keeps a consumer post inside the consumer cohort", () => {
-    for (const post of ALL.filter((a) => isConsumer(a))) {
-      const picked = relatedArticles(post, ALL);
-      expect(
-        picked.filter((a) => !isConsumer(a)).map((a) => a.slug),
-        `${post.slug} recommends the automation cohort`,
-      ).toEqual([]);
+  /** THE DEFECT ITSELF was a consumer post handed three B2B automation essays. Those essays moved
+   * to their own site on 2026-11-20 (lib/ai-business-redirects.ts), so the block can only offer
+   * posts that are still here; this holds the packing post, the one that was measured, to that. */
+  it("offers only posts that are on this site, and none of the moved ones", () => {
+    const here = new Set(ALL.map((a) => a.slug));
+    for (const post of ALL) {
+      for (const a of relatedArticles(post, ALL)) expect(here.has(a.slug), `${post.slug} offers ${a.slug}`).toBe(true);
     }
-    // and specifically the one that was measured
-    const packing = relatedArticles(bySlug("packing-tips-hacks-for-moving"), ALL);
-    expect(packing.map((a) => a.slug)).not.toContain("custom-automation-real-estate-bespoke-build");
-    expect(packing.map((a) => a.slug)).not.toContain("ai-assessment-small-business-what-not-to-automate");
-    expect(packing.map((a) => a.slug)).not.toContain("ai-clone-real-estate-agent-video-avatar");
+    const packing = relatedArticles(bySlug("packing-tips-hacks-for-moving"), ALL).map((a) => a.slug);
+    for (const moved of MOVED_POST_SLUGS) expect(packing).not.toContain(moved);
   });
 
-  it("keeps a flagship post inside the flagship cohort", () => {
-    for (const post of ALL.filter((a) => !isConsumer(a))) {
-      expect(
-        relatedArticles(post, ALL).filter((a) => isConsumer(a)).map((a) => a.slug),
-        `${post.slug} recommends a consumer post`,
-      ).toEqual([]);
-    }
-  });
-
-  /** And the reverse of the consumer rule for REAL consumer posts: a reposted article is never
-   * handed a placeholder stub while a real sibling exists. */
-  it("never recommends a stub from a real post while its cohort has three real others", () => {
-    const realOthers = (post: Article) =>
-      ALL.filter((a) => !a.placeholder && a.slug !== post.slug && isConsumer(a) === isConsumer(post)).length;
+  /** A reposted article is never handed a placeholder stub while a real sibling exists. */
+  it("never recommends a stub from a real post while three real others exist", () => {
+    const realOthers = (post: Article) => ALL.filter((a) => !a.placeholder && a.slug !== post.slug).length;
     for (const post of ALL.filter((a) => !a.placeholder && realOthers(a) >= 3)) {
       expect(
         relatedArticles(post, ALL).filter((a) => a.placeholder).map((a) => a.slug),
@@ -103,10 +88,10 @@ describe("relatedArticles", () => {
     expect(blocks.size).toBeGreaterThanOrEqual(20);
   });
 
-  /** A CRM-published post arrives with no cluster. It must still get a full, cohort-correct
-   * block rather than an empty one or a crash. */
+  /** A CRM-published post arrives with no cluster. It must still get a full block of real
+   * articles rather than an empty one or a crash. */
   it("still fills the block for a post with no cluster", () => {
-    const orphan: Article = { ...bySlug("workflow-automation-real-estate-business"), slug: "db-published-post", cluster: undefined };
+    const orphan: Article = { ...bySlug("timeline-selling-a-house-ny"), slug: "db-published-post", cluster: undefined };
     const picked = relatedArticles(orphan, [orphan, ...ALL]);
     expect(picked).toHaveLength(3);
     expect(picked.map((a) => a.slug)).not.toContain("db-published-post");

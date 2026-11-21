@@ -2,8 +2,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { PageFaqItem } from "@/lib/page-faqs";
 
-/** The marketing-page FAQ block — the services Faq pattern (components/services/Faq.tsx),
- * generalized for /buying, /selling, /financing (round 39).
+/** The marketing-page FAQ block — the services Faq pattern (that file left this site with the
+ * services pages on 2026-11-20), generalized for /buying, /selling, /financing (round 39).
  *
  * Same reasons as the original: native <details>, so every answer is in the HTML whether
  * or not it is expanded and whether or not JavaScript runs; the first row open so the

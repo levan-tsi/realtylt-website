@@ -1,5 +1,5 @@
 /* Print canonical + Open Graph + Twitter meta for a page. Usage: node scripts/check-meta.mjs <url> */
-const url = process.argv[2] || "http://localhost:3002/blog/workflow-automation-real-estate-business";
+const url = process.argv[2] || "http://localhost:3002/blog/seller-disclosure-requirements-new-york";
 const html = await (await fetch(url)).text();
 const grab = (re) => [...html.matchAll(re)].map((m) => m[0]);
 const out = [

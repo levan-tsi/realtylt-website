@@ -8,7 +8,7 @@ import { chromium } from "playwright";
 // so a run aimed at production either measured whatever happened to be on that port or died
 // with ECONNREFUSED, depending on the day.
 const BASE = process.argv[2] || process.env.BASE || "http://localhost:3100";
-const PATH = process.argv[3] || process.env.PATHNAME || "/blog/workflow-automation-real-estate-business";
+const PATH = process.argv[3] || process.env.PATHNAME || "/blog/seller-disclosure-requirements-new-york";
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: "reduce" });

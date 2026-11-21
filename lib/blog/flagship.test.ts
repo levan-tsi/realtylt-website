@@ -1,67 +1,26 @@
 import { describe, expect, it } from "vitest";
-import { AI_CHAT_FLAGSHIP } from "@/content/blog/ai-chat-scenes";
-import { AI_VOICE_FLAGSHIP } from "@/content/blog/voice-agent-scenes";
-import { REACTIVATION_FLAGSHIP } from "@/content/blog/reactivation-scenes";
-import { QUALIFY_FLAGSHIP } from "@/content/blog/qualify-scenes";
-import { WORKFLOW_FLAGSHIP } from "@/content/blog/workflow-scenes";
-import { REVIEW_FLAGSHIP } from "@/content/blog/review-scenes";
-import { BOOKING_FLAGSHIP } from "@/content/blog/booking-scenes";
-import { LOCAL_SEO_FLAGSHIP } from "@/content/blog/local-seo-scenes";
-import { GEO_PAGES_FLAGSHIP } from "@/content/blog/geo-pages-scenes";
-import { CRM_SYNC_FLAGSHIP } from "@/content/blog/crm-sync-scenes";
-import { AGENT_WORKFORCE_FLAGSHIP } from "@/content/blog/agent-workforce-scenes";
-import { MARKETING_AUTOMATION_FLAGSHIP } from "@/content/blog/marketing-automation-scenes";
-import { DOCUMENT_PROCESSING_FLAGSHIP } from "@/content/blog/document-scenes";
-import { DATA_ENRICHMENT_FLAGSHIP } from "@/content/blog/enrichment-scenes";
-import { SCHEDULING_FLAGSHIP } from "@/content/blog/scheduling-scenes";
-import { INVOICING_FLAGSHIP } from "@/content/blog/invoicing-scenes";
-import { CLONE_FLAGSHIP } from "@/content/blog/clone-scenes";
-import { AUDIT_FLAGSHIP } from "@/content/blog/audit-scenes";
 import { SELLER_DISCLOSURE_FLAGSHIP } from "@/content/blog/seller-disclosure-scenes";
 import { SELLER_DISCLOSURE_POST } from "@/content/blog/seller-posts";
-import { CUSTOM_FLAGSHIP } from "@/content/blog/custom-scenes";
-import { SINGULARITY_FLAGSHIP } from "@/content/blog/singularity-scenes";
-import {
-  AI_AGENT_WORKFORCE_POST,
-  AI_APPOINTMENT_BOOKING_POST,
-  AI_CHAT_ASSISTANT_POST,
-  AI_VOICE_AGENTS_POST,
-  CRM_SYNC_POST,
-  DATABASE_REACTIVATION_POST,
-  DATA_ENRICHMENT_POST,
-  AI_SCHEDULING_POST,
-  INVOICING_POST,
-  AI_AUDIT_POST,
-  CUSTOM_AUTOMATION_POST,
-  AI_CLONE_POST,
-  DOCUMENT_PROCESSING_POST,
-  GEO_LANDING_PAGES_POST,
-  LEAD_QUALIFICATION_POST,
-  LOCAL_SEO_POST,
-  MARKETING_AUTOMATION_POST,
-  REVIEW_AUTOMATION_POST,
-  SINGULARITY_POST,
-  WORKFLOW_AUTOMATION_POST,
-} from "@/content/blog/ai-posts";
 import { flagshipToc, railWords, type FlagshipContent } from "./flagship";
 import { parseOutline } from "./markdown";
 import { parseHeadings } from "./toc";
 
-const outline = parseOutline(AI_CHAT_ASSISTANT_POST);
+/** Since 2026-11-20 the seller disclosure guide is the one flagship on this site: the twenty AI
+ * posts, their frozen rails and the scene kinds only they used moved to the AI business's own site. */
+const outline = parseOutline(SELLER_DISCLOSURE_POST);
 
 describe("parseOutline", () => {
   it("interleaves scenes and headings in document order", () => {
     const kinds = new Set(outline.map((e) => e.kind));
     expect(kinds).toEqual(new Set(["scene", "heading"]));
-    // The reel is placed before the first prose heading in the body.
-    const firstScene = outline.findIndex((e) => e.kind === "scene");
-    const firstHeading = outline.findIndex((e) => e.kind === "heading");
-    expect(firstScene).toBeLessThan(firstHeading);
+    // The timeline is placed straight after the first section heading.
+    expect(outline[0]).toMatchObject({ kind: "heading", id: "the-form-is-required-on-most-sales" });
+    expect(outline[1]).toEqual({ kind: "scene", key: "form-timeline" });
   });
 
   it("gives every heading the same id the page renders", () => {
     const fromOutline = outline.filter((e) => e.kind === "heading").map((e) => e.id);
-    const fromHeadings = parseHeadings(AI_CHAT_ASSISTANT_POST)
+    const fromHeadings = parseHeadings(SELLER_DISCLOSURE_POST)
       .filter((h) => h.level <= 2)
       .map((h) => h.id);
     expect(fromOutline).toEqual(fromHeadings);
@@ -69,249 +28,36 @@ describe("parseOutline", () => {
 });
 
 describe("flagshipToc", () => {
-  /** The rail this reproduces was hand-curated until the template landed. Freezing the exact
-   * list here is what proves deriving it changed nothing, and it stays as the guard: a scene
-   * that loses its label, or a heading that is renamed, shows up here rather than as a rail
-   * row that jumps nowhere. */
-  it("derives exactly the rail the flagship shipped with", () => {
-    // Every row is either a labelled scene or an H2, in document order. Asserting the whole rail
-    // rather than its length is what catches a renamed heading whose short label was not renamed
-    // with it: that leaves the row pointing at a live anchor with the full 58-character heading
-    // as its label, which is not a rail, and it is exactly what happened when this post was
-    // raised to the standard on 2026-08-02.
-    expect(flagshipToc(outline, AI_CHAT_FLAGSHIP)).toEqual([
-      { id: "scene-reel", label: "Watch it", scene: true },
-      { id: "the-speed-claim-in-ai-chatbot-sales-pitches-and-where-it-comes-from", label: "The number" },
-      { id: "scene-response-gap", label: "The gap", scene: true },
-      { id: "scene-leads-calculator", label: "Your numbers", scene: true },
-      { id: "what-does-an-ai-chatbot-actually-do-on-a-small-business-website", label: "What it does" },
-      { id: "scene-four-moves", label: "Four moves", scene: true },
-      { id: "what-makes-an-ai-chatbot-answer-true", label: "True answers" },
-      { id: "what-should-you-check-before-an-ai-chatbot-goes-on-your-website", label: "The fine print" },
-      // Round 29 (2026-11-14): the refresh re-aimed at local owners added the teaching shape, the
-      // quiz and the sources; "What it costs" became "What it takes to run".
-      { id: "what-does-it-take-to-run-an-ai-chatbot", label: "What it takes" },
-      { id: "how-do-you-test-an-ai-chatbot-before-you-buy-it", label: "How to test one" },
-      { id: "is-an-ai-chatbot-worth-it-for-a-small-business", label: "Worth automating?" },
-      { id: "what-should-an-ai-chatbot-never-do", label: "What it will not do" },
-      { id: "scene-teardown", label: "The teardown", scene: true },
-      { id: "which-businesses-an-ai-chatbot-fits-and-which-it-does-not", label: "Who it fits" },
-      { id: "what-to-do-first-with-an-ai-chatbot", label: "Your first weeks" },
-      { id: "scene-roadmap", label: "The roadmap", scene: true },
-      { id: "common-questions-about-ai-chatbots-answered-honestly", label: "Common questions" },
+  /** A rail that silently loses a row, or a renamed heading whose short label was not renamed
+   * with it (the row then prints the full heading), is per-post, so the guard is a freeze of the
+   * rail a reader actually sees. */
+  it("derives exactly the rail the seller disclosure guide ships with", () => {
+    expect(flagshipToc(outline, SELLER_DISCLOSURE_FLAGSHIP)).toEqual([
+      { id: "the-form-is-required-on-most-sales", label: "Required on most sales" },
+      { id: "what-the-56-questions-cover", label: "The 56 questions" },
+      { id: "answer-from-what-you-actually-know", label: "How to answer" },
+      { id: "who-is-exempt", label: "Who is exempt" },
+      { id: "selling-as-is-does-not-cover-a-known-hidden-defect", label: "Selling as is" },
+      { id: "two-other-disclosures", label: "Two other disclosures" },
+      { id: "the-disclosure-plan", label: "The disclosure plan" },
+      { id: "who-this-fits", label: "Who this fits" },
+      { id: "frequently-asked-questions", label: "Common questions" },
       { id: "scene-quiz", label: "Quiz", scene: true },
-      { id: "where-does-an-ai-chatbot-go-wrong", label: "Where does an AI chatbot go wrong?" },
-      { id: "scene-system-diagram", label: "What it connects to", scene: true },
-      { id: "what-to-do-next-about-an-ai-chatbot", label: "What to do" },
-      { id: "sources", label: "Sources" },
-    ]);
-  });
-
-  /** The same freeze for topic 6. One frozen rail proved its worth on 2026-08-02, when a
-   * renamed heading left its short label pointing at a dead anchor and the rail printed the
-   * full 58-character heading instead of "The number". That failure mode is per-post, so the
-   * guard has to be per-post: the table-driven contract below checks that every label points
-   * at a heading that EXISTS, and only a freeze like this one checks that the rail a reader
-   * actually sees is the rail somebody intended. */
-  it("derives exactly the rail the review automation post shipped with", () => {
-    const reviewOutline = parseOutline(REVIEW_AUTOMATION_POST);
-    expect(flagshipToc(reviewOutline, REVIEW_FLAGSHIP)).toEqual([
-      { id: "why-is-the-claim-that-most-customers-read-reviews-not-used-here", label: "The number" },
-      { id: "scene-thresholds", label: "What they need", scene: true },
-      { id: "what-does-a-stranger-look-at-on-your-google-profile", label: "The scan" },
-      { id: "what-was-one-extra-star-worth-in-a-study-that-measured-money", label: "The study" },
-      { id: "scene-yelp-lift", label: "The money", scene: true },
-      { id: "why-does-the-ask-for-a-google-review-not-happen", label: "Why nobody asks" },
-      { id: "what-does-review-automation-actually-do", label: "What it does" },
-      { id: "scene-the-ask", label: "The four", scene: true },
-      { id: "where-is-the-line-for-asking-customers-for-google-reviews", label: "The line" },
-      { id: "scene-gating-line", label: "Both sides", scene: true },
-      { id: "what-does-the-federal-review-rule-say-about-your-own-website", label: "Your own site" },
-      { id: "scene-review-calculator", label: "Your numbers", scene: true },
-      { id: "what-should-you-do-when-a-google-review-is-genuinely-bad", label: "The bad one" },
-      { id: "how-do-you-test-a-review-tool-before-you-buy-it", label: "How to test one" },
-      // Round 28 (2026-11-11): the refresh re-aimed at local owners added the teaching shape and the quiz;
-      // "What it costs" became "What it takes to run" (the second reader read the cost lines as our pricing).
-      { id: "is-it-worth-automating-google-review-requests", label: "Worth automating?" },
-      { id: "what-does-it-take-to-run-automated-review-requests", label: "What it takes" },
-      { id: "what-does-review-automation-not-do-and-should-not-pretend-to", label: "What it will not do" },
-      { id: "who-this-fits-and-who-it-does-not", label: "Who it fits" },
-      { id: "what-should-you-do-first-to-get-more-google-reviews", label: "Your first weeks" },
-      { id: "scene-roadmap", label: "The roadmap", scene: true },
-      { id: "common-questions-answered-honestly", label: "Common questions" },
-      { id: "scene-quiz", label: "Quiz", scene: true },
-      { id: "what-should-you-do-about-your-google-reviews", label: "What to do" },
-      { id: "sources", label: "Sources" },
-    ]);
-  });
-
-  /** And the same freeze for topic 7. */
-  it("derives exactly the rail the appointment booking post shipped with", () => {
-    const bookingOutline = parseOutline(AI_APPOINTMENT_BOOKING_POST);
-    // Round 29 (2026-11-14): the refresh for local owners added "How to reduce no-shows: three moves",
-    // the teaching shape, the quiz and the sources; "What it costs" became "What it takes to run".
-    expect(flagshipToc(bookingOutline, BOOKING_FLAGSHIP)).toEqual([
-      { id: "how-to-reduce-no-shows-three-moves", label: "Three moves" },
-      { id: "why-does-the-gap-to-the-appointment-hide-the-cost-of-no-shows", label: "The gap" },
-      { id: "scene-lead-time", label: "The lead time", scene: true },
-      { id: "why-do-longer-waits-lead-to-more-no-shows", label: "Why it dies" },
-      { id: "does-a-reminder-reduce-no-shows", label: "The second half" },
-      { id: "scene-reminders", label: "The trial", scene: true },
-      { id: "what-does-an-ai-appointment-booking-system-do-to-reduce-no-shows", label: "What it does" },
-      { id: "scene-the-booking", label: "The booking", scene: true },
-      { id: "what-reading-your-calendar-should-actually-mean", label: "Your calendar" },
-      { id: "what-a-booking-is-technically-and-why-many-of-them-are-not-one", label: "What a booking is" },
-      { id: "scene-booking-path", label: "The path", scene: true },
-      { id: "scene-booking-calculator", label: "Your numbers", scene: true },
-      { id: "what-should-you-do-about-the-no-shows-that-still-happen", label: "When they miss" },
-      { id: "how-do-you-test-a-tool-to-reduce-no-shows-before-you-buy-it", label: "How to test one" },
-      { id: "is-automating-booking-and-reminders-worth-it-to-reduce-no-shows", label: "Worth automating?" },
-      { id: "what-does-it-take-to-run-booking-and-reminders-that-reduce-no-shows", label: "What it takes" },
-      { id: "what-can-ai-appointment-booking-not-do-about-no-shows", label: "What it will not do" },
-      { id: "who-this-fits-the-businesses-that-lose-money-to-no-shows", label: "Who it fits" },
-      { id: "what-should-an-owner-do-first-to-reduce-no-shows", label: "Your first weeks" },
-      { id: "scene-roadmap", label: "The roadmap", scene: true },
-      { id: "common-questions-answered-honestly", label: "Common questions" },
-      { id: "scene-quiz", label: "Quiz", scene: true },
-      { id: "what-can-you-do-about-no-shows-this-week", label: "What to do" },
-      { id: "sources", label: "Sources" },
-    ]);
-  });
-
-  /** And the same freeze for topic 8. */
-  it("derives exactly the rail the local SEO post shipped with", () => {
-    const localOutline = parseOutline(LOCAL_SEO_POST);
-    expect(flagshipToc(localOutline, LOCAL_SEO_FLAGSHIP)).toEqual([
-      // Round 29 (2026-11-14): the refresh re-aimed at local owners (plain question headings, the experts' list,
-      // the worth-it test, who it fits, what to do first, the quiz and the sources).
-      { id: "how-do-you-rank-higher-on-google-maps", label: "How to rank" },
-      { id: "scene-ranking-factors", label: "The three", scene: true },
-      { id: "what-do-local-search-experts-say-matters-most", label: "The experts" },
-      { id: "which-parts-of-the-ranking-can-you-not-change", label: "Distance" },
-      { id: "why-does-the-top-of-a-short-list-matter-so-much", label: "The top slot" },
-      { id: "how-do-reviews-affect-your-ranking-in-google-maps", label: "Reviews" },
-      { id: "what-does-google-allow-in-your-profile", label: "The rules" },
-      { id: "what-does-a-local-profile-need-week-to-week", label: "What it does" },
-      { id: "scene-the-work", label: "The work", scene: true },
-      { id: "what-is-your-google-profile-already-producing", label: "Your numbers" },
-      { id: "what-do-ads-add-compared-with-ranking-in-google-maps", label: "Renting it" },
-      { id: "scene-paid-search", label: "The experiment", scene: true },
-      { id: "is-it-worth-ranking-in-google-maps-yourself-or-having-it-done", label: "Worth doing?" },
-      { id: "what-does-it-take-and-how-long-to-rank-in-google-maps", label: "What it takes" },
-      { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
-      { id: "who-does-ranking-in-google-maps-fit-and-who-does-it-not", label: "Who it fits" },
-      { id: "how-do-you-check-where-you-rank-in-google-maps-in-ten-minutes", label: "How to check" },
-      { id: "what-should-you-do-first-to-rank-in-google-maps", label: "Your first weeks" },
-      { id: "scene-roadmap", label: "The roadmap", scene: true },
-      { id: "common-questions-answered-honestly", label: "Common questions" },
-      { id: "scene-quiz", label: "Quiz", scene: true },
-      { id: "what-should-you-do-about-your-google-maps-ranking", label: "What to do" },
-      { id: "sources", label: "Sources" },
-    ]);
-  });
-
-  /** And the same freeze for topic 9. */
-  it("derives exactly the rail the area pages post shipped with", () => {
-    const geoOutline = parseOutline(GEO_LANDING_PAGES_POST);
-    expect(flagshipToc(geoOutline, GEO_PAGES_FLAGSHIP)).toEqual([
-      { id: "doorway-pages-vs-landing-pages-what-is-the-difference", label: "Doorway or landing" },
-      { id: "why-build-town-pages-when-a-business-has-a-google-business-profile", label: "Why a page" },
-      { id: "what-does-googles-spam-policy-say-about-doorway-pages", label: "The policy" },
-      { id: "is-it-against-googles-rules-to-write-town-pages-with-ai", label: "Writing with AI" },
-      { id: "what-separates-a-real-location-page-from-a-doorway-page", label: "The line" },
-      { id: "scene-the-test", label: "The questions", scene: true },
-      { id: "can-google-tell-when-town-pages-are-the-same-page", label: "Sameness" },
-      { id: "what-goes-on-a-town-page-that-is-really-about-the-town", label: "What goes on it" },
-      { id: "scene-page-path", label: "The page", scene: true },
-      { id: "scene-geo-calculator", label: "Your numbers", scene: true },
-      { id: "do-fair-housing-rules-apply-to-a-real-estate-teams-town-pages", label: "Fair housing" },
-      { id: "scene-complaints", label: "The complaints", scene: true },
-      { id: "what-may-a-real-estate-teams-town-page-say", label: "May and may not" },
-      { id: "how-do-you-test-whether-a-town-page-is-a-doorway-page", label: "How to test one" },
-      { id: "how-many-town-pages-should-a-small-business-have", label: "How many pages" },
-      { id: "how-much-work-are-location-pages-and-how-long-do-they-take", label: "Work and time" },
-      { id: "what-can-town-pages-not-do", label: "What they will not do" },
-      { id: "common-questions-about-doorway-pages-and-location-pages", label: "Common questions" },
-      { id: "what-to-do-first-about-doorway-pages-on-your-own-site", label: "What to do" },
-      { id: "sources", label: "Sources" },
-    ]);
-  });
-
-  /** And the same freeze for topic 10. A rail that silently loses a row is the defect this
-   * exists to catch, and it can only be caught by writing down what shipped. */
-  it("derives exactly the rail the CRM sync post shipped with", () => {
-    const crmOutline = parseOutline(CRM_SYNC_POST);
-    // Round 33 (2026-11-17): the headings became the questions an owner types, a section on fixing the duplicates already
-    // there was added, the calculator moved into it, and the post gained a Sources list.
-    expect(flagshipToc(crmOutline, CRM_SYNC_FLAGSHIP)).toEqual([
-      { id: "why-does-a-crm-end-up-with-duplicate-contacts", label: "Why two" },
-      { id: "scene-two-of-her", label: "The two records", scene: true },
-      { id: "how-does-a-computer-decide-two-contacts-are-the-same-person", label: "The same person" },
-      { id: "can-a-crm-match-duplicate-contacts-by-name-alone", label: "Names" },
-      { id: "scene-surnames", label: "The surname", scene: true },
-      { id: "what-is-the-published-method-for-matching-duplicate-records", label: "The model" },
-      { id: "scene-three-answers", label: "Three answers", scene: true },
-      { id: "why-does-matching-duplicate-contacts-need-a-person-in-the-middle", label: "The third answer" },
-      { id: "scene-census-clerks", label: "What is left", scene: true },
-      { id: "what-is-two-way-crm-sync-made-of", label: "What a sync is" },
-      { id: "scene-sync-path", label: "The path", scene: true },
-      { id: "why-does-a-crm-sync-erase-a-field", label: "The erased field" },
-      { id: "why-does-the-same-update-arrive-twice", label: "Arriving twice" },
-      { id: "what-happens-when-both-systems-change-a-contact-at-once", label: "Both sides" },
-      { id: "which-system-wins-when-two-contact-records-disagree", label: "Which side wins" },
-      { id: "which-field-decides-whether-a-contact-is-new-or-a-duplicate", label: "The identity field" },
-      { id: "how-do-you-check-a-crm-for-duplicate-contacts-in-twenty-minutes", label: "How to check yours" },
-      { id: "how-do-you-fix-duplicate-contacts-already-in-a-crm", label: "Fixing what is there" },
-      { id: "scene-crm-calculator", label: "Your numbers", scene: true },
-      { id: "what-does-it-take-to-fix-duplicate-contacts-in-a-crm", label: "What it takes" },
-      { id: "what-does-a-crm-sync-not-fix", label: "What it will not do" },
-      { id: "common-questions-about-duplicate-contacts-and-crm-sync", label: "Common questions" },
-      { id: "what-to-do-first-about-duplicate-contacts-in-a-crm", label: "What to do" },
-      { id: "sources", label: "Sources" },
-    ]);
-  });
-
-  /** And the same freeze for topic 11. */
-  it("derives exactly the rail the agent workforce post shipped with", () => {
-    const agentOutline = parseOutline(AI_AGENT_WORKFORCE_POST);
-    expect(flagshipToc(agentOutline, AGENT_WORKFORCE_FLAGSHIP)).toEqual([
-      { id: "scene-tenth-morning", label: "The tenth morning", scene: true },
-      { id: "what-are-ai-employees-and-what-are-they-not", label: "What they are" },
-      { id: "scene-not-a-chatbot", label: "What it is", scene: true },
-      { id: "is-an-ai-assistant-that-is-right-once-right-every-time", label: "Right every time" },
-      { id: "what-happens-when-an-ai-assistant-does-the-same-job-again-and-again", label: "Running it again" },
-      { id: "where-do-multi-agent-ai-systems-go-wrong", label: "Where it fails" },
-      { id: "why-is-the-written-brief-the-most-important-part-of-an-ai-employee", label: "The brief" },
-      { id: "why-does-the-second-ai-assistant-cost-more-than-the-first", label: "The second one" },
-      { id: "scene-agent-path", label: "One assistant", scene: true },
-      { id: "where-does-the-money-go-when-you-run-several-ai-assistants", label: "Where money goes" },
-      { id: "scene-agent-calculator", label: "Your numbers", scene: true },
-      { id: "is-an-ai-employee-cheaper-than-a-person", label: "What a person costs" },
-      { id: "who-is-responsible-when-an-ai-employee-is-wrong", label: "Who is responsible" },
-      { id: "what-does-supervising-ai-employees-look-like", label: "Supervision" },
-      { id: "how-do-you-test-one-ai-assistant-before-you-run-four", label: "How to test one" },
-      { id: "how-many-ai-employees-can-one-owner-supervise", label: "How many to run" },
-      { id: "what-do-ai-employees-cost-and-how-long-does-the-setup-take", label: "Cost and time" },
-      { id: "what-can-ai-employees-not-do", label: "What they will not do" },
-      { id: "common-questions-about-ai-employees", label: "Common questions" },
-      { id: "what-to-do-first-about-ai-employees", label: "What to do" },
+      { id: "next-step", label: "Next step" },
       { id: "sources", label: "Sources" },
     ]);
   });
 
   it("skips scenes that declare no label, because not every scene is a destination", () => {
-    const rows = flagshipToc(outline, AI_CHAT_FLAGSHIP);
-    for (const key of ["pull-quote", "funnel", "in-short", "response-curve", "failure-modes"]) {
+    const rows = flagshipToc(outline, SELLER_DISCLOSURE_FLAGSHIP);
+    for (const key of ["form-timeline", "form-anatomy", "four-answers", "who-files", "lead-paint", "disclosure-plan", "prep-sheet"]) {
       expect(rows.some((r) => r.id === `scene-${key}`)).toBe(false);
     }
   });
 
   it("falls back to the heading's own text when no short label is given", () => {
-    expect(AI_CHAT_FLAGSHIP.headingLabels).not.toHaveProperty("where-does-an-ai-chatbot-go-wrong");
-    expect(flagshipToc(outline, AI_CHAT_FLAGSHIP)).toContainEqual({
-      id: "where-does-an-ai-chatbot-go-wrong",
-      label: "Where does an AI chatbot go wrong?",
-    });
+    expect(SELLER_DISCLOSURE_FLAGSHIP.headingLabels).not.toHaveProperty("who-is-exempt");
+    expect(flagshipToc(outline, SELLER_DISCLOSURE_FLAGSHIP)).toContainEqual({ id: "who-is-exempt", label: "Who is exempt" });
   });
 
   it("emits nothing but headings when a post has no scene content", () => {
@@ -330,30 +76,8 @@ describe("flagshipToc", () => {
  * nobody notices. Adding a topic is a row here, so a new topic is covered by construction
  * rather than by whoever wrote it remembering to duplicate the file. */
 const TOPICS: [string, string, FlagshipContent][] = [
-  ["ai chat assistant", AI_CHAT_ASSISTANT_POST, AI_CHAT_FLAGSHIP],
-  ["ai voice agents", AI_VOICE_AGENTS_POST, AI_VOICE_FLAGSHIP],
-  ["database reactivation", DATABASE_REACTIVATION_POST, REACTIVATION_FLAGSHIP],
-  ["lead qualification", LEAD_QUALIFICATION_POST, QUALIFY_FLAGSHIP],
-  ["workflow automation", WORKFLOW_AUTOMATION_POST, WORKFLOW_FLAGSHIP],
-  ["review automation", REVIEW_AUTOMATION_POST, REVIEW_FLAGSHIP],
-  ["ai appointment booking", AI_APPOINTMENT_BOOKING_POST, BOOKING_FLAGSHIP],
-  ["local seo", LOCAL_SEO_POST, LOCAL_SEO_FLAGSHIP],
-  ["geo landing pages", GEO_LANDING_PAGES_POST, GEO_PAGES_FLAGSHIP],
-  ["crm sync", CRM_SYNC_POST, CRM_SYNC_FLAGSHIP],
-  ["ai agent workforce", AI_AGENT_WORKFORCE_POST, AGENT_WORKFORCE_FLAGSHIP],
-  ["marketing automation", MARKETING_AUTOMATION_POST, MARKETING_AUTOMATION_FLAGSHIP],
-  ["document processing", DOCUMENT_PROCESSING_POST, DOCUMENT_PROCESSING_FLAGSHIP],
-  ["data enrichment", DATA_ENRICHMENT_POST, DATA_ENRICHMENT_FLAGSHIP],
-  ["ai scheduling", AI_SCHEDULING_POST, SCHEDULING_FLAGSHIP],
-  ["invoicing and payments", INVOICING_POST, INVOICING_FLAGSHIP],
-  ["ai clone", AI_CLONE_POST, CLONE_FLAGSHIP],
-  ["ai audit", AI_AUDIT_POST, AUDIT_FLAGSHIP],
-  ["custom automation", CUSTOM_AUTOMATION_POST, CUSTOM_FLAGSHIP],
-  // Topic 21, 2026-08-27. The first flagship whose scenes are ALL primitives: no `component`
-  // escape hatch anywhere in its payload, which is what the template was generalised for.
-  ["the singularity", SINGULARITY_POST, SINGULARITY_FLAGSHIP],
   // Round 14, 2026-10-30. The first consumer post built as a flagship, and the first topic whose
-  // figures use the round-14 kinds (bars, cells, timeline, flow, tiles, steps).
+  // figures use the round-14 kinds (cells, timeline, flow, tiles, steps).
   ["seller disclosure", SELLER_DISCLOSURE_POST, SELLER_DISCLOSURE_FLAGSHIP],
 ];
 
@@ -404,22 +128,10 @@ describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) =
     expect(markers.length).toBeGreaterThanOrEqual(5);
   });
 
-  /** The honesty invariants. TypeScript forces the FIELDS to exist; these force them to say
-   * something. A cited chart whose source is a blank string, or whose caveat is empty, passes
-   * the compiler and fails the reader. */
-  it("gives every cited data graphic a live source and a real caveat", () => {
-    for (const [key, scene] of Object.entries(content.scenes)) {
-      if (scene.kind !== "statbars") continue;
-      expect(scene.sourceHref, `scene ${key}`).toMatch(/^https:\/\//);
-      expect(scene.note.trim().length, `scene ${key} caveat`).toBeGreaterThan(20);
-      expect(scene.bars.length, `scene ${key} bars`).toBeGreaterThan(1);
-    }
-  });
-
   /** The round-14 figure kinds carry their citation as a list rather than one field. A figure
    * with an empty source list passes the compiler and reads as an illustration of nothing. */
   it("gives every round-14 figure a source line and a one-sentence alt", () => {
-    const FIGURES = ["bars", "cells", "timeline", "flow", "tiles", "steps"];
+    const FIGURES = ["cells", "timeline", "flow", "tiles", "steps"];
     for (const [key, scene] of Object.entries(content.scenes)) {
       if (!FIGURES.includes(scene.kind) || !("sources" in scene)) continue;
       expect(scene.sources.length, `scene ${key} sources`).toBeGreaterThan(0);
@@ -429,50 +141,10 @@ describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) =
     }
   });
 
-  it("makes every staged conversation admit that it is staged", () => {
-    for (const [key, scene] of Object.entries(content.scenes)) {
-      if (scene.kind !== "conversation") continue;
-      expect(scene.note.trim().length, `scene ${key} note`).toBeGreaterThan(10);
-      expect(scene.turns.length, `scene ${key} turns`).toBeGreaterThan(1);
-    }
-  });
-
-  /** A film scene with no film renders nothing, which is a silent hole in the page rather
-   * than an error. Catch it here instead of in a screenshot. */
-  it("only places a film scene when the topic actually has a film", () => {
-    const placesFilm = Object.values(content.scenes).some((s) => s.kind === "film");
-    if (placesFilm) expect(content.film).toBeDefined();
-  });
-
-  /** A scene REPLACES the prose it stages; it never echoes it. The rule is written down in
-   * STANDARD.md and in the Grid primitive's own docstring, and until 2026-08-03 one scene in
-   * the cohort broke it: the voice post's pull quote opened with "A phone call has no typing
-   * indicator", word for word the first sentence of a body paragraph two screens above.
+  /** A scene REPLACES the prose it stages; it never echoes it.
    *
-   * A pull quote that lifts a nearby sentence is a copy and paste rather than a distillation,
-   * and the reader meets the same words twice on a page whose whole standard is that nothing
-   * is said twice. Nine of the ten statements were already original; this catches the tenth.
-   *
-   * Held to whole sentences of five words or more, so a shared phrase that is just the
-   * topic's own vocabulary cannot trip it. That distinction is the same one the sibling
-   * overlap metric had to learn: repeating a SENTENCE is the failure, repeating a NOUN is not. */
-  it("never puts a body sentence into a held statement scene", () => {
-    const flat = body.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ");
-    for (const [key, scene] of Object.entries(content.scenes)) {
-      if (scene.kind !== "statement") continue;
-      const echoes = scene.text
-        .split(/(?<=[.!?])\s+/)
-        .map((s) => s.trim())
-        .filter((s) => s.split(/\s+/).length >= 5)
-        .filter((s) => flat.includes(s.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim()));
-      expect(echoes, `scene ${key} repeats the body verbatim`).toEqual([]);
-    }
-  });
-
-  /** The same rule, everywhere the copy actually lives.
-   *
-   * The check above has guarded `statement` scenes since 2026-08-03, and only their `text`.
-   * Rounds F, G and H then found TWENTY-THREE echoes it could not see, every one of them in a
+   * A check on held `statement` scenes (a kind that moved with the AI posts) guarded only their
+   * `text` from 2026-08-03. Rounds F, G and H then found TWENTY-THREE echoes it could not see, every one of them in a
    * chart `note`, a grid card `body`, a caption or a footnote — and each round's log recommended
    * building this and moved on, four times. Round H's log put it plainly: "the test to catch
    * them has been recommended four times and never built."
@@ -481,7 +153,7 @@ describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) =
    * asset fields are skipped (see SKIP): a `src` or a licence name is not prose about the
    * subject and can legitimately repeat anything.
    *
-   * The threshold is EIGHT words, not the five above. A grid card's label is short and shares
+   * The threshold is EIGHT words, not five. A grid card's label is short and shares
    * the topic's vocabulary by design, so five words produces false positives on exactly the
    * fields this is meant to cover; eight words is a sentence somebody wrote twice. That is the
    * same distinction the sibling-overlap metric had to learn: repeating a SENTENCE is the
@@ -520,10 +192,9 @@ describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) =
   });
 });
 
-/** Round 16 (the owner, 2026-10-31): the AI audit post's floating list "is full on the whole
- * screen" and "shows things twice" (two "Who stays on the job", two "How the audit runs", two
- * "What you get"). It had 32 rows: every H2 plus every labelled scene, several labelled with
- * their own section's words. flagshipToc now gives one entry per section. */
+/** Round 16 (the owner, 2026-10-31): a flagship's floating list "is full on the whole screen"
+ * and "shows things twice". It had 32 rows: every H2 plus every labelled scene, several labelled
+ * with their own section's words. flagshipToc now gives one entry per section. */
 describe("flagshipToc: one entry per section, no row twice", () => {
   const key = (label: string) => [...railWords(label)].sort().join(" ");
 
@@ -536,10 +207,10 @@ describe("flagshipToc: one entry per section, no row twice", () => {
   it("drops a scene that repeats a heading anywhere, or its own section's words, and keeps the rest", () => {
     const content = {
       scenes: {
-        same: { kind: "plate", band: "light", label: "How it runs" },
-        inside: { kind: "plate", band: "light", label: "Not to automate" },
-        own: { kind: "plate", band: "light", label: "The booking" },
-        tool: { kind: "calculator", band: "light", label: "Your numbers" },
+        same: { kind: "tiles", band: "light", label: "How it runs" },
+        inside: { kind: "tiles", band: "light", label: "Not to automate" },
+        own: { kind: "tiles", band: "light", label: "The booking" },
+        tool: { kind: "steps", band: "light", label: "Your numbers" },
       },
       headingLabels: { b: "What not to automate" },
     } as unknown as FlagshipContent;
@@ -558,23 +229,6 @@ describe("flagshipToc: one entry per section, no row twice", () => {
       content,
     );
     expect(rows.map((r) => r.label)).toEqual(["How it runs", "What not to automate", "What it does", "The booking", "Your numbers", "What a booking is"]);
-  });
-
-  it("gives the real AI audit post a short rail with no repeated words", () => {
-    const o = parseOutline(AI_AUDIT_POST);
-    const rows = flagshipToc(o, AUDIT_FLAGSHIP);
-    const keys = rows.map((r) => key(r.label));
-    expect(new Set(keys).size).toBe(keys.length);
-    const headings = o.filter((e) => e.kind === "heading" && e.level <= 2) as { id: string; text: string }[];
-    const headingKeys = new Set(headings.map((h) => key(AUDIT_FLAGSHIP.headingLabels?.[h.id] ?? h.text)));
-    // A scene is its own destination only when its label says something no heading says.
-    const destinations = o.filter(
-      (e) => e.kind === "scene" && AUDIT_FLAGSHIP.scenes[e.key]?.label && !headingKeys.has(key(AUDIT_FLAGSHIP.scenes[e.key].label!)),
-    );
-    expect(rows.length).toBeLessThanOrEqual(headings.length + destinations.length);
-    expect(rows.length).toBeLessThanOrEqual(18);
-    for (const label of ["Who stays on the job", "How the assessment runs", "What you get", "Your roadmap"])
-      expect(rows.filter((r) => key(r.label) === key(label)), label).toHaveLength(1);
   });
 
   it.each(TOPICS)("never repeats a row's words on the %s rail", (_name, body, content) => {

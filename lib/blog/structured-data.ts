@@ -1,5 +1,4 @@
-/** JSON-LD for an article page, mirrored on lib/services/index.ts so both surfaces feed
- * crawlers the same shapes. Pure functions, unit-tested without rendering React.
+/** JSON-LD for an article page. Pure functions, unit-tested without rendering React.
  *
  * `BlogPosting` says what the article is and who published it; `BreadcrumbList` places it;
  * `FAQPage` is the part an assistant quotes verbatim, emitted only when the body actually
@@ -81,45 +80,14 @@ export function faqJsonLd(faqs: FaqPair[], article: Article) {
   };
 }
 
-/** A film the article serves itself. `uploadDate` is the article's own revision date rather
- * than an invented one, on the same principle as dateModified: the film shipped with the
- * revision that introduced it. */
-export function videoJsonLd(article: Article) {
-  const film = article.film!;
-  const abs = (p: string) => (p.startsWith("http") ? p : `${SITE.url}${p}`);
-  return {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    "@id": `${articleUrl(article)}#film`,
-    name: film.name,
-    description: film.description,
-    thumbnailUrl: [abs(film.poster)],
-    contentUrl: abs(film.src),
-    embedUrl: articleUrl(article),
-    uploadDate: article.updated || article.date,
-    duration: film.duration,
-    width: film.width,
-    height: film.height,
-    isFamilyFriendly: true,
-    publisher: {
-      "@type": "Organization",
-      name: SITE.name,
-      url: SITE.url,
-      logo: { "@type": "ImageObject", url: `${SITE.url}/og-realtylt.png` },
-    },
-  };
-}
-
 /** Every JSON-LD block an article page emits, in order. FAQPage only when a Q&A section
- * exists in a markdown body; VideoObject only when the article actually serves a film, so a
- * page can never advertise a video that is not there. */
+ * exists in a markdown body. */
 export function articleStructuredData(article: Article): object[] {
   const blocks: object[] = [articleJsonLd(article), breadcrumbJsonLd(article)];
   if (article.body.kind === "markdown") {
     const faqs = extractFaqs(article.body.markdown);
     if (faqs.length) blocks.push(faqJsonLd(faqs, article));
   }
-  if (article.film) blocks.push(videoJsonLd(article));
   return blocks;
 }
 

@@ -7,19 +7,17 @@
 // dynamically rendered page STREAMS its metadata into <body> (title at byte 37,260, </head> at
 // 2,075 on /who-we-are) and React hoists it after hydration; Bingbot and facebookexternalhit
 // are on Next's html-limited list and get it blocking, inside <head>. So the head checks below
-// hold for the strictest reader. In dev EVERY page is dynamic; on prod the posts and services
-// are static and carry their metadata in <head> for everyone.
-// Surfaces = every <loc> in /sitemap.xml plus every /blog/* and /services/* on the indexes.
-// /ai is another repo's page behind a rewrite and is not audited here.
+// hold for the strictest reader. In dev EVERY page is dynamic; on prod the posts are static and
+// carry their metadata in <head> for everyone.
+// Surfaces = every <loc> in /sitemap.xml plus every /blog/* on the blog index.
+// (The service pages, their rules and /ai moved to the AI business's own site on 2026-11-20.)
 //
 //   META       title present, page part <= 60 chars (the " | RealtyLT" suffix may truncate
 //              harmlessly); description 70-160; exactly one h1; canonical = own URL; og:title,
 //              og:description, og:image, og:url (= canonical), twitter:card; no noindex;
 //              titles, descriptions and h1s unique across the site
-//   KEYWORDS   services: the primary keyword's words all appear in title+h1+description, and
-//              some keyword phrase's words all appear in the first 100 words of prose
-//   LINKS-IN   every post links its service page and >= 2 other posts; every service links
-//              its post and >= 2 other services; nothing is an orphan (>= 1 inbound link from
+//   KEYWORDS   posts: the <title> shares at least three words with the slug
+//   LINKS-IN   every post links >= 2 other posts; no post is an orphan (>= 1 inbound link from
 //              a page that is not an index)
 //   ANCHORS    every internal link in <main> gives a crawler real anchor text: visible text,
 //              an img alt, or a title attribute. aria-label alone is NOT anchor text (Google's
@@ -28,9 +26,8 @@
 //   LINKS-OUT  target=_blank carries rel noopener; citations are followed (no nofollow on an
 //              editorial source); with --external every unique outbound URL is fetched:
 //              404/410/5xx/DNS = FAIL, 401/403/429 = "bot-blocked, check by hand" (listed)
-//   SITEMAP    every post and service is in the sitemap and every sitemap path resolves 200
-//   JSON-LD    every block parses; posts carry BlogPosting (headline, datePublished, author),
-//              services carry Service; FAQPage where the page shows FAQs
+//   SITEMAP    every post is in the sitemap and every sitemap path resolves 200
+//   JSON-LD    every block parses; posts carry BlogPosting (headline, datePublished, author)
 //
 // Usage:
 //   node scripts/seo-audit.mjs                 # everything except outbound fetches
@@ -65,7 +62,6 @@ const words = (s) => s.toLowerCase().replace(/[^a-z0-9 ]+/g, " ").split(/\s+/).f
 /** "agents" matches "agent", "invoicing" matches "invoice", "automated" matches "automation":
  * compare on a crude stem. Crude on purpose: it only ever has to agree with itself. */
 const stem = (w) => (w.length <= 4 ? w : w.replace(/ies$/, "y").replace(/(?:ing|ion|ed|es|s|e)$/, ""));
-const hasAll = (needle, hay) => { const h = new Set(words(hay).map(stem)); return words(needle).filter((w) => !STOP.has(w)).every((w) => h.has(stem(w))); };
 
 /** A page that cannot be fetched is a FINDING ("STATUS fetch failed: ..."), never a crash: on
  * 2026-09-19 one dev-server timeout threw out of this function and the whole audit died with a
@@ -118,29 +114,12 @@ export function parsePage(html) {
     // owns that box), and a crawler does not care which landmark an h1 sits in.
     h1s: [...html.replace(/<(script|style|noscript)[\s>][\s\S]*?<\/\1>/gi, " ").matchAll(/<h1[\s>][\s\S]*?<\/h1>/gi)].map((m) => text(m[0])),
     links,
-    // Everything a reader meets first, in page order: breadcrumb, eyebrow, h1, lede, chips.
-    // Headings count; a crawler does not skip them on its way to the first paragraph.
-    first100: words(text(mainClean)).slice(0, 100).join(" "),
-    hasFaqUi: /<details|faq/i.test(mainClean),
     jsonld,
   };
 }
 
 const typesOf = (blocks) => blocks.flatMap((b) => (Array.isArray(b) ? b : b["@graph"] || [b])).map((b) => b["@type"]).flat().filter(Boolean);
 const pathOf = (url) => { try { return new URL(url, BASE).pathname.replace(/\/$/, "") || "/"; } catch { return url; } };
-
-/** Service keyword arrays, read from source: the page does not print them. */
-function serviceKeywords() {
-  const out = {};
-  for (const f of fs.readdirSync("content/services").filter((x) => x.endsWith(".ts") && !/^(index|types)\./.test(x))) {
-    const s = fs.readFileSync(`content/services/${f}`, "utf8");
-    const slug = (s.match(/slug:\s*"([^"]+)"/) || [])[1];
-    const kw = (s.match(/keywords:\s*\[([\s\S]*?)\]/) || [, ""])[1];
-    const posts = (s.match(/relatedPosts:\s*\[([\s\S]*?)\]/) || [, ""])[1];
-    if (slug) out[slug] = { keywords: [...kw.matchAll(/"([^"]+)"/g)].map((m) => m[1]), relatedPosts: [...posts.matchAll(/"([^"]+)"/g)].map((m) => m[1]) };
-  }
-  return out;
-}
 
 const isMain = process.argv[1] && process.argv[1].replace(/\\/g, "/").endsWith("seo-audit.mjs");
 if (isMain) {
@@ -151,11 +130,11 @@ if (isMain) {
   const sm = await get("/sitemap.xml");
   const sitemapPaths = [...sm.html.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => pathOf(m[1]));
   const indexed = new Set();
-  for (const idx of ["/blog", "/services"]) {
-    const { html } = await get(idx);
-    for (const m of html.matchAll(/href="(\/(?:blog|services)\/[a-z0-9-]+)"/g)) indexed.add(m[1]);
+  {
+    const { html } = await get("/blog");
+    for (const m of html.matchAll(/href="(\/blog\/[a-z0-9-]+)"/g)) indexed.add(m[1]);
   }
-  const all = [...new Set([...sitemapPaths, ...indexed])].filter((p) => p !== "/ai");
+  const all = [...new Set([...sitemapPaths, ...indexed])];
   const surfaces = only ? [only] : all;
   for (const p of indexed) if (!sitemapPaths.includes(p)) flag(p, "SITEMAP: on an index page but missing from sitemap.xml");
 
@@ -167,12 +146,7 @@ if (isMain) {
     pages[p] = parsePage(html);
   }
 
-  const kw = serviceKeywords();
   const isPost = (p) => /^\/blog\/[a-z0-9-]+$/.test(p);
-  const isService = (p) => /^\/services\/[a-z0-9-]+$/.test(p);
-  /** post slug -> service path, from the services' own relatedPosts[0] (the topic's post). */
-  const serviceOfPost = {};
-  for (const [slug, v] of Object.entries(kw)) if (v.relatedPosts[0]) serviceOfPost[v.relatedPosts[0]] ??= `/services/${slug}`;
 
   // ---- per page -------------------------------------------------------------------------
   const seen = { title: {}, description: {}, h1: {} };
@@ -196,20 +170,10 @@ if (isMain) {
     if (d.description) (seen.description[d.description] ||= []).push(p);
     if (d.h1s[0]) (seen.h1[d.h1s[0]] ||= []).push(p);
 
-    if (isService(p)) {
-      const k = kw[p.split("/").pop()];
-      if (!k || !k.keywords.length) flag(p, "KEYWORDS: no keywords array in source");
-      else {
-        const front = `${d.title} ${d.h1s.join(" ")} ${d.description}`;
-        if (!hasAll(k.keywords[0], front)) flag(p, `KEYWORDS: primary "${k.keywords[0]}" not covered by title + h1 + description`);
-        if (!k.keywords.some((x) => hasAll(x, d.first100))) flag(p, `KEYWORDS: no keyword phrase is covered by the first 100 words (${k.keywords.slice(0, 3).join(" | ")})`);
-      }
-    }
-
     const internal = d.links.filter((l) => l.href.startsWith("/") && !l.href.startsWith("//"));
     for (const l of internal) {
       const to = pathOf(l.href.split("#")[0] || "/");
-      if (to !== p && !["/blog", "/services", "/"].includes(p)) (inbound[to] ||= new Set()).add(p);
+      if (to !== p && !["/blog", "/"].includes(p)) (inbound[to] ||= new Set()).add(p);
       const anchor = (l.text || l.alt || l.title).trim();
       if (!anchor) flag(p, `ANCHORS: empty anchor text -> ${l.href}${l.aria ? ` (aria-label only: "${l.aria.slice(0, 50)}")` : ""}`);
       else if (LAZY_ANCHORS.has(anchor.toLowerCase())) flag(p, `ANCHORS: lazy anchor "${anchor}" -> ${l.href}`);
@@ -224,9 +188,7 @@ if (isMain) {
 
     if (isPost(p)) {
       const slug = p.split("/").pop();
-      const svc = serviceOfPost[slug];
       const posts = new Set(internal.map((l) => pathOf(l.href.split("#")[0])).filter((x) => isPost(x) && x !== p));
-      if (svc && !internal.some((l) => pathOf(l.href.split("#")[0]) === svc)) flag(p, `LINKS-IN: does not link its service page ${svc}`);
       if (posts.size < 2) flag(p, `LINKS-IN: links ${posts.size} other posts (< 2)`);
       // A post's keyword is the phrase its slug was chosen for. The H1 is a story line and is
       // allowed to carry none of it; the <title> tag is not (BlogPost.seoTitle).
@@ -242,22 +204,12 @@ if (isMain) {
         if (bp.dateModified && bp.datePublished && bp.dateModified < bp.datePublished) flag(p, "JSON-LD: dateModified earlier than datePublished");
       }
     }
-    if (isService(p)) {
-      const slug = p.split("/").pop();
-      const post = kw[slug]?.relatedPosts[0];
-      const services = new Set(internal.map((l) => pathOf(l.href.split("#")[0])).filter((x) => isService(x) && x !== p));
-      if (post && !internal.some((l) => pathOf(l.href.split("#")[0]) === `/blog/${post}`)) flag(p, `LINKS-IN: does not link its post /blog/${post}`);
-      if (services.size < 2) flag(p, `LINKS-IN: links ${services.size} other services (< 2)`);
-      const t = typesOf(d.jsonld);
-      if (!t.includes("Service")) flag(p, "JSON-LD: no Service");
-      if (d.hasFaqUi && !t.includes("FAQPage")) flag(p, "JSON-LD: FAQ on the page but no FAQPage");
-    }
     for (const b of d.jsonld) if (b.PARSE_ERROR) flag(p, `JSON-LD: does not parse (${b.PARSE_ERROR})`);
   }
 
   if (!only) {
     for (const [kind, map] of Object.entries(seen)) for (const [val, ps] of Object.entries(map)) if (val && ps.length > 1) for (const p of ps) flag(p, `META: duplicate ${kind} shared with ${ps.filter((x) => x !== p).join(", ")}`);
-    for (const p of Object.keys(pages)) if ((isPost(p) || isService(p)) && !(inbound[p] && inbound[p].size)) flag(p, "LINKS-IN: orphan (no inbound link from any non-index page)");
+    for (const p of Object.keys(pages)) if (isPost(p) && !(inbound[p] && inbound[p].size)) flag(p, "LINKS-IN: orphan (no inbound link from any non-index page)");
   }
 
   // ---- outbound -------------------------------------------------------------------------

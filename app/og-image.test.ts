@@ -23,8 +23,6 @@ function pngSize(file: string): { w: number; h: number } {
 describe("the share card", () => {
   const refs = [
     "app/layout.tsx",
-    "app/services/page.tsx",
-    "app/services/[slug]/page.tsx",
     "components/listing/ListingDetail.tsx",
     "lib/blog/structured-data.ts",
   ];

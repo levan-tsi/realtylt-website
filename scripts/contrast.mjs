@@ -6,13 +6,10 @@
 import { chromium } from "playwright";
 
 const BASE = process.argv[2] || "http://localhost:3111";
+// The service pages and AI posts this audited moved to their own site on 2026-11-20.
 const PAGES = [
-  "/services",
-  "/services/ai-chat-assistant",
-  "/services/ai-voice-agents",
-  "/services/skip-tracing-lead-generation",
-  "/services/workflow-automation",
-  "/blog/ai-chat-assistant-real-estate-website",
+  "/blog",
+  "/blog/seller-disclosure-requirements-new-york",
 ];
 
 const browser = await chromium.launch();

@@ -7,11 +7,8 @@ import { LETTERS, scoreQuiz, shuffleQuiz } from "@/lib/blog/quiz";
 /** PRIMITIVE: a short quiz on what the post taught. Round 15, 2026-10-31.
  *
  * The owner's brief, in his words: "a little quiz at the end: what did you learn, multiple
- * choice, about 10 questions, four answers each, the result at the end. Below 50 percent: it
- * takes you to the black hole and tells you to try again. Pass: the galaxy comes out and the
- * brain shines." For the real estate posts the same scene draws a house: dark on a fail, the
- * porch light and the windows on, and the stars out, on a pass. The two brands never share a
- * motif, so `brand` picks the whole drawing rather than a colour.
+ * choice, about 10 questions, four answers each, the result at the end." The result draws a
+ * house: dark on a fail, the porch light and the windows on, and the stars out, on a pass.
  *
  * WITHOUT JAVASCRIPT the server markup is the whole quiz as a list, each answer folded inside a
  * <details>, so nothing is hidden behind a script. With JavaScript the list is swapped for the
@@ -22,11 +19,9 @@ import { LETTERS, scoreQuiz, shuffleQuiz } from "@/lib/blog/quiz";
  * line of why, and the wrong pick is marked in words as well as in colour.
  *
  * Motion is CSS only and every animated part rests on its finished frame, so reduced motion
- * (and the site's own reduced-motion block) gets the lit brain or the lit house, standing still. */
+ * (and the site's own reduced-motion block) gets the lit house, standing still. */
 
-type Brand = "ai" | "realtylt";
-
-const ACCENT: Record<Brand, string> = { ai: "#c79bff", realtylt: "#28a8e0" };
+const ACCENT = "#28a8e0";
 const WRONG = "#f2a38f";
 
 export function Quiz({
@@ -34,7 +29,6 @@ export function Quiz({
   ariaLabel,
   eyebrow,
   title,
-  brand,
   questions,
   passLine,
   failLine,
@@ -43,7 +37,6 @@ export function Quiz({
   ariaLabel: string;
   eyebrow: string;
   title: string;
-  brand: Brand;
   questions: QuizQuestion[];
   passLine: string;
   failLine: string;
@@ -75,7 +68,7 @@ export function Quiz({
   const muted = dark ? "text-paper/65" : "text-stone";
   const strong = dark ? "text-paper" : "text-ink";
   const rule = dark ? "border-white/15" : "border-line-strong";
-  const accent = ACCENT[brand];
+  const accent = ACCENT;
 
   const start = () => {
     moved.current = true;
@@ -101,7 +94,6 @@ export function Quiz({
           <QuizList questions={questions} dark={dark} muted={muted} strong={strong} rule={rule} />
         ) : done ? (
           <Result
-            brand={brand}
             dark={dark}
             score={scoreQuiz(run, picks)}
             passLine={passLine}
@@ -321,7 +313,6 @@ function Ask({
 }
 
 function Result({
-  brand,
   dark,
   score,
   passLine,
@@ -332,7 +323,6 @@ function Result({
   strong,
   accent,
 }: {
-  brand: Brand;
   dark: boolean;
   score: ReturnType<typeof scoreQuiz>;
   passLine: string;
@@ -344,22 +334,12 @@ function Result({
   accent: string;
 }) {
   const pass = score.passed;
-  const heading =
-    brand === "ai"
-      ? pass
-        ? "The galaxy is out and the brain is lit"
-        : "The black hole: try again"
-      : pass
-        ? "The porch light is on"
-        : "The house stays dark: try again";
-  const link =
-    brand === "ai"
-      ? { label: "Talk to us about an AI assessment", href: "/connect" }
-      : { label: "Talk to Levan", href: "/connect" };
+  const heading = pass ? "The porch light is on" : "The house stays dark: try again";
+  const link = { label: "Talk to Levan", href: "/connect" };
   return (
     <div className="mt-10 grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]" data-quiz-result={pass ? "pass" : "fail"}>
       <div className="mx-auto w-full max-w-[26rem] md:order-2">
-        <QuizArt brand={brand} pass={pass} />
+        <House lit={pass} />
       </div>
       <div aria-live="polite">
         <p className={`text-sm font-bold uppercase tracking-[0.16em] ${muted}`}>Your score</p>
@@ -410,12 +390,6 @@ function Result({
   );
 }
 
-/** The result drawing for a brand and an outcome. Exported so the four states can be rendered
- * and looked at on their own. */
-export function QuizArt({ brand, pass }: { brand: Brand; pass: boolean }) {
-  return brand === "ai" ? pass ? <GalaxyBrain /> : <BlackHole /> : <House lit={pass} />;
-}
-
 function Tick() {
   return (
     <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden>
@@ -443,8 +417,8 @@ function seeded(seed: number) {
   };
 }
 
-/** A spiral galaxy as dots: two arms plus a scatter. Wider than the brain, so the arms show
- * on both sides of it. */
+/** A field of dots: two spiral arms plus a scatter. The house's stars are a subset of it, so
+ * the generator stays exactly as drawn and the stars land where they always have. */
 const GALAXY = (() => {
   const r = seeded(7);
   const pts: { x: number; y: number; s: number; o: number }[] = [];
@@ -462,116 +436,8 @@ const GALAXY = (() => {
   return pts;
 })();
 
-/** The brain, side view facing left: the outline, the fold between the lobes, the cerebellum
- * and the stem, the folds (gyri) that make it read as a brain at phone size, and a small
- * network of nodes inside it. Drawn at 0.82 scale around the middle of the galaxy. */
-const BRAIN_OUTLINE =
-  "M110,142 C100,104 128,70 168,62 C194,48 240,50 264,68 C294,76 310,104 304,132 C308,152 294,168 276,170 C264,178 248,180 238,174 C226,186 204,190 188,182 C166,188 142,180 132,168 C118,164 110,154 110,142 Z";
-const BRAIN_FOLDS = [
-  "M146,96 C156,84 170,100 182,88 C194,76 206,92 218,80",
-  "M228,80 C238,94 252,82 262,96 C270,106 284,98 290,112",
-  "M126,126 C138,114 152,130 164,118 C176,106 190,122 204,110",
-  "M214,110 C226,124 240,112 252,124 C262,134 276,126 290,140",
-  "M138,156 C164,144 204,148 236,164",
-  "M196,62 C204,78 194,94 204,108",
-];
-const CEREBELLUM = "M246,176 C250,196 284,198 292,176";
-const CEREBELLUM_LINES = ["M254,182 C264,188 278,188 286,180", "M258,190 C266,194 276,194 282,188"];
-const BRAIN_STEM = "M234,180 C236,198 230,212 224,226";
-const NODES: [number, number][] = [
-  [140, 112], [170, 80], [208, 68], [244, 82], [276, 106], [152, 146], [186, 118],
-  [224, 102], [262, 138], [196, 160], [230, 140], [168, 136], [288, 124],
-];
-const LINKS: [number, number][] = [
-  [0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [0, 6], [1, 6], [6, 7], [2, 7], [7, 3], [7, 10], [4, 8],
-  [10, 8], [6, 11], [11, 5], [11, 9], [9, 10], [6, 10], [4, 12], [12, 8],
-];
-
-function GalaxyBrain() {
-  return (
-    <svg viewBox="0 0 400 260" className="h-auto w-full" role="img" aria-label="A spiral galaxy opens behind a drawn brain whose network lights up.">
-      <defs>
-        <filter id="qz-glow" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="3.2" result="b" />
-          <feMerge>
-            <feMergeNode in="b" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-        <radialGradient id="qz-core" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#c79bff" stopOpacity="0.55" />
-          <stop offset="100%" stopColor="#c79bff" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <g className="qz-galaxy">
-        <ellipse cx="200" cy="130" rx="190" ry="92" fill="url(#qz-core)" opacity="0.5" />
-        {GALAXY.map((p, i) => (
-          <circle key={i} cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r={p.s.toFixed(2)} fill="#f2f2ee" opacity={p.o.toFixed(2)} />
-        ))}
-      </g>
-      <g className="qz-brain" filter="url(#qz-glow)" transform="translate(36 22) scale(0.82)">
-        <path d={BRAIN_OUTLINE} fill="rgba(10,8,20,0.78)" stroke="#c79bff" strokeWidth="2.4" className="qz-draw" pathLength={1} />
-        <path d={CEREBELLUM} fill="rgba(10,8,20,0.78)" stroke="#c79bff" strokeWidth="2.2" className="qz-draw" pathLength={1} />
-        <path d={BRAIN_STEM} fill="none" stroke="#c79bff" strokeWidth="2.4" strokeLinecap="round" className="qz-draw" pathLength={1} />
-        {[...BRAIN_FOLDS, ...CEREBELLUM_LINES].map((d) => (
-          <path key={d} d={d} fill="none" stroke="#a78bfa" strokeWidth="1.7" strokeLinecap="round" opacity="0.75" className="qz-draw" pathLength={1} />
-        ))}
-        {LINKS.map(([a, b]) => (
-          <line key={`${a}-${b}`} x1={NODES[a][0]} y1={NODES[a][1]} x2={NODES[b][0]} y2={NODES[b][1]} stroke="#e4d4ff" strokeWidth="1" opacity="0.5" className="qz-link" />
-        ))}
-        {NODES.map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r="3.6" fill="#f4ecff" className="qz-node" style={{ animationDelay: `${0.9 + i * 0.07}s` }} />
-        ))}
-      </g>
-    </svg>
-  );
-}
-
-/** The black hole: a dark core inside a slow swirl. */
-const SWIRL = (() => {
-  const arms: string[] = [];
-  for (let arm = 0; arm < 4; arm += 1) {
-    const pts: string[] = [];
-    for (let k = 0; k <= 40; k += 1) {
-      const t = k / 40;
-      const a = arm * (Math.PI / 2) + t * 5.2;
-      const rad = 120 - t * 88;
-      pts.push(`${(200 + Math.cos(a) * rad).toFixed(1)},${(130 + Math.sin(a) * rad * 0.5).toFixed(1)}`);
-    }
-    arms.push(`M${pts.join(" L")}`);
-  }
-  return arms;
-})();
-const DIM_STARS = GALAXY.filter((_, i) => i % 5 === 0);
-
-function BlackHole() {
-  return (
-    <svg viewBox="0 0 400 260" className="h-auto w-full" role="img" aria-label="A dark vortex: stars drawn into a black hole.">
-      <defs>
-        <radialGradient id="qz-rim" cx="50%" cy="50%" r="50%">
-          <stop offset="55%" stopColor="#000" stopOpacity="1" />
-          <stop offset="72%" stopColor="#8b5cf6" stopOpacity="0.45" />
-          <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      {DIM_STARS.map((p, i) => (
-        <circle key={i} cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r={(p.s * 0.8).toFixed(2)} fill="#9b9b96" opacity={(p.o * 0.6).toFixed(2)} />
-      ))}
-      <g className="qz-swirl">
-        {SWIRL.map((d) => (
-          <path key={d} d={d} fill="none" stroke="#6d5a9e" strokeWidth="1.4" strokeLinecap="round" opacity="0.55" />
-        ))}
-        <ellipse cx="200" cy="130" rx="118" ry="58" fill="none" stroke="#3a3350" strokeWidth="1" />
-        <ellipse cx="200" cy="130" rx="80" ry="38" fill="none" stroke="#4b3f6e" strokeWidth="1" />
-      </g>
-      <circle cx="200" cy="130" r="46" fill="url(#qz-rim)" />
-      <circle cx="200" cy="130" r="26" fill="#000" />
-    </svg>
-  );
-}
-
 /** The house: dark on a fail; on a pass the porch light and the windows come on and the stars
- * come out. Real estate only; it never borrows the galaxy or the brain. */
+ * come out. */
 const HOUSE_STARS = GALAXY.filter((p, i) => i % 3 === 0 && p.y < 120);
 
 function House({ lit }: { lit: boolean }) {
@@ -609,18 +475,10 @@ function House({ lit }: { lit: boolean }) {
  * with reduced motion, where animation is removed, the base style IS the finished frame. */
 const QUIZ_CSS = `
 .qz-choice:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
-@keyframes qz-bloom { from { opacity: 0; transform: scale(0.82); } to { opacity: 1; transform: scale(1); } }
-@keyframes qz-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes qz-on { from { opacity: 0.08; } to { opacity: 1; } }
-@keyframes qz-turn { to { transform: rotate(-360deg); } }
-.qz-galaxy { transform-origin: 200px 130px; animation: qz-bloom 1.4s cubic-bezier(.2,.7,.2,1) both; }
-.qz-draw { stroke-dasharray: 1; stroke-dashoffset: 0; animation: qz-draw 1.6s ease-out 0.35s both; }
-.qz-link { animation: qz-on 0.8s ease-out 1.2s both; }
-.qz-node { animation: qz-on 0.6s ease-out both; }
-.qz-swirl { transform-origin: 200px 130px; transform-box: view-box; animation: qz-turn 40s linear infinite; }
 .qz-lamp { animation: qz-on 0.9s ease-out both; }
 .qz-star { animation: qz-on 1.2s ease-out both; }
 @media (prefers-reduced-motion: reduce) {
-  .qz-galaxy, .qz-draw, .qz-link, .qz-node, .qz-swirl, .qz-lamp, .qz-star { animation: none !important; }
+  .qz-lamp, .qz-star { animation: none !important; }
 }
 `;

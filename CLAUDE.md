@@ -18,6 +18,10 @@ node/npm (AVG MITM).
   photo-mirror) · `scripts/` gates + runners (`inventory-health.mjs` = the photo gate;
   `backfill-photos.mjs` = the paced photo runner; `_scratch-*` are one-off probes).
 - `public/images/` static art; `ATTRIBUTIONS.md` records photo licences.
+- The AI business is NOT part of this site since 2026-11-20: `/ai`, `/services/*` and the twenty
+  AI posts live on excelsiormind.com and answer here only as 301s, generated from
+  `lib/ai-business-redirects.ts` (held by `app/redirects.test.ts`). A page added at one of those
+  paths is dead behind its redirect, and nav, footer and sitemaps link nothing there.
 
 ## Standing rules (every one was earned the hard way)
 - ONE dev server per repo: check `netstat -ano | grep -E ':300[0-9]|:3100'`; reuse :3100

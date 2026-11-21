@@ -11,7 +11,7 @@
 import { chromium } from 'playwright';
 
 const BASE = process.argv[2] ?? 'https://realtylt-website.vercel.app';
-const ROUTES = ['/', '/search', '/listing/KEY1023749', '/ai', '/financing', '/top-areas', '/saved', '/connect'];
+const ROUTES = ['/', '/search', '/listing/KEY1023749', '/financing', '/top-areas', '/saved', '/connect'];
 const VIEWPORTS = [
   { name: '1280', width: 1280, height: 900, mobile: false },
   { name: '390', width: 390, height: 844, mobile: true },
@@ -63,7 +63,7 @@ for (const vp of VIEWPORTS) {
 
     try {
       const resp = await page.goto(BASE + route, { waitUntil: 'load', timeout: 60000 });
-      await page.waitForTimeout(route === '/ai' ? 7000 : 3000);
+      await page.waitForTimeout(3000);
       const { sw, cw } = await page.evaluate(() => ({
         sw: document.documentElement.scrollWidth,
         cw: document.documentElement.clientWidth,
@@ -81,7 +81,6 @@ for (const vp of VIEWPORTS) {
         mapBroken = tiles === 0;
         extra = ` cards=${cards} tilesLoaded=${tiles} strip="${(strip ?? '').trim().slice(0, 28)}"`;
       }
-      if (route === '/ai') extra = ` canvases=${await page.locator('canvas').count()}`;
       if (route.startsWith('/listing/')) {
         const h1 = await page.locator('h1').first().textContent().catch(() => '');
         extra = ` h1="${(h1 ?? '').trim().slice(0, 34)}" zeroSpec=${/0 Bed|0 Bath|0 Sq/.test(await page.content())}`;

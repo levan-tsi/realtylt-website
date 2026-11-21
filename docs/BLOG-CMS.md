@@ -4,7 +4,10 @@
 marketing site. This document is the whole contract. The CRM agent can build against it without guessing.
 
 - **Website side (built, live):** reads PUBLISHED posts from Supabase and merges them with the existing
-  static posts. `/blog`, `/blog/[slug]`, `/sitemap.xml`.
+  static posts. `/blog`, `/blog/[slug]`, `/sitemap.xml`. Since 2026-11-20 it reads only rows whose
+  `organization_id` is RealtyLT's (`00000000-0000-0000-0000-000000000001`): the CRM's AI organisation
+  (`…0002`) has its own website, and a post published there must not appear on realtylt.com
+  (`lib/blog/db.ts`).
 - **CRM side (to build):** create / edit / publish / unpublish rows in `public.blog_posts`, then ping the
   website's revalidate hook.
 - **Shared DB:** Supabase project `wpfmhmnceflfruhssqqb` (the CRM's project). Migration

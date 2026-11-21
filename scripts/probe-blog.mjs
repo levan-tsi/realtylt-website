@@ -7,7 +7,7 @@ import { chromium } from "playwright";
 import { mkdir } from "node:fs/promises";
 
 const BASE = process.argv[2] || "http://localhost:3001";
-const PATH = process.argv[3] || "/blog/workflow-automation-real-estate-business";
+const PATH = process.argv[3] || "/blog/seller-disclosure-requirements-new-york";
 const WIDTH = Number(process.argv[4] || 1440);
 const PREFIX = process.argv[5] || "probe";
 const OUT = "docs/blog-redesign/probe";

@@ -53,12 +53,6 @@ describe("the dark site's surfaces", () => {
     }
   });
 
-  it("keeps the visitor's chat bubble navy at night (river is the moon there)", () => {
-    for (const f of ["components/blog/scenes/primitives/Conversation.tsx", "components/blog/scenes/Teardown.tsx"]) {
-      expect(read(f), f).toContain('"bg-river text-paper night:bg-[#102c54] night:text-moon"');
-    }
-  });
-
   it("draws the financing phone's five-year total as a night panel, not a moon-white box", () => {
     expect(read("app/financing/page.tsx")).toContain('className="mt-5 rounded-xl border border-line bg-mist px-4 py-3 text-center"');
   });

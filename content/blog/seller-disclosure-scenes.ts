@@ -27,7 +27,6 @@ export const SELLER_DISCLOSURE_FLAGSHIP: FlagshipContent = {
     moment: "56",
     suffix: "questions",
     photo: "/images/editorial/signature-ink.jpg",
-    signature: "porchlight",
   },
   scenes: {
     /** dp2, the timeline. True-date spacing; the law filled, the bill hollow. */
@@ -246,7 +245,7 @@ export const SELLER_DISCLOSURE_FLAGSHIP: FlagshipContent = {
 
     /** Round 15 (2026-10-31): the ten-question check at the end of the reading, his ask ("a little
      * quiz at the end"). The questions live in seller-disclosure-quiz.ts (tested against the post);
-     * the RealtyLT result states are the dark house and the porch light, never the AI brand's brain. */
+     * the result states are the dark house and the porch light. */
     quiz: {
       kind: "quiz",
       band: "night",
@@ -254,7 +253,6 @@ export const SELLER_DISCLOSURE_FLAGSHIP: FlagshipContent = {
       ariaLabel: "Quiz: what did you learn",
       eyebrow: "Ten questions",
       title: "What did you learn? Check it in two minutes",
-      brand: "realtylt",
       passLine: "You know the form. If a question here touches your own sale, call or write and I will go through it with you.",
       failLine: "Under half this time. Reread the 56 questions and the four answers, then have another go.",
       questions: SELLER_DISCLOSURE_QUIZ,

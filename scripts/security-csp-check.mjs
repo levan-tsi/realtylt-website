@@ -19,7 +19,6 @@ const ROUTES = [
   ["/blog/top-5-renovations-increase-home-value-ny", 3000],
   ["/who-we-are", 2500],
   ["/connect", 2500],
-  ["/ai", 7000],
 ];
 
 const results = [];
@@ -77,17 +76,11 @@ for (const [route, settle, sel] of ROUTES) {
       })
       .catch(() => null);
   }
-  let aiInfo = null;
-  if (route === "/ai") {
-    aiInfo = await page
-      .evaluate(() => ({ canvas: document.querySelectorAll("canvas").length }))
-      .catch(() => null);
-  }
 
   const shot = path.join(OUT, "csp-" + route.replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g, "") + ".png");
   await page.screenshot({ path: shot }).catch(() => {});
 
-  results.push({ route, httpStatus, cspEvents, cspConsole, mapInfo, aiInfo, failed, consoleErrorCount: consoleErrors.length, consoleErrors: consoleErrors.slice(0, 6) });
+  results.push({ route, httpStatus, cspEvents, cspConsole, mapInfo, failed, consoleErrorCount: consoleErrors.length, consoleErrors: consoleErrors.slice(0, 6) });
   await ctx.close();
 }
 await browser.close();
@@ -97,7 +90,6 @@ for (const r of results) {
   const viol = r.cspEvents.length + r.cspConsole.length;
   console.log(`\n${r.route}  [HTTP ${r.httpStatus}]  CSPviolations=${viol}  failedReq=${r.failed.length}  consoleErr=${r.consoleErrorCount}`);
   if (r.mapInfo) console.log("   map:", JSON.stringify(r.mapInfo));
-  if (r.aiInfo) console.log("   ai:", JSON.stringify(r.aiInfo));
   if (viol) console.log("   CSP:", JSON.stringify([...r.cspEvents, ...r.cspConsole].slice(0, 8)));
   if (r.failed.length) console.log("   FAILED:", JSON.stringify(r.failed.slice(0, 5)));
   if (r.consoleErrors.length) console.log("   errsample:", JSON.stringify(r.consoleErrors.slice(0, 3)));

@@ -28,11 +28,11 @@ import { describe, expect, it } from "vitest";
 
 const ROOT = process.cwd();
 
-/** Every component that renders a floating [data-toc-trigger] pill. */
+/** Every component that renders a floating [data-toc-trigger] pill. (ServiceToc was a third
+ * until 2026-11-20, when the service pages moved to their own site.) */
 const TOCS = [
   "components/blog/FlagshipToc.tsx",
   "components/blog/ArticleToc.tsx",
-  "components/services/ServiceToc.tsx",
 ];
 
 /** The `fixed` class string that places the trigger.
@@ -60,7 +60,7 @@ function triggerPlacement(src: string): string {
 
 describe("the floating table-of-contents pill is centred on the viewport", () => {
   it("names every component that has one", () => {
-    expect(TOCS.length).toBe(3);
+    expect(TOCS.length).toBe(2);
     for (const f of TOCS) expect(fs.existsSync(path.join(ROOT, f)), f).toBe(true);
   });
 
@@ -133,7 +133,6 @@ describe("the floating table-of-contents pill is centred on the viewport", () =>
   const TITLE_BLOCKS = [
     "components/blog/scenes/ColdOpen.tsx",
     "app/blog/[slug]/page.tsx",
-    "components/services/ServiceHero.tsx",
   ];
   for (const file of TITLE_BLOCKS) {
     it(`${file} marks its h1 and its standfirst as the title block`, () => {

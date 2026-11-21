@@ -100,6 +100,19 @@ describe("fetchDbArticles", () => {
     expect(opts.next).toEqual({ revalidate: 300, tags: ["blog"] });
   });
 
+  /** 2026-11-20: the CRM's AI organisation has its own website now and publishes into the same
+   * table. Only RealtyLT's posts may appear here. */
+  it("asks for RealtyLT's organisation only, never the AI organisation's posts", async () => {
+    vi.stubEnv("SUPABASE_URL", SUPA);
+    vi.stubEnv("SUPABASE_ANON_KEY", "anon-key");
+    const fetchSpy = vi.fn(async () => new Response(JSON.stringify([]), { status: 200 }));
+    vi.stubGlobal("fetch", fetchSpy);
+    await fetchDbArticles();
+    const [url] = fetchSpy.mock.calls[0] as unknown as [string];
+    expect(new URL(url).searchParams.get("organization_id")).toBe("eq.00000000-0000-0000-0000-000000000001");
+    expect(url).not.toContain("0000-000000000002");
+  });
+
   it("degrades to static-only ([]) on an error status, a throw, or a junk payload", async () => {
     vi.stubEnv("SUPABASE_URL", SUPA);
     vi.stubEnv("SUPABASE_ANON_KEY", "anon-key");

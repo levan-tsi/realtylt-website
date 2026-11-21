@@ -7,7 +7,7 @@
  * separators that are invalid raw in a script context — keeps the output valid JSON
  * while making break-out impossible. */
 /** BreadcrumbList for any page with a visible trail (round 39: listing + county pages —
- * the same shape lib/services and lib/blog already emit for theirs). The last item is the
+ * the same shape lib/blog already emits for its posts). The last item is the
  * current page; per Google's guidance it may omit `item`, so entries without a path are
  * emitted name-only. */
 export function breadcrumbsJsonLd(

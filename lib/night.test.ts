@@ -77,12 +77,6 @@ describe("the night is black and white", () => {
     expect(night).toMatch(/--color-porchlight:\s*var\(--color-moon\)/);
     expect(night).toMatch(/--color-river:\s*var\(--color-moon\)/);
   });
-
-  it("keeps the logo's R blue as a brand mark nothing re-points (the header's AI item wears it)", () => {
-    expect(hex(theme, "--color-brand-r")).toBe(hex(theme, "--color-porchlight"));
-    expect(night).not.toMatch(/--color-brand-r\s*:/);
-    expect(css.slice(css.indexOf(".daylight {"), css.indexOf("}", css.indexOf(".daylight {")))).not.toMatch(/--color-brand-r\s*:/);
-  });
 });
 
 describe("area labels on a night page", () => {

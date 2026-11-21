@@ -64,8 +64,6 @@ describe("sentence case, site-wide", () => {
     Object.assign(gone, {
       "app/sitemap/page.tsx": ["Site <strong>Map</strong>"],
       "app/search/page.tsx": ["Search Listings:"],
-      "components/services/ServiceHero.tsx": ["AI Services\n"],
-      "app/services/page.tsx": ['<span className="text-paper/80">AI Services</span>'],
       "components/listing/ListingSubNav.tsx": ['label: "Market Insights"', "Make an </span>Offer"],
     });
     gone["components/leads/ListingLeadCTAs.tsx"].push("Request a Tour\n");

@@ -36,8 +36,9 @@ function flagshipSlugs() {
 }
 
 const SLUGS = flagshipSlugs();
-if (SLUGS.length < 20) {
-  console.error(`FAIL: expected at least 20 flagship slugs from posts.ts, parsed ${SLUGS.length}.`);
+// 20 until 2026-11-20, when the AI flagships moved to their own site; the seller guide stays.
+if (SLUGS.length < 1) {
+  console.error(`FAIL: expected at least 1 flagship slug from posts.ts, parsed ${SLUGS.length}.`);
   process.exit(1);
 }
 

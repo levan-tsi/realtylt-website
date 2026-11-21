@@ -38,8 +38,9 @@ function offenders(title: string): string[] {
 
 describe("blog post titles are in sentence case", () => {
   it("finds the posts at all (the check must not silently match nothing)", () => {
-    // 56 since 2026-10-31: the skip tracing post was removed at the owner's word.
-    expect(POSTS.length).toBeGreaterThanOrEqual(56);
+    // 56 since 2026-10-31 (the skip tracing post was removed at the owner's word); 36 since
+    // 2026-11-20, when the twenty AI posts moved to their own site.
+    expect(POSTS.length).toBeGreaterThanOrEqual(36);
   });
 
   it("writes every post title in sentence case, names and acronyms kept", () => {

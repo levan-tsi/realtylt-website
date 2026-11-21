@@ -14,7 +14,7 @@ import { renderScene, sceneBand } from "@/components/blog/scenes/registry";
 import { aliasTarget, fmtDate, getArticle, getArticles, missingPostTarget, type Article } from "@/lib/blog";
 import { flagshipToc } from "@/lib/blog/flagship";
 import { hasScenes, parseOutline, renderFlagshipBands } from "@/lib/blog/markdown";
-import { isConsumer, relatedArticles } from "@/lib/blog/related";
+import { relatedArticles } from "@/lib/blog/related";
 import { articleStructuredData, articleUrl } from "@/lib/blog/structured-data";
 import { extractToc, readingTime } from "@/lib/blog/toc";
 import { SITE } from "@/lib/site";
@@ -140,27 +140,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     </div>
   );
 
-  // Who wrote it and how to reach him, on every post (round 15, the owner's word): the card's
-  // standing line and paragraph follow the post's cluster, the same consumer/business split the
-  // "Keep reading" block uses. components/blog/AuthorCard.tsx carries the copy.
-  // A post with no cluster (the database posts published from the CRM, market check-ins) is
-  // real estate, so it gets the RealtyLT card (round 15, the orchestrator's fix at the merge).
-  const authorCard = (
-    <AuthorCard author={post.author} slug={post.slug} consumer={isConsumer(post) || post.cluster === undefined} />
-  );
+  // Who wrote it and how to reach him, on every post (round 15, the owner's word).
+  // components/blog/AuthorCard.tsx carries the copy.
+  const authorCard = <AuthorCard author={post.author} />;
 
-  // The prompt is audience-specific, because the two audiences are not the same person. A
-  // consumer post is passed to somebody who is moving; a flagship is 3,300 words aimed at the
-  // person who runs the brokerage, and telling them to send it to a home buyer is the wrong ask.
-  // The sentence is capped so the share row keeps its ~356px and never orphans an icon onto a
-  // second line: five targets plus the copy pill is the widest this row gets.
+  // Every post here is passed to somebody who is buying, selling or moving (since 2026-11-20 the
+  // automation essays, which had their own prompt, live on the AI business's site). The sentence is
+  // capped so the share row keeps its ~356px and never orphans an icon onto a second line: five
+  // targets plus the copy pill is the widest this row gets.
   const endCap = (
     <div className="mt-16 border-t border-line pt-7">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="t-small text-stone sm:max-w-[19rem]">
-          {flagship
-            ? "Know somebody who would argue with this? Send it to them."
-            : "Found this useful? Send it to someone who is buying, selling, or moving."}
+          Found this useful? Send it to someone who is buying, selling, or moving.
         </p>
         <ShareRow url={url} title={post.title} tone="dark" />
       </div>

@@ -7,8 +7,9 @@ import { chromium } from "playwright";
 const BASE = process.argv[2] || "http://localhost:3002";
 const PAGES = [
   "/blog",
-  "/blog/workflow-automation-real-estate-business",
-  "/blog/ai-chat-assistant-real-estate-website",
+  // The two AI posts this used moved to their own site on 2026-11-20; the seller guide is the
+  // flagship that stays.
+  "/blog/seller-disclosure-requirements-new-york",
 ];
 const MAX_TABS = 90;
 

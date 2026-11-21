@@ -1,26 +1,12 @@
 import type { ReactNode } from "react";
-import type { ComponentId, FlagshipContent } from "@/lib/blog/flagship";
-import { Bars } from "./primitives/Bars";
-import { Calculator } from "./primitives/Calculator";
+import type { FlagshipContent } from "@/lib/blog/flagship";
 import { Cells } from "./primitives/Cells";
-import { Conversation } from "./primitives/Conversation";
-import { Diagram } from "./primitives/Diagram";
-import { Film } from "./primitives/Film";
 import { Flow } from "./primitives/Flow";
-import { Grid } from "./primitives/Grid";
 import { Offer } from "./primitives/Offer";
-import { Plate } from "./primitives/Plate";
 import { Quiz } from "./primitives/Quiz";
-import { Statement } from "./primitives/Statement";
-import { StatBars } from "./primitives/StatBars";
 import { Steps } from "./primitives/Steps";
-import { Summary } from "./primitives/Summary";
 import { Tiles } from "./primitives/Tiles";
 import { Timeline } from "./primitives/Timeline";
-import { ResponseCurve } from "./ResponseCurve";
-import { ResponseGap } from "./ResponseGap";
-import { SystemDiagram } from "./SystemDiagram";
-import { Teardown } from "./Teardown";
 
 /** The flagship scene registry.
  *
@@ -36,56 +22,13 @@ import { Teardown } from "./Teardown";
  * Every scene is full-bleed and self-contained: it owns its own layout, background and CSS, and
  * must read as a finished still (a carousel slide) as well as a scroll moment.
  */
-
-/** Bespoke components: the scenes not yet reduced to primitives.
- *
- * The calculator used to live here on the grounds that its model was "genuinely per-topic and
- * cannot be expressed as data". That was wrong, and four posts with no calculator at all was
- * the price. What varies between topics is the arithmetic, and arithmetic IS data: see
- * primitives/Calculator.tsx. */
-const COMPONENTS: Record<ComponentId, () => ReactNode> = {
-  "response-curve": ResponseCurve,
-  "response-gap": ResponseGap,
-  teardown: Teardown,
-  "system-diagram": SystemDiagram,
-};
-
-/** ARIA labels for grid instances. The primitive cannot invent one, and a full-bleed landmark
- * with no accessible name is a landmark a screen-reader user cannot navigate to. */
-const GRID_LABELS: Record<string, string> = {
-  "four-moves": "The four moves",
-  "failure-modes": "Where it goes wrong",
-};
-
 export function renderScene(key: string, content?: FlagshipContent): ReactNode {
   const scene = content?.scenes[key];
   if (!scene) return null;
 
   switch (scene.kind) {
-    case "grid":
-      return <Grid {...scene} ariaLabel={GRID_LABELS[key] ?? scene.heading} />;
-    case "summary":
-      return <Summary {...scene} />;
-    case "statement":
-      return <Statement {...scene} />;
-    case "statbars":
-      // The scene key seeds the SVG's aria ids, so two charts on one page cannot collide.
-      return <StatBars {...scene} idBase={`sb-${key}`} />;
-    case "diagram":
-      return <Diagram {...scene} idBase={`dg-${key}`} />;
-    case "conversation":
-      return <Conversation {...scene} />;
-    case "calculator":
-      return <Calculator {...scene} />;
-    case "plate":
-      return <Plate {...scene} />;
     case "offer":
       return <Offer {...scene} />;
-    case "film":
-      // A film scene without a film is a content error, not a render error.
-      return content.film ? <Film {...scene} film={content.film} /> : null;
-    case "bars":
-      return <Bars {...scene} />;
     case "cells":
       return <Cells {...scene} />;
     case "timeline":
@@ -98,10 +41,6 @@ export function renderScene(key: string, content?: FlagshipContent): ReactNode {
       return <Steps {...scene} />;
     case "quiz":
       return <Quiz {...scene} />;
-    case "component": {
-      const Component = COMPONENTS[scene.id];
-      return Component ? <Component /> : null;
-    }
   }
 }
 

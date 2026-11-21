@@ -1,15 +1,15 @@
 // THE SHARE AUDIT (final round, beat 4) - the committed scorer for "every share control opens
 // the real intent URL with the page URL + title prefilled".
 //
-// For EVERY /blog/<slug> and /services/<slug> (collected from the rendered indexes, same as
-// the readability gate) plus the flagship hero rows, assert on the RENDERED page:
+// For EVERY /blog/<slug> (collected from the rendered index, same as the readability gate)
+// plus the flagship hero rows, assert on the RENDERED page:
 //   - each ShareRow carries exactly 5 network anchors (facebook, linkedin, whatsapp, x, email),
 //     every href well-formed with the page's own CANONICAL url properly encoded in the right
 //     param (fb u=, li url=, wa text contains it, x url=, mailto body=), title where the
 //     network takes one, target=_blank + rel=noopener on the four web targets;
 //   - a Copy-link button exists beside them (the copied url is the canonical, by construction:
 //     both render from the same prop).
-// --click N: additionally CLICK facebook + linkedin on N blog and N service pages (desk + 390)
+// --click N: additionally CLICK facebook + linkedin on N blog pages (desk + 390)
 // and assert the OPENED tab's url still carries the prefilled page url - the real-browser
 // proof the owner asked for. Run headful against prod (the bot challenge blocks plain HTTP).
 //
@@ -28,12 +28,13 @@ await ctx.route("**/api/media/**", (r) => r.abort());
 const page = await ctx.newPage();
 
 const surfaces = [];
-for (const index of ["/blog", "/services"]) {
+// /services left with the AI business on 2026-11-20 (it redirects off-site now).
+for (const index of ["/blog"]) {
   await page.goto(`${BASE}${index}`, { waitUntil: "domcontentloaded", timeout: 60000 });
   const hrefs = await page.evaluate(() =>
-    [...document.querySelectorAll('a[href^="/blog/"], a[href^="/services/"]')]
+    [...document.querySelectorAll('a[href^="/blog/"]')]
       .map((a) => a.getAttribute("href"))
-      .filter((h) => /^\/(blog|services)\/[a-z0-9-]+$/.test(h)),
+      .filter((h) => /^\/blog\/[a-z0-9-]+$/.test(h)),
   );
   for (const h of new Set(hrefs)) surfaces.push(h);
 }
@@ -75,7 +76,7 @@ if (CLICKS > 0) {
   for (const [w, h, tag] of [[1440, 900, "desk"], [390, 844, "390"]]) {
     const cctx = await browser.newContext({ viewport: { width: w, height: h } });
     const cpage = await cctx.newPage();
-    const picks = [...surfaces.filter((s) => s.startsWith("/blog/")).slice(0, CLICKS), ...surfaces.filter((s) => s.startsWith("/services/")).slice(0, CLICKS)];
+    const picks = surfaces.filter((s) => s.startsWith("/blog/")).slice(0, CLICKS);
     for (const path of picks) {
       await cpage.goto(`${BASE}${path}`, { waitUntil: "domcontentloaded", timeout: 60000 });
       for (const label of ["Share on Facebook", "Share on LinkedIn"]) {

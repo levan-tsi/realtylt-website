@@ -18,8 +18,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 /** The one lead form — every conversion surface uses it (brief §5B, §7).
  * Variants: `dark` for ink sections/footer; `withAddress` + `defaultReason` for
  * home-value / cash-offer flows; `compact` hides the message box; `hideReason` drops the
- * interest dropdown entirely (its options are buy/sell/rent — meaningless on an AI
- * services page). `stack` forces one field per row; `emailPhone2up` is the /selling hero
+ * interest dropdown entirely (where the page already says what the visitor wants). `stack` forces one field per row; `emailPhone2up` is the /selling hero
  * layout — a single "Full Name", then Email + Phone 2-up, then a full-width address (parsed
  * server-side into first/last + street/city/state/zip); `fullWidthSubmit` stretches the CTA;
  * `splitName` swaps the single name field for First/Last (the footer/contact form);

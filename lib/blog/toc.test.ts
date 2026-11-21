@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { extractFaqs, extractToc, parseHeadings, readingTime, slugify, stripInline } from "./toc";
-import { AI_CHAT_ASSISTANT_POST, WORKFLOW_AUTOMATION_POST } from "@/content/blog/ai-posts";
+import { SELLER_DISCLOSURE_POST } from "@/content/blog/seller-posts";
+import { FIRST_TIME_BUYER_CHECKLIST_POST } from "@/content/blog/real-estate-posts";
 
 describe("slugify / stripInline", () => {
   it("lowercases, drops punctuation, hyphenates whitespace", () => {
@@ -47,33 +48,18 @@ describe("extractToc", () => {
     ]);
   });
 
-  it("finds the six sections in each real article", () => {
-    // The AI post was raised to the flagship standard on 2026-08-02 and gained four sections
-    // (what makes an answer true, the fine print, what it costs, how to test one) and four more
-    // questions: 10 top-level sections + 7 questions. Assert the SECTION count directly rather
-    // than relaxing the number, so a heading going missing still fails this test.
-    // Round 29 (2026-11-14): the refresh for local owners added "Is it worth automating", "Who
-    // this fits, and who it does not", "What to do first" and "Sources" (14 top-level sections) and
-    // five questions (12 in all, the live post's MLS question kept). Round 33 (2026-11-17): one more question,
-    // where we are based (13 in all).
-    expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth <= 2)).toHaveLength(14);
-    expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth === 3)).toHaveLength(13);
-    expect(extractToc(AI_CHAT_ASSISTANT_POST)).toHaveLength(27);
-    // The workflow post was rebuilt as a flagship on 2026-08-01 and gained a "Common questions"
-    // section: 9 top-level sections plus 6 questions. On 2026-08-25 it gained a tenth, "The
-    // first month, and the two things to do in it", when the standard ratcheted to 19 sections
-    // and the honest way to close that was to write one. Same shape of assertion as above, so a
-    // heading going missing still fails rather than being absorbed by a looser number.
-    // 2026-11-03 (round 24 refresh): three new sections (is it worth automating, who it fits, what
-    // to do first) and a Sources section, 14 top-level. 2026-11-14 (round 29): "How to follow up on
-    // every quote without chasing it" and "What the AI readiness assessment hands over" added (16
-    // top-level) and three owner questions (9 in all). Round 33 (2026-11-17): one more question, where we are
-    // based (10 in all).
-    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth <= 2)).toHaveLength(16);
-    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth === 3)).toHaveLength(10);
-    expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(26);
+  it("finds the sections and questions in each real article", () => {
+    // The two long staying guides (since 2026-11-20 the AI posts this used to count live on their
+    // own site). Assert the SECTION count directly rather than a loose floor, so a heading going
+    // missing fails this test.
+    expect(extractToc(SELLER_DISCLOSURE_POST).filter((t) => t.depth <= 2)).toHaveLength(11);
+    expect(extractToc(SELLER_DISCLOSURE_POST).filter((t) => t.depth === 3)).toHaveLength(10);
+    expect(extractToc(SELLER_DISCLOSURE_POST)).toHaveLength(21);
+    expect(extractToc(FIRST_TIME_BUYER_CHECKLIST_POST).filter((t) => t.depth <= 2)).toHaveLength(14);
+    expect(extractToc(FIRST_TIME_BUYER_CHECKLIST_POST).filter((t) => t.depth === 3)).toHaveLength(11);
+    expect(extractToc(FIRST_TIME_BUYER_CHECKLIST_POST)).toHaveLength(25);
     // ids are unique and non-empty
-    for (const post of [AI_CHAT_ASSISTANT_POST, WORKFLOW_AUTOMATION_POST]) {
+    for (const post of [SELLER_DISCLOSURE_POST, FIRST_TIME_BUYER_CHECKLIST_POST]) {
       const ids = extractToc(post).map((t) => t.id);
       expect(new Set(ids).size).toBe(ids.length);
       expect(ids.every(Boolean)).toBe(true);
@@ -84,7 +70,7 @@ describe("extractToc", () => {
 describe("readingTime", () => {
   it("is a floor of one minute and scales with length", () => {
     expect(readingTime("one two three")).toBe(1);
-    expect(readingTime(AI_CHAT_ASSISTANT_POST)).toBeGreaterThanOrEqual(3);
+    expect(readingTime(SELLER_DISCLOSURE_POST)).toBeGreaterThanOrEqual(3);
   });
 });
 
@@ -109,27 +95,17 @@ describe("extractFaqs", () => {
     expect(extractFaqs(noFaqSection)).toEqual([]);
   });
 
-  it("pairs the AI post's real questions with their answers (drives FAQPage JSON-LD)", () => {
-    // Reshaped again on 2026-08-02. The first three entries were all OBJECTIONS, which is what
-    // we are defensive about rather than what anybody types into a search box, and the
-    // definitional question ("what IS this, in plain terms") was missing entirely even though it
-    // is the entry an AI answer lifts. It now leads. Assert the real questions, so a rewrite
-    // that quietly drops the definitional one fails here.
-    const faqs = extractFaqs(AI_CHAT_ASSISTANT_POST);
+  it("pairs a real post's questions with their answers (drives FAQPage JSON-LD)", () => {
+    // The seller disclosure guide's questions, in order. Assert the real questions, so a rewrite
+    // that quietly drops one fails here. (Until 2026-11-20 this held the AI chat post's thirteen;
+    // that post moved to its own site.)
+    const faqs = extractFaqs(SELLER_DISCLOSURE_POST);
     expect(faqs.map((f) => f.q)).toEqual([
-      "What is an AI website chatbot for a small business?",
-      "Do I need an AI chatbot on my website?",
-      "How much does an AI chatbot cost for a small business?",
-      "What is the difference between live chat and an AI chat assistant?",
-      "Can an AI chatbot work on a real estate website?",
-      "Does it work on the MLS, or only on what my website already says?",
-      "How is it different from the chatbot I already have?",
-      "Will it annoy my visitors?",
-      "My customers want a human, not a bot",
-      "Do I have to tell people it is an AI?",
-      "What happens when it gets something wrong?",
-      "Can I add an AI chat assistant to my existing website?",
-      "Can we talk about a website chatbot on a call if my business is outside New York?",
+      "Is the property condition disclosure statement required in New York?",
+      "Which version of the form should a seller use?",
+      "Do I have to disclose a death in a house in New York?",
+      "Do condo and co-op sellers have to fill out the PCDS?",
+      "Is New York a buyer beware state?",
     ]);
     expect(faqs.every((f) => f.a.length > 40)).toBe(true);
   });

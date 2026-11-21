@@ -28,7 +28,8 @@ const OWNED_MODALS = [
   "components/leads/LeadSheet.tsx",
   "components/leads/QualifyingWizard.tsx",
   "components/search/SaveSearchDialog.tsx",
-  "components/services/ServiceToc.tsx",
+  // components/services/ServiceToc.tsx was here until 2026-11-20, when the service pages moved
+  // to their own site.
 ];
 
 const read = (f: string) => fs.readFileSync(path.join(process.cwd(), f), "utf8");
@@ -74,12 +75,6 @@ describe("focus is handed back when a modal closes", () => {
     expect(openSignIn).toContain("document.activeElement");
     expect(openSignIn).toContain("modalTriggerRef.current =");
     expect(provider).toContain("trigger?.isConnected");
-  });
-
-  it("ServiceToc restores by selector, because its trigger unmounts while the sheet is open", () => {
-    const src = read("components/services/ServiceToc.tsx");
-    expect(src).toContain('document.querySelector<HTMLElement>("[data-toc-trigger]")?.focus()');
-    expect(src).toContain("[data-toc-trigger]");
   });
 
   it.each([

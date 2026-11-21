@@ -2,28 +2,19 @@ import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-/** THE CHAT LAUNCHER MUST BE VISIBLE ON LOAD ON THE AI PAGE, AND STAY TUCKED ON LISTING PAGES.
+/** THE CHAT LAUNCHER STAYS TUCKED ON A PAGE'S FIRST SCREEN, AND THE WIDGET RUNS ONE ASSISTANT.
  *
- * The owner's own test on realtylt.com/ai (2026-08-28): "the chat launcher is invisible until you
- * scroll". public/rlt-chat.js tucks the phone launcher while scrollY < 60% of the viewport so it
- * never lands on a form field or a CTA in a listing page's first screen. On /ai the hero fills
- * that first screen and the chat is the product being sold, so the tuck hid the product.
+ * public/rlt-chat.js tucks the phone launcher while scrollY < 60% of the viewport so it never
+ * lands on a form field or a CTA in a listing page's first screen. Until 2026-11-20 the tuck was
+ * skipped on /ai, where the chat was the product, and a second persona ('aipage') opened there.
+ * The AI business moved to its own site that day and every /ai address here is a permanent
+ * redirect, so the widget tucks everywhere and tells the CRM one context on every turn.
  *
- * The fix is decided by the page (detectPersona reads the pathname) and NOT by a new key on the
- * deliberately short RLT_CHAT_CONFIG override list, which must stay endpoint-only. This test holds
- * the two halves together the way lib/chat-csp.test.ts holds the widget and the CSP together:
- * the file is a byte copy on the AI page's repo, so a regression here is a regression there.
+ * The deliberately short RLT_CHAT_CONFIG override list stays endpoint-only: a page may point the
+ * widget at another server, never choose its persona or its behaviour.
  */
 const ROOT = path.resolve(__dirname, "..");
 const js = fs.readFileSync(path.join(ROOT, "public", "rlt-chat.js"), "utf8");
-
-/** The persona detector, lifted out of the IIFE and run against a fake `location`. */
-function personaFor(pathname: string, hostname = "realtylt.com"): string {
-  const m = js.match(/function detectPersona\(\) \{[\s\S]*?\r?\n {2}\}\r?\n/);
-  if (!m) throw new Error("rlt-chat.js: detectPersona() not found");
-  const fn = new Function("location", `${m[0]}; return detectPersona();`);
-  return fn({ pathname, hostname }) as string;
-}
 
 describe("the chat launcher's first-screen tuck", () => {
   it("still tucks (class + scroll/resize listeners) — the listing-page behaviour is intact", () => {
@@ -43,26 +34,30 @@ describe("the chat launcher's first-screen tuck", () => {
     expect(js).toMatch(/\.rlt-bubble--tucked \{ transition: [^}]*visibility 0s linear 0\.25s; \}/);
   });
 
-  it("skips the tuck on the AI page, decided by detectPersona() and nothing configurable", () => {
-    const block = js.match(
-      /if \(detectPersona\(\) !== 'aipage'\) \{\s*bubble\.classList\.add\('rlt-bubble--tucked'\);[\s\S]*?syncBubble\(\);\s*\}/,
-    );
-    expect(block, "the tuck must be inside `if (detectPersona() !== 'aipage')`").not.toBeNull();
-    // The override list stays endpoint-only: no TUCK / persona key was added to it.
+  it("tucks on every page (no page-based exception) and keeps the override list endpoint-only", () => {
+    // The tuck is unconditional: the line that adds the class sits at the IIFE's own indent, not
+    // inside an if. (The file is CRLF, hence \r?.)
+    expect(js).toMatch(/\r?\n {2}bubble\.classList\.add\('rlt-bubble--tucked'\);\r?\n/);
     const overrides = js.match(/\[('[A-Z_]+'(?:, )?)+\]\.forEach\(function\(key\)/);
     expect(overrides?.[0]).toBe(
       "['WEBHOOK_URL', 'SESSION_URL', 'POLL_URL', 'VOICE_TOKEN_URL', 'VOICE_TURN_URL'].forEach(function(key)",
     );
   });
+});
 
-  it("detectPersona() says aipage for /ai and /ai/*, and realestate everywhere else", () => {
-    expect(personaFor("/ai")).toBe("aipage");
-    expect(personaFor("/ai/")).toBe("aipage");
-    expect(personaFor("/ai/services")).toBe("aipage");
-    expect(personaFor("/", "realtylt-ai-page.vercel.app")).toBe("aipage");
-    expect(personaFor("/")).toBe("realestate");
-    expect(personaFor("/listing/KEY1")).toBe("realestate");
-    expect(personaFor("/air-conditioning")).toBe("realestate");
-    expect(personaFor("/selling")).toBe("realestate");
+describe("one assistant (since 2026-11-20)", () => {
+  it("sends the real-estate context on every text and voice turn", () => {
+    expect(js).toContain("const PERSONA = 'realestate';");
+    // Code only: a value ends at a comma or a brace on its own line (a comment that says
+    // "context:" does not).
+    const contexts = (js.match(/context: [^,}\r\n]+(?=[,}])/g) ?? []).map((c) => c.trim());
+    // The text turn, the voice turn and the voice token mint.
+    expect(contexts).toHaveLength(3);
+    for (const c of contexts) expect(c).toBe("context: PERSONA");
+  });
+
+  it("carries no AI persona, greeting, chips or placeholder", () => {
+    expect(js).not.toMatch(/AI_GREETING|AI_CHIPS|AI_PLACEHOLDER|detectPersona|currentPersona/);
+    expect(js).not.toMatch(/return 'aipage'|=== 'aipage'/);
   });
 });

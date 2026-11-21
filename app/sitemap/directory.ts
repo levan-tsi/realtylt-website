@@ -9,7 +9,6 @@
 import { COUNTY_CONTENT } from "@/content/counties";
 import { BOROUGH_CONTENT } from "@/content/boroughs";
 import { getArticles } from "@/lib/blog";
-import { aiJourneyHref, getServices } from "@/lib/services";
 import { SITE } from "@/lib/site";
 
 export interface DirectoryLink {
@@ -52,10 +51,6 @@ export async function getDirectory(): Promise<DirectorySection[]> {
     { label: "Top Areas", href: "/top-areas", note: "The six Hudson Valley counties and five NYC boroughs we serve." },
     { label: "Who We Are", href: "/who-we-are", note: "Levan Tsiklauri and the team behind RealtyLT." },
     { label: "Reviews", href: "/reviews", note: "What clients say about working with us." },
-    { label: "AI Services", href: "/services", note: "Twenty AI services we build and run for real estate work." },
-    // /ai is served by a rewrite to a separate project (see lib/services aiJourneyHref):
-    // <Link> would prefetch an RSC payload that does not exist, so it renders as <a>.
-    { label: "RealtyLT AI", href: "/ai", note: "The interactive tour of the AI platform itself.", external: true },
     { label: "Blog", href: "/blog", note: "Guides and market notes, written for New York." },
     { label: "Connect", href: "/connect", note: "Reach Levan by phone, text, or the form." },
   ];
@@ -68,20 +63,6 @@ export async function getDirectory(): Promise<DirectorySection[]> {
     {
       label: "New York City",
       links: BOROUGH_CONTENT.map((b) => ({ label: b.name, href: `/top-areas/${b.slug}` })),
-    },
-  ];
-
-  const services: DirectoryGroup[] = [
-    {
-      label: "Service pages",
-      links: getServices().map((s) => ({ label: s.name, href: `/services/${s.slug}` })),
-    },
-    {
-      // The same twenty, inside the interactive RealtyLT AI journey (owner's ask, round 41c:
-      // the map covers the AI page's own territory too). /ai#… is the rewrite namespace, so
-      // these render as <a> like /ai itself does.
-      label: "Inside RealtyLT AI",
-      links: getServices().map((s) => ({ label: s.name, href: aiJourneyHref(s), external: true })),
     },
   ];
 
@@ -101,7 +82,6 @@ export async function getDirectory(): Promise<DirectorySection[]> {
   return [
     { id: "pages", title: "Pages", groups: [{ links: pages }] },
     { id: "areas", title: "Top Areas", groups: areas },
-    { id: "services", title: "AI Services", groups: services },
     { id: "blog", title: "From the Blog", groups: [{ links: posts }] },
     { id: "legal", title: "Legal & Fair Housing", groups: [{ links: legal }] },
   ];

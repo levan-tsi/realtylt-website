@@ -114,17 +114,6 @@ for (const route of ROUTES) {
   }
 }
 
-// --- /ai (heavy Three.js — longer settle, no fullPage scroll value) ---
-for (const [w, h] of [[1280, 800], [390, 844]]) {
-  try {
-    report.pages["/ai"] = report.pages["/ai"] || {};
-    report.pages["/ai"][w] = await drivePage(browser, "/ai", w, h, { slug: "ai", settle: 9000, postScroll: 2000, fullPage: false });
-    process.stdout.write(`/ai @${w} done\n`);
-  } catch (e) {
-    report.pages["/ai"][w] = { crash: String(e).slice(0, 300) };
-  }
-}
-
 await browser.close();
 fs.writeFileSync(path.join(OUT, "report.json"), JSON.stringify(report, null, 2));
 
@@ -138,7 +127,7 @@ for (const [route, widths] of Object.entries(report.pages)) {
     if (r.errors?.length) issues.push("console: " + r.errors.join(" | "));
     if (r.failedReqs?.length) issues.push("failedReqs: " + r.failedReqs.join(" | "));
     if (r.hscroll && w === "390") issues.push("HORIZONTAL SCROLL");
-    if (r.h1s !== 1 && route !== "/ai") issues.push("h1 count " + r.h1s);
+    if (r.h1s !== 1) issues.push("h1 count " + r.h1s);
     if (r.brokenImgs?.length) issues.push("broken imgs: " + r.brokenImgs.join(","));
     if (r.jsonLdOk === false) issues.push("INVALID JSON-LD");
     if (issues.length) { problems++; console.log(`\n[${route} @${w}] ` + issues.join("\n   ")); }

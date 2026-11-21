@@ -20,7 +20,8 @@ import { generateMetadata } from "./[slug]/page";
  */
 
 const PLACEHOLDER_SLUG = "top-5-renovations-increase-home-value-ny";
-const REAL_SLUG = "ai-chat-assistant-real-estate-website";
+// A real staying post (the AI chat post this named until 2026-11-20 moved to its own site).
+const REAL_SLUG = "seller-disclosure-requirements-new-york";
 
 const params = (slug: string) => ({ params: Promise.resolve({ slug }) });
 

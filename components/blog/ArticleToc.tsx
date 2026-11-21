@@ -46,7 +46,7 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
   // Restoring by SELECTOR rather than by remembering document.activeElement is deliberate —
   // the trigger unmounts as the sheet opens, so by the time this effect runs the active element
   // is already <body> and the remembered node would be a dead end. (Same trap, same fix, as
-  // components/services/ServiceToc.tsx.)
+  // the services ToC had before those pages left this site on 2026-11-20.)
   useEffect(() => {
     if (!open) return;
     const prevOverflow = document.body.style.overflow;

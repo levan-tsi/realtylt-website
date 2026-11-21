@@ -18,12 +18,13 @@ import { describe, expect, it } from "vitest";
  * A rule in a markdown file did not stop that, and would not stop the next one. This does.
  *
  * SCOPE, deliberately narrow. It catches the thing that actually happened — a probe *choosing* to
- * allow media — rather than every script that simply never mentions the route. Six committed
+ * allow media — rather than every script that simply never mentions the route. Five committed
  * probes fall in that second group (probe-blog, probe-blog-mobile, probe-reduced-motion,
- * verify-calc-menu, verify-saved-flow, verify-services-toc); each was checked and every one drives
- * a blog, services or /saved page carrying no listing rails, so none of them requests the route at
- * all. Widening this to "must mention api/media" would mean editing six working scripts to add a
- * no-op, and a guard that forces busywork gets deleted by whoever is in a hurry.
+ * verify-calc-menu, verify-saved-flow; a sixth, verify-services-toc, left with the service pages
+ * on 2026-11-20); each was checked and every one drives a blog or /saved page carrying no listing
+ * rails, so none of them requests the route at all. Widening this to "must mention api/media"
+ * would mean editing five working scripts to add a no-op, and a guard that forces busywork gets
+ * deleted by whoever is in a hurry.
  */
 
 /** Lives in lib/ because vitest.config.ts only includes lib|app|components|content —

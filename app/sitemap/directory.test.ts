@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import sitemap from "@/app/sitemap";
 import { COUNTY_CONTENT } from "@/content/counties";
 import { BOROUGH_CONTENT } from "@/content/boroughs";
-import { getServices } from "@/lib/services";
+import { movedPagePaths } from "@/lib/ai-business-redirects";
 import { getDirectory, sectionCount } from "./directory";
 
 /** THE TWO MAPS MUST AGREE.
@@ -29,25 +29,40 @@ describe("the human site map vs the crawler sitemap", () => {
     }
   });
 
-  it("lists every area and every service, and no link twice", async () => {
+  it("lists every area, and no link twice", async () => {
     const dir = await getDirectory();
     const areas = dir.find((s) => s.id === "areas")!;
-    const services = dir.find((s) => s.id === "services")!;
     expect(sectionCount(areas)).toBe(COUNTY_CONTENT.length + BOROUGH_CONTENT.length);
-    // Twice: each service appears as its indexable page AND as its /ai# journey deep link.
-    expect(sectionCount(services)).toBe(getServices().length * 2);
 
     const hrefs = (await allLinks()).map((l) => l.href);
     expect(new Set(hrefs).size, "a link appears twice on the site map").toBe(hrefs.length);
   });
 
+  /** The AI business moved to its own site on 2026-11-20 and every address it had here is a
+   * redirect (lib/ai-business-redirects.ts). Neither map may list one: a crawler would read a
+   * redirect as a page we claim. */
+  it("lists none of the moved AI addresses", async () => {
+    const dir = await getDirectory();
+    expect(dir.map((s) => s.id)).toEqual(["pages", "areas", "blog", "legal"]);
+    for (const l of await allLinks()) {
+      expect(l.href === "/ai" || l.href.startsWith("/ai/") || l.href.startsWith("/ai#"), l.href).toBe(false);
+      expect(l.href === "/services" || l.href.startsWith("/services/"), l.href).toBe(false);
+      expect(l.href, l.label).not.toMatch(/excelsior/i);
+    }
+    const moved = new Set(movedPagePaths().map(([from]) => from));
+    for (const e of await sitemap()) {
+      const p = new URL(e.url).pathname;
+      expect(moved.has(p), `sitemap.xml still publishes ${p}`).toBe(false);
+      expect(p.startsWith("/services") || p === "/ai" || p.startsWith("/ai/"), p).toBe(false);
+    }
+  });
+
   it("internal links are site-relative; only off-router destinations are external", async () => {
     for (const l of await allLinks()) {
       if (l.external) {
-        // /ai and its #panel deep links (rewrite to another project), /sitemap.xml (metadata
-        // route), or a real https URL.
+        // /sitemap.xml (metadata route) or a real https URL (the NY DOS notice).
         expect(
-          l.href === "/ai" || l.href.startsWith("/ai#") || l.href === "/sitemap.xml" || l.href.startsWith("https://"),
+          l.href === "/sitemap.xml" || l.href.startsWith("https://"),
           `${l.href} is marked external but is none of the known off-router shapes`,
         ).toBe(true);
       } else {

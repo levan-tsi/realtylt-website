@@ -28,6 +28,15 @@ export const BLOG_CACHE_TAG = "blog";
 const SELECT =
   "slug,title,excerpt,body,cover_image_url,author_name,published_at,seo_title,seo_description";
 
+/** THE ORGANISATION THIS SITE PUBLISHES FOR (2026-11-20). The CRM is one database with two
+ * organisations: RealtyLT (`…0001`, seeded by the CRM's migrations 0004 and 0005) and the AI
+ * business (`…0002`, migration 0275), which since that day has its own website. Both can publish
+ * into the same `blog_posts` table, so without this filter a post written in the AI organisation
+ * would appear on realtylt.com. The column exists on the table (supabase/migrations/
+ * website_blog_posts.sql) and the anon role has a table-level SELECT grant, so the filter needs
+ * no schema change. */
+const BLOG_ORGANIZATION_ID = "00000000-0000-0000-0000-000000000001";
+
 interface DbRow {
   slug: unknown;
   title: unknown;
@@ -106,7 +115,7 @@ export async function fetchDbArticles(): Promise<Article[]> {
 
   const url =
     `${origin}/rest/v1/blog_posts?select=${SELECT}` +
-    `&status=eq.published&order=published_at.desc&limit=200`;
+    `&status=eq.published&organization_id=eq.${BLOG_ORGANIZATION_ID}&order=published_at.desc&limit=200`;
 
   try {
     const res = await fetch(url, {

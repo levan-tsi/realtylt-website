@@ -6,9 +6,9 @@
 //
 // measured on what actually ships: the gate fetches each page from the dev server and scores
 // the PROSE inside <main> (the <p> and <li> blocks - headings, buttons and chrome are not
-// sentences and would flatter the average). Surfaces: every /blog/<slug>, every
-// /services/<slug>, and the home page - the lists are collected from the rendered /blog and
-// /services indexes so a new topic can never dodge the gate by not being hard-coded here.
+// sentences and would flatter the average). Surfaces: every /blog/<slug> and the home page -
+// the list is collected from the rendered /blog index so a new post can never dodge the gate by
+// not being hard-coded here.
 //
 // DOMAIN WHITELIST: the words the subject cannot avoid (AI, CRM, MLS, automation ...) are
 // scored at a fixed two syllables so the metric pressures SENTENCES and STRUCTURE, not the
@@ -112,9 +112,10 @@ async function page(path) {
 
 async function collectSurfaces() {
   const hrefs = new Set(["/"]);
-  for (const index of ["/blog", "/services"]) {
+  // /services left with the AI business on 2026-11-20 (it redirects off-site now).
+  for (const index of ["/blog"]) {
     const html = await page(index);
-    for (const m of html.matchAll(/href="(\/(?:blog|services)\/[a-z0-9-]+)"/g)) hrefs.add(m[1]);
+    for (const m of html.matchAll(/href="(\/blog\/[a-z0-9-]+)"/g)) hrefs.add(m[1]);
   }
   return [...hrefs];
 }

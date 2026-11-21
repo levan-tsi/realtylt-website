@@ -1,18 +1,25 @@
 import type { NextConfig } from "next";
 import path from "node:path";
-
-// The AI recruiter journey is its own Vercel project; the stable production alias.
-const AI_PAGE_URL = "https://realtylt-ai-page.vercel.app";
+import { aiBusinessRedirects } from "./lib/ai-business-redirects";
 
 // Content-Security-Policy — ONE policy applied to every route (Next.js sends a
 // duplicate CSP header when multiple `source` rules match the same path, and browsers
-// enforce the INTERSECTION of duplicates, which would silently break the /ai WebGL app).
-// So this single policy must satisfy both the marketing site AND the proxied Three.js
-// journey under /ai. Notes on each directive:
+// enforce the INTERSECTION of duplicates, which would silently break whatever page needs
+// the wider of the two). Notes on each directive:
 //  - script-src needs 'unsafe-inline' for Next.js's inline hydration/RSC bootstrap
 //    scripts (this site is statically generated — a nonce-based CSP would force every
-//    page dynamic and cannot cover the separately-built /ai app served via rewrite).
-//    'unsafe-eval'/'wasm-unsafe-eval' + blob: worker-src keep the WebGL journey working.
+//    page dynamic).
+//  - 'unsafe-eval' + script-src blob: + worker-src blob: were added for the /ai Three.js
+//    journey, which left this site on 2026-11-20 (lib/ai-business-redirects.ts). MEASURED
+//    that day with each removed (/, the live MapLibre ground, /search with the Google map,
+//    /connect, a listing page, two blog posts; local build and production): 0 violations.
+//    They STAY anyway: Google's own Maps JavaScript CSP guide lists all three in both of its
+//    sample policies without naming the feature that needs them, and Maps JS still loads on
+//    /search, the listing gallery's Street View and map tabs (not exercised: no entry point
+//    rendered with MLS media blocked) and the found-your-home form. 'wasm-unsafe-eval' was
+//    removed: nothing staying compiles WebAssembly (client bundle, public scripts and the
+//    MapLibre files scanned) and Google's guide does not list it. MapLibre's worker is a
+//    same-origin module worker ('self'); the chat widget's voice uses no worklet or blob.
 //  - style-src 'unsafe-inline' is required by Next's injected styles + Leaflet's inline
 //    marker/style attributes.
 //  - img-src allows OSM map tiles + (live-mode) MLS Grid listing photos + data:/blob:.
@@ -32,7 +39,7 @@ const CSP = [
   // realtylt.com). Measured 2026-08-26 by injecting the official embed on /buying: the script
   // loads from this host and renders the button AS AN IFRAME from the same host, so
   // frame and two frame-src violations.
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://www.googletagmanager.com https://maps.googleapis.com https://googleads.g.doubleclick.net",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://www.googletagmanager.com https://maps.googleapis.com https://googleads.g.doubleclick.net",
   // …fonts.googleapis.com: the Google Maps JS API injects its own font stylesheet on any page
   // with a map. Blocking it threw 3 style-src-elem violations per /search view (cosmetic only —
   // the map and its controls render — but it is our CSP producing console noise on our own
@@ -179,27 +186,17 @@ const nextConfig: NextConfig = {
       // and `*` also matches the bare /sitemap — which is now our own HTML site map page
       // (app/sitemap/page.tsx, round 41). /sitemap.xml stays the generated crawler file.
       { source: "/sitemap/:path+", destination: "/top-areas", permanent: true },
-      // A blog post removed on purpose (2026-10-31, the owner: "skip tracing should not be a
-      // blog"). Permanent, so search engines drop the address; the page's own unknown-slug
-      // fallback would only send a temporary redirect to /blog.
-      { source: "/blog/skip-tracing-real-estate-legal-owner-phone-numbers", destination: "/blog", permanent: true },
-      // The offer renamed from "AI audit" to "AI assessment" (2026-10-31 evening, round 17):
-      // the post and the service page moved to new slugs. Permanent, so the old addresses pass
-      // their ranking on and no link anyone saved breaks.
-      {
-        source: "/blog/ai-audit-small-business-what-not-to-automate",
-        destination: "/blog/ai-assessment-small-business-what-not-to-automate",
-        permanent: true,
-      },
-      { source: "/services/ai-audit", destination: "/services/ai-readiness-assessment", permanent: true },
+      // The AI business moved to its own site on 2026-11-20: /ai, /services and each service,
+      // each AI post, their films and PDF, and the three older AI redirects (the skip tracing
+      // post and the two "AI audit" renames), each re-aimed in one hop. One data file feeds this
+      // and app/redirects.test.ts; see lib/ai-business-redirects.ts.
+      ...aiBusinessRedirects(),
     ];
   },
   async rewrites() {
-    // /ai is a separate Vercel project (realtylt-ai-page) — proxy it under this domain.
-    // The AI page uses RELATIVE asset URLs; from the document at /ai (no trailing slash)
-    // they resolve against "/", so its root namespaces (styles.css, src/, assets/, vendor/)
-    // are proxied too. These are afterFiles rewrites — real routes and /public files
-    // (images/, og.png) always win; the marketing site must not claim these paths.
+    // Until 2026-11-20 /ai and four root namespaces it needed (styles.css, src/, assets/,
+    // vendor/) were proxied here to the AI page's own deployment. /ai is a redirect now
+    // (redirects() above), so those rewrites are gone and the root paths are not claimed.
     return [
       // PostHog ingestion + assets, proxied under our own origin (round 39). The browser
       // only ever talks to /relay-ph, so the CSP above needed no new origins — 'self'
@@ -209,12 +206,6 @@ const nextConfig: NextConfig = {
       // to the init component's api_host.
       { source: "/relay-ph/static/:path*", destination: "https://us-assets.i.posthog.com/static/:path*" },
       { source: "/relay-ph/:path*", destination: "https://us.i.posthog.com/:path*" },
-      { source: "/ai", destination: `${AI_PAGE_URL}/` },
-      { source: "/ai/:path*", destination: `${AI_PAGE_URL}/:path*` },
-      { source: "/styles.css", destination: `${AI_PAGE_URL}/styles.css` },
-      { source: "/src/:path*", destination: `${AI_PAGE_URL}/src/:path*` },
-      { source: "/assets/:path*", destination: `${AI_PAGE_URL}/assets/:path*` },
-      { source: "/vendor/:path*", destination: `${AI_PAGE_URL}/vendor/:path*` },
     ];
   },
   async headers() {

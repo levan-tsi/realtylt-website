@@ -1,9 +1,1 @@
-[
-  {
-    "match": "KEYWORDS: <title> shares 0 words with the slug",
-    "paths": [
-      "/blog/ai-scheduling-real-estate-showing-confirmations"
-    ],
-    "why": "Adjudicated 2026-11-17 (agents round 33), a decision with its reason: this post's address is indexed and is not renamed (agents round 32: the one post that was renamed fell out of Google's index and was still out 17 days later). The post was re-aimed that day on data: its old phrase, 'AI scheduling assistant', is a search for a personal calendar app (Microsoft, the New York Times and calendar apps hold its first page), and 'appointment confirmation text' is searched 100 to 1,000 times a month in the United States (Google Ads Keyword Planner). The title that ships, 'Appointment Confirmation Texts: Three Wordings to Copy', was clicked first in 2 of 2 lists by the blind reader, with the planted poor title clicked in neither. A title that shared three words with the address would have to say 'AI scheduling' and 'showing', and that names the reader the page no longer writes for. Record: realtylt-agents company/agents/seo/runs/r33-retarget/ (PHRASES.md, posts/RECORD.md item 3)."
-  }
-]
+[]

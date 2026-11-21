@@ -11,8 +11,8 @@ const OUT = process.argv[3] || "docs/blog-redesign/after";
 
 const PAGES = [
   ["index", "/blog"],
-  ["article-workflow", "/blog/workflow-automation-real-estate-business"],
-  ["article-chat", "/blog/ai-chat-assistant-real-estate-website"],
+  // The two AI articles this shot moved to their own site on 2026-11-20.
+  ["article-seller", "/blog/seller-disclosure-requirements-new-york"],
   ["article-stub", "/blog/first-time-home-buyer-ny-10-step-checklist"],
 ];
 

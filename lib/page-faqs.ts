@@ -2,8 +2,8 @@ import { SITE } from "@/lib/site";
 
 /** Visible FAQs for the three core marketing pages (launch-list quick win, round 39).
  *
- * The services pages already answer questions this way (components/services/Faq.tsx) and
- * emit FAQPage schema; /buying, /selling and /financing had neither. The answers here are
+ * The services pages answered questions this way (their Faq left this site with them on
+ * 2026-11-20) and emitted FAQPage schema; /buying, /selling and /financing had neither. The answers here are
  * written the way Levan would answer them on the phone, and every claim is either the
  * page's own (seller-paid buyer compensation on /buying; the 24-hour cash offer and the
  * 15-comp method on /selling) or a number that holds for New York generally. No answer

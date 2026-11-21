@@ -11,20 +11,6 @@
 import type { FlagshipContent } from "./flagship";
 import type { Cluster } from "./related";
 
-/** A film that belongs to an article. Present only on posts that actually have one; its
- * presence is what makes the page emit `VideoObject`, so an article can never advertise a
- * video it does not serve. */
-export interface ArticleFilm {
-  src: string;
-  poster: string;
-  width: number;
-  height: number;
-  /** ISO 8601, e.g. "PT31S" — the only duration format VideoObject accepts. */
-  duration: string;
-  name: string;
-  description: string;
-}
-
 export interface Article {
   slug: string;
   title: string;
@@ -46,8 +32,6 @@ export interface Article {
   cluster?: Cluster;
   seoTitle?: string;
   seoDescription?: string;
-  /** Set only by posts that ship a film. Drives the VideoObject block. */
-  film?: ArticleFilm;
   /** Scene payloads for a body that places [[scene:...]] markers. The whole contract between
    * a topic and the flagship rendering path; see lib/blog/flagship.ts. */
   flagship?: FlagshipContent;

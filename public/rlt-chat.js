@@ -66,18 +66,6 @@
     BRAND_NAME: 'Levan Tsiklauri',
     GREETING: "Hey! Looking for a home in Westchester, the Hudson Valley, or anywhere in the city? I can pull live MLS listings and get you connected with Levan directly. What are you searching for?",
     INITIAL_CHIPS: ['Show me 3-bed homes under $700k', 'Condos under $1M', 'Talk to Levan'],
-    // THE OTHER OPENING (2026-08-27). The same widget now runs on realtylt.com/ai, where the
-    // visitor did not come to look at houses. Greeting them with Westchester listings is the
-    // wrong assistant wearing the right coat. Chosen by detectPersona() below; the two lines
-    // above are untouched and still open every conversation on every other page.
-    AI_GREETING: "Hey! I'm the assistant on RealtyLT's AI side. I can walk you through what we build, chat assistants, voice agents, automations, and what would actually be worth doing first for your business. What do you do?",
-    AI_CHIPS: ['What could AI automate for me?', 'How do voice agents work?', 'Book a call with Levan'],
-    // THE THIRD THING THE PERSONA HAS TO SWAP. The greeting and the chips changed for /ai and
-    // the INPUT did not, so the box under an AI-services conversation went on reading "Ask
-    // about a listing, an area, anything..." That is the one line the visitor is looking at
-    // while deciding what to type, which makes it the worst of the three to leave behind.
-    PLACEHOLDER: 'Ask about a listing, an area, anything...',
-    AI_PLACEHOLDER: 'Ask about a service, an automation, anything...',
     SESSION_KEY: 'realtylt_chat_session',
     HISTORY_KEY: 'realtylt_chat_history',
     HISTORY_LIMIT: 20,
@@ -130,31 +118,18 @@
   }
 
   // ============================================================
-  // PERSONA - which of the two assistants this conversation belongs to
+  // PERSONA - the assistant this site runs
   // ============================================================
-  // THE OWNER, 2026-08-27: on realtylt.com/ai the widget must stop asking about homes and be
-  // the AI-services assistant instead. The page is the only thing that knows, so the page tells
-  // the server, in `userMeta.context`.
+  // Sent to the CRM in `userMeta.context` on every turn, where it picks a prompt, a tool set, a
+  // greeting and a lead stamp (crm: apps/web/lib/chat/persona.ts). IT IS A HINT AND THE SERVER
+  // TREATS IT AS ONE: it changes nothing about the origin allowlist, the session token, the rate
+  // limit or any gate.
   //
-  // IT IS A HINT AND THE SERVER TREATS IT AS ONE. It picks a prompt, a tool set, a greeting and
-  // a lead stamp. It changes nothing about the origin allowlist, the session token, the rate
-  // limit or any gate - a browser that lies about it gets a different tone and FEWER tools.
-  // (crm: apps/web/lib/chat/persona.ts carries the full reasoning.)
-  //
-  // IT STICKS TO THE CONVERSATION, NOT TO THE PAGE. Stored beside the session id, so a visitor
-  // who starts on /ai and then wanders onto the main site keeps the assistant they started
-  // with. A conversation begun anywhere else is real-estate, exactly as it always was.
-  function detectPersona() {
-    try {
-      // `/ai`, `/ai/anything` - and NOT `/air-conditioning`, which is what a bare startsWith
-      // would have matched.
-      if (/^\/ai(?:\/|$)/.test(location.pathname || '')) return 'aipage';
-      // The AI page's own Vercel deployments: realtylt-ai-page.vercel.app and the per-deploy
-      // hash urls under the same project, both of which the CRM's origin allowlist knows.
-      if (/^realtylt-ai-page(?:[-.])/.test(location.hostname || '')) return 'aipage';
-    } catch (e) { /* exotic environment: fall through to the default */ }
-    return 'realestate';
-  }
+  // ONE ASSISTANT since 2026-11-20. Until then a second persona ('aipage') opened on
+  // realtylt.com/ai; the AI business and its page moved to their own site with their own copy of
+  // this widget, and every address under /ai here is now a permanent redirect there, so this
+  // file never runs on an AI page again.
+  const PERSONA = 'realestate';
 
   // ============================================================
   // PORTAL IDENTITY - the visitor who is already signed in
@@ -263,31 +238,32 @@
     return headers;
   }
 
-  // { id, token, cursor, persona } for this tab. Held in memory and mirrored to sessionStorage.
+  // { id, token, cursor } for this tab. Held in memory and mirrored to sessionStorage.
   let _session = null;
 
   function readStoredSession() {
     try {
       const raw = sessionStorage.getItem(CONFIG.SESSION_KEY);
       if (!raw) return null;
-      // JSON is the current shape; a bare string is a session id from an older widget.
+      // JSON is the current shape; a bare string is a session id from an older widget. A
+      // `persona` field written by an older copy is ignored (there is one assistant now).
       if (raw.charAt(0) === '{') {
         const o = JSON.parse(raw);
-        if (o && o.id) return { id: o.id, token: o.token || null, cursor: o.cursor || 0, persona: o.persona || null };
+        if (o && o.id) return { id: o.id, token: o.token || null, cursor: o.cursor || 0 };
         return null;
       }
-      return { id: raw, token: null, cursor: 0, persona: null };
+      return { id: raw, token: null, cursor: 0 };
     } catch (e) { return null; }
   }
 
   function writeStoredSession(s) {
-    // FOUR FIELDS, NAMED. `displayName` is deliberately not one of them: a name written to
+    // THREE FIELDS, NAMED. `displayName` is deliberately not one of them: a name written to
     // storage would outlive the sign-out that took it away, and the only thing it is for is the
     // opening line of a conversation that has not started yet.
     try {
       sessionStorage.setItem(
         CONFIG.SESSION_KEY,
-        JSON.stringify({ id: s.id, token: s.token || null, cursor: s.cursor || 0, persona: s.persona || null })
+        JSON.stringify({ id: s.id, token: s.token || null, cursor: s.cursor || 0 })
       );
     } catch (e) { /* private mode: memory-only for this tab */ }
   }
@@ -298,10 +274,6 @@
     if (_session && _session.id) return _session;
     const stored = readStoredSession();
     if (stored) {
-      // A session stored by an older copy of this file carries no persona. Stamp it from
-      // wherever the visitor is standing now rather than leaving it null: an unstamped session
-      // would re-detect on every page and stop being sticky, which is the point of storing it.
-      if (!stored.persona) { stored.persona = detectPersona(); writeStoredSession(stored); }
       _session = stored;
       return _session;
     }
@@ -330,7 +302,7 @@
       if (resp.ok) {
         const d = await resp.json();
         if (d && d.sessionId) {
-          _session = { id: d.sessionId, token: d.token || null, cursor: 0, persona: detectPersona() };
+          _session = { id: d.sessionId, token: d.token || null, cursor: 0 };
           writeStoredSession(_session);
           // Memory only, and only for this conversation's first line. The server decided it,
           // from a token it verified; nothing here asserts who anybody is.
@@ -339,31 +311,9 @@
         }
       }
     } catch (e) { /* fall through to a local id */ }
-    _session = { id: uuid(), token: null, cursor: 0, persona: detectPersona() };
+    _session = { id: uuid(), token: null, cursor: 0 };
     writeStoredSession(_session);
     return _session;
-  }
-
-  // The persona this conversation belongs to: the one it was opened with when we have it, and
-  // otherwise the page under the visitor's feet. Safe to call before ensureSession has run,
-  // which the greeting does.
-  function currentPersona() {
-    // THE AI PAGE ALWAYS PRESENTS THE AI ASSISTANT (owner, 2026-09-17: /ai "still suggests
-    // real estate boxes and says hey looking for home"). The conversation's persona used to
-    // win everywhere - deliberately, so a visitor who started on /ai kept their assistant on
-    // the main site. That was designed when the AI page lived on its own host; since the
-    // cutover both pages share realtylt.com's storage, so a session born over listings walks
-    // into /ai wearing the wrong coat. Proven on the live page (CRM scripts/voice-0828/06):
-    // a tab carrying a realestate session was greeted on /ai with Westchester listings, the
-    // 3-bed chips and the listing placeholder. So: the PAGE wins where the page IS the
-    // product; everywhere else the conversation keeps the persona it started with, exactly
-    // as before. The stored persona is left untouched - stepping back onto the main site
-    // steps back into the old conversation.
-    if (detectPersona() === 'aipage') return 'aipage';
-    if (_session && _session.persona) return _session.persona;
-    const stored = readStoredSession();
-    if (stored && stored.persona) return stored.persona;
-    return detectPersona();
   }
 
   // Each agent reply carries a fresh token; keep the newest so the session stays owned.
@@ -871,25 +821,19 @@
   // The class is toggled at every width; only the phone stylesheet acts on it, so desktop
   // behaviour is unchanged. Once the panel has been opened the launcher stays put — by then
   // the visitor has asked for it, and having it vanish under them would be worse than an overlap.
-  //
-  // NOT ON THE AI PAGE (the owner's own test, 2026-08-28: "the chat launcher is invisible until
-  // you scroll"). The tuck exists so the launcher never lands on a form field or a CTA in a
-  // listing page's first screen. On /ai the first screen is the hero and the chat IS the
-  // thing the page is selling, so hiding it there hides the product. Decided by the PAGE
-  // (detectPersona reads the pathname), not by the stored conversation persona: a visitor who
-  // starts on /ai and wanders onto a listing page gets the listing tuck like everyone else.
+  // The tuck exists so the launcher never lands on a form field or a CTA in a listing page's
+  // first screen. (Until 2026-11-20 it was skipped on /ai, where the chat was the product; that
+  // page now lives on its own site.)
   let bubbleSummoned = false;
   const TUCK_UNTIL = () => Math.round(window.innerHeight * 0.6);
   const syncBubble = () => {
     if (bubbleSummoned) return;
     bubble.classList.toggle('rlt-bubble--tucked', window.scrollY < TUCK_UNTIL());
   };
-  if (detectPersona() !== 'aipage') {
-    bubble.classList.add('rlt-bubble--tucked');
-    window.addEventListener('scroll', syncBubble, { passive: true });
-    window.addEventListener('resize', syncBubble, { passive: true });
-    syncBubble();
-  }
+  bubble.classList.add('rlt-bubble--tucked');
+  window.addEventListener('scroll', syncBubble, { passive: true });
+  window.addEventListener('resize', syncBubble, { passive: true });
+  syncBubble();
 
   const panel = document.createElement('div');
   panel.className = 'rlt-panel';
@@ -935,12 +879,6 @@
   const msgsEl = panel.querySelector('#rlt-msgs');
   const chipsEl = panel.querySelector('#rlt-chips');
   const inputEl = panel.querySelector('#rlt-input');
-  // The markup ships the real-estate placeholder, so this file still says something sensible if
-  // the line below never runs. Set from currentPersona() rather than from the path, for the same
-  // reason the greeting is: the persona sticks to the CONVERSATION off the AI page, so somebody
-  // who started on /ai and wandered onto the main site keeps the assistant, the chips and now
-  // the prompt they started with. On /ai itself the page wins - see currentPersona().
-  if (inputEl) inputEl.placeholder = currentPersona() === 'aipage' ? CONFIG.AI_PLACEHOLDER : CONFIG.PLACEHOLDER;
   const sendEl = panel.querySelector('#rlt-send');
   const closeEl = panel.querySelector('.rlt-close-btn');
   const resetEl = panel.querySelector('.rlt-reset-btn');
@@ -1156,24 +1094,20 @@
   function restoreHistory() {
     msgsEl.innerHTML = '';
     if (history.length === 0) {
-      // First-time greeting. Three of them now: the AI page opens a different conversation, and
-      // a signed-in client is greeted by name instead of being asked who they are. Everyone
-      // else gets the original two lines on the original timing, unchanged.
+      // First-time greeting. A signed-in client is greeted by name instead of being asked who
+      // they are. Everyone else gets the original two lines on the original timing, unchanged.
       let greeted = false;
       const greetOnce = function() {
         if (greeted) return;
         greeted = true;
-        const ai = currentPersona() === 'aipage';
         const name = (_session && _session.displayName) || '';
         addMessage(
           'bot',
           name
-            ? (ai
-                ? 'Welcome back, ' + name + '. What can I help you with on the AI side today?'
-                : 'Welcome back, ' + name + '. Want to pick up where you left off, or shall I pull something new from the MLS?')
-            : (ai ? CONFIG.AI_GREETING : CONFIG.GREETING)
+            ? 'Welcome back, ' + name + '. Want to pick up where you left off, or shall I pull something new from the MLS?'
+            : CONFIG.GREETING
         );
-        renderChips(ai ? CONFIG.AI_CHIPS : CONFIG.INITIAL_CHIPS);
+        renderChips(CONFIG.INITIAL_CHIPS);
       };
       if (readPortalToken()) {
         // ONLY FOR A SIGNED-IN CLIENT. Asking the CRM who they are means minting the session
@@ -1306,12 +1240,9 @@
           message: message,
           userMeta: {
             page: location.pathname,
-            // WHICH ASSISTANT THIS CONVERSATION BELONGS TO (2026-08-27). `page` alone could
-            // not answer it: it changes as the visitor navigates, and the conversation does
-            // not. Sent on every turn so the server never has to remember. Through
-            // currentPersona() (2026-09-17) so the model the CRM builds matches the assistant
-            // on screen - on /ai that is the AI assistant whatever the session started as.
-            context: currentPersona(),
+            // WHICH ASSISTANT THIS CONVERSATION BELONGS TO (2026-08-27). Sent on every turn so
+            // the server never has to remember. See PERSONA above.
+            context: PERSONA,
             referrer: document.referrer || '',
             userAgent: navigator.userAgent,
             timestamp: new Date().toISOString()
@@ -1591,7 +1522,6 @@
      */
     sessionId: null,
     sessionToken: null,
-    persona: null,
     // Counters, for a harness and for diagnosing a call that went quiet. A voice bug is invisible
     // from the outside — "nothing happened" looks identical whether the microphone never opened,
     // the audio never left, or the model chose not to answer — so the widget keeps the three
@@ -1820,7 +1750,7 @@
       body: JSON.stringify(Object.assign({
         sessionId: voice.sessionId,
         receipts: voice.receipts.slice(-20),
-        userMeta: { page: location.pathname, context: voice.persona || detectPersona() }
+        userMeta: { page: location.pathname, context: PERSONA }
       }, body))
     });
     if (!resp.ok) throw new Error('voice-turn ' + resp.status);
@@ -1958,7 +1888,7 @@
       sessionId: voice.sessionId,
       // `widget` names this build in the CRM's mint log, so "which script did the phone run"
       // is a query rather than a guess.
-      userMeta: { page: location.pathname, context: voice.persona || detectPersona(), widget: VOICE_WIDGET_BUILD }
+      userMeta: { page: location.pathname, context: PERSONA, widget: VOICE_WIDGET_BUILD }
     };
     if (viaHandle) body.resumeHandle = voice.resumeHandle;
     const resp = await fetch(CONFIG.VOICE_TOKEN_URL, {
@@ -2194,9 +2124,6 @@
       // Captured here and used for the whole call, transcript flush included.
       voice.sessionId = sess.id;
       voice.sessionToken = sess.token || null;
-      // currentPersona(), not the session's own stamp: a call started on /ai is the AI
-      // assistant even inside a conversation that began over listings (2026-09-17).
-      voice.persona = currentPersona();
       token = await mintVoiceSession();
     } catch (err) {
       stream.getTracks().forEach(function(t) { t.stop(); });

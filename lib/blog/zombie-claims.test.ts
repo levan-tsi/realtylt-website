@@ -432,15 +432,8 @@ const SOURCES = [
     .readdirSync(path.join(ROOT, "components/blog/scenes/primitives"))
     .filter((f) => f.endsWith(".tsx"))
     .map((f) => `components/blog/scenes/primitives/${f}`),
-  ...fs
-    .readdirSync(path.join(ROOT, "content/services"))
-    .filter((f) => f.endsWith(".ts") && f !== "index.ts" && f !== "types.ts")
-    .map((f) => `content/services/${f}`),
-  // The services INDEX is commercial copy written in JSX, outside every directory above. It kept
-  // "rank ... by what it pays back" for three weeks after the claim was retired everywhere else
-  // (found 2026-09-18 by the readability pass, not by this guard). The sibling-sweep law applies
-  // to a page file as much as to a content file.
-  "app/services/page.tsx",
+  // content/services/** and app/services/page.tsx were read here until 2026-11-20, when the
+  // service pages moved to their own site with this guard's table.
 ];
 
 /** Comments are where the HISTORY of a killed number is written down, and that history is the
@@ -470,16 +463,12 @@ describe("retracted claims stay retracted", () => {
     // A probe that finds no targets reports a beautiful pass.
     expect(SOURCES.length).toBeGreaterThan(10);
     for (const f of SOURCES) expect(fs.existsSync(path.join(ROOT, f)), f).toBe(true);
-    // And it is actually pointed at the commercial surface, not only at the blog. A glob that
-    // silently matches nothing is the same beautiful pass wearing a directory read.
-    // 21 since 2026-08-27, when /services/the-singularity landed. This number is deliberately a
-    // literal and not SERVICES.length: the point of the assertion is that a directory read is
-    // really finding the commercial surface, and comparing one derived count against another
-    // derived count would pass just as happily on an empty glob.
-    expect(SOURCES.filter((f) => f.startsWith("content/services/")).length).toBe(21);
-    // And every scene file, which is where a retracted number can keep talking in twenty point
-    // type. Nine flagships, nine scene files, plus posts.ts and ai-posts.ts.
-    expect(SOURCES.filter((f) => f.startsWith("content/blog/")).length).toBeGreaterThanOrEqual(11);
+    // And every content file and scene file, which is where a retracted number can keep talking
+    // in twenty point type. A literal, not a derived count, so an empty directory read fails:
+    // posts.ts, the four post collections, and the seller disclosure scenes and quiz (7 since
+    // 2026-11-20, when the AI posts and their scene files moved to their own site).
+    expect(SOURCES.filter((f) => f.startsWith("content/blog/")).length).toBeGreaterThanOrEqual(7);
+    expect(SOURCES.filter((f) => f.startsWith("components/blog/scenes/")).length).toBeGreaterThanOrEqual(9);
   });
 
   for (const file of SOURCES) {

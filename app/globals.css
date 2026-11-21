@@ -63,10 +63,6 @@
   --color-moon: #f2f2ee;
   --color-haze: #9b9b96;
   --color-window: #f6c781;
-  /* The logo's R blue as a brand mark that never re-points: the header's AI item wears it by the
-     owner's request ("our logo R blue so people notice", lib/site.ts) on day and night pages alike,
-     while .nocturne turns every other porchlight use (actions, rings) white. */
-  --color-brand-r: #28a8e0;
   /* A listing card's own body. White by day; .nocturne re-points it, so the one card component
      sits correctly on both grounds without knowing which page it is on. */
   --color-card: #ffffff;
@@ -498,8 +494,7 @@ body {
   --color-line: #2a2b2f;
   --color-line-strong: #6d6d67;
   /* Black and white (round 54): the action and focus colour inside the scope is the white itself,
-     so every ring, underline, active row and progress bar that said porchlight reads white here.
-     The AI nav item escapes through --color-brand-r. */
+     so every ring, underline, active row and progress bar that said porchlight reads white here. */
   --color-porchlight: var(--color-moon);
   --color-river: var(--color-moon);
   --color-porchlight-deep: var(--color-moon);
@@ -1199,39 +1194,6 @@ option:disabled {
   /* Filled, not stroked, for the reason the select's chevron gives (round 55): the same 1.8px
      round-capped cross as two capsules. */
   --rlt-clear-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.86 4.14L11.86 13.14A.9 .9 0 0 0 13.14 11.86L4.14 2.86A.9 .9 0 0 0 2.86 4.14ZM11.86 2.86L2.86 11.86A.9 .9 0 0 0 4.14 13.14L13.14 4.14A.9 .9 0 0 0 11.86 2.86Z' fill='%23000'/%3E%3C/svg%3E");
-}
-
-/* ── Service constellation "live signal" — a sonar ping on the lit hub node. The global
-   reduced-motion block at the bottom of this file collapses it to a still. */
-@keyframes svc-ping {
-  0% {
-    opacity: 0.55;
-    scale: 0.5;
-  }
-  70%,
-  100% {
-    opacity: 0;
-    scale: 2.8;
-  }
-}
-.svc-ping {
-  animation: svc-ping 2.6s var(--ease-out) infinite;
-}
-
-/* ── "Live in production" eyebrow dot — a slow porchlight breath + halo. */
-@keyframes live-dot {
-  0%,
-  100% {
-    opacity: 1;
-    box-shadow: 0 0 0 0 rgb(40 168 224 / 0.5);
-  }
-  50% {
-    opacity: 0.55;
-    box-shadow: 0 0 0 4px rgb(40 168 224 / 0);
-  }
-}
-.live-dot {
-  animation: live-dot 2.6s ease-in-out infinite;
 }
 
 /* ── Card hover lift + slow photo scale */

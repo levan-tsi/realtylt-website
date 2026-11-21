@@ -18,7 +18,7 @@
 - Next.js 15 App Router + TS + Tailwind v4. Design tokens in `app/globals.css` (Lato, grays, brand navy/azure).
 - **IDX:** `ReplicatedIdxClient` reads the **committed snapshot** (`data/mls-snapshot.json`, bundled into the deploy). Refresh is **MANUAL**: `node scripts/export-snapshot.mjs` (drives the secret-gated `/api/cron/sync-mls` export endpoint) → commit → deploy. There is NO scheduled cron — `vercel.json` has no `crons`; the schedule was removed with Vercel Blob (serverless FS is read-only, so a scheduled run has nowhere durable to write). Automated refresh needs a durable store — a pending OWNER decision. MLS Grid (OneKey `onekey2`, per-account 2 req/s limit) is never called in the request path; photos are fetched on-demand via `/api/media` and never stored. Fixture fallback is honestly labeled (`isSampleData`).
 - **Leads:** every form → `/api/lead` → `CRM_LEAD_WEBHOOK` (Supabase edge fn `website-lead` → CRM `leads` table). `LEAD_TEST_MODE=1` forces stub (use for QA — never pollute prod).
-- **/ai:** rewrite-proxied to the separate `realtylt-ai-page` Vercel project.
+- **/ai:** since 2026-11-20 a permanent redirect to the AI business's own site, excelsiormind.com, with `/services/*` and the AI posts (`lib/ai-business-redirects.ts`). Until then it was rewrite-proxied to the separate `realtylt-ai-page` Vercel project.
 - Secrets are Vercel env only: `MLS_API_KEY/ENDPOINT/FEED_ID`, `CRON_SECRET`, `CRM_LEAD_WEBHOOK`, `NEXT_PUBLIC_SITE_URL`, `PRELAUNCH`. (`BLOB_READ_WRITE_TOKEN` is vestigial — Blob is removed.)
 
 ## TO GO PUBLIC (owner steps — ~15 min)

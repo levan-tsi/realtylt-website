@@ -8,7 +8,8 @@ const OUT = 'docs/blog-redesign/mobile';
 mkdirSync(OUT, { recursive: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const BASE = process.env.BASE || 'http://localhost:3000';
-const ART = '/blog/ai-chat-assistant-real-estate-website';
+// The AI chat post this audited moved to its own site on 2026-11-20.
+const ART = '/blog/seller-disclosure-requirements-new-york';
 const res = [];
 const check = (ok, name, d = '') => res.push([ok, name, d]);
 

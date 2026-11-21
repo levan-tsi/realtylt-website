@@ -5,7 +5,6 @@ import { BOROUGH_CONTENT } from "@/content/boroughs";
 import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
 import { isFixtureMode } from "@/lib/idx";
 import { listingPath } from "@/lib/idx/listing-url";
-import { getServices } from "@/lib/services";
 import { SITE } from "@/lib/site";
 
 // Regenerate hourly — harmless in fixture mode, honest once the live feed rotates.
@@ -31,11 +30,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/who-we-are`, priority: 0.6, changeFrequency: "monthly", lastModified: now },
     { url: `${base}/reviews`, priority: 0.6, changeFrequency: "monthly", lastModified: now },
     { url: `${base}/blog`, priority: 0.7, changeFrequency: "weekly", lastModified: now },
-    { url: `${base}/services`, priority: 0.9, changeFrequency: "monthly", lastModified: now },
-    // The interactive AI page — a separate Vercel project served under this host via rewrite
-    // (next.config.ts), so it is OUR URL to publish. Its per-service deep links are #fragments
-    // and stay out of XML; the HTML site map and /llms.txt carry them.
-    { url: `${base}/ai`, priority: 0.8, changeFrequency: "monthly", lastModified: now },
     { url: `${base}/connect`, priority: 0.7, changeFrequency: "yearly", lastModified: now },
     // Public and indexable but missing from this inventory until round 41 — found while
     // building the HTML site map (app/sitemap/directory.ts), which lists both.
@@ -49,15 +43,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${base}/top-areas/${a.slug}`,
     priority: 0.8,
     changeFrequency: "weekly",
-    lastModified: now,
-  }));
-
-  // The per-service SEO/GEO surface. `/ai#voice` is not a URL Google can rank — these are.
-  // Flagship pages carry the deepest content, so they get the higher priority.
-  const services: MetadataRoute.Sitemap = getServices().map((s) => ({
-    url: `${base}/services/${s.slug}`,
-    priority: s.tier === "flagship" ? 0.9 : s.tier === "core" ? 0.7 : 0.6,
-    changeFrequency: "monthly",
     lastModified: now,
   }));
 
@@ -87,5 +72,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }))
     : [];
 
-  return [...staticPages, ...counties, ...services, ...posts, ...listings];
+  return [...staticPages, ...counties, ...posts, ...listings];
 }

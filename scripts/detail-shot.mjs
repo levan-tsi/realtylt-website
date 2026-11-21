@@ -4,7 +4,7 @@
 import { chromium } from "playwright";
 import { mkdir } from "node:fs/promises";
 
-const [, , BASE = "http://localhost:3002", PATH = "/blog/workflow-automation-real-estate-business", W = "1440", PREFIX = "d", ...targets] = process.argv;
+const [, , BASE = "http://localhost:3002", PATH = "/blog/seller-disclosure-requirements-new-york", W = "1440", PREFIX = "d", ...targets] = process.argv;
 const OUT = "docs/blog-redesign/probe";
 await mkdir(OUT, { recursive: true });
 

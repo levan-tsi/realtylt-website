@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import { POSTS } from "@/content/blog/posts";
-import { isConsumer } from "./related";
 import { extractFaqs, parseHeadings } from "./toc";
 
 /** THE SEO SHAPE EVERY REPOSTED CONSUMER ARTICLE SHIPS WITH (docs/blog-repost/PIPELINE.md §4).
@@ -10,7 +9,9 @@ import { extractFaqs, parseHeadings } from "./toc";
  * links to the site and to sibling posts, and the house voice. scripts/seo-audit.mjs checks the
  * RENDERED page; this checks the source, so a post cannot be committed without it. */
 
-const REPOSTED = POSTS.filter((p) => !p.placeholder && isConsumer({ placeholder: false, cluster: p.cluster }));
+// Every real (non-placeholder) static post. Until 2026-11-20 this also had to exclude the AI
+// posts; they moved to their own site, so every post here is a consumer article.
+const REPOSTED = POSTS.filter((p) => !p.placeholder);
 const SITE_PAGES = ["/buying", "/selling", "/financing", "/search", "/home-value", "/top-areas", "/connect"];
 
 describe("reposted consumer articles", () => {
