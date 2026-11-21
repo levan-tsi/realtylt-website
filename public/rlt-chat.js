@@ -125,10 +125,8 @@
   // TREATS IT AS ONE: it changes nothing about the origin allowlist, the session token, the rate
   // limit or any gate.
   //
-  // ONE ASSISTANT since 2026-11-20. Until then a second persona ('aipage') opened on
-  // realtylt.com/ai; the AI business and its page moved to their own site with their own copy of
-  // this widget, and every address under /ai here is now a permanent redirect there, so this
-  // file never runs on an AI page again.
+  // ONE ASSISTANT since 2026-11-20: this site's real-estate assistant, on every page. The value is
+  // sent as `context` on the text turn, the voice turn and the voice-token request.
   const PERSONA = 'realestate';
 
   // ============================================================
@@ -822,8 +820,7 @@
   // behaviour is unchanged. Once the panel has been opened the launcher stays put — by then
   // the visitor has asked for it, and having it vanish under them would be worse than an overlap.
   // The tuck exists so the launcher never lands on a form field or a CTA in a listing page's
-  // first screen. (Until 2026-11-20 it was skipped on /ai, where the chat was the product; that
-  // page now lives on its own site.)
+  // first screen.
   let bubbleSummoned = false;
   const TUCK_UNTIL = () => Math.round(window.innerHeight * 0.6);
   const syncBubble = () => {

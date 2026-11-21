@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "match": "KEYWORDS: <title> shares 2 words with the slug",
+    "paths": [
+      "/blog/seller-disclosure-requirements-new-york"
+    ],
+    "why": "Adjudicated 2026-11-20 (the review of the AI split), a decision with its reason. The finding is older than the split: the title has stood since cd2194e2 (2026-10-30) and the audit was already red on it at 9aafe657, the commit in production. The title, 'NY property condition disclosure statement 2026 seller guide', carries 'seller' and 'disclosure' from the address and says 'NY' where the address says 'new york'; the rule counts stemmed words and cannot see that the two are the same place, so the page names its address's subject in full and the count still reads 2. The honest alternatives are worse: the address is indexed and is not renamed (agents round 32: the one post that was renamed fell out of Google's index and was still out 17 days later), and a title is not rewritten without Google's own data for the page first (the standing rule of 2026-11-16). The rule itself is unchanged for every other post. Revisit when Search Console shows the queries this page is shown for; if 'new york' written out wins, change the title and delete this entry (the audit reports an entry that excuses nothing as stale)."
+  }
+]
